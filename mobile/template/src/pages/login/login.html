@@ -1,0 +1,58 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title text-center>Bienvenido</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <br>
+  <h6 text-center>Iniciar Sección</h6>
+
+      <form>
+
+          <ion-list class="paddi">
+            <br>
+                <ion-item>
+                  <ion-icon name="mail" item-start></ion-icon>
+                  <ion-label floating text-center>Correo Email</ion-label>
+                  <ion-input type="email"></ion-input>
+                </ion-item>
+
+              <ion-item>
+                <ion-icon name="eye" item-start></ion-icon>
+                <ion-label floating text-center>Password</ion-label>
+                <ion-input type="password"></ion-input>
+              </ion-item>
+            <br>
+          </ion-list>
+
+          <div padding >
+             <button ion-button block
+                      [navPush]="perfil"> Entrar </button>
+             <br>
+             <button ion-button block> Iniciar Sección con Facebook</button>
+           </div>
+<br><br>
+           <div text-right>
+             <button ion-button clear
+                     [navPush]="registrarse">
+                     Registrarse</button>
+             <br>
+             <button ion-button clear
+                      [navPush]="recu_contra">
+                      ¿Olvide el Password?</button>
+
+           </div>
+
+
+
+
+
+
+
+        </form>
+</ion-content>
