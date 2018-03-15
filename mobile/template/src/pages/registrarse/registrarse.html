@@ -1,0 +1,204 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title text-center>Registrarse</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+
+  <form (ngSubmit)="registrarse(formulario)" #formulario="ngForm" novalidate="">
+
+    <ion-list class="padding padinhori"
+              [ngClass]="{ 'has-danger': (nombre.errors?.minlength || nombre.errors?.required)&& nombre.touched}">
+
+<br>
+      <ion-item>
+      <ion-icon name="person" item-start></ion-icon>
+
+      <ion-label floating text-center>
+          Nombre(s)
+          <div *ngIf="nombre.errors?.required"
+              class="form-control-feedback">
+              Este campo es requerido.
+            </div>
+
+            <div *ngIf="nombre.errors?.minlength"
+            class="form-control-feedback">
+            Por lo menos {{ nombre.errors.minlength.requiredLength}} caracteres.
+          </div>
+    </ion-label>
+
+      <ion-input type="text"
+                 name="nombre"
+                 [(ngModel)]="usuario.nombre"
+                 minlength="3"
+                 required
+                 #nombre="ngModel">
+           </ion-input>
+
+
+    </ion-item>
+
+
+<br>
+
+
+    <ion-item>
+      <ion-icon name="person" item-start></ion-icon>
+
+      <ion-label floating text-center>Apellido (s)
+          <div *ngIf="apellido.errors?.required"
+              class="form-control-feedback">
+              Este campo es requerido.
+            </div>
+      </ion-label>
+
+          <ion-input type="text"
+                  name="apellido"
+                  [(ngModel)]="usuario.apellido"
+                  required
+                  #apellido="ngModel">
+              </ion-input>
+    </ion-item>
+
+
+<br>
+
+
+    <ion-item>
+      <ion-icon name="mail" item-start></ion-icon>
+          <ion-label floating text-center>
+              Correo Email
+
+              <div *ngIf="correo.errors?.required"
+                    class="form-control-feedback">
+                    "Este campo es obligatorio"
+                  </div>
+
+                  <div *ngIf="correo.errors?.pattern"
+                  class="form-control-feedback">
+                  No cumple con los caracteres.
+                </div>
+      </ion-label>
+
+      <ion-input type="email"
+                 name="correo"
+                 [(ngModel)]="usuario.correo"
+                 required
+                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                 #correo="ngModel">
+        </ion-input>
+    </ion-item>
+
+
+<br>
+
+
+    <ion-item>
+      <ion-icon name="eye" item-start></ion-icon>
+      <ion-label floating text-center>Password
+        <div *ngIf="password.errors?.required"
+             class="form-control-feedback">
+        "Este campo es obligatorio"
+      </div>
+      <div *ngIf="password.errors?.minlength"
+      class="form-control-feedback">
+      Por lo menos {{ password.errors.minlength.requiredLength}} caracteres.
+    </div>
+      </ion-label>
+      <ion-input type="password"
+                 name="password"
+                 [(ngModel)]="usuario.password"
+                 required
+                 minlength="8"
+                 #password="ngModel"></ion-input>
+    </ion-item>
+
+
+<br>
+
+
+    <ion-item>
+      <ion-icon name="eye" item-start></ion-icon>
+      <ion-label floating text-center>Repetir Password
+        <div *ngIf="password.errors?.required"
+            class="form-control-feedback">
+        "Este campo es obligatorio"
+      </div>
+      </ion-label>
+      <ion-input type="password"
+                 name="password1"
+                 [(ngModel)]="usuario.password1"
+                 required
+                 #password1="ngModel"></ion-input>
+    </ion-item>
+
+
+<br>
+
+
+    <ion-item>
+      <ion-icon name="call" item-start></ion-icon>
+      <ion-label floating text-center>Teléfono
+        <div *ngIf="telefono.errors?.required"
+            class="form-control-feedback">
+        "Este campo es obligatorio"
+      </div>
+        <div *ngIf="telefono.errors?.minlength"
+        class="form-control-feedback">
+        Debe de tener {{ telefono.errors.minlength.requiredLength}} caracteres.
+      </div>
+      </ion-label>
+      <ion-input type="telefono"
+                 name="telefono"
+                 [(ngModel)]="usuario.telefono"
+                 required
+                 minlength="8"
+                 maxlength="8"
+                 size="8"
+                 #telefono="ngModel">
+            </ion-input>
+
+    </ion-item>
+
+
+<br>
+
+
+</ion-list>
+
+<ion-list class="pa">
+<ion-item>
+ <ion-label>Sexo</ion-label>
+ <ion-select name="sexo" [(ngModel)]="usuario.sexo"
+             required
+             #sexo="ngModel">
+   <ion-option value="Mujer">Mujer</ion-option>
+   <ion-option value="Hombre">Hombre</ion-option>
+ </ion-select>
+</ion-item>
+</ion-list>
+
+  <div padding >
+    <ion-label class="col-2 col-form-label">&nbsp;</ion-label>
+
+     <button ion-button block
+             [disabled]="!formulario.valid"
+             type="submit"> registrarse </button>
+     <br>
+
+     <button ion-button block
+            navPop> Salir</button>
+   </div>
+
+
+
+
+</form>
+
+
+<pre>{{usuario | json}}</pre>
+</ion-content>

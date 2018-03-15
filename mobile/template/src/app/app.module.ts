@@ -3,23 +3,39 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
+import { RegistrarsePage,
+         CambiarContrasenaPage,
+         PerfilPage,
+         RecuperarContrasenaPage,
+         LoginPage } from "../pages/index.paginas";
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    RegistrarsePage,
+    CambiarContrasenaPage,
+    PerfilPage,
+    RecuperarContrasenaPage,
+    LoginPage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    FormsModule,
+    ReactiveFormsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    RegistrarsePage,
+    CambiarContrasenaPage,
+    PerfilPage,
+    RecuperarContrasenaPage,
+    LoginPage
   ],
   providers: [
     StatusBar,

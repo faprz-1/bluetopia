@@ -1,0 +1,56 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title text-right> <h6> <small> <a [navPush]="cerrar">Cerrar Sección</a></small></h6></ion-title>
+
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content text-center>
+
+    <h1>Perfil</h1>
+<br>
+<br>
+
+    <img text-center class="med" src="img/nin-live.png"/>
+    <br>
+    <button ion-button clear>Cambiar</button>
+<br>
+
+          <form>
+            <ion-list class="pad">
+<br>
+              <ion-item>
+                <ion-icon name="person" item-start></ion-icon>
+                <ion-label text-center> Variable del: Nombre(s)</ion-label>
+              </ion-item>
+              <br>
+              <ion-item>
+                <ion-icon name="mail" item-start></ion-icon>
+                <ion-label text-center> Variable del: Correo</ion-label>
+              </ion-item>
+              <br>
+              <ion-item>
+                <ion-icon name="eye" item-start></ion-icon>
+                <ion-label text-center> Variable del: Contraseña</ion-label>
+              </ion-item>
+              <br>
+              <ion-item>
+                <ion-icon name="call" item-start></ion-icon>
+                <ion-label text-center> Variable del: Telefono</ion-label>
+              </ion-item>
+              <br>
+              <ion-item>
+                <ion-icon name="lock" item-start></ion-icon>
+                <ion-label text-center> <a [navPush]="cam_contra">Cambiar Contraseña</a>
+                </ion-label>
+              </ion-item>
+
+            </ion-list>
+          </form>
+
+
+</ion-content>
