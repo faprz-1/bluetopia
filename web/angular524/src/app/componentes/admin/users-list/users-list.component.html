@@ -1,0 +1,21 @@
+<div class="col-md-10 col-md-offset-1">
+  <div class="table responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Nombre</th>
+          <th>Correo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users | async">
+          <td>{{user.id}}</td>
+          <td>{{user.nombres}}</td>  
+          <td>{{user.email}}</tr>
+      </tbody>
+    </table>
+
+  </div>
+
+</div>
