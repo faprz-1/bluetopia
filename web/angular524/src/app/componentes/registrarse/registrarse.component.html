@@ -8,94 +8,72 @@
 <br>
 <br>
 
-<form>
-  <div class="container col-md-7 text-center">
-
-    <div class="form-group row">
-
+<form (ngSubmit)="createUser(createUserForm.value)" #createUserForm = "ngForm"> 
+  <fieldset>
+    <div class="container col-md-7 text-center">
+      <div class="form-group row">
         <label class="col-2 col-form-label">Nombre(s)</label>
-
           <div class="col-md-4">
-            <input class="form-control text-center"
-                  type="nombre"
-                  placeholder="Nombre Completo">
+            <input class="form-control text-center" type="text" placeholder="Nombre Completo" id="nombres" name="nombres" ngModel>
           </div>
 <br>
 <br>
           <label class="col-2 col-form-label">Apellido(s)</label>
-
             <div class="col-md-4">
-              <input class="form-control text-center"
-                    type="apellido"
-                    placeholder="Apellido Completo">
+              <input class="form-control text-center" type="text" placeholder="Nombre Completo" id="apellidos" name="apellidos" ngModel>
             </div>
+      </div>
     </div>
-  </div>
 
 
-  <div class="container col-md-7">
-
-    <div class="form-group row">
-
-      <label class="col-3 col-form-label"> Correo  Email</label>
-
-
-    <div class="col-md-8">
-      <input class="form-control text-center"
-            type="email"
-            placeholder="email@ejemplo.com">
-          </div>
-
+    <div class="container col-md-7">
+      <div class="form-group row">
+        <label class="col-3 col-form-label"> Correo  Email</label>
+        <div class="col-md-8">
+          <input class="form-control text-center" type="email" placeholder="email@ejemplo.com" id="email" name="email" ngModel>
+        </div>
+      </div>
     </div>
-  </div>
 <br>
 
-  <div class="container col-md-7">
-
-    <div class="form-group row">
-
+    <div class="container col-md-7">
+      <div class="form-group row">
         <label class="col-2 col-form-label">Password</label>
-
           <div class="col-md-3">
-            <input class="form-control text-center"
-                  type="password"
-                  placeholder="Password">
+            <input class="form-control text-center" type="password" placeholder="Password" id="password" name="password" ngModel >
           </div>
 <br>
 <br>
 
           <label class="col-3 col-form-label">Repetir Password</label>
-
             <div class="col-md-4">
-              <input class="form-control text-center"
-                    type="password"
-                    placeholder="Repetir Password"> <!-- debe de ir formcontrolname q es variable para verificar si es el mismo password que el primero -->
+              <input class="form-control text-center" type="password" placeholder="Repetir Password" id="password2" name="password2" ngModel> 
+              <!-- debe de ir formcontrolname q es variable para verificar si es el mismo password que el primero -->
             </div>
-    </div>
-  </div>
+        </div>
+      </div>
 
-
-  <div class="container col-md-7">
-
-    <div class="form-group row">
-
-        <label class="col-2 col-form-label">Teléfono</label>
-
+      <div class="container col-md-7">
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Teléfono</label>
           <div class="col-md-4">
-            <input class="form-control text-center"
-                  type="telefono"
-                  placeholder="Teléfono">
+            <input class="form-control text-center" type="text" placeholder="Teléfono" id="telefono" name="telefono" ngModel>
           </div>
 <br>
 <br>
 
           <label class="col-2 col-form-label">Sexo</label>
 
-              <div class="form-check form-check-inline">
+            <div class="form-check form-check-inline" *ngFor="let s of sexos">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="sexo" [value]="s" ngModel>
+                {{s}}
+              </label>
+            </div>
+
+             <!--  <div class="form-check form-check-inline">
                 <input class="form-check-input"
-                      type="radio"
-                      name="sexo"
-                      value="option1">
+                      type="radio"  name="sexo" value="option1">
                 <label class="form-check-label">Hombre</label>
               </div>
 
@@ -106,7 +84,7 @@
                         name="sexo"
                         value="option2">
                 <label class="form-check-label">Mujer</label>
-              </div>
+              </div> -->
 
     </div>
   </div>
@@ -114,27 +92,22 @@
   <br>
 
   <div class="container col-md-5 text-center">
-
     <div class="form-group row">
-
-          <div class="col-md-6">
-            <button type="button" class="btn btn-outline-primary text-center">Registrarse</button>
+      <div class="col-md-6">
+        <button type="submit" class="btn btn-outline-primary text-center">Registrarse</button>
             <!-- Es el que debe de aguardar la informacion y registrarse -->
-          </div>
+      </div>
 <br>
 <br>
 <br>
-        <div class="col-md-6">
-          <button type="button" class="btn btn-outline-primary text-center"
-                  [routerLink]="['/login']">Salir del Registro</button>
-        </div>
-
+      <div class="col-md-6">
+        <button type="button" class="btn btn-outline-primary text-center" [routerLink]="['/login']">
+                  Salir del Registro
+        </button>
+      </div>
     </div>
   </div>
-
-  <br>
-  <br>
-
-
-
+<br>
+<br>
+  </fieldset>
 </form>

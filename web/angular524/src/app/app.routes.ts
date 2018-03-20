@@ -11,7 +11,8 @@ import {ADMIN_ROUTES} from './componentes/admin/admin.routes';
 const APP_ROUTES: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registrarse', component: RegistrarseComponent },
-  { path: 'perfil', component: PerfilComponent },
+  { path: 'perfil/', component: PerfilComponent },
+  { path: 'perfil/:id', component: PerfilComponent },
   { path: 'cambiarContrasena', component: CambiarComtrasenaComponent },
   { path: 'recuperarContrasena', component: RecuperarContrasenaComponent },
   { path: 'admin', component: AdminComponent, children:ADMIN_ROUTES},

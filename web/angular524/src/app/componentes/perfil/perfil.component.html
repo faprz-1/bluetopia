@@ -35,7 +35,7 @@
 <div class="container col-md-4">
   <div class="row">
     <div class="card text-center" style="width: 18rem;">
-      <img class="card-img-top" src="..." alt="Card image cap">
+      <img class="card-img-top" src="..." onerror="this.src='../../../assets/img/default_avatar.jpg'" alt="Card image cap">
       <div class="card-body">
         <p><button type="button" class="btn btn-link">Cambiar</button></p>
       </div>
@@ -54,20 +54,43 @@
 
     <div class="form-group row">
 
-          <label class="col-4 col-form-label">Nombre</label>
+          <label class="col-4 col-form-label">Nombre:</label>
+          <label class="col-4 col-form-label">{{user.nombres}}</label>
+
+    </div>
+
+    <div class="form-group row">
+
+          <label class="col-4 col-form-label">Apellidos:</label>
+          <label class="col-4 col-form-label">{{user.apellidos}}</label>
 
     </div>
 
 
     <div class="form-group row">
 
-          <label class="col-4 col-form-label">Correo</label>
+          <label class="col-4 col-form-label">Correo:</label>
+          <label class="col-4 col-form-label">{{user.email}}</label>
+
+    </div>
+
+    <div class="form-group row">
+
+          <label class="col-4 col-form-label">Sexo:</label>
+          <label class="col-4 col-form-label">{{user.sexo}}</label>
+
+    </div>
+
+    <div class="form-group row">
+
+          <label class="col-4 col-form-label">Teléfono:</label>
+          <label class="col-4 col-form-label">{{user.telefono}}</label>
 
     </div>
     
     <div class="form-group row">
 
-          <label class="col-4 col-form-label">Contraseña</label>
+          <label class="col-4 col-form-label">Contraseña:</label>
 
           <div class="col-md-8">
             <button type="button" class="btn btn-link"
@@ -75,11 +98,7 @@
           </div>
     </div>
 
-    <div class="form-group row">
-
-          <label class="col-4 col-form-label">Teléfono</label>
-
-    </div>
+    
 
 
 
