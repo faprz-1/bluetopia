@@ -28,7 +28,8 @@ class UsersTableSeeder extends Seeder
             'email' => 'admin@test.com',
             'password' => $password,
             'telefono' => '31102308811',
-            'sexo' => 'SUDO'
+            'sexo' => 'SUDO',
+            'api_token' => str_random(15)
         ]);
 
         /*factory(App\User::class, 6)->create();*/
@@ -40,7 +41,8 @@ class UsersTableSeeder extends Seeder
                 'email' => $faker->email,
                 'password' => $password,
                 'telefono' => '1234567890',
-                'sexo' => 'Hombre'
+                'sexo' => 'Hombre',
+                'api_token' => str_random(15)
             ]);
         }
 
@@ -51,7 +53,8 @@ class UsersTableSeeder extends Seeder
                 'email' => $faker->email,
                 'password' => $password,
                 'telefono' => '0987654321',
-                'sexo' => 'Mujer'
+                'sexo' => 'Mujer',
+                'api_token' => str_random(15)
             ]);
         }
     }
