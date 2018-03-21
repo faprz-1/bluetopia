@@ -8,19 +8,38 @@
 <br>
 <br>
 
-<form (ngSubmit)="createUser(createUserForm.value)" #createUserForm = "ngForm"> 
+<form (ngSubmit)="createUser(createUserForm.value)" #createUserForm = "ngForm" novalidate="">
   <fieldset>
     <div class="container col-md-7 text-center">
-      <div class="form-group row">
+
+
+
+      <div class="form-group row" [ngClass]="{ 'has-danger': (password.errors?.minlength || password.errors?.required)&& password.touched}">
+
         <label class="col-2 col-form-label">Nombre(s)</label>
           <div class="col-md-4">
-            <input class="form-control text-center" type="text" placeholder="Nombre Completo" id="nombres" name="nombres" ngModel>
+            <input class="form-control text-center" type="text" placeholder="Nombre Completo"
+                    id="nombres" name="nombres" required ngModel minlength="3" #nombres="ngModel" >
+
+            <div *ngIf="nombres.errors?.required"
+                  class="form-control-feedback text-center">
+                                  "Este campo es obligatorio"</div>
+
+            <div *ngIf="nombres.errors?.minlength"
+                  class="form-control-feedback text-center">
+                  "Por lo menos {{ nombres.errors.minlength.requiredLength}} caracteres" </div>
+
           </div>
 <br>
 <br>
           <label class="col-2 col-form-label">Apellido(s)</label>
             <div class="col-md-4">
-              <input class="form-control text-center" type="text" placeholder="Nombre Completo" id="apellidos" name="apellidos" ngModel>
+              <input class="form-control text-center" type="text" placeholder="Apellido Completo"
+                     id="apellidos" name="apellidos" required ngModel #apellidos="ngModel">
+
+                     <div *ngIf="apellidos.errors?.required"
+                            class="form-control-feedback text-center">
+                              "Este campo es requerido" </div>
             </div>
       </div>
     </div>
@@ -28,27 +47,60 @@
 
     <div class="container col-md-7">
       <div class="form-group row">
+
         <label class="col-3 col-form-label"> Correo  Email</label>
         <div class="col-md-8">
-          <input class="form-control text-center" type="email" placeholder="email@ejemplo.com" id="email" name="email" ngModel>
+          <input class="form-control text-center" type="email" placeholder="email@ejemplo.com" id="email"
+                  name="email" ngModel required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #email="ngModel">
+
+                  <div *ngIf="email.errors?.required"
+                        class="form-control-feedback text-center">
+                            "Este campo es obligatorio" </div>
+
+                  <div *ngIf="email.errors?.pattern"
+                          class="form-control-feedback text-center">
+                                      "No cumple con los caracteres"</div>
+
+
         </div>
+
       </div>
     </div>
-<br>
+
 
     <div class="container col-md-7">
       <div class="form-group row">
-        <label class="col-2 col-form-label">Password</label>
+        <label class="col-2 col-form-label">Contraseña</label>
           <div class="col-md-3">
-            <input class="form-control text-center" type="password" placeholder="Password" id="password" name="password" ngModel >
+            <input class="form-control text-center" type="password" placeholder="Contraseña"
+                    id="password" name="password" required ngModel  minlength="8" #password="ngModel">
+
+                  <div *ngIf="password.errors?.required"
+                          class="form-control-feedback text-center">
+                                                  "Campo obligatorio"</div>
+
+               <div *ngIf="password.errors?.minlength"
+                          class="form-control-feedback text-center">
+                          "Por lo menos {{ password.errors.minlength.requiredLength}} caracteres"</div>
           </div>
+
+
 <br>
 <br>
 
-          <label class="col-3 col-form-label">Repetir Password</label>
+          <label class="col-3 col-form-label">Confirmar Contraseña</label>
             <div class="col-md-4">
-              <input class="form-control text-center" type="password" placeholder="Repetir Password" id="password2" name="password2" ngModel> 
-              <!-- debe de ir formcontrolname q es variable para verificar si es el mismo password que el primero -->
+              <input class="form-control text-center" type="password" placeholder="Confirmar Contraseña"
+                      id="password2" name="password2" ngModel required minlength="8" #password2="ngModel">
+
+                      <div *ngIf="password2.errors?.required"
+                              class="form-control-feedback text-center">
+                                                      "Campo obligatorio"</div>
+
+                        <div *ngIf="password2.errors?.minlength"
+                                class="form-control-feedback text-center">
+                           "Por lo menos {{ password2.errors.minlength.requiredLength}} caracteres"</div>
+
             </div>
         </div>
       </div>
@@ -57,7 +109,19 @@
         <div class="form-group row">
           <label class="col-2 col-form-label">Teléfono</label>
           <div class="col-md-4">
-            <input class="form-control text-center" type="text" placeholder="Teléfono" id="telefono" name="telefono" ngModel>
+            <input class="form-control text-center" type="" placeholder="Teléfono"
+                    id="telefono" name="telefono" ngModel required minlength="8"
+                      maxlength="8" size="8" #telefono="ngModel">
+
+                    <div *ngIf="telefono.errors?.required"
+                            class="form-control-feedback text-center">
+                                        "Este campo es obligatorio"</div>
+
+                   <div *ngIf="telefono.errors?.minlength"
+                          class="form-control-feedback text-center">
+                          "Debe de tener {{ telefono.errors.minlength.requiredLength}} caracteres"</div>
+
+
           </div>
 <br>
 <br>
@@ -66,25 +130,10 @@
 
             <div class="form-check form-check-inline" *ngFor="let s of sexos">
               <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="sexo" [value]="s" ngModel>
+                <input class="form-check-input" type="radio" name="sexo" [value]="s" ngModel required #sexo="ngModel">
                 {{s}}
               </label>
             </div>
-
-             <!--  <div class="form-check form-check-inline">
-                <input class="form-check-input"
-                      type="radio"  name="sexo" value="option1">
-                <label class="form-check-label">Hombre</label>
-              </div>
-
-
-              <div class="form-check form-check-inline">
-                <input class="form-check-input"
-                        type="radio"
-                        name="sexo"
-                        value="option2">
-                <label class="form-check-label">Mujer</label>
-              </div> -->
 
     </div>
   </div>
@@ -94,8 +143,7 @@
   <div class="container col-md-5 text-center">
     <div class="form-group row">
       <div class="col-md-6">
-        <button type="submit" class="btn btn-outline-primary text-center">Registrarse</button>
-            <!-- Es el que debe de aguardar la informacion y registrarse -->
+        <button type="submit" class="btn btn-outline-primary text-center" [disabled]="!createUserForm.valid">Registrarse</button>
       </div>
 <br>
 <br>

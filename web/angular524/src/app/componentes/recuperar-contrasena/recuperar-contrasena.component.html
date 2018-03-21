@@ -13,12 +13,19 @@
 
     <div class="form-group row">
 
-          <label class="col-4 col-form-label">Gmail</label>
+          <label class="col-4 col-form-label">Correo Email</label>
 
           <div class="col-md-8">
-            <input class="form-control text-center"
-                  type="gmail"
-                  placeholder="gmail@ejemplo.com">
+            <input class="form-control text-center" type="gmail" placeholder="gmail@ejemplo.com"
+                    name="email" ngModel required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #email="ngModel">
+
+            <div *ngIf="email.errors?.required"
+                  class="form-control-feedback text-center">
+                      "Este campo es obligatorio" </div>
+
+            <div *ngIf="email.errors?.pattern"
+                    class="form-control-feedback text-center">
+                                "No cumple con los caracteres"</div>
           </div>
     </div>
   </div>
@@ -35,7 +42,8 @@
                           Enviar
                         </button>
                       </div>
-  <br><br>
+  <br>
+  <br>
                     <div class="col-md-5">
                       <button type="button"
                               class="btn btn-outline-primary text-center"

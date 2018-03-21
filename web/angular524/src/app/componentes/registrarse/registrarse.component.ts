@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from '../../services/user.service';
+import { UserService } from '../../services/user.service';
 import { NgForm } from '@angular/forms';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
+import { FormGroup, FormControl, Validators, FormArray} from '@angular/forms'
+import {Observable} from 'rxjs/Rx';
+
 
 
 @Component({
@@ -11,8 +14,8 @@ import {Router} from '@angular/router';
 })
 export class RegistrarseComponent implements OnInit {
 
+  constructor(private userService: UserService, private router:Router) {}
 
-  constructor(private userService: UserService, private router:Router) { }
 
   sexos:string[]=["Hombre","Mujer"]
 
