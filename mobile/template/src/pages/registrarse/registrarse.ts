@@ -10,15 +10,6 @@ import { LoginPage } from '../index.paginas';
 })
 export class RegistrarsePage {
 
-  usuario:Object ={
-    nombre: null,
-    apellido: null,
-    correo: null,
-    password:null,
-    password1:null,
-    telefono:null,
-    sexo:""
-  }
 
   constructor( public alertCtrl: AlertController,
               private navCtrl:NavController) {}
@@ -28,11 +19,9 @@ export class RegistrarsePage {
     console.log("ngForm", formulario);
     console.log("valor formulario", formulario.value);
 
-    console.log("Usuario", this.usuario);
-
     let confirm = this.alertCtrl.create({
     title: '!!FELICIDADES¡¡',
-    message: 'Tú registro fue todo un !EXITO¡',
+    message: 'Tú registro fue todo un ! EXITO ¡',
     buttons: [
       {
         text: 'Iniciar Sección',
