@@ -15,6 +15,7 @@ import { UserService } from './services/user.service';
 import { APP_ROUTING } from './app.routes';
 import { UsersListComponent } from './componentes/admin/users-list/users-list.component';
 import { AdminComponent } from './componentes/admin/admin.component';
+import { UserEditComponent } from './componentes/admin/user-edit/user-edit.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AdminComponent } from './componentes/admin/admin.component';
     RecuperarContrasenaComponent,
     PerfilComponent,
     UsersListComponent,
-    AdminComponent
+    AdminComponent,
+    UserEditComponent
   ],
   imports: [
     BrowserModule,

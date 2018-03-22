@@ -15,11 +15,11 @@
 
 
       <div class="form-group row" [ngClass]="{ 'has-danger': (password.errors?.minlength || password.errors?.required)&& password.touched}">
-
         <label class="col-2 col-form-label">Nombre(s)</label>
           <div class="col-md-4">
             <input class="form-control text-center" type="text" placeholder="Nombre Completo"
                     id="nombres" name="nombres" required ngModel minlength="3" #nombres="ngModel" >
+          </div>
 
             <div *ngIf="nombres.errors?.required"
                   class="form-control-feedback text-center">
@@ -34,7 +34,7 @@
 <br>
           <label class="col-2 col-form-label">Apellido(s)</label>
             <div class="col-md-4">
-              <input class="form-control text-center" type="text" placeholder="Apellido Completo"
+              <input class="form-control text-center" type="text" placeholder="Apellidos Completo"
                      id="apellidos" name="apellidos" required ngModel #apellidos="ngModel">
 
                      <div *ngIf="apellidos.errors?.required"
@@ -42,12 +42,11 @@
                               "Este campo es requerido" </div>
             </div>
       </div>
-    </div>
+    <!-- </div> -->
 
 
     <div class="container col-md-7">
       <div class="form-group row">
-
         <label class="col-3 col-form-label"> Correo  Email</label>
         <div class="col-md-8">
           <input class="form-control text-center" type="email" placeholder="email@ejemplo.com" id="email"
@@ -60,13 +59,9 @@
                   <div *ngIf="email.errors?.pattern"
                           class="form-control-feedback text-center">
                                       "No cumple con los caracteres"</div>
-
-
         </div>
-
       </div>
     </div>
-
 
     <div class="container col-md-7">
       <div class="form-group row">
@@ -109,7 +104,7 @@
         <div class="form-group row">
           <label class="col-2 col-form-label">Teléfono</label>
           <div class="col-md-4">
-            <input class="form-control text-center" type="" placeholder="Teléfono"
+            <input class="form-control text-center" type="text" placeholder="Teléfono"
                     id="telefono" name="telefono" ngModel required minlength="8"
                       maxlength="8" size="8" #telefono="ngModel">
 
@@ -120,7 +115,6 @@
                    <div *ngIf="telefono.errors?.minlength"
                           class="form-control-feedback text-center">
                           "Debe de tener {{ telefono.errors.minlength.requiredLength}} caracteres"</div>
-
 
           </div>
 <br>

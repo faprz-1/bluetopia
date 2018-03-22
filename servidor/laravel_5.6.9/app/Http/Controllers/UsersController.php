@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Hash;
 /*use App\Http\Resources\User as UserResource;*/
 
 class UsersController extends Controller
@@ -43,9 +44,10 @@ class UsersController extends Controller
         'nombres' => trim($request->nombres),
         'apellidos' => trim($request->apellidos),
         'email' => trim($request->email),
-        'password' => trim ($request->password),
+        'password' => trim (Hash::make($request->password)),
         'telefono' => trim ($request->telefono),
-        'sexo' => trim ($request->sexo)
+        'sexo' => trim ($request->sexo),
+        'api_token'=>str_random(15)
       ));
     
     $user->save();
@@ -75,7 +77,7 @@ class UsersController extends Controller
         if(!$user){
             return Response::json([
                 'error' => [
-                    'message' => "No existe la imagen!"]
+                    'message' => "El usuario no existe!"]
                 ], 404);
         }
      return Response::json($user, 200);
@@ -102,7 +104,29 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       $user = User::find($request->id);
+
+        if(!$user){
+            return Response::json([
+                'error' => [
+                    'message' => "El usuario no existe!"]
+                ], 404);
+        }
+
+        $user->nombres = trim ($request->nombres);
+        $user->apellidos = trim ($request->apellidos);
+        $user->email = trim ($request->email);
+        $user->telefono = trim ($request->telefono);
+        $user->save();
+
+        $message = 'El usuario ha modificada con éxito!';
+
+        $response = Response::json([
+            'message' => $message,
+            'data' => $user,
+        ], 201);
+
+        return $response;
     }
 
     /**
@@ -113,6 +137,48 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+         $user = User::findOrFail($id);
+         
+        if($user -> delete()) {
+        $message = 'El usuario ha sido eliminado con éxito!';
+
+        return Response::json([
+            'message' => $message,
+            'data' => $user,
+        ], 204);  
+                        
+        }
+            return Response::json([
+                'error' => [
+                    'message' => "Este usuario no existe!"]
+                ], 404);
+
+            
     }
+
+    public function login (Request $request){
+        if($request -> isJson()){
+            try{
+
+                $data = $request->json()->all();
+                $user = User::where('email',$data['email'])->first();
+
+                if($user && Hash::check($data['password'], $user->password)){
+                    /*return Response::json($user, 200);*/
+                    
+                    return response ()->json($user,200);
+
+                }else{
+                    return Response::json([
+                        'error' => ['message' => "Los datos ingresados son incorrectos"]], 404);
+                }
+            }catch (ModelNotFoundException $e){
+                return Response::json([
+                        'error' => ['message' => "Los datos ingresados son incorrectos"]], 404);
+            }
+        }
+        return Response::json([
+                        'error' => ['message' => "Sin autorizacion"]], 404);
+    }
+
 }
