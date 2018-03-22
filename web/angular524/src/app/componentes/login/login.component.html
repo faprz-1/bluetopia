@@ -4,7 +4,7 @@
     <div class="col-md-12 text">
       <h4>Bienvenido</h4>
       <br>
-    <h6> Iniciar Sección </h6>
+    <h6>Iniciar Sesión</h6>
     </div>
   </div>
 </div>
@@ -12,31 +12,45 @@
 <br>
 <br>
 
-<form class="text">
-
+<form  (ngSubmit)="login(loginForm.value)" #loginForm = "ngForm">
+  <fieldset>
 <div class="container col-md-5 text-center">
 
 
     <div class="form-group row">
 
-          <label class="col-4 col-form-label">Gmail</label>
+          <label class="col-4 col-form-label">Correo</label>
 
           <div class="col-md-8">
-            <input class="form-control text-center"
-                  type="gmail"
-                  placeholder="gmail@ejemplo.com">
+            <input class="form-control text-center" type="email" id="email" placeholder="correo@email.com"
+                    name="email" ngModel required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #email="ngModel">
+
+                    <div *ngIf="email.errors?.required"
+                          class="form-control-feedback text-center">
+                              "Este campo es obligatorio" </div>
+
+                    <div *ngIf="email.errors?.pattern"
+                            class="form-control-feedback text-center">
+                                        "No cumple con los caracteres"</div>
           </div>
     </div>
 
 
         <div class="form-group row">
 
-              <label class="col-4 col-form-label">Password</label>
+              <label class="col-4 col-form-label">Contraseña</label>
 
               <div class="col-md-8">
-                <input class="form-control text-center"
-                      type="password"
-                      placeholder="Password">
+                <input class="form-control text-center" type="password" placeholder="Contraseña"
+                            name="password" required ngModel  minlength="8" #password="ngModel">
+
+                    <div *ngIf="password.errors?.required"
+                            class="form-control-feedback text-center">
+                                                    "Campo obligatorio"</div>
+
+                 <div *ngIf="password.errors?.minlength"
+                            class="form-control-feedback text-center">
+                            "Por lo menos {{ password.errors.minlength.requiredLength}} caracteres"</div>
               </div>
         </div>
 <br>
@@ -47,15 +61,14 @@
 
     <div class="col-md-8">
       <button type="button"
-              class="btn btn-outline-primary text-center">
-                Entrar con Facebook
+              class="btn btn-primary text-center">
+                Iniciar <span><img src="assets/img/face.png" width="30px"></span>
             </button>
     </div>
 <br><br>
             <div class="col-md-4">
-              <button type="button"
-                      class="btn btn-primary"
-                      [routerLink]="['/perfil']">
+              <button type="submit"
+                      class="btn btn-primary">
                         Entrar
                       </button>
                     </div>
@@ -64,6 +77,7 @@
 </div>
 
 </div>
+</fieldset>
 </form>
 
 

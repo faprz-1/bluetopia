@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the CambiarContrasenaPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { NgForm} from '@angular/forms';
 
 @IonicPage()
 @Component({
@@ -15,8 +9,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class CambiarContrasenaPage {
 
+
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
+
+  Guardar(formulario:NgForm){
+
+    console.log("ngForm", formulario);
+    console.log("valor formulario", formulario.value);
+}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CambiarContrasenaPage');

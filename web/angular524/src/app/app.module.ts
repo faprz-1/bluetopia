@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-
+import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './componentes/login/login.component';
@@ -10,7 +10,12 @@ import { CambiarComtrasenaComponent } from './componentes/cambiar-comtrasena/cam
 import { RecuperarContrasenaComponent } from './componentes/recuperar-contrasena/recuperar-contrasena.component';
 import { PerfilComponent } from './componentes/perfil/perfil.component';
 
+import { UserService } from './services/user.service';
+
 import { APP_ROUTING } from './app.routes';
+import { UsersListComponent } from './componentes/admin/users-list/users-list.component';
+import { AdminComponent } from './componentes/admin/admin.component';
+import { UserEditComponent } from './componentes/admin/user-edit/user-edit.component';
 
 @NgModule({
   declarations: [
@@ -19,15 +24,19 @@ import { APP_ROUTING } from './app.routes';
     RegistrarseComponent,
     CambiarComtrasenaComponent,
     RecuperarContrasenaComponent,
-    PerfilComponent
+    PerfilComponent,
+    UsersListComponent,
+    AdminComponent,
+    UserEditComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    APP_ROUTING
+    APP_ROUTING,
+    HttpModule
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

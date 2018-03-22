@@ -7,35 +7,67 @@
 
 </ion-header>
 
-<ion-content>
+<ion-content class="ion">
 
-    <form>
+    <form (ngSubmit)="Guardar(formulario)" #formulario="ngForm" novalidate="">
       <br><br><br>
-        <ion-list class="padd">
+        <ion-list class="padd"   [ngClass]="{ 'has-danger': (password1.errors?.minlength || password1.errors?.required)&& password1.touched}">
 
-          <ion-item>
+          <ion-item  class="ion" >
             <ion-icon name="eye" item-start></ion-icon>
-            <ion-label floating text-center>Password Actual</ion-label>
-            <ion-input type="password"></ion-input>
+            <ion-label floating text-center>Contraseña Actual
+
+              <div *ngIf="password.errors?.required"
+                        class="form-control-feedback">
+                              "Este campo es obligatorio" </div>
+              <div *ngIf="password.errors?.minlength"
+                    class="form-control-feedback">
+                        "Por lo menos {{ password.errors.minlength.requiredLength}} caracteres"</div> </ion-label>
+
+            <ion-input type="password" name="password" ngModel required minlength="8" #password="ngModel"></ion-input>
           </ion-item>
+
       <br>
-          <ion-item>
+
+          <ion-item class="ion" >
             <ion-icon name="eye" item-start></ion-icon>
-            <ion-label floating text-center>Password Nuevo</ion-label>
-            <ion-input type="password"></ion-input>
+            <ion-label floating text-center>Contraseña Nueva
+
+              <div *ngIf="password1.errors?.required"
+                        class="form-control-feedback">
+                              "Este campo es obligatorio" </div>
+              <div *ngIf="password1.errors?.minlength"
+                      class="form-control-feedback">
+                      "Por lo menos {{ password1.errors.minlength.requiredLength}} caracteres" </div> </ion-label>
+
+            <ion-input type="password" name="password1" ngModel required minlength="8" #password1="ngModel"></ion-input>
           </ion-item>
+
       <br>
-          <ion-item>
+
+          <ion-item class="ion" >
             <ion-icon name="eye" item-start></ion-icon>
-            <ion-label floating text-center>Repetir Password</ion-label>
-            <ion-input type="password"></ion-input>
+            <ion-label floating text-center>Confirmar Contraseña
+
+              <div *ngIf="password2.errors?.required"
+                        class="form-control-feedback">
+                              "Este campo es obligatorio" </div>
+              <div *ngIf="password2.errors?.minlength"
+                      class="form-control-feedback">
+                      "Confirmar la Contraseña Nueva" </div> </ion-label>
+
+            <ion-input type="password" name="password2" ngModel required minlength="8" #password2="ngModel"></ion-input>
           </ion-item>
+
       <br>
 
         </ion-list>
 
         <div padding >
-           <button ion-button block> Guardar Cambios</button>
+           <button ion-button block
+                  [disabled]="!formulario.valid"
+                  type="submit">
+                  Guardar Cambios</button>
            <br>
            <button ion-button block
                   navPop> Regresar al perfil </button>

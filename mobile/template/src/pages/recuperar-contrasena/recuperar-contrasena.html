@@ -8,28 +8,39 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content  class="ion" >
   <br><br><br>
-    <form>
-      <ion-list class="pad">
+  <form (ngSubmit)="Enviar(formulario)" #formulario="ngForm" novalidate="">
+      <ion-list class="pad" [ngClass]="{ 'has-danger': (correo.errors?.pattern || correo.errors?.required)&& correo.touched}">
 
-        <ion-item>
+        <ion-item  class="ion" >
           <ion-icon name="mail" item-start></ion-icon>
-          <ion-label floating text-center>Correo Email</ion-label>
-          <ion-input type="email"></ion-input>
+              <ion-label floating text-center> Correo Email
+
+                  <div *ngIf="correo.errors?.required"
+                            class="form-control-feedback">
+                                  "Este campo es obligatorio"</div>
+
+                      <div *ngIf="correo.errors?.pattern"
+                              class="form-control-feedback">
+                                    "No cumple con los caracteres" </div> </ion-label>
+
+          <ion-input type="email" name="correo" ngModel required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #correo="ngModel"></ion-input>
         </ion-item>
+
         <br>
 
       </ion-list>
-<br><br><br>
+<br>
+<br>
+<br>
+
       <div padding >
-         <button ion-button block> Enviar </button>
+         <button ion-button block [disabled]="!formulario.valid" type="submit"> Enviar </button>
          <br>
-         <button ion-button block
-                  navPop> Salir </button>
-       </div>
+         <button ion-button block navPop> Salir </button> </div>
+
+
+
     </form>
-
-
-
 </ion-content>

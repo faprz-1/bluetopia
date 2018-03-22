@@ -8,45 +8,63 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content class="ion">
   <br>
-  <h6 text-center>Iniciar Sección</h6>
+  <h6 text-center>Iniciar Sesión</h6>
 
-      <form>
+  <form (ngSubmit)="Entrar(formulario)" #formulario="ngForm" novalidate="">
 
-          <ion-list class="paddi">
+          <ion-list class="paddi"   [ngClass]="{ 'has-danger': (correo.errors?.minlength || correo.errors?.required)&& correo.touched}">
+
             <br>
-                <ion-item>
+
+                <ion-item class="ion">
                   <ion-icon name="mail" item-start></ion-icon>
-                  <ion-label floating text-center>Correo Email</ion-label>
-                  <ion-input type="email"></ion-input>
+                  <ion-label floating text-center>Correo Email
+                    <div *ngIf="correo.errors?.required"
+                              class="form-control-feedback">
+                                  "Este campo es obligatorio" </div>
+
+                        <div *ngIf="correo.errors?.pattern"
+                                class="form-control-feedback">
+                                  "No cumple con los caracteres"</div> </ion-label>
+
+                  <ion-input type="email" name="correo" ngModel required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #correo="ngModel">></ion-input>
                 </ion-item>
 
-              <ion-item>
-                <ion-icon name="eye" item-start></ion-icon>
-                <ion-label floating text-center>Password</ion-label>
-                <ion-input type="password"></ion-input>
-              </ion-item>
+
+                <ion-item class="ion">
+                  <ion-icon name="eye" item-start></ion-icon>
+                  <ion-label floating text-center>Contraseña
+                    <div *ngIf="password.errors?.required"
+                            class="form-control-feedback">
+                                "Este campo es obligatorio" </div>
+
+                  <div *ngIf="password.errors?.minlength"
+                          class="form-control-feedback">
+                            "Por lo menos {{ password.errors.minlength.requiredLength}} caracteres"</div> </ion-label>
+
+                  <ion-input type="password" name="password" ngModel required minlength="8" #password="ngModel"></ion-input>
+                </ion-item>
+
             <br>
+
           </ion-list>
 
-          <div padding >
-             <button ion-button block
-                      [navPush]="perfil"> Entrar </button>
-             <br>
-             <button ion-button block> Iniciar Sección con Facebook</button>
-           </div>
-<br><br>
-           <div text-right>
-             <button ion-button clear
-                     [navPush]="registrarse">
-                     Registrarse</button>
-             <br>
-             <button ion-button clear
-                      [navPush]="recu_contra">
-                      ¿Olvide el Password?</button>
+          <div padding text-center>
+             <button ion-button clear block icon-left [disabled]="!formulario.valid" type="submit" [navPush]="perfil">
+                      <ion-icon name="log-in"></ion-icon> Entrar </button>
+            <br>
+                <button ion-button clear block icon-left >
+                  <ion-icon name="logo-facebook"></ion-icon>iniciar </button> </div>
 
-           </div>
+<br>
+<br>
+
+           <div text-right>
+             <button ion-button color="dark" clear [navPush]="registrarse"> Registrarse</button>
+             <br>
+             <button ion-button color="dark" clear [navPush]="recu_contra"> ¿Olvidastes la Contraseña?</button> </div>
 
 
 
