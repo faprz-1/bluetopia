@@ -15,7 +15,7 @@ import {ActivatedRoute} from '@angular/router';
 export class PerfilComponent implements OnInit, OnDestroy {
 	id:any;
 	params:any;
-	user = new User ('id', 'nombres', 'apellidos', 'email', 'password', 'telefono', 'sexo');
+	user = new User ('id', 'nombres', 'apellidos', 'email', 'password', 'telefono', 'sexo', 'api_token');
 
   constructor(private userService:UserService, private activatedRoute: ActivatedRoute) { }
 

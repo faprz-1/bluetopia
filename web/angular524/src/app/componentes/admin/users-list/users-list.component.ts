@@ -15,10 +15,28 @@ export class UsersListComponent implements OnInit {
 
 	users: Observable<User[]>;
   
-  constructor(private userService:UserService) { }
+  constructor(private userService:UserService, private router:Router) { }
 
   ngOnInit() {
   	this.users = this.userService.getUsers();
   }
+
+  editUser(id){
+
+    this.router.navigate(['/admin/edituser/',id]);
+    console.log(id);
+  }
+
+  deleteUser(id){
+
+      this.userService.deleteUser(id)
+      .subscribe(
+      	id => {console.log(id);
+
+      	},
+
+      	error => console.log(<any>error));
+      this.router.navigate(['/admin'])
+    }
 
 }

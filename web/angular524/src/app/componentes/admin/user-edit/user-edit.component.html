@@ -1,0 +1,48 @@
+<div class="col-md-10 col-md-offset-1">
+  <div>
+    <a [routerLink]="['/admin/images']" class="brn brn-default">Volver</a>
+  </div>
+</div>
+
+<div class="col-md-10 col-md-offset-1">
+  <div class="well well bs-component">
+    <form novalidate class="form-horizontal" (ngSubmit)="updateUser(user)" #editUserForm="ngForm">
+      <fieldset>
+        <legend>Actualizando: {{user.nombres}}</legend>
+        <div class="form-group">
+          <label for="nombres" class="col-lg-2 control-label">Nombres</label>
+          <div class="col-lg-10">
+            <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Nombres" [(ngModel)]="user.nombres" #nombres="ngModel" required minlength="3">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="apellidos" class="col-lg-2 control-label">Apellidos</label>
+          <div class="col-lg-10">
+            <input type="text" name="apellidos" class="form-control" id="apellidos" placeholder="Apellidos"
+            [(ngModel)]="user.apellidos" user.nombre="ngModel" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email" class="col-lg-2 control-label">Correo</label>
+          <div class="col-lg-10">
+            <input type="text" name="email" class="form-control" id="email" placeholder="Título"
+            [(ngModel)]="user.email" #email="ngModel" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="telefono" class="col-lg-2 control-label">Teléfono</label>
+          <div class="col-lg-10">
+            <input name="description" rows="3" class="form-control" id="telefono"
+              [(ngModel)]="user.telefono" #telefono="ngModel" requiered>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-lg-10 col-lg-offset-2">
+            <a [routerLink]="['/admin/']" class="btn btn-default">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Aplicar cambios</button>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>

@@ -16,7 +16,6 @@ export class RegistrarseComponent implements OnInit {
 
   constructor(private userService: UserService, private router:Router) {}
 
-
   sexos:string[]=["Hombre","Mujer"]
 
   ngOnInit() {
@@ -28,7 +27,7 @@ export class RegistrarseComponent implements OnInit {
     .subscribe(
       user =>{
         console.log(user);
-        /*this.router.navigate(['']);*/
+        this.router.navigate(['/admin']);
       },
       error => console.log(<any>error));
   }

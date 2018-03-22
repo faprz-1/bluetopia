@@ -6,13 +6,25 @@
           <th>Id</th>
           <th>Nombre</th>
           <th>Correo</th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let user of users | async">
           <td>{{user.id}}</td>
           <td>{{user.nombres}}</td>  
-          <td>{{user.email}}</tr>
+          <td>{{user.email}}</td>
+          <td>
+            <button (click)="editUser(user.id)" type="button" class="btn btn-info">
+              Editar
+            </button>
+            <br>
+            <br>
+            <button (click)="deleteUser(user.id)" type="button" class="btn btn-danger">
+              Borrar
+            </button>
+          </td>
+
       </tbody>
     </table>
 
