@@ -24,8 +24,9 @@ export class LoginComponent implements OnInit {
     .subscribe(
       user =>{
         console.log(user);
-        console.log('/perfil/'+user.id);
+        /*console.log('/perfil/'+user.id);
         this.router.navigate(['/perfil/'+user.id]);
+        sessionStorage.setItem("api_token",user.api_token);*/
       },
       error => console.log(<any>error));
   	}
