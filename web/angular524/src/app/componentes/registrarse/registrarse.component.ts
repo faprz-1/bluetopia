@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild} from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormArray} from '@angular/forms'
 import {Observable} from 'rxjs/Rx';
-
 
 
 @Component({
@@ -16,15 +15,34 @@ export class RegistrarseComponent implements OnInit {
 
   constructor(private userService: UserService, private router:Router) {}
 
-  sexos:string[]=["Hombre","Mujer"]
+  @ViewChild('fileInput') fileInput: ElementRef;
+  sexos:string[]=["Hombre","Mujer"];
+  img:string;
 
   ngOnInit() {
   }
 
+   onFileChange(event) {
+    let reader = new FileReader();
+    if(event.target.files && event.target.files.length > 0) {
+      let file = event.target.files[0];
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.img=file.name
+      };
+    }
+  }
+
+  clearFile() {
+    this.img=null;
+    this.fileInput.nativeElement.value = '';
+  }
+
+
    createUser(user){
-    console.log(user);
-    this.userService.createUser(user)
-    .subscribe(
+     user.img=this.img;     
+     this.userService.createUser(user)
+     .subscribe(
       user =>{
         console.log(user);
         this.router.navigate(['/admin']);

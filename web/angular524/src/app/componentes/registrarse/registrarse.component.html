@@ -131,6 +131,15 @@
 
     </div>
   </div>
+
+  <div class="container col-md-7">
+    <div class="form-group row">
+      <label class="col-3 col-form-label">Foto Perfil:</label>
+      <input type="file" id="img" name="img"  ngModel #img="ngModel" (change)="onFileChange($event)" #fileInput>
+      <button type="button" class="btn btn-sm btn-default" (click)="clearFile()" #fileInput>Cancelar imágen</button>
+    </div>
+  </div>
+
   <br>
   <br>
 

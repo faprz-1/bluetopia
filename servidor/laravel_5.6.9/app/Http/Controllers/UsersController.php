@@ -47,7 +47,9 @@ class UsersController extends Controller
         'password' => trim (Hash::make($request->password)),
         'telefono' => trim ($request->telefono),
         'sexo' => trim ($request->sexo),
-        'api_token'=>str_random(15)
+        'api_token'=>str_random(15),
+        'imgperfil'=>trim($request->img)
+
       ));
     
     $user->save();
@@ -165,7 +167,8 @@ class UsersController extends Controller
 
                 if($user && Hash::check($data['password'], $user->password)){
                     /*return Response::json($user, 200);*/
-                    
+                    $user->api_token=str_random(20);
+                    $user->save();
                     return response ()->json($user,200);
 
                 }else{

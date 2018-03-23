@@ -36,7 +36,8 @@ export class UsersListComponent implements OnInit {
       	},
 
       	error => console.log(<any>error));
-      this.router.navigate(['/admin'])
+      
+
     }
 
 }
