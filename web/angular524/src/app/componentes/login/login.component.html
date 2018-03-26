@@ -19,19 +19,19 @@
 
     <div class="form-group row">
 
-          <label class="col-4 col-form-label">Correo</label>
+          <label class="col-4 col-form-label">Corre</label>
 
           <div class="col-md-8">
-            <input class="form-control text-center" type="email" id="email" placeholder="correo@email.com"
+           <input class="form-control text-center" type="email" id="email" placeholder="correo@email.com" 
                     name="email" ngModel required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #email="ngModel">
-
-                    <div *ngIf="email.errors?.required"
+                   <div *ngIf="email.errors?.required"
                           class="form-control-feedback text-center">
                               "Este campo es obligatorio" </div>
 
                     <div *ngIf="email.errors?.pattern"
                             class="form-control-feedback text-center">
                                         "No cumple con los caracteres"</div>
+
           </div>
     </div>
 
@@ -41,16 +41,16 @@
               <label class="col-4 col-form-label">Contraseña</label>
 
               <div class="col-md-8">
-                <input class="form-control text-center" type="password" placeholder="Contraseña"
-                            name="password" required ngModel  minlength="8" #password="ngModel">
+                <input class="form-control text-center" type="password" placeholder="Contraseña" 
+                            name="password" required ngModel  minlength="8" #password="ngModel"> 
 
                     <div *ngIf="password.errors?.required"
                             class="form-control-feedback text-center">
                                                     "Campo obligatorio"</div>
-
-                 <div *ngIf="password.errors?.minlength"
-                            class="form-control-feedback text-center">
+                    <div *ngIf="password.errors?.minlength" 
+                            class="form-control-feedback text-center"> 
                             "Por lo menos {{ password.errors.minlength.requiredLength}} caracteres"</div>
+
               </div>
         </div>
 <br>
@@ -62,7 +62,7 @@
     <div class="col-md-8">
       <button type="button"
               class="btn btn-primary text-center">
-                Iniciar <span><img src="assets/img/face.png" width="30px"></span>
+                Iniciar <span><img src="../../assets/img/face.png" width="30px"></span>
             </button>
     </div>
 <br><br>
@@ -77,18 +77,23 @@
 </div>
 
 </div>
+
+
+
 </fieldset>
 </form>
 
+  <br><br>
+  <br>
+          <div class="col-md-9 text1">
+            <button type="button"
+                    class="btn btn-link"
+                  [routerLink]="['/registrarse']">Registrarse</button>
 
-<br><br>
-<br>
-        <div class="col-md-9 text1">
-          <button type="button"
-                  class="btn btn-link"
-                [routerLink]="['/registrarse']">Registrarse</button>
+            <br>
 
-          <br>
+
+
           <button type="button"
                   class="btn btn-link"
                   [routerLink]="['/recuperarContrasena']">¿Olvidastes el Password?</button>
