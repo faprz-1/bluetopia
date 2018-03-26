@@ -12,23 +12,26 @@ import {Router} from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
+  
 
-  constructor(private userService: UserService, private router:Router) { }
+  constructor(private userService: UserService, private router:Router ) { }
 
   ngOnInit() {
   }
 
-  login(user){
+  	login(user){
   		console.log(user);
   		this.userService.logUser(user)
+
     .subscribe(
       user =>{
+
         console.log(user);
-        /*console.log('/perfil/'+user.id);
-        this.router.navigate(['/perfil/'+user.id]);
-        sessionStorage.setItem("api_token",user.api_token);*/
+        let userid=user.id;
+        let tkn = user.api_token;
+        localStorage.setItem("tkn", tkn);
+        this.router.navigate(['/perfil/'+userid]);
       },
       error => console.log(<any>error));
   	}
-
 }

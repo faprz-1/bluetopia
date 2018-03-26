@@ -3,7 +3,7 @@ import {Http, Response} from  "@angular/http";
 import { User } from '../../../models/user';
 import { UserService } from '../../../services/user.service';
 import 'rxjs/add/operator/map';
-import {Observable} from 'rxjs/Observable'
+import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
 
 @Component({
@@ -36,8 +36,7 @@ export class UsersListComponent implements OnInit {
       	},
 
       	error => console.log(<any>error));
-      
-
+      this.router.navigate(['/admin'])
     }
 
 }

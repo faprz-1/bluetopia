@@ -3,9 +3,9 @@ import {Http, Response} from  "@angular/http";
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import {ActivatedRoute} from '@angular/router';
-import {Router} from '@angular/router';
 //import 'rxjs/add/operator/map';
 //import {Observable} from 'rxjs/Observable'
+//import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-perfil',
@@ -15,14 +15,11 @@ import {Router} from '@angular/router';
 export class PerfilComponent implements OnInit, OnDestroy {
 	id:any;
 	params:any;
-	user = new User ('id', 'nombres', 'apellidos', 'email', 'password', 'telefono', 'sexo', 'api_token');
-
-  constructor(private userService:UserService, private activatedRoute: ActivatedRoute, private router:Router) { }
+	user = new User ('id', 'nombre', 'apellidos', 'email', 'password', 'telefono', 'sexo','imgperfil','api_token');
+  image = 'http://template3.test/laravel_5.6.9/public/';
+  constructor(private userService:UserService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-
-    
-
   	this.params = this.activatedRoute.params.subscribe(params =>  this.id = params['id']);
     this.userService.getUser(this.id).subscribe(
       data => {
@@ -34,28 +31,18 @@ export class PerfilComponent implements OnInit, OnDestroy {
         this.user.password = data ['password'];
         this.user.telefono = data ['telefono'];
         this.user.sexo = data ['sexo'];
+        this.user.imgperfil = data ['imgperfil'];  
       },
       error => console.log(<any>error));
-
-    sessionStorage.getItem("api_token");
-    let aptk = sessionStorage.getItem("api_token");
-    if(!(sessionStorage.getItem("api_token"))){
-      console.log("no hay token");
-    }else{
-      console.log("token: "+ aptk);
-    }
   }
 
   ngOnDestroy(){
+
   	this.params.unsubscribe();
   }
 
-  logout(){
-
-    sessionStorage.removeItem("api_token");
-    let aptk = sessionStorage.getItem("api_token");
-    console.log("token: "+ aptk);
-    this.router.navigate(['/login']);
-  }
+  /*noTkn(){
+    localStorage.removeItem("tkn");
+  }*/
 
 }

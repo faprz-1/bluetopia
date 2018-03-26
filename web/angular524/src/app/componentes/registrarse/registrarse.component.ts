@@ -1,10 +1,10 @@
 import { Component, OnInit, ElementRef, ViewChild} from '@angular/core';
 import { UserService } from '../../services/user.service';
+import { User } from '../../models/user';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormArray} from '@angular/forms'
 import {Observable} from 'rxjs/Rx';
-
 
 @Component({
   selector: 'app-registrarse',
@@ -18,14 +18,17 @@ export class RegistrarseComponent implements OnInit {
   @ViewChild('fileInput') fileInput: ElementRef;
   sexos:string[]=["Hombre","Mujer"];
   img:string;
+  image:File=null;
+  users: Observable<User[]>;
 
   ngOnInit() {
   }
 
-   onFileChange(event) {
+    onFileChange(event) {
     let reader = new FileReader();
     if(event.target.files && event.target.files.length > 0) {
       let file = event.target.files[0];
+      this.image=<File>event.target.files[0];
       reader.readAsDataURL(file);
       reader.onload = () => {
         this.img=file.name
@@ -40,14 +43,27 @@ export class RegistrarseComponent implements OnInit {
 
 
    createUser(user){
-     user.img=this.img;     
-     this.userService.createUser(user)
+     //Para crear usuario en la BD
+     user.img=this.img;
+     console.log(user);    
+    this.userService.createUser(user)
      .subscribe(
       user =>{
         console.log(user);
         this.router.navigate(['/admin']);
       },
       error => console.log(<any>error));
-  }
+
+     //Para agregar la imagen... disque
+     const imageData = new FormData();
+     imageData.append('image', this.image, this.image.name);
+   this.userService.uploadImage(imageData)
+      .subscribe(
+      image =>{
+        console.log(image);
+      },
+      error => console.log(<any>error));
+     
+    }
 
 }

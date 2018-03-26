@@ -8,6 +8,7 @@ export class User {
 		public password:string,
 		public telefono:string,
 		public sexo:string,
+		public imgperfil:string,
 		public api_token:string
 	){
 

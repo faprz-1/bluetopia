@@ -22,6 +22,7 @@ Route::group(['middleware'=>'cors'],function(){
 	Route::get('users/{id}','UsersController@show');
 	Route::post('users','UsersController@store');*/
 	Route::post('login', 'UsersController@login');
+	Route::post('upload','UsersController@uploadImage');
 });
 
 /*Route::group(['middleware'=>['auth']],function(){
