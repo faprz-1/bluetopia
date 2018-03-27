@@ -44,25 +44,25 @@ export class RegistrarseComponent implements OnInit {
 
    createUser(user){
      //Para crear usuario en la BD
-     user.img=this.img;
-     console.log(user);    
+    user.img=this.img;
+    console.log(user);    
     this.userService.createUser(user)
-     .subscribe(
-      user =>{
-        console.log(user);
-        this.router.navigate(['/admin']);
-      },
-      error => console.log(<any>error));
+    .subscribe(
+     user =>{
+       console.log(user);
+       this.router.navigate(['/admin']);
+     },
+     error => console.log(<any>error));
 
      //Para agregar la imagen... disque
-     const imageData = new FormData();
-     imageData.append('image', this.image, this.image.name);
-   this.userService.uploadImage(imageData)
+    const imageData = new FormData();
+    imageData.append('image', this.image, this.image.name);
+    this.userService.uploadImage(imageData)
       .subscribe(
       image =>{
         console.log(image);
       },
-      error => console.log(<any>error));
+      error => console.error(<any>error));
      
     }
 
