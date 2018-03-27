@@ -39,8 +39,12 @@ export class UserService {
    logUser(user:Object): Observable<User[]>{
   	return this.http.post(this.baseUrl+'login',user).map((response: Response) => response.json()).catch((error:any) => Observable.throw(error.json().error || {message:"Error del servidor"}));
   }
+  logSocialUser(user:Object):Observable<User[]>{
+    return this.http.post('http://template3.0.test/servidor/laravel_5.6.9/public/api/logsocialuser',user).map((response: Response) => response.json()).catch((error:any) => Observable.throw(error.json().error || {message:"Error del servidor"}));
 
-  deleteUser(id:String): Observable<User[]>{
+  }
+
+  deleteUser(id:String){
       /*console.log('Prueba de llamado de función desde el service');
       console.log(this.baseUrl+'/'+id);*/
       return this.http.delete(this.baseUrl + 'users/'+ id).map((response: Response) => response.json());

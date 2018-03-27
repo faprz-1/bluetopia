@@ -12,7 +12,27 @@ import { CambiarComtrasenaComponent } from './componentes/cambiar-comtrasena/cam
 import { RecuperarContrasenaComponent } from './componentes/recuperar-contrasena/recuperar-contrasena.component';
 import { PerfilComponent } from './componentes/perfil/perfil.component';
 
+import { FacebookService } from './services/facebook.service';
 import { UserService } from './services/user.service';
+import { SocialLoginModule, AuthServiceConfig,
+          GoogleLoginProvider, FacebookLoginProvider} from "angular5-social-login";
+
+          export function getAuthServiceConfigs() {
+            let config = new AuthServiceConfig(
+                [
+                  {
+                    id: FacebookLoginProvider.PROVIDER_ID,
+                    provider: new FacebookLoginProvider("2032394103667706")
+                  },
+                  {
+          id: GoogleLoginProvider.PROVIDER_ID,
+          provider: new GoogleLoginProvider("46992181928-7tgrlool25i5oena60neapeedc2lhsl2.apps.googleusercontent.com")
+        },
+
+                ] );
+            return config;
+          }
+
 
 import { APP_ROUTING } from './app.routes';
 import { UsersListComponent } from './componentes/admin/users-list/users-list.component';
@@ -39,9 +59,12 @@ import { NavbarComponent } from './componentes/navbar/navbar.component';
     ReactiveFormsModule,
     APP_ROUTING,
     HttpModule,
-    HttpClientModule
+    SocialLoginModule
   ],
-  providers: [UserService],
+  providers: [UserService, FacebookService, {
+      provide: AuthServiceConfig,
+      useFactory: getAuthServiceConfigs
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
