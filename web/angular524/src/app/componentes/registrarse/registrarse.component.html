@@ -18,20 +18,17 @@
         <label class="col-2 col-form-label">Nombre(s)</label>
           <div class="col-md-4">
             <input class="form-control text-center" type="text" placeholder="Nombre Completo"
-                    id="nombres" name="nombres" required ngModel minlength="3" #nombres="ngModel" >
+                    id="nombres" name="nombres" required ngModel minlength="3" #nombres="ngModel">
+
+                    <div *ngIf="nombres.errors?.required"
+                          class="form-control-feedback text-center">
+                                          "Este campo es obligatorio"</div>
+
+                    <div *ngIf="nombres.errors?.minlength"
+                          class="form-control-feedback text-center">
+                          "Por lo menos {{ nombres.errors.minlength.requiredLength}} caracteres" </div>
           </div>
 
-            <div *ngIf="nombres.errors?.required"
-                  class="form-control-feedback text-center">
-                                  "Este campo es obligatorio"</div>
-
-            <div *ngIf="nombres.errors?.minlength"
-                  class="form-control-feedback text-center">
-                  "Por lo menos {{ nombres.errors.minlength.requiredLength}} caracteres" </div>
-
-          </div>
-<br>
-<br>
           <label class="col-2 col-form-label">Apellido(s)</label>
             <div class="col-md-4">
               <input class="form-control text-center" type="text" placeholder="Apellidos Completo"
@@ -41,6 +38,9 @@
                             class="form-control-feedback text-center">
                               "Este campo es requerido" </div>
             </div>
+        </div>
+<br>
+
       </div>
     <!-- </div> -->
 
@@ -68,7 +68,7 @@
         <label class="col-2 col-form-label">Contraseña</label>
           <div class="col-md-3">
             <input class="form-control text-center" type="password" placeholder="Contraseña"
-                    id="password" name="password" required ngModel  minlength="8" #password="ngModel">
+                    id="password" name="password" required ngModel minlength="8" #password="ngModel">
 
                   <div *ngIf="password.errors?.required"
                           class="form-control-feedback text-center">
@@ -88,7 +88,7 @@
               <input class="form-control text-center" type="password" placeholder="Confirmar Contraseña"
                       id="password2" name="password2" ngModel required minlength="8" #password2="ngModel">
 
-                      <div *ngIf="password2.errors?.required"
+                  <div *ngIf="password2.errors?.required"
                               class="form-control-feedback text-center">
                                                       "Campo obligatorio"</div>
 
@@ -137,7 +137,7 @@
   <div class="container col-md-5 text-center">
     <div class="form-group row">
       <div class="col-md-6">
-        <button type="submit" class="btn btn-outline-primary text-center" [disabled]="!createUserForm.valid">Registrarse</button>
+        <button type="submit" value="Validar" class="btn btn-outline-primary text-center" [disabled]="!createUserForm.valid">Registrarse</button>
       </div>
 <br>
 <br>

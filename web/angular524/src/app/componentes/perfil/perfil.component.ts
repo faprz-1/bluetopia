@@ -5,7 +5,7 @@ import { UserService } from '../../services/user.service';
 import {ActivatedRoute} from '@angular/router';
 //import 'rxjs/add/operator/map';
 //import {Observable} from 'rxjs/Observable'
-//import {Router} from '@angular/router';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-perfil',

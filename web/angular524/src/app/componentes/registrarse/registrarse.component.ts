@@ -22,14 +22,19 @@ export class RegistrarseComponent implements OnInit {
   }
 
    createUser(user){
+
     console.log(user);
-    this.userService.createUser(user)
-    .subscribe(
-      user =>{
-        console.log(user);
-        this.router.navigate(['/admin']);
-      },
-      error => console.log(<any>error));
+    if((user.password==user.password2)&&user.password.length>7){
+
+      this.userService.createUser(user)
+      .subscribe(
+        user =>{
+          console.log(user);
+          this.router.navigate(['/admin']);
+        },
+        error => console.log(<any>error));
+      }
   }
+
 
 }

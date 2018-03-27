@@ -42,15 +42,8 @@
 
               <div class="col-md-8">
                 <input class="form-control text-center" type="password" placeholder="Contraseña"
-                            name="password" required ngModel  minlength="8" #password="ngModel">
+                            name="password" ngModel>
 
-                    <div *ngIf="password.errors?.required"
-                            class="form-control-feedback text-center">
-                                                    "Campo obligatorio"</div>
-
-                 <div *ngIf="password.errors?.minlength"
-                            class="form-control-feedback text-center">
-                            "Por lo menos {{ password.errors.minlength.requiredLength}} caracteres"</div>
               </div>
         </div>
 <br>
@@ -60,14 +53,19 @@
   <div class="form-group row">
 
     <div class="col-md-8">
-      <button type="button"
-              class="btn btn-primary text-center">
-                Iniciar <span><img src="assets/img/face.png" width="30px"></span>
+      <!-- Iniciar con FB -->
+      <button type="button" class="btn btn-primary text-center"
+              (click)="socialSignIn('facebook')"> Iniciar <span><img src="assets/img/face.png" width="30px"></span>
             </button>
+      <!-- Iniciar con Google -->
+
+<a class="btn btn-success" (click)="socialSignIn('google')">Sign up in with Google</a>
+
+
+      <!-- <button type="button" (click)="socialSignIn('google')">Signin in with Google</button> -->
     </div>
-<br><br>
-            <div class="col-md-4">
-              <button type="submit"
+ <br><br>    <!-- Login normal -->
+            <div class="col-md-4"><button type="submit"
                       class="btn btn-primary">
                         Entrar
                       </button>
@@ -91,5 +89,5 @@
           <br>
           <button type="button"
                   class="btn btn-link"
-                  [routerLink]="['/recuperarContrasena']">¿Olvidastes el Password?</button>
+                  [routerLink]="['/recuperarContrasena']">¿Olvidastes la Contraseña?</button>
         </div>
