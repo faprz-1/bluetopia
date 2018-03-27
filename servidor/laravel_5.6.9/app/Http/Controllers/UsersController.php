@@ -61,6 +61,8 @@ class UsersController extends Controller
       'data' => $user,
       'logo' => $logo,
     ], 201);
+
+        return $response;
     }
 
     public function uploadImage(Request $request){
@@ -73,11 +75,8 @@ class UsersController extends Controller
         $destinationPath = public_path('images');
         $image->move($destinationPath, $input['imagename']);
 
-        $ruta=$destinationPath."/".$input['imagename'];
-
         $response = Response::json([
-         'message' => 'Imagen guardada en:',
-         'ruta' => $ruta
+         'message' => 'Imagen guardada con éxito!'
         ], 202);
 
         return $response;
@@ -201,6 +200,35 @@ class UsersController extends Controller
         }
         return Response::json([
                         'error' => ['message' => "Sin autorizacion"]], 404);
+    }
+
+    public function logSocialUser(Request $request){
+        $data= $request->json()->all();
+        $email= $data['email'];
+        $correo = User::where('email',$email)->first();
+        if(!$correo){
+
+         $user = new User (array(
+         'nombres' => trim($data['name']),
+         'apellidos' => null,
+         'email' => trim($data['email']),
+         'password' => trim (Hash::make($data['id'])),
+         'telefono' => trim (null),
+         'sexo' => trim (null),
+         'api_token'=>str_random(15)
+       ));
+
+       $user->save();
+
+       return response ()->json($user,200);
+       }
+
+       return response ()->json($correo,200);
+       // return Response::json([
+       //               'message'=> 'No pasó el IF',
+       //               'correo'=> $email
+       //               ], 200);
+
     }
 
 }

@@ -29,7 +29,8 @@ class UsersTableSeeder extends Seeder
             'password' => $password,
             'telefono' => '31102308811',
             'sexo' => 'SUDO',
-            'api_token' => str_random(15)
+            'imgperfil'=>'3.pg',
+            'api_token' => null
         ]);
 
         /*factory(App\User::class, 6)->create();*/
@@ -42,7 +43,7 @@ class UsersTableSeeder extends Seeder
                 'password' => $password,
                 'telefono' => '1234567890',
                 'sexo' => 'Hombre',
-                'api_token' => str_random(15)
+                'api_token' => null
             ]);
         }
 
@@ -54,7 +55,7 @@ class UsersTableSeeder extends Seeder
                 'password' => $password,
                 'telefono' => '0987654321',
                 'sexo' => 'Mujer',
-                'api_token' => str_random(15)
+                'api_token' => null
             ]);
         }
     }

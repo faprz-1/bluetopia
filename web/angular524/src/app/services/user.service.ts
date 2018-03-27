@@ -30,8 +30,8 @@ export class UserService {
    }
 
   updateUser(user:Object): Observable<User[]>{
-     const apiUrl = 'http://template3.test/laravel_5.6.9/public/api/users';
-     const url = `${apiUrl}/${user["id"]}`;
+     const apiUrl = this.baseUrl;
+     const url = `${apiUrl}users/${user["id"]}`;
      console.log(url);
      return this.http.put(url,user).map((response: Response) => response.json()).catch((error:any)=> Observable.throw(error.json().error || {mesage:"Error del servidor"}));
    }
@@ -40,7 +40,7 @@ export class UserService {
   	return this.http.post(this.baseUrl+'login',user).map((response: Response) => response.json()).catch((error:any) => Observable.throw(error.json().error || {message:"Error del servidor"}));
   }
   logSocialUser(user:Object):Observable<User[]>{
-    return this.http.post('http://template3.0.test/servidor/laravel_5.6.9/public/api/logsocialuser',user).map((response: Response) => response.json()).catch((error:any) => Observable.throw(error.json().error || {message:"Error del servidor"}));
+    return this.http.post(this.baseUrl+'logsocialuser',user).map((response: Response) => response.json()).catch((error:any) => Observable.throw(error.json().error || {message:"Error del servidor"}));
 
   }
 

@@ -59,6 +59,7 @@ import { NavbarComponent } from './componentes/navbar/navbar.component';
     ReactiveFormsModule,
     APP_ROUTING,
     HttpModule,
+    HttpClientModule,
     SocialLoginModule
   ],
   providers: [UserService, FacebookService, {

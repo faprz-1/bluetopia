@@ -23,6 +23,7 @@ Route::group(['middleware'=>'cors'],function(){
 	Route::post('users','UsersController@store');*/
 	Route::post('login', 'UsersController@login');
 	Route::post('upload','UsersController@uploadImage');
+	Route::post('logsocialuser','UserController@logSocialUser');
 });
 
 /*Route::group(['middleware'=>['auth']],function(){
