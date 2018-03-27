@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './componentes/login/login.component';
@@ -16,6 +18,7 @@ import { APP_ROUTING } from './app.routes';
 import { UsersListComponent } from './componentes/admin/users-list/users-list.component';
 import { AdminComponent } from './componentes/admin/admin.component';
 import { UserEditComponent } from './componentes/admin/user-edit/user-edit.component';
+import { NavbarComponent } from './componentes/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -27,14 +30,16 @@ import { UserEditComponent } from './componentes/admin/user-edit/user-edit.compo
     PerfilComponent,
     UsersListComponent,
     AdminComponent,
-    UserEditComponent
+    UserEditComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     APP_ROUTING,
-    HttpModule
+    HttpModule,
+    HttpClientModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

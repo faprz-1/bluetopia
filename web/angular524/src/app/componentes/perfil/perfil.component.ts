@@ -15,8 +15,8 @@ import {ActivatedRoute} from '@angular/router';
 export class PerfilComponent implements OnInit, OnDestroy {
 	id:any;
 	params:any;
-	user = new User ('id', 'nombres', 'apellidos', 'email', 'password', 'telefono', 'sexo', 'api_token');
-
+	user = new User ('id', 'nombre', 'apellidos', 'email', 'password', 'telefono', 'sexo','imgperfil','api_token');
+  image = 'http://template3.test/laravel_5.6.9/public/';
   constructor(private userService:UserService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
@@ -31,12 +31,18 @@ export class PerfilComponent implements OnInit, OnDestroy {
         this.user.password = data ['password'];
         this.user.telefono = data ['telefono'];
         this.user.sexo = data ['sexo'];
+        this.user.imgperfil = data ['imgperfil'];  
       },
       error => console.log(<any>error));
   }
 
   ngOnDestroy(){
-  	this.params.unsuscribe();
+
+  	this.params.unsubscribe();
   }
+
+  /*noTkn(){
+    localStorage.removeItem("tkn");
+  }*/
 
 }

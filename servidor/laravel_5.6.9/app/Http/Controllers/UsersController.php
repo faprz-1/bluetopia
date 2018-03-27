@@ -47,7 +47,9 @@ class UsersController extends Controller
         'password' => trim (Hash::make($request->password)),
         'telefono' => trim ($request->telefono),
         'sexo' => trim ($request->sexo),
-        'api_token'=>str_random(15)
+        'api_token'=>null,
+        'imgperfil'=>trim($request->img)
+
       ));
     
     $user->save();
@@ -59,8 +61,27 @@ class UsersController extends Controller
       'data' => $user,
       'logo' => $logo,
     ], 201);
-    
-    return $response;
+    }
+
+    public function uploadImage(Request $request){
+
+        $this->validate($request, [
+        'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',]);
+
+        $image = $request->file('image');
+        $input['imagename'] = $image->getClientOriginalName();
+        $destinationPath = public_path('images');
+        $image->move($destinationPath, $input['imagename']);
+
+        $ruta=$destinationPath."/".$input['imagename'];
+
+        $response = Response::json([
+         'message' => 'Imagen guardada en:',
+         'ruta' => $ruta
+        ], 202);
+
+        return $response;
+            
     }
 
     /**
@@ -165,7 +186,8 @@ class UsersController extends Controller
 
                 if($user && Hash::check($data['password'], $user->password)){
                     /*return Response::json($user, 200);*/
-                    
+                    $user->api_token=str_random(20);
+                    $user->save();
                     return response ()->json($user,200);
 
                 }else{
