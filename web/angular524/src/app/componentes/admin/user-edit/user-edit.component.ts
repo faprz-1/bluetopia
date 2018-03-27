@@ -14,7 +14,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
 	id:any;
   	params:any;
 
-  	user = new User ('id', 'nombres', 'apellidos', 'email', 'password', 'telefono','sexo','api_token');
+  	user = new User ('id', 'nombres', 'apellidos', 'email', 'password', 'telefono','sexo','imgperfil','api_token');
 
 
   constructor(private activatedRoute: ActivatedRoute, private userService: UserService, private router:Router) { }

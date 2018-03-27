@@ -27,10 +27,10 @@ export class LoginComponent implements OnInit {
       user =>{
 
         console.log(user);
-        let userid=user.id;
+        /*let userid=user.id;
         let tkn = user.api_token;
         localStorage.setItem("tkn", tkn);
-        this.router.navigate(['/perfil/'+userid]);
+        this.router.navigate(['/perfil/'+userid]);*/
       },
       error => console.log(<any>error));
   	}
