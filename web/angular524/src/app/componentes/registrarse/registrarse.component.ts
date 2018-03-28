@@ -38,7 +38,8 @@ export class RegistrarseComponent implements OnInit {
 
   clearFile() {
     this.img=null;
-    this.fileInput.nativeElement.value = '';
+    console.log(this.fileInput.nativeElement)
+    /*this.fileInput.nativeElement.value = '';*/
   }
 
 

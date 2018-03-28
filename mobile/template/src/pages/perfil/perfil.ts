@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CambiarContrasenaPage, LoginPage} from '../index.paginas';
+import {Http, Response} from  "@angular/http";
+import { User } from '../../models/user';
+import { UserServiceProvider } from '../../providers/user/usersService';
 
 @IonicPage()
 @Component({
@@ -8,14 +11,37 @@ import { CambiarContrasenaPage, LoginPage} from '../index.paginas';
   templateUrl: 'perfil.html',
 })
 export class PerfilPage {
-  cam_contra:any = CambiarContrasenaPage;
-  cerrar:any = LoginPage;
+	user = new User ('id', 'nombre', 'apellidos', 'email', 'password', 'telefono', 'sexo','imgperfil','api_token');
+	image = 'http://template3.test/laravel_5.6.9/public/';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public userService:UserServiceProvider) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PerfilPage');
+
+    let id=localStorage.getItem("idtemplate")
+
+    this.userService.getUser(id).subscribe(
+      data => {
+        console.log ('data:',data);
+        this.user.id = data['id'];
+        this.user.nombres = data ['nombres'];
+        this.user.apellidos = data ['apellidos'];
+        this.user.email = data ['email'];
+        this.user.password = data ['password'];
+        this.user.telefono = data ['telefono'];
+        this.user.sexo = data ['sexo'];
+        this.user.imgperfil = data ['imgperfil'];  
+      },
+      error => console.log(<any>error));
   }
 
-}
+ 
+  logout(){
+  	localStorage.clear();
+  	this.navCtrl.push(LoginPage);
+  }
+
+  }
+

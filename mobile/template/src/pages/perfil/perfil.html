@@ -2,7 +2,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title text-right> <h6> <small> <a [navPush]="cerrar">Cerrar Sesión</a></small></h6></ion-title>
+    <ion-title text-right> <h6> <small> <a (click)="logout()">Cerrar Sesión</a></small></h6></ion-title>
 
   </ion-navbar>
 
@@ -13,7 +13,7 @@
 
     <h1>Perfil</h1>
 <br>
-   <img src="assets/imgs/logo.png" width="100px"  class="rounded-circle">
+   <img src="{{image}}images/{{user.imgperfil}}" width="100px"  class="rounded-circle" onerror="this.src='../../assets/imgs/default_avatar.jpg'">
 
     <br>
     <button ion-button clear>Cambiar</button>
@@ -24,22 +24,22 @@
 <br>
               <ion-item>
                 <ion-icon name="person" item-start></ion-icon>
-                <ion-label text-center> Variable del: Nombre(s)</ion-label>
+                <ion-label text-center>{{user.nombres}}</ion-label>
               </ion-item>
               <br>
               <ion-item>
                 <ion-icon name="mail" item-start></ion-icon>
-                <ion-label text-center> Variable del: Correo</ion-label>
+                <ion-label text-center>{{user.email}}</ion-label>
               </ion-item>
               <br>
               <ion-item>
                 <ion-icon name="eye" item-start></ion-icon>
-                <ion-label text-center> Variable del: Contraseña</ion-label>
+                <ion-label text-center>{{user.sexo}}</ion-label>
               </ion-item>
               <br>
               <ion-item>
                 <ion-icon name="call" item-start></ion-icon>
-                <ion-label text-center> Variable del: Telefono</ion-label>
+                <ion-label text-center>{{user.telefono}}</ion-label>
               </ion-item>
               <br>
               <ion-item>

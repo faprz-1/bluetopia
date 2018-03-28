@@ -4,6 +4,9 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpModule} from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 import { MyApp } from './app.component';
@@ -11,7 +14,10 @@ import { RegistrarsePage,
          CambiarContrasenaPage,
          PerfilPage,
          RecuperarContrasenaPage,
-         LoginPage } from "../pages/index.paginas";
+         LoginPage,
+         AdminPage,
+          } from "../pages/index.paginas";
+import { UserServiceProvider } from '../providers/user/usersService';
 
 @NgModule({
   declarations: [
@@ -20,13 +26,16 @@ import { RegistrarsePage,
     CambiarContrasenaPage,
     PerfilPage,
     RecuperarContrasenaPage,
-    LoginPage
+    LoginPage,
+    AdminPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpModule,
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -35,12 +44,14 @@ import { RegistrarsePage,
     CambiarContrasenaPage,
     PerfilPage,
     RecuperarContrasenaPage,
-    LoginPage
+    LoginPage,
+    AdminPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    UserServiceProvider,
   ]
 })
 export class AppModule {}

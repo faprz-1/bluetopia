@@ -9,7 +9,7 @@
 
 <ion-content  class="ion" >
 
-  <form (ngSubmit)="registrarse(formulario)" #formulario="ngForm" novalidate="">
+  <form (ngSubmit)="createUser(formulario.value)" #formulario="ngForm" novalidate="">
 
     <ion-list class="padding padinhori" [ngClass]="{ 'has-danger': (nombres.errors?.minlength || nombres.errors?.required)&& nombres.touched}">
 
@@ -123,10 +123,30 @@
 </ion-item>
 </ion-list>
 
+<br>
+
+<ion-item class="ion">
+      <ion-icon floating text-center name="images" item-start></ion-icon>
+      <ion-label text-center>Imagen Perfil</ion-label>
+</ion-item>
+
+
+<ion-item class="ion">    
+  <ion-input type="file" id="img" name="img" ngModel required #img="ngModel" (change)="onFileChange($event)" #fileInput></ion-input>
+</ion-item>
+
+<!-- <div floating text-center>
+<button ion-button icon-only color="danger" type="button" clear (click)="clearFile()" #fileInput >
+  <ion-icon ios="ios-trash" md="md-trash" ></ion-icon>
+</button>
+</div> -->
+
+
+
   <div padding >
     <ion-label class="col-2 col-form-label">&nbsp;</ion-label>
 
-     <button ion-button block [disabled]="!formulario.valid" type="submit"> registrarse </button>
+     <button ion-button block  type="submit"> registrarse </button> <!-- [disabled]="!formulario.valid" -->
      <br>
      <button ion-button block navPop> Salir</button>
    </div>

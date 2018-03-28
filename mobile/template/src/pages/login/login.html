@@ -12,7 +12,7 @@
   <br>
   <h6 text-center>Iniciar Sesión</h6>
 
-  <form (ngSubmit)="Entrar(formulario)" #formulario="ngForm" novalidate="">
+  <form (ngSubmit)="login(formulario.value)" #formulario="ngForm" novalidate="">
 
           <ion-list class="paddi"   [ngClass]="{ 'has-danger': (correo.errors?.minlength || correo.errors?.required)&& correo.touched}">
 
@@ -29,7 +29,7 @@
                                 class="form-control-feedback">
                                   "No cumple con los caracteres"</div> </ion-label>
 
-                  <ion-input type="email" name="correo" ngModel required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #correo="ngModel">></ion-input>
+                  <ion-input type="email" name="email" ngModel required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #correo="ngModel">></ion-input>
                 </ion-item>
 
 
@@ -52,19 +52,19 @@
           </ion-list>
 
           <div padding text-center>
-             <button ion-button clear block icon-left [disabled]="!formulario.valid" type="submit" [navPush]="perfil">
-                      <ion-icon name="log-in"></ion-icon> Entrar </button>
+             <button ion-button clear block icon-left  type="submit">
+                      <ion-icon name="log-in"></ion-icon> Entrar </button> <!-- [disabled]="!formulario.valid" -->
             <br>
-                <button ion-button clear block icon-left >
+                <button ion-button clear block icon-left type="button" >
                   <ion-icon name="logo-facebook"></ion-icon>iniciar </button> </div>
 
 <br>
 <br>
 
            <div text-right>
-             <button ion-button color="dark" clear [navPush]="registrarse"> Registrarse</button>
+             <button ion-button type="button" color="dark" clear [navPush]="registrarse"> Registrarse</button>
              <br>
-             <button ion-button color="dark" clear [navPush]="recu_contra"> ¿Olvidastes la Contraseña?</button> </div>
+             <button ion-button type="button" color="dark" clear [navPush]="recu_contra"> ¿Olvidastes la Contraseña?</button> </div>
 
 
 
