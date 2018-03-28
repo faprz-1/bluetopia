@@ -20,3 +20,9 @@ class cors
           ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     }
 }
+
+//esto iría en el .htacces del proyecto
+/* <ifModule mod_headers.c>
+    Header set Access-Control-Allow-Origin: *
+    Header ser Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
+    </ifModule>*/

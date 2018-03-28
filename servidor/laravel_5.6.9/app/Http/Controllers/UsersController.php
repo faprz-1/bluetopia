@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Response;
@@ -10,6 +11,8 @@ use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
+
+    
     /**
      * Display a listing of the resource.
      *
