@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 
+import { AuthGuard } from './services/auth.guard';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './componentes/login/login.component';
@@ -62,10 +63,14 @@ import { NavbarComponent } from './componentes/navbar/navbar.component';
     HttpClientModule,
     SocialLoginModule
   ],
-  providers: [UserService, FacebookService, {
+  providers: [
+  AuthGuard, 
+  UserService, 
+  FacebookService, {
       provide: AuthServiceConfig,
       useFactory: getAuthServiceConfigs
-    }],
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

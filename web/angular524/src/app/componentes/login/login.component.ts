@@ -32,7 +32,8 @@ export class LoginComponent implements OnInit {
         console.log(user);
         let userid=user.id;
         let tkn = user.api_token;
-        localStorage.setItem("tkn", tkn);
+        localStorage.setItem("tkntemplate", tkn);
+        localStorage.setItem("idtemplate", userid);
         this.router.navigate(['/perfil/'+userid]);
       },
       error => console.log(<any>error));
@@ -56,17 +57,19 @@ export class LoginComponent implements OnInit {
         this.facebookServicio.socialSignIn(google)
         .then(socialUser =>{
           console.log("socialUser:");
-          console.log(socialUser);
-          // this.router.navigate(['/perfil/'+socialUser.id]);
-          /*this.userService.logSocialUser(socialUser)
+          console.log(socialUser);  
+          this.userService.logSocialUser(socialUser)
         .subscribe(
           user =>{
             console.log(user);
-            console.log('perfil/'+user.id);
-            this.router.navigate(['/perfil/'+user.id]);
+            let userid=user.id;
+            let tkn = user.api_token;
+            localStorage.setItem("tkntemplate", tkn);
+            localStorage.setItem("idtemplate", userid);
+            this.router.navigate(['/perfil/'+userid]);
           },
           error => console.log(<any>error));
         },
-        error => console.log(<any>error));*/
+        error => console.log(<any>error));
         }
       }
