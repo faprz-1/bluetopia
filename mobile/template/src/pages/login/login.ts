@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage} from 'ionic-angular';
 import { RegistrarsePage, RecuperarContrasenaPage, PerfilPage } from '../index.paginas';
 import { NgForm} from '@angular/forms';
+import { FacebookProvider } from '../../providers/facebook/facebook';
 
 @IonicPage()
 @Component({
@@ -15,12 +16,14 @@ export class LoginPage {
   perfil:any = PerfilPage;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
-
-
+  constructor(private facebookProvider: FacebookProvider) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
+  }
+
+  loginFacebook(){
+    this.facebookProvider.login();
   }
 
 }

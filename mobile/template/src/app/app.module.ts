@@ -12,6 +12,8 @@ import { RegistrarsePage,
          PerfilPage,
          RecuperarContrasenaPage,
          LoginPage } from "../pages/index.paginas";
+import { FacebookProvider } from '../providers/facebook/facebook';
+import { Facebook } from '@ionic-native/facebook';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { RegistrarsePage,
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    Facebook,
+    FacebookProvider
   ]
 })
 export class AppModule {}
