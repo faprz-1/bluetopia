@@ -37,8 +37,27 @@ export class LoginPage {
       },
       error => console.log(<any>error));
   	}
-  loginFacebook(){
-    this.facebookProvider.login();
-  }
 
-}
+
+  loginFacebook(facebook){
+    console.log(facebook);
+    this.facebookProvider.login()
+    .then(socialUser =>{
+          console.log("socialUser:");
+          console.log(socialUser);
+          this.userService.logSocialUser(socialUser)
+        .subscribe(
+          user =>{
+            console.log(user);
+        /*    let userid=user.id;
+            let tkn = user.api_token;
+            localStorage.setItem("tkntemplate", tkn);
+            localStorage.setItem("idtemplate", userid);
+            this.router.navigate(['/perfil/'+userid]);*/
+          },
+          error => console.log(<any>error));
+        },
+        error => console.log(<any>error));
+        }
+
+  }

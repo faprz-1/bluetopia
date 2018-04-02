@@ -33,6 +33,10 @@ export class UserServiceProvider {
   logUser(user:Object): Observable<User[]>{
   	return this.http.post(this.baseUrl+'login',user).map((response: Response) => response.json()).catch((error:any) => Observable.throw(error.json().error || {message:"Error del servidor"}));
   }
+  logSocialUser(user:Object):Observable<User[]>{
+    return this.http.post(this.baseUrl+'logsocialuser',user).map((response: Response) => response.json()).catch((error:any) => Observable.throw(error.json().error || {message:"Error del servidor"}));
+
+  }
 
   getUser(id:String): Observable<User[]>{
      return this.http.get(this.baseUrl + 'users/'+id).map((response: Response) => response.json());
@@ -45,7 +49,7 @@ export class UserServiceProvider {
      return this.http.put(url,user).map((response: Response) => response.json()).catch((error:any)=> Observable.throw(error.json().error || {mesage:"Error del servidor"}));
    }
 
-   
+
   logSocialUser(user:Object):Observable<User[]>{
     return this.http.post(this.baseUrl+'logsocialuser',user).map((response: Response) => response.json()).catch((error:any) => Observable.throw(error.json().error || {message:"Error del servidor"}));
 
