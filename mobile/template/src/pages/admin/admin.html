@@ -19,29 +19,30 @@
 		<ion-row>
 			<ion-col>
 				<div *ngFor="let user of users | async"> 
-				<!-- <ion-card>				
+				<ion-card>				
 					<ion-item>
 						<ion-avatar item-start>
-							<img src="assets/imgs/logo.png">
-						</ion-avatar> -->
+							<img src="{{image}}images/{{user.imgperfil}}" onerror="this.src='../../assets/imgs/default_avatar.jpg'" >
+						</ion-avatar>
 						<h2>{{user.nombres}}</h2>
 						<p>{{user.email}}</p>
-					<!-- </ion-item>
+	        </ion-item>
 					<ion-card-content>
-						<p>Telefono:</p>
-						<p>ID:</p>
+						<p>Telefono: {{user.telefono}}</p>
+						<p>ID: {{user.id}}</p>
 					</ion-card-content>
 
 					<ion-row>
 						<ion-col>
-							<button ion-button ion-left clear small>
-								<ion-icon name="ios-heart"></ion-icon>
-								<div>Ya veremos que ponemos por acá</div>
-							</button>
+              <button ion-button icon-only round (click)="editUser(user.id)">
+                <ion-icon name="create"></ion-icon>
+              </button>
+              <button ion-button outline icon-only color="danger" round (click)="deleteUser(user.id)">
+                <ion-icon name="trash"></ion-icon>
+              </button>
 						</ion-col>
 					</ion-row>
-
-				</ion-card> -->
+				</ion-card>
 				
 				</div>
 			</ion-col>

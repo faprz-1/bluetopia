@@ -29,11 +29,11 @@ export class LoginPage {
   		.subscribe(
       user =>{
         console.log(user);
-        // let userid=user.id;
-        // let tkn = user.api_token;
-        // localStorage.setItem("tkntemplate", tkn);
-        // localStorage.setItem("idtemplate", userid);
-        // this.navCtrl.push(PerfilPage);
+   /*      let userid=user.id;
+        let tkn = user.api_token;
+        localStorage.setItem("tkntemplate", tkn);
+        localStorage.setItem("idtemplate", userid);
+        this.navCtrl.push(PerfilPage); */
       },
       error => console.log(<any>error));
   	}

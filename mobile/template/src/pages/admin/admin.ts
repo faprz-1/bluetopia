@@ -20,7 +20,7 @@ import 'rxjs/add/operator/map';
   templateUrl: 'admin.html',
 })
 export class AdminPage {	
-
+  image = 'http://template3.test/laravel_5.6.9/public/';
 	users: Observable<User[]>;
 
 
@@ -34,6 +34,25 @@ export class AdminPage {
 
   getUsers(){
   	this.users = this.userService.getUsers();
+  }
+
+  editUser(id) {
+    localStorage.setItem("editId", id);
+    /* this.navCtrl.push(EditarUsuerPage); */
+    console.log(localStorage.getItem("editId"));
+  }
+
+  deleteUser(id) {
+    
+    this.userService.deleteUser(id)
+      .subscribe(
+        // tslint:disable-next-line:no-shadowed-variable
+        id => {
+          console.log("Usuario Eliminado");
+          this.navCtrl.setRoot(this.navCtrl.getActive().component);
+        },
+        error => console.log(<any>error));
+    
   }
 
 }
