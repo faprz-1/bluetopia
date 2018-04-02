@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import {Http, Response} from  "@angular/http";
+import {Http, Response} from '@angular/http';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import {ActivatedRoute} from '@angular/router';
-//import 'rxjs/add/operator/map';
-//import {Observable} from 'rxjs/Observable'
+// import 'rxjs/add/operator/map';
+// import {Observable} from 'rxjs/Observable'
 import {Router} from '@angular/router';
 
 @Component({
@@ -13,14 +13,14 @@ import {Router} from '@angular/router';
   styleUrls: ['./perfil.component.css']
 })
 export class PerfilComponent implements OnInit, OnDestroy {
-	id:any;
-	params:any;
-	user = new User ('id', 'nombre', 'apellidos', 'email', 'password', 'telefono', 'sexo','imgperfil','api_token');
+  id: any;
+  params: any;
+  user = new User ('id', 'nombre', 'apellidos', 'email', 'password', 'telefono', 'sexo', 'imgperfil', 'api_token');
   image = 'http://template3.test/laravel_5.6.9/public/';
-  constructor(private userService:UserService, private activatedRoute: ActivatedRoute) { }
+  constructor(private userService: UserService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-  	this.params = this.activatedRoute.params.subscribe(params =>  this.id = params['id']);
+    this.params = this.activatedRoute.params.subscribe(params =>  this.id = params['id']);
     this.userService.getUser(this.id).subscribe(
       data => {
         console.log (data);
@@ -31,14 +31,13 @@ export class PerfilComponent implements OnInit, OnDestroy {
         this.user.password = data ['password'];
         this.user.telefono = data ['telefono'];
         this.user.sexo = data ['sexo'];
-        this.user.imgperfil = data ['imgperfil'];  
+        this.user.imgperfil = data ['imgperfil'];
       },
       error => console.log(<any>error));
   }
 
-  ngOnDestroy(){
-
-  	this.params.unsubscribe();
+  ngOnDestroy() {
+    this.params.unsubscribe();
   }
 
   /*noTkn(){

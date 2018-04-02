@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Http, Response} from  "@angular/http";
+import {Http, Response} from '@angular/http';
 import { User } from '../../../models/user';
 import { UserService } from '../../../services/user.service';
 import 'rxjs/add/operator/map';
@@ -12,31 +12,27 @@ import {Router} from '@angular/router';
   styleUrls: ['./users-list.component.css']
 })
 export class UsersListComponent implements OnInit {
-
-	users: Observable<User[]>;
-  
-  constructor(private userService:UserService, private router:Router) { }
+  users: Observable<User[]>;
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
-  	this.users = this.userService.getUsers();
+    this.users = this.userService.getUsers();
   }
 
-  editUser(id){
-
-    this.router.navigate(['/admin/edituser/',id]);
+  editUser(id) {
+    this.router.navigate(['/admin/edituser/', id]);
     console.log(id);
   }
 
-  deleteUser(id){
+  deleteUser(id) {
 
       this.userService.deleteUser(id)
       .subscribe(
-      	id => {console.log(id);
-
-      	},
-
-      	error => console.log(<any>error));
-      this.router.navigate(['/admin'])
+        // tslint:disable-next-line:no-shadowed-variable
+        id => {console.log(id);
+        },
+        error => console.log(<any>error));
+      this.router.navigate(['/admin']);
     }
 
 }

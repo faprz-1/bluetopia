@@ -42,7 +42,7 @@ export class UserServiceProvider {
      return this.http.get(this.baseUrl + 'users/'+id).map((response: Response) => response.json());
    }
 
- /* updateUser(user:Object): Observable<User[]>{
+  updateUser(user:Object): Observable<User[]>{
      const apiUrl = this.baseUrl;
      const url = `${apiUrl}users/${user["id"]}`;
      console.log(url);
@@ -58,6 +58,6 @@ export class UserServiceProvider {
   deleteUser(id:String){
       //console.log('Prueba de llamado de función desde el service'); console.log(this.baseUrl+'/'+id);
       return this.http.delete(this.baseUrl + 'users/'+ id).map((response: Response) => response.json());
-    }*/
+    }
 
 }
