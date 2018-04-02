@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams} from 'ionic-angular';
 import { RegistrarsePage, RecuperarContrasenaPage, PerfilPage } from '../index.paginas';
 import { NgForm} from '@angular/forms';
 import { UserServiceProvider } from '../../providers/user/usersService';
+import { FacebookProvider } from '../../providers/facebook/facebook';
 
 @IonicPage()
 @Component({
@@ -15,9 +16,7 @@ export class LoginPage {
   recu_contra:any = RecuperarContrasenaPage;
   perfil:any = PerfilPage;
 
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, public userService: UserServiceProvider) {}
-
+  constructor(private facebookProvider: FacebookProvider, public navCtrl: NavController, public navParams: NavParams, public userService: UserServiceProvider) {}
 
 
   ionViewDidLoad() {
@@ -30,13 +29,16 @@ export class LoginPage {
   		.subscribe(
       user =>{
         console.log(user);
-        let userid=user.id;
-        let tkn = user.api_token;
-        localStorage.setItem("tkntemplate", tkn);
-        localStorage.setItem("idtemplate", userid);
-        this.navCtrl.push(PerfilPage);
+        // let userid=user.id;
+        // let tkn = user.api_token;
+        // localStorage.setItem("tkntemplate", tkn);
+        // localStorage.setItem("idtemplate", userid);
+        // this.navCtrl.push(PerfilPage);
       },
       error => console.log(<any>error));
   	}
+  loginFacebook(){
+    this.facebookProvider.login();
+  }
 
 }

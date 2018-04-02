@@ -18,6 +18,8 @@ import { RegistrarsePage,
          AdminPage,
           } from "../pages/index.paginas";
 import { UserServiceProvider } from '../providers/user/usersService';
+import { FacebookProvider } from '../providers/facebook/facebook';
+import { Facebook } from '@ionic-native/facebook';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,8 @@ import { UserServiceProvider } from '../providers/user/usersService';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserServiceProvider,
+    Facebook,
+    FacebookProvider
   ]
 })
 export class AppModule {}
