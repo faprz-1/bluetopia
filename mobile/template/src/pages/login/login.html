@@ -2,15 +2,26 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title text-center>Bienvenido</ion-title>
+
+    <ion-buttons>
+      <button  ion-button icon-only (click)="mostrarMenu()">
+        <ion-icon name="menu"></ion-icon></button>
+    </ion-buttons>
+
+    <ion-title >Bienvenido</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content class="ion">
+
+
   <br>
   <h6 text-center>Iniciar Sesión</h6>
+
+  <h2 *ngIf="isAuthenticated()"></h2>
+  <h2 *ngIf="!isAuthenticated()"></h2>
 
   <form (ngSubmit)="login(formulario.value)" #formulario="ngForm" novalidate="">
 
@@ -38,13 +49,9 @@
                   <ion-label floating text-center>Contraseña
                     <div *ngIf="password.errors?.required"
                             class="form-control-feedback">
-                                "Este campo es obligatorio" </div>
+                                "Este campo es obligatorio" </div> </ion-label>
 
-                  <div *ngIf="password.errors?.minlength"
-                          class="form-control-feedback">
-                            "Por lo menos {{ password.errors.minlength.requiredLength}} caracteres"</div> </ion-label>
-
-                  <ion-input type="password" name="password" ngModel required minlength="8" #password="ngModel"></ion-input>
+                  <ion-input type="password" name="password" ngModel required  #password="ngModel"></ion-input>
                 </ion-item>
 
             <br>

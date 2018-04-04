@@ -1,21 +1,24 @@
-
 <ion-header>
 
   <ion-navbar>
-    <ion-title text-right> <h6> <small> <a (click)="logout()">Cerrar Sesión</a></small></h6></ion-title>
 
+    <ion-buttons>
+      <button  ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon></button>
+    </ion-buttons>
+
+    <ion-title></ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content text-center  class="ion" >
-
     <h1>Perfil</h1>
 <br>
    <img src="{{image}}images/{{user.imgperfil}}" width="100px"  class="rounded-circle" onerror="this.src='../../assets/imgs/default_avatar.jpg'">
 
-    <br>
+<br>
     <button ion-button clear>Cambiar</button>
 <br>
 

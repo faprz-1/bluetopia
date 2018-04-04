@@ -5,7 +5,7 @@ import { UserServiceProvider } from '../../providers/user/usersService';
 import { Http, Response } from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-
+import { AuthGuardProvider } from '../../providers/auth-guard/auth-guard';
 
 /**
  * Generated class for the AdminPage page.
@@ -19,12 +19,12 @@ import 'rxjs/add/operator/map';
   selector: 'page-admin',
   templateUrl: 'admin.html',
 })
-export class AdminPage {	
+export class AdminPage {
   image = 'http://template3.test/laravel_5.6.9/public/';
 	users: Observable<User[]>;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public http:Http, public userService:UserServiceProvider) {
+  constructor(private authService:AuthGuardProvider, public navCtrl: NavController, public navParams: NavParams, public http:Http, public userService:UserServiceProvider) {
   }
 
   ionViewDidLoad() {
@@ -43,7 +43,7 @@ export class AdminPage {
   }
 
   deleteUser(id) {
-    
+
     this.userService.deleteUser(id)
       .subscribe(
         // tslint:disable-next-line:no-shadowed-variable
@@ -52,7 +52,12 @@ export class AdminPage {
           this.navCtrl.setRoot(this.navCtrl.getActive().component);
         },
         error => console.log(<any>error));
-    
+
   }
+
+//   ionViewCanEnter() {
+//   return this.authService.authenticated();
+// }
+
 
 }
