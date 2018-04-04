@@ -7,7 +7,13 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>admin</ion-title>
+
+    <ion-buttons>
+      <button  ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon></button>
+    </ion-buttons>
+
+    <ion-title> Admin </ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -18,8 +24,8 @@
 	<ion-content>
 		<ion-row>
 			<ion-col>
-				<div *ngFor="let user of users | async"> 
-				<ion-card>				
+				<div *ngFor="let user of users | async">
+				<ion-card>
 					<ion-item>
 						<ion-avatar item-start>
 							<img src="{{image}}images/{{user.imgperfil}}" onerror="this.src='../../assets/imgs/default_avatar.jpg'" >
@@ -43,7 +49,7 @@
 						</ion-col>
 					</ion-row>
 				</ion-card>
-				
+
 				</div>
 			</ion-col>
 		</ion-row>
@@ -65,7 +71,7 @@
       <tbody>
         <tr *ngFor="let user of users | async">
           <td>{{user.id}}</td>
-          <td>{{user.nombres}}</td>  
+          <td>{{user.nombres}}</td>
           <td>{{user.email}}</td>
           <td>
             <button (click)="editUser(user.id)" type="button" class="btn btn-info">
@@ -81,5 +87,3 @@
     </table>
   </div>
 </div> -->
-
-

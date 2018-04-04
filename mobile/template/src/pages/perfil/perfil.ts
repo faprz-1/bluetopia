@@ -4,7 +4,7 @@ import { CambiarContrasenaPage, LoginPage} from '../index.paginas';
 import {Http, Response} from  "@angular/http";
 import { User } from '../../models/user';
 import { UserServiceProvider } from '../../providers/user/usersService';
-
+import { AuthGuardProvider } from '../../providers/auth-guard/auth-guard';
 @IonicPage()
 @Component({
   selector: 'page-perfil',
@@ -14,7 +14,8 @@ export class PerfilPage {
 	user = new User ('id', 'nombre', 'apellidos', 'email', 'password', 'telefono', 'sexo','imgperfil','api_token');
 	image = 'http://template3.test/laravel_5.6.9/public/';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public userService:UserServiceProvider) {
+  constructor(private authService:AuthGuardProvider, public navCtrl: NavController,
+                  public navParams: NavParams, public userService:UserServiceProvider) {
   }
 
   ionViewDidLoad() {
@@ -32,16 +33,19 @@ export class PerfilPage {
         this.user.password = data ['password'];
         this.user.telefono = data ['telefono'];
         this.user.sexo = data ['sexo'];
-        this.user.imgperfil = data ['imgperfil'];  
+        this.user.imgperfil = data ['imgperfil'];
       },
       error => console.log(<any>error));
   }
 
- 
+
   logout(){
   	localStorage.clear();
   	this.navCtrl.push(LoginPage);
   }
 
-  }
+  ionViewCanEnter() {
+  return this.authService.authenticated();
+}
 
+  }

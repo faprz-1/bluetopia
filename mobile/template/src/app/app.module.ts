@@ -10,16 +10,13 @@ import { HttpClientModule } from '@angular/common/http';
 
 
 import { MyApp } from './app.component';
-import { RegistrarsePage,
-         CambiarContrasenaPage,
-         PerfilPage,
-         RecuperarContrasenaPage,
-         LoginPage,
-         AdminPage,
-          } from "../pages/index.paginas";
+import { RegistrarsePage, HomePage, CambiarContrasenaPage, PerfilPage,
+         RecuperarContrasenaPage, LoginPage, AdminPage, } from "../pages/index.paginas";
+
 import { UserServiceProvider } from '../providers/user/usersService';
 import { FacebookProvider } from '../providers/facebook/facebook';
 import { Facebook } from '@ionic-native/facebook';
+import { AuthGuardProvider } from '../providers/auth-guard/auth-guard';
 
 @NgModule({
   declarations: [
@@ -29,6 +26,7 @@ import { Facebook } from '@ionic-native/facebook';
     PerfilPage,
     RecuperarContrasenaPage,
     LoginPage,
+    HomePage,
     AdminPage
   ],
   imports: [
@@ -47,7 +45,8 @@ import { Facebook } from '@ionic-native/facebook';
     PerfilPage,
     RecuperarContrasenaPage,
     LoginPage,
-    AdminPage
+    AdminPage,
+    HomePage
   ],
   providers: [
     StatusBar,
@@ -55,7 +54,8 @@ import { Facebook } from '@ionic-native/facebook';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserServiceProvider,
     Facebook,
-    FacebookProvider
+    FacebookProvider,
+    AuthGuardProvider
   ]
 })
 export class AppModule {}
