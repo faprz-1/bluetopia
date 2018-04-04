@@ -24,9 +24,5 @@ Route::group(['middleware'=>'cors'],function(){
 	Route::post('login', 'UsersController@login');
 	Route::post('upload','UsersController@uploadImage');
 	Route::post('logsocialuser','UsersController@logSocialUser');
+	Route::post('pass','UsersController@updatePswrd');
 });
-
-/*Route::group(['middleware'=>['auth']],function(){
-	Route::resource('users', 'UsersController');
-});
-	*/
