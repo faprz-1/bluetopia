@@ -6,9 +6,9 @@ import { LoginPage, AdminPage, HomePage, PerfilPage } from '../pages/index.pagin
 import { AuthGuardProvider } from '../providers/auth-guard/auth-guard';
 
 
-import { AdminPage } from '../pages/admin/admin';
+/* import { AdminPage } from '../pages/admin/admin';
 import { LoginPage } from '../pages/login/login';
-
+ */
 @Component({
   templateUrl: 'app.html'
 })
@@ -18,8 +18,8 @@ export class MyApp {
     perfil = PerfilPage;
     adm = AdminPage;
 
-  rootPage:any = AdminPage;
-  //rootPage:any = LoginPage;
+  /* rootPage:any = AdminPage; */
+  rootPage:any = LoginPage;
 
   constructor(private authService:AuthGuardProvider, private menuCtrl: MenuController, platform: Platform,
                     statusBar: StatusBar, splashScreen: SplashScreen) {
@@ -39,5 +39,7 @@ export class MyApp {
 
   cerrar(){
     this.authService.logout();
+    this.rootPage= this.login;
+    this.menuCtrl.close();
   }
 }

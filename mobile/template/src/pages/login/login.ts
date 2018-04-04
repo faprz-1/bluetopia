@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController, AlertController} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController, AlertController } from 'ionic-angular'; 
 import { RegistrarsePage, RecuperarContrasenaPage, PerfilPage } from '../index.paginas';
 import { NgForm} from '@angular/forms';
 import { UserServiceProvider } from '../../providers/user/usersService';
 import { FacebookProvider } from '../../providers/facebook/facebook';
-import { AuthGuardProvider } from '../../providers/auth-guard/auth-guard';
-
+import { AuthGuardProvider } from '../../providers/auth-guard/auth-guard'; 
 
 @IonicPage()
 @Component({
@@ -18,9 +17,10 @@ export class LoginPage {
   recu_contra:any = RecuperarContrasenaPage;
   perfil:any = PerfilPage;
 
-  constructor(private alertCtrl: AlertController, private authService:AuthGuardProvider, private menuCtrl: MenuController, private facebookProvider: FacebookProvider, public navCtrl: NavController, public navParams: NavParams, public userService: UserServiceProvider) {}
+  constructor(private alertCtrl: AlertController, private authService: AuthGuardProvider, private menuCtrl: MenuController, private facebookProvider: FacebookProvider, public navCtrl: NavController, public navParams: NavParams, public userService: UserServiceProvider) { } 
+  /* constructor(private facebookProvider: FacebookProvider, public navCtrl: NavController, public navParams: NavParams, public userService: UserServiceProvider) {} */
 
-  mostrarMenu(){
+  mostrarMenu() {
     this.menuCtrl.toggle();
   }
 
@@ -30,20 +30,21 @@ export class LoginPage {
 
   login(user){
     this.authService.login();
-  		console.log(user);
-  		this.userService.logUser(user)
-  		.subscribe(
+    console.log(user);
+    this.userService.logUser(user)
+    .subscribe(
       user =>{
         console.log(user);
-   /*      let userid=user.id;
+        let userid=user.id;
         let tkn = user.api_token;
         localStorage.setItem("tkntemplate", tkn);
         localStorage.setItem("idtemplate", userid);
-        this.navCtrl.push(PerfilPage); */
+        this.navCtrl.setRoot(PerfilPage);
       },
       error => console.log(<any>error));
-  	}
-    nextPage() {
+    }
+    
+  /* nextPage() {
     this.navCtrl.push('PerfilPage').catch(err => {
       let alert = this.alertCtrl.create({
         title: 'Entrada proibida!',
@@ -62,14 +63,11 @@ export class LoginPage {
       alert.present();
     });
 
-  }
+  } */
 
   isAuthenticated() {
     return this.authService.authenticated();
-  }
-
-
-
+  } 
 
 
   loginFacebook(facebook){
@@ -82,16 +80,15 @@ export class LoginPage {
         .subscribe(
           user =>{
             console.log(user);
-            /*      let userid=user.id;
-                 let tkn = user.api_token;
-                 localStorage.setItem("tkntemplate", tkn);
-                 localStorage.setItem("idtemplate", userid);
-                 this.navCtrl.push(PerfilPage); */
+           let userid=user.id;
+            let tkn = user.api_token;
+            localStorage.setItem("tkntemplate", tkn);
+            localStorage.setItem("idtemplate", userid);
+            this.navCtrl.setRoot(PerfilPage);
           },
           error => console.log(<any>error));
         },
         error => console.log(<any>error));
         }
-
 
   }

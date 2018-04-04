@@ -24,12 +24,14 @@ private isLoggedIn = false;
   }
 
   logout(): void {
+    localStorage.clear();
     this.isLoggedIn = false;
 
   }
 
   authenticated(): boolean {
     return this.isLoggedIn;
+    
   }
 
 

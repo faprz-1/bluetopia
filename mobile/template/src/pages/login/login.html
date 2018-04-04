@@ -59,11 +59,12 @@
           </ion-list>
 
           <div padding text-center>
-             <button ion-button clear block icon-left [disabled]="!formulario.valid" [navPush]="perfil">
+             <button ion-button clear block icon-left [disabled]="!formulario.valid">
                       <ion-icon name="log-in"></ion-icon> Entrar </button>
             <br>
                 <button ion-button clear block icon-left (click)="loginFacebook('facebook')">
                   <ion-icon name="logo-facebook"></ion-icon> iniciar </button> </div>
+  </form>
 
 <br>
 <br>
@@ -79,5 +80,5 @@
 
 
 
-        </form>
+        
 </ion-content>
