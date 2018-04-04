@@ -13,31 +13,34 @@ import { FacebookService } from '../../services/facebook.service';
 })
 export class LoginComponent implements OnInit {
 
-  
 
-  constructor(private userService: UserService, private router:Router, private facebookServicio:FacebookService) {
+
+  constructor(private userService: UserService, private router: Router, private facebookServicio: FacebookService) {
 
      }
 
   ngOnInit() {
   }
 
-  	login(user){
-  		console.log(user);
-  		this.userService.logUser(user)
+  login(user) {
+    console.log(user);
+    this.userService.logUser(user)
 
     .subscribe(
-      user =>{
+      // tslint:disable-next-line:no-shadowed-variable
+      user => {
 
         console.log(user);
-       /* let userid=user.id;
+       // tslint:disable-next-line:prefer-const
+       let userid = user.id;
+        // tslint:disable-next-line:prefer-const
         let tkn = user.api_token;
-        localStorage.setItem("tkntemplate", tkn);
-        localStorage.setItem("idtemplate", userid);
-        this.router.navigate(['/perfil/'+userid]);*/
+        localStorage.setItem('tkntemplate', tkn);
+        localStorage.setItem('idtemplate', userid);
+        this.router.navigate(['/perfil/' + userid]);
       },
       error => console.log(<any>error));
-  	}
+    }
 
   //  socialSignIn(facebook){
     //  console.log(facebook);
@@ -52,21 +55,23 @@ export class LoginComponent implements OnInit {
   //  }
 
 
-      socialSignIn(google){
+      socialSignIn(google) {
         console.log(google);
         this.facebookServicio.socialSignIn(google)
-        .then(socialUser =>{
-          console.log("socialUser:");
-          console.log(socialUser);  
+        .then(socialUser => {
+          console.log('socialUser:');
+          console.log(socialUser);
           this.userService.logSocialUser(socialUser)
         .subscribe(
-          user =>{
+          user => {
             console.log(user);
-        /*    let userid=user.id;
+           // tslint:disable-next-line:prefer-const
+           let userid = user.id;
+            // tslint:disable-next-line:prefer-const
             let tkn = user.api_token;
-            localStorage.setItem("tkntemplate", tkn);
-            localStorage.setItem("idtemplate", userid);
-            this.router.navigate(['/perfil/'+userid]);*/
+            localStorage.setItem('tkntemplate', tkn);
+            localStorage.setItem('idtemplate', userid);
+            this.router.navigate(['/perfil/' + userid]);
           },
           error => console.log(<any>error));
         },

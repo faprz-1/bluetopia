@@ -17,7 +17,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
   params: any;
   user = new User ('id', 'nombre', 'apellidos', 'email', 'password', 'telefono', 'sexo', 'imgperfil', 'api_token');
   image = 'http://template3.test/laravel_5.6.9/public/';
-  constructor(private userService: UserService, private activatedRoute: ActivatedRoute) { }
+  constructor(private userService: UserService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.params = this.activatedRoute.params.subscribe(params =>  this.id = params['id']);
@@ -40,8 +40,9 @@ export class PerfilComponent implements OnInit, OnDestroy {
     this.params.unsubscribe();
   }
 
-  /*noTkn(){
-    localStorage.removeItem("tkn");
-  }*/
+  editUser(id) {
+    this.router.navigate(['/editar/', id]);
+    console.log(id);
+  }
 
 }

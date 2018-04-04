@@ -8,7 +8,7 @@
 </div>
 <br><br>
 
-<form>
+<form (ngSubmit)="updatePswrd(formulario.value)" #formulario="ngForm">
 
   <div class="container col-md-5 text-center">
 
@@ -17,7 +17,7 @@
           <label class="col-4 col-form-label">Password Actual</label> 
 
           <input class="form-control text-center" type="password" placeholder="Contraseña Actual" 
-                    name="password" required ngModel  minlength="8" #password="ngModel"> 
+                    name="password" required ngModel  minlength="6" #password="ngModel"> 
  
           <div *ngIf="password.errors?.required" 
                   class="form-control-feedback text-center"> 
@@ -37,7 +37,7 @@
  
                 <div class="col-md-8"> 
                   <input class="form-control text-center" type="password" placeholder="Password Nuevo" 
-                            name="password1" required ngModel  minlength="8" #password1="ngModel"> 
+                            name="password1" required ngModel  minlength="6" #password1="ngModel"> 
 
                         <div *ngIf="password1.errors?.required" 
                                   class="form-control-feedback text-center"> 
@@ -55,7 +55,7 @@
  
                 <div class="col-md-8"> 
                   <input class="form-control text-center" type="password" placeholder="Repetir Password" 
-                            name="password2" ngModel required minlength="8" #password2="ngModel"> 
+                            name="password2" ngModel required minlength="6" #password2="ngModel"> 
  
                     <div *ngIf="password2.errors?.required" class="form-control-feedback text-center">
                     "Campo obligatorio"</div> 
@@ -72,7 +72,7 @@
             <div class="form-group row">
 
               <div class="col-md-7">
-                <button type="button"
+                <button type="submit"
                         class="btn btn-outline-primary text-center">
                         Guardar Cambios
                       </button>
@@ -81,8 +81,8 @@
                   <div class="col-md-5">
                     <button type="button"
                             class="btn btn-outline-primary text-center"
-                            [routerLink]="['/perfil']">
-                            Regresar al Perfil
+                             (click)="goPerfil()">
+                            Cancelar
                           </button>
                   </div>
             </div>

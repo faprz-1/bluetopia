@@ -9,7 +9,7 @@
 
 <ion-content class="ion">
 
-    <form (ngSubmit)="Guardar(formulario)" #formulario="ngForm" novalidate="">
+    <form (ngSubmit)="updatePswrd(formulario.value)" #formulario="ngForm" novalidate="">
       <br><br><br>
         <ion-list class="padd"   [ngClass]="{ 'has-danger': (password1.errors?.minlength || password1.errors?.required)&& password1.touched}">
 
@@ -24,7 +24,7 @@
                     class="form-control-feedback">
                         "Por lo menos {{ password.errors.minlength.requiredLength}} caracteres"</div> </ion-label>
 
-            <ion-input type="password" name="password" ngModel required minlength="8" #password="ngModel"></ion-input>
+            <ion-input type="password" name="password" ngModel required minlength="6" #password="ngModel"></ion-input>
           </ion-item>
 
       <br>
@@ -40,7 +40,7 @@
                       class="form-control-feedback">
                       "Por lo menos {{ password1.errors.minlength.requiredLength}} caracteres" </div> </ion-label>
 
-            <ion-input type="password" name="password1" ngModel required minlength="8" #password1="ngModel"></ion-input>
+            <ion-input type="password" name="password1" ngModel required minlength="6" #password1="ngModel"></ion-input>
           </ion-item>
 
       <br>
@@ -56,7 +56,7 @@
                       class="form-control-feedback">
                       "Confirmar la Contraseña Nueva" </div> </ion-label>
 
-            <ion-input type="password" name="password2" ngModel required minlength="8" #password2="ngModel"></ion-input>
+            <ion-input type="password" name="password2" ngModel required minlength="6" #password2="ngModel"></ion-input>
           </ion-item>
 
       <br>

@@ -2,3 +2,15 @@
 mobile/template/node_modules/
 
 web/angular524/node_modules/
+
+mobile/template/\.sourcemaps/
+
+mobile/template/.sourcemaps/
+
+mobile/template/platforms/
+
+mobile/template/plugins/
+
+mobile/template/resources/
+
+mobile/template/www/

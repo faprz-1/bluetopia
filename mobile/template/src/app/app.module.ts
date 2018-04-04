@@ -10,9 +10,14 @@ import { HttpClientModule } from '@angular/common/http';
 
 
 import { MyApp } from './app.component';
-import { RegistrarsePage, HomePage, CambiarContrasenaPage, PerfilPage,
-         RecuperarContrasenaPage, LoginPage, AdminPage, } from "../pages/index.paginas";
-
+import { RegistrarsePage,
+         CambiarContrasenaPage,
+         PerfilPage,
+         RecuperarContrasenaPage,
+         LoginPage,
+         AdminPage,
+         EditarPage,
+          } from "../pages/index.paginas";
 import { UserServiceProvider } from '../providers/user/usersService';
 import { FacebookProvider } from '../providers/facebook/facebook';
 import { Facebook } from '@ionic-native/facebook';
@@ -26,8 +31,8 @@ import { AuthGuardProvider } from '../providers/auth-guard/auth-guard';
     PerfilPage,
     RecuperarContrasenaPage,
     LoginPage,
-    HomePage,
-    AdminPage
+    AdminPage,
+    EditarPage
   ],
   imports: [
     BrowserModule,
@@ -46,7 +51,7 @@ import { AuthGuardProvider } from '../providers/auth-guard/auth-guard';
     RecuperarContrasenaPage,
     LoginPage,
     AdminPage,
-    HomePage
+    EditarPage
   ],
   providers: [
     StatusBar,

@@ -6,6 +6,9 @@ import { LoginPage, AdminPage, HomePage, PerfilPage } from '../pages/index.pagin
 import { AuthGuardProvider } from '../providers/auth-guard/auth-guard';
 
 
+import { AdminPage } from '../pages/admin/admin';
+import { LoginPage } from '../pages/login/login';
+
 @Component({
   templateUrl: 'app.html'
 })

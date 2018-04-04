@@ -1,0 +1,110 @@
+<!--
+  Generated template for the EditarPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Editar</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="ion">
+
+  <form (ngSubmit)="updateUser(formulario.value)" #formulario="ngForm" novalidate="">
+
+    <ion-list class="padding padinhori" [ngClass]="{ 'has-danger': (nombres.errors?.minlength || nombres.errors?.required)&& nombres.touched}">
+
+      <br>
+
+      <ion-item class="ion">
+        <ion-icon name="person" item-start></ion-icon>
+        <ion-label floating text-center> Nombre(s)
+          <div *ngIf="nombres.errors?.required" class="form-control-feedback">
+            "Este campo es requerido"</div>
+
+          <div *ngIf="nombres.errors?.minlength" class="form-control-feedback">
+            "Por lo menos {{ nombres.errors.minlength.requiredLength}} caracteres"</div>
+        </ion-label>
+
+        <ion-input type="text" name="nombres" minlength="3" [(ngModel)]="user.nombres" required #nombres="ngModel"> </ion-input>
+      </ion-item>
+
+      <br>
+      
+
+      <ion-item class="ion">
+        <ion-icon name="person" item-start></ion-icon>
+        <ion-label floating text-center>Apellido (s)
+          <div *ngIf="apellidos.errors?.required" class="form-control-feedback">
+            "Este campo es requerido"</div>
+        </ion-label>
+
+        <ion-input type="text" name="apellidos" [(ngModel)]="user.apellidos" required #apellidos="ngModel"> </ion-input>
+      </ion-item>
+
+      <br>
+
+      <ion-item class="ion">
+        <ion-icon name="mail" item-start></ion-icon>
+        <ion-label floating text-center>Correo Email
+          <div *ngIf="email.errors?.required" class="form-control-feedback">
+            "Este campo es obligatorio"</div>
+
+          <div *ngIf="email.errors?.pattern" class="form-control-feedback">
+            "No cumple con los caracteres"</div>
+        </ion-label>
+
+        <ion-input type="email" name="email" [(ngModel)]="user.email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #email="ngModel">
+        </ion-input>
+      </ion-item>
+
+      <br>
+
+      <ion-item class="ion">
+        <ion-icon name="call" item-start></ion-icon>
+        <ion-label floating text-center>Teléfono
+          <div *ngIf="telefono.errors?.required" class="form-control-feedback">
+            "Este campo es obligatorio" </div>
+
+          <div *ngIf="telefono.errors?.minlength" class="form-control-feedback">
+            "Debe de tener {{ telefono.errors.minlength.requiredLength}} caracteres"</div>
+        </ion-label>
+
+        <ion-input type="number" name="telefono" [(ngModel)]="user.telefono" required minlength="8" maxlength="8" size="8" #telefono="ngModel"></ion-input>
+      </ion-item>
+
+      <br>
+
+    </ion-list>
+
+    <ion-list class="pa">
+      <ion-item class="ion">
+        <ion-label>Sexo</ion-label>
+        <ion-select name="sexo" ngModel required #sexo="ngModel">
+          <ion-option value="Mujer">Mujer</ion-option>
+          <ion-option value="Hombre">Hombre</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    
+    <div padding>
+      <ion-label class="col-2 col-form-label">&nbsp;</ion-label>
+
+      <button ion-button block type="submit"> Editar </button>
+       <!-- [disabled]="!formulario.valid"  -->
+      <br>
+      <button ion-button block navPop> Cancelar</button>
+    </div>
+
+
+
+
+  </form>
+
+</ion-content>
+

@@ -10,19 +10,14 @@ import {Router} from '@angular/router';
   styleUrls: ['./user-edit.component.css']
 })
 export class UserEditComponent implements OnInit, OnDestroy {
+  id: any;
+  params: any;
+  user = new User ('id', 'nombres', 'apellidos', 'email', 'password', 'telefono', 'sexo', 'imgperfil', 'api_token');
 
-	id:any;
-  	params:any;
+  constructor(private activatedRoute: ActivatedRoute, private userService: UserService, private router: Router) { }
 
-  	user = new User ('id', 'nombres', 'apellidos', 'email', 'password', 'telefono','sexo','imgperfil','api_token');
-
-
-  constructor(private activatedRoute: ActivatedRoute, private userService: UserService, private router:Router) { }
-
-  
   ngOnInit() {
-
-  	this.params = this.activatedRoute.params.subscribe(params =>  this.id = params['id']);
+    this.params = this.activatedRoute.params.subscribe(params =>  this.id = params['id']);
     this.userService.getUser(this.id).subscribe(
       data => {
         console.log (data);
@@ -36,18 +31,18 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnDestroy(){
-  	this.params.unsubscribe();
+  ngOnDestroy() {
+    this.params.unsubscribe();
   }
 
-  updateUser(user){
+  updateUser(user) {
 
     this.userService.updateUser(user).subscribe(
-      	user => {console.log(user);
-      		this.router.navigate(['/admin']);
-      	},
-
-      	error => console.log(<any>error));
+      // tslint:disable-next-line:no-shadowed-variable
+      user => {console.log(user);
+        this.router.navigate(['/admin']);
+      },
+      error => console.log(<any>error));
 
 
   }

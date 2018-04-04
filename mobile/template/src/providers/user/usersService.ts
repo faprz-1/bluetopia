@@ -13,6 +13,8 @@ import {Observable} from 'rxjs/Rx';
 @Injectable()
 export class UserServiceProvider {
 
+  
+
   constructor(private http:Http) {}
 
   baseUrl='http://template3.0.test/servidor/laravel_5.6.9/public/api/';
@@ -30,11 +32,12 @@ export class UserServiceProvider {
     return this.http.post(this.baseUrl+'upload',image);
   }
 
-  logUser(user:Object): Observable<User[]>{
+  logUser(user:Object): Observable<User>{
   	return this.http.post(this.baseUrl+'login',user).map((response: Response) => response.json()).catch((error:any) => Observable.throw(error.json().error || {message:"Error del servidor"}));
   }
-  logSocialUser(user:Object):Observable<User[]>{
-    return this.http.post(this.baseUrl+'logsocialuser',user).map((response: Response) => response.json()).catch((error:any) => Observable.throw(error.json().error || {message:"Error del servidor"}));
+  logSocialUser(user:Object):Observable<User>{
+    return this.http.post(this.baseUrl+'logsocialuser',user)
+    .map((response: Response) => response.json()).catch((error:any) => Observable.throw(error.json().error || {message:"Error del servidor"}));
 
   }
 
@@ -49,11 +52,12 @@ export class UserServiceProvider {
      return this.http.put(url,user).map((response: Response) => response.json()).catch((error:any)=> Observable.throw(error.json().error || {mesage:"Error del servidor"}));
    }
 
-  //
-  // logSocialUser(user:Object):Observable<User[]>{
-  //   return this.http.post(this.baseUrl+'logsocialuser',user).map((response: Response) => response.json()).catch((error:any) => Observable.throw(error.json().error || {message:"Error del servidor"}));
-  //
-  // }
+   updatePswrd(pass:Object): Observable<User[]>{
+     /* const apiUrl = this.baseUrl;
+     const url = `${apiUrl}pass/${pass["id"]}`;
+     console.log(url); */
+     return this.http.post(this.baseUrl+ 'pass', pass).map((response: Response) => response.json()).catch((error: any) => Observable.throw(error.json().error || { mesage: "Error del servidor" }));
+   }
 
   deleteUser(id:String){
       //console.log('Prueba de llamado de función desde el service'); console.log(this.baseUrl+'/'+id);
