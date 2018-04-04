@@ -220,17 +220,35 @@ class UsersController extends Controller
          'sexo' => trim (null),
          'api_token'=>str_random(15)
        ));
-
        $user->save();
-
        return response ()->json($user,200);
        }
-
        return response ()->json($correo,200);
-       // return Response::json([
-       //               'message'=> 'No pasó el IF',
-       //               'correo'=> $email
-       //               ], 200);
+    }
+
+    public function updatePswrd(Request $request){
+
+        $data = $request->json()->all();
+        $user = User::find($data['id']);        
+
+        if(!$user){
+            return Response::json([
+                'error' => [
+                    'message' => "El usuario no existe!"]
+                ], 404); 
+        }
+       if($user && Hash::check($data['password'], $user->password)){
+            $user->password = trim (Hash::make($data['password1']));
+            $user->save();
+                }else{
+                    return Response::json([
+                        'error' => ['message' => "Los datos ingresados son incorrectos"]], 404);
+                }
+        $response = Response::json([
+            'message' => 'El password ha sido cambiado exitosamente!',
+        ], 201);
+
+        return $response;
 
     }
 
