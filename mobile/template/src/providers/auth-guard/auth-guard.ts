@@ -23,10 +23,10 @@ private isLoggedIn = false;
     this.isLoggedIn = true;
   }
 
-  logout(): void {
+  logout(): boolean {
     localStorage.clear();
     this.isLoggedIn = false;
-
+    return this.isLoggedIn;
   }
 
   authenticated(): boolean {

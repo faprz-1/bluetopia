@@ -18,13 +18,14 @@ export class PerfilPage {
   
 
   constructor(private authService:AuthGuardProvider, public navCtrl: NavController,
-                  public navParams: NavParams, public userService:UserServiceProvider) {
-  }
+              public navParams: NavParams, public userService:UserServiceProvider) {
+    
+               }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PerfilPage');
 
-    let id=localStorage.getItem("idtemplate")
+    let id=localStorage.getItem("idtemplate"); //PENDIENTETLEEKLESKSLSLDKDGNSLSKDS.DSNDSDS,MDS
 
     this.userService.getUser(id).subscribe(
       data => {
@@ -67,6 +68,15 @@ export class PerfilPage {
   }
 
   ionViewCanEnter() {
+    let auth = (this.authService.authenticated());
+
+    if (auth) {
+      console.log('Bienvenido (>.<)!');      
+    }else{
+      console.error('Acceso Denegado (x_x)?');
+      
+    }    
+
   return this.authService.authenticated();
 }
 

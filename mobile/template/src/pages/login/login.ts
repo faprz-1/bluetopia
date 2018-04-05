@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController, AlertController } from 'ionic-angular'; 
+import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular'; 
 import { RegistrarsePage, RecuperarContrasenaPage, PerfilPage } from '../index.paginas';
-import { NgForm} from '@angular/forms';
+/* import { NgForm} from '@angular/forms'; */
 import { UserServiceProvider } from '../../providers/user/usersService';
 import { FacebookProvider } from '../../providers/facebook/facebook';
 import { AuthGuardProvider } from '../../providers/auth-guard/auth-guard'; 
+import { MyApp } from "../../app/app.component";
 
 @IonicPage()
 @Component({
@@ -16,9 +17,10 @@ export class LoginPage {
   registrarse:any = RegistrarsePage;
   recu_contra:any = RecuperarContrasenaPage;
   perfil:any = PerfilPage;
+  rootPage: any;
 
-  constructor(private alertCtrl: AlertController, private authService: AuthGuardProvider, private menuCtrl: MenuController, private facebookProvider: FacebookProvider, public navCtrl: NavController, public navParams: NavParams, public userService: UserServiceProvider) { } 
-  /* constructor(private facebookProvider: FacebookProvider, public navCtrl: NavController, public navParams: NavParams, public userService: UserServiceProvider) {} */
+  constructor(private authService: AuthGuardProvider, private menuCtrl: MenuController, private facebookProvider: FacebookProvider, public navCtrl: NavController,
+              public navParams: NavParams, public userService: UserServiceProvider) { } 
 
   mostrarMenu() {
     this.menuCtrl.toggle();
@@ -39,7 +41,8 @@ export class LoginPage {
         let tkn = user.api_token;
         localStorage.setItem("tkntemplate", tkn);
         localStorage.setItem("idtemplate", userid);
-        this.navCtrl.setRoot(PerfilPage);
+        this.navCtrl.push(PerfilPage);
+        this.navCtrl.remove(1);
       },
       error => console.log(<any>error));
     }

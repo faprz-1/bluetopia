@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { Platform, MenuController} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { LoginPage, AdminPage, HomePage, PerfilPage } from '../pages/index.paginas';
+import { LoginPage, AdminPage, PerfilPage } from '../pages/index.paginas';
 import { AuthGuardProvider } from '../providers/auth-guard/auth-guard';
 
 
@@ -12,6 +12,7 @@ import { LoginPage } from '../pages/login/login';
 @Component({
   templateUrl: 'app.html'
 })
+
 export class MyApp {
 
     login = LoginPage;
@@ -39,7 +40,7 @@ export class MyApp {
 
   cerrar(){
     this.authService.logout();
-    this.rootPage= this.login;
+    this.rootPage = this.login;   
     this.menuCtrl.close();
   }
 }
