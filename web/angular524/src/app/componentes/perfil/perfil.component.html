@@ -1,80 +1,66 @@
 
+      <div class="container col-md-4 col-sm-6 main-container">
+        <div class="row">
+            <h4 class="text-center col-md-9">Perfil</h4>
+          </div>
+        </div>
 
-<div class="container col-md-6 main-container">
-  <div class="row">
-
-      <h4 class="text-center col-md-10">Perfil</h4>
-
-  </div>
-</div>
 <br>
 
-<div class="container col-md-4">
-  <div class="row">
-    <div class="card text-center" style="width: 18rem;">
-      <img class="card-img-top" src="{{image}}images/{{user.imgperfil}}" onerror="this.src='../../../assets/img/default_avatar.jpg'" alt="Card image cap">
-      <div class="card-body">
-        <p><button type="button" class="btn btn-link">Cambiar</button></p>
+      <div class="container col-md-4 col-sm-6 ">
+        <div class="row">
+          <div class="card" style="width: 20rem">
+            <img class="card-img-top col-md-12 col-sm-6 text-center" src="{{image}}images/{{user.imgperfil}}"
+                  onerror="this.src='../../../assets/img/default_avatar.jpg'" alt="Card image cap">
+
+              <p class="text-center"><button type="button" class="btn btn-link"> Cambiar </button></p>
+          </div>
+        </div>
       </div>
-    </div>
-
-  </div>
-
-</div>
 <br>
 <br>
-
 
 <form>
+  <div class="container col-md-4 col-sm-6">
 
-  <div class="container col-md-4">
+          <div class="form-group row">
+                <label class="col-4 col-sm-4 col-form-label">Nombre:</label>
+                <label class="col-4 col-sm-4 col-form-label">{{user.nombres}}</label>
+          </div>
 
-    <div class="form-group row">
+          <div class="form-group row">
+                <label class="col-4  col-sm-4 col-form-label">Apellidos:</label>
+                <label class="col-4 col-sm-4 col-form-label">{{user.apellidos}}</label>
+          </div>
 
-          <label class="col-4 col-form-label">Nombre:</label>
-          <label class="col-4 col-form-label">{{user.nombres}}</label>
+          <div class="form-group row">
+                <label class="col-4  col-sm-4 col-form-label">Correo:</label>
+                <label class="col-4 col-sm-4 col-form-label">{{user.email}}</label>
+          </div>
+
+          <div class="form-group row">
+                <label class="col-4  col-sm-4 col-form-label">Sexo:</label>
+                <label class="col-4 col-sm-4 col-form-label">{{user.sexo}}</label>
+          </div>
+
+          <div class="form-group row">
+                <label class="col-4  col-sm-4 col-form-label">Teléfono:</label>
+                <label class="col-4 col-sm-4 col-form-label">{{user.telefono}}</label>
+          </div>
+
+          <div class="form-group row">
+                <label class="col-4 col-sm-4 col-form-label">Contraseña: </label>
+                <button type="button" class="btn btn-link" [routerLink]="['/cambiarContrasena']">
+                   Cambiar Contraseña
+                </button>
+          </div>
+<br>
+          <div class="pa text-center col-md-9">
+            <button type="button" class="btn btn-primary" (click)="editUser(user.id)">
+              Editar Información
+            </button>
+          </div>
+
 
     </div>
-
-    <div class="form-group row">
-
-          <label class="col-4 col-form-label">Apellidos:</label>
-          <label class="col-4 col-form-label">{{user.apellidos}}</label>
-
-    </div>
-
-
-    <div class="form-group row">
-
-          <label class="col-4 col-form-label">Correo:</label>
-          <label class="col-4 col-form-label">{{user.email}}</label>
-
-    </div>
-
-    <div class="form-group row">
-
-          <label class="col-4 col-form-label">Sexo:</label>
-          <label class="col-4 col-form-label">{{user.sexo}}</label>
-
-    </div>
-
-    <div class="form-group row">
-
-          <label class="col-4 col-form-label">Teléfono:</label>
-          <label class="col-4 col-form-label">{{user.telefono}}</label>
-
-    </div>
-    
-    <div class="form-group row">
-
-          <label class="col-4 col-form-label">Contraseña:</label>
-          <button type="button" class="btn btn-link" [routerLink]="['/cambiarContrasena']">
-            Cambiar Contraseña
-          </button>
-    </div>
-      
-      <button type="button" class="btn btn-primary" (click)="editUser(user.id)">
-        Editar Información
-      </button>
-    </div>
-  </form>
+</form>

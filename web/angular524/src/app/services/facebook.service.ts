@@ -1,6 +1,6 @@
   import { Injectable } from '@angular/core';
   import { AuthService, FacebookLoginProvider, GoogleLoginProvider } from 'angular5-social-login';
- import {UserService} from '../services/user.service';
+  import {UserService} from '../services/user.service';
 
   @Injectable()
   export class FacebookService {

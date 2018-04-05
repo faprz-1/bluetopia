@@ -1,49 +1,71 @@
 
+      <div class="container main-container">
+        <div class="row">
+          <div class="col-md-12 col-sm-6 text-center">
+            <h4>Actualizando: {{user.nombres}}</h4>
+          </div>
+        </div>
+      </div>
 
-<div class="col-md-10 col-md-offset-1">
-  <div class="well well bs-component">
+<br>
+<br>
+
     <form novalidate class="form-horizontal" (ngSubmit)="updateUser(user)" #editUserForm="ngForm">
       <fieldset>
-        <legend>Actualizando: {{user.nombres}}</legend>
-        <div class="form-group">
-          <label for="nombres" class="col-lg-2 control-label">Nombres</label>
-          <div class="col-lg-10">
-            <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Nombres" [(ngModel)]="user.nombres" #nombres="ngModel"
-              required minlength="3">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="apellidos" class="col-lg-2 control-label">Apellidos</label>
-          <div class="col-lg-10">
-            <input type="text" name="apellidos" class="form-control" id="apellidos" placeholder="Apellidos" [(ngModel)]="user.apellidos"
-              user.nombre="ngModel" required>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="email" class="col-lg-2 control-label">Correo</label>
-          <div class="col-lg-10">
-            <input type="text" name="email" class="form-control" id="email" placeholder="Título" [(ngModel)]="user.email" #email="ngModel"
-              required>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="telefono" class="col-lg-2 control-label">Teléfono</label>
-          <div class="col-lg-10">
-            <input name="description" rows="3" class="form-control" id="telefono" [(ngModel)]="user.telefono" #telefono="ngModel" requiered>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-lg-10 col-lg-offset-2">            
-            <button type="submit" class="btn btn-outline-primary">
-              Aplicar cambios
-            </button>
-            <button type="button" class="btn btn-outline-danger text-center" (click)="goPerfil()">
-              Cancelar
-            </button>
 
+        <div class="container col-md-5 col-sm-6 text-center">
+
+          <div class="form-group row">
+            <label class="col-4 control-form-label">Nombres</label>
+              <div class="col-md-8 col-sm-6">
+                <input type="text" class="form-control" name="nombres" placeholder="Nombres"
+                        [(ngModel)]="user.nombres" #nombres="ngModel" required minlength="3"> </div>
           </div>
-        </div>
-      </fieldset>
-    </form>
+
+
+          <div class="form-group row">
+            <label class="col-4 control-form-label">Apellidos</label>
+            <div class="col-md-8 col-sm-6">
+              <input type="text" name="apellidos" class="form-control" placeholder="Apellidos"
+                                  [(ngModel)]="user.apellidos" user.nombre="ngModel" required> </div>
+          </div>
+
+
+          <div class="form-group row">
+            <label class="col-4 control-form-label">Correo</label>
+            <div class="col-md-8 col-sm-6">
+              <input type="email" name="email" class="form-control" placeholder="ejemplo@email.com"
+                      [(ngModel)]="user.email" #email="ngModel" required>
+            </div>
+          </div>
+
+
+          <div class="form-group row">
+            <label class="col-4 control-form-label">Teléfono</label>
+            <div class="col-md-8 col-sm-6">
+              <input name="number" class="form-control" [(ngModel)]="user.telefono"
+              #telefono="ngModel" requiered maxlength="10" minlength="10" size="10"> </div>
+          </div>
+
+</div>
+
+<br>
+
+          <div class="container col-md-5 col-sm-6 text-center">
+            <div class="form-group row">
+
+
+              <div class="col-md-7 col-sm-5">
+                <button type="submit" class="btn btn-outline-primary text-center">
+                          Aplicar cambios </button> </div>
+<br>
+<br>
+
+              <div class="col-md-5 col-sm-6">
+                <button type="button" class="btn btn-outline-danger text-center" (click)="goPerfil()">
+                        Cancelar </button> </div>
+
   </div>
 </div>
+</fieldset>
+</form>

@@ -17,6 +17,8 @@ export class CambiarComtrasenaComponent implements OnInit {
   }
 
   updatePswrd(pass) {
+    if((pass.password1==pass.password2)&&pass.password1.length>5){
+
     pass.id = localStorage.getItem('idtemplate');
     console.log('valor formulario', pass);
     this.userService.updatePswrd(pass)
@@ -27,6 +29,7 @@ export class CambiarComtrasenaComponent implements OnInit {
           this.router.navigate(['/perfil/', this.usrid]);
         },
         error => console.log(<any>error));
+      }
   }
 
   goPerfil() {

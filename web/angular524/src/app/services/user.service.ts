@@ -11,7 +11,7 @@ import {HttpClient} from '@angular/common/http';
 export class UserService {
 
   constructor(private http: Http, private httpClient: HttpClient) { }
-  baseUrl = 'http://template3.test/laravel_5.6.9/public/api/';
+  baseUrl = 'http://template3.0.test/servidor/laravel_5.6.9/public/api/';
 
   getUsers(): Observable<User[]> {
     return this.http.get(this.baseUrl + 'users').map((response: Response) => response.json());
