@@ -19,10 +19,8 @@
    <img src="{{imagenpefil}}images/{{user.imgperfil}}" width="100px"  class="rounded-circle" onerror="this.src='../../assets/imgs/default_avatar.jpg'">
 
 <br>
-<form (ngSubmit)="cambiarImg(img)" #formulario="ngForm">
     <input style="display:none" type="file" id="img" name="img" ngModel required #img="ngModel" (change)="onFileChange($event)" #fileInput>
     <button type="button" ion-button clear (click)="fileInput.click()">Cambiar</button>
-</form>
 <br>
 
           <form  class="ion" >

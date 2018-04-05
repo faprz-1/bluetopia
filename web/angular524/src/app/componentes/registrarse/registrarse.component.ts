@@ -4,6 +4,7 @@ import { User } from '../../models/user';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormArray} from '@angular/forms'
+// tslint:disable-next-line:import-blacklist
 import {Observable} from 'rxjs/Rx';
 
 @Component({
@@ -16,9 +17,9 @@ export class RegistrarseComponent implements OnInit {
   constructor(private userService: UserService, private router:Router) {}
 
   @ViewChild('fileInput') fileInput: ElementRef;
-  sexos:string[]=["Hombre","Mujer"];
-  img:string;
-  image:File=null;
+  sexos: string[] = ['Hombre', 'Mujer'];
+  img: string;
+  image: File = null;
   users: Observable<User[]>;
 
   ngOnInit() {
@@ -26,45 +27,45 @@ export class RegistrarseComponent implements OnInit {
 
     onFileChange(event) {
     let reader = new FileReader();
-    if(event.target.files && event.target.files.length > 0) {
+    if (event.target.files && event.target.files.length > 0) {
       let file = event.target.files[0];
-      this.image=<File>event.target.files[0];
+      this.image = <File>event.target.files[0];
       reader.readAsDataURL(file);
       reader.onload = () => {
-        this.img=file.name
+        this.img = file.name;
       };
     }
   }
 
   clearFile() {
-    this.img=null;
+    this.img = null;
     console.log(this.fileInput.nativeElement)
     /*this.fileInput.nativeElement.value = '';*/
   }
 
 
-   createUser(user){
-     //Para crear usuario en la BD
-    user.img=this.img;
-    console.log(user);    
+   createUser(user) {
+     // Para crear usuario en la BD
+    user.img = this.img;
+    console.log(user);
     this.userService.createUser(user)
     .subscribe(
-     user =>{
+     // tslint:disable-next-line:no-shadowed-variable
+     user => {
        console.log(user);
        this.router.navigate(['/admin']);
      },
      error => console.log(<any>error));
 
-     //Para agregar la imagen... disque
+     // Para agregar la imagen... disque
     const imageData = new FormData();
     imageData.append('image', this.image, this.image.name);
     this.userService.uploadImage(imageData)
       .subscribe(
-      image =>{
+      image => {
         console.log(image);
       },
       error => console.error(<any>error));
-     
     }
 
 }

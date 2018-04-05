@@ -95,33 +95,8 @@ export class PerfilPage {
             error => console.error(<any>error));
         
       };
-    }      
-
+    }
   }
-
-/*   cambiarImg(user){
-    user.img = this.img;
-    console.log(user);
-    this.userService.createUser(user)
-      .subscribe(
-        user => {
-          console.log(user);
-          this.navCtrl.popTo(LoginPage);
-        },
-        error => console.log(<any>error));
-
-    //Para agregar la imagen... disque
-    const imageData = new FormData();
-    imageData.append('image', this.image, this.image.name);
-    console.log(imageData);
-    this.userService.uploadImage(imageData)
-      .subscribe(
-        image => {
-          console.log(image);
-        },
-        error => console.error(<any>error));
-
-  } */
 
  
   logout() {

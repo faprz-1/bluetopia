@@ -47,14 +47,18 @@ export class UserService {
     .catch((error: any) => Observable.throw(error.json().error || { mesage: 'Error del servidor' }));
   }
 
+  cambioImg(img: Object): Observable<User> {
+    return this.http.post(this.baseUrl + 'imgchng', img).map((response: Response) => response.json());
+  }
+
    logUser(user: Object): Observable<User> {
     return this.http.post(this.baseUrl + 'login', user).map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || {message: 'Error del servidor'}));
   }
+
   logSocialUser(user: Object): Observable<User> {
     return this.http.post(this.baseUrl + 'logsocialuser', user).map((response: Response) => response.json())
     .catch((error: any) => Observable.throw(error.json().error || {message: 'Error del servidor'}));
-
   }
 
   deleteUser(id: String) {
