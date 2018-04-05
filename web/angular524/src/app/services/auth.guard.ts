@@ -8,36 +8,36 @@ import { UserService } from '../services/user.service';
 
 
 export class AuthGuard implements CanActivate {
-
-	id:any;
-	params:any;
+	
+	id: any;
+	params: any;
 	user = new User ('id', 'nombre', 'apellidos', 'email', 'password', 'telefono', 'sexo','imgperfil','api_token');
 
-	constructor(private userService:UserService, private router:Router) {}
+	constructor(private userService: UserService, private router: Router) {}
 
 
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+	
+		let tkn = localStorage.getItem('tkntemplate');
 
-	let tkn= localStorage.getItem("tkntemplate");	
+  	if (tkn) {
 
-  	if(tkn){
-
-  		console.log("Bienvendio! (>.<)!");
-  		return true;	
+  		console.log('Bienvendio! (>.<)!');
+  		return true;
   	}
-  	this.router.navigate(['login']); 
-  	console.error("Acceso denegado!");
+  	this.router.navigate(['login']);
+  	console.error('Acceso denegado!');
   	
-  	return false;    
+  	return false;
   }
 
-  testkn():boolean{
-  	let tkn= localStorage.getItem("tkntemplate");	
-  	if(tkn){
-  		return true;	
+  testkn(): boolean {
+  	let tkn = localStorage.getItem('tkntemplate');
+  	if (tkn) {
+  		return true;
   	}
   	return false;
   }

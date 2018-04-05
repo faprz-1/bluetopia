@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { User } from '../../models/user';
 import { UserServiceProvider } from '../../providers/user/usersService';
-import { Http, Response } from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { AuthGuardProvider } from '../../providers/auth-guard/auth-guard';
@@ -24,7 +23,7 @@ export class AdminPage {
 	users: Observable<User[]>;
 
 
-  constructor(private authService:AuthGuardProvider, public navCtrl: NavController, public navParams: NavParams, public http:Http, public userService:UserServiceProvider) {
+  constructor(private authService:AuthGuardProvider, public navCtrl: NavController, public navParams: NavParams, public userService:UserServiceProvider) {
   }
 
   ionViewDidLoad() {
@@ -55,9 +54,19 @@ export class AdminPage {
 
   }
 
-//   ionViewCanEnter() {
-//   return this.authService.authenticated();
-// }
+  ionViewCanEnter() {
+    let auth = (this.authService.authenticated());
+    let tkn = localStorage.getItem('tkntemplate');
+
+    if (auth && tkn) {
+      console.log('Bienvenido (>.<)!');
+    } else {
+      console.error('Acceso Denegado (x_x)?');
+
+    }
+
+    return this.authService.authenticated();
+  }
 
 
 }

@@ -9,11 +9,11 @@ import {Router} from '@angular/router';
 })
 export class NavbarComponent{
 
-  id:string;
+  id: string;
 
   constructor(private auth: AuthGuard, private router: Router) {
-  	auth.testkn();
-    this.id=localStorage.getItem("idtemplate");
+    auth.testkn();
+    this.id = localStorage.getItem('idtemplate');
    }
 
 // funcion para cerrar sesión

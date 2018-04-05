@@ -252,4 +252,26 @@ class UsersController extends Controller
 
     }
 
+    public function updateImg(Request $request){
+         $data = $request->json()->all();
+         $user = User::find($data['id']); 
+
+        if(!$user){
+            return Response::json([
+                'error' => [
+                    'message' => "Usuario no existente o logueado correctamente!"]
+                ], 404); 
+        }
+       
+            $user->imgperfil = trim ($data['nombre']);
+            $user->save();
+
+        $response = Response::json([
+            'message' => 'Cambio de imagen exitoso!',
+            'content' => $data
+        ], 201);
+
+        return $response;
+    }
+
 }
