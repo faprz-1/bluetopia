@@ -5,7 +5,6 @@ import { RegistrarsePage, RecuperarContrasenaPage, PerfilPage } from '../index.p
 import { UserServiceProvider } from '../../providers/user/usersService';
 import { FacebookProvider } from '../../providers/facebook/facebook';
 import { AuthGuardProvider } from '../../providers/auth-guard/auth-guard'; 
-import { MyApp } from "../../app/app.component";
 
 @IonicPage()
 @Component({
@@ -41,8 +40,9 @@ export class LoginPage {
         let tkn = user.api_token;
         localStorage.setItem("tkntemplate", tkn);
         localStorage.setItem("idtemplate", userid);
-        this.navCtrl.push(PerfilPage);
-        this.navCtrl.remove(1);
+        /* this.navCtrl.push(PerfilPage);
+        this.navCtrl.remove(1); */
+        this.navCtrl.setRoot(PerfilPage);
       },
       error => console.log(<any>error));
     }

@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -35,6 +36,7 @@ import { AuthGuardProvider } from '../providers/auth-guard/auth-guard';
     EditarPage
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     IonicModule.forRoot(MyApp),
     FormsModule,

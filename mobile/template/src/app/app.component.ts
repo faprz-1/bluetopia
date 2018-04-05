@@ -1,5 +1,7 @@
-import { Component, Injectable } from '@angular/core';
-import { Platform, MenuController} from 'ionic-angular';
+import { CommonModule } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
+import { Component, ViewChild } from '@angular/core';
+import { Platform, MenuController, NavController} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage, AdminPage, PerfilPage } from '../pages/index.paginas';
@@ -14,13 +16,13 @@ import { LoginPage } from '../pages/login/login';
 })
 
 export class MyApp {
-
+  @ViewChild('mycontent') navCtrl: NavController
     login = LoginPage;
     perfil = PerfilPage;
     adm = AdminPage;
 
   /* rootPage:any = AdminPage; */
-  rootPage:any = LoginPage;
+  rootPage:any = PerfilPage;
 
   constructor(private authService:AuthGuardProvider, private menuCtrl: MenuController, platform: Platform,
                     statusBar: StatusBar, splashScreen: SplashScreen) {
@@ -30,6 +32,10 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
     });
+
+    this.authService.testkn();
+    console.log('testkn: ', this.authService.testkn());
+    
   }
 
 
@@ -40,7 +46,8 @@ export class MyApp {
 
   cerrar(){
     this.authService.logout();
-    this.rootPage = this.login;   
+    /* this.rootPage = this.login;  */  
+    this.navCtrl.setRoot(LoginPage);
     this.menuCtrl.close();
   }
 }

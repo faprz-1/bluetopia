@@ -16,10 +16,11 @@
 <ion-content text-center  class="ion" >
     <h1>Perfil</h1>
 <br>
-   <img src="{{image}}images/{{user.imgperfil}}" width="100px"  class="rounded-circle" onerror="this.src='../../assets/imgs/default_avatar.jpg'">
+   <img src="{{imagenpefil}}images/{{user.imgperfil}}" width="100px"  class="rounded-circle" onerror="this.src='../../assets/imgs/default_avatar.jpg'">
 
 <br>
-    <button ion-button clear>Cambiar</button>
+    <input style="display:none" type="file" id="img" name="img" ngModel required #img="ngModel" (change)="onFileChange($event)" #fileInput>
+    <button type="button" ion-button clear (click)="fileInput.click()">Cambiar</button>
 <br>
 
           <form  class="ion" >
