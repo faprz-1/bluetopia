@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { NgForm} from '@angular/forms';
+/* import { NgForm} from '@angular/forms'; */
 import { UserServiceProvider } from '../../providers/user/usersService';
 import { PerfilPage } from '../index.paginas';
 

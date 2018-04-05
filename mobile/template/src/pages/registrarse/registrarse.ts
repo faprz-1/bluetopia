@@ -1,12 +1,11 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { IonicPage, NavController, AlertController  } from 'ionic-angular';
-import { NgForm} from '@angular/forms';
+/* import { NgForm} from '@angular/forms'; */
 import { LoginPage } from '../index.paginas';
 import { User } from '../../models/user';
 import { UserServiceProvider } from '../../providers/user/usersService';
-import { Http, Response } from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-import { FormGroup, FormControl, Validators, FormArray} from '@angular/forms'
+/* import { FormGroup, FormControl, Validators, FormArray} from '@angular/forms' */
 
 @IonicPage()
 @Component({
@@ -50,8 +49,7 @@ export class RegistrarsePage {
     .subscribe(
      user =>{
        console.log(user);
-//       this.router.navigate(['/admin']);
-       this.navCtrl.push(LoginPage);
+       this.navCtrl.popTo(LoginPage);
      },
      error => console.log(<any>error));
 

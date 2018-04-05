@@ -1,9 +1,4 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UserServiceProvider } from '../user/usersService';
-import { User } from '../../models/user';
-import { IonicPage} from 'ionic-angular';
-import { LoginPage} from '../../pages/index.paginas';
 /*
   Generated class for the AuthGuardProvider provider.
 
@@ -34,7 +29,14 @@ private isLoggedIn = false;
     
   }
 
-
-
+  testkn(): boolean {
+    let tkn = localStorage.getItem('tkntemplate');
+    let auth = (this.authenticated());
+    if (tkn && auth) {
+      return true;
+    }else{
+      return false;
+    }  
+  }
 
 }

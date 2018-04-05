@@ -8,17 +8,16 @@
 
 <ion-content>
   <ion-list>
-
-       <button ion-item (click)="abrirPagina( login )">
-         Iniciar Sesión
-       </button>
-       <button ion-item (click)="abrirPagina( perfil )">
+        <button ion-item (click)="abrirPagina( login )" *ngIf="!authService.testkn()">
+          Iniciar Sesión
+        </button> 
+       <button ion-item (click)="abrirPagina( perfil )" *ngIf="authService.testkn()">
          Perfil
        </button>
-       <button ion-item (click)="abrirPagina( adm )">
+       <button ion-item (click)="abrirPagina( adm )" *ngIf="authService.testkn()">
          Admin
        </button>
-       <button ion-item (click)="cerrar()">
+       <button ion-item (click)="cerrar(pagina)" *ngIf="authService.testkn()">
          Cerrar Sesión
        </button>
 

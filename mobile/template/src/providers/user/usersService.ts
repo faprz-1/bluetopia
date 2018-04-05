@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../../models/user';
 import {Http, Response} from '@angular/http'
@@ -36,10 +35,10 @@ export class UserServiceProvider {
   logUser(user:Object): Observable<User>{
   	return this.http.post(this.baseUrl+'login',user).map((response: Response) => response.json()).catch((error:any) => Observable.throw(error.json().error || {message:"Error del servidor"}));
   }
+
   logSocialUser(user:Object):Observable<User>{
     return this.http.post(this.baseUrl+'logsocialuser',user)
     .map((response: Response) => response.json()).catch((error:any) => Observable.throw(error.json().error || {message:"Error del servidor"}));
-
   }
 
   getUser(id:String): Observable<User[]>{
@@ -60,7 +59,11 @@ export class UserServiceProvider {
      return this.http.post(this.baseUrl+ 'pass', pass).map((response: Response) => response.json()).catch((error: any) => Observable.throw(error.json().error || { mesage: "Error del servidor" }));
    }
 
-  deleteUser(id:String){
+  cambioImg(img:Object): Observable<User>{
+    return this.http.post(this.baseUrl + 'imgchng', img).map((response: Response) => response.json());
+   }
+
+  deleteUser(id: String): Observable<User[]>{
       //console.log('Prueba de llamado de función desde el service'); console.log(this.baseUrl+'/'+id);
       return this.http.delete(this.baseUrl + 'users/'+ id).map((response: Response) => response.json());
     }

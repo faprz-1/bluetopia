@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Http, Response } from "@angular/http";
 import { User } from '../../models/user';
 import { UserServiceProvider } from '../../providers/user/usersService';
-import { TYPED_NULL_EXPR } from '@angular/compiler/src/output/output_ast';
+/* import { TYPED_NULL_EXPR } from '@angular/compiler/src/output/output_ast'; */
 import { PerfilPage } from '../index.paginas';
 
 /**

@@ -9,24 +9,21 @@ import {Router} from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
-  id:string;
+  id: string;
 
   constructor(private auth: AuthGuard, private router: Router) {
-  	auth.testkn();
-    this.id=localStorage.getItem("idtemplate");
+    auth.testkn();
+    this.id = localStorage.getItem('idtemplate');
    }
-
-
-  
 
 
   ngOnInit() {
   }
 
 
-  logout(){
-  	localStorage.clear();
-  	this.router.navigate(['login']);
+  logout() {
+    localStorage.clear();
+    this.router.navigate(['login']);
   }
 
 }
