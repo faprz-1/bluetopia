@@ -14,7 +14,7 @@ import {Observable} from 'rxjs/Rx';
 })
 export class RegistrarseComponent implements OnInit {
 
-  constructor(private userService: UserService, private router:Router) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   @ViewChild('fileInput') fileInput: ElementRef;
   sexos: string[] = ['Hombre', 'Mujer'];
