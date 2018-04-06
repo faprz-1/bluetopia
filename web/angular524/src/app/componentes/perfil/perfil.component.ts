@@ -17,7 +17,8 @@ export class PerfilComponent implements OnInit, OnDestroy {
   id: any;
   params: any;
   user = new User ('id', 'nombre', 'apellidos', 'email', 'password', 'telefono', 'sexo', 'imgperfil', 'api_token');
-  imagenpefil = 'http://template3.test/laravel_5.6.9/public/';
+  // imagenpefil = 'http://template3.test/laravel_5.6.9/public/';
+  imagenpefil = 'http://template3.0.test/servidor/laravel_5.6.9/public/';
   img = { nombre: String, id: localStorage.getItem('idtemplate') };
   image: any;
   users: Observable<User[]>;
