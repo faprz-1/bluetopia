@@ -29,7 +29,8 @@ export class UsersListComponent implements OnInit {
       this.userService.deleteUser(id)
       .subscribe(
         // tslint:disable-next-line:no-shadowed-variable
-        id => {console.log(id);
+        id => {
+          console.log('Usuario eliminado');
         },
         error => console.log(<any>error));
       this.router.navigate(['/admin']);

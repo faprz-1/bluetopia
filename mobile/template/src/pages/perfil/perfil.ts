@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import { CambiarContrasenaPage, LoginPage, EditarPage} from '../index.paginas';
 import { User } from '../../models/user';
 import { UserServiceProvider } from '../../providers/user/usersService';
@@ -23,7 +23,8 @@ export class PerfilPage {
   
 
   constructor(private authService:AuthGuardProvider, public navCtrl: NavController,
-              public navParams: NavParams, public userService:UserServiceProvider) { }
+    public navParams: NavParams, public userService: UserServiceProvider, public alertCtrl: AlertController,
+    public toastCtrl: ToastController) { }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PerfilPage');
@@ -74,26 +75,16 @@ export class PerfilPage {
       reader.readAsDataURL(file);
       reader.onload = () => {
         this.img.nombre = file.name;
-      //Cambiando imagen en la bd
+        //Cambiando imagen en la bd
         console.log(this.img);        
         this.userService.cambioImg(this.img)
         .subscribe(
             user => {
               console.log(user);
               this.navCtrl.setRoot(PerfilPage);
+              this.toastimg();
             },
             error => console.log(<any>error));
-      //Guardando la imagen
-        const imageData = new FormData();
-        imageData.append('image', this.image, this.image.name);
-        console.log(imageData);
-        this.userService.uploadImage(imageData)
-          .subscribe(
-            image => {
-              console.log(image);
-            },
-            error => console.error(<any>error));
-        
       };
     }
   }
@@ -104,18 +95,37 @@ export class PerfilPage {
   	this.navCtrl.push(LoginPage);
   }
 
-  /* ionViewCanEnter() {
+  ionViewCanEnter() {
     let auth = (this.authService.authenticated());
     let tkn = localStorage.getItem('tkntemplate');
 
     if (auth && tkn) {
-      console.log('Bienvenido (>.<)!');      
+      console.log('Bienvenido (>.<)!');
+
     }else{
       console.error('Acceso Denegado (x_x)?');
+      this.showAlert();
       
     }    
 
   return this.authService.authenticated();
-} */
+}
+
+  showAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Acceso Denegado',
+      subTitle: '!No se ha iniciado sesión correctamente!',
+      buttons: ['(x_X)?']
+    });
+    alert.present();
+  }
+
+  toastimg() {
+    let toast = this.toastCtrl.create({
+      message: 'Imagen cambiada',
+      duration: 2500
+    });
+    toast.present();
+  }
 
   }

@@ -81,7 +81,6 @@
       <br>
 
     </ion-list>
-
     <ion-list class="pa">
       <ion-item class="ion">
         <ion-label>Sexo</ion-label>
@@ -99,6 +98,10 @@
        <!-- [disabled]="!formulario.valid"  -->
       <br>
       <button ion-button block navPop> Cancelar</button>
+    </div>
+    <br>
+    <div padding>
+      <button ion-button color="danger" round type="button" large (click)="delete(user.id)">ELIMINAR CUENTA</button>
     </div>
 
 

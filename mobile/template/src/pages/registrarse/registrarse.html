@@ -71,7 +71,7 @@
               class="form-control-feedback">
                 "Por lo menos {{ password.errors.minlength.requiredLength}} caracteres"</div> </ion-label>
 
-      <ion-input type="password" name="password" ngModel required minlength="8" #password="ngModel"></ion-input>
+      <ion-input type="password" name="password" ngModel required minlength="6" #password="ngModel"></ion-input>
     </ion-item>
 
 <br>
@@ -88,7 +88,7 @@
                     "Repetir la Contraseña"</div> </ion-label>
 
 
-      <ion-input type="password" name="password1" ngModel required #password1="ngModel" minlength="8"></ion-input>
+      <ion-input type="password" name="password1" ngModel required #password1="ngModel" minlength="6"></ion-input>
     </ion-item>
 
 
@@ -106,7 +106,7 @@
                 class="form-control-feedback">
                   "Debe de tener {{ telefono.errors.minlength.requiredLength}} caracteres"</div> </ion-label>
 
-      <ion-input type="number" name="telefono" ngModel required minlength="8" maxlength="8" size="8" #telefono="ngModel"></ion-input>
+      <ion-input type="number" name="telefono" ngModel required minlength="10" maxlength="10" size="10" #telefono="ngModel"></ion-input>
     </ion-item>
 
 <br>
@@ -132,7 +132,7 @@
 
 
 <ion-item class="ion">    
-  <ion-input type="file" id="img" name="img" ngModel required #img="ngModel" (change)="onFileChange($event)" #fileInput></ion-input>
+  <ion-input type="file" id="img" name="img" ngModel #img="ngModel" (change)="onFileChange($event)" #fileInput></ion-input>
 </ion-item>
 
 <!-- <div floating text-center>
@@ -146,7 +146,7 @@
   <div padding >
     <ion-label class="col-2 col-form-label">&nbsp;</ion-label>
 
-     <button ion-button block  type="submit"> registrarse </button> <!-- [disabled]="!formulario.valid" -->
+     <button ion-button block  type="submit" [disabled]="!formulario.valid"> registrarse </button>
      <br>
      <button ion-button block navPop> Salir</button>
    </div>
