@@ -4,6 +4,7 @@ import { User } from '../../models/user';
 import { UserServiceProvider } from '../../providers/user/usersService';
 /* import { TYPED_NULL_EXPR } from '@angular/compiler/src/output/output_ast'; */
 import { PerfilPage, LoginPage } from '../index.paginas';
+import { AuthGuardProvider } from '../../providers/auth-guard/auth-guard';
 
 /**
  * Generated class for the EditarPage page.
@@ -22,7 +23,7 @@ export class EditarPage {
   user = new User('id', 'nombre', 'apellidos', 'email', 'password', 'telefono', 'sexo', 'imgperfil', 'api_token');
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public userService: UserServiceProvider,
-    public toastCtrl: ToastController) {
+    public toastCtrl: ToastController, private authService: AuthGuardProvider) {
   }
 
   ionViewDidLoad() {
@@ -70,7 +71,9 @@ export class EditarPage {
         // tslint:disable-next-line:no-shadowed-variable
         id => {
           console.log("Usuario Eliminado");
-          this.toastupdate('Su cuenta ha sido eliminada')
+          this.toastupdate('Su cuenta ha sido eliminada');
+          localStorage.clear();
+          this.authService.logout();
           this.navCtrl.setRoot(LoginPage);
         },
         error => console.log(<any>error));
