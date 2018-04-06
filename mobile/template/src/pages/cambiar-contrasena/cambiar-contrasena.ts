@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 /* import { NgForm} from '@angular/forms'; */
 import { UserServiceProvider } from '../../providers/user/usersService';
 import { PerfilPage } from '../index.paginas';
@@ -13,7 +13,8 @@ export class CambiarContrasenaPage {
 
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public userService: UserServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public userService: UserServiceProvider,
+    public toastCtrl: ToastController) {
   }
 
   ionViewDidLoad() {
@@ -29,8 +30,17 @@ export class CambiarContrasenaPage {
       user => {
         console.log(user);
         this.navCtrl.popTo(PerfilPage);
+        this.toaspswrd();
       },
       error => console.log(<any>error));
+  }
+
+  toaspswrd() {
+    let toast = this.toastCtrl.create({
+      message: 'Contraseña cambiada',
+      duration: 2500
+    });
+    toast.present();
   }
   
 }

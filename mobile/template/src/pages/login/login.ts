@@ -5,6 +5,7 @@ import { RegistrarsePage, RecuperarContrasenaPage, PerfilPage } from '../index.p
 import { UserServiceProvider } from '../../providers/user/usersService';
 import { FacebookProvider } from '../../providers/facebook/facebook';
 import { AuthGuardProvider } from '../../providers/auth-guard/auth-guard'; 
+import { AlertController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -19,7 +20,7 @@ export class LoginPage {
   rootPage: any;
 
   constructor(private authService: AuthGuardProvider, private menuCtrl: MenuController, private facebookProvider: FacebookProvider, public navCtrl: NavController,
-              public navParams: NavParams, public userService: UserServiceProvider) { } 
+    public navParams: NavParams, public userService: UserServiceProvider, public alertCtrl: AlertController) { } 
 
   mostrarMenu() {
     this.menuCtrl.toggle();
@@ -44,29 +45,14 @@ export class LoginPage {
         this.navCtrl.remove(1); */
         this.navCtrl.setRoot(PerfilPage);
       },
-      error => console.log(<any>error));
+      error =>{
+        console.log(<any>error);
+        this.showAlert();
+      } 
+    );
+      
+
     }
-    
-  /* nextPage() {
-    this.navCtrl.push('PerfilPage').catch(err => {
-      let alert = this.alertCtrl.create({
-        title: 'Entrada proibida!',
-        subTitle: 'Você não passará',
-        buttons: ['Entendi']
-      });
-      alert.present();
-    });
-
-    this.navCtrl.push('AdminPage').catch(err => {
-      let alert = this.alertCtrl.create({
-        title: 'Entrada proibida!',
-        subTitle: 'Você não passará',
-        buttons: ['Entendi']
-      });
-      alert.present();
-    });
-
-  } */
 
   isAuthenticated() {
     return this.authService.authenticated();
@@ -93,5 +79,15 @@ export class LoginPage {
         },
         error => console.log(<any>error));
         }
+  
+  showAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Acceso Denegado',
+      subTitle: '!No se ha iniciado sesión correctamente!',
+      buttons: ['(x_X)?']
+    });
+    alert.present();
+  }
+    
 
   }

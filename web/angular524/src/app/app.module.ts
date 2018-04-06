@@ -19,6 +19,9 @@ import { UserService } from './services/user.service';
 import { SocialLoginModule, AuthServiceConfig,
           GoogleLoginProvider, FacebookLoginProvider} from 'angular5-social-login';
 
+import { ToastModule } from 'ng2-toastr/ng2-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
           export function getAuthServiceConfigs() {
             // tslint:disable-next-line:prefer-const
             let config = new AuthServiceConfig(
@@ -64,7 +67,9 @@ import { NavbarComponent } from './componentes/navbar/navbar.component';
     APP_ROUTING,
     HttpModule,
     HttpClientModule,
-    SocialLoginModule
+    SocialLoginModule,
+    BrowserAnimationsModule,
+    ToastModule.forRoot()
   ],
   providers: [
   AuthGuard,

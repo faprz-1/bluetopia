@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild, ViewContainerRef } from '@angular/core';
 import {Http, Response} from '@angular/http';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 
 @Component({
@@ -20,14 +21,18 @@ export class PerfilComponent implements OnInit, OnDestroy {
   img = { nombre: String, id: localStorage.getItem('idtemplate') };
   image: any;
   users: Observable<User[]>;
+  chngpass = false;
 
-  constructor(private userService: UserService, private activatedRoute: ActivatedRoute, private router: Router) { }
+  constructor(private userService: UserService, private activatedRoute: ActivatedRoute, private router: Router,
+    public toastr: ToastsManager, vcr: ViewContainerRef) {
+    this.toastr.setRootViewContainerRef(vcr);
+     }
 
   @ViewChild('fileInput') fileInput: ElementRef;
 
   ngOnInit() {
     this.params = this.activatedRoute.params.subscribe(params =>  this.id = params['id']);
-    this.userService.getUser(this.id).subscribe(
+    this.userService.getUser(localStorage.getItem('idtemplate')).subscribe(
       data => {
         console.log (data);
         this.user.id = data['id'];
@@ -40,6 +45,14 @@ export class PerfilComponent implements OnInit, OnDestroy {
         this.user.imgperfil = data ['imgperfil'];
       },
       error => console.log(<any>error));
+
+    if (localStorage.getItem('cambio')) {
+        // tslint:disable-next-line:prefer-const
+        let text = localStorage.getItem('cambio');
+        this.showWarning(text);
+        localStorage.removeItem('cambio');
+      }
+
   }
 
   reload() {
@@ -86,20 +99,29 @@ export class PerfilComponent implements OnInit, OnDestroy {
             user => {
               console.log(user);
               this.reload();
+              // Guardando la imagen
+              const imageData = new FormData();
+              imageData.append('image', this.image, this.image.name);
+              console.log(imageData);
+              this.userService.uploadImage(imageData)
+                .subscribe(
+                  image => {
+                    console.log(image);
+                    this.showInfo();
+                  },
+                  error => console.error(<any>error));
             },
             error => console.log(<any>error));
-        // Guardando la imagen
-        const imageData = new FormData();
-        imageData.append('image', this.image, this.image.name);
-        console.log(imageData);
-        this.userService.uploadImage(imageData)
-          .subscribe(
-            image => {
-              console.log(image);
-            },
-            error => console.error(<any>error));
       };
     }
+  }
+
+  showInfo() {
+    this.toastr.info('La imagen ha sido cambiada con exito');
+  }
+
+  showWarning(text) {
+    this.toastr.warning(text, 'Cambio realizado:');
   }
 
 }

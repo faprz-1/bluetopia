@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { User } from '../../models/user';
 import { UserServiceProvider } from '../../providers/user/usersService';
 /* import { TYPED_NULL_EXPR } from '@angular/compiler/src/output/output_ast'; */
-import { PerfilPage } from '../index.paginas';
+import { PerfilPage, LoginPage } from '../index.paginas';
 
 /**
  * Generated class for the EditarPage page.
@@ -21,7 +21,8 @@ export class EditarPage {
 
   user = new User('id', 'nombre', 'apellidos', 'email', 'password', 'telefono', 'sexo', 'imgperfil', 'api_token');
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public userService: UserServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public userService: UserServiceProvider,
+    public toastCtrl: ToastController) {
   }
 
   ionViewDidLoad() {
@@ -49,9 +50,30 @@ export class EditarPage {
       user => {
         console.log(user);
         this.navCtrl.popTo(PerfilPage);
+        this.toastupdate('Datos modificados');
       },
       error => console.log(<any>error));
 
+  }
+
+  toastupdate(text) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 2500
+    });
+    toast.present();
+  }
+
+  delete(id){
+    this.userService.deleteUser(id)
+      .subscribe(
+        // tslint:disable-next-line:no-shadowed-variable
+        id => {
+          console.log("Usuario Eliminado");
+          this.toastupdate('Su cuenta ha sido eliminada')
+          this.navCtrl.setRoot(LoginPage);
+        },
+        error => console.log(<any>error));
   }
 
 

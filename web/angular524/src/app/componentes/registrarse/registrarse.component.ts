@@ -1,11 +1,12 @@
-import { Component, OnInit, ElementRef, ViewChild} from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, ViewContainerRef} from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators, FormArray} from '@angular/forms'
+import { FormGroup, FormControl, Validators, FormArray} from '@angular/forms';
 // tslint:disable-next-line:import-blacklist
 import {Observable} from 'rxjs/Rx';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
   selector: 'app-registrarse',
@@ -14,7 +15,9 @@ import {Observable} from 'rxjs/Rx';
 })
 export class RegistrarseComponent implements OnInit {
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private userService: UserService, private router: Router, public toastr: ToastsManager, vcr: ViewContainerRef) {
+    this.toastr.setRootViewContainerRef(vcr);
+  }
 
   @ViewChild('fileInput') fileInput: ElementRef;
   sexos: string[] = ['Hombre', 'Mujer'];
@@ -26,8 +29,10 @@ export class RegistrarseComponent implements OnInit {
   }
 
     onFileChange(event) {
+    // tslint:disable-next-line:prefer-const
     let reader = new FileReader();
     if (event.target.files && event.target.files.length > 0) {
+      // tslint:disable-next-line:prefer-const
       let file = event.target.files[0];
       this.image = <File>event.target.files[0];
       reader.readAsDataURL(file);
@@ -39,7 +44,7 @@ export class RegistrarseComponent implements OnInit {
 
   clearFile() {
     this.img = null;
-    console.log(this.fileInput.nativeElement)
+    console.log(this.fileInput.nativeElement);
     /*this.fileInput.nativeElement.value = '';*/
   }
 
@@ -48,27 +53,42 @@ export class RegistrarseComponent implements OnInit {
    // Para crear usuario en la BD
   user.img = this.img;
   console.log(user);
-  if ((user.password == user.password2) && user.password.length > 5 ){
+  // tslint:disable-next-line:triple-equals
+  if ((user.password == user.password2) && user.password.length > 5 ) {
     this.userService.createUser(user)
       .subscribe(
         // tslint:disable-next-line:no-shadowed-variable
         user => {
           console.log(user);
+          console.log('Usuario creado con exito');
+          localStorage.setItem('creado', 'Por favor inicie sesión');
           this.router.navigate(['/login']);
+          // tslint:disable-next-line:triple-equals
+          if (this.img != undefined) {
+            // Guardar la imagen
+            const imageData = new FormData();
+            imageData.append('image', this.image, this.image.name);
+            console.log(imageData);
+            this.userService.uploadImage(imageData)
+              .subscribe(
+                image => {
+                  console.log(image);
+                },
+                error => {
+                  console.error(<any>error);
+                });
+          } else {
+            console.log('No se agregó imagen a su perfil');
+          }
         },
         error => console.log(<any>error));
-
-    // Para agregar la imagen... disque
-    const imageData = new FormData();
-    imageData.append('image', this.image, this.image.name);
-    this.userService.uploadImage(imageData)
-      .subscribe(
-        image => {
-          console.log(image);
-        },
-        error => console.error(<any>error));
   } else {
     console.error('Las contraseñas no coinciden!!!');
+    this.showError();
+    }
   }
+
+  showError() {
+    this.toastr.error('Las contraseñas no coinciden!', 'Error:');
   }
 }

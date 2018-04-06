@@ -22,7 +22,8 @@ export class MyApp {
     adm = AdminPage;
 
   /* rootPage:any = AdminPage; */
-  rootPage:any = PerfilPage;
+  /* rootPage:any = PerfilPage; */
+  rootPage:any = LoginPage;
 
   constructor(private authService:AuthGuardProvider, private menuCtrl: MenuController, platform: Platform,
                     statusBar: StatusBar, splashScreen: SplashScreen) {

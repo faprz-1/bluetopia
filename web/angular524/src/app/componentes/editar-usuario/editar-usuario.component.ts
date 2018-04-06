@@ -40,11 +40,22 @@ export class EditarUsuarioComponent implements OnInit {
       // tslint:disable-next-line:no-shadowed-variable
       user => {
         console.log(user);
+        localStorage.setItem('cambio', 'Sus datos han sido modificados');
         this.router.navigate(['/perfil/', this.usrid]);
       },
       error => console.log(<any>error));
+  }
 
-
+  delete(id) {
+    this.userService.deleteUser(id)
+      .subscribe(
+        // tslint:disable-next-line:no-shadowed-variable
+        id => {
+          console.log('Usuario Eliminado');
+          localStorage.setItem('cambio', '¡Su cuenta ha sido eliminada!');
+          this.router.navigate(['/login/']);
+        },
+        error => console.log(<any>error));
   }
 
 }
