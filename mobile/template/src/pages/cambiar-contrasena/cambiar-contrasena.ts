@@ -24,24 +24,29 @@ export class CambiarContrasenaPage {
   updatePswrd(pass){
     pass.id = localStorage.getItem("idtemplate");
     console.log("valor formulario", pass);
+    if((pass.password1 == pass.password2))  {
     this.userService.updatePswrd(pass)
     .subscribe(
       // tslint:disable-next-line:no-shadowed-variable
       user => {
         console.log(user);
         this.navCtrl.popTo(PerfilPage);
-        this.toaspswrd();
+        this.toaspswrd('Contraseña cambiada');
       },
       error => console.log(<any>error));
+
+    }else{
+  this.toaspswrd('Las contraseñas no coinciden');
+    }
+
   }
 
-  toaspswrd() {
+  toaspswrd(text:string) {
     let toast = this.toastCtrl.create({
-      message: 'Contraseña cambiada',
+      message: text,
       duration: 2500
     });
     toast.present();
   }
-  
-}
 
+}

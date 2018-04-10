@@ -12,7 +12,7 @@
     <form (ngSubmit)="updatePswrd(formulario.value)" #formulario="ngForm" novalidate="">
       <br><br><br>
         <ion-list class="padd"   [ngClass]="{ 'has-danger': (password1.errors?.minlength || password1.errors?.required)&& password1.touched}">
-
+<br>
           <ion-item  class="ion" >
             <ion-icon name="eye" item-start></ion-icon>
             <ion-label floating text-center>Contraseña Actual
