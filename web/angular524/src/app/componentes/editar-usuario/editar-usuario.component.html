@@ -47,6 +47,17 @@
               #telefono="ngModel" requiered maxlength="10" minlength="10" size="10"> </div>
           </div>
 
+          <div class="form-group row">
+            <label class="col-4 control-form-label">Sexo</label>
+            <div class="col-md-8 col-sm-6">
+              <select class="custom-select" name="sexo" [(ngModel)]="user.sexo" required #sexo="ngModel">
+                <option value="">{{user.sexo}}</option>
+                <option value="Mujer">Mujer</option>
+                <option value="Hombre">Hombre</option>
+              </select>
+            </div>
+          </div>
+
 </div>
 
 <br>

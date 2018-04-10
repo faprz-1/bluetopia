@@ -140,6 +140,7 @@ class UsersController extends Controller
         $user->apellidos = trim ($request->apellidos);
         $user->email = trim ($request->email);
         $user->telefono = trim ($request->telefono);
+        $user->sexo = trim($request->sexo);
         $user->save();
 
         $message = 'El usuario ha modificada con éxito!';
