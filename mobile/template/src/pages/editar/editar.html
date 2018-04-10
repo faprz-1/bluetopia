@@ -17,7 +17,7 @@
 
   <form (ngSubmit)="updateUser(formulario.value)" #formulario="ngForm" novalidate="">
 
-    <ion-list class="padding padinhori" [ngClass]="{ 'has-danger': (nombres.errors?.minlength || nombres.errors?.required)&& nombres.touched}">
+    <ion-list class="pa" [ngClass]="{ 'has-danger': (nombres.errors?.minlength || nombres.errors?.required)&& nombres.touched}">
 
       <br>
 
@@ -35,7 +35,7 @@
       </ion-item>
 
       <br>
-      
+
 
       <ion-item class="ion">
         <ion-icon name="person" item-start></ion-icon>
@@ -75,13 +75,14 @@
             "Debe de tener {{ telefono.errors.minlength.requiredLength}} caracteres"</div>
         </ion-label>
 
-        <ion-input type="number" name="telefono" [(ngModel)]="user.telefono" required minlength="8" maxlength="8" size="8" #telefono="ngModel"></ion-input>
+        <ion-input type="number" name="telefono" [(ngModel)]="user.telefono" required minlength="10" maxlength="10" size="10" #telefono="ngModel"></ion-input>
       </ion-item>
 
       <br>
 
     </ion-list>
-    <ion-list class="pa">
+
+    <ion-list class="pad">
       <ion-item class="ion">
         <ion-label>Sexo</ion-label>
         <ion-select name="sexo" ngModel required #sexo="ngModel">
@@ -90,18 +91,18 @@
         </ion-select>
       </ion-item>
     </ion-list>
-    
+
     <div padding>
       <ion-label class="col-2 col-form-label">&nbsp;</ion-label>
 
       <button ion-button block type="submit"> Editar </button>
        <!-- [disabled]="!formulario.valid"  -->
-      <br>
+      <br >
       <button ion-button block navPop> Cancelar</button>
     </div>
     <br>
     <div padding>
-      <button ion-button color="danger" round type="button" large (click)="delete(user.id)">ELIMINAR CUENTA</button>
+      <button ion-button block color="danger" round type="button" large (click)="delete(user.id)">ELIMINAR CUENTA</button>
     </div>
 
 
@@ -110,4 +111,3 @@
   </form>
 
 </ion-content>
-

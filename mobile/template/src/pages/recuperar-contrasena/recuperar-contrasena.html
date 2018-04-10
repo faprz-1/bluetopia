@@ -12,7 +12,7 @@
   <br><br><br>
   <form (ngSubmit)="Enviar(formulario)" #formulario="ngForm" novalidate="">
       <ion-list class="pad" [ngClass]="{ 'has-danger': (correo.errors?.pattern || correo.errors?.required)&& correo.touched}">
-
+<br>
         <ion-item  class="ion" >
           <ion-icon name="mail" item-start></ion-icon>
               <ion-label floating text-center> Correo Email
