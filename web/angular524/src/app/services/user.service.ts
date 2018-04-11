@@ -13,6 +13,7 @@ export class UserService {
   constructor(private http: Http, private httpClient: HttpClient) { }
   /* baseUrl = 'http://template3.0.test/servidor/laravel_5.6.9/public/api/'; */
   baseUrl = 'http://template3.test/laravel_5.6.9/public/api/';
+  /* baseUrl = 'http://localhost:8000/api/'; */
 
 
   getUsers(): Observable<User[]> {
@@ -68,5 +69,20 @@ export class UserService {
       console.log(this.baseUrl+'/'+id);*/
       return this.http.delete(this.baseUrl + 'users/' + id).map((response: Response) => response.json());
     }
+
+  sendMail(correo: Object): Observable <User []> {
+    /* return this.http.post(this.baseUrl + 'forgotpass', correo).map((response: Response) => response.json()); */
+    return this.http.post(this.baseUrl + 'forgotpass', correo).map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || { mesage: 'Error del servidor' }));
+  }
+
+  getUserRecovey(key: string): Observable<User> {
+  return this.http.get(this.baseUrl + 'recoveryGet/' + key).map((response: Response) => response.json());
+  }
+
+  changePswr(pass: Object): Observable<User[]> {
+    return this.http.post(this.baseUrl + 'changepass', pass).map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || { mesage: 'Error del servidor' }));
+  }
 
 }

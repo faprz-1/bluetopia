@@ -7,7 +7,7 @@
 </div>
 <br><br>
 
-<form>
+<form (ngSubmit)="sendMail(recoverForm.value)" #recoverForm = "ngForm">
 
   <div class="container col-md-5 text-center">
 
@@ -37,11 +37,12 @@
               <div class="form-group row">
 
                 <div class="col-md-7">
-                  <button type="button"
+                  <button type="submit"
                           class="btn btn-outline-primary text-center">
                           Enviar
                         </button>
                       </div>
+
   <br><br>
                     <div class="col-md-5">
                       <button type="button"
@@ -54,5 +55,5 @@
 
     </div>
 
-
-  </form>
+</form>
+  
