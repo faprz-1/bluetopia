@@ -45,6 +45,7 @@ import { UsersListComponent } from './componentes/admin/users-list/users-list.co
 import { AdminComponent } from './componentes/admin/admin.component';
 import { UserEditComponent } from './componentes/admin/user-edit/user-edit.component';
 import { NavbarComponent } from './componentes/navbar/navbar.component';
+import { RecoveyContrasenaComponent } from './componentes/recovey-contrasena/recovey-contrasena.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { NavbarComponent } from './componentes/navbar/navbar.component';
     AdminComponent,
     UserEditComponent,
     NavbarComponent,
-    EditarUsuarioComponent
+    EditarUsuarioComponent,
+    RecoveyContrasenaComponent
   ],
   imports: [
     BrowserModule,

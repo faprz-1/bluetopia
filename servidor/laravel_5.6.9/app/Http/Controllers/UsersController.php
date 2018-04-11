@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\Controller;
+
 /*use App\Http\Resources\User as UserResource;*/
 
 class UsersController extends Controller
@@ -273,6 +277,98 @@ class UsersController extends Controller
         ], 201);
 
         return $response;
+    }
+
+    public function recoverPass(Request $request){
+        $data = $request->json()->all();
+        $user = User::where('email',$data['email'])->first();
+        if($user){
+            //Función PHP puro
+            //Variables para el correo remitente, destinatario y el asunto
+            $email_from = "smum15973@hotmail.com";
+            $email_subject = "Prueba correo";  
+            $token = str_random(20);
+
+            $email_to = $user->email;
+            $user->api_token=trim($token);
+            $user->save();
+            
+            $link= "http://localhost:4200/recovery/";
+            //A partir de aqui se contruye el cuerpo del mensaje tal y como llegará al correo
+            $email_message = "Hola usuario!\n\n";
+            function clean_string($string) {
+                $bad = array("content-type","bcc:","to:","cc:","href");
+                 return str_replace($bad,"",$string);
+                }         
+            $email_message .= "Hace unos momentos se hizo una petición para recuperar la contraseña de tu correo: \n\n"
+            .clean_string($email_to)."\n\n";
+            $email_message .= "Para realizar el cambio de tu contraseña por favor ingresa a este enclace: \n"
+            .clean_string($link).clean_string($token)."\n\n";
+            $email_message .= "Si realizaste esta petición o este correo no es tuyo por favor ignora este mensaje.\n";
+            $email_message .= "\n Gracias. (>.<)!";
+            //Se crean los encabezados del correo
+            $headers = 'From: '.$email_from."\r\n".
+            'Reply-To: '.$email_from."\r\n" .
+            'X-Mailer: PHP/' . phpversion();
+            @mail($email_to, $email_subject, $email_message, $headers);
+
+            //Función usando Laravel: No permite realizar el envío sin usar el stmp del archivo .env
+            /* Mail::send(['text'=>'mail'], ['name','Manuel'], function($message){
+                $message -> to('wiz_Alberto@hotmail.com') -> subject ('Pueba de correo');
+                $message -> from ('smum15973@hotmail.com');
+            }); */
+
+            return Response::json([
+                'message' => "Se ha enviado un mensaje a su correo para recuperar su contraseña"
+            ],200);
+        }else{
+            return Response::json([
+                'error' => [
+                    'message' => "Este correo no existe en la BD!"
+                    ]
+                ], 404); 
+        }
+
+    }
+
+    public function getUserecovery($key){
+
+        $user = User::where('api_token',$key)->first();
+
+        if($user){
+            return Response::json('Enlace vigente', 200);            
+        }else{
+            return Response::json([
+                'error' => [
+                    'message' => "El enlace ha expirado!"]
+                ], 404);
+        }    
+
+    }
+
+    public function changePswrd(Request $request){
+
+        $data = $request->json()->all();
+        $user = User::where('api_token',$data['key'])->first();
+
+       if($user){
+
+            $user->password = trim (Hash::make($data['password1']));
+            $user->api_token=null;
+            $user->save();
+            return Response::json([
+                'message' => 'El password ha sido cambiado exitosamente!'
+            ], 201);
+        }else{
+            return Response::json([
+                'error' => [
+                    'message' => "Este enlace ha expirado"
+                    ]], 404); 
+                }
+
+        
+
+
     }
 
 }

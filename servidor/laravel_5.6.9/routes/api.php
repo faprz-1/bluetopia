@@ -26,4 +26,7 @@ Route::group(['middleware'=>'cors'],function(){
 	Route::post('logsocialuser','UsersController@logSocialUser');
 	Route::post('pass','UsersController@updatePswrd');
 	Route::post('imgchng','UsersController@updateImg');
+	Route::post('forgotpass','UsersController@recoverPass');
+	Route::get('recoveryGet/{key}','UsersController@getUserecovery');
+	Route::post('changepass','UsersController@changePswrd');
 });
