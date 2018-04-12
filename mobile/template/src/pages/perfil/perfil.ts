@@ -13,8 +13,8 @@ import { Observable } from 'rxjs/Observable';
 })
 export class PerfilPage {
 	user = new User ('id', 'nombre', 'apellidos', 'email', 'password', 'telefono', 'sexo','imgperfil','api_token');
-  // imagenpefil = 'http://template3.test/laravel_5.6.9/public/';
-  imagenpefil = 'http://template3.0.test/servidor/laravel_5.6.9/public/';
+  imagenpefil = 'http://template3.test/laravel_5.6.9/public/';
+  //imagenpefil = 'http://template3.0.test/servidor/laravel_5.6.9/public/';
   editar: any = EditarPage;
   cam_contra: any = CambiarContrasenaPage;
 

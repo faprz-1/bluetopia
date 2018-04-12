@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     }
     if (localStorage.getItem('creado')) {
       // tslint:disable-next-line:prefer-const
-      this.creado();
+      this.creado(localStorage.getItem('creado'));
       localStorage.clear();
     }
   }
@@ -97,7 +97,7 @@ export class LoginComponent implements OnInit {
   eliminado() {
     this.toastr.error('Su cuenta ha sido exitosamente eliminada', 'Cuenta Eliminada!');
   }
-  creado() {
-    this.toastr.success('Su cuenta ha sido creada, por favor inicie sesió', 'Éxito');
+  creado(text) {
+    this.toastr.success(text, 'Éxito');
   }
   }

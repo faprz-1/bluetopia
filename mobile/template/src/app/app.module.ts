@@ -17,7 +17,7 @@ import { RegistrarsePage,
          RecuperarContrasenaPage,
          LoginPage,
          AdminPage,
-         EditarPage,
+         EditarPage
           } from "../pages/index.paginas";
 import { UserServiceProvider } from '../providers/user/usersService';
 import { FacebookProvider } from '../providers/facebook/facebook';

@@ -16,8 +16,8 @@ export class UserServiceProvider {
 
   constructor(private http:Http) {}
 
-  baseUrl='http://template3.0.test/servidor/laravel_5.6.9/public/api/'; 
-  // baseUrl = 'http://template3.test/laravel_5.6.9/public/api/';
+  // baseUrl='http://template3.0.test/servidor/laravel_5.6.9/public/api/'; 
+  baseUrl = 'http://template3.test/laravel_5.6.9/public/api/';
 
   getUsers(): Observable<User[]>{
   	return this.http.get(this.baseUrl+'users').map((response: Response) => response.json());
@@ -67,5 +67,10 @@ export class UserServiceProvider {
       //console.log('Prueba de llamado de función desde el service'); console.log(this.baseUrl+'/'+id);
       return this.http.delete(this.baseUrl + 'users/'+ id).map((response: Response) => response.json());
     }
+
+  sendMail(correo: Object): Observable<User[]> {
+    return this.http.post(this.baseUrl + 'forgotpass', correo).map((response: Response) => response.json())
+      .catch((error: any) => Observable.throw(error.json().error || { mesage: 'Error del servidor' }));
+  }
 
 }
