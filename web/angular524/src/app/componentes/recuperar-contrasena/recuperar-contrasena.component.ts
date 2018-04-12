@@ -23,7 +23,8 @@ export class RecuperarContrasenaComponent implements OnInit {
         // tslint:disable-next-line:no-shadowed-variable
         user => {
           console.log(user);
-          /* this.router.navigate(['/login']); */
+          localStorage.setItem('creado', 'Se ha enviado un correo a su dirección email');
+          this.router.navigate(['/login']);
         },
         error => {
           console.log(<any>error);

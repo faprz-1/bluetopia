@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular'; 
+import { IonicPage, NavController, NavParams, MenuController, 
+  AlertController } from 'ionic-angular'; 
 import { RegistrarsePage, RecuperarContrasenaPage, PerfilPage } from '../index.paginas';
 /* import { NgForm} from '@angular/forms'; */
 import { UserServiceProvider } from '../../providers/user/usersService';
 import { FacebookProvider } from '../../providers/facebook/facebook';
 import { AuthGuardProvider } from '../../providers/auth-guard/auth-guard'; 
-import { AlertController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -84,7 +84,7 @@ export class LoginPage {
     let alert = this.alertCtrl.create({
       title: 'Acceso Denegado',
       subTitle: '!No se ha iniciado sesión correctamente!',
-      buttons: ['(x_X)?']
+      buttons: ['Ok']
     });
     alert.present();
   }

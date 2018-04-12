@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { User } from '../../models/user';
 import { UserServiceProvider } from '../../providers/user/usersService';
 /* import { TYPED_NULL_EXPR } from '@angular/compiler/src/output/output_ast'; */
@@ -23,7 +23,7 @@ export class EditarPage {
   user = new User('id', 'nombre', 'apellidos', 'email', 'password', 'telefono', 'sexo', 'imgperfil', 'api_token');
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public userService: UserServiceProvider,
-    public toastCtrl: ToastController, private authService: AuthGuardProvider) {
+    public toastCtrl: ToastController, private authService: AuthGuardProvider, public alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
@@ -71,12 +71,21 @@ export class EditarPage {
         // tslint:disable-next-line:no-shadowed-variable
         id => {
           console.log("Usuario Eliminado");
-          this.toastupdate('Su cuenta ha sido eliminada');
+          this.showAlert();
           localStorage.clear();
           this.authService.logout();
           this.navCtrl.setRoot(LoginPage);
         },
         error => console.log(<any>error));
+  }
+
+  showAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Eliminado',
+      subTitle: '!Su cuenta ha sido correctamente eliminada!',
+      buttons: ['Ok']
+    });
+    alert.present();
   }
 
 
