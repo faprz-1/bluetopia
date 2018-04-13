@@ -33,10 +33,13 @@ export class CambiarContrasenaPage {
         this.navCtrl.popTo(PerfilPage);
         this.toaspswrd('Contraseña cambiada');
       },
-      error => console.log(<any>error));
+      error => {
+        console.log(<any>error);
+        this.toaspswrd('La contraseña actual es incorrecta')
+      });
 
     }else{
-  this.toaspswrd('Las contraseñas no coinciden');
+  this.toaspswrd('Las contraseñas nuevas no coinciden');
     }
 
   }

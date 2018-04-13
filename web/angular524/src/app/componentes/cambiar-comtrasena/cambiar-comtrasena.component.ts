@@ -33,9 +33,12 @@ export class CambiarComtrasenaComponent implements OnInit {
           localStorage.setItem('cambio', 'Su contraseña ha sido cambiada');
           this.router.navigate(['/perfil/', this.usrid]);
         },
-        error => console.log(<any>error));
+        error => {
+          console.log(<any>error);
+          this.showError('¡Contraseña actual incorrecta!');
+         });
       } else {
-        this.showError();
+        this.showError('¡Las contraseñas nuevas no coinciden!');
       }
   }
 
@@ -43,8 +46,8 @@ export class CambiarComtrasenaComponent implements OnInit {
     this.router.navigate(['/perfil/', this.usrid]);
   }
 
-  showError() {
-    this.toastr.error('Las contraseñas no coinciden!', 'Error:');
+  showError(texto) {
+    this.toastr.error(texto, 'Error:');
   }
 
 }

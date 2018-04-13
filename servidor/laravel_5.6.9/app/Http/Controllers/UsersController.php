@@ -166,20 +166,21 @@ class UsersController extends Controller
     public function destroy($id)
     {
          $user = User::findOrFail($id);
+         $info=$user;
          
         if($user -> delete()) {
         $message = 'El usuario ha sido eliminado con éxito!';
 
         return Response::json([
-            'message' => $message,
-            'data' => $user,
+            'message' => $message
         ], 204);  
                         
-        }
+        }else{
             return Response::json([
                 'error' => [
                     'message' => "Este usuario no existe!"]
                 ], 404);
+       }           
 
             
     }

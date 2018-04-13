@@ -28,6 +28,7 @@ export class RecoveyContrasenaComponent implements OnInit, OnDestroy {
       error => {
         console.log(<any>error);
         this.router.navigate(['/login']);
+        localStorage.setItem('cambio', 'Este enlace ya ha caducado');
       });
   }
 

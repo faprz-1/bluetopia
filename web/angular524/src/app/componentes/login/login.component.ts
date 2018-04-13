@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     if (localStorage.getItem('cambio')) {
       // tslint:disable-next-line:prefer-const
-      this.eliminado();
+      this.eliminado(localStorage.getItem('cambio'));
       localStorage.clear();
     }
     if (localStorage.getItem('creado')) {
@@ -94,8 +94,8 @@ export class LoginComponent implements OnInit {
   showError() {
     this.toastr.error('No se ha iniciado sesión correctamente!', 'Acceso denegado!');
   }
-  eliminado() {
-    this.toastr.error('Su cuenta ha sido exitosamente eliminada', 'Cuenta Eliminada!');
+  eliminado(texto) {
+    this.toastr.error(texto, 'Error de sesión!');
   }
   creado(text) {
     this.toastr.success(text, 'Éxito');

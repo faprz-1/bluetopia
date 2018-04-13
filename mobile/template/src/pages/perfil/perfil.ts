@@ -82,6 +82,16 @@ export class PerfilPage {
         .subscribe(
             user => {
               console.log(user);
+              // Guardando la imagen
+              const imageData = new FormData();
+              imageData.append('image', this.image, this.image.name);
+              console.log(imageData);
+              this.userService.uploadImage(imageData)
+                .subscribe(
+                  image => {
+                    console.log(image);
+                  },
+                  error => console.error(<any>error));
               this.navCtrl.setRoot(PerfilPage);
               this.toastimg();
             },

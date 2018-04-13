@@ -65,6 +65,28 @@ export class EditarPage {
     toast.present();
   }
 
+  deleteConfirm(id) {
+    let confirm = this.alertCtrl.create({
+      title: 'Eliminar cuenta',
+      message: '¿Realmente desea eliminar su cuenta?',
+      buttons: [
+        {
+          text: 'Si',
+          handler: () => {
+            this.delete(id);
+          }
+        },
+        {
+          text: 'No',
+          handler: () => {
+            console.log('No');
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
   delete(id){
     this.userService.deleteUser(id)
       .subscribe(
@@ -82,7 +104,7 @@ export class EditarPage {
   showAlert() {
     let alert = this.alertCtrl.create({
       title: 'Eliminado',
-      subTitle: '!Su cuenta ha sido correctamente eliminada!',
+      subTitle: '!Su cuenta ha sido eliminada!',
       buttons: ['Ok']
     });
     alert.present();
