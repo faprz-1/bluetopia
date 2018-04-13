@@ -29,7 +29,7 @@ class UsersTableSeeder extends Seeder
             'password' => $password,
             'telefono' => '31102308811',
             'sexo' => 'SUDO',
-            'imgperfil'=>'3.pg',
+            'imgperfil'=>'3.jpg',
             'api_token' => null
         ]);
 
