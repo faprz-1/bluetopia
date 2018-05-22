@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('telefono')->nullable();
             $table->string('sexo')->nullable();
-            $table->string('api_token', 64)->nullable();
+            $table->string('api_token', 60)->unique();
             $table->string('imgperfil')->nullable();
             $table->rememberToken();
             $table->timestamps();

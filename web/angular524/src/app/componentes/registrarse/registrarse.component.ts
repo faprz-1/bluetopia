@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormArray} from '@angular/forms';
 // tslint:disable-next-line:import-blacklist
 import {Observable} from 'rxjs/Rx';
-import { ToastsManager } from 'ng2-toastr';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
   selector: 'app-registrarse',
