@@ -13,6 +13,8 @@ export class UserService {
   constructor(private http: Http, private httpClient: HttpClient) { }
   // baseUrl = 'http://template3.0.test/servidor/laravel_5.6.9/public/api/';
   // baseUrl = 'http://template3.test/laravel_5.6.9/public/api/';
+  baseUrl = 'http://localhost:8000/api/';
+  
 
 
   getUsers(): Observable<User[]> {

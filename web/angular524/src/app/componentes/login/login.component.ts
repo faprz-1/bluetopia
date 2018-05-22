@@ -4,7 +4,7 @@ import {UserService} from '../../services/user.service';
 import { NgForm } from '@angular/forms';
 import {Router} from '@angular/router';
 import { FacebookService } from '../../services/facebook.service';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { ToastsManager } from 'ng2-toastr';
 
 
 @Component({

@@ -19,7 +19,7 @@ import { UserService } from './services/user.service';
 import { SocialLoginModule, AuthServiceConfig,
           GoogleLoginProvider, FacebookLoginProvider} from 'angular5-social-login';
 
-import { ToastModule } from 'ng2-toastr/ng2-toastr';
+import { ToastModule } from 'ng2-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
           export function getAuthServiceConfigs() {
