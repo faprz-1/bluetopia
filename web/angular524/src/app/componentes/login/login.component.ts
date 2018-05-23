@@ -39,12 +39,10 @@ export class LoginComponent implements OnInit {
     this.userService.logUser(user)
     .subscribe(
       // tslint:disable-next-line:no-shadowed-variable
-      user => {
-        console.log(user);
-       // tslint:disable-next-line:prefer-const
-       let userid = user.id;
-        // tslint:disable-next-line:prefer-const
-        let tkn = user.api_token;
+      (response: any) =>{
+        console.log(response);
+        let userid= response.datos.user.id;
+        let tkn = response.datos.token.token;
         localStorage.setItem('tkntemplate', tkn);
         localStorage.setItem('idtemplate', userid);
         this.router.navigate(['/perfil/' + userid]);

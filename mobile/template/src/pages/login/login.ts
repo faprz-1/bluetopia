@@ -35,10 +35,10 @@ export class LoginPage {
     console.log(user);
     this.userService.logUser(user)
     .subscribe(
-      user =>{
-        console.log(user);
-        let userid=user.id;
-        let tkn = user.api_token;
+      (response: any) =>{
+        console.log(response);
+        let userid= response.datos.user.id;
+        let tkn = response.datos.token.token;
         localStorage.setItem("tkntemplate", tkn);
         localStorage.setItem("idtemplate", userid);
         /* this.navCtrl.push(PerfilPage);

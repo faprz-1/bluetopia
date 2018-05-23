@@ -17,8 +17,8 @@ export class UserServiceProvider {
   constructor(private http:Http) {}
 
   // baseUrl='http://template3.0.test/servidor/laravel_5.6.9/public/api/'; 
-  baseUrl = 'http://template3.test/laravel_5.6.9/public/api/';
-
+  // baseUrl = 'http://template3.test/laravel_5.6.9/public/api/';
+  baseUrl = 'http://127.0.0.1:8000/api/';
   getUsers(): Observable<User[]>{
   	return this.http.get(this.baseUrl+'users').map((response: Response) => response.json());
   }

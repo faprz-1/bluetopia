@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\UserTokens;
 use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Hash;
@@ -24,9 +25,12 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users= User::all();
-        $response= Response::json($users);
-        return $response;
+        $this->estado(10);
+        $this->datos("diez",10);
+        $this->datos("once",11);        
+        $this->toast("diez");
+        $this->httpStatus(202);
+        return $this->genResponse();
     }
 
     /**
@@ -189,15 +193,24 @@ class UsersController extends Controller
         if($request -> isJson()){
             try{
 
+                
                 $data = $request->json()->all();
                 $user = User::where('email',$data['email'])->first();
-
+                
                 if($user && Hash::check($data['password'], $user->password)){
                     /*return Response::json($user, 200);*/
                     $user->api_token=str_random(20);
                     $user->save();
-                    return response ()->json($user,200);
-
+                    $userToken = new UserTokens;
+                    $userToken->token = trim((base64_encode(openssl_random_pseudo_bytes(100))));
+                    $userToken->user_id = $user->id;
+                    $userToken->save();
+                    $this->estado(1);
+                    $this->datos("user",$user);
+                    $this->datos("token",$userToken);        
+                    $this->toast("Login correcto");
+                    $this->httpStatus(200);
+                    return $this->genResponse();
                 }else{
                     return Response::json([
                         'error' => ['message' => "Los datos ingresados son incorrectos"]], 404);
