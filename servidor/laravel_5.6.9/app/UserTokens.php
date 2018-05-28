@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserTokens extends Model
 {
-    protected $table = 'usertokens';
+    protected $table = 'UserTokens';
      /**
      * The attributes that are mass assignable.
      *

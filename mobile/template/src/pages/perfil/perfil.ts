@@ -5,6 +5,7 @@ import { User } from '../../models/user';
 import { UserServiceProvider } from '../../providers/user/usersService';
 import { AuthGuardProvider } from '../../providers/auth-guard/auth-guard';
 import { Observable } from 'rxjs/Observable';
+import { ApiProvider } from '../../providers/api/api';
 
 @IonicPage()
 @Component({
@@ -23,8 +24,13 @@ export class PerfilPage {
   users: Observable<User[]>;
   
 
-  constructor(private authService:AuthGuardProvider, public navCtrl: NavController,
-    public navParams: NavParams, public userService: UserServiceProvider, public alertCtrl: AlertController,
+  constructor(
+    private api: ApiProvider, 
+    private authService:AuthGuardProvider, 
+    public navCtrl: NavController,
+    public navParams: NavParams, 
+    public userService: UserServiceProvider, 
+    public alertCtrl: AlertController,
     public toastCtrl: ToastController) { }
 
   ionViewDidLoad() {
@@ -32,7 +38,7 @@ export class PerfilPage {
 
     let id=localStorage.getItem("idtemplate");
 
-    this.userService.getUser(id).subscribe(
+    this.api.apiPost("getMyInfo",{}).subscribe(
       data => {
         console.log ('data:',data);
         this.user.id = data['id'];
@@ -47,24 +53,24 @@ export class PerfilPage {
       error => console.log(<any>error));
   }
 
-  ionViewWillEnter(){
+  // ionViewWillEnter(){
 
-    let id = localStorage.getItem("idtemplate")
+  //   let id = localStorage.getItem("idtemplate")
 
-    this.userService.getUser(id).subscribe(
-      data => {
-        this.user.id = data['id'];
-        this.user.nombres = data['nombres'];
-        this.user.apellidos = data['apellidos'];
-        this.user.email = data['email'];
-        this.user.password = data['password'];
-        this.user.telefono = data['telefono'];
-        this.user.sexo = data['sexo'];
-        this.user.imgperfil = data['imgperfil'];
-      },
-      error => console.log(<any>error));
+  //   this.userService.getUser(id).subscribe(
+  //     data => {
+  //       this.user.id = data['id'];
+  //       this.user.nombres = data['nombres'];
+  //       this.user.apellidos = data['apellidos'];
+  //       this.user.email = data['email'];
+  //       this.user.password = data['password'];
+  //       this.user.telefono = data['telefono'];
+  //       this.user.sexo = data['sexo'];
+  //       this.user.imgperfil = data['imgperfil'];
+  //     },
+  //     error => console.log(<any>error));
 
-  }
+  // }
 
   @ViewChild('fileInput') fileInput: ElementRef;
 

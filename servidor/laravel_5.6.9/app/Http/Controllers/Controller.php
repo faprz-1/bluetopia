@@ -33,9 +33,9 @@ class Controller extends BaseController
         $this->responseMessage = $message;
     }
 
-    public function httpStatus($status)
+    public function httpStatus($httpStatus)
     {
-        $this->httpStatus = $status;
+        $this->httpStatus = $httpStatus;
     }
 
     public function genResponse()

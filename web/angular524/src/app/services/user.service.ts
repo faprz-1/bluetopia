@@ -30,13 +30,18 @@ export class UserService {
   }
 
   getUser(id: String): Observable<User[]> {
-     return this.http.get(this.baseUrl + 'users/' + id).map((response: Response) => response.json());
+      let params = {
+        'id': id,
+        'token': localStorage.getItem('tkntemplate')
+      }
+     return this.http.post(this.baseUrl + 'users/', params).map((response: Response) => response.json());
    }
 
   updateUser(user: Object): Observable<User[]> {
      const apiUrl = this.baseUrl;
      const url = `${apiUrl}users/${user['id']}`;
      console.log(url);
+     user['token'] = localStorage.getItem('tkntemplate');
      return this.http.put(url, user).map((response: Response) => response.json())
      .catch((error: any) => Observable.throw(error.json().error || {mesage: 'Error del servidor'}));
    }
