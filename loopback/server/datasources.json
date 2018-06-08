@@ -1,0 +1,16 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "mysqlDev": {
+    "host": "jarabesoft.com",
+    "port": 3306,
+    "url": "",
+    "database": "j4r4b3s0_template3",
+    "password": "t3mpl4t33",
+    "name": "mysqlDev",
+    "user": "j4r4b3s0_templ3",
+    "connector": "mysql"
+  }
+}
