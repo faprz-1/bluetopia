@@ -15,7 +15,6 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 })
 export class PerfilComponent implements OnInit, OnDestroy {
   id: any;
-  params: any;
   user = new User ('id', 'nombre', 'apellidos', 'email', 'password', 'telefono', 'sexo', 'imgperfil', 'api_token');
   // imagenpefil = 'http://template3.test/laravel_5.6.9/public/';
   // imagenpefil = 'http://template3.0.test/servidor/laravel_5.6.9/public/';
@@ -26,13 +25,12 @@ export class PerfilComponent implements OnInit, OnDestroy {
 
   constructor(private userService: UserService, private activatedRoute: ActivatedRoute, private router: Router,
     public toastr: ToastsManager, vcr: ViewContainerRef) {
-    this.toastr.setRootViewContainerRef(vcr);
+      this.toastr.setRootViewContainerRef(vcr);
      }
 
   @ViewChild('fileInput') fileInput: ElementRef;
 
   ngOnInit() {
-    this.params = this.activatedRoute.params.subscribe(params =>  this.id = params['id']);
     this.userService.getUser(localStorage.getItem('idtemplate')).subscribe(
       data => {
         console.log (data);
@@ -57,8 +55,6 @@ export class PerfilComponent implements OnInit, OnDestroy {
   }
 
   reload() {
-
-    this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
     this.userService.getUser(this.id).subscribe(
       data => {
         this.user.id = data['id'];
@@ -75,7 +71,6 @@ export class PerfilComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.params.unsubscribe();
   }
 
   editUser(id) {

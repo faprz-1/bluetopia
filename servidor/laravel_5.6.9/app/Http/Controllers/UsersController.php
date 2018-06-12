@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\UserTokens;
 use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Hash;
@@ -16,29 +17,22 @@ use App\Http\Controllers\Controller;
 class UsersController extends Controller
 {
 
-    
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    /*
+        $this->estado($status);
+        $this->datos($name, $value);
+        $this->toast($message);
+        $this->httpStatus($httpStatus);
+        return $this->genResponse();
+        
+    */
+    public function getMyInfo(Request $request)
     {
-        $users= User::all();
-        $response= Response::json($users);
-        return $response;
+        $this->estado(1);
+        $this->datos("user", $request->user);
+        $this->toast('Informacion cargada');
+        $this->httpStatus(200);
+        return $this->genResponse();
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -54,22 +48,21 @@ class UsersController extends Controller
         'password' => trim (Hash::make($request->password)),
         'telefono' => trim ($request->telefono),
         'sexo' => trim ($request->sexo),
-        'api_token'=>null,
+        'user_type' => trim ($request->user_type),
         'imgperfil'=>trim($request->img)
-
-      ));
+        ));
     
-    $user->save();
-    
-    $message = 'Usuario creado exitosamente. Eston son los datos guardados...';
-    $logo = '(>.<)!';
-    $response = Response::json([
-      'message' => $message,
-      'data' => $user,
-      'logo' => $logo,
-    ], 201);
-
-        return $response;
+        $user->save();
+        $message = 'Usuario creado exitosamente. Eston son los datos guardados...';
+        $this->estado(1);
+        $this->toast($message);    
+        $this->httpStatus(201);
+        $logo = '(>.<)!';
+        $this->datos('logo', $logo);
+        $this->datos('message', $message);
+        $this->datos('data', $data);
+        return $this->genResponse();
+        
     }
 
     public function uploadImage(Request $request){
@@ -82,44 +75,9 @@ class UsersController extends Controller
         $destinationPath = public_path('images');
         $image->move($destinationPath, $input['imagename']);
 
-        $response = Response::json([
-         'message' => 'Imagen guardada con éxito!'
-        ], 202);
-
-        return $response;
-            
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        
-        $user = User::find($id);
-
-        if(!$user){
-            return Response::json([
-                'error' => [
-                    'message' => "El usuario no existe!"]
-                ], 404);
-        }
-     return Response::json($user, 200);
-    
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $this->httpStatus(202);
+        $this->toast('Imagen guardada con éxito!');
+        return $this->genResponse();            
     }
 
     /**
@@ -129,7 +87,7 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
        $user = User::find($request->id);
 
@@ -149,12 +107,10 @@ class UsersController extends Controller
 
         $message = 'El usuario ha modificada con éxito!';
 
-        $response = Response::json([
-            'message' => $message,
-            'data' => $user,
-        ], 201);
-
-        return $response;
+        $this->datos('data', $user);
+        $this->httpStatus(201);
+        $this->toast($message);    
+        return $this->genResponse();
     }
 
     /**
@@ -171,15 +127,14 @@ class UsersController extends Controller
         if($user -> delete()) {
         $message = 'El usuario ha sido eliminado con éxito!';
 
-        return Response::json([
-            'message' => $message
-        ], 204);  
+        $this->httpStatus(204);
+        $this->toast($message);    
+        return $this->genResponse();  
                         
         }else{
-            return Response::json([
-                'error' => [
-                    'message' => "Este usuario no existe!"]
-                ], 404);
+            $this->httpStatus(404);
+            $this->toast('Este usuario no existe!');    
+            return $this->genResponse();
        }           
 
             
@@ -189,26 +144,37 @@ class UsersController extends Controller
         if($request -> isJson()){
             try{
 
+                
                 $data = $request->json()->all();
                 $user = User::where('email',$data['email'])->first();
-
+                
                 if($user && Hash::check($data['password'], $user->password)){
                     /*return Response::json($user, 200);*/
-                    $user->api_token=str_random(20);
                     $user->save();
-                    return response ()->json($user,200);
-
+                    $userToken = new UserTokens;
+                    $userToken->token = trim((base64_encode(openssl_random_pseudo_bytes(100))));
+                    $userToken->user_id = $user->id;
+                    $userToken->save();
+                    $this->estado(1);
+                    $this->datos("user",$user);
+                    $this->datos("token",$userToken);        
+                    $this->toast("Login correcto");
+                    $this->httpStatus(200);
+                    return $this->genResponse();
                 }else{
-                    return Response::json([
-                        'error' => ['message' => "Los datos ingresados son incorrectos"]], 404);
+                    $this->toast("Los datos ingresados son incorrectos");
+                    $this->httpStatus(404);
+                    return $this->genResponse();
                 }
             }catch (ModelNotFoundException $e){
-                return Response::json([
-                        'error' => ['message' => "Los datos ingresados son incorrectos"]], 404);
+                $this->toast("Los datos ingresados son incorrectos");
+                $this->httpStatus(404);
+                return $this->genResponse();
             }
         }
-        return Response::json([
-                        'error' => ['message' => "Sin autorizacion"]], 404);
+        $this->toast("Sin autorizacion");
+        $this->httpStatus(404);
+        return $this->genResponse();
     }
 
     public function logSocialUser(Request $request){
@@ -217,19 +183,31 @@ class UsersController extends Controller
         $correo = User::where('email',$email)->first();
         if(!$correo){
 
-         $user = new User (array(
-         'nombres' => trim($data['name']),
-         'apellidos' => null,
-         'email' => trim($data['email']),
-         'password' => trim (Hash::make($data['id'])),
-         'telefono' => trim (null),
-         'sexo' => trim (null),
-         'api_token'=>str_random(15)
-       ));
-       $user->save();
-       return response ()->json($user,200);
-       }
-       return response ()->json($correo,200);
+            $user = new User (array(
+                'nombres' => trim($data['name']),
+                'apellidos' => null,
+                'email' => trim($data['email']),
+                'password' => trim (Hash::make($data['id'])),
+                'telefono' => trim (null),
+                'sexo' => trim (null)
+            ));
+            $user->save();
+            $userToken = new UserTokens;
+            $userToken->token = trim((base64_encode(openssl_random_pseudo_bytes(100))));
+            $userToken->user_id = $user->id;
+            $userToken->save();
+            $this->estado(1);
+            $this->datos("user",$user);
+            $this->datos("token",$userToken);        
+            $this->toast("Login correcto");
+            $this->httpStatus(200);
+            return $this->genResponse();
+        }
+        $this->estado(1);
+        $this->datos("correo",$correo);        
+        $this->toast("nueva cuenta");
+        $this->httpStatus(200);
+        return $this->genResponse();
     }
 
     public function updatePswrd(Request $request){
@@ -238,23 +216,21 @@ class UsersController extends Controller
         $user = User::find($data['id']);        
 
         if(!$user){
-            return Response::json([
-                'error' => [
-                    'message' => "El usuario no existe!"]
-                ], 404); 
+            $this->toast("El usuario no existe!");
+            $this->httpStatus(404);
+            return $this->genResponse(); 
         }
        if($user && Hash::check($data['password'], $user->password)){
             $user->password = trim (Hash::make($data['password1']));
             $user->save();
-                }else{
-                    return Response::json([
-                        'error' => ['message' => "Los datos ingresados son incorrectos"]], 404);
-                }
-        $response = Response::json([
-            'message' => 'El password ha sido cambiado exitosamente!',
-        ], 201);
-
-        return $response;
+        }else{
+            $this->toast("Los datos ingresados son incorrectos");
+            $this->httpStatus(404);
+            return $this->genResponse();
+        }
+        $this->toast("El password ha sido cambiado exitosamente!");
+        $this->httpStatus(201);
+        return $this->genResponse();
 
     }
 
@@ -263,21 +239,18 @@ class UsersController extends Controller
          $user = User::find($data['id']); 
 
         if(!$user){
-            return Response::json([
-                'error' => [
-                    'message' => "Usuario no existente o logueado correctamente!"]
-                ], 404); 
+            $this->toast("Usuario no existente o logueado correctamente!");
+            $this->httpStatus(404);
+            return $this->genResponse();
         }
-       
-            $user->imgperfil = trim ($data['nombre']);
-            $user->save();
+        $user->imgperfil = trim ($data['nombre']);
+        $user->save();
 
-        $response = Response::json([
-            'message' => 'Cambio de imagen exitoso!',
-            'content' => $data
-        ], 201);
-
-        return $response;
+        $this->toast("Usuario no existente o logueado correctamente!");
+        $this->datos("content",$data);        
+        $this->httpStatus(201);
+        
+        return $this->genResponse();
     }
 
     public function recoverPass(Request $request){
@@ -291,7 +264,6 @@ class UsersController extends Controller
             $token = str_random(20);
 
             $email_to = $user->email;
-            $user->api_token=trim($token);
             $user->save();
             
             $link= "http://localhost:4200/recovery/";
@@ -319,56 +291,14 @@ class UsersController extends Controller
                 $message -> from ('smum15973@hotmail.com');
             }); */
 
-            return Response::json([
-                'message' => "Se ha enviado un mensaje a su correo para recuperar su contraseña"
-            ],200);
+            $this->toast("Se ha enviado un mensaje a su correo para recuperar su contraseña");  
+            $this->httpStatus(200);
+            return $this->genResponse();
         }else{
-            return Response::json([
-                'error' => [
-                    'message' => "Este correo no existe en la BD!"
-                    ]
-                ], 404); 
+            $this->toast("Este correo no existe en la BD!");  
+            $this->httpStatus(404);
+            return $this->genResponse();
         }
-
-    }
-
-    public function getUserecovery($key){
-
-        $user = User::where('api_token',$key)->first();
-
-        if($user){
-            return Response::json('Enlace vigente', 200);            
-        }else{
-            return Response::json([
-                'error' => [
-                    'message' => "El enlace ha expirado!"]
-                ], 404);
-        }    
-
-    }
-
-    public function changePswrd(Request $request){
-
-        $data = $request->json()->all();
-        $user = User::where('api_token',$data['key'])->first();
-
-       if($user){
-
-            $user->password = trim (Hash::make($data['password1']));
-            $user->api_token=null;
-            $user->save();
-            return Response::json([
-                'message' => 'El password ha sido cambiado exitosamente!'
-            ], 201);
-        }else{
-            return Response::json([
-                'error' => [
-                    'message' => "Este enlace ha expirado"
-                    ]], 404); 
-                }
-
-        
-
 
     }
 

@@ -13,7 +13,7 @@ export class UserService {
   constructor(private http: Http, private httpClient: HttpClient) { }
   // baseUrl = 'http://template3.0.test/servidor/laravel_5.6.9/public/api/';
   // baseUrl = 'http://template3.test/laravel_5.6.9/public/api/';
-
+  baseUrl = 'http://127.0.0.1:8000/api/';
 
   getUsers(): Observable<User[]> {
     return this.http.get(this.baseUrl + 'users').map((response: Response) => response.json());
@@ -30,13 +30,18 @@ export class UserService {
   }
 
   getUser(id: String): Observable<User[]> {
-     return this.http.get(this.baseUrl + 'users/' + id).map((response: Response) => response.json());
+      let params = {
+        'id': id,
+        'token': localStorage.getItem('tkntemplate')
+      }
+     return this.http.post(this.baseUrl + 'users/', params).map((response: Response) => response.json());
    }
 
   updateUser(user: Object): Observable<User[]> {
      const apiUrl = this.baseUrl;
      const url = `${apiUrl}users/${user['id']}`;
      console.log(url);
+     user['token'] = localStorage.getItem('tkntemplate');
      return this.http.put(url, user).map((response: Response) => response.json())
      .catch((error: any) => Observable.throw(error.json().error || {mesage: 'Error del servidor'}));
    }

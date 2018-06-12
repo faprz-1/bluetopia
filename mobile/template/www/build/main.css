@@ -25686,6 +25686,14 @@ page-cambiar-contrasena .padd {
   padding: 20px;
 }
 
+page-editar .pa {
+  padding: 0 20px;
+}
+
+page-editar .pad {
+  padding: 0 60px;
+}
+
 page-home .pa {
   padding: 0 40px;
 }
