@@ -6,26 +6,6 @@ var boot = require('loopback-boot');
 var app = module.exports = loopback();
 
 app.start = function() {
-  // Migrate
-  var db = app.dataSources.mysqlDev;
-  var appModels = [
-    'ACL', 
-    'RoleMapping', 
-    'Role', 
-    'Usuario',
-    'UsuarioAccessToken'
-  ];
-  db.isActual(appModels, function(err, actual) {
-    if (!actual) {
-      db.autoupdate(appModels, function(err) {
-        if (err){
-          throw (err);
-        }
-      });
-    }
-  });
-  db.disconnect();
-  console.log("Migrated: " + appModels.join());
   // start the web server
   return app.listen(function() {
     app.emit('started');

@@ -14,6 +14,49 @@
       "foreignKey": "userId"
     }
   },
-  "acls": [],
-  "methods": {}
+  "acls": [
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "test"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW"
+    }
+  ],
+  "methods": {
+    "test": {
+      "accepts": [
+        {
+          "arg": "objt",
+          "type": "object",
+          "required": true,
+          "description": "objt",
+          "http": {
+            "source": "body"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "res",
+          "type": "object",
+          "root": true,
+          "description": "res"
+        }
+      ],
+      "description": "test",
+      "http": [
+        {
+          "path": "/test",
+          "verb": "post"
+        }
+      ]
+    }
+  }
 }

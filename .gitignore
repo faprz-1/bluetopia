@@ -29,3 +29,4 @@ mobile/template/www/
 #Angular Ignore
 web/angular524/node_modules/
 web/angular524/dist/
+\.vscode/
