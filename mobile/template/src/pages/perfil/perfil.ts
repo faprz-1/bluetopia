@@ -38,19 +38,19 @@ export class PerfilPage {
 
     let id= localStorage.getItem("idtemplate");
     let myToken = localStorage.getItem('tkntemplate');
-    this.api.apiPost("getMyInfo",{token: myToken}).subscribe(
-      (data: any) => {
-        console.log ('data:',data.datos.user);
-        this.user.id = data.datos.user['id'];
-        this.user.nombres = data.datos.user ['nombres'];
-        this.user.apellidos = data.datos.user ['apellidos'];
-        this.user.email = data.datos.user ['email'];
-        this.user.password = data.datos.user ['password'];
-        this.user.telefono = data.datos.user ['telefono'];
-        this.user.sexo = data.datos.user ['sexo'];
-        this.user.imgperfil = data.datos.user ['imgperfil'];
-      },
-      error => console.log(<any>error));
+    // this.api.apiPost("getMyInfo",{token: myToken}).subscribe(
+    //   (data: any) => {
+    //     console.log ('data:',data.datos.user);
+    //     this.user.id = data.datos.user['id'];
+    //     this.user.nombres = data.datos.user ['nombres'];
+    //     this.user.apellidos = data.datos.user ['apellidos'];
+    //     this.user.email = data.datos.user ['email'];
+    //     this.user.password = data.datos.user ['password'];
+    //     this.user.telefono = data.datos.user ['telefono'];
+    //     this.user.sexo = data.datos.user ['sexo'];
+    //     this.user.imgperfil = data.datos.user ['imgperfil'];
+    //   },
+    //   error => console.log(<any>error));
   }
 
   // ionViewWillEnter(){
