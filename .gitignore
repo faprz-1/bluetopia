@@ -46,6 +46,7 @@ loopback/.strong-pm
 loopback/coverage
 loopback/node_modules
 loopback/npm-debug.log
+loopback/server/storage/*
 
 #Angular Ignore
 web/angular524/node_modules/
