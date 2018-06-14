@@ -12,5 +12,12 @@
     "name": "mysqlDev",
     "user": "j4r4b3s0_templ3",
     "connector": "mysql"
+  },
+  "files": {
+    "name": "files",
+    "connector": "loopback-component-storage",
+    "provider": "filesystem",
+    "root": "./server/storage",
+    "nameConflict": "makeUnique"
   }
 }
