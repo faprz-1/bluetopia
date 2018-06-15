@@ -22,10 +22,6 @@ import { RegistrarsePage,
          AdminPage,
          EditarPage
           } from "../pages/index.paginas";
-import { UserServiceProvider } from '../providers/user/usersService';
-import { FacebookProvider } from '../providers/facebook/facebook';
-import { Facebook } from '@ionic-native/facebook';
-import { AuthGuardProvider } from '../providers/auth-guard/auth-guard';
 import { ApiProvider } from '../providers/api/api';
 
 @NgModule({
@@ -64,10 +60,6 @@ import { ApiProvider } from '../providers/api/api';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    UserServiceProvider,
-    Facebook,
-    FacebookProvider,
-    AuthGuardProvider,
     ApiProvider
   ]
 })

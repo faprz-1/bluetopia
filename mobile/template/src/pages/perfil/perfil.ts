@@ -1,9 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import { CambiarContrasenaPage, LoginPage, EditarPage} from '../index.paginas';
-import { User } from '../../models/user';
-import { UserServiceProvider } from '../../providers/user/usersService';
-import { AuthGuardProvider } from '../../providers/auth-guard/auth-guard';
 import { Observable } from 'rxjs/Observable';
 import { ApiProvider } from '../../providers/api/api';
 
@@ -13,7 +10,7 @@ import { ApiProvider } from '../../providers/api/api';
   templateUrl: 'perfil.html',
 })
 export class PerfilPage {
-	user = new User ('id', 'nombre', 'apellidos', 'email', 'password', 'telefono', 'sexo','imgperfil','api_token');
+	user = {};
   imagenpefil = 'http://template3.test/laravel_5.6.9/public/';
   //imagenpefil = 'http://template3.0.test/servidor/laravel_5.6.9/public/';
   editar: any = EditarPage;
@@ -21,15 +18,13 @@ export class PerfilPage {
 
   img={nombre:String, id:localStorage.getItem("idtemplate")};
   image: any;
-  users: Observable<User[]>;
+  users: any;
   
 
   constructor(
     private api: ApiProvider, 
-    private authService:AuthGuardProvider, 
     public navCtrl: NavController,
     public navParams: NavParams, 
-    public userService: UserServiceProvider, 
     public alertCtrl: AlertController,
     public toastCtrl: ToastController) { }
 
@@ -83,25 +78,7 @@ export class PerfilPage {
       reader.onload = () => {
         this.img.nombre = file.name;
         //Cambiando imagen en la bd
-        console.log(this.img);        
-        this.userService.cambioImg(this.img)
-        .subscribe(
-            user => {
-              console.log(user);
-              // Guardando la imagen
-              const imageData = new FormData();
-              imageData.append('image', this.image, this.image.name);
-              console.log(imageData);
-              this.userService.uploadImage(imageData)
-                .subscribe(
-                  image => {
-                    console.log(image);
-                  },
-                  error => console.error(<any>error));
-              this.navCtrl.setRoot(PerfilPage);
-              this.toastimg();
-            },
-            error => console.log(<any>error));
+        console.log(this.img);
       };
     }
   }
@@ -113,20 +90,8 @@ export class PerfilPage {
   }
 
   ionViewCanEnter() {
-    let auth = (this.authService.authenticated());
-    let tkn = localStorage.getItem('tkntemplate');
-
-    if (auth && tkn) {
-      console.log('Bienvenido (>.<)!');
-
-    }else{
-      console.error('Acceso Denegado (x_x)?');
-      this.showAlert();
-      
-    }    
-
-  return this.authService.authenticated();
-}
+   
+  } 
 
   showAlert() {
     let alert = this.alertCtrl.create({

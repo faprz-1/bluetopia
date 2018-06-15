@@ -30,31 +30,31 @@
     }
   ],
   "methods": {
-    "test": {
+    "prototype.userWithCredentials": {
       "accepts": [
         {
-          "arg": "objt",
+          "arg": "ctx",
           "type": "object",
           "required": true,
-          "description": "objt",
+          "description": "Current Context",
           "http": {
-            "source": "body"
+            "source": "req"
           }
         }
       ],
       "returns": [
         {
-          "arg": "res",
+          "arg": "userWithCredentials",
           "type": "object",
           "root": true,
-          "description": "res"
+          "description": "user with it's credentials"
         }
       ],
-      "description": "test",
+      "description": "Gets an user with his credentials",
       "http": [
         {
-          "path": "/test",
-          "verb": "post"
+          "path": "/withCredentials",
+          "verb": "get"
         }
       ]
     }

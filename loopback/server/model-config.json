@@ -35,5 +35,9 @@
   "UsuarioAccessToken": {
     "dataSource": "mysqlDev",
     "public": false
+  },
+  "Upload": {
+    "dataSource": "localFiles",
+    "public": true
   }
 }

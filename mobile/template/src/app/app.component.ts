@@ -1,12 +1,10 @@
-import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
 import { Component, ViewChild } from '@angular/core';
 import { Platform, MenuController, NavController, App} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage, AdminPage, PerfilPage } from '../pages/index.paginas';
-import { AuthGuardProvider } from '../providers/auth-guard/auth-guard';
 import { ApiProvider } from '../providers/api/api';
+import { Storage } from '@ionic/storage';
 
 
 /* import { AdminPage } from '../pages/admin/admin';
@@ -26,37 +24,40 @@ export class MyApp {
   /* rootPage:any = PerfilPage; */
   rootPage:any = LoginPage;
 
-  constructor(private authService:AuthGuardProvider, 
+  constructor(
     private menuCtrl: MenuController, 
     private platform: Platform,                
     private statusBar: StatusBar, 
     private splashScreen: SplashScreen,
     private api: ApiProvider,
-    private app: App) {
-    this.api.ready().then((e)=>{
-      console.log("api provider ready: ", e);
-    })
-    platform.ready().then(() => {
+    private storage: Storage) {
+    this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      statusBar.styleDefault();
-      splashScreen.hide();
-    });
-
-    this.authService.testkn();
-    console.log('testkn: ', this.authService.testkn());
-    
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
+      this.storage.get("token").then((token)=>{
+        if (!token)
+          this.abrirPagina(LoginPage);
+        else{
+          this.storage.get("user").then((user)=>{
+            if(user.rootPage.name == "Admin")
+              this.abrirPagina(AdminPage)
+            else
+              this.abrirPagina(PerfilPage)
+          });
+        }
+      });
+    });    
   }
 
 
   abrirPagina( pagina: any ){
-  this.rootPage = pagina;
-  this.menuCtrl.close();
+    this.rootPage = pagina;
+    this.menuCtrl.close();
   }
 
   cerrar(){
-    this.authService.logout();
-    /* this.rootPage = this.login;  */  
     this.navCtrl.setRoot(LoginPage);
     this.menuCtrl.close();
   }

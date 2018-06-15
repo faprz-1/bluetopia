@@ -1,0 +1,42 @@
+{
+  "name": "Upload",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {
+    "newBase64File": {
+      "accepts": [
+        {
+          "arg": "newFileBase64",
+          "type": "object",
+          "required": true,
+          "description": "new file in base 64 encoding and file name",
+          "http": {
+            "source": "body"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "newFileURL",
+          "type": "string",
+          "root": true,
+          "description": "new base 64 decoded file's URL"
+        }
+      ],
+      "description": "uploads a new base 64 file to the server",
+      "http": [
+        {
+          "path": "/newBase64File",
+          "verb": "post"
+        }
+      ]
+    }
+  }
+}

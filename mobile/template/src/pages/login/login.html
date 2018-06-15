@@ -2,12 +2,6 @@
 <ion-header>
 
   <ion-navbar>
-
-    <ion-buttons>
-      <button  ion-button icon-only (click)="mostrarMenu()">
-        <ion-icon name="menu"></ion-icon></button>
-    </ion-buttons>
-
     <ion-title >Bienvenido</ion-title>
   </ion-navbar>
 
@@ -20,65 +14,52 @@
   <br>
   <h6 text-center>Iniciar Sesión</h6>
 
-  <h2 *ngIf="isAuthenticated()"></h2>
-  <h2 *ngIf="!isAuthenticated()"></h2>
-
   <form (ngSubmit)="login(formulario.value)" #formulario="ngForm" novalidate="">
 
-          <ion-list class="paddi"   [ngClass]="{ 'has-danger': (correo.errors?.minlength || correo.errors?.required)&& correo.touched}">
+    <ion-list class="paddi"   [ngClass]="{ 'has-danger': (correo.errors?.minlength || correo.errors?.required)&& correo.touched}">
+      <br>
+      <ion-item class="ion">
+        <ion-icon name="mail" item-start></ion-icon>
+        <ion-label floating text-center>Correo Email
+          <div *ngIf="correo.errors?.required" class="form-control-feedback">
+              "Este campo es obligatorio" 
+          </div>
 
-            <br>
+          <div *ngIf="correo.errors?.pattern" class="form-control-feedback">
+              "No cumple con los caracteres"
+          </div> 
+        </ion-label>
+        <ion-input type="email" name="email" ngModel required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #correo="ngModel"></ion-input>
+      </ion-item>
+      <ion-item class="ion">
+        <ion-icon name="eye" item-start></ion-icon>
+        <ion-label floating text-center>Contraseña
+          <div *ngIf="password.errors?.required" class="form-control-feedback">
+              "Este campo es obligatorio" 
+          </div> 
+        </ion-label>
+        <ion-input type="password" name="password" ngModel required  #password="ngModel"></ion-input>
+      </ion-item>
+      <br>
+    </ion-list>
 
-                <ion-item class="ion">
-                  <ion-icon name="mail" item-start></ion-icon>
-                  <ion-label floating text-center>Correo Email
-                    <div *ngIf="correo.errors?.required"
-                              class="form-control-feedback">
-                                  "Este campo es obligatorio" </div>
-
-                        <div *ngIf="correo.errors?.pattern"
-                                class="form-control-feedback">
-                                  "No cumple con los caracteres"</div> </ion-label>
-
-                  <ion-input type="email" name="email" ngModel required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #correo="ngModel">></ion-input>
-                </ion-item>
-
-
-                <ion-item class="ion">
-                  <ion-icon name="eye" item-start></ion-icon>
-                  <ion-label floating text-center>Contraseña
-                    <div *ngIf="password.errors?.required"
-                            class="form-control-feedback">
-                                "Este campo es obligatorio" </div> </ion-label>
-
-                  <ion-input type="password" name="password" ngModel required  #password="ngModel"></ion-input>
-                </ion-item>
-
-            <br>
-
-          </ion-list>
-
-          <div padding text-center>
-             <button ion-button clear block icon-left [disabled]="!formulario.valid">
-                      <ion-icon name="log-in"></ion-icon> Entrar </button>
-            <br>
-                <button ion-button clear block icon-left (click)="loginFacebook('facebook')">
-                  <ion-icon name="logo-facebook"></ion-icon> iniciar </button> </div>
+    <div padding text-center>
+      <button ion-button clear block icon-left [disabled]="!formulario.valid">
+        <ion-icon name="log-in"></ion-icon> Entrar 
+      </button>
+      <br>
+      <button ion-button clear block icon-left (click)="loginFacebook('facebook')">
+        <ion-icon name="logo-facebook"></ion-icon> iniciar 
+      </button> 
+    </div>
   </form>
 
-<br>
-<br>
+  <br>
+  <br>
 
-           <div text-right>
-             <button ion-button type="button" color="dark" clear [navPush]="registrarse"> Registrarse</button>
-             <br>
-             <button ion-button type="button" color="dark" clear [navPush]="recu_contra"> ¿Olvidaste la Contraseña?</button> </div>
-
-
-
-
-
-
-
-        
+  <div text-right>
+    <button ion-button type="button" color="dark" clear [navPush]="registrarse"> Registrarse</button>
+    <br>
+    <button ion-button type="button" color="dark" clear [navPush]="recu_contra"> ¿Olvidaste la Contraseña?</button> 
+  </div>        
 </ion-content>
