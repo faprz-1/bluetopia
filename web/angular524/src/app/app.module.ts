@@ -1,11 +1,12 @@
+// Angular
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
-import { AuthGuard } from './services/auth.guard';
-
+// Angular components
 import { AppComponent } from './app.component';
 import { LoginComponent } from './componentes/login/login.component';
 import { RegistrarseComponent } from './componentes/registrarse/registrarse.component';
@@ -14,30 +15,30 @@ import { RecuperarContrasenaComponent } from './componentes/recuperar-contrasena
 import { PerfilComponent } from './componentes/perfil/perfil.component';
 import { EditarUsuarioComponent } from './componentes/editar-usuario/editar-usuario.component';
 
+// Angular servives
 import { FacebookService } from './services/facebook.service';
-import { UserService } from './services/user.service';
-import { SocialLoginModule, AuthServiceConfig,
-          GoogleLoginProvider, FacebookLoginProvider} from 'angular5-social-login';
+import { ApiService } from './services/api.service';
+import { AuthGuard } from './services/auth.guard';
 
+// Installed packages
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider} from 'angular5-social-login';
 
-          export function getAuthServiceConfigs() {
-            // tslint:disable-next-line:prefer-const
-            let config = new AuthServiceConfig(
-                [
-                  {
-                    id: FacebookLoginProvider.PROVIDER_ID,
-                    provider: new FacebookLoginProvider('2032394103667706')
-                  },
-                  {
-          id: GoogleLoginProvider.PROVIDER_ID,
-          provider: new GoogleLoginProvider('46992181928-7tgrlool25i5oena60neapeedc2lhsl2.apps.googleusercontent.com')
-        },
+export function getAuthServiceConfigs() {
+  // tslint:disable-next-line:prefer-const
+  let config = new AuthServiceConfig(
+    [{
+        id: FacebookLoginProvider.PROVIDER_ID,
+        provider: new FacebookLoginProvider('2032394103667706')
+      },
+      {
+        id: GoogleLoginProvider.PROVIDER_ID,
+        provider: new GoogleLoginProvider('46992181928-7tgrlool25i5oena60neapeedc2lhsl2.apps.googleusercontent.com')
+      },
 
-                ] );
-            return config;
-          }
+    ]);
+  return config;
+}
 
 
 import { APP_ROUTING } from './app.routes';
@@ -75,7 +76,7 @@ import { RecoveyContrasenaComponent } from './componentes/recovey-contrasena/rec
   ],
   providers: [
   AuthGuard,
-  UserService,
+  ApiService,
   FacebookService, {
       provide: AuthServiceConfig,
       useFactory: getAuthServiceConfigs

@@ -26,6 +26,28 @@ mobile/template/plugins/android.json
 mobile/template/plugins/ios.json
 mobile/template/www/
 
+#Loopback Ignore
+loopback/*.csv
+loopback/*.dat
+loopback/*.iml
+loopback/*.log
+loopback/*.out
+loopback/*.pid
+loopback/*.seed
+loopback/*.sublime-*
+loopback/*.swo
+loopback/*.swp
+loopback/*.tgz
+loopback/*.xml
+loopback/.DS_Store
+loopback/.idea
+loopback/.project
+loopback/.strong-pm
+loopback/coverage
+loopback/node_modules
+loopback/npm-debug.log
+loopback/server/storage/*
+
 #Angular Ignore
 web/angular524/node_modules/
 web/angular524/dist/

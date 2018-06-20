@@ -5,5 +5,3 @@ export { RecuperarContrasenaPage } from './recuperar-contrasena/recuperar-contra
 export { RegistrarsePage } from './registrarse/registrarse';
 export { AdminPage } from './admin/admin';
 export { EditarPage } from './editar/editar';
-
-export { HomePage } from './home/home';

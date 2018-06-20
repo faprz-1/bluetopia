@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
-/* import { NgForm} from '@angular/forms'; */
-import { UserServiceProvider } from '../../providers/user/usersService';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular'
 import { PerfilPage } from '../index.paginas';
 
 @IonicPage()
@@ -13,8 +11,10 @@ export class CambiarContrasenaPage {
 
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public userService: UserServiceProvider,
-    public toastCtrl: ToastController) {
+  constructor(
+    private navCtrl: NavController, 
+    private navParams: NavParams,
+    private toastCtrl: ToastController) {
   }
 
   ionViewDidLoad() {
@@ -25,21 +25,8 @@ export class CambiarContrasenaPage {
     pass.id = localStorage.getItem("idtemplate");
     console.log("valor formulario", pass);
     if((pass.password1 == pass.password2))  {
-    this.userService.updatePswrd(pass)
-    .subscribe(
-      // tslint:disable-next-line:no-shadowed-variable
-      user => {
-        console.log(user);
-        this.navCtrl.popTo(PerfilPage);
-        this.toaspswrd('Contraseña cambiada');
-      },
-      error => {
-        console.log(<any>error);
-        this.toaspswrd('La contraseña actual es incorrecta')
-      });
-
     }else{
-  this.toaspswrd('Las contraseñas nuevas no coinciden');
+    this.toaspswrd('Las contraseñas nuevas no coinciden');
     }
 
   }

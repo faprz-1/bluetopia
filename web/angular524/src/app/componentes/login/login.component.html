@@ -1,10 +1,9 @@
-
 <div class="container main-container">
   <div class="row">
     <div class="col-md-12 col-sm-6 text">
       <h4>Bienvenido</h4>
       <br>
-    <h6>Iniciar Sesión</h6>
+      <h6>Iniciar Sesión</h6>
     </div>
   </div>
 </div>
@@ -12,71 +11,69 @@
 <br>
 <br>
 
-<form  (ngSubmit)="login(loginForm.value)" #loginForm = "ngForm">
-<fieldset>
-<div class="container col-md-5 col-sm-6 text-center">
+<form (ngSubmit)="login(loginForm.value)" #loginForm="ngForm">
+  <fieldset>
+    <div class="container col-md-5 col-sm-6 text-center">
 
 
-    <div class="form-group row">
-          <label class="col-4 col-form-label">Correo</label>
+      <div class="form-group row">
+        <label class="col-4 col-form-label">Correo</label>
 
-          <div class="col-md-8 col-sm-6">
-    <!-- Validaciones del campo del correo -->
-           <input class="form-control text-center" type="email" id="email" placeholder="ejemplo@email.com"
-                    name="email" ngModel required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #email="ngModel">
-    <!-- Mensajes de las validaciones -->
-                   <div *ngIf="email.errors?.required"
-                         class="form-control-feedback text-center">"Este campo es obligatorio" </div>
+        <div class="col-md-8 col-sm-6">
+          <!-- Validaciones del campo del correo -->
+          <input class="form-control text-center" type="email" id="email" placeholder="ejemplo@email.com" name="email" ngModel required
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #email="ngModel">
+          <!-- Mensajes de las validaciones -->
+          <div *ngIf="email.errors?.required" class="form-control-feedback text-center">"Este campo es obligatorio" </div>
 
-                    <div *ngIf="email.errors?.pattern"
-                          class="form-control-feedback text-center">"No cumple con los caracteres"</div>
-          </div>
-    </div>
-
-
-        <div class="form-group row">
-              <label class="col-4 col-form-label">Contraseña</label>
-
-              <div class="col-md-8 col-sm-6">
-    <!-- Validaciones del campo de la contraseña -->
-                <input class="form-control text-center" type="password" placeholder="Contraseña"
-                            name="password" required ngModel #password="ngModel">
-    <!-- Mensaje de las validaciones -->
-                    <div *ngIf="password.errors?.required"
-                          class="form-control-feedback text-center">"Campo obligatorio"</div>
-              </div>
+          <div *ngIf="email.errors?.pattern" class="form-control-feedback text-center">"No cumple con los caracteres"</div>
         </div>
-<br>
-<br>
+      </div>
+
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label">Contraseña</label>
+
+        <div class="col-md-8 col-sm-6">
+          <!-- Validaciones del campo de la contraseña -->
+          <input class="form-control text-center" type="password" placeholder="Contraseña" name="password" required ngModel #password="ngModel">
+          <!-- Mensaje de las validaciones -->
+          <div *ngIf="password.errors?.required" class="form-control-feedback text-center">"Campo obligatorio"</div>
+        </div>
+      </div>
+      <br>
+      <br>
 
       <div class="container col-md-8 col-sm-6 text-center">
         <div class="form-group row">
 
-          <div class="col-md-8 col-sm-6">
-            <!-- Iniciar con una cuenta de Google-->
-              <a class="btn btn-info" (click)="socialSignIn('google')"> Iniciar
-                    <span> <img src="assets/img/google.png" width="20px"></span>
-              </a>
-          </div>
- <br>
- <br>
+          <!-- Iniciar con una cuenta de Google-->
+          <!-- <div class="col-md-8 col-sm-6">
+            <a class="btn btn-info" (click)="socialSignIn('google')"> Iniciar
+              <span>
+                <img src="assets/img/google.png" width="20px">
+              </span>
+            </a>
+          </div> -->
+          <br>
+          <br>
 
-        <!-- Iniciar sesion con login normal -->
-            <div class="col-md-4">
-                <button type="submit" class="btn btn-info"> Entrar </button> </div>
+          <!-- Iniciar sesion con login normal -->
+          <div class="col-md-4">
+            <button type="submit" class="btn btn-info"> Entrar </button>
+          </div>
         </div>
       </div>
 
-</div>
-</fieldset>
+    </div>
+  </fieldset>
 </form>
 
-  <br>
-  <br>
-
-          <div class="col-md-9 col-sm-6 text1">
-            <button type="button" class="btn btn-link"
-                    [routerLink]="['/registrarse']">Registrarse</button>
 <br>
-          <button type="button" class="btn btn-link"
-                  [routerLink]="['/recuperarContrasena']">¿Olvidaste la Contraseña?</button><div>
+<br>
+
+<div class="col-md-9 col-sm-6 text1">
+  <button type="button" class="btn btn-link" [routerLink]="['/registrarse']">Registrarse</button>
+  <br>
+  <button type="button" class="btn btn-link" [routerLink]="['/recuperarContrasena']">¿Olvidaste la Contraseña?</button>
+  <div>

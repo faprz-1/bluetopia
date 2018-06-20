@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController, 
-  AlertController } from 'ionic-angular'; 
+import { IonicPage, NavController, AlertController, LoadingController } from 'ionic-angular'; 
 import { RegistrarsePage, RecuperarContrasenaPage, PerfilPage } from '../index.paginas';
-/* import { NgForm} from '@angular/forms'; */
-import { UserServiceProvider } from '../../providers/user/usersService';
-import { FacebookProvider } from '../../providers/facebook/facebook';
-import { AuthGuardProvider } from '../../providers/auth-guard/auth-guard'; 
+import { Storage } from '@ionic/storage';
+import { ApiProvider } from '../../providers/api/api';
+import { AdminPage } from '../admin/admin';
 
 @IonicPage()
 @Component({
@@ -14,72 +12,49 @@ import { AuthGuardProvider } from '../../providers/auth-guard/auth-guard';
 })
 export class LoginPage {
 
+  user: any;
   registrarse:any = RegistrarsePage;
   recu_contra:any = RecuperarContrasenaPage;
   perfil:any = PerfilPage;
   rootPage: any;
 
-  constructor(private authService: AuthGuardProvider, private menuCtrl: MenuController, private facebookProvider: FacebookProvider, public navCtrl: NavController,
-    public navParams: NavParams, public userService: UserServiceProvider, public alertCtrl: AlertController) { } 
+  constructor(
+    private navCtrl: NavController,
+    private api: ApiProvider,
+    private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController,
+    private storage: Storage) { 
 
-  mostrarMenu() {
-    this.menuCtrl.toggle();
-  }
+    }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
   }
 
   login(user){
-    this.authService.login();
-    console.log(user);
-    this.userService.logUser(user)
-    .subscribe(
-      (response: any) =>{
-        console.log(response);
-        let userid= response.datos.user.id;
-        let tkn = response.datos.token.token;
-        localStorage.setItem("tkntemplate", tkn);
-        localStorage.setItem("idtemplate", userid);
-        /* this.navCtrl.push(PerfilPage);
-        this.navCtrl.remove(1); */
-        this.navCtrl.setRoot(PerfilPage);
-      },
-      error =>{
-        console.log(<any>error);
-        this.showAlert();
-      } 
-    );
+    let loading = this.loadingCtrl.create({content: 'autenticando...', dismissOnPageChange: true});
+    loading.present();
+    this.api.post("/Usuarios/login", user).subscribe((token: any) =>{
+      this.storage.clear().then(()=>{
+        this.storage.set("token",token.id)
+        this.api.token= token.id;
+        this.api.get("/Usuarios/withCredentials", true).subscribe((userFromServer: any)=>{
+          this.storage.set("user", userFromServer).then(()=>{
+            loading.dismiss();
+            if(userFromServer.role.name == "Admin")
+              this.navCtrl.setRoot(AdminPage)
+            else
+              this.navCtrl.setRoot(PerfilPage)
+          })
+        })
+      })
+    }, (error: any) => {
+      console.log("error Override:", error);
       
+      this.showAlert()
+    })
+  }
 
-    }
-
-  isAuthenticated() {
-    return this.authService.authenticated();
-  } 
-
-
-  loginFacebook(facebook){
-    console.log(facebook);
-    this.facebookProvider.login()
-    .then(socialUser =>{
-          console.log("socialUser:");
-          console.log(socialUser);
-          this.userService.logSocialUser(socialUser)
-        .subscribe(
-          user =>{
-            console.log(user);
-           let userid=user.id;
-            let tkn = user.api_token;
-            localStorage.setItem("tkntemplate", tkn);
-            localStorage.setItem("idtemplate", userid);
-            this.navCtrl.setRoot(PerfilPage);
-          },
-          error => console.log(<any>error));
-        },
-        error => console.log(<any>error));
-        }
-  
   showAlert() {
     let alert = this.alertCtrl.create({
       title: 'Acceso Denegado',
@@ -88,6 +63,5 @@ export class LoginPage {
     });
     alert.present();
   }
-    
 
   }

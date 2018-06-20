@@ -14,8 +14,8 @@ import { AuthGuard } from './services/auth.guard';
 const APP_ROUTES: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registrarse', component: RegistrarseComponent },
-  /* { path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard]}, */
-  { path: 'perfil/:id', component: PerfilComponent, canActivate: [AuthGuard] },
+  { path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard]},
+  // { path: 'perfil/:id', component: PerfilComponent, canActivate: [AuthGuard] },
   { path: 'editar/:id', component: EditarUsuarioComponent, canActivate: [AuthGuard] },
   { path: 'cambiarContrasena', component: CambiarComtrasenaComponent, canActivate: [AuthGuard] },
   { path: 'recuperarContrasena', component: RecuperarContrasenaComponent},

@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { IonicStorageModule } from '@ionic/storage';
 
 // APP
 import { MyApp } from './app.component';
@@ -21,10 +22,6 @@ import { RegistrarsePage,
          AdminPage,
          EditarPage
           } from "../pages/index.paginas";
-import { UserServiceProvider } from '../providers/user/usersService';
-import { FacebookProvider } from '../providers/facebook/facebook';
-import { Facebook } from '@ionic-native/facebook';
-import { AuthGuardProvider } from '../providers/auth-guard/auth-guard';
 import { ApiProvider } from '../providers/api/api';
 
 @NgModule({
@@ -45,7 +42,8 @@ import { ApiProvider } from '../providers/api/api';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    HttpClientModule
+    HttpClientModule,
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -62,10 +60,6 @@ import { ApiProvider } from '../providers/api/api';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    UserServiceProvider,
-    Facebook,
-    FacebookProvider,
-    AuthGuardProvider,
     ApiProvider
   ]
 })
