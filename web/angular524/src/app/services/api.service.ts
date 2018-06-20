@@ -2,12 +2,10 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, retryWhen } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
-import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs';
-// import { retryWhen } from 'rxjs/operator/retryWhen';
 
 @Injectable()
-export class ApiProvider {
+export class ApiService {
 
   public baseURL: string = "http://localhost:3000/api"
   // public mediaBaseURL: string = "http://localhost:3000/"
@@ -15,7 +13,7 @@ export class ApiProvider {
   public retryAttempts: number = 5
   public token: string = "";
 
-  constructor(private http: HttpClient, private storage: Storage) {
+  constructor(private http: HttpClient) {
     this.getToken();
   }
 
@@ -42,25 +40,18 @@ export class ApiProvider {
 
   /**
    * Refleja el estado del provider al checar el token de sesion
-   * @returns {Promise<boolean>} Retorna una promesa del estado de la obtencion del token de sesion
+   * @returns {boolean} Retorna el estado de la obtencion del token de sesion
    */
-  public ready(): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      if(this.token.length > 0 && this.token != "")
-        resolve(true)
-    })
+  public ready(): boolean {
+    return this.token != ""
   }
 
   /**
-   * Trata de obtener el token de localstorage
+   * Trata de obtener el token de localStorage
    * Este metodo es ejecutado en el contructor de la clase
    */
   public getToken() {
-    this.storage.ready().then(()=>{
-      this.storage.get("token").then((token) =>{
-        this.token = token;
-      })
-    })
+    this.token = localStorage.getItem("token")
   }
 
   /**

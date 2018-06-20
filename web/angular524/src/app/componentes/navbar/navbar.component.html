@@ -15,7 +15,7 @@
     </ul>
     <!-- Boton para cerrar sesión y dejar limpio el localstorage -->
     <span class="navbar-text">
-      <button class="btn btn-outline-success" (click)="logout()" *ngIf="auth.testkn()"> <!-- *ngIf="tkn" -->
+      <button class="btn btn-outline-success" (click)="logout()" *ngIf="hastoken"> <!-- *ngIf="tkn" -->
       Cerrar sesión </button>
     </span>
 

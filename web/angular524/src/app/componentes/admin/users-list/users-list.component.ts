@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Http, Response} from '@angular/http';
-import { User } from '../../../models/user';
-import { UserService } from '../../../services/user.service';
+// import { UserService } from '../../../services/user.service';
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
@@ -12,11 +10,11 @@ import {Router} from '@angular/router';
   styleUrls: ['./users-list.component.css']
 })
 export class UsersListComponent implements OnInit {
-  users: Observable<User[]>;
-  constructor(private userService: UserService, private router: Router) { }
+  users: Observable<any[]>;
+  constructor( private router: Router) { }
 
   ngOnInit() {
-    this.users = this.userService.getUsers();
+    // this.users = this.userService.getUsers();
   }
 
   editUser(id) {
@@ -26,14 +24,14 @@ export class UsersListComponent implements OnInit {
 
   deleteUser(id) {
 
-      this.userService.deleteUser(id)
-      .subscribe(
-        // tslint:disable-next-line:no-shadowed-variable
-        id => {
-          console.log('Usuario eliminado');
-        },
-        error => console.log(<any>error));
-      this.router.navigate(['/admin']);
+      // this.userService.deleteUser(id)
+      // .subscribe(
+      //   // tslint:disable-next-line:no-shadowed-variable
+      //   id => {
+      //     console.log('Usuario eliminado');
+      //   },
+      //   error => console.log(<any>error));
+      // this.router.navigate(['/admin']);
     }
 
 }

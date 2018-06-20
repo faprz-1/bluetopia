@@ -125,7 +125,7 @@ module.exports = function(app) {
                   });
                 });
                 // If exist asing role to admin user
-              }else if(res[0].name == "Admin"){
+              }else if(res[0].name == "User"){
                 var role = res[0];
                 role.principals.create({
                   principalType: RoleMapping.USER,

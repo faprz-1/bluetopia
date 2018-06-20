@@ -1,6 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild, ViewContainerRef} from '@angular/core';
-import { UserService } from '../../services/user.service';
-import { User } from '../../models/user';
+//import { UserService } from '../../services/user.service';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormArray} from '@angular/forms';
@@ -15,7 +14,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 })
 export class RegistrarseComponent implements OnInit {
 
-  constructor(private userService: UserService, private router: Router, public toastr: ToastsManager, vcr: ViewContainerRef) {
+  constructor( private router: Router, public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
   }
 
@@ -23,7 +22,7 @@ export class RegistrarseComponent implements OnInit {
   sexos: string[] = ['Hombre', 'Mujer'];
   img: string;
   image: File = null;
-  users: Observable<User[]>;
+  users: Observable<any[]>;
 
   ngOnInit() {
   }
@@ -54,33 +53,33 @@ export class RegistrarseComponent implements OnInit {
   console.log(user);
   // tslint:disable-next-line:triple-equals
   if ((user.password == user.password2) && user.password.length > 5 ) {
-    this.userService.createUser(user)
-      .subscribe(
-        // tslint:disable-next-line:no-shadowed-variable
-        user => {
-          console.log(user);
-          console.log('Usuario creado con exito');
-          localStorage.setItem('creado', 'Por favor inicie sesión');
-          this.router.navigate(['/login']);
-          // tslint:disable-next-line:triple-equals
-          if (this.img != undefined) {
-            // Guardar la imagen
-            const imageData = new FormData();
-            imageData.append('image', this.image, this.image.name);
-            console.log(imageData);
-            this.userService.uploadImage(imageData)
-              .subscribe(
-                image => {
-                  console.log(image);
-                },
-                error => {
-                  console.error(<any>error);
-                });
-          } else {
-            console.log('No se agregó imagen a su perfil');
-          }
-        },
-        error => console.log(<any>error));
+    // this.userService.createUser(user)
+    //   .subscribe(
+    //     // tslint:disable-next-line:no-shadowed-variable
+    //     user => {
+    //       console.log(user);
+    //       console.log('Usuario creado con exito');
+    //       localStorage.setItem('creado', 'Por favor inicie sesión');
+    //       this.router.navigate(['/login']);
+    //       // tslint:disable-next-line:triple-equals
+    //       if (this.img != undefined) {
+    //         // Guardar la imagen
+    //         const imageData = new FormData();
+    //         imageData.append('image', this.image, this.image.name);
+    //         console.log(imageData);
+    //         this.userService.uploadImage(imageData)
+    //           .subscribe(
+    //             image => {
+    //               console.log(image);
+    //             },
+    //             error => {
+    //               console.error(<any>error);
+    //             });
+    //       } else {
+    //         console.log('No se agregó imagen a su perfil');
+    //       }
+    //     },
+    //     error => console.log(<any>error));
   } else {
     console.error('Las contraseñas no coinciden!!!');
     this.showError();

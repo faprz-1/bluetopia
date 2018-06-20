@@ -25,18 +25,13 @@
       "returns": [
         {
           "arg": "newFileURL",
-          "type": "string",
+          "type": "object",
           "root": true,
           "description": "new base 64 decoded file's URL"
         }
       ],
       "description": "uploads a new base 64 file to the server",
-      "http": [
-        {
-          "path": "/newBase64File",
-          "verb": "post"
-        }
-      ]
+      "http": []
     }
   }
 }

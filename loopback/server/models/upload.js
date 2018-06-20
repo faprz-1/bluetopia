@@ -12,19 +12,25 @@ module.exports = function(Upload) {
      */
 
     Upload.newBase64File = function(newFile, callback) {
-        var newFileURL;
-        var encodedFile = newFile.base64File;
-        var fileName = uuidV4()+newFile.fileExtention;
-        var encodedFileContainer = "profileImages";
+        const encodedFileContainer = newFile.encodedFileContainer;
+        var UploadedFiles = Upload.app.models.UploadedFiles;
+        const encodedFile = newFile.base64File;
+        var newFileId = uuidV4();
+        var fileName = newFileId+newFile.fileExtention;
         // TODO
-        var uploadStream = Upload.app.models.Upload.uploadStream(
+        var uploadStream = Upload.uploadStream(
             encodedFileContainer,
             fileName
         );
         uploadStream.end(encodedFile, 'base64', async err => {
             if (err) return callback(err);
-            newFileURL = "api/Uploads/profileImages/download/"+fileName;
-            callback(null, newFileURL);
+            UploadedFiles.create({
+                id: newFileId,
+                URL: "/Uploads/"+encodedFileContainer+"/download/"+fileName
+            }, function(err, res){
+                if (err) return callback(err);
+                callback(null, res);
+            })
         });
     }
 };

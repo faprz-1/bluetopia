@@ -30,7 +30,22 @@
   },
   "Usuario": {
     "dataSource": "mysqlDev",
-    "public": true
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "profileImage": false,
+          "login": true,
+          "logout": true,
+          "register": true,
+          "userWithCredentials": true,
+          "changePassword": true,
+          "resetPassword": true,
+          "setPassword": true
+        }
+      }
+    }
   },
   "UsuarioAccessToken": {
     "dataSource": "mysqlDev",
@@ -39,5 +54,9 @@
   "Upload": {
     "dataSource": "localFiles",
     "public": true
+  },
+  "UploadedFiles": {
+    "dataSource": "mysqlDev",
+    "public": false
   }
 }

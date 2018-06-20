@@ -1,10 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, MenuController, NavController, App} from 'ionic-angular';
+import { Platform, MenuController, NavController, AlertController, LoadingController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage, AdminPage, PerfilPage } from '../pages/index.paginas';
-import { ApiProvider } from '../providers/api/api';
 import { Storage } from '@ionic/storage';
+import { ApiProvider } from '../providers/api/api';
 
 
 /* import { AdminPage } from '../pages/admin/admin';
@@ -29,8 +29,10 @@ export class MyApp {
     private platform: Platform,                
     private statusBar: StatusBar, 
     private splashScreen: SplashScreen,
-    private api: ApiProvider,
-    private storage: Storage) {
+    private storage: Storage,
+    public alertCtrl: AlertController,
+    private loadingCtrl: LoadingController,
+    private api: ApiProvider) {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -41,7 +43,7 @@ export class MyApp {
           this.abrirPagina(LoginPage);
         else{
           this.storage.get("user").then((user)=>{
-            if(user.rootPage.name == "Admin")
+            if(user.role.name == "Admin")
               this.abrirPagina(AdminPage)
             else
               this.abrirPagina(PerfilPage)
@@ -58,7 +60,29 @@ export class MyApp {
   }
 
   cerrar(){
-    this.navCtrl.setRoot(LoginPage);
-    this.menuCtrl.close();
+    this.alertCtrl.create({
+      title: '¿Desea cerrar sesión?',
+      buttons: [
+        {
+          text: 'Si',
+          handler: data => {
+            let loading = this.loadingCtrl.create({content: 'cargando...', dismissOnPageChange: true});
+            loading.present();
+            this.api.post("/Usuarios/logout",null,true).subscribe(()=>{
+              this.storage.clear().then(()=>{
+                loading.dismiss();
+                this.menuCtrl.close();
+                this.navCtrl.setRoot(LoginPage);
+              })
+            })
+          }
+        },
+        {
+          text: 'No',
+          handler: data => {
+          }
+        }
+      ]
+    }).present();
   }
 }

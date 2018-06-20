@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
-/*import { RegistrarseComponent} from "../registrarse/registrarse.component";*/
-import {UserService} from '../../services/user.service';
-import { NgForm } from '@angular/forms';
+// import {UserService} from '../../services/user.service';
 import {Router} from '@angular/router';
 import { FacebookService } from '../../services/facebook.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { ApiService } from '../../services/api.service';
 
 
 @Component({
@@ -14,12 +13,15 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 })
 export class LoginComponent implements OnInit {
 
-
-
-  constructor(private userService: UserService, private router: Router, private facebookServicio: FacebookService,
-    public toastr: ToastsManager, vcr: ViewContainerRef) {
+  constructor(
+     
+    private router: Router, 
+    private facebookServicio: FacebookService,
+    public toastr: ToastsManager, 
+    vcr: ViewContainerRef,
+    private api: ApiService) {
     this.toastr.setRootViewContainerRef(vcr);
-    }
+  }
 
   ngOnInit() {
     if (localStorage.getItem('cambio')) {
@@ -35,54 +37,40 @@ export class LoginComponent implements OnInit {
   }
 
   login(user) {
-    console.log(user);
-    this.userService.logUser(user)
-    .subscribe(
-      // tslint:disable-next-line:no-shadowed-variable
-      (response: any) =>{
-        console.log(response);
-        let userid= response.datos.user.id;
-        let tkn = response.datos.token.token;
-        localStorage.setItem('tkntemplate', tkn);
-        localStorage.setItem('idtemplate', userid);
-        this.router.navigate(['/perfil/']);
-      },
-      error => {
-        console.log(<any>error);
-        this.showError();
-      });
-    }
-
-  //  socialSignIn(facebook){
-    //  console.log(facebook);
-      // this.facebookServicio.socialSignIn(facebook);
-    // .subscribe(
-    //   user =>{
-    //     console.log(user);
-    //     console.log('/perfil/'+user.id);
-    //     this.router.navigate(['/perfil/'+user.id]);
-    //   },
-    //   error => console.log(<any>error));
-  //  }
+    this.api.post("/Usuarios/login", user).subscribe((token: any) =>{
+      localStorage.clear()
+        localStorage.setItem("token",token.id)
+        this.api.token= token.id;
+        this.api.get("/Usuarios/withCredentials", true).subscribe((userFromServer: any)=>{
+          localStorage.setItem("user", JSON.stringify(userFromServer))
+          console.log(userFromServer.role.name);
+          if(userFromServer.role.name == "Admin")
+            this.router.navigate(['/admin']);
+          else
+            this.router.navigate(['/perfil']);
+        })
+    }, (error: any) => {
+      this.showError()
+    })
+  }
 
 
   socialSignIn(google) {
     console.log(google);
     this.facebookServicio.socialSignIn(google)
     .then(socialUser => {
-      console.log('socialUser:');
-      console.log(socialUser);
-      this.userService.logSocialUser(socialUser)
-    .subscribe(
-      (response: any) =>{
-        console.log(response);
-        let userid= response.datos.user.id;
-        let tkn = response.datos.token.token;
-        localStorage.setItem('tkntemplate', tkn);
-        localStorage.setItem('idtemplate', userid);
-        this.router.navigate(['/perfil/' + userid]);
-      },
-      error => console.log(<any>error));
+    //   console.log('socialUser:');
+    //   console.log(socialUser);
+    //   this.userService.logSocialUser(socialUser)
+    // .subscribe(
+    //   (response: any) =>{
+    //     console.log(response);
+    //     let userid= response.datos.user.id;
+    //     let tkn = response.datos.token.token;
+    //     localStorage.setItem('tkntemplate', tkn);
+    //     this.router.navigate(['/perfil/' + userid]);
+    //   },
+    //   error => console.log(<any>error));
     },
     error => console.log(<any>error));
   }
@@ -96,4 +84,4 @@ export class LoginComponent implements OnInit {
   creado(text) {
     this.toastr.success(text, 'Éxito');
   }
-  }
+}

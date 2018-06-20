@@ -13,10 +13,10 @@
 </ion-header>
 
 
-<ion-content text-center  class="ion" >
+<ion-content text-center  class="ion" *ngIf="ready">
     <h1>Perfil</h1>
 <br>
-   <img src="{{imagenpefil}}images/{{user.imgperfil}}" width="100px"  class="rounded-circle" onerror="this.src='../../assets/imgs/default_avatar.jpg'">
+   <img src="{{user.imgperfil}}" width="100px"  class="rounded-circle" onerror="this.src='../../assets/imgs/default_avatar.jpg'">
 
 <br>
   <input style="display:none" type="file" id="img" name="img" ngModel required #img="ngModel" (change)="onFileChange($event)"
@@ -39,12 +39,7 @@
               <br>
               <ion-item>
                 <ion-icon name="eye" item-start></ion-icon>
-                <ion-label text-center>{{user.sexo}}</ion-label>
-              </ion-item>
-              <br>
-              <ion-item>
-                <ion-icon name="call" item-start></ion-icon>
-                <ion-label text-center>{{user.telefono}}</ion-label>
+                <ion-label text-center>{{user.usuario}}</ion-label>
               </ion-item>
               <br>
               <ion-item>

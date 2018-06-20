@@ -10,10 +10,11 @@ import {Router} from '@angular/router';
 export class NavbarComponent{
 
   id: string;
+  hastoken: boolean = false;
 
   constructor(private auth: AuthGuard, private router: Router) {
-    auth.testkn();
     this.id = localStorage.getItem('idtemplate');
+    this.hastoken = localStorage.getItem("token") != null;
    }
 
 // funcion para cerrar sesión

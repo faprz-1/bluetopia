@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {UserService} from '../../../services/user.service';
-import {User} from '../../../models/user';
+// import {UserService} from '../../../services/user.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -12,22 +11,22 @@ import {Router} from '@angular/router';
 export class UserEditComponent implements OnInit, OnDestroy {
   id: any;
   params: any;
-  user = new User ('id', 'nombres', 'apellidos', 'email', 'password', 'telefono', 'sexo', 'imgperfil', 'api_token');
+  user:any = {};
 
-  constructor(private activatedRoute: ActivatedRoute, private userService: UserService, private router: Router) { }
+  constructor(private activatedRoute: ActivatedRoute,  private router: Router) { }
 
   ngOnInit() {
     this.params = this.activatedRoute.params.subscribe(params =>  this.id = params['id']);
-    this.userService.getUser(this.id).subscribe(
-      data => {
-        console.log (data);
-        this.user.nombres = data['nombres'];
-        this.user.apellidos = data ['apellidos'];
-        this.user.email = data ['email'];
-        this.user.telefono = data ['telefono'];
-        this.user.id = data ['id'];
-      },
-      error => console.log(<any>error));
+    // this.userService.getUser(this.id).subscribe(
+    //   data => {
+    //     console.log (data);
+    //     this.user.nombres = data['nombres'];
+    //     this.user.apellidos = data ['apellidos'];
+    //     this.user.email = data ['email'];
+    //     this.user.telefono = data ['telefono'];
+    //     this.user.id = data ['id'];
+    //   },
+    //   error => console.log(<any>error));
 
   }
 
@@ -37,12 +36,12 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
   updateUser(user) {
 
-    this.userService.updateUser(user).subscribe(
-      // tslint:disable-next-line:no-shadowed-variable
-      user => {console.log(user);
-        this.router.navigate(['/admin']);
-      },
-      error => console.log(<any>error));
+    // this.userService.updateUser(user).subscribe(
+    //   // tslint:disable-next-line:no-shadowed-variable
+    //   user => {console.log(user);
+    //     this.router.navigate(['/admin']);
+    //   },
+    //   error => console.log(<any>error));
 
 
   }

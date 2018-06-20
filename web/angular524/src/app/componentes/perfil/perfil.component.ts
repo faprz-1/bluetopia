@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild, ViewContainerRef } from '@angular/core';
 import {Http, Response} from '@angular/http';
-import { User } from '../../models/user';
-import { UserService } from '../../services/user.service';
+//import { UserService } from '../../services/user.service';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { ApiService } from '../../services/api.service';
 
 
 @Component({
@@ -15,59 +15,58 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 })
 export class PerfilComponent implements OnInit, OnDestroy {
   id: any;
-  user = new User ('id', 'nombre', 'apellidos', 'email', 'password', 'telefono', 'sexo', 'imgperfil', 'api_token');
-  // imagenpefil = 'http://template3.test/laravel_5.6.9/public/';
-  // imagenpefil = 'http://template3.0.test/servidor/laravel_5.6.9/public/';
-  img = { nombre: String, id: localStorage.getItem('idtemplate') };
+  user: any = {};
+  img: any;
   image: any;
-  users: Observable<User[]>;
+  users: Observable<any[]>;
   chngpass = false;
+  ready: boolean = false;
 
-  constructor(private userService: UserService, private activatedRoute: ActivatedRoute, private router: Router,
-    public toastr: ToastsManager, vcr: ViewContainerRef) {
+  constructor(
+     
+    private activatedRoute: ActivatedRoute, 
+    private router: Router,
+    public toastr: ToastsManager, 
+    vcr: ViewContainerRef,
+    private api: ApiService) {
       this.toastr.setRootViewContainerRef(vcr);
      }
 
   @ViewChild('fileInput') fileInput: ElementRef;
 
   ngOnInit() {
-    this.userService.getUser(localStorage.getItem('idtemplate')).subscribe(
-      data => {
-        console.log (data);
-        this.user.id = data['id'];
-        this.user.nombres = data ['nombres'];
-        this.user.apellidos = data ['apellidos'];
-        this.user.email = data ['email'];
-        this.user.password = data ['password'];
-        this.user.telefono = data ['telefono'];
-        this.user.sexo = data ['sexo'];
-        this.user.imgperfil = data ['imgperfil'];
-      },
-      error => console.log(<any>error));
+    // this.userService.getUser(localStorage.getItem('idtemplate')).subscribe(
+    //   data => {
+    //     console.log (data);
+    //     this.user.id = data['id'];
+    //     this.user.nombres = data ['nombres'];
+    //     this.user.apellidos = data ['apellidos'];
+    //     this.user.email = data ['email'];
+    //     this.user.password = data ['password'];
+    //     this.user.telefono = data ['telefono'];
+    //     this.user.sexo = data ['sexo'];
+    //     this.user.imgperfil = data ['imgperfil'];
+    //   },
+    //   error => console.log(<any>error));
 
-    if (localStorage.getItem('cambio')) {
-        // tslint:disable-next-line:prefer-const
-        let text = localStorage.getItem('cambio');
-        this.showWarning(text);
-        localStorage.removeItem('cambio');
-      }
-
+    // if (localStorage.getItem('cambio')) {
+    //     // tslint:disable-next-line:prefer-const
+    //     let text = localStorage.getItem('cambio');
+    //     this.showWarning(text);
+    //     localStorage.removeItem('cambio');
+    //   }
+    
+    this.reload();
   }
 
   reload() {
-    this.userService.getUser(this.id).subscribe(
-      data => {
-        this.user.id = data['id'];
-        this.user.nombres = data['nombres'];
-        this.user.apellidos = data['apellidos'];
-        this.user.email = data['email'];
-        this.user.password = data['password'];
-        this.user.telefono = data['telefono'];
-        this.user.sexo = data['sexo'];
-        this.user.imgperfil = data['imgperfil'];
-      },
-      error => console.log(<any>error));
-
+    localStorage.ge
+    let user = JSON.parse(localStorage.getItem("user"))
+    this.user.nombres = user.realm;
+    this.user.email = user.email
+    this.user.usuario = user.username
+    this.user.imgperfil = this.api.baseURL+user.profileImage.URL
+    this.ready = true;
   }
 
   ngOnDestroy() {
@@ -90,24 +89,24 @@ export class PerfilComponent implements OnInit, OnDestroy {
         this.img.nombre = file.name;
         // Cambiando imagen en la bd
         console.log(this.img);
-        this.userService.cambioImg(this.img)
-          .subscribe(
-            user => {
-              console.log(user);
-              this.reload();
-              // Guardando la imagen
-              const imageData = new FormData();
-              imageData.append('image', this.image, this.image.name);
-              console.log(imageData);
-              this.userService.uploadImage(imageData)
-                .subscribe(
-                  image => {
-                    console.log(image);
-                    this.showInfo();
-                  },
-                  error => console.error(<any>error));
-            },
-            error => console.log(<any>error));
+        // this.userService.cambioImg(this.img)
+        //   .subscribe(
+        //     user => {
+        //       console.log(user);
+        //       this.reload();
+        //       // Guardando la imagen
+        //       const imageData = new FormData();
+        //       imageData.append('image', this.image, this.image.name);
+        //       console.log(imageData);
+        //       this.userService.uploadImage(imageData)
+        //         .subscribe(
+        //           image => {
+        //             console.log(image);
+        //             this.showInfo();
+        //           },
+        //           error => console.error(<any>error));
+        //     },
+        //     error => console.log(<any>error));
       };
     }
   }

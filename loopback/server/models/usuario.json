@@ -5,6 +5,13 @@
   "options": {
     "validateUpsert": true
   },
+  "hidden": [
+    "id",
+    "profileImageId"
+  ],
+  "scope": {
+    "include": "profileImage"
+  },
   "properties": {},
   "validations": [],
   "relations": {
@@ -12,25 +19,37 @@
       "type": "hasMany",
       "model": "UsuarioAccessToken",
       "foreignKey": "userId"
+    },
+    "profileImage": {
+      "type": "belongsTo",
+      "model": "UploadedFiles",
+      "foreignKey": "profileImageId"
     }
   },
   "acls": [
-    {
-      "accessType": "EXECUTE",
-      "principalType": "ROLE",
-      "principalId": "$everyone",
-      "permission": "ALLOW",
-      "property": "test"
-    },
     {
       "accessType": "*",
       "principalType": "ROLE",
       "principalId": "$owner",
       "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "register"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "userWithCredentials"
     }
   ],
   "methods": {
-    "prototype.userWithCredentials": {
+    "userWithCredentials": {
       "accepts": [
         {
           "arg": "ctx",
@@ -55,6 +74,34 @@
         {
           "path": "/withCredentials",
           "verb": "get"
+        }
+      ]
+    },
+    "register": {
+      "accepts": [
+        {
+          "arg": "newUser",
+          "type": "object",
+          "required": true,
+          "description": "new User object to be stored",
+          "http": {
+            "source": "body"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "user",
+          "type": "object",
+          "root": true,
+          "description": "user in DB"
+        }
+      ],
+      "description": "registers a new user with a profile picture",
+      "http": [
+        {
+          "path": "/register",
+          "verb": "post"
         }
       ]
     }

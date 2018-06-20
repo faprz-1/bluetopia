@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController, 
-  AlertController } from 'ionic-angular'; 
+import { IonicPage, NavController, AlertController, LoadingController } from 'ionic-angular'; 
 import { RegistrarsePage, RecuperarContrasenaPage, PerfilPage } from '../index.paginas';
+import { Storage } from '@ionic/storage';
+import { ApiProvider } from '../../providers/api/api';
+import { AdminPage } from '../admin/admin';
 
 @IonicPage()
 @Component({
@@ -17,9 +19,11 @@ export class LoginPage {
   rootPage: any;
 
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,  
-    public alertCtrl: AlertController) { 
+    private navCtrl: NavController,
+    private api: ApiProvider,
+    private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController,
+    private storage: Storage) { 
 
     }
 
@@ -28,7 +32,27 @@ export class LoginPage {
   }
 
   login(user){
-    console.log(user);
+    let loading = this.loadingCtrl.create({content: 'autenticando...', dismissOnPageChange: true});
+    loading.present();
+    this.api.post("/Usuarios/login", user).subscribe((token: any) =>{
+      this.storage.clear().then(()=>{
+        this.storage.set("token",token.id)
+        this.api.token= token.id;
+        this.api.get("/Usuarios/withCredentials", true).subscribe((userFromServer: any)=>{
+          this.storage.set("user", userFromServer).then(()=>{
+            loading.dismiss();
+            if(userFromServer.role.name == "Admin")
+              this.navCtrl.setRoot(AdminPage)
+            else
+              this.navCtrl.setRoot(PerfilPage)
+          })
+        })
+      })
+    }, (error: any) => {
+      console.log("error Override:", error);
+      
+      this.showAlert()
+    })
   }
 
   showAlert() {

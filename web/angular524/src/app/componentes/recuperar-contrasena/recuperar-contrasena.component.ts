@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
-import { UserService } from '../../services/user.service';
+//import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
@@ -10,7 +10,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 })
 export class RecuperarContrasenaComponent implements OnInit {
 
-  constructor(private userService: UserService, private router: Router, public toastr: ToastsManager, vcr: ViewContainerRef) {
+  constructor( private router: Router, public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
    }
 
@@ -18,18 +18,18 @@ export class RecuperarContrasenaComponent implements OnInit {
   }
 
   sendMail(correo) {
-    this.userService.sendMail(correo)
-      .subscribe(
-        // tslint:disable-next-line:no-shadowed-variable
-        user => {
-          console.log(user);
-          localStorage.setItem('creado', 'Se ha enviado un correo a su dirección email');
-          this.router.navigate(['/login']);
-        },
-        error => {
-          console.log(<any>error);
-          this.showError();
-        });
+    // this.userService.sendMail(correo)
+    //   .subscribe(
+    //     // tslint:disable-next-line:no-shadowed-variable
+    //     user => {
+    //       console.log(user);
+    //       localStorage.setItem('creado', 'Se ha enviado un correo a su dirección email');
+    //       this.router.navigate(['/login']);
+    //     },
+    //     error => {
+    //       console.log(<any>error);
+    //       this.showError();
+    //     });
 
   }
 
