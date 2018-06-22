@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthGuard } from '../../services/auth.guard';
-import {Router} from '@angular/router';
+import {Router, NavigationEnd} from '@angular/router';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,16 +12,30 @@ export class NavbarComponent{
 
   id: string;
   hastoken: boolean = false;
+  isAdmin: boolean = false;
+  constructor(
+    private auth: AuthGuard, 
+    private router: Router,
+    private api: ApiService) {
+    this.updateData();
+    this.router.events.subscribe((event)=>{
+      if(event instanceof NavigationEnd)
+        this.updateData();
+    })
+    
+  }
 
-  constructor(private auth: AuthGuard, private router: Router) {
-    this.id = localStorage.getItem('idtemplate');
+  private updateData(){
     this.hastoken = localStorage.getItem("token") != null;
-   }
+    this.isAdmin = JSON.parse(localStorage.getItem("user")).role.name == "Admin"
+  }
 
 // funcion para cerrar sesión
   logout(){
-  	localStorage.clear();
-  	this.router.navigate(['login']);
+    this.api.post("/Usuarios/logout",null).subscribe(()=>{
+      localStorage.clear();
+      this.router.navigate(['login']);
+    })
   }
 
 }

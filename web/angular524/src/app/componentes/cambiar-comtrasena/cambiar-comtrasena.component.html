@@ -1,11 +1,10 @@
-
-      <div class="container main-container">
-        <div class="row">
-          <div class="col-md-12 col-sm-6 text-center">
-            <h4>Cambiar Contraseña</h4>
-          </div>
-        </div>
-      </div>
+<div class="container main-container">
+  <div class="row">
+    <div class="col-md-12 col-sm-6 text-center">
+      <h4>Cambiar Contraseña</h4>
+    </div>
+  </div>
+</div>
 <br>
 <br>
 
@@ -13,64 +12,60 @@
 
   <div class="container col-md-5 col-am-6 text-center">
 
-      <div class="form-group row" [ngClass]="{ 'has-danger': (password1.errors?.minlength || password1.errors?.required)&& password1.touched}">
-            <label class="col-4 col-form-label">Contraseña Actual</label>
+    <div class="form-group row" [ngClass]="{ 'has-danger': (newPassword.errors?.minlength || newPassword.errors?.required)&& newPassword.touched}">
+      <label class="col-4 col-form-label">Contraseña Actual</label>
 
-                <div class="col-md-8">
-                      <input class="form-control text-center" type="password" placeholder="Contraseña Actual"
-                                                  name="password" required ngModel #password="ngModel">
+      <div class="col-md-8">
+        <input class="form-control text-center" type="password" placeholder="Contraseña Actual" name="password" required ngModel
+          #password="ngModel">
 
-                      <div *ngIf="password.errors?.required"
-                            class="form-control-feedback text-center">"Campo obligatorio"</div>
-                </div>
-        </div>
+        <div *ngIf="password.errors?.required" class="form-control-feedback text-center">"Campo obligatorio"</div>
+      </div>
+    </div>
 
-        <div class="form-group row">
-            <label class="col-4 col-form-label">Contraseña Nueva</label>
+    <div class="form-group row">
+      <label class="col-4 col-form-label">Contraseña Nueva</label>
 
-                <div class="col-md-8">
-                    <input class="form-control text-center" type="password" placeholder="Contraseña Nueva"
-                                      name="password1" required ngModel  minlength="6" #password1="ngModel">
+      <div class="col-md-8">
+        <input class="form-control text-center" type="password" placeholder="Contraseña Nueva" name="newPassword" required ngModel
+          minlength="6" #newPassword="ngModel">
 
-                        <div *ngIf="password1.errors?.required"
-                              class="form-control-feedback text-center">"Campo obligatorio"</div>
+        <div *ngIf="newPassword.errors?.required" class="form-control-feedback text-center">"Campo obligatorio"</div>
 
-                        <div *ngIf="password1.errors?.minlength"
-                              class="form-control-feedback text-center">
-                              "Por lo menos {{ password1.errors.minlength.requiredLength}} caracteres"</div>
-                </div>
-        </div>
+        <div *ngIf="newPassword.errors?.minlength" class="form-control-feedback text-center">
+          "Por lo menos {{ newPassword.errors.minlength.requiredLength}} caracteres"</div>
+      </div>
+    </div>
 
 
-        <div class="form-group row">
-              <label class="col-4 col-form-label">Confirmar Contraseña</label>
+    <div class="form-group row">
+      <label class="col-4 col-form-label">Confirmar Contraseña</label>
 
-                    <div class="col-md-8">
-                        <input class="form-control text-center" type="password" placeholder="Repetir Contraseña"
-                                                 name="password2" ngModel required minlength="6" #password2="ngModel">
+      <div class="col-md-8">
+        <input class="form-control text-center" type="password" placeholder="Repetir Contraseña" name="repeatNewPassword" ngModel
+          required minlength="6" #repeatNewPassword="ngModel">
 
-                            <div *ngIf="password2.errors?.required"
-                                  class="form-control-feedback text-center">"Campo obligatorio"</div>
+        <div *ngIf="repeatNewPassword.errors?.required" class="form-control-feedback text-center">"Campo obligatorio"</div>
 
-                            <div *ngIf="password2.errors?.minlength"
-                                  class="form-control-feedback text-center">"Confirmar la Nueva Contraseña"</div>
-                    </div>
-           </div>
+        <div *ngIf="repeatNewPassword.errors?.minlength" class="form-control-feedback text-center">"Confirmar la Nueva Contraseña"</div>
+      </div>
+    </div>
   </div>
 
-<br>
-<br>
+  <br>
+  <br>
 
   <div class="container col-md-5 col-sm-6 text-center">
 
-        <div class="form-group row">
-            <div class="col-md-7 col-sm-5">
-                  <button type="submit" class="btn btn-outline-primary text-center"> Guardar Cambios </button> </div>
-<br>
-<br>
-        <div class="col-md-5 col-sm-6">
-            <button type="button" class="btn btn-outline-primary text-center"
-                    (click)="goPerfil()"> Cancelar </button> </div>
+    <div class="form-group row">
+      <div class="col-md-7 col-sm-5">
+        <button type="submit" class="btn btn-outline-primary text-center"> Guardar Cambios </button>
+      </div>
+      <br>
+      <br>
+      <div class="col-md-5 col-sm-6">
+        <button type="button" class="btn btn-outline-primary text-center" (click)="goPerfil()"> Cancelar </button>
+      </div>
     </div>
-</div>
+  </div>
 </form>

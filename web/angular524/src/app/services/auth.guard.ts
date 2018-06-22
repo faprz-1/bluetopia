@@ -18,12 +18,12 @@ export class AuthGuard implements CanActivate {
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 	let token = localStorage.getItem('token');
 
-  	if (token) {
+	if(next.data.hasOwnProperty("role")){		
+		return  next.data.role == JSON.parse(localStorage.getItem("user")).role.name
+	}else if (token) {
   		return true;
   	}
-  	this.router.navigate(['login']);
-  	console.error('Acceso denegado!');
-  	
+  	this.router.navigate(['login']);  	
   	return false;
   }
 

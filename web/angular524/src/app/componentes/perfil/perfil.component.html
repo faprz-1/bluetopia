@@ -10,7 +10,7 @@
   <div class="container col-md-4">
     <div class="row">
       <div class="card text-center" style="width: 18rem;">
-        <img class="card-img-top" src="{{user.imgperfil}}" onerror="this.src='../../../assets/img/default_avatar.jpg'" alt="Card image cap">
+        <img class="card-img-top" src="{{api.baseURL+user.profileImage.URL}}" onerror="this.src='../../../assets/img/default_avatar.jpg'" alt="Card image cap">
         <div class="card-body">
           <p>
             <input style="display:none" type="file" id="img" name="img" ngModel required #img="ngModel" (change)="onFileChange($event)"
@@ -28,13 +28,13 @@
     <div class="container col-md-4 col-sm-6">
   
       <div class="form-group row">
-        <label class="col-4 col-sm-4 col-form-label">Nombre:</label>
-        <label class="col-4 col-sm-4 col-form-label">{{user.nombres}}</label>
+        <label class="col-4 col-sm-4 col-form-label">Usuario:</label>
+        <label class="col-4 col-sm-4 col-form-label">{{user.username}}</label>
       </div>
   
       <div class="form-group row">
-        <label class="col-4  col-sm-4 col-form-label">Apellidos:</label>
-        <label class="col-4 col-sm-4 col-form-label">{{user.apellidos}}</label>
+        <label class="col-4  col-sm-4 col-form-label">Nombre:</label>
+        <label class="col-4 col-sm-4 col-form-label">{{user.realm}}</label>
       </div>
   
       <div class="form-group row">

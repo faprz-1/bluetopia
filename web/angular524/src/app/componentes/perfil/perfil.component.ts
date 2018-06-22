@@ -62,10 +62,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
   reload() {
     localStorage.ge
     let user = JSON.parse(localStorage.getItem("user"))
-    this.user.nombres = user.realm;
-    this.user.email = user.email
-    this.user.usuario = user.username
-    this.user.imgperfil = this.api.baseURL+user.profileImage.URL
+    this.user = user
     this.ready = true;
   }
 

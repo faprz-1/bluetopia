@@ -34,7 +34,7 @@ export class LoginPage {
   login(user){
     let loading = this.loadingCtrl.create({content: 'autenticando...', dismissOnPageChange: true});
     loading.present();
-    this.api.post("/Usuarios/login", user).subscribe((token: any) =>{
+    this.api.post("/Usuarios/login", user, false).subscribe((token: any) =>{
       this.storage.clear().then(()=>{
         this.storage.set("token",token.id)
         this.api.token= token.id;

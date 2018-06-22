@@ -53,7 +53,7 @@ export class RegistrarsePage {
       }
       let loading = this.loadingCtrl.create({content: 'cargando...', dismissOnPageChange: true});
       loading.present();
-      this.api.post("/Usuarios/register",userRequest).subscribe(()=>{
+      this.api.post("/Usuarios/register",userRequest, false).subscribe(()=>{
         loading.dismiss();
         this.navCtrl.pop();
       })

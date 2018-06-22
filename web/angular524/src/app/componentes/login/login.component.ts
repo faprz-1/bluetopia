@@ -37,18 +37,14 @@ export class LoginComponent implements OnInit {
   }
 
   login(user) {
-    this.api.post("/Usuarios/login", user).subscribe((token: any) =>{
+    this.api.post("/Usuarios/login", user, false).subscribe((token: any) =>{
       localStorage.clear()
-        localStorage.setItem("token",token.id)
-        this.api.token= token.id;
-        this.api.get("/Usuarios/withCredentials", true).subscribe((userFromServer: any)=>{
-          localStorage.setItem("user", JSON.stringify(userFromServer))
-          console.log(userFromServer.role.name);
-          if(userFromServer.role.name == "Admin")
-            this.router.navigate(['/admin']);
-          else
-            this.router.navigate(['/perfil']);
-        })
+      localStorage.setItem("token",token.id)
+      this.api.token= token.id;
+      this.api.get("/Usuarios/withCredentials", true).subscribe((userFromServer: any)=>{
+        localStorage.setItem("user", JSON.stringify(userFromServer))
+        this.router.navigate(['/perfil']);
+      })
     }, (error: any) => {
       this.showError()
     })

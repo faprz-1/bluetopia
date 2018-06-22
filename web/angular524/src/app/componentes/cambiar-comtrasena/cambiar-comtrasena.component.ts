@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
-//import { UserService } from '../../services/user.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-cambiar-comtrasena',
@@ -10,40 +10,34 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 })
 export class CambiarComtrasenaComponent implements OnInit {
 
-  usrid: string = localStorage.getItem('idtemplate');
+  user: any = JSON.parse(localStorage.getItem("user"))
 
-  constructor( private router: Router, public toastr: ToastsManager, vcr: ViewContainerRef) {
+  constructor( 
+    private router: Router, 
+    public toastr: ToastsManager, 
+    vcr: ViewContainerRef,
+    private api: ApiService) {
     this.toastr.setRootViewContainerRef(vcr);
    }
 
   ngOnInit() {
   }
 
-  updatePswrd(pass) {
-    // tslint:disable-next-line:triple-equals
-    // if ((pass.password1 == pass.password2) && pass.password1.length > 5) {
-
-    // pass.id = localStorage.getItem('idtemplate');
-    // console.log('valor formulario', pass);
-    // this.userService.updatePswrd(pass)
-    //   .subscribe(
-    //     // tslint:disable-next-line:no-shadowed-variable
-    //     user => {
-    //       console.log(user);
-    //       localStorage.setItem('cambio', 'Su contraseña ha sido cambiada');
-    //       this.router.navigate(['/perfil/', this.usrid]);
-    //     },
-    //     error => {
-    //       console.log(<any>error);
-    //       this.showError('¡Contraseña actual incorrecta!');
-    //      });
-    //   } else {
-    //     this.showError('¡Las contraseñas nuevas no coinciden!');
-    //   }
+  updatePswrd(data) {
+    if(data.newPassword == data.repeatNewPassword){
+      console.log(data);
+      this.api.post("/Usuarios/change-password", {oldPassword: data.password, newPassword: data.newPassword}).subscribe(res => {
+       this.router.navigate(['/perfil/']);
+      }, err => {
+        this.toastr.error("¡La contraseña actual es incorrecta!")
+      })
+    }else{
+      this.toastr.error("¡Las contraseñas nuevas no coinciden!")
+    }
   }
 
   goPerfil() {
-    this.router.navigate(['/perfil/', this.usrid]);
+    this.router.navigate(['/perfil/']);
   }
 
   showError(texto) {

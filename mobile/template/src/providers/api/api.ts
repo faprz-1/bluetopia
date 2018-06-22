@@ -66,9 +66,9 @@ export class ApiProvider {
   /**
    * Metodo get para conectarse con la api
    * @param endPoint string con el end pint a usar ej: "Usuarios/1"
-   * @param useToken boolean para  intentar usar token en la peticion default: false
+   * @param useToken boolean para  intentar usar token en la peticion default: true
    */
-  public get(endPoint: string, useToken:boolean = false): Observable<object>{
+  public get(endPoint: string, useToken:boolean = true): Observable<object>{
     let link: string = this.genLink(endPoint, useToken);
     return this.http.get<JSON>(link, this.headers).pipe(
       retryWhen(err =>this.conditionalRetry(err)),
@@ -81,9 +81,9 @@ export class ApiProvider {
    * Metodo post para conectarse con la api
    * @param endPoint string con el end pint a usar ej: "Usuarios/1"
    * @param body object objeto para enviar al servidor
-   * @param useToken boolean para  intentar usar token en la peticion default: false
+   * @param useToken boolean para  intentar usar token en la peticion default: true
    */
-  public post(endPoint: string, body: object, useToken:boolean = false): Observable<object>{
+  public post(endPoint: string, body: object, useToken:boolean = true): Observable<object>{
     let link: string = this.genLink(endPoint, useToken);
     return this.http.post<JSON>(link, body, this.headers).pipe(
       retryWhen(err =>this.conditionalRetry(err)),
@@ -95,9 +95,9 @@ export class ApiProvider {
   /**
    * Metodo delete para conectarse con la api
    * @param endPoint string con el end pint a usar ej: "Usuarios/1"
-   * @param useToken boolean para  intentar usar token en la peticion default: false
+   * @param useToken boolean para  intentar usar token en la peticion default: true
    */
-  public delete(endPoint: string, useToken:boolean = false): Observable<object>{
+  public delete(endPoint: string, useToken:boolean = true): Observable<object>{
     let link: string = this.genLink(endPoint, useToken);
     return this.http.delete<JSON>(link, this.headers).pipe(
       retryWhen(err =>this.conditionalRetry(err)),
