@@ -17,7 +17,7 @@
     "name": "localFiles",
     "connector": "loopback-component-storage",
     "provider": "filesystem",
-    "root": "C:/wamp64/www/template3.0/loopback/server/storage",
+    "root": "./server/storage",
     "nameConflict": "makeUnique"
   }
 }
