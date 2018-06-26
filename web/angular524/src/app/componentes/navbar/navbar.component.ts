@@ -26,14 +26,22 @@ export class NavbarComponent{
   }
 
   private updateData(){
-    this.hastoken = localStorage.getItem("token") != null;
-    this.isAdmin = JSON.parse(localStorage.getItem("user")).role.name == "Admin"
+    let token = localStorage.getItem("token");
+    let user = localStorage.getItem("user");
+    if( token && user ){
+      this.hastoken = token != null;
+      this.isAdmin = JSON.parse(user).role.name == "Admin"
+    }else{
+      this.hastoken = false;
+      this.isAdmin = false;
+    }
   }
 
 // funcion para cerrar sesión
   logout(){
     this.api.post("/Usuarios/logout",null).subscribe(()=>{
       localStorage.clear();
+      this.updateData()
       this.router.navigate(['login']);
     })
   }
