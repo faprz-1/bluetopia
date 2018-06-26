@@ -6,6 +6,7 @@ import { FormGroup, FormControl, Validators, FormArray} from '@angular/forms';
 // tslint:disable-next-line:import-blacklist
 import {Observable} from 'rxjs/Rx';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-registrarse',
@@ -14,7 +15,11 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 })
 export class RegistrarseComponent implements OnInit {
 
-  constructor( private router: Router, public toastr: ToastsManager, vcr: ViewContainerRef) {
+  constructor( 
+    private router: Router, 
+    public toastr: ToastsManager, 
+    private api: ApiService,
+    vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
   }
 
@@ -28,17 +33,16 @@ export class RegistrarseComponent implements OnInit {
   }
 
     onFileChange(event) {
-    // tslint:disable-next-line:prefer-const
-    let reader = new FileReader();
-    if (event.target.files && event.target.files.length > 0) {
-      // tslint:disable-next-line:prefer-const
-      let file = event.target.files[0];
-      this.image = <File>event.target.files[0];
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.img = file.name;
-      };
-    }
+      let reader = new FileReader();
+      if(event.target.files && event.target.files.length > 0) {
+        let file = event.target.files[0];
+        this.image=<File>event.target.files[0];
+        reader.onload = (readEvent: any) => {
+          var binaryString = readEvent.target.result;
+          this.img= btoa(binaryString);
+        };
+        reader.readAsBinaryString(file);
+      }
   }
 
   clearFile() {
@@ -48,41 +52,25 @@ export class RegistrarseComponent implements OnInit {
 
 
   createUser(user) {
-   // Para crear usuario en la BD
-  user.img = this.img;
-  console.log(user);
-  // tslint:disable-next-line:triple-equals
-  if ((user.password == user.password2) && user.password.length > 5 ) {
-    // this.userService.createUser(user)
-    //   .subscribe(
-    //     // tslint:disable-next-line:no-shadowed-variable
-    //     user => {
-    //       console.log(user);
-    //       console.log('Usuario creado con exito');
-    //       localStorage.setItem('creado', 'Por favor inicie sesión');
-    //       this.router.navigate(['/login']);
-    //       // tslint:disable-next-line:triple-equals
-    //       if (this.img != undefined) {
-    //         // Guardar la imagen
-    //         const imageData = new FormData();
-    //         imageData.append('image', this.image, this.image.name);
-    //         console.log(imageData);
-    //         this.userService.uploadImage(imageData)
-    //           .subscribe(
-    //             image => {
-    //               console.log(image);
-    //             },
-    //             error => {
-    //               console.error(<any>error);
-    //             });
-    //       } else {
-    //         console.log('No se agregó imagen a su perfil');
-    //       }
-    //     },
-    //     error => console.log(<any>error));
-  } else {
-    console.error('Las contraseñas no coinciden!!!');
-    this.showError();
+    if ((user.password == user.password1)) {
+      let userRequest = {
+        user:{
+          realm: user.nombres + user.apellidos,
+          username: user.nombres,
+          email: user.email,
+          password: user.password
+        },
+        profileImage:{
+          base64ProfileImage: this.img,
+          base64ProfileImageExtention: "."+this.image.name.split('.')[1]
+        }
+      }
+      this.api.post("/Usuarios/register",userRequest, false).subscribe(()=>{
+        this.router.navigate(['/login']);
+      })
+      
+    } else {
+      this.showError();
     }
   }
 
