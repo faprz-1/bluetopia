@@ -21,6 +21,9 @@ export class LoginComponent implements OnInit {
     vcr: ViewContainerRef,
     private api: ApiService) {
     this.toastr.setRootViewContainerRef(vcr);
+    if(localStorage.getItem("token")){
+      this.router.navigate(['/perfil'])
+    }
   }
 
   ngOnInit() {
