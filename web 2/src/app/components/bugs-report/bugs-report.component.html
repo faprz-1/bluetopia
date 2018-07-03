@@ -1,0 +1,105 @@
+
+<section class="content">
+		<div class="row">
+			<div class="col-12">
+				<div class="display-3">
+					Proyecto {{proyecto?.nombre}} [{{proyecto?.code}}]
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="row">
+			<div class="col-12">
+				
+				<h4 class="mt-3 mb-3">Bugs:</h4>
+			</div>
+		<!-- 	<div class="col-3">
+				<div class="card card-fluid" style="width: 18rem;">
+					  <div class="card-body">
+					    <h5 class="card-title">Nuevo: <br>{{tipos[nuevoBug.tipo]}}</h5>
+					    <p class="card-text form-group">Titulo <br><input type="text" class="form-control"   placeholder="Titulo" [(ngModel)]="nuevoBug.titulo"></p>
+					    <p class="card-text form-group">Descripcion <br><textarea class="form-control" placeholder="Descripcion" [(ngModel)]="nuevoBug.descripcion"></textarea> </p>
+					    <p>Tipo : <br><select [(ngModel)]="nuevoBug.tipo">
+					    	<option value="0">{{tipos[0]}}</option>
+					    	<option value="1">{{tipos[1]}}</option>
+					    	<option value="2">{{tipos[2]}}</option>
+					    </select></p>
+					     <p>Mucha urgencia 1  <br> Puede esperar 5 <br><select [(ngModel)]="nuevoBug.prioridad">
+					    	<option value="5" selected>5</option>
+					    	<option value="4">4</option>
+					    	<option value="3">3</option>
+					    	<option value="2">2</option>
+					    	<option value="1">1</option>
+					    </select></p>
+					    <p class="card-text"><button class="btn btn-primary" (click)="addBug()">Agregar</button></p>
+					  </div>
+					</div>
+			</div>
+			<div class="col-3" *ngFor="let bug of proyecto?.Tickets">
+					<div class="card" style="width: 18rem;" >
+					  <div class="card-body">
+					    <h5 class="card-title">{{bug.titulo}}</h5>
+					    <p class="card-text">{{bug.descripcion}}</p>
+					    <p class="card-text">Prioridad :{{bug.prioridad}}</p>
+					    <p class="card-text">{{tipos[bug.tipo]}}</p>
+					    <p class="card-text"><small class="text-muted">{{bug.fecha| date:medium}}</small></p>
+					  </div>
+					</div>
+				
+			</div> -->
+			<div class="row"><div class="col-12">
+					<div class="card " >
+						  <div class="card-body">
+						  	<div class="row">
+						  		<div class="col-6">
+						  			<h5 class="card-title">Nuevo: <br>{{tipos[nuevoBug.tipo]}}</h5>
+								    <p class="card-text form-group">Titulo <br><input type="text" class="form-control"   placeholder="Titulo" [(ngModel)]="nuevoBug.titulo"></p>
+								    <p class="card-text form-group">Descripcion <br><textarea class="form-control" placeholder="Descripcion" [(ngModel)]="nuevoBug.descripcion"></textarea> </p>
+						  		</div>
+						  		<div class="col-6">
+						  			 <p>Tipo : <br><select [(ngModel)]="nuevoBug.tipo_ticket_id">
+								    	<option value="0">{{tipos[0]}}</option>
+								    	<option value="1">{{tipos[1]}}</option>
+								    	<option value="2">{{tipos[2]}}</option>
+								    </select></p>
+								     <p>Mucha urgencia 1  <br> Puede esperar 5 <br><select [(ngModel)]="nuevoBug.prioridad">
+								    	<option value="5" selected>5</option>
+								    	<option value="4">4</option>
+								    	<option value="3">3</option>
+								    	<option value="2">2</option>
+								    	<option value="1">1</option>
+								    </select></p>
+								    <p class="card-text"><button class="btn btn-primary" (click)="addBug()">Agregar</button></p>
+						  		</div>
+						  	</div>
+						    
+						   
+						  </div>
+						</div>
+					</div>
+				
+						<ng-container  *ngFor="let bug of proyecto?.Tickets; let index=index" >
+							<div class="col-12" *ngIf="index==0 || proyecto.Tickets[index].tipo!=proyecto.Tickets[index-1].tipo">
+								<div class="display-4">{{tipos[bug.tipo]}}</div>
+								<hr>
+							</div>
+							<div class="col-12 col-md-4 col-lg-3 col-xl-2" >
+								<div class="card" [ngClass]="{
+										'border-success':bug.prioridad==5,
+										'border-warning':bug.prioridad<=4 && bug.prioridad>1,
+										'border-danger':bug.prioridad ==1
+									}" 
+									 style="width: 18rem; border: solid;5px">
+								  <div class="card-body">
+								    <h5 class="card-title">{{bug.titulo}}</h5>
+								    <p class="card-text">{{bug.descripcion}}</p>
+								    <p class="card-text">Prioridad :{{bug.prioridad}}</p>
+								    <p class="card-text"><small class="blockquote-footer">{{bug.fecha| date:large}}</small></p>
+								  </div>
+								</div>
+							</div>
+						</ng-container>
+				</div>
+		</div>
+</section>

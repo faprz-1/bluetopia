@@ -1,0 +1,99 @@
+
+<section class="content">
+		<div class="row">
+			<div class="col-12">
+				<div class="display-4">
+					Jarabes
+				</div>
+			</div>
+			<div class="col-3" *ngFor="let user of checkUser">
+				<div class="card mb-3" style="border: solid 6px;" 
+						[ngClass]="{
+							'border-success':calcProgress(user.checklistSalidas[0])==4,
+							'border-warning':calcProgress(user.checklistSalidas[0])<=3 && calcProgress(user.checklistSalidas[0])>0,
+							'border-danger':calcProgress(user.checklistSalidas[0]) ==0
+						}" 
+						>
+					<!-- <img src="./assets/fondo/user.png" class="card-img" alt=""> -->
+					<!-- <div class="card-img-overlay" *ngIf="user.checklistSalidas[0]==undefined">
+						<h5 class="card-title  ml-2 mr-2 mt-2" >
+							Registrar llegada 
+						</h5>
+							<div class="card-text">
+								
+							<button class="btn btn-lg btn-primary btn-block" (click)="addCheck(user)">
+						<span class="oi oi-account-login"></span> Registar</button>
+							</div>
+					</div> -->
+					<div class="card-title mb-1 pt-3">
+						<strong class="h2 ml-5 mt-5">{{user.username|uppercase}}</strong>
+					</div>
+					<div class="card-title" *ngIf="user.checklistSalidas[0]==undefined">
+						
+						
+							<div class="card-text">
+								
+							<button class="btn btn-lg btn-primary btn-block" (click)="addCheck(user)">
+						<span class="oi oi-account-login"></span> Ya llegue!</button>
+							</div>
+					
+					</div>
+					<div class="card-body" *ngIf="user.checklistSalidas[0]!=undefined">
+
+						<p>Progreso del dia {{user.checklistSalidas[0]?.fecha|date:"short"}}</p>
+						<i class="icon ion-md-heart"></i>
+						
+						<div class="row" >
+							<div class="col-6 mt-2" tooltip="Commits" tooltipPlacement="bottom" [tooltipDisabled]="false" [tooltipAnimation]="true">
+								<button class="btn btn-sm btn-block" 
+									[ngClass]="{
+										'btn-danger':user.checklistSalidas[0].commit ==0, 
+										'btn-success':user.checklistSalidas[0].commit!=0}" 
+									(click)="aumentar(user.checklistSalidas[0],'commit')"
+									>
+						<span class="oi oi-code"></span>
+								<div class="ml-4 badge badge-secondary">{{user.checklistSalidas[0].commit}}</div>
+							</button>
+								
+							</div>
+							<div class="col-6 mt-2" tooltip="Ortografia" tooltipPlacement="bottom" [tooltipDisabled]="false" [tooltipAnimation]="true">
+								<button class="btn btn-sm btn-block" 
+									[ngClass]="{
+										'btn-danger':user.checklistSalidas[0].ortografia ==0, 
+										'btn-success':user.checklistSalidas[0].ortografia!=0}" 
+									(click)="aumentar(user.checklistSalidas[0],'revision')"
+									>
+						<span class="oi oi-circle-check"></span>
+								 <div class="ml-4 badge badge-secondary">{{user.checklistSalidas[0].ortografia}}</div>
+							</button>
+								
+							</div>
+							<div class="col-6 mt-2" tooltip="jira" tooltipPlacement="bottom" [tooltipDisabled]="false" [tooltipAnimation]="true">
+								<button class="btn btn-sm btn-block" 
+									[ngClass]="{
+										'btn-danger':user.checklistSalidas[0].jira ==0, 
+										'btn-success':user.checklistSalidas[0].jira!=0}" 
+									(click)="aumentar(user.checklistSalidas[0],'jira')"
+									>
+						<span class="oi oi-cloudy"></span><div class="ml-4 badge badge-secondary">{{user.checklistSalidas[0].jira}}</div>
+							</button>
+								
+							</div>
+							<div class="col-6 mt-2" tooltip="Indentacion" tooltipPlacement="bottom" [tooltipDisabled]="false" [tooltipAnimation]="true">
+								<button class="btn btn-sm btn-block" 
+									[ngClass]="{
+										'btn-danger':user.checklistSalidas[0].indentacion ==0, 
+										'btn-success':user.checklistSalidas[0].indentacion!=0}" 
+									(click)="aumentar(user.checklistSalidas[0],'indentacion')"
+									>
+								<span class="oi oi-copywriting"></span>
+							<div class="ml-4 badge badge-secondary">{{user.checklistSalidas[0].indentacion}}</div>
+							</button>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</section>

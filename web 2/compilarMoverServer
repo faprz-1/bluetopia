@@ -1,0 +1,9 @@
+echo "compilando"
+ng build
+echo "Compilado terminado"
+echo "Eliminando archivos"
+rm -rf /var/www/html/mediccallapp.com/public_html
+echo "Copiando archivos"
+mkdir /var/www/html/mediccallapp.com/public_html
+cp -r dist/* /var/www/html/mediccallapp.com/public_html/
+echo "Archivos copiados"
