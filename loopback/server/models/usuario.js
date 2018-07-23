@@ -1,8 +1,9 @@
 'use strict';
+var disableRelationMethods = require("../model-methods-helper").disableRelationMethods;
 
 module.exports = function(Usuario) {
     var app = require('../../server/server');
-    
+    disableRelationMethods(Usuario);
     /**
      * Gets an user with his credentials
      * @param {object} ctx Current Context

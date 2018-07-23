@@ -144,30 +144,125 @@ module.exports = function(app) {
     }) 
   }
 
+  var seedRoles = function () {
+    var appRoles = [
+      {
+        name: "User",
+        description: 'platform user'
+      },
+      {
+        name: "Admin",
+        description: 'platform administrator'
+      }
+    ]
+
+    // console.log("Seeding Model: Role");
+    sequentialSeed(appRoles, "name", app.models.Role);  
+  }
+
+  var seedUploadContainers = function(){
+    var Upload = app.models.Upload;
+    var containers = [
+      {
+        name: "profileImages"
+      }
+    ]
+
+    var sequentialConteinerSeed = function(containers, uploadAppModel){
+      if(containers.length == 0){
+        console.log("Seeded Model: ",uploadAppModel.modelName);
+        return;
+      }
+      let container = containers[0];
+      uploadAppModel.getContainer(container.name, function(err, cont){
+        containers.shift();
+        if(err){
+          if (err.code == "ENOENT"){
+            uploadAppModel.createContainer(container, function(err, cont){
+              if (err) throw err;
+              if(cont)
+                console.log("Created  "+uploadAppModel.modelName+": ",container.name)
+              else
+                console.log("Could not create  "+appModel.modelName+": ",container.name)
+
+              sequentialConteinerSeed(containers, uploadAppModel);
+            })
+          }else
+            throw err
+        }else{
+          sequentialConteinerSeed(containers, uploadAppModel);
+        }
+      })
+    }
+
+    sequentialConteinerSeed(containers, Upload);
+  }
+
+  var sequentialSeed = function (modelsSeedsArray, key, appModel){
+    if(modelsSeedsArray.length == 0){
+      console.log("Seeded Model: ",appModel.modelName);
+      return;
+    }
+    var modelSeed = modelsSeedsArray[0];
+    var query = {};
+    query["where"] = {};
+    query["where"][key] = modelSeed[key];
+
+    // Find seed object
+    appModel.find(query, function(err, res){
+        if (err) throw err;
+
+        // Remove actual seed model from array
+        modelsSeedsArray.shift();
+        // If seed object is not created
+        if (res.length == 0) {
+          appModel.create(modelSeed, function(err, res){
+            if (err) throw err;
+
+            if(res)
+              console.log("Created  "+appModel.modelName+": ",modelSeed[key])
+            else
+              console.log("Could not create  "+appModel.modelName+": ",modelSeed[key])
+
+            // pass to next modelSeed
+            sequentialSeed(modelsSeedsArray, key, appModel)
+          });
+        }else{
+          // pass to next modelSeed
+          sequentialSeed(modelsSeedsArray, key, appModel)
+        }
+      });
+  }
+
   var Seeders = [
-    seedUsers
+    seedUsers,
+    seedRoles,
+    seedUploadContainers
   ]
+
   // Migrate
-  var migrateAndUpdate = function() {
+  var migrateAndUpdate = function () {
     // set datdsource listeners to prevent memory leaks
     const numModels = Object.keys(app.models).length
     for (let dataSource of Object.values(app.dataSources)) {
       dataSource.setMaxListeners(numModels)
     }
+    // get database to seed
     var db = app.dataSources.mysqlDev;
     var appModels = Object.keys(db.connector._models)
-    db.isActual(appModels, function(err, actual) {
+    // check if database is up to date with models
+    db.isActual(appModels, function (err, actual) {
       if (!actual) {
-        db.autoupdate(appModels, function(err, result) {
+        db.autoupdate(appModels, function (err, result) {
           if (err) throw err;
-          console.log("Updated Models: "+appModels.join()+" Seeding...")
-          Seeders.forEach(s => s())
+          console.log("Updated Models: " + appModels.join() + " Seeding...")
+          Seeders.forEach(seeder => seeder())
         });
-      }else{
+      } else {
         console.log("Already Up to date, Seeding...")
-        Seeders.forEach(s => s())
+        Seeders.forEach(seeder => seeder())
       }
-    });  
+    });
   }
 
   migrateAndUpdate()
