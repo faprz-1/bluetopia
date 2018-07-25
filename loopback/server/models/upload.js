@@ -3,7 +3,7 @@
 const uuidV4 = require('uuid/v4');
 
 module.exports = function(Upload) {
-
+    
     /**
      * uploads a new base 64 file to the server
      * @param {string} newFile new file in base 64 encoding object
@@ -30,6 +30,22 @@ module.exports = function(Upload) {
             }, function(err, res){
                 if (err) return callback(err);
                 callback(null, res);
+            })
+        });
+    }
+
+    Upload.replaceFileBase64File = function(oldFileId, newFile, callback){
+        var UploadedFiles = Upload.app.models.UploadedFiles;
+
+        // serach old file
+        UploadedFiles.destroyById(oldFileId,function(err){
+            if (err) return callback(err);
+
+            // upload and create new file
+            Upload.newBase64File(newFile, function(err, res){
+                if (err) return callback(err);
+
+                callback(null, res)
             })
         });
     }

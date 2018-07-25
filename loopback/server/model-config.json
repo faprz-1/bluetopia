@@ -53,7 +53,15 @@
   },
   "Upload": {
     "dataSource": "localFiles",
-    "public": true
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "download": true
+        }
+      }
+    }
   },
   "UploadedFiles": {
     "dataSource": "mysqlDev",
