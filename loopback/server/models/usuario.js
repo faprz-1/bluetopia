@@ -4,6 +4,33 @@ var disableRelationMethods = require("../model-methods-helper").disableRelationM
 module.exports = function(Usuario) {
     var app = require('../../server/server');
     disableRelationMethods(Usuario);
+
+    Usuario.newUseWithRole = function(user, role, callback) {
+        var RoleMapping = app.models.RoleMapping;
+        var Role = app.models.Role;
+
+        Usuario.create(user, function(err, newU){
+            if (err) return callback(err);
+
+            Role.findOne({
+                where:{
+                  name: role
+                }
+              }, function(err, role) {
+                if (err) return callback(err);
+                
+                role.principals.create({
+                    principalType: RoleMapping.USER,
+                    principalId: newU.id
+                  }, function(err, principal) {
+                    if (err) callback(err);
+
+                    callback(null, newU)
+                })
+              })
+        })
+    }
+    
     /**
      * Gets an user with his credentials
      * @param {object} ctx Current Context
