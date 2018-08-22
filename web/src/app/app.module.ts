@@ -12,13 +12,21 @@ import swal from 'sweetalert';
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 
+// firebase  
+import { AngularFireModule } from 'angularfire2';  
+import * as firebase from 'firebase';  
+import { firebaseConfig } from './../environments/firebase.config';  
+import { AngularFireDatabaseModule } from 'angularfire2/database';  
+firebase.initializeApp(firebaseConfig);  
 
 ///services
 import { SharedService } from "./shared/services/shared.service";
 import { ApiService } from "./services/api.service";
 import { HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from './services/auth.guard';
-
+import { EventsModule } from 'angular4-events'  
+import { MessagingService } from './services/messaging.service';  
+import { AngularFireAuth } from '../../node_modules/angularfire2/auth'; 
 
 import { FilterPipe } from './filter.pipe';
 
@@ -30,7 +38,10 @@ import { FilterPipe } from './filter.pipe';
     BrowserAnimationsModule,
     FormsModule,
     routing,
-    Ng4AlertModule.forRoot(),
+    Ng4AlertModule.forRoot(),  
+    AngularFireModule.initializeApp(firebaseConfig),  
+    AngularFireDatabaseModule ,  
+    EventsModule.forRoot()  
   ],
   declarations: [
     AppComponent,
@@ -47,7 +58,9 @@ import { FilterPipe } from './filter.pipe';
       useClass: HashLocationStrategy
     },
     ApiService,
-    AuthGuard
+    AuthGuard,
+    MessagingService,  
+    AngularFireAuth  
 
   ],
   bootstrap: [AppComponent]
