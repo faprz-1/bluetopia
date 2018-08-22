@@ -15,6 +15,15 @@
     </ion-buttons>
 
     <ion-title></ion-title>
+
+    <ion-buttons end> 
+      <button ion-button icon-only (click)="openModalNotifications()"> 
+        <ion-icon name="notifications"></ion-icon> 
+        <ion-badge color="warning" item-end *ngIf="notiServ.countUnseen!=0"> {{notiServ.countUnseen()}}</ion-badge> 
+      </button> 
+    </ion-buttons> 
+
+    
   </ion-navbar>
 
 </ion-header>
@@ -26,62 +35,8 @@
     </ion-refresher-content>
   </ion-refresher>
   <ng-container *ngIf="ready">
-
-    <h1>Perfil</h1>
-    <br>
-    <img src="{{user.imgperfil}}" width="100px" class="rounded-circle" onerror="this.src='../../assets/imgs/default_avatar.jpg'">
-
-    <br>
-    <!-- <input style="display:none" type="file" id="img" name="img" ngModel required #img="ngModel" (change)="onFileChange($event)"
-        #fileInput>
-      <button type="button" ion-button clear (click)="fileInput.click()">Cambiar</button> -->
-    <br>
-
-    <form class="ion">
-      <ion-list class="pad">
-        <br>
-        <ion-item>
-          <ion-icon name="person" item-start></ion-icon>
-          <ion-label text-center>{{user.username}}</ion-label>
-        </ion-item>
-        <br>
-        <ion-item>
-          <ion-icon name="person" item-start></ion-icon>
-          <ion-label text-center>{{user.name}}</ion-label>
-        </ion-item>
-        <br>
-        <ion-item>
-          <ion-icon name="mail" item-start></ion-icon>
-          <ion-label text-center>{{user.email}}</ion-label>
-        </ion-item>
-        <br>
-        <ion-item>
-          <ion-icon name="call" item-start></ion-icon>
-          <ion-label text-center>{{user.phone}}</ion-label>
-        </ion-item>
-        <br>
-        <!-- <ion-item>
-            <ion-icon name="lock" item-start></ion-icon>
-            <ion-label text-center>
-              <a [navPush]="cam_contra">Cambiar Contraseña</a>
-            </ion-label>
-          </ion-item> -->
-        <br>
-        <br>
-      </ion-list>
-    </form>
-    <ng-container *ngIf="user.driver.driverState.id == 4">
-      <ion-title>
-        Se encuentra en viaje
-      </ion-title>
-    </ng-container>
-    <ng-container *ngIf="user.driver.driverState.id != 4">
-      <ion-title>
-        No tiene unidad asignada
-      </ion-title>
-      <ion-label>
-        contacte a su supervisor para asignación de unidad
-      </ion-label>
-    </ng-container>
+    <p class="main-header">
+      Dashboard
+    </p>
   </ng-container>
 </ion-content>

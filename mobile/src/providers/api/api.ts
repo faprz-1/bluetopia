@@ -23,6 +23,7 @@ export class ApiProvider {
   }
 
   private genLink(endPoint: string, useToken: boolean): string {
+    console.log("genlink",endPoint); 
     return (!useToken || !(this.token.length > 0 && this.token != "")) ? this.baseURL+endPoint : this.baseURL+endPoint+"?access_token="+this.token;
   }
 

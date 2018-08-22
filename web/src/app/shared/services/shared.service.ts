@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
 @Injectable()
@@ -7,6 +7,8 @@ export class SharedService {
     // Sidebar visibility
     sidebarVisible: boolean
     sidebarVisibilitySubject: Subject<boolean> = new Subject<boolean>()
+    
+    public breadcrumbs : Array<any> = [] 
 
     toggleSidebarVisibilty() {
         this.sidebarVisible = !this.sidebarVisible
@@ -22,7 +24,7 @@ export class SharedService {
         this.maThemeSubject.next(this.maTheme)
     }
 
-    constructor()  {
+    constructor(private zone : NgZone)  {
         // Hidden the sidebar by default
         this.sidebarVisible = true
 
@@ -30,6 +32,12 @@ export class SharedService {
         // this.maTheme = 'green'
         this.maTheme = 'teal'
     }
+    
+    setBreadcrumbs(bread){ 
+        this.zone.run(()=>{ 
+            this.breadcrumbs= bread; 
+        }); 
+    } 
 
 
 }

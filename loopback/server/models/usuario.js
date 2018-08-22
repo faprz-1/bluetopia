@@ -4,6 +4,45 @@ var disableRelationMethods = require("../model-methods-helper").disableRelationM
 module.exports = function(Usuario) {
     var app = require('../../server/server');
     disableRelationMethods(Usuario);
+ 
+    Usuario.testPush = function(callback){ 
+        // Enviar push 
+        var notificacion = Usuario.app.models.Notification; 
+        var res = notificacion.setByRoleNotification("admin",{title:"Ticket añadido", content:"Un cliente agrego un ticket en Porter",link:"/traxsa/admin/empresas","image":"https://us-ticket.com/images/Admission-Roll-Tickets,/Bristol-Blank-Roll-Tickets-Yellow.jpg"}); 
+        // var res = notificacion.setByRoleNotification("admin",{title:"Push prueba3", content:"Animo!!",link:"http://localhost:4200/#/inicio/administrador/tickets/1","image":"http://elvwdetuvida.com.mx/img/decada/highlights/d70s/icon-historias-volkswagen-aniversario-h-16.svg"}); 
+        callback(null,res); 
+      }
+
+    Usuario.findByRole= function(role, includes = null, callback){
+        var RoleMapping = app.models.RoleMapping;
+        var Role = app.models.Role;
+        Role.findOne({where:{name: role}}, function(err, DBrole) {
+            if (err) return callback(err);
+            
+            RoleMapping.find({where:{roleId: DBrole.id}}, function(err, roles){
+                if (err) return callback(err);
+
+                var query = { include:  [],where:{or:[]}}
+                if(includes.hasOwnProperty("length") && includes.length > 0){
+                    includes.forEach(i =>{
+                        query.include.push({
+                            relation: i
+                        })
+                    })
+                }
+                roles.forEach(r =>{
+                    query.where.or.push({
+                        id: r.principalId
+                    })
+                });
+                Usuario.find(query, function(err, DBusers){
+                    if (err) return callback(err);
+
+                     callback(null, DBusers)
+                })
+            })
+        })
+    }
 
     Usuario.newUseWithRole = function(user, role, callback) {
         var RoleMapping = app.models.RoleMapping;
@@ -123,4 +162,73 @@ module.exports = function(Usuario) {
             });
         })
     };
+
+
+
+    /**
+     * updates a user's push token
+     * @param {object} body token to be saved
+     * @param {Function(Error)} callback
+     */
+
+    Usuario.prototype.updatePushToken = function(body, callback) {
+        var PushTokens = Usuario.app.models.PushTokens;
+        var actual = this;
+        // TODO
+        PushTokens.findById(body.token, function(err, res){
+            if (err) return callback(err);
+
+            if(!res){
+                var newToken = {
+                    id: body.token,
+                    usuarioId: actual.id
+                }
+                PushTokens.create(newToken, function(err, res){
+                    if (err) return callback(err);
+        
+                    callback(null, true);
+                })
+            }
+            else{
+                callback(null, false)
+            }
+        })
+    }; 
+
+    /**
+     * updates a user's push token
+     * @param {object} body token to be saved
+     * @param {Function(Error)} callback
+     */
+
+    Usuario.prototype.deletePushToken = function(body, callback) {
+        var PushTokens = Usuario.app.models.PushTokens;
+        var actual = this;
+        // TODO
+        actual.PushTokens.findById(body.token, function(err, res){
+            if (err) return callback(err);
+            if(res){
+                PushTokens.destroyById(body.token, function(err, res){
+                    if (err) return callback(err);
+            
+                    callback(null);
+                })
+            }
+        })
+    }; 
+    Usuario.testPush = function(callback){
+        // Enviar push
+        var notificacion = Usuario.app.models.Notification;
+
+        var res = notificacion.setByRoleNotification("admin", {
+            title:"Ticket añadido", 
+            content:"Un cliente agrego un ticket en Porter",
+            link:"http://localhost:4200/#/traxsa/admin/empresas",
+            "image":"https://us-ticket.com/images/Admission-Roll-Tickets,/Bristol-Blank-Roll-Tickets-Yellow.jpg"
+        });
+
+        // var res = notificacion.setByRoleNotification("admin",{title:"Push prueba3", content:"Animo!!",link:"http://localhost:4200/#/inicio/administrador/tickets/1","image":"http://elvwdetuvida.com.mx/img/decada/highlights/d70s/icon-historias-volkswagen-aniversario-h-16.svg"});
+        
+        callback(null,res);
+    }
 };

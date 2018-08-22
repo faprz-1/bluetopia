@@ -42,7 +42,9 @@
           "userWithCredentials": true,
           "changePassword": true,
           "resetPassword": true,
-          "setPassword": true
+          "setPassword": true, 
+          "testPush": true ,
+          "prototype.updatePushToken": true  
         }
       }
     }
@@ -65,6 +67,14 @@
   },
   "UploadedFiles": {
     "dataSource": "mysqlDev",
-    "public": false
-  }
+    "public": false 
+  }, 
+    "Notification": { 
+      "dataSource": "mysqlDev", 
+      "public": true 
+  },  
+  "PushTokens": {  
+    "dataSource": "mysqlDev",  
+    "public": false  
+  } 
 }

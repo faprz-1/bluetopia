@@ -1,6 +1,21 @@
 // Import Bootstrap and App variables and mixins
 @import "../../../assets/scss/inner-imports";
-
+// Notificaciones 
+.breadcrumb-item { 
+  a { 
+    color: $white !important; 
+  } 
+  color:$white !important; 
+} 
+ 
+.badge-white { 
+  color: $black; 
+  background-color: $white; 
+} 
+ 
+.listview__item.unseen { 
+  background-color: #ececec; 
+} 
 
 // Header Base
 .header {

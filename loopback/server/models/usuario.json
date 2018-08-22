@@ -6,7 +6,6 @@
     "validateUpsert": true
   },
   "hidden": [
-    "id",
     "profileImageId"
   ],
   "scope": {
@@ -24,7 +23,16 @@
       "type": "belongsTo",
       "model": "UploadedFiles",
       "foreignKey": "profileImageId"
+    },
+    "pushTokens": {  
+      "type": "hasMany",  
+      "model": "PushTokens",  
+      "foreignKey": "",  
+      "options": {  
+        "nestRemoting": true  
+      }  
     }
+ 
   },
   "acls": [
     {
@@ -46,9 +54,58 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "userWithCredentials"
+    },
+    { 
+      "accessType": "EXECUTE", 
+      "principalType": "ROLE", 
+      "principalId": "$authenticated", 
+      "permission": "ALLOW", 
+      "property": "testPush" 
     }
   ],
   "methods": {
+    "prototype.updatePushToken": {  
+      "accepts": [  
+        {  
+          "arg": "body",  
+          "type": "object",  
+          "required": true,  
+          "description": "token to be saved",  
+          "http": {  
+            "source": "body"  
+          }  
+        }  
+      ],  
+      "returns": [],  
+      "description": "updates a user's push token",  
+      "http": [  
+        {  
+          "path": "/updatePushToken",  
+          "verb": "post"  
+        }  
+      ]  
+    },  
+    "prototype.deletePushToken": {  
+      "accepts": [  
+        {  
+          "arg": "body",  
+          "type": "object",  
+          "required": true,  
+          "description": "token to be saved",  
+          "http": {  
+            "source": "body"  
+          }  
+        }  
+      ],  
+      "returns": [],  
+      "description": "updates a user's push token",  
+      "http": [  
+        {  
+          "path": "/deletePushToken",  
+          "verb": "post"  
+        }  
+      ]  
+    } ,
     "userWithCredentials": {
       "accepts": [
         {
@@ -104,6 +161,25 @@
           "verb": "post"
         }
       ]
+    }, 
+    "testPush": { 
+      "accepts": [ 
+      ], 
+      "returns": [ 
+        { 
+          "arg": "testPush", 
+          "type": "object", 
+          "root": true, 
+          "description": "testPush" 
+        } 
+      ], 
+      "description": "testPush", 
+      "http": [ 
+        { 
+          "path": "/testPush", 
+          "verb": "get" 
+        } 
+      ] 
     }
   }
 }

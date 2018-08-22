@@ -1,8 +1,18 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { 
+  IonicPage, 
+  NavController, 
+  NavParams, 
+  AlertController, 
+  ToastController, 
+  Platform, 
+  MenuController, 
+  ModalController
+} from 'ionic-angular';
 import { ApiProvider } from '../../providers';
 import { Storage } from '@ionic/storage';
-
+import { NotificationProvider } from '../../providers/notification/notification';
+import { NotificationModalPage } from '../../pages/notification-modal/notification-modal'; 
 /**
  * Generated class for the DashboardPage page.
  *
@@ -27,33 +37,28 @@ export class DashboardPage {
     public navParams: NavParams, 
     public alertCtrl: AlertController,
     public toastCtrl: ToastController,
-    private storage: Storage) { 
+    public notiServ: NotificationProvider,
+    public modalCtrl: ModalController,
+    private platform:Platform, 
+    private menuCtrl:MenuController, 
+    private storage: Storage ) { 
+      this.menuCtrl.enable(true) 
+
     this.reload();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DashboardPage');
   }
+  openModalNotifications(){ 
+ 
+    const modal = this.modalCtrl.create("NotificationModalPage"); 
+    modal.present(); 
+  } 
 
   reload(refresher = null){
     this.ready = false;
-    this.storage.get("user").then((user: any )=>{
-      if(!user) return 0;
-      this.api.get("/drivers/"+user.driver.id+"/getUpdatedInfo").subscribe((driver)=>{
-        user.driver = driver;
-        this.user = user;
-        this.user.imgperfil = this.api.baseURL+user.profileImage.URL ? this.api.baseURL+user.profileImage.URL : this.api.baseURL
-        this.storage.set("user", user);
-        if(refresher) refresher.complete();
-        this.ready = true;
-      },
-      err =>{
-        this.user = user;
-        this.user.imgperfil = this.api.baseURL+user.profileImage.URL ? this.api.baseURL+user.profileImage.URL : this.api.baseURL
-        if(refresher) refresher.complete();
-        this.ready = true;
-      })
-    })
+  
   }
 
 }

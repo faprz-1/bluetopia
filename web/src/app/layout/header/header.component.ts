@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedService } from "../../shared/services/shared.service";
+import { NotificationService } from '../../services/notification.service'; 
 
 @Component({
   selector: 'app-header',
@@ -17,7 +18,10 @@ export class HeaderComponent implements OnInit {
     this.sharedService.setTheme(this.maThemeModel)
   }
 
-  constructor(private sharedService: SharedService) {
+  constructor(
+      private sharedService: SharedService,
+      private notiServ : NotificationService 
+    ) {
     sharedService.maThemeSubject.subscribe((value) => {
       this.maThemeModel = value
     })

@@ -1,0 +1,28 @@
+<!--
+  Generated template for the NotificationModalPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Mis notificaciones {{notiServ.countUnseen()}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item (click)="notiServ.setSeen(n)" [ngClass]="{'unseen':n.seen==null}" *ngFor="let n of notiServ.notifications">
+      <ion-avatar item-start>
+        <img [src]="n.image" class="listview__img" alt="">
+      </ion-avatar>
+      <h2>{{n.title}}</h2>
+      <h3>{{n.content}}</h3>
+      <p item-end>{{n.timestamp|date}}</p>
+
+    </ion-item>
+  </ion-list>
+</ion-content>
