@@ -7,6 +7,7 @@ import { Storage } from '@ionic/storage';
 
 import { Settings } from '../providers';
 import { ApiProvider } from '../providers/api/api';
+import { NotificationProvider } from '../providers/notification/notification';
 
 @Component({
   templateUrl: 'app.html'
@@ -16,19 +17,21 @@ export class MyApp {
 
   @ViewChild(Nav) nav: Nav;
 
-  pages: any[] = [
-    { title: 'Tutorial', component: 'TutorialPage' },
-    { title: 'Welcome', component: 'WelcomePage' },
-    { title: 'Tabs', component: 'TabsPage' },
-    { title: 'Cards', component: 'CardsPage' },
-    { title: 'Content', component: 'ContentPage' },
-    { title: 'Login', component: 'LoginPage' },
-    { title: 'Signup', component: 'SignupPage' },
-    { title: 'Master Detail', component: 'ListMasterPage' },
-    { title: 'Settings', component: 'SettingsPage' },
-    { title: 'Search', component: 'SearchPage' },
-    { title: 'item-create', component: 'ItemCreatePage' }
-  ]
+  pages:any=[]; 
+  user:any=[]; 
+// pages: any[] = [ 
+//   { title: 'Tutorial', component: 'TutorialPage' }, 
+//   { title: 'Welcome', component: 'WelcomePage' }, 
+//   { title: 'Tabs', component: 'TabsPage' }, 
+//   { title: 'Cards', component: 'CardsPage' }, 
+//   { title: 'Content', component: 'ContentPage' }, 
+//   { title: 'Login', component: 'LoginPage' }, 
+//   { title: 'Signup', component: 'SignupPage' }, 
+//   { title: 'Master Detail', component: 'ListMasterPage' }, 
+//   { title: 'Settings', component: 'SettingsPage' }, 
+//   { title: 'Search', component: 'SearchPage' }, 
+//   { title: 'item-create', component: 'ItemCreatePage' } 
+// ] 
 
   constructor(
     private translate: TranslateService, 
@@ -41,9 +44,27 @@ export class MyApp {
     private storage: Storage,
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
+    private notiServ: NotificationProvider,
     private menuCtrl: MenuController) {
     this.initApp();
     this.initTranslate();
+    this.initData(); 
+  } 
+  initData(){ 
+    console.log("va a leer storage"); 
+    this.storage.get("user").then((user: any )=>{ 
+      console.log("1",user,user!=null,null);
+      if(user!=null){
+        console.log("2",user);
+
+        this.user= user; 
+        console.log("leyendo storage user"); 
+        this.user.imgperfil = this.api.baseURL+user.profileImage.URL ? this.api.baseURL+user.profileImage.URL : this.api.baseURL 
+        
+      }
+    }, 
+    err =>{ 
+    }) 
   }
 
   initTranslate() {
