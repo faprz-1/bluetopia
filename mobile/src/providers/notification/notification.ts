@@ -23,7 +23,6 @@ export class NotificationProvider {
     private platform: Platform, 
     private modalCtrl:ModalController, 
   ) { 
-    this.loadNotifications(); 
     this.getUser(); 
   } 
   getUser(){ 
@@ -31,6 +30,7 @@ export class NotificationProvider {
     this.storage.get("user").then((user) =>{ 
       this.user = user; 
       this.susbcribeToNotifications(); 
+      this.loadNotifications(); 
     }); 
   } 
  
