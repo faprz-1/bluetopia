@@ -44,7 +44,6 @@ export class DashboardPage {
     private menuCtrl:MenuController, 
     private loadingCtrl: LoadingController,
     private storage: Storage ) { 
-      this.menuCtrl.enable(true) 
 
     this.reload();
     this.initLoading(); 
@@ -66,7 +65,8 @@ export class DashboardPage {
   } 
 
   reload(refresher = null){
-    if(this.mainLoading) this.mainLoading.dismiss(); 
+    //Estas lineas van donde trae los primeros datos 
+    if(this.mainLoading) this.mainLoading.dismiss();   
     if (refresher) refresher.complete(); 
   
   }

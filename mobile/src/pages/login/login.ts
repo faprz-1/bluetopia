@@ -43,6 +43,7 @@ export class LoginPage {
         this.api.get("/Usuarios/withCredentials", true).subscribe((userFromServer: any)=>{
           this.storage.set("user", userFromServer).then(()=>{
             loading.dismiss();
+            this.menuCtrl.enable(true);
             // if(userFromServer.role.name == "Admin") return this.errorLogin("Este usuario no es conductor")
             this.navCtrl.setRoot('DashboardPage');
           })
