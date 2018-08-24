@@ -7,7 +7,8 @@ import {
   ToastController, 
   Platform, 
   MenuController, 
-  ModalController
+  ModalController,
+  LoadingController
 } from 'ionic-angular';
 import { ApiProvider } from '../../providers';
 import { Storage } from '@ionic/storage';
@@ -30,7 +31,7 @@ export class DashboardPage {
   user: any = {};
   imagenpefil = this.api.baseURL;
   ready: boolean = false
-
+  mainLoading:any;
   constructor(
     private api: ApiProvider, 
     public navCtrl: NavController,
@@ -41,10 +42,18 @@ export class DashboardPage {
     public modalCtrl: ModalController,
     private platform:Platform, 
     private menuCtrl:MenuController, 
+    private loadingCtrl: LoadingController,
     private storage: Storage ) { 
       this.menuCtrl.enable(true) 
 
     this.reload();
+    this.initLoading(); 
+  } 
+  initLoading() { 
+    this.mainLoading = this.loadingCtrl.create({ 
+      content: "Cargando bitacoras..." 
+    }); 
+    this.mainLoading.present(); 
   }
 
   ionViewDidLoad() {
@@ -57,7 +66,8 @@ export class DashboardPage {
   } 
 
   reload(refresher = null){
-    this.ready = false;
+    if(this.mainLoading) this.mainLoading.dismiss(); 
+    if (refresher) refresher.complete(); 
   
   }
 
