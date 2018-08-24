@@ -99,33 +99,6 @@ export class MyApp {
     this.nav.setRoot(page.component);
   }
 
-  logout(){
-    this.alertCtrl.create({
-      title: '¿Desea cerrar sesión?',
-      buttons: [
-        {
-          text: 'Si',
-          handler: data => {
-            let loading = this.loadingCtrl.create({content: 'cargando...', dismissOnPageChange: true});
-            loading.present();
-            this.api.post("/Usuarios/logout",null,true).subscribe(()=>{
-              this.storage.clear().then(()=>{
-                loading.dismiss();
-                this.menuCtrl.close();
-                this.nav.setRoot('LoginPage');
-              })
-            })
-          }
-        },
-        {
-          text: 'No',
-          handler: data => {
-          }
-        }
-      ]
-    }).present();
-  }
-
   initApp(){
     this.platform.ready().then(() => {
       this.storage.get("token").then((t)=>{        
