@@ -19,8 +19,8 @@ export class HeaderComponent implements OnInit {
   }
 
   constructor(
-      private sharedService: SharedService,
-      private notiServ : NotificationService 
+      public sharedService: SharedService,
+      public notiServ : NotificationService 
     ) {
     sharedService.maThemeSubject.subscribe((value) => {
       this.maThemeModel = value
@@ -28,19 +28,19 @@ export class HeaderComponent implements OnInit {
 
     this.messagesData = [
       {
-        image: './assets/demo/img/profile-pics/1.jpg',
+        image: 'assets/demo/img/profile-pics/1.jpg',
         name: 'Ventas',
         message: 'Tienes una nueva unidad en construccion',
         date: '12:01 PM'
       },
       {
-        image: './assets/demo/img/profile-pics/2.jpg',
+        image: 'assets/demo/img/profile-pics/2.jpg',
         name: 'Abogado',
         message: 'Documentos listos para impresion',
         date: '02:45 PM'
       },
       {
-        image: './assets/demo/img/profile-pics/6.jpg',
+        image: 'assets/demo/img/profile-pics/6.jpg',
         name: 'Cliente',
         message: 'Nueva falla reportada',
         date: '08:21 PM'

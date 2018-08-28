@@ -32,7 +32,7 @@ export class RecentSignupsComponent implements OnInit {
       {
         name: 'Clint Hugh',
         letter: 'C',
-        avatar: './assets/demo/img/profile-pics/1.jpg'
+        avatar: 'assets/demo/img/profile-pics/1.jpg'
       },
       {
         name: 'Roydon Jem',
@@ -47,12 +47,12 @@ export class RecentSignupsComponent implements OnInit {
       {
         name: 'Nicholas Roydon',
         letter: 'N',
-        avatar: './assets/demo/img/profile-pics/2.jpg'
+        avatar: 'assets/demo/img/profile-pics/2.jpg'
       },
       {
         name: 'Wat Shaw',
         letter: 'W',
-        avatar: './assets/demo/img/profile-pics/3.jpg'
+        avatar: 'assets/demo/img/profile-pics/3.jpg'
       },
       {
         name: 'Devereux Brad',
@@ -82,12 +82,12 @@ export class RecentSignupsComponent implements OnInit {
       {
         name: 'Jaycob Ronny',
         letter: 'J',
-        avatar: './assets/demo/img/profile-pics/4.jpg'
+        avatar: 'assets/demo/img/profile-pics/4.jpg'
       },
       {
         name: 'Alvin Norman',
         letter: 'A',
-        avatar: './assets/demo/img/profile-pics/5.jpg'
+        avatar: 'assets/demo/img/profile-pics/5.jpg'
       },
       {
         name: 'Malcom Dutch',
@@ -117,7 +117,7 @@ export class RecentSignupsComponent implements OnInit {
       {
         name: 'Benji Braxton',
         letter: 'B',
-        avatar: './assets/demo/img/profile-pics/6.jpg'
+        avatar: 'assets/demo/img/profile-pics/6.jpg'
       },
       {
         name: 'Chesley Donny',
@@ -146,7 +146,7 @@ export class RecentSignupsComponent implements OnInit {
       {
         name: 'Sylvanus Delano',
         letter: 'S',
-        avatar: './assets/demo/img/profile-pics/7.jpg'
+        avatar: 'assets/demo/img/profile-pics/7.jpg'
       }
 
     ]

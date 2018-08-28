@@ -3,15 +3,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
-import { EasyPieChartDirective } from "./directives/easy-pie-chart/easy-pie-chart.directive";
+// import { EasyPieChartDirective } from "./directives/easy-pie-chart/easy-pie-chart.directive";
 import { JqvMapDirective } from "./directives/jqvmap/jqvmap.directive";
 import { FlotDirective } from "./directives/flot/flot.directive";
 import { SparklineDirective } from "./directives/sparklines/sparkline.directive";
 import { DropzoneDirective } from "./directives/dropzone/dropzone.directive";
 import { InputFloatDirective } from "./directives/input-float/input-float.directive";
 
-import { TodoListsComponent } from "./components/widgets/todo-lists/todo-lists.component";
-import { PieChartsComponent } from "./components/widgets/pie-charts/pie-charts.component";
+// import { TodoListsComponent } from "./components/widgets/todo-lists/todo-lists.component";
+// import { PieChartsComponent } from "./components/widgets/pie-charts/pie-charts.component";
 import { RandomPostComponent } from "./components/widgets/random-post/random-post.component";
 import { RecentPostsComponent } from "./components/widgets/recent-posts/recent-posts.component";
 import { VisitorsComponent } from "./components/widgets/visitors/visitors.component";
@@ -26,7 +26,7 @@ import { RecentSignupsComponent } from './components/widgets/recent-signups/rece
 @NgModule ({
   declarations: [
     // Directives
-    EasyPieChartDirective,
+    // EasyPieChartDirective,
     JqvMapDirective,
     FlotDirective,
     SparklineDirective,
@@ -35,8 +35,8 @@ import { RecentSignupsComponent } from './components/widgets/recent-signups/rece
 
     // Components
     PastDaysComponent,
-    TodoListsComponent,
-    PieChartsComponent,
+    // TodoListsComponent,
+    // PieChartsComponent,
     RandomPostComponent,
     RecentPostsComponent,
     VisitorsComponent,
@@ -54,7 +54,7 @@ import { RecentSignupsComponent } from './components/widgets/recent-signups/rece
   ],
   exports: [
     // Directives
-    EasyPieChartDirective,
+    // EasyPieChartDirective,
     JqvMapDirective,
     FlotDirective,
     SparklineDirective,
@@ -63,8 +63,8 @@ import { RecentSignupsComponent } from './components/widgets/recent-signups/rece
 
     // Components
     PastDaysComponent,
-    TodoListsComponent,
-    PieChartsComponent,
+    // TodoListsComponent,
+    // PieChartsComponent,
     RandomPostComponent,
     RecentPostsComponent,
     VisitorsComponent,

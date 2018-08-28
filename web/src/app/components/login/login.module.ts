@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import {TooltipModule} from "ngx-tooltip";
 
 import { LoginComponent } from "./login.component";
-import { FilterPipe } from '../../filter.pipe';
 
 
 const MODULE_ROUTES = [
@@ -20,7 +19,7 @@ const MODULE_ROUTES = [
   	ToastModule.forRoot()
   ]
   ,
-  declarations: [LoginComponent,FilterPipe]
+  declarations: [LoginComponent]
   ,providers:[
   ]
 })

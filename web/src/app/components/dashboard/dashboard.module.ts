@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import {TooltipModule} from "ngx-tooltip";
 
 import { DashboardComponent } from "./dashboard.component";
-import { FilterPipe } from '../../filter.pipe';
 
 
 const MODULE_ROUTES = [
@@ -18,7 +17,7 @@ const MODULE_ROUTES = [
     RouterModule.forChild(MODULE_ROUTES)
   ]
   ,
-  declarations: [DashboardComponent,FilterPipe]
+  declarations: [DashboardComponent]
 })
 export class DashboardModule { }
 

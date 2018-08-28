@@ -11,15 +11,15 @@ export class PhotosComponent implements OnInit {
   constructor() {
 
     this.picturesData = [
-      './assets/demo/img/widgets/headers/1.png',
-      './assets/demo/img/widgets/headers/2.png',
-      './assets/demo/img/widgets/headers/3.png',
-      './assets/demo/img/widgets/headers/4.png',
-      './assets/demo/img/widgets/headers/5.png',
-      './assets/demo/img/widgets/headers/6.png',
-      './assets/demo/img/widgets/headers/7.png',
-      './assets/demo/img/widgets/headers/8.png',
-      './assets/demo/img/widgets/headers/9.png'
+      'assets/demo/img/widgets/headers/1.png',
+      'assets/demo/img/widgets/headers/2.png',
+      'assets/demo/img/widgets/headers/3.png',
+      'assets/demo/img/widgets/headers/4.png',
+      'assets/demo/img/widgets/headers/5.png',
+      'assets/demo/img/widgets/headers/6.png',
+      'assets/demo/img/widgets/headers/7.png',
+      'assets/demo/img/widgets/headers/8.png',
+      'assets/demo/img/widgets/headers/9.png'
     ]
 
   }

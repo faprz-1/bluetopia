@@ -34,35 +34,35 @@ export class VisitorsComponent implements OnInit {
         country: 'United States',
         browser: 'Firefox',
         os: 'Mac OSX',
-        img: './assets/demo/img/flags/United_States_of_America.png'
+        img: 'assets/demo/img/flags/United_States_of_America.png'
       },
       {
         date: 'Sunday, September 4, 20:21:01 (5 Mins 12 Seconds)',
         country: 'Australia',
         browser: 'Chrome',
         os: 'Android',
-        img: './assets/demo/img/flags/Australia.png'
+        img: 'assets/demo/img/flags/Australia.png'
       },
       {
         date: 'Sunday, September 4, 20:21:10 (10 Mins 43 Seconds)',
         country: 'Brazil',
         browser: 'Edge',
         os: 'Windows',
-        img: './assets/demo/img/flags/Brazil.png'
+        img: 'assets/demo/img/flags/Brazil.png'
       },
       {
         date: 'Sunday, September 4, 20:59:04 (1 Min 02 Seconds)',
         country: 'South Korea',
         browser: 'Chrome',
         os: 'Android',
-        img: './assets/demo/img/flags/South_Korea.png'
+        img: 'assets/demo/img/flags/South_Korea.png'
       },
       {
         date: 'Sunday, September 4, 20:58:12 (3 Min 44 Seconds)',
         country: 'Japan',
         browser: 'Chrome',
         os: 'Windows',
-        img: './assets/demo/img/flags/Japan.png'
+        img: 'assets/demo/img/flags/Japan.png'
       }
     ]
   }

@@ -4,7 +4,7 @@
         <div class="user" dropdown>
             <div class="user__info" dropdownToggle>
                 <img  class="user__img" style="object-fit: cover" *ngIf="user.profile_image!=null" src="{{this.baseurl._imgUrl+user.profile_image}}" alt="{{this.baseurl._imgUrl+user.profile_image}}">
-                <img *ngIf="user.profile_image==null" class="user__img" style="object-fit: cover" src="./assets/fondo/user.png" alt=""> 
+                <img *ngIf="user.profile_image==null" class="user__img" style="object-fit: cover" src="assets/fondo/user.png" alt=""> 
                 <div>
                     <div class="user__name">{{user.username}} {{user.email}}</div>
                     <div class="user__email">{{medic.specialty}}</div>

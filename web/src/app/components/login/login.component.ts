@@ -11,6 +11,7 @@ import { ApiService } from '../../services/api.service';
 })
 export class LoginComponent implements OnInit {
 
+  public procesando: boolean = false;
   constructor(
      
     private router: Router, 
@@ -37,15 +38,18 @@ export class LoginComponent implements OnInit {
   }
 
   login(user) {
+    this.procesando = true
     this.api.post("/Usuarios/login", user, false).subscribe((token: any) =>{
       localStorage.clear()
       localStorage.setItem("token",token.id)
       this.api.token= token.id;
       this.api.get("/Usuarios/withCredentials", true).subscribe((userFromServer: any)=>{
+        this.procesando = false;
         localStorage.setItem("user", JSON.stringify(userFromServer))
         this.router.navigate(['/inicio/dashboard']);
       })
     }, (error: any) => {
+      this.procesando = false;
       // this.showError()
     })
   }
