@@ -157,7 +157,8 @@ module.exports = function(app) {
     ]
 
     // console.log("Seeding Model: Role");
-    sequentialSeed(appRoles, "name", app.models.Role);  
+    sequentialSeed(appRoles, "name", app.models.Role, seedUsers);
+    
   }
 
   var seedUploadContainers = function(){
@@ -198,9 +199,13 @@ module.exports = function(app) {
     sequentialConteinerSeed(containers, Upload);
   }
 
-  var sequentialSeed = function (modelsSeedsArray, key, appModel){
+  var sequentialSeed = function (modelsSeedsArray, key, appModel, afterFunction = null){
     if(modelsSeedsArray.length == 0){
       console.log("Seeded Model: ",appModel.modelName);
+      if(afterFunction != null){
+        console.log("Executing After Function: "+afterFunction.name+"...",);
+        afterFunction();
+      }
       return;
     }
     var modelSeed = modelsSeedsArray[0];
@@ -225,17 +230,16 @@ module.exports = function(app) {
               console.log("Could not create  "+appModel.modelName+": ",modelSeed[key])
 
             // pass to next modelSeed
-            sequentialSeed(modelsSeedsArray, key, appModel)
+            sequentialSeed(modelsSeedsArray, key, appModel, afterFunction)
           });
         }else{
           // pass to next modelSeed
-          sequentialSeed(modelsSeedsArray, key, appModel)
+          sequentialSeed(modelsSeedsArray, key, appModel, afterFunction)
         }
       });
   }
 
   var Seeders = [
-    seedUsers,
     seedRoles,
     seedUploadContainers
   ]
