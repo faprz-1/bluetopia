@@ -38,15 +38,27 @@ module.exports = function(Upload) {
         var UploadedFiles = Upload.app.models.UploadedFiles;
 
         // serach old file
-        UploadedFiles.destroyById(oldFileId,function(err){
+        UploadedFiles.findById(oldFileId, function(err, oldFile){
             if (err) return callback(err);
 
-            // upload and create new file
-            Upload.newBase64File(newFile, function(err, res){
+            // destroy old File
+            UploadedFiles.destroyById(oldFileId,function(err){
                 if (err) return callback(err);
+    
+                // destroy old file
+                var container = oldFile.URL.split("/")[2];
+                var oldFileName = oldFile.URL.split("/")[4];
+                Upload.removeFile(container, oldFileName, function(err){
+                    if (err) return callback(err);
 
-                callback(null, res)
-            })
+                    // upload and create new file
+                    Upload.newBase64File(newFile, function(err, res){
+                        if (err) return callback(err);
+        
+                        callback(null, res)
+                    })
+                })
+            });
         });
     }
 };
