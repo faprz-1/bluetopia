@@ -13,6 +13,8 @@ import { Settings, User, ApiProvider } from '../providers';
 import { MyApp } from './app.component';
 import { NotificationProvider } from '../providers/notification/notification';
 import { SocketProvider } from '../providers/socket/socket';
+import { PushProvider } from '../providers/push/push';
+import { Push } from '@ionic-native/push'; 
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -67,7 +69,9 @@ export function provideSettings(storage: Storage) {
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ApiProvider,
     NotificationProvider,
-    SocketProvider
+    SocketProvider,
+    PushProvider,
+    Push
   ]
 })
 export class AppModule { }

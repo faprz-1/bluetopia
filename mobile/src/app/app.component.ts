@@ -8,6 +8,7 @@ import { Storage } from '@ionic/storage';
 import { Settings } from '../providers';
 import { ApiProvider } from '../providers/api/api';
 import { NotificationProvider } from '../providers/notification/notification';
+import { PushProvider } from '../providers/push/push';
 
 @Component({
   templateUrl: 'app.html'
@@ -45,7 +46,9 @@ export class MyApp {
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
     private notiServ: NotificationProvider,
-    private menuCtrl: MenuController) {
+    private menuCtrl: MenuController,
+    private pushPrv : PushProvider
+    ) {
     this.initApp();
     this.initTranslate();
     this.initData(); 
@@ -109,6 +112,9 @@ export class MyApp {
         // Here you can do any higher level native things you might need.
         this.statusBar.styleDefault();
         this.splashScreen.hide();
+
+        this.pushPrv.setMain(this); 
+        console.log(this.pushPrv.pushObject) 
       })
     });
   }

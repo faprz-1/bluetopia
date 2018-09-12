@@ -6,14 +6,16 @@ const request = require('request');
 module.exports = function(PushTokens) {
     disableRelationMethods(PushTokens)
     
-    PushTokens.sendPushNotification = function(pushTokens, not, callback){
+    PushTokens.sendPushNotification = function(pushTokens, not, callback, is_mobile=false){
+        var desktopKey = "key=AAAACBx3Rhk:APA91bHbX3QnY9HWv8vtnIe2sGU_cU3uxUpV2C7pUhzny4cjuSZNBzRY00pORUBpc4p_AwDptAB3tagOWibz0o1SqYWVYXI51gtxFbp6HqE869m9BAYxqCAUVNQUsv6ezAd-GoNznvtUuT2-dDwad7Pt6gycHhVVkg"
+        var mobileKey = "key=AAAAaWTT-RU:APA91bGrC-PGlxiC1pUa-5aKHsoTyhzPfFU98fDe8RIe-sLmgU2Wl5cyYsn2_C1RRYmhrH9JHbNzcS2HfVi3N1iP3D6cAgO4e2ngfMIh1WZs7eIqxFatv0tpBabomV4kdak9XVfXStTF"
         console.log("mis push",pushTokens);
         if(pushTokens.length!=0){
 
             var fireBaseURI = "https://fcm.googleapis.com/fcm/send"
             var headers = {
                 "Content-Type": "application/json",
-                "Authorization": "key=AAAACBx3Rhk:APA91bHbX3QnY9HWv8vtnIe2sGU_cU3uxUpV2C7pUhzny4cjuSZNBzRY00pORUBpc4p_AwDptAB3tagOWibz0o1SqYWVYXI51gtxFbp6HqE869m9BAYxqCAUVNQUsv6ezAd-GoNznvtUuT2-dDwad7Pt6gycHhVVkg"
+                "Authorization": is_mobile ? mobileKey : desktopKey
             }
             var data = {
                 notification: {
