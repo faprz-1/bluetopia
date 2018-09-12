@@ -37,28 +37,38 @@ module.exports = function(Upload) {
     Upload.replaceFileBase64File = function(oldFileId, newFile, callback){
         var UploadedFiles = Upload.app.models.UploadedFiles;
 
-        // serach old file
-        UploadedFiles.findById(oldFileId, function(err, oldFile){
-            if (err) return callback(err);
+        if(oldFileId == null){
+            // upload and create new file
+            Upload.newBase64File(newFile, function(err, res){
+                if (err) return callback(err);
 
-            // destroy old File
-            UploadedFiles.destroyById(oldFileId,function(err){
+                callback(null, res)
+            })
+        }
+        else{
+            // serach old file
+            UploadedFiles.findById(oldFileId, function(err, oldFile){
                 if (err) return callback(err);
     
-                // destroy old file
-                var container = oldFile.URL.split("/")[2];
-                var oldFileName = oldFile.URL.split("/")[4];
-                Upload.removeFile(container, oldFileName, function(err){
+                // destroy old File
+                UploadedFiles.destroyById(oldFileId,function(err){
                     if (err) return callback(err);
-
-                    // upload and create new file
-                    Upload.newBase64File(newFile, function(err, res){
-                        if (err) return callback(err);
         
-                        callback(null, res)
+                    // destroy old file
+                    var container = oldFile.URL.split("/")[2];
+                    var oldFileName = oldFile.URL.split("/")[4];
+                    Upload.removeFile(container, oldFileName, function(err){
+                        if (err) return callback(err);
+    
+                        // upload and create new file
+                        Upload.newBase64File(newFile, function(err, res){
+                            if (err) return callback(err);
+            
+                            callback(null, res)
+                        })
                     })
-                })
+                });
             });
-        });
+        }
     }
 };
