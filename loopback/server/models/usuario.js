@@ -223,7 +223,7 @@ module.exports = function(Usuario) {
         var res = notificacion.setByRoleNotification("admin", {
             title:"Ticket añadido", 
             content:"Un cliente agrego un ticket en Porter",
-            link:"http://localhost:4200/#/traxsa/admin/empresas",
+            link:"/admin/empresas",
             "image":"https://us-ticket.com/images/Admission-Roll-Tickets,/Bristol-Blank-Roll-Tickets-Yellow.jpg"
         });
 

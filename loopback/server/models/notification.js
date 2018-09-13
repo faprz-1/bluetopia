@@ -52,6 +52,7 @@ module.exports = function (Notification) {
 
    Notification.setSingleNotification = function (id, notification) {
        notification["usuarioId"] = id;
+       notification.link = hostURL + notification.link;
        console.log("notification",id,"getnew");
        Notification.create(notification,
            function (err, notification) {
@@ -73,6 +74,7 @@ module.exports = function (Notification) {
 
    Notification.setByRoleNotification = function (Role, notification) {
        var user = Notification.app.models.Usuario;
+       notification.link = hostURL + notification.link;
        user.findByRole(Role, ["pushTokens"], function (err, users) {
            if (err) return err;
 
