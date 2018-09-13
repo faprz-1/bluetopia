@@ -175,13 +175,14 @@ module.exports = function(Usuario) {
         var PushTokens = Usuario.app.models.PushTokens;
         var actual = this;
         // TODO
-        PushTokens.findById(body.token, function(err, res){
+        PushTokens.findById(body.token.id, function(err, res){
             if (err) return callback(err);
 
             if(!res){
                 var newToken = {
-                    id: body.token,
-                    usuarioId: actual.id
+                    id: body.token.id,
+                    usuarioId: actual.id,
+                    isMobile: body.token.isMobile
                 }
                 PushTokens.create(newToken, function(err, res){
                     if (err) return callback(err);
