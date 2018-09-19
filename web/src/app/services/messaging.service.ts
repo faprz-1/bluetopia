@@ -26,7 +26,7 @@ export class MessagingService {
   
   updateToken(token) {  
  
-    this.api.post("/Usuarios/"+this.user.id+"/updatePushToken",{token:token}).subscribe(()=>{})  
+    this.api.post("/Usuarios/"+this.user.id+"/updatePushToken",{token:{id: token, isMobile: false}}).subscribe(()=>{})  
     this.afAuth.authState.take(1).subscribe(user => {  
       if (!user) return;  
   

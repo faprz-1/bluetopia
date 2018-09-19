@@ -105,7 +105,7 @@ export class PushProvider {
     this.storage.get("pushToken").then((val) => {
       if(val != null) {
         console.log("Updating push token...", val)
-        this.api.post("/Usuarios/" + id + "/updatePushToken", { token: val}, true).subscribe(
+        this.api.post("/Usuarios/" + id + "/updatePushToken", {token:{id: val, isMobile: true}}, true).subscribe(
           (succ) => {
             console.log(succ)
           },
