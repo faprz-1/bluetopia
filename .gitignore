@@ -52,3 +52,7 @@ loopback/server/storage/*
 web/node_modules/
 web/dist/
 \.vscode/
+
+# persistance Ignore
+persistence/mysql_db/
+persistence/loopback_storage/

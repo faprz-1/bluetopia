@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import io from "socket.io-client";
+import * as io from "socket.io-client";
 import { ApiService } from './api.service';
 
 @Injectable()
