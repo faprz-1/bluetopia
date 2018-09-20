@@ -55,3 +55,5 @@ web/dist/
 
 # persistance Ignore
 persistance/*
+persistence/mysql_db/
+persistence/loopback_storage/
