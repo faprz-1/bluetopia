@@ -26,8 +26,6 @@ services:
     build:
       context: ./loopback
       dockerfile: Dockerfile
-    ports:
-      - '3000:3000'
     volumes:
       - ./persistence/loopback_storage:/app/server/storage
 
@@ -36,7 +34,7 @@ services:
     build: ./nginx
     depends_on:
       - loopback
-    container_name: loopback-server-nginx
+    container_name: loopback-nginx
     ports:
       - "80:80"
       - "443:443"

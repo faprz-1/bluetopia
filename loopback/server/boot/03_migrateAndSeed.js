@@ -11,137 +11,60 @@ module.exports = function(app) {
 
   // Seed
   var seedUsers = function() {
-    var Role = app.models.Role;
-    var RoleMapping = app.models.RoleMapping;
-    var usuarios = app.models.Usuario;
-    // Seed Admin
-    usuarios.find({
-      where:{
-        username: "templateAdmin"
-      }
-    }, function(err, user) {
-      if (err) throw err;
-      // if user doesn't exists
-      if(user.length == 0){
-        usuarios.create({
-          realm: "Admintrator",
+    var attemptNewUseWithRole = function(user, roleToAssing) {
+      var RoleMapping = app.models.RoleMapping;
+      var Role = app.models.Role;
+      var Usuario = app.models.Usuario;
+
+      Usuario.find({where:{email:user.email}}, function(err, res){
+        if (err) throw err;
+
+        // If seed object is not created
+        if (res.length == 0) {
+          Usuario.create(user, function(err, newU){
+            if (err) throw err;
+
+            Role.findOne({where:{name: roleToAssing}}, function(err, role) {
+              if (err) throw err;
+
+              role.principals.create({
+                  principalType: RoleMapping.USER,
+                  principalId: newU.id
+                }, function(err, principal) {
+                  if (err) throw err;
+
+                  console.log("Created User: ",newU.email,", with role: ", roleToAssing)
+              })
+            })
+          })
+        }
+      })
+    }
+
+    var users = [
+      {
+        User: {
           username: "templateAdmin",
           password: "j4r4b3s0",
           email: "admin@test.com",
           emailVerified: true
         },
-        function(err, user) {
-          if (err) throw err;
-          if(user){
-            console.log("created User: "+user.username);
-            //create the admin role
-            Role.find({
-              where:{
-                name: "Admin"
-              }
-            }, function(err, res) {
-              if (err) throw err;
-              // If user doesn't exist
-              if(res.length == 0){
-                // create it
-                Role.create({
-                  name: "Admin",
-                  description: 'platform administrator'
-                }, function(err, role) {
-                  // assing role to admin user
-                  if (err) throw err;
-                  console.log('Created role:', role.name);
-                  role.principals.create({
-                    principalType: RoleMapping.USER,
-                    principalId: user.id
-                  }, function(err, principal) {
-                    if (err) throw err;
-                    console.log('Assinged Admin role to user: templateAdmin');
-                    console.log("Seeding Admin complete.");
-                  });
-                });
-                // If exist asing role to admin user
-              }else if(res[0].name == "Admin"){
-                var role = res[0];
-                role.principals.create({
-                  principalType: RoleMapping.USER,
-                  principalId: user.id
-                }, function(err, principal) {
-                  if (err) throw err;
-                  console.log('Assinged Admin role to user: templateAdmin');
-                  console.log("Seeding Admin complete.");
-                });
-              }
-            })
-          }
-        })
-      } else
-        console.log("Seeding Admin complete.");
-    }) 
-    // Seer Simple User
-    usuarios.find({
-      where:{
-        username: "templateUser"
-      }
-    }, function(err, user) {
-      if (err) throw err;
-      // if user doesn't exists
-      if(user.length == 0){
-        usuarios.create({
-          realm: "Simple User",
+        Role: "Admin"
+      },
+      {
+        User: {
           username: "templateUser",
           password: "j4r4b3s0",
           email: "user@test.com",
           emailVerified: true
         },
-        function(err, user) {
-          if (err) throw err;
-          if(user){
-            console.log("created User: "+user.username);
-            //create the admin role
-            Role.find({
-              where:{
-                name: "User"
-              }
-            }, function(err, res) {
-              if (err) throw err;
-              // If user doesn't exist
-              if(res.length == 0){
-                // create it
-                Role.create({
-                  name: "User",
-                  description: 'platform user'
-                }, function(err, role) {
-                  // assing role to admin user
-                  if (err) throw err;
-                  console.log('Created role:', role.name);
-                  role.principals.create({
-                    principalType: RoleMapping.USER,
-                    principalId: user.id
-                  }, function(err, principal) {
-                    if (err) throw err;
-                    console.log('Assinged User role to user: templateUser');
-                    console.log("Seeding User complete.");
-                  });
-                });
-                // If exist asing role to admin user
-              }else if(res[0].name == "User"){
-                var role = res[0];
-                role.principals.create({
-                  principalType: RoleMapping.USER,
-                  principalId: user.id
-                }, function(err, principal) {
-                  if (err) throw err;
-                  console.log('Assinged User role to user: templateUser');
-                  console.log("Seeding User complete.");
-                });
-              }
-            })
-          }
-        })
-      } else
-        console.log("Seeding User complete.");
-    }) 
+        Role: "User"
+      }
+    ]
+
+    users.forEach(u => {
+      attemptNewUseWithRole(u.User, u.Role);
+    });
   }
 
   var seedRoles = function () {
