@@ -1,0 +1,39 @@
+git pull
+Docker logs: docker logs [ContainerID]
+Docker command in container docker exec -it [ContainerID] bash -c "command"
+Docker get procesess: docker ps -a
+Docker get images: docker images -a
+
+					Server
+
+docker:
+    Start Server:
+	docker-compose up -d --build
+		OR
+        docker-compose build
+        docker-compose up -d
+    Terminate Server:
+        docker-compose down --rmi all
+
+mysql:
+    docker-compose.yml:
+        mysql:
+            ...
+            ports: - '3306:3306' -> null/""/remove this line!
+
+-------------------------------------------------------------------------------------------------
+					SSL
+Install certbot:
+	apt-get install certbot -t stretch-backports
+
+Install certificate:
+	certbot certonly --manual -d *.project.com
+
+Auto renew:
+	certbot renew --dry-run
+
+Prod Cert Route:
+	.cert:
+	/etc/letsencrypt/live/project.com/fullchain.pem
+	.key
+	/etc/letsencrypt/live/project.com/privkey.pem
