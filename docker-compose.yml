@@ -35,7 +35,7 @@ services:
     image: loopback-nginx
     build: ./nginx
     depends_on:
-      - loopback-server
+      - loopback
     container_name: loopback-server-nginx
     ports:
       - "80:80"
@@ -44,4 +44,4 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt
       - ./persistence/compiled_angular:/var/www/landing
     links:
-      - loopback-server
+      - loopback
