@@ -12,7 +12,7 @@ RUN npm install --production
 EXPOSE 3000
 
 # Show current folder structure in logs
-RUN ls -al -R
+# RUN ls -al -R
 
 CMD [ "pm2-runtime", "start", "server/server.js" ]
 # ENTRYPOINT pm2 start server/server.js

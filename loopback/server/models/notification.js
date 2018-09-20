@@ -1,5 +1,5 @@
 'use strict';
-var pubsub = require('../../server/pubsub.js');
+var pubsub = require('../helpers/pubsub.js');
 var hostURL = require("../helpers/constants").hostURL;
 
 module.exports = function (Notification) {
