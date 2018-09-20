@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+
+  mysql:
+    image: mysql
+    build: ./mysql
+    container_name: loopback-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: -$t*zMcXezNDae8R#NB7WgD_+
+      MYSQL_DATABASE: template3
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./persistence/mysql_db:/var/lib/mysql
+
+  loopback:
+    image: loopback
+    container_name: loopback-server
+    restart: always
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    build:
+      context: ./loopback
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./persistence/loopback_storage:/app/server/storage
