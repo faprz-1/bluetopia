@@ -6,7 +6,7 @@
   "apps": [
     {
       "root": "src",
-      "outDir": "dist",
+      "outDir": "../persistence/compiled_angular",
       "assets": [
         "assets",
         "favicon.ico",  

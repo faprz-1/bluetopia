@@ -30,3 +30,18 @@ services:
       - '3000:3000'
     volumes:
       - ./persistence/loopback_storage:/app/server/storage
+
+  nginx:
+    image: loopback-nginx
+    build: ./nginx
+    depends_on:
+      - loopback-server
+    container_name: loopback-server-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+      - ./persistence/compiled_angular:/var/www/landing
+    links:
+      - loopback-server
