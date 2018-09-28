@@ -27,7 +27,7 @@ Install certbot:
 	apt-get install certbot -t stretch-backports
 
 Install certificate:
-	certbot certonly --manual -d *.project.com
+	certbot certonly -d *.project.com
 
 Auto renew:
 	certbot renew --dry-run
