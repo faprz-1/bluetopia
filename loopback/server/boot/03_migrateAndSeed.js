@@ -11,7 +11,7 @@ module.exports = function(app) {
 
   // Seed
   var seedUsers = function() {
-    var attemptNewUseWithRole = function(user, roleToAssing) {
+    var attemptNewUserWithRole = function(user, roleToAssing) {
       var RoleMapping = app.models.RoleMapping;
       var Role = app.models.Role;
       var Usuario = app.models.Usuario;
