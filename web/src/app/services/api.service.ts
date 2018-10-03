@@ -47,7 +47,7 @@ export class ApiService {
 
   private handleError(error: HttpErrorResponse, link: string){
     console.error(link,error)
-    return of()
+    return of(error)
   }
 
   /**
