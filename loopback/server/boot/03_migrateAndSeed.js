@@ -16,7 +16,7 @@ module.exports = function(app) {
       var Role = app.models.Role;
       var Usuario = app.models.Usuario;
 
-      Usuario.find({where:{email:user.email}}, function(err, res){
+      Usuario.find({where:{ or: [{email:user.email}, {username: user.username}] } }, function(err, res){
         if (err) throw err;
 
         // If seed object is not created
@@ -44,6 +44,7 @@ module.exports = function(app) {
     var users = [
       {
         User: {
+          name: "User",
           username: "templateAdmin",
           password: "j4r4b3s0",
           email: "admin@test.com",
@@ -53,6 +54,7 @@ module.exports = function(app) {
       },
       {
         User: {
+          name: "Admin",
           username: "templateUser",
           password: "j4r4b3s0",
           email: "user@test.com",
@@ -63,7 +65,7 @@ module.exports = function(app) {
     ]
 
     users.forEach(u => {
-      attemptNewUseWithRole(u.User, u.Role);
+      attemptNewUserWithRole(u.User, u.Role);
     });
   }
 
