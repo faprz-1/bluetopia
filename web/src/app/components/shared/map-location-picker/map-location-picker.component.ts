@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChildren, ElementRef, QueryList, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChildren, ElementRef, QueryList, Input, Output, EventEmitter, NgZone } from '@angular/core';
 
 @Component({
   selector: 'mapLocationPicker',
@@ -9,6 +9,24 @@ export class MapLocationPickerComponent implements  AfterViewInit {
 
   // TODO set placeData as output to view
   PlaceData : google.maps.places.PlaceResult
+
+  @Input() isFuzzy : boolean = false
+  @Input() readOnly : boolean = false
+
+  @Input('point') 
+  set Point(point : google.maps.LatLng) {
+    this.point = point
+    this.GetPointData()
+  }
+  get Point() : google.maps.LatLng {
+    return this.point
+  }
+
+  point : google.maps.LatLng = null
+  
+  // Fuzzyness
+  rn : number = 0.002 // 200 Meters
+
 
   @Output() onChange : EventEmitter<google.maps.places.PlaceResult> = new EventEmitter();
 
@@ -22,47 +40,29 @@ export class MapLocationPickerComponent implements  AfterViewInit {
 
   searchString : string
 
-  constructor() {
+  constructor(public zone : NgZone) {
     this.geocoder = new google.maps.Geocoder
   }
 
   ngOnInit() {
+    this.readOnly = this.isFuzzy
   }
 
   ngAfterViewInit() {
     console.log("ngAfterViewInit")  
+    
     let mapElems = this.gmapElements.toArray()
     if(mapElems.length > 0) {
       this.LoadMap(mapElems[0])
     }
   }
 
-  LoadMap(gmapElement) {
-    console.log("mapElem", gmapElement)
+  GetPointData() {
     let self = this
 
-    var mapProp = {
-      center: new google.maps.LatLng(24.0624125, -100.8401745),
-      zoom: 5.5,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-
-    let markerData = {
-      position: new google.maps.LatLng(24.0624125, -100.8401745),
-      draggable : true,
-      clickable : false,
-      map: null
-    }
-
-    this.map = new google.maps.Map(gmapElement.nativeElement, mapProp)
-    markerData.map = this.map
-
-    this.marker = new google.maps.Marker(markerData)
-    this.marker.addListener('dragend', function() {
-      console.log("Location", self.marker.getPosition())
-
+    if(this.point != null) {
       let geocoderRequest : google.maps.GeocoderRequest = {
-        location : self.marker.getPosition()
+        location : this.point
       }
       
       // Get GEOCODER Data
@@ -82,20 +82,83 @@ export class MapLocationPickerComponent implements  AfterViewInit {
               self.PlaceData = place
               self.onChange.emit(self.PlaceData)
 
-              self.marker.setPosition(place.geometry.location)
-              self.map.setCenter(place.geometry.location)
-              self.searchString = place.formatted_address
+              self.zone.run(() => {
+                if(self.marker != null) {
+                  self.marker.setPosition(place.geometry.location)
+                }
+                self.map.setCenter(place.geometry.location)
+                self.map.setZoom(14)
+                self.searchString = place.formatted_address
+              })
             }
             else {
-              console.error("Error while using Place Services")
+              console.log("Error while using Place Services")
+              self.zone.run(() => {
+                self.searchString = null
+              })
             }
           })
         }
         else {
-          console.error("Geocoder Request failed")
+          console.log("Geocoder Request failed")
+          self.zone.run(() => {
+            self.searchString = null
+          })
         }
       })
+    }
+  }
+
+  LoadMap(gmapElement) {
+    console.log("mapElem", gmapElement)
+    let self = this
+
+    this.map = new google.maps.Map(gmapElement.nativeElement, {
+      center: this.point ? this.point : new google.maps.LatLng(24.0624125, -100.8401745),
+      zoom: 5.5,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
     })
+    this.GetPointData()
+
+
+    if(this.isFuzzy) {
+      let mLat = Math.random()*(2*this.rn) + (this.point.lat() - this.rn)
+      let mLng = Math.random()*(2*this.rn) + (this.point.lng() - this.rn)
+
+      let markerData = new google.maps.Circle({
+        strokeColor: '#DC2D26',
+        strokeOpacity: 0.85,
+        strokeWeight: 0.5,
+        fillColor: '#F03E22',
+        fillOpacity: 0.35,
+        map: this.map,
+        center: new google.maps.LatLng(mLat, mLng),
+        radius: 1000
+      });
+
+      this.map.setZoom(15)
+
+      console.log(markerData)
+    }
+    else {
+      let markerData = {
+        position: this.point ? this.point : new google.maps.LatLng(24.0624125, -100.8401745),
+        draggable : true,
+        clickable : false,
+        map: this.map
+      }
+  
+      markerData.map = this.map
+  
+      this.marker = new google.maps.Marker(markerData)
+      this.marker.addListener('dragend', function() {
+        console.log("Location", self.marker.getPosition())
+        self.point = self.marker.getPosition()
+        self.GetPointData()
+      })
+    }
+
+    
   }
 
   SearchPredictions() {
@@ -137,9 +200,11 @@ export class MapLocationPickerComponent implements  AfterViewInit {
         self.PlaceData = place
         self.onChange.emit(self.PlaceData)
 
-        self.marker.setPosition(place.geometry.location)
+        if(self.marker != null) {
+          self.marker.setPosition(place.geometry.location)
+        }
         self.map.setCenter(place.geometry.location)
-        self.map.setZoom(15)
+        self.map.setZoom(14)
         self.searchString = place.formatted_address
       }
       else {
