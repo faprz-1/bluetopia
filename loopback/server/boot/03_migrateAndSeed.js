@@ -44,7 +44,7 @@ module.exports = function(app) {
     var users = [
       {
         User: {
-          name: "User",
+          name: "Admin",
           username: "templateAdmin",
           password: "j4r4b3s0",
           email: "admin@test.com",
@@ -54,7 +54,7 @@ module.exports = function(app) {
       },
       {
         User: {
-          name: "Admin",
+          name: "User",
           username: "templateUser",
           password: "j4r4b3s0",
           email: "user@test.com",
