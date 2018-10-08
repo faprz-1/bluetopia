@@ -1,0 +1,21 @@
+<div id="fileChooser" class="d-flex flex-column justify-content-center align-items-center">
+  <img 
+    src="{{uploadedFile.URL}}" 
+    onerror="assets/fondo/user.png"
+  >
+
+  <label for="base64File">
+    <i class="zmdi zmdi-upload"></i> Subir
+  </label>
+  
+  <input 
+    [disabled]="processing" 
+    type="file" 
+    id="base64File" 
+    name="base64File" 
+    ngModel="base64File"
+    accept="{{extensionFilter}}" 
+    (change)="onPhotoFileChange($event)"
+  >
+</div>
+

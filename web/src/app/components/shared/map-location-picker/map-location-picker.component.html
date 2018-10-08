@@ -1,0 +1,25 @@
+<div class="card">
+  <div class="card-body">
+    <div class="form-group m-2">
+      <!-- label for="searchBar">Buscador</label -->
+      <input type="email" class="form-control" placeholder="Ingrese aquí la dirección a buscar" aria-describedby="searchBar" 
+      [(ngModel)]="searchString" (input)="SearchPredictions()">
+    </div>
+
+    <div>
+      <div #gmap id="map" class="map card-img-top"></div>
+
+      <div class="searchResultsView d-flex flex-column" *ngIf="searchResults.length > 0">
+        <h5 class="mb-4">Resultados de busqueda</h5>
+
+        <ul class="list-group" *ngIf="searchResults.length > 0">
+          <li class="list-group-item list-group-item-action" *ngFor="let searchResult of searchResults; index as i"
+            (click)="UseSearchResult(i)">
+            <p>{{ searchResult.description }}</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
