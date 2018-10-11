@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 // import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { ApiService } from '../../services/api.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -13,12 +14,11 @@ export class LoginComponent implements OnInit {
 
   public procesando: boolean = false;
   constructor(
-     
-    private router: Router, 
-    // public toastr: ToastsManager, 
     vcr: ViewContainerRef,
+    public toast: ToastService,
+    private router: Router, 
     private api: ApiService) {
-    // this.toastr.setRootViewContainerRef(vcr);
+    this.toast.toastr.setRootViewContainerRef(vcr);
     if(localStorage.getItem("token")){
       this.router.navigate(['/inicio/dashboard'])
     }
@@ -45,11 +45,13 @@ export class LoginComponent implements OnInit {
       this.api.token= token.id;
       this.api.get("/Usuarios/withCredentials", true).subscribe((userFromServer: any)=>{
         this.procesando = false;
-        localStorage.setItem("user", JSON.stringify(userFromServer))
+        localStorage.setItem("user", JSON.stringify(userFromServer));
+        this.toast.showSuccess("Sesion Iniciada Exitosamente");
         this.router.navigate(['/inicio/dashboard']);
       })
-    }, (error: any) => {
+    }, (err: any) => {
       this.procesando = false;
+      this.toast.showError(err.error.error.message);
       // this.showError()
     })
   }

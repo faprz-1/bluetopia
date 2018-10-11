@@ -5,9 +5,7 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-// import { Ng4AlertModule } from 'ng4-alert';
-// import { LoginComponent } from './components/login/login.component';
-import swal from 'sweetalert';
+import {ToastModule} from 'ng2-toastr/ng2-toastr';
 
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
@@ -27,8 +25,8 @@ import { AuthGuard } from './services/auth.guard';
 import { EventsModule } from 'angular4-events'  
 import { MessagingService } from './services/messaging.service';  
 import { AngularFireAuth } from 'angularfire2/auth'; 
-
 import { FilterPipe } from './filter.pipe';
+import { ToastService } from './services/toast.service';
 
 @NgModule({
   imports: [
@@ -38,17 +36,13 @@ import { FilterPipe } from './filter.pipe';
     BrowserAnimationsModule,
     FormsModule,
     routing,
-    // Ng4AlertModule.forRoot(),  
     AngularFireModule.initializeApp(firebaseConfig),  
-    AngularFireDatabaseModule ,  
-    EventsModule.forRoot()  
+    AngularFireDatabaseModule,
+    EventsModule.forRoot(),
+    ToastModule.forRoot()
   ],
   declarations: [
     AppComponent,
-    // LoginComponent,
-    // BugsReportComponent,
-    // TarifasComponent,
-    // TransaccionesComponent,
     FilterPipe
   ],
   providers: [
@@ -60,7 +54,8 @@ import { FilterPipe } from './filter.pipe';
     ApiService,
     AuthGuard,
     MessagingService,  
-    AngularFireAuth  
+    AngularFireAuth,
+    ToastService
 
   ],
   bootstrap: [AppComponent]
