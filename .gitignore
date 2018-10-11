@@ -56,3 +56,6 @@ web/dist/
 # persistance Ignore
 persistence/mysql_db/
 persistence/loopback_storage/
+
+# Local DB ignore
+mysql/local_db
