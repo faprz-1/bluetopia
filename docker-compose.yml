@@ -3,7 +3,7 @@ version: '3'
 services:
 
   mysql:
-    image: mysql
+    image: loopback-mysql
     build: ./mysql
     container_name: loopback-mysql
     restart: always
@@ -16,7 +16,7 @@ services:
       - ./persistence/mysql_db:/var/lib/mysql
 
   loopback:
-    image: loopback
+    image: loopback-server
     container_name: loopback-server
     restart: always
     depends_on:

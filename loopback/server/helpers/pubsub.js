@@ -13,7 +13,7 @@ module.exports = {
            name+= (model)?'/'+model:''; 
            name+= (id)?'/'+id:''; 
            name+= (method)?'/'+method:''; 
-           console.log(name,data); 
+        //    console.log(name,data); 
            socket.emit(name, data); 
        }else{ 
            throw 'Error: Option must be an object type'; 
