@@ -54,7 +54,7 @@ module.exports = function (Notification) {
    Notification.setSingleNotification = function (id, notification) {
        notification["usuarioId"] = id;
        notification.link = hostURL + notification.link;
-       console.log("notification",id,"getnew");
+    //    console.log("notification",id,"getnew");
        Notification.create(notification,
            function (err, notification) {
                if (err) {

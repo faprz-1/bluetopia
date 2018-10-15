@@ -1,0 +1,26 @@
+			useful Commands
+git pull
+Docker logs: docker logs [ContainerID]
+Docker logs follow: docker logs [ContainerID] --follow
+Docker command in container: docker exec [ContainerID] [command]
+Docker get procesess: docker ps -a
+Docker get images: docker images -a
+Docker stop container: docker stop [ContainerID]
+Docker remove container: docker rm [ContainerID]
+Docker remove unamed images: docker rmi $(docker images -f “dangling=true” -q)
+
+-------------------------------------------------------------------------------------------------
+					Server
+
+docker:
+    Start Server:
+	    docker-compose -f docker-compose-dev.yml up -d
+    Start Server Re-Building iamges:
+        docker-compose -f docker-compose-dev.yml up -d --build
+    OR
+        docker-compose -f docker-compose-dev.yml build --no-cache
+        docker-compose -f docker-compose-dev.yml up -d
+    Terminate Server:
+        docker-compose -f docker-compose-dev.yml down
+    Terminate Server And Remove Images:
+        docker-compose -f docker-compose-dev.yml down --rmi all

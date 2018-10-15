@@ -46,7 +46,7 @@ export class DashboardPage {
     private storage: Storage ) { 
 
     this.reload();
-    this.initLoading(); 
+    // this.initLoading(); 
   } 
   initLoading() { 
     this.mainLoading = this.loadingCtrl.create({ 

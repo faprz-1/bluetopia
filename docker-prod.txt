@@ -1,18 +1,28 @@
+					useful Commands
 git pull
 Docker logs: docker logs [ContainerID]
-Docker command in container docker exec -it [ContainerID] bash -c "command"
+Docker logs follow: docker logs [ContainerID] --follow
+Docker command in container: docker exec -it [ContainerID] bash -c "command"
 Docker get procesess: docker ps -a
 Docker get images: docker images -a
+Docker stop container: docker stop [ContainerID]
+Docker remove container: docker rm [ContainerID]
+Docker remove unamed images: docker rmi $(docker images -f “dangling=true” -q)
 
+-----------------------------------------------------------------------------------------------------
 					Server
 
 docker:
     Start Server:
-	docker-compose up -d --build
-		OR
+	    docker-compose up -d
+    Start Server Re-Building iamges:
+        docker-compose up -d --build
+	OR
         docker-compose build
         docker-compose up -d
     Terminate Server:
+		docker-compose down
+    Terminate Server And Remove Images:
         docker-compose down --rmi all
 
 mysql:
