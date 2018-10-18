@@ -9,13 +9,13 @@
   </label>
   
   <input 
-    [disabled]="processing" 
+    [disabled]="isProcessing" 
     type="file" 
     id="base64File" 
     name="base64File" 
     ngModel="base64File"
     accept="{{extensionFilter}}" 
-    (change)="onPhotoFileChange($event)"
+    (change)="onFileChange($event)"
   >
 </div>
 
