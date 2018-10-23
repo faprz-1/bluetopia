@@ -30,8 +30,17 @@ export class SocketProvider {
  
  
   init(id,userId){ 
-    var url = this.api.baseURL.replace("/api", ""); 
-    let socket = io.connect(url); 
+    var url = this.api.baseURL
+    var splitted = url.split("/");
+    let socket;
+    url.replace("/api", "");
+    if(splitted.length > 4){
+      socket = io.connect(url, {
+          path: '/'+splitted[splitted.length-2]+'/socket.io'
+      });
+    }
+    else
+      socket = io.connect(url);
  
     console.log("conectando auth socket", id, userId); 
     socket.on('connect', function () { 

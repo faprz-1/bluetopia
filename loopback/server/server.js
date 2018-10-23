@@ -5,9 +5,9 @@ var boot = require('loopback-boot');
 
 var app = module.exports = loopback();
 
-app.start = function() {
+app.start = function () {
   // start the web server
-  return app.listen(function() {
+  return app.listen(function () {
     app.emit('started');
     var baseUrl = app.get('url').replace(/\/$/, '');
     console.log('Web server listening at: %s', baseUrl);
@@ -20,41 +20,53 @@ app.start = function() {
 
 // Bootstrap the application, configure models, datasources and middleware.
 // Sub-apps like REST API are mounted via boot scripts.
-boot(app, __dirname, function(err) {
+boot(app, __dirname, function (err) {
   if (err) throw err;
 
   // start the server if `$ node server.js`
-  if (require.main === module) { 
+  if (require.main === module) {
     //Comment this app.start line and add following lines 
     //app.start(); 
-    app.io = require('socket.io')(app.start()); 
-    require('socketio-auth')(app.io, { 
-      authenticate: function (socket, value, callback) { 
-  
-          var AccessToken = app.models.UsuarioAccessToken; 
-          //get credentials sent by the client 
-          var token = AccessToken.find({ 
-            where:{ 
-              and: [{ userId: value.userId }, { id: value.id }] 
-            } 
-          }, function(err, tokenDetail){ 
-            if (err) throw err; 
-            if(tokenDetail.length){ 
-              callback(null, true); 
-            } else { 
-              callback(null, false); 
-            } 
-          }); //find function.. 
-        } //authenticate function.. 
-    }); 
-  
-  
-  app.io.on('connection', function(socket){ 
-    console.log('a user connected'); 
-    socket.on('disconnect', function(){ 
-        console.log('user disconnected'); 
-    }); 
-  }); 
-  
-  } 
+    app.io = require('socket.io')(app.start());
+    require('socketio-auth')(app.io, {
+      authenticate: function (socket, value, callback) {
+
+        var AccessToken = app.models.UsuarioAccessToken;
+        //get credentials sent by the client 
+        var token = AccessToken.find({
+          where: {
+            and: [{
+              userId: value.userId
+            }, {
+              id: value.id
+            }]
+          }
+        }, function (err, tokenDetail) {
+          if (err) throw err;
+          if (tokenDetail.length) {
+            callback(null, true);
+          } else {
+            callback(null, false);
+          }
+        }); //find function.. 
+      } //authenticate function.. 
+    });
+
+
+    var splitted = constants.serverURL.split("/");
+    var nsp = "/"
+    for (let i = 3; i < splitted.length; i++) {
+      nsp += splitted[i] + "/";
+    }
+    nsp = nsp.substring(0, nsp.length - 1);
+    console.log("nsp: ", nsp);
+
+    app.io.of(nsp).on('connection', function (socket) {
+      console.log('a user connected nsp: ', nsp);
+      socket.on('disconnect', function () {
+        console.log('user disconnected nsp: ', nsp);
+      });
+    });
+
+  }
 });
