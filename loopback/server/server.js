@@ -52,19 +52,10 @@ boot(app, __dirname, function (err) {
       } //authenticate function.. 
     });
 
-
-    var splitted = constants.serverURL.split("/");
-    var nsp = "/"
-    for (let i = 3; i < splitted.length; i++) {
-      nsp += splitted[i] + "/";
-    }
-    nsp = nsp.substring(0, nsp.length - 1);
-    console.log("nsp: ", nsp);
-
-    app.io.of(nsp).on('connection', function (socket) {
-      console.log('a user connected nsp: ', nsp);
+    app.io.on('connection', function (socket) {
+      console.log('a user connected');
       socket.on('disconnect', function () {
-        console.log('user disconnected nsp: ', nsp);
+        console.log('user disconnected');
       });
     });
 

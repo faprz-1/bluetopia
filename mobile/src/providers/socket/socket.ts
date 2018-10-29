@@ -28,35 +28,25 @@ export class SocketProvider {
  
   } 
  
- 
-  init(id,userId){ 
-    var url = this.api.baseURL
-    var splitted = url.split("/");
-    let socket;
-    url.replace("/api", "");
-    if(splitted.length > 4){
-      socket = io.connect(url, {
-          path: '/'+splitted[splitted.length-2]+'/socket.io'
+  init(id,userId){
+    var url = this.api.baseURL.replace("/api", "");
+    let socket = io.connect(url);
+  
+    console.log("conectando auth socket", id, userId);
+    socket.on('connect', function (s) {
+      socket.emit('authentication', {
+        id: id,
+        userId: userId
       });
-    }
-    else
-      socket = io.connect(url);
- 
-    console.log("conectando auth socket", id, userId); 
-    socket.on('connect', function () { 
-      socket.emit('authentication', { 
-        id: id, 
-        userId: userId 
-      }); 
-      socket.on('authenticated', function () { 
-        // use the socket as usual 
-        console.log('User is authenticated'); 
-      }); 
-    }); 
- 
-    this.socket = socket; 
-    this.ready=true; 
-  } 
+      socket.on('authenticated', function (s) {
+        // use the socket as usual
+        console.log('User is authenticated');
+      });
+    });
+  
+    this.socket = socket;
+    this.ready=true;
+  }
  
   subscribe(options, callback) { 
     if (this.ready){ 

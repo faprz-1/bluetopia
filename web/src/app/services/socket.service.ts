@@ -6,34 +6,22 @@ import { ApiService } from './api.service';
 export class SocketService {
   container: any = [];
   socket: any;
-  constructor(private api: ApiService) {
-    var url = this.api.baseURL
-    var splitted = url.split("/");
-    let socket;
-    url.replace("/api", "");
-    if(splitted.length > 4){
-        socket = io.connect(url, {
-            path: '/'+splitted[splitted.length-2]+'/socket.io'
-        });
-    }
-    else
-        socket = io.connect(url);
-
+  constructor(private api:ApiService) {
+    var url = this.api.baseURL.replace("/api", "");
+    let socket = io.connect(url);
+  
     var id = localStorage.getItem('token');
     var userId = JSON.parse(localStorage.getItem("user")).id;
-
-    console.log("conectando auth socket", id, userId);
-    socket.on('connect', function () {
-      socket.emit('authentication', {
-        id: id,
-        userId: userId
-      });
-      socket.on('authenticated', function () {
-        // use the socket as usual
-        console.log('User is authenticated');
-      });
+  
+    // console.log("conectando auth socket",id,userId);
+    socket.on('connect', function(){
+        socket.emit('authentication', {id: id, userId: userId });
+        socket.on('authenticated', function() {
+            // use the socket as usual
+            // console.log('User is authenticated');
+        });
     });
-
+  
     this.socket = socket;
   }
 
