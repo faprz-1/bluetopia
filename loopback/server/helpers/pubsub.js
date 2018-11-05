@@ -1,25 +1,24 @@
 'use strict'; 
 //Writing pubsub module for socket.io 
-module.exports = { 
-   //Publishing a event.. 
-   publish: function(socket, options ){ 
-       if(options){ 
-           var model = options.model; 
-           var method         = options.method; 
-           var data           = options.data; 
-           var id        = options.id; 
- 
-           var name ="" 
-           name+= (model)?'/'+model:''; 
-           name+= (id)?'/'+id:''; 
-           name+= (method)?'/'+method:''; 
-        //    console.log(name,data); 
-           socket.emit(name, data); 
-       }else{ 
-           throw 'Error: Option must be an object type'; 
-       } 
-   }, //End Publish.. 
- 
+module.exports = {
+    //Publishing a event.. 
+    publish: function (socket, options) {
+        if (options) {
+            var model = options.model;
+            var method = options.method;
+            var data = options.data;
+            var id = options.id;
+
+            var name = ""
+            name += (model) ? '/' + model : '';
+            name += (id) ? '/' + id : '';
+            name += (method) ? '/' + method : '';
+            socket.emit(name, data);
+        } else {
+            throw 'Error: Option must be an object type';
+        }
+    }, //End Publish..
+
    isEmpty:function (obj) { 
        var hasOwnProperty = Object.prototype.hasOwnProperty; 
        // null and undefined are "empty" 
