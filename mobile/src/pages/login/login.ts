@@ -5,6 +5,7 @@ import { IonicPage, NavController, ToastController, MenuController, LoadingContr
 import { User, ApiProvider } from '../../providers';
 import { MainPage } from '../';
 import { Storage } from '@ionic/storage';
+import { NotificationProvider } from '../../providers/notification/notification';
 
 @IonicPage()
 @Component({
@@ -28,7 +29,9 @@ export class LoginPage {
     private api: ApiProvider,
     private storage: Storage,
     private alertCtrl: AlertController,
-    private loadingCtrl: LoadingController) {
+    private loadingCtrl: LoadingController,
+    private notiCtrl : NotificationProvider
+    ) {
     this.menuCtrl.enable(false)
   }
 
@@ -44,7 +47,8 @@ export class LoginPage {
           this.storage.set("user", userFromServer).then(()=>{
             loading.dismiss();
             this.menuCtrl.enable(true);
-            // if(userFromServer.role.name == "Admin") return this.errorLogin("Este usuario no es conductor")
+            
+            this.notiCtrl.loadNotifications()
             this.navCtrl.setRoot('DashboardPage');
           })
         })
