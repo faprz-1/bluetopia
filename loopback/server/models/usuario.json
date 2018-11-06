@@ -63,6 +63,34 @@
     }
   ],
   "methods": {
+    "prototype.changeProfileImage": {
+      "accepts": [
+        {
+          "arg": "newImage",
+          "type": "object",
+          "required": true,
+          "description": "new image in base 64",
+          "http": {
+            "source": "body"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "updatedUser",
+          "type": "object",
+          "root": true,
+          "description": "updated user from db"
+        }
+      ],
+      "description": "changes the user's prifile image for a new one",
+      "http": [
+        {
+          "path": "/changeProfileImage",
+          "verb": "post"
+        }
+      ]
+    },
     "prototype.updatePushToken": {
       "accepts": [
         {
