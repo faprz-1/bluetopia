@@ -11,7 +11,7 @@ services:
       MYSQL_ROOT_PASSWORD: 8RyC?LL6Dww_G?#yC7fTYsWEV
       MYSQL_DATABASE: template3
     ports:
-      - '3306:3306'
+      - "3306:3306"
     volumes:
       - ./persistence/mysql_db:/var/lib/mysql
 
@@ -40,6 +40,7 @@ services:
       - "443:443"
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt
+      - /root/certs-data/:/data/letsencrypt/
       - ./persistence/compiled_angular:/var/www/landing
     links:
       - loopback
