@@ -61,9 +61,9 @@ export class MyApp {
         console.log("2",user);
 
         this.user= user; 
-        console.log("leyendo storage user"); 
-        this.user.imgperfil = this.api.baseURL+user.profileImage.URL ? this.api.baseURL+user.profileImage.URL : this.api.baseURL 
-        
+        console.log("leyendo storage user", this.user); 
+        this.user.imgperfil = this.user.profileImage != null ? this.api.baseURL + this.user.profileImage.URL : 'assets/imgs/default_avatar.jpg'
+        console.log("IMGPERF", this.user.imgperfil)
       }
     }, 
     err =>{ 
