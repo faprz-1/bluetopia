@@ -8,8 +8,7 @@ module.exports = function(Usuario) {
     Usuario.testPush = function(callback){ 
         // Enviar push 
         var notificacion = Usuario.app.models.Notification; 
-        var res = notificacion.setByRoleNotification("admin",{title:"Ticket añadido", content:"Un cliente agrego un ticket en Porter",link:"/traxsa/admin/empresas","image":"https://us-ticket.com/images/Admission-Roll-Tickets,/Bristol-Blank-Roll-Tickets-Yellow.jpg"}); 
-        // var res = notificacion.setByRoleNotification("admin",{title:"Push prueba3", content:"Animo!!",link:"http://localhost:4200/#/inicio/administrador/tickets/1","image":"http://elvwdetuvida.com.mx/img/decada/highlights/d70s/icon-historias-volkswagen-aniversario-h-16.svg"}); 
+        var res = notificacion.setByRoleNotification("admin",{title:"Test Push", content:"Una notificación de prueba",link:"/","image":"http://placeimg.com/100/100/any"}); 
         callback(null, res); 
       }
 

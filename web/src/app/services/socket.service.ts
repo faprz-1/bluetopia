@@ -10,6 +10,9 @@ export class SocketService {
     var url = this.api.baseURL.replace("/api", "");
     let socket = io.connect(url);
   
+    if(JSON.parse(localStorage.getItem("user")) == null)
+      return 
+
     var id = localStorage.getItem('token');
     var userId = JSON.parse(localStorage.getItem("user")).id;
   

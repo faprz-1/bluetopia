@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import {TooltipModule} from "ngx-tooltip";
 
 import { LoginComponent } from "./login.component";
+import { NotificationService } from '../../services/notification.service';
+import { SocketService } from '../../services/socket.service';
 
 
 const MODULE_ROUTES = [
@@ -21,6 +23,8 @@ const MODULE_ROUTES = [
   ,
   declarations: [LoginComponent]
   ,providers:[
+    NotificationService,
+    SocketService
   ]
 })
 export class LoginModule { }

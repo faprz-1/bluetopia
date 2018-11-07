@@ -19,15 +19,16 @@ export class HeaderComponent implements OnInit {
   }
 
   constructor(
-      public sharedService: SharedService,
-      public notiServ : NotificationService 
-    ) {
+    public sharedService: SharedService,
+    public notiServ: NotificationService
+  ) {
     sharedService.maThemeSubject.subscribe((value) => {
       this.maThemeModel = value
     })
 
-    this.messagesData = [
-      {
+    this.notiServ.Init()
+
+    this.messagesData = [{
         image: 'assets/demo/img/profile-pics/1.jpg',
         name: 'Ventas',
         message: 'Tienes una nueva unidad en construccion',
@@ -47,29 +48,27 @@ export class HeaderComponent implements OnInit {
       }
     ];
 
-    this.tasksData = [
-      {
-        name: 'HTML5 Validation Report',
-        completed: 95,
-        color: ''
-      },{
-        name: 'Google Chrome Extension',
-        completed: '80',
-        color: 'success'
-      },{
-        name: 'Social Intranet Projects',
-        completed: '20',
-        color: 'warning'
-      },{
-        name: 'Bootstrap Admin Template',
-        completed: '60',
-        color: 'danger'
-      },{
-        name: 'Youtube Client App',
-        completed: '80',
-        color: 'info'
-      }
-    ]
+    this.tasksData = [{
+      name: 'HTML5 Validation Report',
+      completed: 95,
+      color: ''
+    }, {
+      name: 'Google Chrome Extension',
+      completed: '80',
+      color: 'success'
+    }, {
+      name: 'Social Intranet Projects',
+      completed: '20',
+      color: 'warning'
+    }, {
+      name: 'Bootstrap Admin Template',
+      completed: '60',
+      color: 'danger'
+    }, {
+      name: 'Youtube Client App',
+      completed: '80',
+      color: 'info'
+    }]
   }
 
   ngOnInit() {

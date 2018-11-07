@@ -14,7 +14,6 @@ import { HeaderComponent } from './header/header.component';
 import { SearchComponent } from './header/search/search.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { NavigationTriggerComponent } from './header/navigation-trigger/navigation-trigger.component';
-import { ChecklistService } from '../services/checklist.service';
 import { NotificationService } from "../services/notification.service"; 
 import { SocketService } from "../services/socket.service"; 
 
@@ -40,7 +39,6 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG)
   ],
   providers:[
-  ChecklistService,
   NotificationService, 
   SocketService 
 ]

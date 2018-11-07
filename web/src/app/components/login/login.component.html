@@ -1,33 +1,7 @@
-<!-- <div style="background-image: url('assets/gifs/login-background.gif'); background-size: cover; height: 100vh;">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-6 col-md-4 col-md-offset-4 mx-auto mt-5 mb-1">
-        <div class="card mb-1">
-          <div class="card-body">
-            <div class="account-wall">
-              <img class="profile-img image w-100" src="http://rocher.jarabesoft.com/cakeRocher/app/webroot/img/logo.jpg" alt="">
-              <form class="form-signin" id="loginForm" name="login" (ngSubmit)="sendForm()">
-                <input type="text" class="form-control" name="email" placeholder="Email" required autofocus [(ngModel)]="this.loginForm.email">
-                <input type="password" class="form-control" name="pass" placeholder="Password" required [(ngModel)]="this.loginForm.password">
-                <div class="row mt-2">
-                  <div class="loader ml-auto mr-auto" *ngIf="procesando"></div>
-                </div>
-                <button *ngIf="!procesando" [disabled]="loginForm.email==''|| loginForm.password==''" class="btn btn-lg btn-primary btn-block mt-2" type="submit">
-                  Iniciar Session</button>
-              </form>
-            </div>
-          </div>
-        </div>
-<alert *ngIf="error==true" [dismissible]="true" [type]="alert.type" (onClosed)="error=false">{{ alert.message }}</alert> 
-      </div>
-    </div>
-  </div>
-</div>
- -->
 <div class="loginBack">
   <div class="row justify-content-center segment title">
     <div class="col-auto">
-          <div class="mediccallFont mediccallBlueText mediccall title">MedicCall</div>
+          <div class="templateFont templateBlueText template title">template</div>
           <div class="lema">Toma el control</div>
       
         
@@ -40,7 +14,7 @@
       <div class="col-auto">
         <div class="circular segment">
           <form (ngSubmit)="login(loginForm.value)" #loginForm="ngForm">
-                <label class="mediccallBlueText">Correo electrónico</label>      
+                <label class="templateBlueText">Correo electrónico</label>      
                 <div class="form-group">  
                     <!-- Validaciones del campo del correo -->
                       <input class="form-control text-center" type="email" id="email" placeholder="ejemplo@email.com" name="email" ngModel required
@@ -50,7 +24,7 @@
 
                       <div *ngIf="email.errors?.pattern" class="form-control-feedback text-center">"No cumple con los caracteres"</div>
                 </div>
-                <label class="mediccallBlueText">Contraseña</label>      
+                <label class="templateBlueText">Contraseña</label>      
                 <div class="form-group">  
                      <!-- Validaciones del campo de la contraseña -->
                     <input class="form-control text-center" type="password" placeholder="Contraseña" name="password" required ngModel #password="ngModel">

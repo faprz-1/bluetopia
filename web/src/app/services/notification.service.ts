@@ -9,9 +9,13 @@ export class NotificationService {
     private socket: SocketService,
     private api: ApiService,
   ) {
+  }
+  
+  Init() {
     this.loadNotifications();
     this.susbcribeToNotifications();
   }
+
   susbcribeToNotifications() {
     //Suscripcion a notificaciones
     this.socket.subscribe({

@@ -3,7 +3,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
 
 @Component({
-  selector: 'traxsa-file-chooser',
+  selector: 'template-file-chooser',
   templateUrl: './file-chooser.component.html',
   styleUrls: ['./file-chooser.component.scss'],
   providers : [

@@ -6,10 +6,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class ApiService {
-
-  // public baseURL: string = "http://mediccallapp.com:8085/api"
   public baseURL: string = "http://localhost:3000/api"
-  // public mediaBaseURL: string = "http://localhost:3000/"
   public headers: any = {'Content-Type': 'application/json'};
   public retryAttempts: number = 5
   public token: string = "";
