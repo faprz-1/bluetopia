@@ -7,6 +7,8 @@ import { MainPage } from '../';
 import { Storage } from '@ionic/storage';
 import { NotificationProvider } from '../../providers/notification/notification';
 
+import * as moment from 'moment';
+
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -45,11 +47,13 @@ export class LoginPage {
         this.api.token= token.id;
         this.api.get("/Usuarios/withCredentials", true).subscribe((userFromServer: any)=>{
           this.storage.set("user", userFromServer).then(()=>{
-            loading.dismiss();
-            this.menuCtrl.enable(true);
-            
-            this.notiCtrl.loadNotifications()
-            this.navCtrl.setRoot('DashboardPage');
+            this.storage.set("ttl", moment().add(1209600, 's').toISOString()).then(() => {
+              loading.dismiss();
+              this.menuCtrl.enable(true);
+              
+              this.notiCtrl.loadNotifications()
+              this.navCtrl.setRoot('DashboardPage');
+            })
           })
         })
       })

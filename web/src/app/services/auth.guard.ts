@@ -3,6 +3,8 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 import { Observable } from 'rxjs/Observable';
 // import { UserService } from '../services/user.service';
 
+import * as moment from 'moment';
+
 @Injectable()
 
 export class AuthGuard implements CanActivate {
@@ -13,13 +15,21 @@ export class AuthGuard implements CanActivate {
   constructor(private router: Router) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable < boolean > | Promise < boolean > | boolean {
-    let token = localStorage.getItem('token');
+	let token = localStorage.getItem('token');
+	
+	let ttl = localStorage.getItem("ttl")
+	if(ttl != null && moment().isSameOrAfter(ttl) ) {
+		console.log("HI")
+		localStorage.clear();
+		return false
+	}
 
     if (next.data.hasOwnProperty("role")) {
-      return next.data.role == JSON.parse(localStorage.getItem("user")).role.name
+		return next.data.role == JSON.parse(localStorage.getItem("user")).role.name
     } else if (token) {
       return true;
-    }
+	}
+	
     this.router.navigate(['login']);
     return false;
   }

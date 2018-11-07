@@ -6,6 +6,8 @@ import { ApiService } from '../../services/api.service';
 import { ToastService } from '../../services/toast.service';
 import { NotificationService } from '../../services/notification.service';
 
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -29,13 +31,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     if (localStorage.getItem('cambio')) {
-      // tslint:disable-next-line:prefer-const
-      // this.eliminado(localStorage.getItem('cambio'));
       localStorage.clear();
     }
     if (localStorage.getItem('creado')) {
-      // tslint:disable-next-line:prefer-const
-      // this.creado(localStorage.getItem('creado'));
       localStorage.clear();
     }
   }
@@ -49,6 +47,7 @@ export class LoginComponent implements OnInit {
       this.api.get("/Usuarios/withCredentials", true).subscribe((userFromServer: any)=>{
         this.procesando = false;
         localStorage.setItem("user", JSON.stringify(userFromServer));
+        localStorage.setItem("ttl", moment().add(1209600, 's').toISOString() )
         this.notiServ.loadNotifications()
         this.toast.showSuccess("Sesion Iniciada Exitosamente");
         this.router.navigate(['/inicio/dashboard']);
@@ -56,38 +55,6 @@ export class LoginComponent implements OnInit {
     }, (err: any) => {
       this.procesando = false;
       this.toast.showError(err.error.error.message);
-      // this.showError()
     })
   }
-
-
-  // socialSignIn(google) {
-  //   console.log(google);
-  //   this.facebookServicio.socialSignIn(google)
-  //   .then(socialUser => {
-  //   //   console.log('socialUser:');
-  //   //   console.log(socialUser);
-  //   //   this.userService.logSocialUser(socialUser)
-  //   // .subscribe(
-  //   //   (response: any) =>{
-  //   //     console.log(response);
-  //   //     let userid= response.datos.user.id;
-  //   //     let tkn = response.datos.token.token;
-  //   //     localStorage.setItem('tkntemplate', tkn);
-  //   //     this.router.navigate(['/perfil/' + userid]);
-  //   //   },
-  //   //   error => console.log(<any>error));
-  //   },
-  //   error => console.log(<any>error));
-  // }
-
-  // showError() {
-  //   this.toastr.error('No se ha iniciado sesión correctamente!', 'Acceso denegado!');
-  // }
-  // eliminado(texto) {
-  //   this.toastr.error(texto, 'Error de sesión!');
-  // }
-  // creado(text) {
-  //   this.toastr.success(text, 'Éxito');
-  // }
 }

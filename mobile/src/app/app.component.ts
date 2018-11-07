@@ -10,6 +10,8 @@ import { ApiProvider } from '../providers/api/api';
 import { NotificationProvider } from '../providers/notification/notification';
 import { PushProvider } from '../providers/push/push';
 
+import * as moment from 'moment';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -104,9 +106,22 @@ export class MyApp {
 
   initApp(){
     this.platform.ready().then(() => {
-      this.storage.get("token").then((t)=>{        
-        if(t) this.nav.setRoot('DashboardPage');
-        else this.nav.setRoot('LoginPage');
+      this.storage.get("token").then((token)=>{        
+
+        if(token) {
+          this.storage.get("ttl").then((ttl)=>{ 
+            if(ttl != null && moment().isSameOrAfter(ttl) ) {
+              this.storage.clear()
+              this.nav.setRoot('LoginPage')
+            }
+            else {
+              this.nav.setRoot('DashboardPage')
+            }
+          })
+        }
+        else {
+          this.nav.setRoot('LoginPage')
+        }
         
         // Okay, so the platform is ready and our plugins are available.
         // Here you can do any higher level native things you might need.

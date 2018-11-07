@@ -38,6 +38,7 @@
     "jquery-sparkline": "^2.4.0",
     "jqvmap": "^1.5.1",
     "material-design-iconic-font": "^2.2.0",
+    "moment": "^2.22.2",
     "ng-autosize": "^1.0.1",
     "ng2-nouislider": "^1.7.0",
     "ng2-select2": "^1.0.0-beta.10",
