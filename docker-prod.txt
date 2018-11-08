@@ -40,8 +40,7 @@ create acme challenge folder:
 	mkdir /root/certs-data
 
 Install certificate:
-	certbot certonly -d *.project.com
-	certbot certonly --webroot -w /root/certs-data/ -d 138.68.243.185.nip.io
+	certbot certonly --webroot -w /root/certs-data/ -d project.com
 
 Auto renew:
 	certbot renew --dry-run

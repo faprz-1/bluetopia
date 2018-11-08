@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class ApiService {
-  public baseURL: string = "https://138.68.243.185.nip.io/api"
+  public baseURL: string = "http://localhost:3000/api"
   public headers: any = {'Content-Type': 'application/json'};
   public retryAttempts: number = 5
   public token: string = "";
