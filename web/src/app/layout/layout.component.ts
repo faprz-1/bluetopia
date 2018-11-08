@@ -6,12 +6,7 @@ import { SharedService } from '../shared/services/shared.service';
   templateUrl: './layout.component.html'
 })
 export class LayoutComponent implements OnInit {
-  maTheme: string = this.sharedService.maTheme;
-
-  constructor(private sharedService: SharedService) {
-    sharedService.maThemeSubject.subscribe((value) => {
-      this.maTheme = value
-    })
+  constructor() {
   }
 
   ngOnInit() {

@@ -16,7 +16,7 @@ const MODULE_ROUTES = [
   imports: [
     CommonModule ,FormsModule,TooltipModule,
     RouterModule.forChild(MODULE_ROUTES),
-    ProfileImageEditorModule
+    ProfileImageEditorModule,
   ]
   ,
   declarations: [DashboardComponent]

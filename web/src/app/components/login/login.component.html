@@ -1,41 +1,47 @@
 <div class="loginBack">
   <div class="row justify-content-center segment title">
     <div class="col-auto">
-          <div class="templateFont templateBlueText template title">Jarabe Template</div>
-          <div class="lema">Un template para uso de JarabeSoft</div>
-      
-        
+      <div class="mediccallFont mediccall title colorPrincipal">JarabeSoft</div>
+
+      <div class="lema">Control</div>
+
+
     </div>
   </div>
 
   <div class="container">
-    <div class="row justify-content-center">
+    <div class="row">
 
-      <div class="col-auto">
+      <div class="col-12 col-lg-4">
         <div class="circular segment">
+          <h2 class="m-4">Inicia sesion</h2>
           <form (ngSubmit)="login(loginForm.value)" #loginForm="ngForm">
-                <label class="templateBlueText">Correo electrónico</label>      
-                <div class="form-group">  
-                    <!-- Validaciones del campo del correo -->
-                      <input class="form-control text-center" type="email" id="email" placeholder="ejemplo@email.com" name="email" ngModel required
-                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #email="ngModel">
-                      <!-- Mensajes de las validaciones -->
-                      <div *ngIf="email.errors?.required" class="form-control-feedback text-center">"Este campo es obligatorio" </div>
+            <label class="colorPrincipal">Correo electrónico</label>
+            <div class="form-group">
+              <!-- Validaciones del campo del correo -->
+              <input class="form-control text-center" type="email" id="email" placeholder="ejemplo@email.com" name="email"
+                ngModel required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #email="ngModel">
+              <!-- Mensajes de las validaciones -->
+              <div *ngIf="email.errors?.required" class="form-control-feedback text-center">"Este campo es obligatorio"
+              </div>
 
-                      <div *ngIf="email.errors?.pattern" class="form-control-feedback text-center">"No cumple con los caracteres"</div>
-                </div>
-                <label class="templateBlueText">Contraseña</label>      
-                <div class="form-group">  
-                     <!-- Validaciones del campo de la contraseña -->
-                    <input class="form-control text-center" type="password" placeholder="Contraseña" name="password" required ngModel #password="ngModel">
-                    <!-- Mensaje de las validaciones -->
-                    <div *ngIf="password.errors?.required" class="form-control-feedback text-center">"Campo obligatorio"</div>
-                </div>
-                <br>
-                <button *ngIf="!procesando" [disabled]="loginForm.email==''|| loginForm.password==''" class="btn btn-primary mt-2" type="submit">
-                  CONTINUAR</button>
-                <!-- <button  class="btn btn-primary" type="submit"  [disabled]="loginForm.email==''||loginForm.password==''">Continuar</button> -->
-              </form>
+              <div *ngIf="email.errors?.pattern" class="form-control-feedback text-center">"No cumple con los
+                caracteres"</div>
+            </div>
+            <label class="colorPrincipal">Contraseña</label>
+            <div class="form-group">
+              <!-- Validaciones del campo de la contraseña -->
+              <input class="form-control text-center" type="password" placeholder="Contraseña" name="password" required
+                ngModel #password="ngModel">
+              <!-- Mensaje de las validaciones -->
+              <div *ngIf="password.errors?.required" class="form-control-feedback text-center">"Campo obligatorio"</div>
+            </div>
+            <br>
+            <button *ngIf="!procesando" [disabled]="loginForm.email==''|| loginForm.password==''" class="btn colorPrincipal fondo"
+              type="submit">
+              CONTINUAR</button>
+            <!-- <button  class="btn btn-primary" type="submit"  [disabled]="loginForm.email==''||loginForm.password==''">Continuar</button> -->
+          </form>
         </div>
       </div>
     </div>

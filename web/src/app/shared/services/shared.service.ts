@@ -1,6 +1,10 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
+/**
+ * A través de este componente se cambia el tema de la aplicación al color especificado. Se pueden añadir mas colores añadiendo entradas
+ * al archivo assets/scss/_theme.scss
+ */
 @Injectable()
 export class SharedService {
 
@@ -28,9 +32,8 @@ export class SharedService {
         // Hidden the sidebar by default
         this.sidebarVisible = true
 
-        // // Set default theme as green
-        // this.maTheme = 'green'
-        this.maTheme = 'teal'
+        // Set default theme
+        this.maTheme = 'orange'
     }
     
     setBreadcrumbs(bread){ 

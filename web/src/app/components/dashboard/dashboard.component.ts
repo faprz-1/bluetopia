@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, TemplateRef} from '@angular/core';
 import { RouterModule, Routes ,Router} from '@angular/router';
 
 import {TooltipModule} from "ngx-tooltip";
@@ -11,6 +11,6 @@ import {TooltipModule} from "ngx-tooltip";
 
 export class DashboardComponent implements OnInit {  
   
-	constructor(private router: Router) {}
+	constructor(private router: Router, private modalService: BsModalService) {}
   ngOnInit() {}
 }
