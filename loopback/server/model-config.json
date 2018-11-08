@@ -44,7 +44,8 @@
           "resetPassword": true,
           "setPassword": true,
           "testPush": true,
-          "prototype.updatePushToken": true
+          "prototype.updatePushToken": true,
+          "prototype.changeProfileImage": true
         }
       }
     }
