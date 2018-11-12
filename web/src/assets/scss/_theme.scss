@@ -58,3 +58,7 @@
 [data-ma-theme="lime"] {
   @include ma-theme($lime);
 }
+
+[data-ma-theme="amber"] {
+  @include ma-theme($amber);
+}

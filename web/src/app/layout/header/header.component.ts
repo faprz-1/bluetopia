@@ -18,7 +18,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     public notiServ: NotificationService,
     public api: ApiService, 
-    public router : Router
+    public router : Router,
+    public sharedService : SharedService
   ) {
     this.notiServ.Init()
   }
