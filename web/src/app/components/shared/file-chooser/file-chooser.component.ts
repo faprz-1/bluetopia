@@ -19,6 +19,7 @@ export class FileChooserComponent implements ControlValueAccessor, OnInit {
   base64File : any
   uploadedFile : any
   imageURL : string
+  fileData : any
 
   isProcessing : boolean = false
   isSuccess : boolean = false
@@ -56,7 +57,7 @@ export class FileChooserComponent implements ControlValueAccessor, OnInit {
 			reader.onload = (readEvent: any) => {
         var binaryString = readEvent.target.result;
         
-        let fileData = {
+        this.fileData = {
           "fileType" : this.fileType,
           "file" : {
             "base64File" : btoa(binaryString),
@@ -64,10 +65,13 @@ export class FileChooserComponent implements ControlValueAccessor, OnInit {
           }
         }
 
+        if(this.fileUploadEndpoint == null)
+          return 
+
         this.isProcessing = false
         this.isSuccess = false
 
-        this.api.post(this.fileUploadEndpoint, fileData, true).subscribe(
+        this.api.post(this.fileUploadEndpoint, this.fileData, true).subscribe(
           (valid : any) => {
             this.isProcessing = true
             this.isSuccess = true

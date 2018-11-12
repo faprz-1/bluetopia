@@ -1,21 +1,12 @@
 <div id="fileChooser" class="d-flex flex-column justify-content-center align-items-center">
-  <img 
-    src="{{uploadedFile.URL}}" 
-    onerror="assets/fondo/user.png"
-  >
+  <img *ngIf="uploadedFile != null" src="{{uploadedFile.URL}}">
+  <img *ngIf="fileData != null  && ( fileData.file.fileExtention == '.png' || fileData.file.fileExtention == '.jpg' || fileData.file.fileExtention == '.jpeg')" 
+    src="{{'data:image/' + fileData.file.fileExtention.split('.')[1] + ';base64,' + fileData.file.base64File}}">
 
   <label for="base64File">
     <i class="zmdi zmdi-upload"></i> Subir
   </label>
-  
-  <input 
-    [disabled]="isProcessing" 
-    type="file" 
-    id="base64File" 
-    name="base64File" 
-    ngModel="base64File"
-    accept="{{extensionFilter}}" 
-    (change)="onFileChange($event)"
-  >
-</div>
 
+  <input [disabled]="isProcessing" type="file" id="base64File" name="base64File" ngModel="base64File" accept="{{extensionFilter}}"
+    (change)="onFileChange($event)">
+</div>
