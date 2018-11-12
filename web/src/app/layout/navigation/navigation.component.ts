@@ -52,10 +52,9 @@ export class NavigationComponent implements OnInit {
     })
   }
 
-  userPages = [{
-    name: "Inicio",
-    action: "/inicio/dashboard"
-  }];
+  userPages = [
+    {name: "Inicio",action: "/inicio/dashboard"}
+  ];
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user'));
