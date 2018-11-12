@@ -33,7 +33,7 @@ export class SharedService {
         this.sidebarVisible = true
 
         // Set default theme
-        this.setTheme('amber')
+        this.setTheme('orange')
     }
     
     setBreadcrumbs(bread){ 
