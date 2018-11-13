@@ -6,8 +6,6 @@ import {TooltipModule} from "ngx-tooltip";
 
 import { DashboardComponent } from "./dashboard.component";
 import { ProfileImageEditorModule } from '../shared/profile-image-editor/profile-image-editor.module';
-import { FileChooserModule } from '../shared/file-chooser/file-chooser.module';
-
 
 const MODULE_ROUTES = [
     { path: '', component: DashboardComponent }
@@ -19,8 +17,7 @@ const MODULE_ROUTES = [
     FormsModule,
     TooltipModule,
     RouterModule.forChild(MODULE_ROUTES),
-    ProfileImageEditorModule,
-    FileChooserModule
+    ProfileImageEditorModule
   ]
   ,
   declarations: [DashboardComponent]
