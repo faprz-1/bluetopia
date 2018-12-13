@@ -3,10 +3,10 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase';
 
-import 'rxjs/add/operator/take';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject'
+
+import { BehaviorSubject } from 'rxjs'
 import { ApiService } from './api.service';
-import { EventsService } from 'angular4-events';
+import { take } from 'rxjs/operators';
 
 @Injectable()
 export class MessagingService {
@@ -17,9 +17,7 @@ export class MessagingService {
   constructor(
     private db: AngularFireDatabase,
     private afAuth: AngularFireAuth,
-    private api: ApiService,
-    private events: EventsService
-
+    private api: ApiService
   ) {
     this.user = JSON.parse(localStorage.getItem("user"))
   }
@@ -32,7 +30,7 @@ export class MessagingService {
         isMobile: false
       }
     }).subscribe(() => {})
-    this.afAuth.authState.take(1).subscribe(user => {
+    this.afAuth.authState.pipe(take(1)).subscribe(user => {
       if (!user) return;
 
       const data = {
@@ -46,7 +44,6 @@ export class MessagingService {
       if(tokenList != null) { tokenList.push(token) }
       else { tokenList = [ token ] }
       localStorage.setItem("fireTokens", JSON.stringify(tokenList))
-
     })
   }
 
@@ -68,7 +65,6 @@ export class MessagingService {
   receiveMessage() {
     this.messaging.onMessage((payload: any) => {
       console.log("Message: ", payload);
-      this.events.publish('message', payload)
       this.currentMessage.next(payload)
     });
   }

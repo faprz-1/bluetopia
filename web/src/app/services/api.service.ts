@@ -1,8 +1,8 @@
+
+import {throwError as observableThrowError,  of ,  Observable } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, retryWhen } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import { Observable } from 'rxjs';
+import { catchError, retryWhen, mergeMap, take } from 'rxjs/operators';
 
 @Injectable()
 export class ApiService {
@@ -31,15 +31,19 @@ export class ApiService {
   }
 
   private conditionalRetry(error: Observable<any>): Observable<any> {
-    return error.flatMap((error: any)=>{
-      // solo hace retry en codigos de error: 408: Request Time-out, 504: Gateway Time-out, de ahi en mas para todo hace retry
-      if(((error.status >= 400 && error.status <= 407) || (error.status >= 409 && error.status <= 418) ) 
-      || 
-      (error.status >= 500 && error.status <= 503) || error.status == 505){
-          return Observable.throw(error)
-        }
-        return Observable.of(error.status).delay(0);
-    }).take(this.retryAttempts)
+    
+    return error.pipe(
+      mergeMap((error: any)=>{
+        // solo hace retry en codigos de error: 408: Request Time-out, 504: Gateway Time-out, de ahi en mas para todo hace retry
+        if(((error.status >= 400 && error.status <= 407) || (error.status >= 409 && error.status <= 418) ) 
+        || 
+        (error.status >= 500 && error.status <= 503) || error.status == 505){
+            return observableThrowError(error)
+          }
+          return of(error.status)
+      }),
+      take(this.retryAttempts)
+    )
   }
 
   private handleError(error: HttpErrorResponse, link: string){

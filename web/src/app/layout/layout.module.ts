@@ -36,7 +36,7 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     BsDropdownModule.forRoot(),
     ProgressbarModule.forRoot(),
     ButtonsModule.forRoot(),
-    PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG)
+    PerfectScrollbarModule
   ],
   providers:[
   NotificationService, 

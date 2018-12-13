@@ -5,7 +5,6 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import {ToastModule} from 'ng2-toastr/ng2-toastr';
 
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
@@ -22,11 +21,11 @@ import { SharedService } from "./shared/services/shared.service";
 import { ApiService } from "./services/api.service";
 import { HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from './services/auth.guard';
-import { EventsModule } from 'angular4-events'  
 import { MessagingService } from './services/messaging.service';  
 import { AngularFireAuth } from 'angularfire2/auth'; 
 import { FilterPipe } from './filter.pipe';
 import { ToastService } from './services/toast.service';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   imports: [
@@ -38,14 +37,13 @@ import { ToastService } from './services/toast.service';
     routing,
     AngularFireModule.initializeApp(firebaseConfig),  
     AngularFireDatabaseModule,
-    EventsModule.forRoot(),
-    ToastModule.forRoot()
+    ToastrModule.forRoot() 
   ],
   declarations: [
     AppComponent,
     FilterPipe
   ],
-  providers: [
+providers: [
     SharedService,
     {
       provide: LocationStrategy,

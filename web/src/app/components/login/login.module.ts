@@ -1,4 +1,3 @@
-import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -8,6 +7,7 @@ import {TooltipModule} from "ngx-tooltip";
 import { LoginComponent } from "./login.component";
 import { NotificationService } from '../../services/notification.service';
 import { SocketService } from '../../services/socket.service';
+import { ToastrModule } from 'ngx-toastr';
 
 
 const MODULE_ROUTES = [
@@ -18,7 +18,7 @@ const MODULE_ROUTES = [
   imports: [
     CommonModule ,FormsModule,TooltipModule,
     RouterModule.forChild(MODULE_ROUTES),
-  	ToastModule.forRoot()
+  	ToastrModule.forRoot()
   ]
   ,
   declarations: [LoginComponent]

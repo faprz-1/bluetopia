@@ -1,7 +1,8 @@
-import { Component, OnInit, trigger, state, style, transition, animate} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { SharedService } from "../../shared/services/shared.service";
 import { ApiService } from '../../services/api.service';
 import { MessagingService } from '../../services/messaging.service';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
     selector: 'app-navigation',

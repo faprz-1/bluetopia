@@ -1,7 +1,6 @@
 import { Component, OnInit ,ViewContainerRef} from '@angular/core';
 import { Router } from '@angular/router';
 
-// import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { ApiService } from '../../services/api.service';
 import { ToastService } from '../../services/toast.service';
 import { NotificationService } from '../../services/notification.service';
@@ -22,9 +21,8 @@ export class LoginComponent implements OnInit {
     private router: Router, 
     private api: ApiService,
     private notiServ : NotificationService
-    ) {
-    this.toast.toastr.setRootViewContainerRef(vcr);
-    if(localStorage.getItem("token")){
+  ) {
+    if(localStorage.getItem("token")) {
       this.router.navigate(['/inicio/dashboard'])
     }
   }

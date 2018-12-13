@@ -1,5 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChildren, ElementRef, QueryList, Input, Output, EventEmitter, NgZone } from '@angular/core';
-import { } from '@types/googlemaps';
+
+import {} from "googlemaps";
+
 @Component({
   selector: 'mapLocationPicker',
   templateUrl: './map-location-picker.component.html',

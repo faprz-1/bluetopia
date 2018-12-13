@@ -1,5 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 /**
  * A través de este componente se cambia el tema de la aplicación al color especificado. Se pueden añadir mas colores añadiendo entradas

@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewContainerRef, NgZone } from '@angular/core';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-import { EventsService } from 'angular4-events';
 import { ApiService } from '../../../services/api.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'template-profile-image-editor',
@@ -18,9 +17,8 @@ export class ProfileImageEditorComponent implements OnInit {
   success : any = false
 
   constructor(
-    public toastr: ToastsManager, 
+    public toastr: ToastrService, 
     private api: ApiService,
-    private event:EventsService, 
     vcr: ViewContainerRef,
     private zone:NgZone
     ) { 
@@ -78,7 +76,6 @@ export class ProfileImageEditorComponent implements OnInit {
             console.log(this.user.profileImage,success.profileImage)
           })
           localStorage.setItem("user", JSON.stringify(this.user) )
-          this.event.publish("profileUpdate");
           this.processed = true
           this.success = true
         },
