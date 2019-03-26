@@ -14,17 +14,24 @@ import { Observable } from 'rxjs';
 export class ApiProvider {
 
   public baseURL: string = "http://localhost:3000/api"
+  public baseURLDev: string = "http://localhost:300022/api"
   public headers: any = {'Content-Type': 'application/json'};
   public retryAttempts: number = 5
   public token: string = "";
+  public debugMode:boolean= false;
 
   constructor(private http: HttpClient, private storage: Storage) {
     this.getToken();
+    this.getDebugMode();
   }
 
   private genLink(endPoint: string, useToken: boolean): string {
-    console.log("genlink",endPoint); 
-    return (!useToken || !(this.token.length > 0 && this.token != "")) ? this.baseURL+endPoint : this.baseURL+endPoint+"?access_token="+this.token;
+    if(this.debugMode){
+      return (!useToken || !(this.token.length > 0 && this.token != "")) ? this.baseURLDev+endPoint : this.baseURLDev+endPoint+"?access_token="+this.token;
+    }
+    else{
+      return (!useToken || !(this.token.length > 0 && this.token != "")) ? this.baseURL+endPoint : this.baseURL+endPoint+"?access_token="+this.token;
+    }
   }
 
   private conditionalRetry(error: Observable<any>): Observable<any> {
@@ -63,6 +70,38 @@ export class ApiProvider {
     this.storage.ready().then(()=>{
       this.storage.get("token").then((token) =>{
         this.token = token;
+      })
+    })
+  }
+  /**
+   * Trata de GUARDAR el modo de localstorage
+   * Este metodo es ejecutado en el contructor de la clase
+   */
+  public setDebugMode() {
+    var mode = !this.debugMode;
+    console.log("seteando modo debug",mode);
+    this.storage.ready().then(()=>{
+      this.storage.set("debugMode",mode).then((debugMode) =>{
+        this.debugMode = debugMode;
+        console.log("seteando modo debug after",mode);
+      })
+    })
+  }
+  /**
+   * Trata de obtener el modo de localstorage
+   * Este metodo es ejecutado en el contructor de la clase
+   */
+  public getDebugMode() {
+    console.log("ActualDEbugmode",this.debugMode);
+    
+    this.storage.ready().then(()=>{
+      this.storage.get("debugMode").then((debugMode) =>{
+        if(debugMode!=null){
+          this.debugMode = debugMode;
+        }
+
+        console.log("debugmode de storage",this.debugMode);
+
       })
     })
   }

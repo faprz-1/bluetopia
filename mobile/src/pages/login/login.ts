@@ -8,6 +8,7 @@ import { Storage } from '@ionic/storage';
 import { NotificationProvider } from '../../providers/notification/notification';
 
 import * as moment from 'moment';
+import { timeout } from 'rxjs/operators';
 
 @IonicPage()
 @Component({
@@ -36,7 +37,34 @@ export class LoginPage {
     ) {
     this.menuCtrl.enable(false)
   }
-
+    setDebugCount:number=5
+    setDebugTimeout:any;
+    setDebugMode(){
+      this.setDebugCount--;
+      if(this.setDebugCount<0){
+        this.setDebugCount=5;
+      } else if(this.setDebugCount==0){
+        this.api.setDebugMode()
+        this.setDebugCount=5
+        let toast = this.toastCtrl.create({
+          message: 'Modo debug encendido',
+          duration: 1500
+        });
+        toast.present();
+      }
+      if(this.setDebugCount<4 && this.setDebugCount>0){
+        let toast = this.toastCtrl.create({
+          message: 'Cambiar a modo debug en ...'+this.setDebugCount,
+          duration: 800
+        });
+        toast.present();
+      }
+      clearTimeout(this.setDebugTimeout)
+      this.setDebugTimeout= setTimeout(()=>{
+        this.setDebugCount=5;
+      },2000);
+    }
+    
   // Attempt to login in through our User service
   doLogin() {
     let loading = this.loadingCtrl.create({content: 'autenticando...', dismissOnPageChange: true});
