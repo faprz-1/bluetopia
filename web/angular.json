@@ -27,6 +27,7 @@
               "node_modules/animate.css/animate.min.css",
               "node_modules/dropzone/dist/min/dropzone.min.css",
               "node_modules/nouislider/distribute/nouislider.min.css",
+              "node_modules/ngx-toastr/toastr.css",
               "src/styles.scss"
             ],
             "scripts": [
@@ -106,6 +107,7 @@
               "node_modules/material-design-iconic-font/dist/css/material-design-iconic-font.min.css",
               "node_modules/animate.css/animate.min.css",
               "node_modules/dropzone/dist/min/dropzone.min.css",
+              "node_modules/ngx-toastr/toastr.css",
               "node_modules/nouislider/distribute/nouislider.min.css",
               "src/styles.scss"
             ],

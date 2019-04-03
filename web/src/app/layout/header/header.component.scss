@@ -46,7 +46,7 @@
 // Logo
 .header__logo {
   @include media-breakpoint-up(xl) {
-    min-width: calc(#{$sidebar-width} - 2rem);
+    min-width: calc(#{$sidebar-width} - 15rem);
   }
 
   @include media-breakpoint-down(sm) {
