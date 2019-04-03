@@ -1,5 +1,10 @@
 // Import Bootstrap and App variables and mixins
 @import "../../../assets/scss/inner-imports";
+//Tamaño de logo
+  .logo-img{
+    width: 50px;
+  }
+
 // Notificaciones 
 .breadcrumb-item { 
   a { 

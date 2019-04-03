@@ -26,6 +26,7 @@ export class SharedService {
     setTheme(color) {
         this.maTheme = color
         this.maThemeSubject.next(this.maTheme)
+        localStorage.setItem("theme",color);
     }
 
     constructor(private zone : NgZone)  {
@@ -33,7 +34,13 @@ export class SharedService {
         this.sidebarVisible = true
 
         // Set default theme
-        this.setTheme('orange')
+        let theme = localStorage.getItem("theme");
+        if(!theme){
+            localStorage.setItem("theme","teal");
+            theme="teal";
+        }
+
+        this.maTheme = theme
     }
     
     setBreadcrumbs(bread){ 

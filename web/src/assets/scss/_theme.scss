@@ -17,6 +17,13 @@
       box-shadow: inset 0 -2px 0 $color !important;
     }
   }
+  .background-color-theme{
+    background-color: $color !important;
+  }
+  
+  .font-color-theme{
+    color: $color !important;
+  }
 }
 
 [data-ma-theme="green"] {
