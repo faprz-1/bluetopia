@@ -1,9 +1,9 @@
 <div class="loginBack">
   <div class="row justify-content-center segment title">
     <div class="col-auto">
-      <div class="mediccallFont mediccall title colorPrincipal">JarabeSoft</div>
-
-      <div class="lema">Control</div>
+      <!-- <div class="title colorPrincipal">JarabeSoft</div> -->
+      <img class="logo-img" src="assets/img/logo.png" alt="">
+      <div class="lema">Jarabe Template</div>
 
 
     </div>
@@ -22,11 +22,12 @@
               <input class="form-control text-center" type="email" id="email" placeholder="ejemplo@email.com" name="email"
                 ngModel required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #email="ngModel">
               <!-- Mensajes de las validaciones -->
-              <div *ngIf="email.errors?.required" class="form-control-feedback text-center">"Este campo es obligatorio"
+              <div *ngIf="email.touched && email.dirty">
+                <div *ngIf="email.errors?.required" class="form-control-feedback text-center">"Este campo es
+                  obligatorio"</div>
+                <div *ngIf="email.errors?.pattern" class="form-control-feedback text-center">"No cumple con los
+                  caracteres"</div>
               </div>
-
-              <div *ngIf="email.errors?.pattern" class="form-control-feedback text-center">"No cumple con los
-                caracteres"</div>
             </div>
             <label class="colorPrincipal">Contraseña</label>
             <div class="form-group">
@@ -34,7 +35,10 @@
               <input class="form-control text-center" type="password" placeholder="Contraseña" name="password" required
                 ngModel #password="ngModel">
               <!-- Mensaje de las validaciones -->
-              <div *ngIf="password.errors?.required" class="form-control-feedback text-center">"Campo obligatorio"</div>
+             
+             <div *ngIf="password.touched && password.dirty">
+               <div *ngIf="password.errors?.required" class="form-control-feedback text-center">"Campo obligatorio"</div>
+              </div> 
             </div>
             <br>
             <button *ngIf="!procesando" [disabled]="loginForm.email==''|| loginForm.password==''" class="btn colorPrincipal fondo"

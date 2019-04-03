@@ -49,6 +49,9 @@ export class LoginComponent implements OnInit {
         this.notiServ.loadNotifications()
         this.toast.showSuccess("Sesion Iniciada Exitosamente");
         this.router.navigate(['/inicio/dashboard']);
+      }, (err: any) => {
+        this.procesando = false;
+        this.toast.showError(err.error.error.message);
       })
     }, (err: any) => {
       this.procesando = false;

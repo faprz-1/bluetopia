@@ -2,7 +2,8 @@
   <navigation-trigger></navigation-trigger>
 
   <div class="header__logo">
-    <h1><a [routerLink]="['']">JARABE</a></h1>
+    <!-- <h1><a [routerLink]="['']">JARABE</a></h1> -->
+    <h1><a [routerLink]="['']"><img class="header__logo logo-img" src="assets/img/logo.png" alt=""></a></h1>
   </div>
 
   <nav aria-label="breadcrumb" *ngIf="sharedService.breadcrumbs.length!=0"> 
@@ -62,11 +63,31 @@
             <div class="listview__header">
               Opciones
             </div>
-
+            <div class="dropdown-item theme-switch">
+                Theme Switch
+      
+                <div class="btn-group btn-group--colors mt-2 d-block">
+                  <label class="btn bg-green" [(ngModel)]="maThemeModel" btnRadio="green" uncheckable (click)="setTheme()"></label>
+                  <label class="btn bg-blue" [(ngModel)]="maThemeModel" btnRadio="blue" uncheckable (click)="setTheme()"></label>
+                  <label class="btn bg-red" [(ngModel)]="maThemeModel" btnRadio="red" uncheckable (click)="setTheme()"></label>
+                  <label class="btn bg-orange" [(ngModel)]="maThemeModel" btnRadio="orange" uncheckable (click)="setTheme()"></label>
+                  <label class="btn bg-teal" [(ngModel)]="maThemeModel" btnRadio="teal" uncheckable (click)="setTheme()"></label>
+      
+                  <br>
+      
+                  <label class="btn bg-cyan" [(ngModel)]="maThemeModel" btnRadio="cyan" uncheckable (click)="setTheme()"></label>
+                  <label class="btn bg-blue-grey" [(ngModel)]="maThemeModel" btnRadio="blue-grey" uncheckable (click)="setTheme()"></label>
+                  <label class="btn bg-purple" [(ngModel)]="maThemeModel" btnRadio="purple" uncheckable (click)="setTheme()"></label>
+                  <label class="btn bg-indigo" [(ngModel)]="maThemeModel" btnRadio="indigo" uncheckable (click)="setTheme()"></label>
+                  <label class="btn bg-lime" [(ngModel)]="maThemeModel" btnRadio="lime" uncheckabl (click)="setTheme()"e></label>
+                </div>
+              </div> 
             <a class="dropdown-item" (click)="cerrarSession()" href="">Cerrar sesion</a>
           </div>
         </div>
       </li>
+
+
     </ul>
 
 </header>

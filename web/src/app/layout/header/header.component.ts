@@ -12,9 +12,12 @@ import { Router } from '@angular/router';
   ]
 })
 export class HeaderComponent implements OnInit {
-  messagesData: Array < any > ;
   tasksData: Array < any > ;
+  maThemeModel: string;
 
+  setTheme() {
+    this.sharedService.setTheme(this.maThemeModel)
+  }
   constructor(
     public notiServ: NotificationService,
     public api: ApiService, 
