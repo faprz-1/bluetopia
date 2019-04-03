@@ -39,6 +39,7 @@
           "login": true,
           "logout": true,
           "register": true,
+          "registerAdminis":true,
           "userWithCredentials": true,
           "changePassword": true,
           "resetPassword": true,

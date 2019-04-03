@@ -57,6 +57,10 @@ export class NavigationComponent implements OnInit {
     {name: "Inicio",action: "/inicio/dashboard"}
   ];
 
+  superUserPages = [
+    {name: "Inicio",action: "/inicio/dashboard"},
+    {name:"Registrar Usuario", action: "/inicio/registro"}
+  ];
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user'));
   }

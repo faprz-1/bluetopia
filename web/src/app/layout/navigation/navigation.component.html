@@ -16,9 +16,16 @@
                 <a class="dropdown-item" (click)="cerrarSession()" href="">Cerrar sesion</a>
             </div>
         </div>
-        <ul class="navigation">
-            <li routerLinkActive="navigation__active" *ngFor="let link of userPages"> <a [routerLink]="['/'+link.action]"><i class="zmdi zmdi-home"></i> {{link.name}}</a></li>
+        <!-- ESTE SERA EL NAVIGATION PARA LOS USUARIOS QUE NO SON SUPER USUARIO-->
+        <ul class="navigation" *ngIf="user.role.id!='3'">
+            <li routerLinkActive="navigation__active" *ngFor="let link of userPages">
+            <a [routerLink]="['/'+link.action]"><i class="zmdi zmdi-home"></i> {{link.name}}</a></li>
         </ul>
+  <!-- ESTE SERA EL NAVIGATION PARA LOS USUARIOS QUE SON SUPER USUARIO-->
+        <ul class="navigation" *ngIf="user.role.id=='3'">
+                <li routerLinkActive="navigation__active" *ngFor="let link of  superUserPages">
+                <a [routerLink]="['/'+link.action]"><i class="zmdi zmdi-home"></i> {{link.name}}</a></li>
+            </ul>
         <!-- <ul class="navigation">
             <li routerLinkActive="navigation__active"><a [routerLink]="['/home']"><i class="zmdi zmdi-home"></i> Home</a></li>
             <li routerLinkActive="navigation__active"><a [routerLink]="['/typography']"><i class="zmdi zmdi-format-underlined"></i> Typography</a></li>

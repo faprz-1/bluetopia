@@ -50,6 +50,13 @@
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "registerAdminis"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "userWithCredentials"
@@ -60,6 +67,13 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "testPush"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "registerAdmin"
     }
   ],
   "methods": {
@@ -185,6 +199,34 @@
       "http": [
         {
           "path": "/register",
+          "verb": "post"
+        }
+      ]
+    },
+    "registerAdminis": {
+      "accepts": [
+        {
+          "arg": "newUser",
+          "type": "object",
+          "required": true,
+          "description": "new  adminUser object to be stored",
+          "http": {
+            "source": "body"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "user",
+          "type": "object",
+          "root": true,
+          "description": "user in DB"
+        }
+      ],
+      "description": "registers a new admin with a profile picture",
+      "http": [
+        {
+          "path": "/registerAdminis",
           "verb": "post"
         }
       ]

@@ -61,6 +61,16 @@ module.exports = function(app) {
           emailVerified: true
         },
         Role: "User"
+      },
+      {
+        User: {
+          name: "SuperUser",
+          username: "SuperUser",
+          password: "j4r4b3s0",
+          email: "superuser@test.com",
+          emailVerified: true
+        },
+        Role: "SuperUser"
       }
     ]
 
@@ -78,6 +88,10 @@ module.exports = function(app) {
       {
         name: "Admin",
         description: 'platform administrator'
+      },
+      {
+        name:"SuperUser",
+        description: 'the most powerful user'
       }
     ]
 

@@ -123,7 +123,7 @@ module.exports = function(Usuario) {
     Usuario.register = function(newUser, callback) {
         var Role = app.models.Role;
         var RoleMapping = app.models.RoleMapping;
-        Usuario.create(newUser.user,function(err, user){
+        Usuario.create(newUser,function(err, user){
             if (err) return callback(err);
             Role.find({
                 where:{
@@ -137,11 +137,73 @@ module.exports = function(Usuario) {
                   principalId: user.id
                 }, function(err, principal) {
                   if (err) throw err;
+
+                  if(!newUser.profileImage)
+                   return callback(null,user)
+
                   var profileImage = {
                         encodedFileContainer: "profileImages",
                         base64File: newUser.profileImage.base64ProfileImage,
                         fileExtention: newUser.profileImage.base64ProfileImageExtention
                     }
+                   
+                    app.models.Upload.newBase64File(profileImage, function(err, img){
+                        if (err) return callback(err);
+                        user.profileImage(img);
+                        Usuario.upsert( user, function(err, updatedUser){
+                          if (err) return callback(err);
+                            Usuario.find({
+                              where:{
+                                  id: updatedUser.id
+                              }
+                            }, function(err, userWR){
+                              if (err) return callback(err);
+                              callback(null, userWR);
+                            });
+                        })
+                    });
+                });
+            });
+        })
+    };
+
+
+
+
+      /**
+     * registers a new user with a profile picture
+     * @param {object} newUser new User object to be stored
+     * @param {Function(Error, object)} callback
+     */
+
+    Usuario.registerAdminis = function(newUser, callback) {
+        var Role = app.models.Role;
+        var RoleMapping = app.models.RoleMapping;
+        newUser.emailVerified=1;
+        Usuario.create(newUser,function(err, user){
+            if (err) return callback(err);
+            Role.find({
+                where:{
+                  name: "Admin"
+                }
+              }, function(err, res) {
+                if (err) return callback(err);
+                var role = res[0];
+                role.principals.create({
+                  principalType: RoleMapping.USER,
+                  principalId: user.id
+                }, function(err, principal) {
+                  if (err) throw err;
+
+                  if(!newUser.profileImage)
+                   return callback(null,user)
+
+                  var profileImage = {
+                        encodedFileContainer: "profileImages",
+                        base64File: newUser.profileImage.base64ProfileImage,
+                        fileExtention: newUser.profileImage.base64ProfileImageExtention
+                    }
+                   
                     app.models.Upload.newBase64File(profileImage, function(err, img){
                         if (err) return callback(err);
                         user.profileImage(img);
