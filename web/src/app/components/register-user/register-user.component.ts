@@ -13,9 +13,10 @@ export class RegisterUserComponent implements OnInit {
   procesando : boolean = false
 	captcha : boolean = false
 	pass : string
-	passConf : string
+  passConf : string
+  passwordForgotten: boolean = false;
 
-  constructor( vcr: ViewContainerRef, private router: Router, private api: ApiService, public toastr: ToastService, ) {
+  constructor( vcr: ViewContainerRef, private router: Router, private api: ApiService, public toastr: ToastService) {
   }
 
   
@@ -27,7 +28,7 @@ export class RegisterUserComponent implements OnInit {
 			this.toastr.showError("Completar los datos");
 			console.log("sin datos");
 			return
-		}else if(user.user.password != user.user.passwordConfirm){
+    }else if(user.user.password != user.user.passwordConfirm){
 			this.toastr.showError("Las contraseñas no coinciden");
 			console.log("sin datos");
 			return
@@ -38,7 +39,7 @@ export class RegisterUserComponent implements OnInit {
         this.toastr.showSuccess("Se genero correctamente el usuario.");
         registerForm.reset();
       },err=>{
-        this.toastr.showSuccess(err.error.error.message);
+        this.toastr.showError(err.error.error.message);
       });
     }
     if(user.user.type=='Usuario')

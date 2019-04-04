@@ -8,8 +8,51 @@
 
     </div>
   </div>
+  <div *ngIf="passwordForgotten==true" class="container">
+    <div class="row">
 
-  <div class="container">
+      <div class="col-12 col-lg-4">
+        <div class="circular segment">
+          <h2 class="m-4">Ingresa tu correo</h2>
+          <form (ngSubmit)="sendEmail(recoverPassword.value)" #recoverPassword="ngForm">
+            <label class="colorPrincipal">Correo electrónico</label>
+            <div class="form-group">
+              <!-- Validaciones del campo del correo -->
+              <input class="form-control text-center" type="email" id="email" name="emailtoRecover" ngModel required
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #emailtoRecover="ngModel">
+              <!-- Mensajes de las validaciones -->
+              <div *ngIf="emailtoRecover.invalid && (emailtoRecover.dirty || emailtoRecover.touched)"
+                class="alert alert-danger">
+                <div *ngIf="emailtoRecover.errors?.required" class="form-control-feedback text-center">Campo
+                  obligatorio* </div>
+                <div *ngIf="emailtoRecover.errors?.pattern" class="form-control-feedback text-center">Correo electrónico
+                  no valido</div>
+              </div>
+            </div>
+            <br>
+            <button *ngIf="!procesando" [disabled]="!recoverPassword.valid" class="btn colorPrincipal fondo"
+              type="submit">
+              CONTINUAR</button>
+            <!-- <button  class="btn btn-primary" type="submit"  [disabled]="loginForm.email==''||loginForm.password==''">Continuar</button> -->
+          </form>
+          <div *ngIf="tryPin==true">
+            <h4>Ingrese el PIN</h4>
+            <br>
+            <input type="number" [(ngModel)]="pin" name="pin">
+            <br>
+            <br>
+            <button (click)="tryPIN()" class="btn colorPrincipal fondo">CONTINUAR</button>
+            <br>
+            <br>
+          </div>
+          <div *ngIf="changuePass==true">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="passwordForgotten==false" class="container">
     <div class="row">
 
       <div class="col-12 col-lg-4">
@@ -19,8 +62,8 @@
             <label class="colorPrincipal">Correo electrónico</label>
             <div class="form-group">
               <!-- Validaciones del campo del correo -->
-              <input class="form-control text-center" type="email" id="email" placeholder="ejemplo@email.com" name="email"
-                ngModel required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #email="ngModel">
+              <input class="form-control text-center" type="email" id="email" placeholder="ejemplo@email.com"
+                name="email" ngModel required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #email="ngModel">
               <!-- Mensajes de las validaciones -->
               <div *ngIf="email.touched && email.dirty">
                 <div *ngIf="email.errors?.required" class="form-control-feedback text-center">"Este campo es
@@ -35,17 +78,22 @@
               <input class="form-control text-center" type="password" placeholder="Contraseña" name="password" required
                 ngModel #password="ngModel">
               <!-- Mensaje de las validaciones -->
-             
-             <div *ngIf="password.touched && password.dirty">
-               <div *ngIf="password.errors?.required" class="form-control-feedback text-center">"Campo obligatorio"</div>
-              </div> 
+
+              <div *ngIf="password.touched && password.dirty">
+                <div *ngIf="password.errors?.required" class="form-control-feedback text-center">"Campo obligatorio"
+                </div>
+              </div>
             </div>
             <br>
-            <button *ngIf="!procesando" [disabled]="loginForm.email==''|| loginForm.password==''" class="btn colorPrincipal fondo"
-              type="submit">
+            <button *ngIf="!procesando" [disabled]="loginForm.email==''|| loginForm.password==''"
+              class="btn colorPrincipal fondo" type="submit">
               CONTINUAR</button>
             <!-- <button  class="btn btn-primary" type="submit"  [disabled]="loginForm.email==''||loginForm.password==''">Continuar</button> -->
           </form>
+          <br>
+          <div>
+            <a style="color:orange" (click)="passwordForgotten=true;">Olvide mi contraseña</a>
+          </div>
         </div>
       </div>
     </div>

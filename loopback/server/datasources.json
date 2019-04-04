@@ -4,14 +4,15 @@
     "connector": "memory"
   },
   "mysqlDev": {
-    "host": "mysql",
+    "host": "localhost",
     "port": 3306,
     "url": "",
-    "database": "template3",
-    "password": "8RyC?LL6Dww_G?#yC7fTYsWEV",
+    "database": "template3.1",
+    "password": "",
     "name": "mysqlDev",
     "user": "root",
     "connector": "mysql"
+  
   },
   "localFiles": {
     "name": "localFiles",
@@ -32,6 +33,25 @@
         "auth": {
           "user": "templatemailer@jarabesoft.com",
           "pass": "uFMA46HKtYM$N=G9"
+        },
+        "tls": {
+          "rejectUnauthorized": false
+        }
+      }
+    ]
+  },
+  "adminMail": {
+    "name": "adminMail",
+    "connector": "mail",
+    "transports": [
+      {
+        "type": "smtp",
+        "host": "mail.jarabesoft.com",
+        "secure": true,
+        "port": 465,
+        "auth": {
+          "user": "testmail@jarabesoft.com",
+          "pass": "#7L%yaMFV7]@"
         },
         "tls": {
           "rejectUnauthorized": false

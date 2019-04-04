@@ -82,5 +82,14 @@
   "Mail": {
     "dataSource": "mailDev",
     "public": false
+  },
+  "PasswordResetPIN": {
+    "dataSource": "mysqlDev",
+    "public": true
+  },
+  "adminMail": {
+    "dataSource": "adminMail",
+    "public": false
   }
+
 }
