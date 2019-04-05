@@ -74,6 +74,13 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "registerAdmin"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "getRoles"
     }
   ],
   "methods": {
@@ -245,6 +252,24 @@
       "http": [
         {
           "path": "/testPush",
+          "verb": "get"
+        }
+      ]
+    },
+    "getRoles": {
+      "accepts": [],
+      "returns": [
+        {
+          "arg": "roles",
+          "type": "object",
+          "root": true,
+          "description": "roles in DB"
+        }
+      ],
+      "description": "gives all the roles in db",
+      "http": [
+        {
+          "path": "/getRoles",
           "verb": "get"
         }
       ]

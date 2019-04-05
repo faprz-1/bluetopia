@@ -127,7 +127,7 @@ module.exports = function(Usuario) {
             if (err) return callback(err);
             Role.find({
                 where:{
-                  name: "User"
+                  name: newUser.type
                 }
               }, function(err, res) {
                 if (err) return callback(err);
@@ -179,7 +179,6 @@ module.exports = function(Usuario) {
     Usuario.registerAdminis = function(newUser, callback) {
         var Role = app.models.Role;
         var RoleMapping = app.models.RoleMapping;
-        newUser.emailVerified=1;
         Usuario.create(newUser,function(err, user){
             if (err) return callback(err);
             Role.find({
@@ -329,4 +328,24 @@ module.exports = function(Usuario) {
             });
         })
     });
+
+    
+    /**
+     * gives all the roles
+     * 
+     */
+
+    Usuario.getRoles = function(callback) {
+        var Role = app.models.Role;
+
+        Role.find({
+            where:{
+                name:{neq:"SuperUser"}
+            }
+        }, function(err, res) {
+            if(err) return callback(null)
+
+            return callback(null,res)
+          });
+    };
 };

@@ -15,14 +15,21 @@ export class RegisterUserComponent implements OnInit {
 	pass : string
   passConf : string
   passwordForgotten: boolean = false;
-
+  Roles:any;
+  type="";
   constructor( vcr: ViewContainerRef, private router: Router, private api: ApiService, public toastr: ToastService) {
   }
 
   
   ngOnInit() {
+    this.api.get("/Usuarios/getRoles",true).subscribe(roles=>{
+      console.log(roles);
+      this.Roles=roles;
+      
+    })
   }
   registrarUsuario(user,valid,registerForm)	{
+   console.log(user.user.type);
    
     if(!valid){
 			this.toastr.showError("Completar los datos");
@@ -33,26 +40,15 @@ export class RegisterUserComponent implements OnInit {
 			console.log("sin datos");
 			return
 		}
-    if(user.user.type=='Administrador'){
+   
       this.api.post("/Usuarios/registerAdminis", user.user, false).subscribe((resp: any) =>{
         console.log(resp);
         this.toastr.showSuccess("Se genero correctamente el usuario.");
         registerForm.reset();
       },err=>{
-        this.toastr.showError(err.error.error.message);
+        this.toastr.showError(err.error.error.details.messages.email);
       });
-    }
-    if(user.user.type=='Usuario')
-		{
-      this.api.post("/Usuarios/register", user.user, false).subscribe((resp: any) =>{
-        console.log(resp);
-        this.toastr.showSuccess("Se genero correctamente el usuario.");
-        registerForm.reset();
-      },err=>{
-        this.toastr.showError(err.error.error.message);
-    });
-    }
-
+  
 	}
 
 }

@@ -44,6 +44,7 @@
           "changePassword": true,
           "resetPassword": true,
           "setPassword": true,
+          "getRoles": true,
           "testPush": true,
           "prototype.updatePushToken": true,
           "prototype.changeProfileImage": true
