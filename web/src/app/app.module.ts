@@ -26,6 +26,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { FilterPipe } from './filter.pipe';
 import { ToastService } from './services/toast.service';
 import { ToastrModule } from 'ngx-toastr';
+import { AuthSGuard } from './services/authSuser.guard';
 
 @NgModule({
   imports: [
@@ -51,6 +52,7 @@ providers: [
     },
     ApiService,
     AuthGuard,
+    AuthSGuard,
     MessagingService,  
     AngularFireAuth,
     ToastService

@@ -55,12 +55,12 @@ export class NavigationComponent implements OnInit {
   }
 
   userPages = [
-    {name: "Inicio",action: "/inicio/dashboard"}
+    {name: "Inicio",action: "/inicio/dashboard", icon: "zmdi zmdi-home"}
   ];
 
   superUserPages = [
-    {name: "Inicio",action: "/inicio/dashboard"},
-    {name:"Registrar Usuario", action: "/inicio/registro"}
+    {name: "Inicio",action: "/inicio/dashboard", icon: "zmdi zmdi-home"},
+    {name:"Registrar Usuario", action: "/inicio/registro", icon: "zmdi zmdi-account-add"}
   ];
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user'));

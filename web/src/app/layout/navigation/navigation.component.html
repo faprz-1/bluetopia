@@ -24,7 +24,7 @@
   <!-- ESTE SERA EL NAVIGATION PARA LOS USUARIOS QUE SON SUPER USUARIO-->
         <ul class="navigation" *ngIf="user.role.id=='3'">
                 <li routerLinkActive="navigation__active" *ngFor="let link of  superUserPages">
-                <a [routerLink]="['/'+link.action]"><i class="zmdi zmdi-home"></i> {{link.name}}</a></li>
+                <a [routerLink]="['/'+link.action]"><i class="{{link.icon}}"></i> {{link.name}}</a></li>
             </ul>
         <!-- <ul class="navigation">
             <li routerLinkActive="navigation__active"><a [routerLink]="['/home']"><i class="zmdi zmdi-home"></i> Home</a></li>
