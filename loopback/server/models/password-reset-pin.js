@@ -68,6 +68,7 @@ module.exports = function(Passwordresetpin) {
     }
 
     Passwordresetpin.consume= function( pinToTry, callback) {
+console.log(pinToTry);
 
         //Se buscan el pin en la DB
         Passwordresetpin.find({ 
@@ -81,6 +82,8 @@ module.exports = function(Passwordresetpin) {
             if (err) return callback(err);
             //Si encontro algun PIN
             if ( userPins.length > 0 ) {
+                console.log(userPins);
+                
                 //Compara coincidencia
                 if ( pinToTry.pin == userPins[0].pin ){
                     //Y si aun no expira el PIN

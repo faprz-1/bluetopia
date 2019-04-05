@@ -16,17 +16,19 @@ export class LoginComponent implements OnInit {
 
   passwordForgotten:boolean = false;
   public procesando: boolean = false;
+  procesandoEmail:boolean = false;
   email='';
   pin: string = '';
+  newPassword: string = '';
   changuePass:boolean=false;
   tryPin:boolean=false;
+  successUpdate: boolean=false;
   constructor(
     vcr: ViewContainerRef,
     public toast: ToastService,
     private router: Router, 
     private api: ApiService,
-    private notiServ : NotificationService,
-    public toastr: ToastService
+    private notiServ : NotificationService
   ) {
     if(localStorage.getItem("token")) {
       this.router.navigate(['/inicio/dashboard'])
@@ -69,31 +71,51 @@ export class LoginComponent implements OnInit {
    
     console.log(email.emailtoRecover);
   this.email=email.emailtoRecover;
-  this.procesando = true;
+  this.procesandoEmail = true;
   this.api.post('/PasswordResetPINs/createAndSend', {email: this.email}, false).subscribe(
     (msg: any)=>{
       console.log(msg);
   if(msg.msg=='notRegistered'){
-    this.toastr.showError('USUARIO NO REGISTRADO');
+    this.toast.showError('Usuario no registrado');
     this.procesando = false;
    }else{
-     this.toastr.showSuccess('SE ENVIO EL CORREO CORRECTAMENTE');
+     this.toast.showSuccess('Se envio el correo correctamente');
     this.tryPin=true;
    }
     },(err: any)=>{
-      this.toastr.showError(err.err);
+      this.toast.showError(err.err);
       this.procesando = false;
       this.tryPin=false;
     });
   }
   tryPIN(){
-    this.api.post( '/PasswordResetPINs/consume', { pin: this.pin, email: this.email }, false ).subscribe( (res: any) => {
-      this.tryPin=false;
-      this.changuePass=true;
+    this.api.post( '/PasswordResetPINs/consume', { pin: this.pin, email: this.email }, false ).subscribe( (msg: any) => {
+      if(msg.msg=='Pin incorrecto'){
+        this.toast.showError('PIN incorrecto');
+        this.pin='';
+      }
+      else{
+        this.toast.showSuccess('PIN correcto');
+        this.tryPin=false;
+        this.changuePass=true;
+      }
   });
   }
-  setPassword(password){
-console.log(password);
+  setPassword(){
+  this.api.post( '/PasswordResetPINs/resetPassword', {password: this.newPassword , email: this.email}, false ).subscribe(
+    (res:any) => {
+      if (res.msg == "usuario actualizado") {
+        this.toast.showSuccess('Contraseña asignada correctamente');
+        this.successUpdate = true;
+        this.passwordForgotten=false;
+        this.changuePass=false;
+        this.procesando = false;
+      }
+      else{
+        this.toast.showSuccess('Sucedio un Error');
+      }
+    }
+  )
 
   }
 }
