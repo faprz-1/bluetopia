@@ -10,9 +10,10 @@
       "type": "string",
       "id": true
     },
-    "isMobile": {
-      "type": "boolean",
-      "default": false
+      "mobile":{
+        "type":"boolean",
+        "default":false,
+        "required": true
     }
   },
   "validations": [],

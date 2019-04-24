@@ -10,7 +10,9 @@ export class PushProvider {
 
   options: PushOptions = {
     android: {
-      senderID: '508289902153'
+      senderID: '508289902153',
+      forceShow:true,
+      sound: true
     },
     ios: {
       alert: 'true',
@@ -105,7 +107,7 @@ export class PushProvider {
     this.storage.get("pushToken").then((val) => {
       if(val != null) {
         console.log("Updating push token...", val)
-        this.api.post("/Usuarios/" + id + "/updatePushToken", {token:{id: val, isMobile: true}}, true).subscribe(
+        this.api.post("/Usuarios/" + id + "/updatePushTokenMobile", {token:{id: val, isMobile: true}}, true).subscribe(
           (succ) => {
             console.log(succ)
           },

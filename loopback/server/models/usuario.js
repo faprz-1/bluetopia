@@ -5,13 +5,28 @@ module.exports = function(Usuario) {
     var app = require('../../server/server');
     disableRelationMethods(Usuario);
  
-    Usuario.testPush = function(callback){ 
+    Usuario.testPush = function (callback) {
         // Enviar push 
-        var notificacion = Usuario.app.models.Notification; 
-        var res = notificacion.setByRoleNotification("admin",{title:"Test Push", content:"Una notificación de prueba",link:"/","image":"http://placeimg.com/100/100/any"}); 
-        callback(null, res); 
-      }
-
+        var notificacion = Usuario.app.models.Notification;
+        var res = notificacion.setByRoleNotification("admin", {
+            onclick:()=>{console.log("clickeado"); alert("hello")},
+            title: "titulo de prueba",
+            tag: "tag1",
+            content: "un push de prueba se ha enviado para revisar que todo este bien",
+            link: notificacion.baseURL + "/inicio",
+            "image": "https://scontent.fgdl4-1.fna.fbcdn.net/v/t1.0-9/50728512_2110076052393262_3123088630382329856_o.png?_nc_cat=103&_nc_ht=scontent.fgdl4-1.fna&oh=045b806a600cd3dc959b54ae1e739d73&oe=5D2B7633"
+        });
+        var res = notificacion.setByRoleNotification("admin", {
+            onclick:()=>{console.log("clickeado"); alert("hello")},
+            title: "titulo de prueba 2",
+            tag: "tag2",
+            content: "un push de prueba se ha enviado para revisar que todo este bien",
+            link: notificacion.baseURL + "/inicio",
+            "image": "https://scontent.fgdl4-1.fna.fbcdn.net/v/t1.0-9/50728512_2110076052393262_3123088630382329856_o.png?_nc_cat=103&_nc_ht=scontent.fgdl4-1.fna&oh=045b806a600cd3dc959b54ae1e739d73&oe=5D2B7633"
+        });
+        //    var res = notificacion.setByRoleNotification("admin",{title:"Push prueba3", content:"Animo!!",link:"http://localhost:4200/#/inicio/administrador/tickets/1","image":"http://elvwdetuvida.com.mx/img/decada/highlights/d70s/icon-historias-volkswagen-aniversario-h-16.svg"});
+        callback(null, res);
+    }
     Usuario.findByRole= function(role, includes = null, callback){
         var RoleMapping = app.models.RoleMapping;
         var Role = app.models.Role;
@@ -275,7 +290,7 @@ module.exports = function(Usuario) {
                 var newToken = {
                     id: body.token.id,
                     usuarioId: actual.id,
-                    isMobile: body.token.isMobile
+                    mobile:true
                 }
                 PushTokens.create(newToken, function(err, res){
                     if (err) return callback(err);
@@ -289,6 +304,39 @@ module.exports = function(Usuario) {
         })
     }; 
 
+   /** 
+     * updates a user's push token 
+     * @param {object} body token to be saved 
+     * @param {Function(Error)} callback 
+     */
+
+    Usuario.prototype.updatePushTokenMobile = function (body, callback) {
+        var PushTokens = Usuario.app.models.PushTokens;
+        var actual = this;
+        // TODO 
+        PushTokens.findById(body.token, function (err, res) {
+            if (err) return callback(err);
+
+            if (!res) {
+                var newToken = {
+                    id: body.token,
+                    usuarioId: actual.id,
+                    mobile:true
+                }
+                PushTokens.create(newToken, function (err, res) {
+                    if (err) return callback(err);
+
+                    callback(null, "Registro exitoso");
+                })
+            } else {
+                PushTokens.upsert({id:res.id,mobile:true},(err,updated)=>{
+                    if(err) return callback(err)
+                    
+                    return callback(null, "token ya registrado");
+                })
+            }
+        })
+    };
     /**
      * updates a user's push token
      * @param {object} body token to be saved

@@ -112,6 +112,27 @@
         }
       ]
     },
+    "prototype.updatePushTokenMobile": {
+      "accepts": [
+        {
+          "arg": "body",
+          "type": "object",
+          "required": true,
+          "description": "token to be saved",
+          "http": {
+            "source": "body"
+          }
+        }
+      ],
+      "returns": [],
+      "description": "updates a user's push token",
+      "http": [
+        {
+          "path": "/updatePushTokenMobile",
+          "verb": "post"
+        }
+      ]
+    },
     "prototype.updatePushToken": {
       "accepts": [
         {

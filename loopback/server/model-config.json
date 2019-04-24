@@ -47,6 +47,7 @@
           "getRoles": true,
           "testPush": true,
           "prototype.updatePushToken": true,
+          "prototype.updatePushTokenMobile": true,
           "prototype.changeProfileImage": true
         }
       }
