@@ -1,7 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, ToastController, MenuController, LoadingController, AlertController } from 'ionic-angular';
-import { Slides } from 'ionic-angular';
 
 import { User, ApiProvider } from '../../providers';
 import { MainPage } from '../';
@@ -18,7 +17,6 @@ import { timeout } from 'rxjs/operators';
   templateUrl: 'login.html'
 })
 export class LoginPage {
-  @ViewChild('slides') slides: Slides;
   // The account fields for the login form.
   // If you're using the username field with or without email, make
   // sure to add it to the type
@@ -28,19 +26,11 @@ export class LoginPage {
   };
   loading = this.loadingCtrl.create({content: 'Cargando...', dismissOnPageChange: true});
   procesando: boolean = false
-  showSlides:boolean = false;
   email='';
-  pin: string = '';
-  newPassword: string = '';
-  successUpdate: boolean=false;
 
   setDebugCount:number=5
   setDebugTimeout:any;
 
-  slideOpts = {
-    initialSlide: 1,
-    speed: 400
-  };
 
   constructor(public navCtrl: NavController,
     public user: User,
@@ -57,7 +47,6 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
-    this.slides.onlyExternal = true;
   }
     setDebugMode(){
       this.setDebugCount--;
@@ -123,62 +112,10 @@ export class LoginPage {
     })
   }
 
-  sendEmail(){
-
-    console.log(this.email);
-    if(this.email == "" || this.email == undefined)
-      return;
-
-    this.procesando = true
-
-    this.api.post('/PasswordResetPINs/createAndSend', {email: this.email}, false).subscribe(
-      (msg: any)=>{
-
-    this.procesando = false
-    if(msg.msg=='notRegistered'){
-      this.showToast('Usuario no registrado');
-
-     }else{
-      this.showToast('Se envio el correo correctamente');
-      this.email = ""
-      this.slides.slideNext();
-     }
-      },(err: any)=>{
-        this.showToast(err.err);
-        this.procesando = false
-      });
+  toChangePassword(){
+    this.navCtrl.setRoot('PinPasswordChangePage');
   }
 
-  tryPIN(){
-    this.procesando = true
-    this.api.post( '/PasswordResetPINs/consume', { pin: this.pin, email: this.email }, false ).subscribe( (msg: any) => {
-      this.procesando = false
-      if(msg.msg=='Pin incorrecto'){
-        this.showToast('PIN incorrecto');
-        this.pin='';
-      }
-      else{
-        this.showToast('PIN correcto');
-        this.slides.slideNext();
-      }
-  });
-  }
-  setPassword(){
-    this.procesando = true
-    this.api.post( '/PasswordResetPINs/resetPassword', {password: this.newPassword , email: this.email}, false ).subscribe(
-      (res:any) => {
-        this.procesando = false
-        if (res.msg == "usuario actualizado") {
-          this.successUpdate = true
-          this.showToast('Contraseña asignada correctamente');
-        }
-        else{
-          this.showToast('Sucedio un Error');
-        }
-      }
-    )
-
-  }
 
   showToast(msg){
     let toast = this.toastCtrl.create({

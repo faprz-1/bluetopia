@@ -85,4 +85,8 @@
         <variable name="FCM_VERSION" value="11.6.2" />
     </plugin>
     <engine name="android" spec="7.0.0" />
+    <plugin name="cordova-plugin-facebook4" spec="^4.2.1">
+        <variable name="APP_ID" value="1222277651272251" />
+        <variable name="APP_NAME" value="jarabeTemplate" />
+    </plugin>
 </widget>
