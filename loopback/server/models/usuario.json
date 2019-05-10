@@ -6,12 +6,21 @@
     "validateUpsert": true
   },
   "hidden": [
-    "profileImageId"
+    "profileImageId",
+    "FBToken",
+    "GToken"
   ],
   "scope": {
     "include": "profileImage"
   },
-  "properties": {},
+  "properties": {
+    "FBToken": {
+      "type": "string"
+    },
+    "GToken": {
+      "type": "string"
+    }
+  },
   "validations": [],
   "relations": {
     "accessTokens": {
