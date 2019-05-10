@@ -15,6 +15,7 @@ import { NotificationProvider } from '../providers/notification/notification';
 import { SocketProvider } from '../providers/socket/socket';
 import { PushProvider } from '../providers/push/push';
 import { Push } from '@ionic-native/push'; 
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -71,7 +72,8 @@ export function provideSettings(storage: Storage) {
     NotificationProvider,
     SocketProvider,
     PushProvider,
-    Push
+    Push,
+    Facebook
   ]
 })
 export class AppModule { }
