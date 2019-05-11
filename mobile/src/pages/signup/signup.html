@@ -32,13 +32,13 @@
             </ion-item>
             
             <div class="m-btn">
-              <button ion-button color="secondary" block>Crear cuenta</button>
+              <button ion-button [disabled]="procesando" color="secondary" block>Crear cuenta</button>
             </div>
             
           </ion-list>
         </form>
         <div padding>
-          <button ion-button color="danger" block [disabled]="procesando" (click)="toLogin()">Ya tengo cuenta</button>
+          <button ion-button [disabled]="procesando" color="danger" block [disabled]="procesando" (click)="toLogin()">Ya tengo cuenta</button>
         </div>
       </ion-slide>
 

@@ -414,7 +414,7 @@ module.exports = function(Usuario) {
           });
     };
 
-    Usuario.loginByToken = function (email, callback) {
+    Usuario.loginBySocialMedia = function (email, callback) {
 
       Usuario.findOne({
           where: {email: email}

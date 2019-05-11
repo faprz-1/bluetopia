@@ -293,6 +293,34 @@
           "verb": "get"
         }
       ]
+    },
+    "loginBySocialMedia": {
+      "accepts": [
+        {
+          "arg": "user",
+          "type": "object",
+          "required": true,
+          "description": "token and user data",
+          "http": {
+            "source": "body"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "user",
+          "type": "object",
+          "root": true,
+          "description": "user in DB"
+        }
+      ],
+      "description": "registers a new admin with a profile picture",
+      "http": [
+        {
+          "path": "/registerAdminis",
+          "verb": "post"
+        }
+      ]
     }
   }
 }

@@ -43,7 +43,7 @@ export class LoginPage {
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
     private notiCtrl : NotificationProvider,
-    public events: Events,
+    public events: Events
     ) {
     this.menuCtrl.enable(false)
   }
