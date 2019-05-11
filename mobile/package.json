@@ -30,8 +30,6 @@
     "@ngx-translate/core": "8.0.0",
     "@ngx-translate/http-loader": "^2.0.0",
     "@types/socket.io-client": "^1.4.32",
-    "angular4-social-login": "^1.1.1",
-    "angularx-social-login": "^1.2.6",
     "cordova-android": "6.3.0",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-facebook4": "^4.2.1",
@@ -71,6 +69,8 @@
         "APP_NAME": "jarabeTemplate"
       }
     },
-    "platforms": []
+    "platforms": [
+      "android"
+    ]
   }
 }

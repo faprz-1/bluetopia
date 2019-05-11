@@ -9,6 +9,7 @@ import { Settings } from '../providers';
 import { ApiProvider } from '../providers/api/api';
 import { NotificationProvider } from '../providers/notification/notification';
 import { PushProvider } from '../providers/push/push';
+import { Events } from 'ionic-angular';
 
 import * as moment from 'moment';
 
@@ -49,12 +50,20 @@ export class MyApp {
     private loadingCtrl: LoadingController,
     private notiServ: NotificationProvider,
     private menuCtrl: MenuController,
-    private pushPrv : PushProvider
+    private pushPrv : PushProvider,
+    public events: Events,
     ) {
     this.initApp();
     this.initTranslate();
     this.initData(); 
+    
+    events.subscribe('user:logged', (user) => {
+        this.initApp();
+        this.initData(); 
+      });
   } 
+
+
   initData(){ 
     console.log("va a leer storage"); 
     this.storage.get("user").then((user: any )=>{ 

@@ -138,54 +138,69 @@ module.exports = function(Usuario) {
     Usuario.register = function(newUser, callback) {
         var Role = app.models.Role;
         var RoleMapping = app.models.RoleMapping;
-        Usuario.create(newUser,function(err, user){
+        if(!newUser.type) newUser.type = "User"
+
+        Usuario.findOne({
+            where:{
+                email: newUser.email
+            }
+          }, function(err, userWR){
             if (err) return callback(err);
-            Role.find({
-                where:{
-                  name: newUser.type
-                }
-              }, function(err, res) {
-                if (err) return callback(err);
-                var role = res[0];
-                role.principals.create({
-                  principalType: RoleMapping.USER,
-                  principalId: user.id
-                }, function(err, principal) {
-                  if (err) throw err;
 
-                  if(!newUser.profileImage)
-                   return callback(null,user)
+            if(userWR){
+              return callback('El correo ya existe')
+            } 
+            console.log('No Registrado')
+            
+            Usuario.create(newUser,function(err, user){
+              if (err) return callback(err);
+              Role.find({
+                  where:{
+                    name: newUser.type
+                  }
+                }, function(err, res) {
+                  if (err) return callback(err);
+                  var role = res[0];
+                  role.principals.create({
+                    principalType: RoleMapping.USER,
+                    principalId: user.id
+                  }, function(err, principal) {
+                    if (err) throw err;
 
-                  var profileImage = {
-                        encodedFileContainer: "profileImages",
-                        base64File: newUser.profileImage.base64ProfileImage,
-                        fileExtention: newUser.profileImage.base64ProfileImageExtention
-                    }
-                   
-                    app.models.Upload.newBase64File(profileImage, function(err, img){
-                        if (err) return callback(err);
-                        user.profileImage(img);
-                        Usuario.upsert( user, function(err, updatedUser){
+                    if(!newUser.profileImage)
+                     return callback(null,user)
+
+                    var profileImage = {
+                          encodedFileContainer: "profileImages",
+                          base64File: newUser.profileImage.base64ProfileImage,
+                          fileExtention: newUser.profileImage.base64ProfileImageExtention
+                      }
+                     
+                      app.models.Upload.newBase64File(profileImage, function(err, img){
                           if (err) return callback(err);
-                            Usuario.find({
-                              where:{
-                                  id: updatedUser.id
-                              }
-                            }, function(err, userWR){
-                              if (err) return callback(err);
-                              callback(null, userWR);
-                            });
-                        })
-                    });
-                });
-            });
-        })
+                          user.profileImage(img);
+                          Usuario.upsert( user, function(err, updatedUser){
+                            if (err) return callback(err);
+                              Usuario.find({
+                                where:{
+                                    id: updatedUser.id
+                                }
+                              }, function(err, userWR){
+                                if (err) return callback(err);
+                                callback(null, userWR);
+                              });
+                          })
+                      });
+                  });
+              });
+          })
+        });
     };
 
 
 
 
-      /**
+    /**
      * registers a new user with a profile picture
      * @param {object} newUser new User object to be stored
      * @param {Function(Error, object)} callback
@@ -364,18 +379,20 @@ module.exports = function(Usuario) {
      * @param {object} body token to be saved
      * @param {Function(Error)} callback
      */
-    Usuario.beforeRemote('logout', function(context, callback) {
-        Usuario.find({where: {id : context.req.accessToken.userId}}, function(err, usuario) {
-            if(err) return callback(err)
+    // Usuario.beforeRemote('logout', function(context, callback) {
+    //     Usuario.find({where: {id : context.req.accessToken.userId}}, function(err, usuario) {
+    //         if(err) return callback(err)
 
-            context.req.body.tokens.forEach(token => {
-                let body = { token : token }
-                console.log("BODY", body)
+    //         if(context.req.body.tokens){
+    //           context.req.body.tokens.forEach(token => {
+    //               let body = { token : token }
+    //               console.log("BODY", body)
 
-                usuario.deletePushToken(body, null)
-            });
-        })
-    });
+    //               usuario.deletePushToken(body, null)
+    //           });
+    //         }
+    //     })
+    // });
 
     
     /**
@@ -396,4 +413,26 @@ module.exports = function(Usuario) {
             return callback(null,res)
           });
     };
+
+    Usuario.loginByToken = function (email, callback) {
+
+      Usuario.findOne({
+          where: {email: email}
+
+      }, function (err, user) {
+          if (err) {
+              return callback(err, null);
+          } else {
+              if (user) {
+                  user.createAccessToken(tokenTimeToLive, function (error, token) {
+                      return cb(error, token);
+                  });
+              } else {
+                  return callback(new Error("No User found"), null);
+              }
+          }
+      });
+    };
+
+
 };

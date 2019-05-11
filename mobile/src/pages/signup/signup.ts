@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, ToastController, MenuController, LoadingController, AlertController } from 'ionic-angular';
+import { Slides } from 'ionic-angular';
 
 import { User, ApiProvider } from '../../providers';
 import { MainPage } from '../';
@@ -14,24 +15,23 @@ import { timeout } from 'rxjs/operators';
 
 @IonicPage()
 @Component({
-  selector: 'page-login',
-  templateUrl: 'login.html'
+  selector: 'page-signup',
+  templateUrl: 'signup.html'
 })
-export class LoginPage {
-  // The account fields for the login form.
-  // If you're using the username field with or without email, make
-  // sure to add it to the type
+export class SignupPage {
+  @ViewChild('slides') slides: Slides;
+
   account: { email: string, password: string } = {
     email: '',
     password: ''
   };
   loading = this.loadingCtrl.create({content: 'Cargando...', dismissOnPageChange: true});
   procesando: boolean = false
-  email='';
 
-  setDebugCount:number=5
-  setDebugTimeout:any;
-
+  slideOpts = {
+    initialSlide: 1,
+    speed: 400
+  };
 
   constructor(public navCtrl: NavController,
     public user: User,
@@ -43,53 +43,59 @@ export class LoginPage {
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
     private notiCtrl : NotificationProvider,
-    public events: Events,
+    public events: Events
     ) {
     this.menuCtrl.enable(false)
   }
 
   ionViewDidLoad() {
+    this.slides.onlyExternal = true;
   }
-    setDebugMode(){
-      this.setDebugCount--;
-      if(this.setDebugCount<0){
-        this.setDebugCount=5;
-      } else if(this.setDebugCount==0){
-        this.api.setDebugMode()
-        this.setDebugCount=5
-        let toast = this.toastCtrl.create({
-          message: 'Modo debug encendido',
-          duration: 1500
-        });
-        toast.present();
-      }
-      if(this.setDebugCount<4 && this.setDebugCount>0){
-        let toast = this.toastCtrl.create({
-          message: 'Cambiar a modo debug en ...'+this.setDebugCount,
-          duration: 800
-        });
-        toast.present();
-      }
-      clearTimeout(this.setDebugTimeout)
-      this.setDebugTimeout= setTimeout(()=>{
-        this.setDebugCount=5;
-      },2000);
+
+  toLogin(){
+    this.navCtrl.setRoot('LoginPage');
+  }
+
+ registrarUsuario(user,valid,registerForm)  {
+   console.log(user);
+   
+    if(!valid){
+      this.showToast("Completar los datos");
+      return
+    }else if(user.password != user.passwordConfirm){
+      this.showToast("Las contraseñas no coinciden");
+      return
     }
-    
-  // Attempt to login in through our User service
-  doLogin() {
-    // let loading = this.loadingCtrl.create({content: 'autenticando...', dismissOnPageChange: true});
     this.loading.present();
-    this.api.post("/Usuarios/login", this.account, false).subscribe((token: any) =>{
+    this.procesando = true
+    this.api.post("/Usuarios/register", user, false).subscribe((resp: any) =>{
+      this.doLogin(user);
+    },err=>{
+
+      console.log(err)
+      this.loading.dismiss();
+      this.procesando = false
+      if(err.status == 500)
+        this.showToast(err.error.error.message);
+    });
+  
+  }
+
+  // Attempt to login in through our User service
+  doLogin(user) {
+
+    this.api.post("/Usuarios/login", user, false).subscribe((token: any) =>{
       this.storage.clear().then(()=>{
         this.storage.set("token",token.id);
         this.api.token= token.id;
+
         this.api.get("/Usuarios/withCredentials", true).subscribe((userFromServer: any)=>{
+          this.loading.dismiss();
+          this.procesando = false
+          this.menuCtrl.enable(true);
           this.storage.set("user", userFromServer).then(()=>{
             this.storage.set("ttl", moment().add(1209600, 's').toISOString()).then(() => {
-              this.loading.dismiss();
-              this.menuCtrl.enable(true);
-
+              
               this.notiCtrl.loadNotifications()
               this.events.publish('user:logged', true);
               this.navCtrl.setRoot('DashboardPage');
@@ -100,6 +106,7 @@ export class LoginPage {
     }, (error: any) => {
       console.log("error Override:", error);
       this.loading.dismiss();
+      this.procesando = false
       this.errorLogin();
     })
   }
@@ -115,19 +122,10 @@ export class LoginPage {
     })
   }
 
-  toChangePassword(){
-    this.navCtrl.setRoot('PinPasswordChangePage');
-  }
-
-  toSignup(){
-    this.navCtrl.setRoot('SignupPage');
-  }
-
-
   showToast(msg){
     let toast = this.toastCtrl.create({
           message: msg,
-          duration: 800
+          duration: 2000
         });
         toast.present();
   }

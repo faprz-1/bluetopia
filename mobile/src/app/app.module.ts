@@ -17,8 +17,6 @@ import { PushProvider } from '../providers/push/push';
 import { Push } from '@ionic-native/push'; 
 
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
-import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
-import { GoogleLoginProvider, FacebookLoginProvider} from "angularx-social-login";
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -26,20 +24,6 @@ export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-let config = new AuthServiceConfig([
-  {
-    id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider("Google-OAuth-Client-Id")
-  },
-  {
-    id: FacebookLoginProvider.PROVIDER_ID,
-    provider: new FacebookLoginProvider("Facebook-App-Id")
-  }
-]);
-
-export function provideConfig() {
-  return config;
-}
 
 
 export function provideSettings(storage: Storage) {
@@ -73,7 +57,6 @@ export function provideSettings(storage: Storage) {
     }),
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
-    SocialLoginModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -93,12 +76,7 @@ export function provideSettings(storage: Storage) {
     SocketProvider,
     PushProvider,
     Push,
-    Facebook,
-    {
-
-      provide: AuthServiceConfig,
-      useFactory: provideConfig
-    }
+    Facebook
   ]
 })
 export class AppModule { }
