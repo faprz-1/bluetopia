@@ -1,0 +1,48 @@
+<ion-content >
+  <ion-slides  pager="false"  #slides>
+      <ion-slide>
+        <div class="center-title prodColors" >
+          <div class="white prodColors">
+            Registrarse
+          </div>
+          <!-- <img src="/assets/imgs/logo.png"> -->
+        </div>
+        <form (ngSubmit)="registrarUsuario(registerForm.value,registerForm.valid,registerForm)" #registerForm="ngForm">
+          <ion-list >
+            
+            <ion-item>
+              <ion-label floating>Nombre de Usuario</ion-label>
+              <ion-input type="text" id="username2"  name="username" ngModel required #username="ngModel"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label floating>{{ 'EMAIL' | translate }}</ion-label>
+              <ion-input type="email" id="email"  name="email" ngModel required pattern="[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #email="ngModel"></ion-input>
+            </ion-item>
+            <!-- <ion-item>
+              <ion-label floating>Teléfono</ion-label>
+              <ion-input  type="tel" id="telefone" placeholder="1" name="username" ngModel required #username="ngModel"></ion-input>
+            </ion-item> -->
+            <ion-item>
+              <ion-label floating>{{ 'PASSWORD' | translate }}</ion-label>
+              <ion-input type="password"  name="password" required ngModel #password="ngModel"></ion-input>
+            </ion-item>
+             <ion-item>
+              <ion-label floating>Confirmar Contraseña</ion-label>
+              <ion-input type="password"  name="passwordConfirm" required ngModel #passwordConfirm="ngModel"></ion-input>
+            </ion-item>
+            
+            <div class="m-btn">
+              <button ion-button [disabled]="procesando" color="secondary" block>Crear cuenta</button>
+            </div>
+            
+          </ion-list>
+        </form>
+        <div padding>
+          <button ion-button [disabled]="procesando" color="danger" block [disabled]="procesando" (click)="toLogin()">Ya tengo cuenta</button>
+        </div>
+      </ion-slide>
+
+    </ion-slides>
+</ion-content>
+
+  

@@ -15,13 +15,16 @@ import { NotificationProvider } from '../providers/notification/notification';
 import { SocketProvider } from '../providers/socket/socket';
 import { PushProvider } from '../providers/push/push';
 import { Push } from '@ionic-native/push'; 
-import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
+
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
+
+
 
 export function provideSettings(storage: Storage) {
   /**
@@ -53,7 +56,7 @@ export function provideSettings(storage: Storage) {
       }
     }),
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [

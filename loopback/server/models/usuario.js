@@ -138,54 +138,69 @@ module.exports = function(Usuario) {
     Usuario.register = function(newUser, callback) {
         var Role = app.models.Role;
         var RoleMapping = app.models.RoleMapping;
-        Usuario.create(newUser,function(err, user){
+        if(!newUser.type) newUser.type = "User"
+
+        Usuario.findOne({
+            where:{
+                email: newUser.email
+            }
+          }, function(err, userWR){
             if (err) return callback(err);
-            Role.find({
-                where:{
-                  name: newUser.type
-                }
-              }, function(err, res) {
-                if (err) return callback(err);
-                var role = res[0];
-                role.principals.create({
-                  principalType: RoleMapping.USER,
-                  principalId: user.id
-                }, function(err, principal) {
-                  if (err) throw err;
 
-                  if(!newUser.profileImage)
-                   return callback(null,user)
+            if(userWR){
+              return callback('El correo ya existe')
+            } 
+            console.log('No Registrado')
+            
+            Usuario.create(newUser,function(err, user){
+              if (err) return callback(err);
+              Role.find({
+                  where:{
+                    name: newUser.type
+                  }
+                }, function(err, res) {
+                  if (err) return callback(err);
+                  var role = res[0];
+                  role.principals.create({
+                    principalType: RoleMapping.USER,
+                    principalId: user.id
+                  }, function(err, principal) {
+                    if (err) throw err;
 
-                  var profileImage = {
-                        encodedFileContainer: "profileImages",
-                        base64File: newUser.profileImage.base64ProfileImage,
-                        fileExtention: newUser.profileImage.base64ProfileImageExtention
-                    }
-                   
-                    app.models.Upload.newBase64File(profileImage, function(err, img){
-                        if (err) return callback(err);
-                        user.profileImage(img);
-                        Usuario.upsert( user, function(err, updatedUser){
+                    if(!newUser.profileImage)
+                     return callback(null,user)
+
+                    var profileImage = {
+                          encodedFileContainer: "profileImages",
+                          base64File: newUser.profileImage.base64ProfileImage,
+                          fileExtention: newUser.profileImage.base64ProfileImageExtention
+                      }
+                     
+                      app.models.Upload.newBase64File(profileImage, function(err, img){
                           if (err) return callback(err);
-                            Usuario.find({
-                              where:{
-                                  id: updatedUser.id
-                              }
-                            }, function(err, userWR){
-                              if (err) return callback(err);
-                              callback(null, userWR);
-                            });
-                        })
-                    });
-                });
-            });
-        })
+                          user.profileImage(img);
+                          Usuario.upsert( user, function(err, updatedUser){
+                            if (err) return callback(err);
+                              Usuario.find({
+                                where:{
+                                    id: updatedUser.id
+                                }
+                              }, function(err, userWR){
+                                if (err) return callback(err);
+                                callback(null, userWR);
+                              });
+                          })
+                      });
+                  });
+              });
+          })
+        });
     };
 
 
 
 
-      /**
+    /**
      * registers a new user with a profile picture
      * @param {object} newUser new User object to be stored
      * @param {Function(Error, object)} callback
@@ -364,18 +379,20 @@ module.exports = function(Usuario) {
      * @param {object} body token to be saved
      * @param {Function(Error)} callback
      */
-    Usuario.beforeRemote('logout', function(context, callback) {
-        Usuario.find({where: {id : context.req.accessToken.userId}}, function(err, usuario) {
-            if(err) return callback(err)
+    // Usuario.beforeRemote('logout', function(context, callback) {
+    //     Usuario.find({where: {id : context.req.accessToken.userId}}, function(err, usuario) {
+    //         if(err) return callback(err)
 
-            context.req.body.tokens.forEach(token => {
-                let body = { token : token }
-                console.log("BODY", body)
+    //         if(context.req.body.tokens){
+    //           context.req.body.tokens.forEach(token => {
+    //               let body = { token : token }
+    //               console.log("BODY", body)
 
-                usuario.deletePushToken(body, null)
-            });
-        })
-    });
+    //               usuario.deletePushToken(body, null)
+    //           });
+    //         }
+    //     })
+    // });
 
     
     /**
@@ -396,4 +413,79 @@ module.exports = function(Usuario) {
             return callback(null,res)
           });
     };
+
+    /**
+     * log the user by social media token
+     * @param {object} user user to login
+     * @param {Function(Error, object)} callback
+     */
+
+    Usuario.loginBySocialMedia = function(user, callback) {
+      var user;
+      // TODO
+      Usuario.findOne({
+          where: {
+            FBToken: user.token
+          }
+      }, function (err, res) {
+          if (err) return callback(err, null);
+          
+          if (res) {
+            if(res.email == user.email){
+
+              // console.log('Found user with that key')
+              res.createAccessToken(5000, function (err, token) {
+                 if (err) return callback(err, null);
+
+                 callback(null, token);
+              });
+            }
+            else {
+              return callback('Error')
+            }
+
+          } else {
+            // Si el key no se encuentra entre los usuarios , revisa el correo, 
+            Usuario.findOne({
+                where: {
+                  email: user.email
+                }
+            }, function (err, userWithEmail) {
+                if (err) return callback(err, null);
+
+            // si el correo ya existe le asigna el key a esa cuenta,
+            // si el correo no existe dentro de usuarios, crea un nuevo usuario y le asigna el key
+                if(userWithEmail){
+                  userWithEmail.FBToken = user.token
+                  Usuario.upsert(userWithEmail, function(err, updatedUser){
+                    if (err) return callback(err);
+                    
+                    updatedUser.createAccessToken(5000, function (err, token) {
+                     if (err) return callback(err, null);
+
+                       callback(null, token);
+                    });
+                  })
+                } else {
+                  user.password = Math.random().toString(36).slice(-8);
+                  // console.log('Creating user with that key')
+
+                  Usuario.register(user,function(err, userWR){
+                    if (err) return callback(err);
+
+                    userWR.createAccessToken(5000, function (err, token) {
+                       if (err) return callback(err, null);
+
+                       callback(null, token);
+                    });
+                    
+                  });
+                }   
+            });
+          }
+      });
+      
+    };
+
+
 };
