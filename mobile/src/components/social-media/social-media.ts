@@ -38,11 +38,8 @@ export class SocialMediaComponent {
   	this.loading.present();
 
     this.fb.getLoginStatus().then((res) => {
-    	console.log(res)
 	    if (res.status === 'connected') {
 	        // Already logged in to FB so pass credentials to provider (in my case firebase)
-	        console.log(res.authResponse.accessToken)
-	        console.log(res)
 	        this.fb.api("/me?fields=name,email", []).then((data) => {
 
                 user.username  = data.name;
@@ -51,7 +48,6 @@ export class SocialMediaComponent {
 
                 this.api.post('/Usuarios/loginBySocialMedia', user, false).subscribe(
 			      (token: any)=>{
-			      	console.log(token)  	
 				    this.doLogin(token);
 	
 			      },(err: any)=>{
@@ -69,7 +65,6 @@ export class SocialMediaComponent {
         // Not already logged in to FB so sign in
         this.fb.login([ 'email'])
 	    .then( (res: FacebookLoginResponse) => {
-	    	console.log('RES', res)
 	        if(res.status == "connected") {
 
 	            var fb_id = res.authResponse.userID;
@@ -82,9 +77,7 @@ export class SocialMediaComponent {
 	                user.token = res.authResponse.accessToken;
 
 	                this.api.post('/Usuarios/loginBySocialMedia', user, false).subscribe(
-				      (token: any)=>{
-				      	console.log(token)
-				      	
+				      (token: any)=>{				      	
 				      	this.doLogin(token);
 		
 				      },(err: any)=>{
@@ -120,7 +113,6 @@ export class SocialMediaComponent {
   }
 
   doLogin(token) {
-  	console.log('Tokeeen', token)
 	this.storage.clear().then(()=>{
 		this.storage.set("token",token.id);
 		this.api.token= token.id;
