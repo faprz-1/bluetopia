@@ -23,3 +23,7 @@ Pasos:
         ionic serve
 
 Se pueden encontrar más comandos útiles en los archivos docker-dev.txt y docker-prod.txt
+
+<!-- Generate Facebook Key    -->
+<!-- Correr comando en la carpeta donde se generó el apk -->
+<!-- keytool -list -printcert -jarfile android-debug.apk -->
