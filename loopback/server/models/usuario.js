@@ -414,24 +414,77 @@ module.exports = function(Usuario) {
           });
     };
 
-    Usuario.loginBySocialMedia = function (email, callback) {
+    /**
+     * log the user by social media token
+     * @param {object} user user to login
+     * @param {Function(Error, object)} callback
+     */
 
+    Usuario.loginBySocialMedia = function(user, callback) {
+      var user;
+      // TODO
       Usuario.findOne({
-          where: {email: email}
+          where: {
+            FBToken: user.token
+          }
+      }, function (err, res) {
+          if (err) return callback(err, null);
+          
+          if (res) {
+            if(res.email == user.email){
 
-      }, function (err, user) {
-          if (err) {
-              return callback(err, null);
+              // console.log('Found user with that key')
+              res.createAccessToken(5000, function (err, token) {
+                 if (err) return callback(err, null);
+
+                 callback(null, token);
+              });
+            }
+            else {
+              return callback('Error')
+            }
+
           } else {
-              if (user) {
-                  user.createAccessToken(tokenTimeToLive, function (error, token) {
-                      return cb(error, token);
+            // Si el key no se encuentra entre los usuarios , revisa el correo, 
+            Usuario.findOne({
+                where: {
+                  email: user.email
+                }
+            }, function (err, userWithEmail) {
+                if (err) return callback(err, null);
+
+            // si el correo ya existe le asigna el key a esa cuenta,
+            // si el correo no existe dentro de usuarios, crea un nuevo usuario y le asigna el key
+                if(userWithEmail){
+                  userWithEmail.FBToken = user.token
+                  Usuario.upsert(userWithEmail, function(err, updatedUser){
+                    if (err) return callback(err);
+                    
+                    updatedUser.createAccessToken(5000, function (err, token) {
+                     if (err) return callback(err, null);
+
+                       callback(null, token);
+                    });
+                  })
+                } else {
+                  user.password = Math.random().toString(36).slice(-8);
+                  // console.log('Creating user with that key')
+
+                  Usuario.register(user,function(err, userWR){
+                    if (err) return callback(err);
+
+                    userWR.createAccessToken(5000, function (err, token) {
+                       if (err) return callback(err, null);
+
+                       callback(null, token);
+                    });
+                    
                   });
-              } else {
-                  return callback(new Error("No User found"), null);
-              }
+                }   
+            });
           }
       });
+      
     };
 
 
