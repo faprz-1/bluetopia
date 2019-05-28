@@ -422,12 +422,28 @@ module.exports = function(Usuario) {
 
     Usuario.loginBySocialMedia = function(user, callback) {
       var user;
+      let mediaFilter = {}
       // TODO
-      Usuario.findOne({
-          where: {
-            FBToken: user.token
+      switch(user.loginType){
+        case "Facebook" :
+          mediaFilter = {
+            where: {
+                FBToken: user.token
+              }
           }
-      }, function (err, res) {
+          break;
+        case "Google" :
+          mediaFilter = {
+            where: {
+                GToken: user.token
+              }
+          }
+          break;
+        default : return callback('Undefined token type', null);
+          break;
+      }
+
+      Usuario.findOne(mediaFilter, function (err, res) {
           if (err) return callback(err, null);
           
           if (res) {
@@ -456,7 +472,17 @@ module.exports = function(Usuario) {
             // si el correo ya existe le asigna el key a esa cuenta,
             // si el correo no existe dentro de usuarios, crea un nuevo usuario y le asigna el key
                 if(userWithEmail){
-                  userWithEmail.FBToken = user.token
+                  switch(user.loginType){
+                    case "Facebook" :
+                      userWithEmail.FBToken = user.token
+                      break;
+                    case "Google" :
+                      userWithEmail.GToken = user.token
+                      break;
+                    default : return callback('Undefined token type', null);
+                      break;
+                  }
+                  
                   Usuario.upsert(userWithEmail, function(err, updatedUser){
                     if (err) return callback(err);
                     
@@ -469,6 +495,16 @@ module.exports = function(Usuario) {
                 } else {
                   user.password = Math.random().toString(36).slice(-8);
                   // console.log('Creating user with that key')
+                   switch(user.loginType){
+                    case "Facebook" :
+                      user.FBToken = user.token
+                      break;
+                    case "Google" :
+                      user.GToken = user.token
+                      break;
+                    default : return callback('Undefined token type', null);
+                      break;
+                  }
 
                   Usuario.register(user,function(err, userWR){
                     if (err) return callback(err);
@@ -484,7 +520,7 @@ module.exports = function(Usuario) {
             });
           }
       });
-      
+           
     };
 
 

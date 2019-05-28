@@ -1,5 +1,8 @@
 # The Ionic Super Starter 🎮
 
+<!-- Generate Facebook Key    -->
+<!-- Correr comando en la carpeta donde se generó el apk -->
+<!-- keytool -list -printcert -jarfile android-debug.apk -->
 <img src="https://user-images.githubusercontent.com/236501/32385619-bddac0ac-c08c-11e7-9ee4-9c892197191f.png" width="400" />
 
 The Ionic Super Starter is a batteries-included starter project for Ionic apps
