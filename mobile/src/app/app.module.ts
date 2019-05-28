@@ -15,7 +15,7 @@ import { NotificationProvider } from '../providers/notification/notification';
 import { SocketProvider } from '../providers/socket/socket';
 import { PushProvider } from '../providers/push/push';
 import { Push } from '@ionic-native/push'; 
-
+import { GooglePlus } from '@ionic-native/google-plus';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 
 // The translate loader needs to know where to load i18n files
@@ -76,7 +76,8 @@ export function provideSettings(storage: Storage) {
     SocketProvider,
     PushProvider,
     Push,
-    Facebook
+    Facebook,
+    GooglePlus
   ]
 })
 export class AppModule { }
