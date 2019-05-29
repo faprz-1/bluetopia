@@ -15,7 +15,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "882348787555-1rd0hf6ubih9rkrnnk4lhuasj7it9pc9.apps.googleusercontent.com",
+          "client_id": "882348787555-v2m30qbv6mea0jjo0s4oefst38jj4jmp.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.jarabe.mobile",
@@ -36,7 +36,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "882348787555-cnbud6d7fjlefg7mf2nncfg2k69k4m38.apps.googleusercontent.com",
+              "client_id": "882348787555-2p0fp8175511e77p2jslk3d841qk0fj1.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
