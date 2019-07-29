@@ -200,13 +200,90 @@ module.exports = function(app) {
           if (err) throw err;
           console.log("Updated Models: " + appModels.join() + " Seeding...")
           Seeders.forEach(seeder => seeder())
+          RecursiveUserPolicyNodeSeeder()
         });
       } else {
         console.log("Already Up to date, Seeding...")
         Seeders.forEach(seeder => seeder())
+        RecursiveUserPolicyNodeSeeder()
       }
     });
   }
 
   migrateAndUpdate()
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ SEEDER PERMISOS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+  var userPermissionPolicyNodes = [
+    //+++++++++++DASHBOARD+++++++++++
+    {
+      key : "dashboard",
+      name : "Página principal",
+      children : [
+        {
+          key : "Events",
+          name : "Ver eventos"
+        }
+      ]
+    }
+  ]
+
+  var RecursiveUserPolicyNodeSeeder = function() {
+    let UserPermissionPolicyNode = app.models.UserPermissionPolicyNode
+
+    console.log(`Seeding model ${UserPermissionPolicyNode.modelName}...`)
+
+    let seedUserPolicyNode = function(node) {
+
+      
+      let preparedNode = {
+        key : node.key,
+        name : node.name,
+        parentId : node.parentId
+      }
+
+      //console.log(`SEEDING ${preparedNode.key} of parent ${preparedNode.parentId}`)
+      
+      isNodeAlreadySeeded(preparedNode, function(err, isSeeded) {
+        if (err) throw err;
+
+        if (isSeeded) {
+          //console.log(`ALREADYSEEDED ${preparedNode.key} of parent ${preparedNode.parentId}`)
+          return
+        }
+        
+        UserPermissionPolicyNode.create(preparedNode, function(err, UserPermissionPolicyNode) {
+          if (err) throw err;
+  
+          //console.log(`SEEDED ${UserPermissionPolicyNode.key} of parent ${UserPermissionPolicyNode.parentId}`)
+          if( Array.isArray(node.children) ) {
+            for(let innerNode of node.children) {
+              innerNode.parentId = UserPermissionPolicyNode.id
+              //console.log(`CHILD ${innerNode.key} of parent ${innerNode.parentId}`)
+              seedUserPolicyNode(innerNode)
+            }
+          }
+        })
+      })      
+    }
+
+    let isNodeAlreadySeeded = function(node, callback) {
+      let filter = {
+        where : {
+          key : node.key,
+          parentId : node.parentId
+        }
+      }
+
+      UserPermissionPolicyNode.findOne(filter, function(err, existingNode) {
+        if(err) return callback(err)
+
+        return callback(null, existingNode != null)
+      })
+    }
+    
+    userPermissionPolicyNodes.forEach(seedUserPolicyNode)
+  }
 };

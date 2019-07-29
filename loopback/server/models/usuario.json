@@ -19,6 +19,10 @@
     },
     "GToken": {
       "type": "string"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
     }
   },
   "validations": [],
@@ -40,6 +44,12 @@
       "options": {
         "nestRemoting": true
       }
+    },
+    "userPermissions": {
+      "type": "hasMany",
+      "model": "UserPermissionPolicyNode",
+      "foreignKey": "",
+      "through": "UserPermissionPolicyRelation"
     }
   },
   "acls": [
@@ -65,7 +75,8 @@
         "getRoles",
         "registerAdminis",
         "registerAdmin",
-        "loginBySocialMedia"
+        "loginBySocialMedia",
+        "loginIfActive"
       ]
     },
     {
@@ -81,6 +92,17 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "testPush"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "SuperUser",
+      "permission": "ALLOW",
+      "property": [
+        "getAnyUsers",
+        "updateAnyUser",
+        "changeAnyPassword"
+      ]
     }
   ],
   "methods": {
@@ -319,6 +341,136 @@
       "http": [
         {
           "path": "/loginBySocialMedia",
+          "verb": "post"
+        }
+      ]
+    },
+    "getAnyUsers": {
+      "accepts": [
+        {
+          "arg": "ctx",
+          "type": "object",
+          "required": true,
+          "description": "Current Context",
+          "http": {
+            "source": "req"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "users",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "Gets Users",
+      "http": [
+        {
+          "path": "/users",
+          "verb": "get"
+        }
+      ]
+    },
+    "changeAnyPassword": {
+      "accepts": [
+        {
+          "arg": "ctx",
+          "type": "object",
+          "required": true,
+          "description": "Current Context",
+          "http": {
+            "source": "req"
+          }
+        },
+        {
+          "arg": "data",
+          "type": "object",
+          "required": true,
+          "description": "{userId, newPassword}",
+          "http": {
+            "source": "body"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "msg",
+          "type": "string",
+          "root": true,
+          "description": "Message of success"
+        }
+      ],
+      "description": "Update ana user's password",
+      "http": [
+        {
+          "path": "/updatePass",
+          "verb": "post"
+        }
+      ]
+    },
+    "prototype.updateAnyUser": {
+      "accepts": [
+        {
+          "arg": "ctx",
+          "type": "object",
+          "required": true,
+          "description": "Current Context",
+          "http": {
+            "source": "req"
+          }
+        },
+        {
+          "arg": "updtUser",
+          "type": "object",
+          "required": true,
+          "description": "any User object to be updated",
+          "http": {
+            "source": "body"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "users",
+          "type": "array",
+          "root": true,
+          "description": "users"
+        }
+      ],
+      "description": "Update any user",
+      "http": [
+        {
+          "path": "/updateUs",
+          "verb": "post"
+        }
+      ]
+    },
+    "loginIfActive": {
+      "accepts": [
+        {
+          "arg": "credentials",
+          "type": "object",
+          "required": true,
+          "description": "{email, password}",
+          "http": {
+            "source": "body"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "token",
+          "type": "object",
+          "root": true,
+          "description": "Token"
+        }
+      ],
+      "description": "Login to platform",
+      "http": [
+        {
+          "path": "/login",
           "verb": "post"
         }
       ]

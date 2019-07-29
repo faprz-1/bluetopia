@@ -1,0 +1,22 @@
+<div class="card h-100" *ngIf="data != null">
+  <img class="card-img-top profileImage" *ngIf="data.profileImage != null" onerror="this.src='/assets/fondo/user.png'" src="{{ api.baseURL + data?.profileImage?.URL }}">
+  <img class="card-img-top profileImage" *ngIf="data.profileImage == null"src="/assets/fondo/user.png">
+  <div class="card-body">
+    <h4 class="card-title">{{data.username}}</h4>
+    <p class="card-text">{{data.email}}</p>
+
+    <!-- 
+    <div class="col-12">
+      <h6 class="mb-4">Permisos</h6>
+    </div>
+    <ul>
+      <li *ngFor="let d of data.level?.description">{{d}}</li>
+    </ul>
+    </div> -->
+</div>
+
+<div class="card" *ngIf="data == null">
+  <div class="card-body">
+    <p class="card-text">Usuario No Válido</p>
+  </div>
+</div>

@@ -36,11 +36,14 @@
         "sharedMethods": {
           "*": false,
           "profileImage": false,
-          "login": true,
+          "loginIfActive": true,
           "logout": true,
           "register": true,
           "registerAdminis": true,
           "userWithCredentials": true,
+          "getAnyUsers": true,
+          "prototype.updateAnyUser": true,
+          "changeAnyPassword": true,
           "changePassword": true,
           "resetPassword": true,
           "setPassword": true,
@@ -92,6 +95,14 @@
   },
   "adminMail": {
     "dataSource": "adminMail",
+    "public": false
+  },
+  "UserPermissionPolicyNode": {
+    "dataSource": "mysqlDev",
+    "public": true
+  },
+  "UserPermissionPolicyRelation": {
+    "dataSource": "mysqlDev",
     "public": false
   }
 }
