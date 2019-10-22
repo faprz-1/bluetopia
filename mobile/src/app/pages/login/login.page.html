@@ -1,0 +1,41 @@
+<ion-content class="background-primary">
+  
+  <div class="welcome-screen">
+    <h3>JarabeTemplate</h3>
+    <img src="/assets/img/logo.png">
+  </div>
+
+  <ion-card class="login-card">  
+    <ion-card-content>
+        <ion-row>
+          <ion-col size="12">
+            <ion-label position="floating">Email</ion-label>
+            <ion-input placeholder="Correo electrónico" type="email" [(ngModel)]="loginAccount.email"></ion-input>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12">
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input placeholder="Contraseña" type="password" [(ngModel)]="loginAccount.password"></ion-input>
+          </ion-col>
+        </ion-row>
+        
+        <ion-row>
+          <ion-col size="6">
+            <ion-button color="primary" (click)="OnLogin()">Login</ion-button>
+          </ion-col>
+          <ion-col size="6">
+            <ion-button color="secondary">Registrarse</ion-button>
+          </ion-col>
+        </ion-row>
+        
+        <template-social-media-login-buttons
+          (onSocialLoginStart)="OnSocialLoginStart()"
+          (onSocialLoginSuccess)="GetUserWithAPIToken($event)"
+          (onSocialLoginError)="OnSocialLoginError($event)"
+        ></template-social-media-login-buttons>
+    </ion-card-content>
+  </ion-card>
+  
+</ion-content>

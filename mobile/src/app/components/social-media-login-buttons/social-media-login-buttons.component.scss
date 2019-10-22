@@ -1,0 +1,26 @@
+.connect-label {
+    color: var(--ion-color-primary-shade);
+    font-weight: 450;
+    text-align: center;
+
+    margin-top: 1.5vh;
+    margin-bottom: 1vh;
+}
+
+ion-button {
+    --background: var(--ion-color-primary-contrast);
+    --border-color: var(--ion-color-primary-contrast);
+    --border-radius: 100%;
+
+    --padding-start: 0px;
+    --padding-end: 0px;
+
+    margin-left: 1vw;
+    margin-right: 1vw;
+
+    img {
+        height: 36px;
+        width: 36px;
+    }
+}
+

@@ -1,0 +1,36 @@
+<ion-app>
+  <ion-split-pane>
+    <ion-menu type="overlay">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-item *ngIf="loggedUser!=null" (click)="goToUrl('/profile');"> 
+            <ion-avatar slot="start">
+              <img src="{{loggedUser.imgperfil}}" onerror="this.src='assets/img/avatar.jpg'">
+            </ion-avatar>
+            <ion-label>
+              <h2>{{loggedUser.name}}</h2> 
+              <h3>{{loggedUser.username}}</h3> 
+              <p>{{loggedUser.phone}}</p> 
+              <p>{{loggedUser.email}}</p> 
+            </ion-label>
+          </ion-item>
+
+          <ion-menu-toggle auto-hide="false" *ngFor="let item of menuItems">
+            <ion-item [routerDirection]="'root'" [routerLink]="[item.url]">
+              <ion-icon slot="start" [name]="item.icon"></ion-icon>
+              <ion-label>
+                {{item.title}}
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet main></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>

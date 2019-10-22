@@ -1,0 +1,42 @@
+.welcome-screen {
+    position: absolute;
+    top: 0px;
+
+    text-align: center;
+    width: 100%;
+
+    margin-top: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    
+    img {
+        max-width: 50vw;
+        max-height: 50vh;
+    }
+
+    h3 {
+        color: var(--ion-color-primary-contrast);
+        margin-bottom: var(--default-card-margin);
+    }
+}
+
+.login-card {
+    position: absolute;
+    bottom: 0px;
+
+    width: calc(100vw - var(--default-card-margin) - var(--default-card-margin));
+
+    margin-top: auto;
+    margin-left: var(--default-card-margin);
+    margin-right: var(--default-card-margin);
+    margin-bottom: var(--default-card-margin);
+
+    ion-button {
+        width: 100%;
+    }
+
+    template-social-media-login-buttons {
+        margin-top: 10vh;
+    }
+}
