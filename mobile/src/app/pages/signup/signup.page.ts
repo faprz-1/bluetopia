@@ -4,29 +4,33 @@ import { ComponentBase } from 'src/app/base/component-base';
 import * as moment from 'moment';
 
 class Account {
+  username: string;
   email: string;
   password: string;
 }
 
 @Component({
-  selector: 'template-login-page',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  selector: 'app-signup',
+  templateUrl: './signup.page.html',
+  styleUrls: ['./signup.page.scss'],
 })
-export class LoginPage extends ComponentBase implements OnInit {
-  loginAccount: Account = new Account();
+export class SignupPage extends ComponentBase implements OnInit {
+  signupAccount: Account = new Account(); 
+  constructor() { }
 
   ngOnInit() {
     this.disableMenu();
   }
 
-  public async OnLogin() {
+  public async OnSignup() {
     this.ShowLoading()
-    this.api.post("/Usuarios/login", this.loginAccount, false).subscribe(
+    this.api.post("/Usuarios/register", this.signupAccount, false).subscribe(
       userToken => this.GetUserWithAPIToken(userToken),
       error => this.HandleAPIError(error)
     )
   }
+
+
 
   public async GetUserWithAPIToken(token) {
     this.ShowLoading()
@@ -42,18 +46,10 @@ export class LoginPage extends ComponentBase implements OnInit {
   private async SaveUserData(userFromServer: JSON) {
     await this.storage.set("user", userFromServer)
     await this.storage.set("ttl", moment().add(1209600, 's').toISOString())
-    await this.AfterSuccessfulLogin()
+    await this.AfterSuccessfulSignup()
   }  
 
-  public async OnSocialLoginStart() {
-    this.ShowLoading()
-  }
-
-  public async OnSocialLoginError(data) {
-    this.ShowToast(data)
-  }
-
-  private async AfterSuccessfulLogin() {
+  private async AfterSuccessfulSignup() {
     this.DismissLoading()
     this.enableMenu()
     this.events.publish('user:logged', true)
@@ -63,4 +59,5 @@ export class LoginPage extends ComponentBase implements OnInit {
   public goToUrl(url) {
     this.navController.navigateRoot(url);
   }
+
 }

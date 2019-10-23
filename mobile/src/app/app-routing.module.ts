@@ -7,6 +7,8 @@ const routes: Routes = [
   { path: 'dashboard', loadChildren: './pages/dashboard/dashboard.module#DashboardPageModule' },
   { path: 'settings', loadChildren: './pages/settings/settings.module#SettingsPageModule' },
   { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule' },
+  { path: 'signup', loadChildren: './pages/signup/signup.module#SignupPageModule' },
+
 ];
 
 @NgModule({
