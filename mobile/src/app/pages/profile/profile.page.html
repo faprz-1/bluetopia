@@ -9,7 +9,13 @@
 
 <ion-content fullscreen>
   <ion-card>
-    <img src="{{loggedUser?.imgperfil}}" onerror="this.src='../../../assets/img/avatar.jpg'">
+    <div class="profileImg">
+      <ion-button (click)="updateProfilePic()">
+        <ion-icon slot="icon-only" name="camera"></ion-icon>
+      </ion-button>
+      <img src="{{loggedUser?.imgperfil}}" onerror="this.src='../../../assets/img/avatar.jpg'">
+    </div>
+
     <ion-card-header>
       <ion-card-title>{{loggedUser?.username}}</ion-card-title>
       <ion-card-subtitle>{{loggedUser?.email}}</ion-card-subtitle>

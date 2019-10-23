@@ -29,6 +29,10 @@ export class ApiService {
     }
     return link;
   }
+  
+  public getBaseURL(){
+    return this.baseURL;
+  }
 
   private conditionalRetry(error: Observable<any>): Observable<any> {
     

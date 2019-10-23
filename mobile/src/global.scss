@@ -36,3 +36,8 @@ ion-card, ion-item {
     max-height: 100vh;
     max-width: 100vw;
 }
+
+ion-toolbar {
+ color: var(--ion-color-secondary-contrast) !important;
+ --background: var(--ion-color-secondary) !important;
+}
