@@ -6,38 +6,43 @@
     </div>
 
     <ion-card class="login-card">
-        <ion-card-content>
-            <ion-row>
-                <ion-col size="12">
-                    <ion-label position="floating">Usuario</ion-label>
-                    <ion-input placeholder="Nombre de usuario" type="text" [(ngModel)]="signupAccount.username"></ion-input>
-                </ion-col>
-            </ion-row>
+        <ion-card-content >
+            <form [formGroup]="signupForm">
+                <ion-row>
+                    <ion-col size="12">
+                        <ion-label position="floating">Usuario</ion-label>
+                        <ion-input placeholder="Nombre de usuario" type="text" formControlName="username"></ion-input>
+                        <!--  <mat-error *ngIf="myForm.hasError('required', 'password')">
+                            Please enter your new password
+                        </mat-error> -->
+                    </ion-col>
+                </ion-row>
 
-            <ion-row>
-                <ion-col size="12">
-                    <ion-label position="floating">Email</ion-label>
-                    <ion-input placeholder="Correo electrónico" type="email" [(ngModel)]="signupAccount.email"></ion-input>
-                </ion-col>
-            </ion-row>
+                <ion-row>
+                    <ion-col size="12">
+                        <ion-label position="floating">Email</ion-label>
+                        <ion-input placeholder="Correo electrónico" type="email" formControlName="email"></ion-input>
+                    </ion-col>
+                </ion-row>
 
-            <ion-row>
-                <ion-col size="12">
-                    <ion-label position="floating">Contraseña</ion-label>
-                    <ion-input placeholder="Contraseña" type="password" (keyup.enter)="OnLogin()" [(ngModel)]="signupAccount.password"></ion-input>
-                </ion-col>
-            </ion-row>
+                <ion-row>
+                    <ion-col size="12">
+                        <ion-label position="floating">Contraseña</ion-label>
+                        <ion-input placeholder="Contraseña" type="password" (keyup.enter)="OnLogin()" formControlName="password"></ion-input>
+                    </ion-col>
+                </ion-row>
 
-            <ion-row>
-                <ion-col size="12">
-                    <ion-label position="floating">Repetir Contraseña</ion-label>
-                    <ion-input placeholder="Contraseña" type="password" (keyup.enter)="OnLogin()" [(ngModel)]="signupAccount.repeatPassword"></ion-input>
-                </ion-col>
-            </ion-row>
+                <ion-row>
+                    <ion-col size="12">
+                        <ion-label position="floating">Repetir Contraseña</ion-label>
+                        <ion-input placeholder="Contraseña" type="password" (keyup.enter)="OnLogin()" formControlName="repeatPassword"></ion-input>
+                    </ion-col>
+                </ion-row>
 
+            </form>
             <ion-row>
                 <ion-col size="12">
-                    <ion-button color="primary" (click)="OnSignup()">Ingresar</ion-button>
+                    <ion-button color="primary" [disabled]="!this.signupForm.valid" (click)="OnSignup()">Ingresar</ion-button>
                 </ion-col>
             </ion-row>
             <ion-row>

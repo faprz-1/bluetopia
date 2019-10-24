@@ -154,19 +154,23 @@ module.exports = function(Usuario) {
     Usuario.register = function(newUser, callback) {
         var Role = app.models.Role;
         var RoleMapping = app.models.RoleMapping;
-        if (!newUser.type) newUser.type = "User"
+        if (!newUser.type) newUser.type = "User";
+
 
         Usuario.findOne({
             where: {
-                email: newUser.email
+                or : [
+                    email: newUser.email,
+                    username: newUser.username,
+                ]
             }
         }, function(err, userWR) {
             if (err) return callback(err);
 
             if (userWR) {
-                return callback('El correo ya existe')
+                if(userWR.email == newUser.email) return callback('Correo inválido')
+                if(userWR.username == newUser.username) return callback('Nombre de usuario inválido')
             }
-            console.log('No Registrado')
 
             Usuario.create(newUser, function(err, user) {
                 if (err) return callback(err);
@@ -183,39 +187,12 @@ module.exports = function(Usuario) {
                     }, function(err, principal) {
                         if (err) throw err;
 
-                        if (!newUser.profileImage) {
-                            Usuario.login(user, function(err, accessToken) {
-                                if (err) return callback(err)
+                        Usuario.login(newUser, function(err, accessToken) {
+                            if (err) return callback(err)
 
-                                callback(null, accessToken)
-                            })
-                        }
+                            return callback(null, accessToken)
+                        })
 
-                        var profileImage = {
-                            encodedFileContainer: "profileImages",
-                            base64File: newUser.profileImage.base64ProfileImage,
-                            fileExtention: newUser.profileImage.base64ProfileImageExtention
-                        }
-
-                        app.models.Upload.newBase64File(profileImage, function(err, img) {
-                            if (err) return callback(err);
-                            user.profileImage(img);
-                            Usuario.upsert(user, function(err, updatedUser) {
-                                if (err) return callback(err);
-                                Usuario.find({
-                                    where: {
-                                        id: updatedUser.id
-                                    }
-                                }, function(err, userWR) {
-                                    if (err) return callback(err);
-                                    Usuario.login(userWR, function(err, accessToken) {
-                                        if (err) return callback(err)
-
-                                        callback(null, accessToken)
-                                    });
-                                });
-                            });
-                        });
                     });
                 });
             })

@@ -1,14 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ComponentBase } from 'src/app/base/component-base';
+import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
 import * as moment from 'moment';
 
-class Account {
-  username: string;
-  email: string;
-  password: string;
-  repeatPassword: string;
-}
 
 @Component({
   selector: 'app-signup',
@@ -16,30 +11,29 @@ class Account {
   styleUrls: ['./signup.page.scss'],
 })
 export class SignupPage extends ComponentBase implements OnInit {
-  signupAccount: Account = new Account(); 
+  private signupForm : FormGroup;
 
   ngOnInit() {
     this.disableMenu();
+
+    this.signupForm = new FormGroup({
+      username: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
+      repeatPassword: new FormControl('', Validators.required),
+    })
   }
 
   public async OnSignup() {
-    if(! await this.isUserDataValid(this.signupAccount)){
+    if(!this.signupForm.valid){
       return;
     }
+
     this.ShowLoading()
-    this.api.post("/Usuarios/register", this.signupAccount, false).subscribe(
+    this.api.post("/Usuarios/register", this.signupForm.value, false).subscribe(
       userToken => this.GetUserWithAPIToken(userToken),
       error => this.HandleAPIError(error)
     )
-  }
-
-  public async isUserDataValid(signupAccount : Account){
-    if(this.signupAccount.password != this.signupAccount.repeatPassword){
-      console.log("Too bad");
-      this.ShowToast("Las contraseñas no coinciden");
-      return false;
-    }
-    return true;
   }
 
   public async GetUserWithAPIToken(token) {
