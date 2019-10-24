@@ -8,7 +8,8 @@ import { ComponentBase } from 'src/app/base/component-base';
 })
 export class SettingsPage extends ComponentBase {
 
-  public openPasswordChangeModal() { 
+  public openPasswordChangePage() {
+    this.navController.navigateRoot('/settings/password-change')
   }
 
   public logout() {
