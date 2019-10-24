@@ -119,4 +119,8 @@ export class ApiService {
     await this.storage.ready();
     this.token = await this.storage.get("token");
   }
+
+  public getBaseURL(){
+    return this.debugMode ? BASEURL_DEV : BASEURL
+  }
 }
