@@ -1,9 +1,53 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>signup</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="background-primary">
 
-<ion-content>
+    <div class="welcome-screen">
+        <!-- <h3>JarabeTemplate</h3> -->
+        <img src="/assets/img/logo.png">
+    </div>
+
+    <ion-card class="login-card">
+        <ion-card-content>
+            <ion-row>
+                <ion-col size="12">
+                    <ion-label position="floating">Usuario</ion-label>
+                    <ion-input placeholder="Nombre de usuario" type="text" [(ngModel)]="signupAccount.username"></ion-input>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col size="12">
+                    <ion-label position="floating">Email</ion-label>
+                    <ion-input placeholder="Correo electrónico" type="email" [(ngModel)]="signupAccount.email"></ion-input>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col size="12">
+                    <ion-label position="floating">Contraseña</ion-label>
+                    <ion-input placeholder="Contraseña" type="password" (keyup.enter)="OnLogin()" [(ngModel)]="signupAccount.password"></ion-input>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col size="12">
+                    <ion-label position="floating">Repetir Contraseña</ion-label>
+                    <ion-input placeholder="Contraseña" type="password" (keyup.enter)="OnLogin()" [(ngModel)]="signupAccount.repeatPassword"></ion-input>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col size="12">
+                    <ion-button color="primary" (click)="OnSignup()">Ingresar</ion-button>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="12">
+                    <div color="secondary" class="login-label" (click)="goToUrl('/login');">Ya tengo cuenta</div>
+                </ion-col>
+            </ion-row>
+
+            <template-social-media-login-buttons (onSocialLoginStart)="OnSocialLoginStart()" (onSocialLoginSuccess)="GetUserWithAPIToken($event)" (onSocialLoginError)="OnSocialLoginError($event)"></template-social-media-login-buttons>
+        </ion-card-content>
+    </ion-card>
 
 </ion-content>
