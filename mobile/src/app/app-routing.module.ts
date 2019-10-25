@@ -14,6 +14,7 @@ const routes: Routes = [
       { path: 'password-change', loadChildren: './pages/settings/password-change/password-change.module#PasswordChangePageModule' },
     ]
   },
+  { path: 'notification', loadChildren: './pages/notification/notification.module#NotificationPageModule' },
 ];
 
 @NgModule({
