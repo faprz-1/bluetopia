@@ -78,7 +78,7 @@ export class PasswordChangePage extends ComponentBase implements OnInit {
   }
 
   goBack() {
-    this.navController.navigateBack('/settings');
+    this.navController.back()
   }
 
 }

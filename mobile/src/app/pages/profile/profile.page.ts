@@ -40,4 +40,8 @@ export class ProfilePage extends ComponentBase {
     });
   }
 
+  protected goToSettings(){
+    this.navController.navigateRoot('/settings');
+  }
+
 }
