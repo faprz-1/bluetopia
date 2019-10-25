@@ -59,4 +59,8 @@ export class LoginPage extends ComponentBase implements OnInit {
     this.events.publish('user:logged', true)
     this.navController.navigateRoot('dashboard')
   }
+
+  public goToUrl(url) {
+    this.navController.navigateRoot(url);
+  }
 }

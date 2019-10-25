@@ -1,10 +1,11 @@
-import { NavController, NavParams, AlertController, ToastController,ModalController,LoadingController,IonRefresher, Platform, MenuController, Events} from '@ionic/angular';
+import { NavController, NavParams, AlertController, ToastController, ModalController, LoadingController, IonRefresher, Platform, MenuController, Events } from '@ionic/angular';
 import { stringify } from '@angular/compiler/src/util';
 import { AlertInput, AlertButton } from '@ionic/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../services/api.service';
 import { Storage } from '@ionic/storage';
 import { NotificationsService } from '../services/notifications.service';
+import { CameraOptions, Camera } from "@ionic-native/camera/ngx";
 
 const BASE_LOADING_MESSAGE = "Cargando..."
 const BASE_LOADING_DURATION = 2000
@@ -26,35 +27,38 @@ export class ComponentBase {
         protected loadingController: LoadingController,
         protected platform: Platform,
         protected storage: Storage,
-        protected menuController : MenuController,
+        protected menuController: MenuController,
         protected events: Events,
-        public  translate: TranslateService,
-        public  api: ApiService,
-        public  notifications: NotificationsService
+        public camera: Camera,
+        public translate: TranslateService,
+        public api: ApiService,
+        public notifications: NotificationsService
     ) {
         this.InitializeLoadingElement()
         this.enableMenu()
+        this.user = JSON.parse(localStorage.getItem('user'))
     }
 
-    loadingElement : HTMLIonLoadingElement;
-    isLoading : boolean = false;
+    loadingElement: HTMLIonLoadingElement;
+    isLoading: boolean = false;
+    user: any;
 
     protected async InitializeLoadingElement() {
-        this.loadingElement = await this.loadingController.create({ 
+        this.loadingElement = await this.loadingController.create({
             message: BASE_LOADING_MESSAGE,
             duration: BASE_LOADING_DURATION,
         })
     }
 
     protected ShowLoading() {
-        if(this.loadingElement && !this.isLoading) {
+        if (this.loadingElement && !this.isLoading) {
             this.loadingElement.present()
             this.isLoading = true
         }
     }
 
     protected DismissLoading() {
-        if(this.loadingElement) {
+        if (this.loadingElement) {
             this.loadingElement.dismiss()
             this.isLoading = false
         }
@@ -69,7 +73,7 @@ export class ComponentBase {
         return toast
     }
 
-    protected async ShowOkAlert(header: string, subHeader:string, okButtonText: string = OK_ALERT_BUTTON_TEXT) {
+    protected async ShowOkAlert(header: string, subHeader: string, okButtonText: string = OK_ALERT_BUTTON_TEXT) {
         let alert = await this.alertController.create({
             header: header,
             subHeader: subHeader,
@@ -78,7 +82,7 @@ export class ComponentBase {
         await alert.present()
     }
 
-    protected async ShowPromptAlert(header: string, subHeader:string, okButtonText: string, okButtonHandler: any, cancelButtonText: string, cancelButtonHandler: any) {
+    protected async ShowPromptAlert(header: string, subHeader: string, okButtonText: string, okButtonHandler: any, cancelButtonText: string, cancelButtonHandler: any) {
         let alert = await this.alertController.create({
             header: header,
             subHeader: subHeader,
@@ -97,7 +101,7 @@ export class ComponentBase {
         await alert.present()
     }
 
-    protected async ShowAlert(header: string, subHeader:string, inputs : AlertInput[], buttons: AlertButton[]) {
+    protected async ShowAlert(header: string, subHeader: string, inputs: AlertInput[], buttons: AlertButton[]) {
         let alert = await this.alertController.create({
             header: header,
             subHeader: subHeader,
@@ -114,7 +118,7 @@ export class ComponentBase {
     }
 
     protected GetPlaform() {
-        if(this.platform.is('ios'))
+        if (this.platform.is('ios'))
             return SupportedPlatformsEnum.iOS
         else
             return SupportedPlatformsEnum.Android
@@ -131,7 +135,33 @@ export class ComponentBase {
     protected async HandleAPIError(error) {
         this.DismissLoading()
         this.ShowToast(error.error.error.message)
-      }
+    }
+
+    protected takePicture() {
+        console.log("Updating Profile Pic");
+        const options: CameraOptions = {
+            quality: 100,
+            destinationType: this.camera.DestinationType.DATA_URL,
+            encodingType: this.camera.EncodingType.JPEG,
+            sourceType: this.camera.PictureSourceType.CAMERA,
+            mediaType: this.camera.MediaType.PICTURE,
+            targetWidth: 1280,
+            targetHeight: 720,
+        };
+        this.camera.getPicture(options).then((imageData) => {
+            this.ShowLoading()
+              return {
+                profileImage: {
+                  base64ProfileImage: imageData,
+                  base64ProfileImageExtention: ".jpeg"
+                }
+              };
+        }, (err) => {
+            this.ShowToast('No se pudo utilizar la camara...',3000)
+            console.log("camera Error: ", err);
+            return null;
+        });
+    };
 
     public openMenu() {
         this.menuController.open("templateMenu")
