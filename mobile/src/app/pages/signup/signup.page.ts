@@ -25,7 +25,9 @@ export class SignupPage extends ComponentBase implements OnInit {
   }
 
   public async OnSignup() {
-    if(!this.signupForm.valid){
+    if(!this.signupForm.valid)return;
+    if(this.signupForm.value.password != this.signupForm.value.repeatPassword){
+      this.ShowToast("La contraseña no coincide")
       return;
     }
 
