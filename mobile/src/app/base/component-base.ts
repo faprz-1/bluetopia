@@ -36,10 +36,12 @@ export class ComponentBase {
     ) {
         this.InitializeLoadingElement()
         this.enableMenu()
+        this.user = JSON.parse(localStorage.getItem('user'))
     }
 
     loadingElement: HTMLIonLoadingElement;
     isLoading: boolean = false;
+    user: any;
 
     protected async InitializeLoadingElement() {
         this.loadingElement = await this.loadingController.create({
