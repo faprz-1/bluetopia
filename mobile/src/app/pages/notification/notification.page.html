@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/dashboard" [text]="Atras"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mis Notificaciones {{notifications.countUnseen()}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <ion-item (click)="notifications.setSeen(n)" [ngClass]="{'unseen':n.seen==null}" *ngFor="let n of notifications.notifications">
+          <ion-avatar item-start>
+            <img [src]="n.image" class="listview__img" alt="">
+          </ion-avatar>
+          <h2>{{n.title}}</h2>
+          <h3>{{n.content}}</h3>
+          <p item-end>{{n.timestamp|date}}</p>
+    
+        </ion-item>
+      </ion-list>
+</ion-content>
