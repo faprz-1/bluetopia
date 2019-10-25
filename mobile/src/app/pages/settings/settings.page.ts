@@ -19,15 +19,21 @@ export class SettingsPage extends ComponentBase {
       'Si', 
       () => {
         console.log("ASD")
+        this.storage.clear();
+        this.DismissLoading();
+        this.navController.navigateRoot('/login');
+
         this.ShowLoading();
         this.api.post("/Usuarios/logout", null, true).subscribe(async () => {
-          await this.storage.clear();
-          this.DismissLoading();
-          this.navController.navigateRoot('/login');
+          // await this.storage.clear();
+          // this.DismissLoading();
+          // this.navController.navigateRoot('/login');
         })
       }, 
       'No', 
-      () => {}
+      () => {
+        
+      }
     )
   }
 }
