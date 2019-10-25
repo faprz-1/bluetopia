@@ -125,11 +125,11 @@ export class ComponentBase {
     }
 
     protected enableMenu() {
-        this.menuController.enable(true, "templateMenu")
+        this.menuController.enable(true)
     }
 
     protected disableMenu() {
-        this.menuController.enable(false, "templateMenu")
+        this.menuController.enable(false)
     }
 
     protected async HandleAPIError(error) {
