@@ -156,20 +156,20 @@ module.exports = function(Usuario) {
         var RoleMapping = app.models.RoleMapping;
         if (!newUser.type) newUser.type = "User";
 
-
         Usuario.findOne({
             where: {
-                or : [
-                    email: newUser.email,
-                    username: newUser.username,
+                or: [
+                    { email: newUser.email },
+                    { username: newUser.username },
                 ]
+
             }
         }, function(err, userWR) {
             if (err) return callback(err);
 
             if (userWR) {
-                if(userWR.email == newUser.email) return callback('Correo inválido')
-                if(userWR.username == newUser.username) return callback('Nombre de usuario inválido')
+                if (userWR.email == newUser.email) return callback('Correo inválido');
+                return callback('Nombre de usuario inválido');
             }
 
             Usuario.create(newUser, function(err, user) {
