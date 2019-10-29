@@ -58,7 +58,7 @@ export class PasswordRecoveryPage extends ComponentBase implements OnInit {
     //Validations
     this.ShowLoading()
     this.api.post("/PasswordResetPINs/consume", { pin: this.pin, email: this.email }, false).subscribe(
-      response => {
+      (response:any) => {
         if(response.msg == "Pin correcto"){
           this.successfullStep();
           return;
@@ -72,7 +72,7 @@ export class PasswordRecoveryPage extends ComponentBase implements OnInit {
   public setNewPassword(){
     this.ShowLoading()
     this.api.post("/PasswordResetPINs/resetPassword", { password: this.password , email: this.email }, false).subscribe(
-      response => {
+      (response:any) => {
         this.ShowToast("Contraseña actualizada");
         this.goToUrl('/login');
       },
