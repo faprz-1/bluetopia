@@ -8,7 +8,7 @@ import { IonSlides } from '@ionic/angular';
   styleUrls: ['./password-recovery.page.scss'],
 })
 export class PasswordRecoveryPage extends ComponentBase implements OnInit {
-  @ViewChild('slides') slides: IonSlides;
+  @ViewChild('slides', {static: true}) slides: IonSlides;
 
   email: string;
   password: string;
@@ -21,6 +21,7 @@ export class PasswordRecoveryPage extends ComponentBase implements OnInit {
 
   ngOnInit() {
     this.disableMenu();
+    this.slides.lockSwipes(true);
   }
 
   public goToUrl(url: string) {
@@ -28,11 +29,14 @@ export class PasswordRecoveryPage extends ComponentBase implements OnInit {
   }
 
   public goBack() {
+    this.slides.lockSwipes(false);
     this.slides.slidePrev();
+    this.slides.lockSwipes(true);
   }
 
   public sendEmail(){
     //Validations
+    if(this.email == "" || !this.email) return this.ShowToast("Email inválido");
     this.ShowLoading();
     this.api.post("/PasswordResetPINs/createAndSend", { email : this.email }, false).subscribe(
       response => this.successfullStep("Correo enviado correctamente"),
@@ -44,7 +48,9 @@ export class PasswordRecoveryPage extends ComponentBase implements OnInit {
 
     this.DismissLoading();
     if(toastText) this.ShowToast(toastText);
+    this.slides.lockSwipes(false);
     this.slides.slideNext();
+    this.slides.lockSwipes(true);
     //nest slide
   }  
 
@@ -53,8 +59,11 @@ export class PasswordRecoveryPage extends ComponentBase implements OnInit {
     this.ShowLoading()
     this.api.post("/PasswordResetPINs/consume", { pin: this.pin, email: this.email }, false).subscribe(
       response => {
-        console.log(response);
-        this.successfullStep();
+        if(response.msg == "Pin correcto"){
+          this.successfullStep();
+          return;
+        }  
+        this.ShowToast(response.msg);
       } ,
       error => this.HandleAPIError(error)     
     )
@@ -62,8 +71,11 @@ export class PasswordRecoveryPage extends ComponentBase implements OnInit {
 
   public setNewPassword(){
     this.ShowLoading()
-    this.api.post("/PasswordResetPINs/consume", { password: this.password , email: this.email }, false).subscribe(
-      response => this.successfullStep("Contraseña actualizada"),
+    this.api.post("/PasswordResetPINs/resetPassword", { password: this.password , email: this.email }, false).subscribe(
+      response => {
+        this.ShowToast("Contraseña actualizada");
+        this.goToUrl('/login');
+      },
       error => this.HandleAPIError(error)     
     )
   }
