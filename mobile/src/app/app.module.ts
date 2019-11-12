@@ -13,6 +13,7 @@ import { ComponentsModule } from './components/components.module';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera/ngx';
+import { AuthGuard } from './services/auth.guard';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { Camera } from '@ionic-native/camera/ngx';
     SplashScreen,
     Camera,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    Storage
+    Storage,
+    AuthGuard
   ],
   bootstrap: [
     AppComponent,

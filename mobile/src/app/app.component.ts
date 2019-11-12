@@ -4,6 +4,7 @@ import { Platform, NavController, MenuController, Events } from '@ionic/angular'
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Storage } from '@ionic/storage';
+import * as moment from "moment";
 
 @Component({
   selector: 'app-root',
@@ -40,11 +41,26 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-
-      this.getUserData();
-      this.initializeEvents();
+      this.storage.get('token').then((token)=>{
+        if(token){
+          this.storage.get("ttl").then((ttl)=>{ 
+            if(ttl != null && moment().isSameOrAfter(ttl) ) {
+              this.storage.clear()
+              this.navController.navigateRoot('/login')
+            }
+            else {
+              this.navController.navigateRoot('/dashboard')
+            }
+          });
+        } else {
+          this.navController.navigateRoot('/login')
+        }
+        this.statusBar.styleDefault();
+        this.splashScreen.hide();
+  
+        this.getUserData();
+        this.initializeEvents();
+      })
     });
   }
 
