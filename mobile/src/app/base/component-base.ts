@@ -137,8 +137,7 @@ export class ComponentBase {
         this.ShowToast(error.error.error.message)
     }
 
-    protected takePicture() {
-        console.log("Updating Profile Pic");
+    protected async takePicture() {
         const options: CameraOptions = {
             quality: 100,
             destinationType: this.camera.DestinationType.DATA_URL,
@@ -147,20 +146,22 @@ export class ComponentBase {
             mediaType: this.camera.MediaType.PICTURE,
             targetWidth: 1280,
             targetHeight: 720,
+            correctOrientation: true
         };
-        this.camera.getPicture(options).then((imageData) => {
-            this.ShowLoading()
-              return {
+        try {
+            let imageData = await  this.camera.getPicture(options);
+            return {
                 profileImage: {
                   base64ProfileImage: imageData,
                   base64ProfileImageExtention: ".jpeg"
                 }
               };
-        }, (err) => {
-            this.ShowToast('No se pudo utilizar la camara...',3000)
-            console.log("camera Error: ", err);
+        }
+        catch(e) {
+            this.ShowToast('No se obtuvo la imagen',3000)
+            console.log("camera Error: ", e);
             return null;
-        });
+        }
     };
 
     public openMenu() {

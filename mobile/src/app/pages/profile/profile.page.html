@@ -16,13 +16,46 @@
       <img src="{{loggedUser?.imgperfil}}" onerror="this.src='../../../assets/img/avatar.jpg'">
     </div>
 
-    <ion-card-header>
-      <ion-card-title>{{loggedUser?.username}}</ion-card-title>
-      <ion-card-subtitle>{{loggedUser?.email}}</ion-card-subtitle>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-label>celular: {{loggedUser?.phone}}</ion-label>
-    </ion-card-content>
+    <ng-container *ngIf="loggedUser!=null">
+        <ion-list text-wrap>
+          <ion-item no-lines>
+            <ion-label>Usuario</ion-label>
+            <ion-text>
+              <strong>
+                {{loggedUser?.username}}
+              </strong>
+            </ion-text>
+          </ion-item>
+    
+          <!-- <ion-item no-lines>
+            <ion-label>Nombre</ion-label>
+            <ion-text>
+              <strong>
+                {{loggedUser?.teacher.middleName + ' ' + loggedUser?.teacher.lastName + ' ' + loggedUser?.teacher.name }}
+              </strong>
+            </ion-text>
+          </ion-item> -->
+    
+          <ion-item no-lines>
+            <ion-label>Teléfono:</ion-label>
+            <ion-text>
+              <strong>
+                {{loggedUser?.phone ? loggedUser?.phone :'---'}}
+              </strong>
+            </ion-text>
+          </ion-item>
+    
+          <ion-item no-lines>
+            <ion-label>Correo:</ion-label>
+            <ion-text>
+              <strong>
+                {{loggedUser?.email}}
+              </strong>
+            </ion-text>
+          </ion-item>
+        </ion-list>
+      </ng-container>
+   
     <ion-grid text-center>
       <ion-row>
         <ion-col>
@@ -31,4 +64,5 @@
       </ion-row>
     </ion-grid>
   </ion-card>
+
 </ion-content>

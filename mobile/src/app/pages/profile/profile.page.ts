@@ -20,14 +20,15 @@ export class ProfilePage extends ComponentBase {
   }
 
   private async updateProfilePic(){
-    let newImage = this.takePicture();
+    let newImage = await this.takePicture();
+
     if(newImage!=null){
       await this.saveProfilePic(newImage)
     }
   }
 
   private async saveProfilePic(newImage: any){
-    this.api.post("/Usuarios/" + this.loggedUser.id + "/changeProfileImage", newImage).subscribe((res: any) => {
+    this.api.post("/Usuarios/" + this.loggedUser.id + "/changeProfileImage", newImage, true).subscribe((res: any) => {
       this.loggedUser.profileImage = res.profileImage;
       this.loggedUser.imgperfil = this.loggedUser.profileImage != null ? this.api.getBaseURL() + this.loggedUser.profileImage.URL : this.api.getBaseURL()
       this.storage.set("user", this.loggedUser).then(() => {
@@ -35,7 +36,7 @@ export class ProfilePage extends ComponentBase {
       })
       this.DismissLoading()
     }, err => {
-       this.ShowToast('Error al actualizar imagen de perfil...', 3000)
+       this.ShowToast('Error al actualizar imagen de perfil', 3000)
        this.DismissLoading()
     });
   }
