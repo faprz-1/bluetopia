@@ -7,7 +7,7 @@
     "host": "localhost",
     "port": 3306,
     "url": "",
-    "database": "template3.1",
+    "database": "templatedb",
     "password": "",
     "name": "mysqlDev",
     "user": "root",
