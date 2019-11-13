@@ -14,6 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera/ngx';
 import { AuthGuard } from './services/auth.guard';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,7 @@ import { AuthGuard } from './services/auth.guard';
     AppRoutingModule,
     TranslateModule.forRoot(),
     ComponentsModule, 
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(), ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     StatusBar,

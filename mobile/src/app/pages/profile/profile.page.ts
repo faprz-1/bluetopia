@@ -19,7 +19,7 @@ export class ProfilePage extends ComponentBase {
     this.loggedUser.imgperfil = this.loggedUser.profileImage != null ? this.api.getBaseURL() + this.loggedUser.profileImage.URL : 'assets/imgs/default_avatar.jpg'
   }
 
-  private async updateProfilePic(){
+  async updateProfilePic(){
     let newImage = await this.takePicture();
 
     if(newImage!=null){
@@ -41,7 +41,7 @@ export class ProfilePage extends ComponentBase {
     });
   }
 
-  protected goToSettings(){
+  goToSettings(){
     this.navController.navigateRoot('/settings');
   }
 

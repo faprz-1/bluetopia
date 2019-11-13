@@ -10,7 +10,7 @@ import * as moment from 'moment';
 })
 export class PasswordChangePage extends ComponentBase implements OnInit {
 
-  private changePassForm: FormGroup;
+  public changePassForm: FormGroup;
   
   ngOnInit() {
     this.changePassForm = new FormGroup({
@@ -20,7 +20,7 @@ export class PasswordChangePage extends ComponentBase implements OnInit {
     })
   }
 
-  protected async OnSaved() {
+  async OnSaved() {
     if (!this.changePassForm.valid) {
       return;
     }

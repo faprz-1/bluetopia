@@ -11,7 +11,7 @@ import * as moment from 'moment';
   styleUrls: ['./signup.page.scss'],
 })
 export class SignupPage extends ComponentBase implements OnInit {
-  private signupForm : FormGroup;
+  signupForm : FormGroup;
 
   ngOnInit() {
     this.disableMenu();
