@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "compression": "^1.0.3",
+    "conekta": "^3.7.1",
     "cors": "^2.5.2",
     "helmet": "^3.10.0",
     "http-errors": "^1.6.3",

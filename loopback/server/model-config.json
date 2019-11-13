@@ -104,5 +104,9 @@
   "UserPermissionPolicyRelation": {
     "dataSource": "mysqlDev",
     "public": false
+  },
+  "pays": {
+    "dataSource": "mysqlDev",
+    "public": true
   }
 }
