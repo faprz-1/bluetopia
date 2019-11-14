@@ -81,13 +81,6 @@ module.exports = function(Pays) {
         //     callback(null,orderObj)
         // });
 
-        conekta.Token.create(dataCard, (err, token) => {
-            if(err) return callback(err);
-            // callback(token);
-            console.log(token);
-            
-        });
-
         
         // callback(null, newDAta);
     };

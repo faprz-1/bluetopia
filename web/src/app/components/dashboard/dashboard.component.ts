@@ -12,5 +12,14 @@ import {TooltipModule} from "ngx-tooltip";
 export class DashboardComponent implements OnInit {  
   
 	constructor(private router: Router) {}
-  ngOnInit() {}
+  ngOnInit() {this.x()}
+
+
+
+  x() {
+    var conekta = new conekta();
+
+    console.log(conekta);
+    
+  }
 }
