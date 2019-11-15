@@ -48,18 +48,14 @@ module.exports = function(Pays) {
             unit_price: 50000,
             quantity: 5,
             tags: ['food', 'mexican food']
+        }],
+        charges:[{
+          payment_method: {
+            type: 'card',
+            token_id: null
+          }
         }]
       }
-
-      var dataCard = {
-        "card": {
-          "number": "4242424242424242",
-          "name": "Javier Pedreiro",
-          "exp_year": "2018",
-          "exp_month": "12",
-          "cvc": "123"
-        }
-      };
 
     /**
      *
@@ -68,21 +64,16 @@ module.exports = function(Pays) {
      */
 
     Pays.createOrder = function(data, callback) {
+        orderBody.charges[0].payment_method.token_id = data.Token;
 
-        // conekta.setPublicKey(PUBLIC_KEY);
-        // conekta.setLanguage(LOCALE);
-
-        // conekta.Order.create(orderBody, (err, order) => {
-        //     if(err) return console.log(err);
+        conekta.Order.create(orderBody, (err, order) => {
+            if(err) return console.log(err);
             
-        //     var orderObj = order.toObject();
+            var orderObj = order.toObject();
 
-        //     console.log(orderObj);
-        //     callback(null,orderObj)
-        // });
-
-        
-        // callback(null, newDAta);
+            console.log(orderObj);
+            return callback(null,orderObj)
+        });
     };
 
     /**
