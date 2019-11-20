@@ -107,7 +107,8 @@ module.exports = function(Usuario) {
         Usuario.find({
             where: {
                 id: id
-            }
+            },
+            include: 'cardtokenusers'
         }, function(error, user) {
             if (error) return callback(error, "Error On User")
 
@@ -731,6 +732,40 @@ module.exports = function(Usuario) {
             })
         })
     }
+
+
+    /**
+     *
+     * @param {object} objCard
+     * @param {Function(Error, object)} callback
+     */
+
+    Usuario.addCard = function(objCard, callback) {
+        Usuario.app.models.cardtokenuser.upsert(objCard, (err, newObjCard) => {
+            if(err) return callback(err);
+
+            return callback(null, newObjCard);
+        });
+    };
+
+
+    /**
+     *
+     * @param {object} myInfo
+     * @param {Function(Error, object)} callback
+     */
+
+    Usuario.prototype.asignedMeConekta = function(myInfo, callback) {
+        var resConekta = Usuario.app.models.pays.conectConekta(myInfo);
+
+        if(resConekta != null) {
+            this.customerId = resConekta.id;
+            this.save([], (err,newConektaInfo) => {
+                if(err) return callback(err);
+                return callback(null, newConektaInfo);
+            });
+        }
+    };
 
 
 };

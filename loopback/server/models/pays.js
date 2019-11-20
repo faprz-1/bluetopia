@@ -39,7 +39,7 @@ module.exports = function(Pays) {
             name: 'Item2',
             description: 'Imported From Mex.',
             unit_price: 100000,
-            quantity: 1,
+            quantity: 2,
             tags: ['food', 'mexican food']
         },
         {
@@ -97,4 +97,12 @@ module.exports = function(Pays) {
             });
         });
     };
+
+
+    Pays.conectConekta = (info) => {
+      conekta.Customer.create(info, (err, newCus) => {
+        if(err) return null;
+        return newCus;
+      })
+    }
 };

@@ -52,7 +52,9 @@
           "prototype.updatePushToken": true,
           "prototype.updatePushTokenMobile": true,
           "prototype.changeProfileImage": true,
-          "loginBySocialMedia": true
+          "loginBySocialMedia": true,
+          "addCard": true,
+          "prototype.asignedMeConekta": true
         }
       }
     }
@@ -106,6 +108,10 @@
     "public": false
   },
   "pays": {
+    "dataSource": "mysqlDev",
+    "public": true
+  },
+  "cardtokenuser": {
     "dataSource": "mysqlDev",
     "public": true
   }

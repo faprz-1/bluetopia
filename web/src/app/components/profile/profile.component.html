@@ -1,9 +1,13 @@
 <section class="content" *ngIf="user != null">
   <div class="row">
-    <div class="col-12">
+    <div class="col-8">
       <div class="display-4">
         Perfil
       </div>
+    </div>
+    <div class="col-4 d-flex align-items-center justify-content-end">
+      <button class="btn btn-primary float-right align-self-center mr-4" (click)="asignedMeConekta()">Conekta</button>
+      <i class="zmdi zmdi-card zmdi-hc-4x float-right cickleable" data-toggle="tooltip" data-placement="bottom" title="Agregar Tarjeta" (click)="openModal(addCard,$event)"></i>
     </div>
   </div>
 
@@ -40,4 +44,9 @@
       </div>
     </div>
   </div>
+  <button class="btn btn-primary" (click)="pruebaOrder()">ClickMePLS</button>
 </section>
+
+<ng-template #addCard>
+  <app-add-card [user]="user"></app-add-card>
+</ng-template>
