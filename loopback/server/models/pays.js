@@ -98,11 +98,14 @@ module.exports = function(Pays) {
         });
     };
 
-
-    Pays.conectConekta = (info) => {
+    Pays.conectConekta = (info, functionCus) => {
       conekta.Customer.create(info, (err, newCus) => {
         if(err) return null;
-        return newCus;
+
+        console.log(newCus.toObject());
+        
+
+        return newCus.toObject();
       })
     }
 };

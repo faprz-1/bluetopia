@@ -756,15 +756,18 @@ module.exports = function(Usuario) {
      */
 
     Usuario.prototype.asignedMeConekta = function(myInfo, callback) {
-        var resConekta = Usuario.app.models.pays.conectConekta(myInfo);
+        Usuario.app.models.pays.conectConekta(myInfo, (resConekta) => {
+            console.log(resConekta);
+            if(resConekta != null) {
+                
+                this.customerId = resConekta.id;
+                this.save([], (err,newConektaInfo) => {
+                    if(err) return callback(err);
+                    return callback(null, newConektaInfo);
+                });
+            }
+        });
 
-        if(resConekta != null) {
-            this.customerId = resConekta.id;
-            this.save([], (err,newConektaInfo) => {
-                if(err) return callback(err);
-                return callback(null, newConektaInfo);
-            });
-        }
     };
 
 
