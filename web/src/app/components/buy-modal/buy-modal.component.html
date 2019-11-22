@@ -1,0 +1,81 @@
+<div class="modal-content" >
+    <div class="modal-header bg-dark">
+      <h4 class="modal-title text-white pull-left ">Forma de pago</h4>
+      <button type="button" class="close text-white pull-right" aria-label="Close" (click)="closeModal();">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+  
+    <div class="modal-body pb-1">
+      <div class="form-group bg-light">
+        <label for="exampleInputEmail1">Opcion de pago</label>
+        <select name="opc" id="opdId" class="form-control" [(ngModel)]="opcBuy">
+          <option *ngIf="user != null && cards.length > 0" value="Default">Default</option>
+          <option *ngIf="user != null && cards.length > 0" value="especifica">Tarjeta Especifica</option>
+          <option value="token">Otra Tarjeta</option>
+        </select>
+        <!-- <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"> -->
+      </div>
+      <ng-container *ngIf="opcBuy == 'Default'">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Tarjeta por default</label>
+            <p>**** **** **** {{defCard?.last4}} {{defCard?.brand}} {{defCard?.exp_month}}/{{defCard?.exp_year}}</p>
+          </div>
+      </ng-container>
+      <ng-container *ngIf="opcBuy == 'especifica'">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Tarjeta</label>
+            <select name="opc" id="opdId" class="form-control" [(ngModel)]="selectedCard">
+              <option value="1">Selecciona una tarjeta</option>
+              <option *ngFor="let c of cards" [value]="c.id">**** **** **** {{c?.last4}} {{c?.brand}} {{c?.exp_month}}/{{c?.exp_year}}</option>
+            </select>
+          </div>
+      </ng-container>
+      <ng-container *ngIf="opcBuy == 'token'">
+          <div class="form-row form-group">
+              <label>Nombre del Tarjetahabiente</label>
+              <input class="form-control" type="text" size="20" name="name" [(ngModel)]="data.card.name">
+            </div>
+          <div class="form-row form-group">
+              <label>Correo Electronico</label>
+              <input class="form-control" type="email" size="20" name="email" [(ngModel)]="userInfo.email">
+            </div>
+          <div class="form-row form-group">
+              <label>Numero de Telefono</label>
+              <input class="form-control" type="text" size="10" name="phone" [(ngModel)]="userInfo.phone">
+            </div>
+            <div class="form-row form-group">
+              <label>Número de tarjeta de crédito</label>
+              <input class="form-control" type="text" size="20" name="number" [(ngModel)]="data.card.number">
+            </div>
+            <div class="form-row form-group">
+              <label>CVC</label>
+              <input class="form-control" type="text" size="4" name="cvc" [(ngModel)]="data.card.cvc">
+            </div>
+            <div class="form-row form-group">
+              <p>
+                <label>Fecha de expiración (MM/AAAA)</label><br>
+              </p>
+              <div class="row ml-3">
+                <div class="col-5">
+                  <input class="form-control" type="text" size="2" name="exp_month" [(ngModel)]="data.card.exp_month">
+                </div>
+                <div class="col-1">/</div>
+                <div class="col-5">
+                  <input class="form-control" type="text" size="4" name="exp_year" [(ngModel)]="data.card.exp_year">
+                </div>
+              </div>
+            </div>
+      </ng-container>
+    </div>
+  
+    <div class="modal-footer">
+      <div class="row mt-4">
+        <div class="col-6">
+          <button *ngIf="opcBuy == 'Default'" type="button" class="btn btn-primary float-left" (click)="buy()"> Comprar </button>
+          <button *ngIf="opcBuy == 'especifica'" type="button" class="btn btn-primary float-left" (click)="buy()" [disabled]="selectedCard == '1' && opcBuy == 'especifica'"> Comprar </button>
+          <button *ngIf="opcBuy == 'token'" type="button" class="btn btn-primary float-left" (click)="buy()" [disabled]="getStatusData()"> Comprar </button>
+        </div>
+      </div>
+    </div>
+  </div>

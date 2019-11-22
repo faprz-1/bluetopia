@@ -38,7 +38,7 @@
   <div class="modal-footer">
     <div class="row mt-4">
       <div class="col-6">
-        <button type="button" class="btn btn-primary float-left" (click)="createTokoenCard()"> Agregar </button>
+        <button *ngIf="user != null" type="button" class="btn btn-primary float-left" (click)="createTokoenCard()" [disabled]="getStatusData()"> Agregar </button>
       </div>
     </div>
   </div>

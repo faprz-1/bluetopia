@@ -3,16 +3,17 @@
     <div class="col-8">
       <div class="display-4">
         Perfil
+        <span *ngIf="user.customerId != null"><small class="text-muted">(Conectado con Conekta)</small></span>
       </div>
     </div>
     <div class="col-4 d-flex align-items-center justify-content-end">
-      <button class="btn btn-primary float-right align-self-center mr-4" (click)="asignedMeConekta()">Conekta</button>
-      <i class="zmdi zmdi-card zmdi-hc-4x float-right cickleable" data-toggle="tooltip" data-placement="bottom" title="Agregar Tarjeta" (click)="openModal(addCard,$event)"></i>
+      <button class="btn btn-primary float-right align-self-center mr-4" *ngIf="user.customerId == null" (click)="asignedMeConekta()">Conekta</button>
+      <i class="zmdi zmdi-card zmdi-hc-4x float-right cickleable" *ngIf="user.customerId != null" data-toggle="tooltip" data-placement="bottom" title="Agregar Tarjeta" (click)="openModal(addCard,$event)"></i>
     </div>
   </div>
 
   <div class="row" *ngIf="user != null">
-    <div class="card profile-card">
+    <div class="card profile-card ml-3">
       <div class="card-img">
 
         <template-profile-image-editor style="top: 10px; right:15px; position:absolute"></template-profile-image-editor>
@@ -21,32 +22,44 @@
       </div>
 
       <div class="card-body">
-        <div class="form-group row">
+        <div class="form-group row mb-2">
           <p> Nombre de usuario:
             <strong> {{user?.username}}</strong>
           </p>
-
         </div>
 
-        <div class="form-group row">
+        <div class="form-group row mb-2">
           <p>Nombre completo:
             <strong> {{user?.name}}</strong>
           </p>
-
         </div>
 
-        <div class="form-group row">
+        <div class="form-group row mb-2">
           <p>Correo:
             <strong> {{user?.email}}</strong>
           </p>
         </div>
 
+        <div class="form-group row mb-2">
+          <p>Tarjetas en conekta:</p>
+          <span *ngFor="let c of cards">
+            <p>
+              **** **** **** {{c?.last4}} {{c?.brand}} <strong>{{c?.exp_month}}/{{c?.exp_year}}</strong>
+              <span *ngIf="c.default"> Default</span>
+            </p>
+          </span>
+        </div>
+
       </div>
     </div>
   </div>
-  <button class="btn btn-primary" (click)="pruebaOrder()">ClickMePLS</button>
+  <button class="btn btn-primary" (click)="openModal(buyMod,$event)">ClickMePLS</button>
 </section>
 
 <ng-template #addCard>
-  <app-add-card [user]="user"></app-add-card>
+  <app-add-card [user]="user" (close)="closeModal()"></app-add-card>
 </ng-template>
+
+<ng-template #buyMod>
+    <app-buy-modal [user]="user" (close)="closeModal()"></app-buy-modal>
+  </ng-template>

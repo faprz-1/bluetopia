@@ -53,14 +53,6 @@
       "model": "UserPermissionPolicyNode",
       "foreignKey": "",
       "through": "UserPermissionPolicyRelation"
-    },
-    "cardtokenusers": {
-      "type": "hasMany",
-      "model": "cardtokenuser",
-      "foreignKey": "userId",
-      "options": {
-        "nestRemoting": true
-      }
     }
   },
   "acls": [
@@ -87,9 +79,7 @@
         "registerAdminis",
         "registerAdmin",
         "loginBySocialMedia",
-        "loginIfActive",
-        "addCard",
-        "asignedMeConekta"
+        "loginIfActive"
       ]
     },
     {
@@ -114,9 +104,7 @@
       "property": [
         "getAnyUsers",
         "updateAnyUser",
-        "changeAnyPassword",
-        "addCard",
-        "asignedMeConekta"
+        "changeAnyPassword"
       ]
     }
   ],
@@ -486,62 +474,6 @@
       "http": [
         {
           "path": "/login",
-          "verb": "post"
-        }
-      ]
-    },
-    "addCard": {
-      "accepts": [
-        {
-          "arg": "objCard",
-          "type": "object",
-          "required": true,
-          "description": "",
-          "http": {
-            "source": "body"
-          }
-        }
-      ],
-      "returns": [
-        {
-          "arg": "newObjCard",
-          "type": "object",
-          "root": true,
-          "description": ""
-        }
-      ],
-      "description": "",
-      "http": [
-        {
-          "path": "/addCard",
-          "verb": "post"
-        }
-      ]
-    },
-    "prototype.asignedMeConekta": {
-      "accepts": [
-        {
-          "arg": "myInfo",
-          "type": "object",
-          "required": true,
-          "description": "",
-          "http": {
-            "source": "body"
-          }
-        }
-      ],
-      "returns": [
-        {
-          "arg": "newConektaInfo",
-          "type": "object",
-          "root": true,
-          "description": ""
-        }
-      ],
-      "description": "",
-      "http": [
-        {
-          "path": "/asignedMeConekta",
           "verb": "post"
         }
       ]

@@ -1,0 +1,182 @@
+{
+  "name": "conekta",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {
+    "createOrder": {
+      "accepts": [
+        {
+          "arg": "data",
+          "type": "object",
+          "required": true,
+          "description": "",
+          "http": {
+            "source": "body"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "newDAta",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/createOrder",
+          "verb": "post"
+        }
+      ]
+    },
+    "createCharge": {
+      "accepts": [
+        {
+          "arg": "data",
+          "type": "object",
+          "required": true,
+          "description": "",
+          "http": {
+            "source": "body"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "newDAta",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/createCharge",
+          "verb": "post"
+        }
+      ]
+    },
+    "asignedConekta": {
+      "accepts": [
+        {
+          "arg": "data",
+          "type": "object",
+          "required": true,
+          "description": "",
+          "http": {
+            "source": "body"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "newData",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/asignedConekta",
+          "verb": "post"
+        }
+      ]
+    },
+    "addCardToUser": {
+      "accepts": [
+        {
+          "arg": "data",
+          "type": "object",
+          "required": true,
+          "description": "",
+          "http": {
+            "source": "body"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "newData",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/addCardToUser",
+          "verb": "post"
+        }
+      ]
+    },
+    "orderFromCustomer": {
+      "accepts": [
+        {
+          "arg": "data",
+          "type": "object",
+          "required": true,
+          "description": "",
+          "http": {
+            "source": "body"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "newData",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/orderFromCustomer",
+          "verb": "post"
+        }
+      ]
+    },
+    "getCards": {
+      "accepts": [
+        {
+          "arg": "data",
+          "type": "object",
+          "required": true,
+          "description": "",
+          "http": {
+            "source": "body"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "listCards",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/getCards",
+          "verb": "post"
+        }
+      ]
+    }
+  }
+}

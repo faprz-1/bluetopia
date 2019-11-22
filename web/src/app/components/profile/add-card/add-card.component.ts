@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output ,EventEmitter } from '@angular/core';
-import * as moment from 'moment';
 import { ToastService } from '../../../services/toast.service';
 import { ApiService } from '../../../services/api.service';
 
@@ -12,24 +11,20 @@ declare var Conekta;
 })
 export class AddCardComponent implements OnInit {
 
-  @Input() user:any;
+  @Input() user:any = null;
   @Output('close') close = new EventEmitter<any>();
   
   PUBLIC_KEY = 'key_MjbjZMy9XbTrWK4pCWBFjHg';
   
   data = {
     card: {
-      number: "4242424242424242",
-      name: "Javier Pedreiro",
-      exp_year: "2022",
-      exp_month: "12",
-      cvc: "123"
+      number: "",
+      name: "",
+      exp_year: "",
+      exp_month: "",
+      cvc: ""
     }
   };
-
-  conektaTokenObject:any;
-
-  aux:any = [];
 
   constructor(
     private api: ApiService,
@@ -79,36 +74,27 @@ export class AddCardComponent implements OnInit {
 
       console.log(Token);
 
-      let objToken = {
-        cardToken: Token,
-        date: null,
-        userId: this.user.id
-      }
-
-      objToken.date = moment().toISOString();
-
-      console.log(objToken);
-
-      let enpoint = "/Usuarios/addCard";
+      let enpoint = "/conekta/addCardToUser";
       
 
-      this.api.post(enpoint,objToken,true).subscribe( res => {
+      this.api.post(enpoint,{cardToken:Token, customerId: this.user.customerId},true).subscribe( res => {
         console.log(res);
+        this.close.emit();
       }, err => {
         console.log(err);
       });
-      
-      // let endpoint = "/pays/createOrder";
-  
-      // this.api.post(endpoint,{Token:Token}).subscribe( res => {
-      //   console.log(res);
-      // }, err => {
-      //   console.log(err);
-      // });
   }
 
   onErrorToken(error) {
     this.toast.showError(error);
+  }
+
+  getStatusData() {
+    if(this.data.card.number == "" || this.data.card.name == "" || this.data.card.exp_year == "" || this.data.card.exp_month == ""  || this.data.card.cvc == "") {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }

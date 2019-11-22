@@ -13,6 +13,8 @@ export class ProfileComponent implements OnInit {
   user : any
   mtModalRef: BsModalRef;
 
+  cards:any = [];
+
   constructor(
     private api : ApiService,
     private modalService: BsModalService
@@ -29,7 +31,7 @@ export class ProfileComponent implements OnInit {
     this.ready = false;
     this.user = JSON.parse(localStorage.getItem("user"))
     console.log(this.user);
-    
+    this.getCards();
     this.ready = true;
   }
 
@@ -42,28 +44,33 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  pruebaOrder() {
-    let endpoint = "/pays/createOrder";
-  
-    this.api.post(endpoint,{Token:this.user.cardtokenusers[0].cardToken}).subscribe( res => {
-      console.log(res);
-    }, err => {
-      console.log(err);
-    });
-  }
+  closeModal() {this.mtModalRef.hide();}
 
   asignedMeConekta() {
-    let endpoint = `/Usuarios/${this.user.id}/asignedMeConekta`;
+    let endpoint = `/conekta/asignedConekta`;
 
     let info = {
       name: this.user.username,
       email: this.user.email
   }
 
-    this.api.post(endpoint,info,true).subscribe( res => {
+    this.api.post(endpoint,{info:info, userId:this.user.id},true).subscribe( res => {
+      console.log(res);
+      this.reload();
+    }, err => {
+      console.log(err);
+    });
+  }
+
+  getCards() {
+    let endpoint = "/conekta/getCards";
+
+    this.api.post(endpoint,{cutomerId:this.user.customerId},true).subscribe(res => {
+      this.cards = res;
       console.log(res);
     }, err => {
       console.log(err);
+      
     });
   }
 
