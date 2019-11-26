@@ -8,7 +8,7 @@
 
   <div class="modal-body pb-1">
     <div class="form-row form-group">
-      <label>Nombre del tarjetahabiente</label>
+      <label>Nombre del Tarjetahabiente</label>
       <input class="form-control" type="text" size="20" name="name" [(ngModel)]="data.card.name">
     </div>
     <div class="form-row form-group">
@@ -38,7 +38,7 @@
   <div class="modal-footer">
     <div class="row mt-4">
       <div class="col-6">
-        <button *ngIf="user != null" type="button" class="btn btn-primary float-left" (click)="createTokoenCard()" [disabled]="getStatusData()"> Agregar </button>
+        <button *ngIf="user != null" type="button" class="btn btn-primary float-left" (click)="checkUser()" [disabled]="getStatusData()"> Agregar </button>
       </div>
     </div>
   </div>

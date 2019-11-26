@@ -10,8 +10,8 @@
       <div class="form-group bg-light">
         <label for="exampleInputEmail1">Opcion de pago</label>
         <select name="opc" id="opdId" class="form-control" [(ngModel)]="opcBuy">
-          <option *ngIf="user != null && cards.length > 0" value="Default">Default</option>
-          <option *ngIf="user != null && cards.length > 0" value="especifica">Tarjeta Especifica</option>
+          <option *ngIf="user != null && cards.length > 0 && user.customerId != null" value="Default">Default</option>
+          <option *ngIf="user != null && cards.length > 0 && user.customerId != null" value="especifica">Tarjeta Especifica</option>
           <option value="token">Otra Tarjeta</option>
         </select>
         <!-- <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"> -->

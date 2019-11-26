@@ -10,13 +10,17 @@ import { Storage } from "@ionic/storage";
 export class ProfilePage extends ComponentBase {
 
   public loggedUser: any;
+
+  cards: any = [];
+
   ngOnInit() {
     this.getProfile();
   }
 
   private async getProfile() {
     this.loggedUser = await this.storage.get("user");
-    this.loggedUser.imgperfil = this.loggedUser.profileImage != null ? this.api.getBaseURL() + this.loggedUser.profileImage.URL : 'assets/imgs/default_avatar.jpg'
+    this.loggedUser.imgperfil = this.loggedUser.profileImage != null ? this.api.getBaseURL() + this.loggedUser.profileImage.URL : 'assets/imgs/default_avatar.jpg';
+    this.getCards();
   }
 
   async updateProfilePic(){
@@ -43,6 +47,16 @@ export class ProfilePage extends ComponentBase {
 
   goToSettings(){
     this.navController.navigateRoot('/settings');
+  }
+
+  public getCards() {
+    let endpoint = "/conekta/getCards";
+
+    this.api.post(endpoint,{cutomerId:this.loggedUser.customerId},true).subscribe(res => {
+      this.cards = res;
+    }, err => {
+      console.log(err);
+    });
   }
 
 }

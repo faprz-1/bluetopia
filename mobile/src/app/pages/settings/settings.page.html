@@ -9,14 +9,24 @@
 
 <ion-content>
     <ion-list>
-        <ion-item (click)="openPasswordChangePage()">
-          <p>Cambiar contraseña</p>
-          <ion-ripple-effect></ion-ripple-effect>
-        </ion-item>
-  
-        <ion-item class="logout" ion-item (click)="logout()">
-          <p>Cerrar sesión</p>
-          <ion-ripple-effect></ion-ripple-effect>
-        </ion-item>
-      </ion-list>
+      <ion-item *ngIf="loggedUser != null && loggedUser.customerId == null" (click)="asignedMeConekta()">
+        <p>Conectar con Conekta</p>
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-item>
+
+      <ion-item *ngIf="loggedUser != null && loggedUser.customerId != null" (click)="goToAddCard()">
+        <p>Agregar Tarjeta</p>
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-item>
+
+      <ion-item (click)="openPasswordChangePage()">
+        <p>Cambiar contraseña</p>
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-item>
+
+      <ion-item class="logout" ion-item (click)="logout()">
+        <p>Cerrar sesión</p>
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-item>
+    </ion-list>
 </ion-content>

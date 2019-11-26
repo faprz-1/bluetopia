@@ -3,11 +3,11 @@
     <div class="col-8">
       <div class="display-4">
         Perfil
-        <span *ngIf="user.customerId != null"><small class="text-muted">(Conectado con Conekta)</small></span>
+        <!-- <span *ngIf="user.customerId != null"><small class="text-muted">(Conectado con Conekta)</small></span> -->
       </div>
     </div>
     <div class="col-4 d-flex align-items-center justify-content-end">
-      <button class="btn btn-primary float-right align-self-center mr-4" *ngIf="user.customerId == null" (click)="asignedMeConekta()">Conekta</button>
+      <button class="btn btn-primary float-right align-self-center mr-4" *ngIf="user.customerId == null" (click)="asignedMeConekta()">Conectar con Conekta</button>
       <i class="zmdi zmdi-card zmdi-hc-4x float-right cickleable" *ngIf="user.customerId != null" data-toggle="tooltip" data-placement="bottom" title="Agregar Tarjeta" (click)="openModal(addCard,$event)"></i>
     </div>
   </div>
@@ -40,9 +40,9 @@
           </p>
         </div>
 
-        <div class="form-group row mb-2">
-          <p>Tarjetas en conekta:</p>
-          <span *ngFor="let c of cards">
+        <div class="form-group row mb-2" *ngIf="user.customerId != null && cards.length > 0">
+          <p class="w-100">Tarjetas en conekta:</p>
+          <span class="w-100" *ngFor="let c of cards">
             <p>
               **** **** **** {{c?.last4}} {{c?.brand}} <strong>{{c?.exp_month}}/{{c?.exp_year}}</strong>
               <span *ngIf="c.default"> Default</span>

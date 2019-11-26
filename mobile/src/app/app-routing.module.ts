@@ -14,6 +14,7 @@ const routes: Routes = [
     path: 'settings', children: [
       { path: '', loadChildren: './pages/settings/settings.module#SettingsPageModule' },
       { path: 'password-change', loadChildren: './pages/settings/password-change/password-change.module#PasswordChangePageModule' },
+      { path: 'add-card', loadChildren: './pages/settings/add-card/add-card.module#AddCardPageModule' }
     ]
   },
   { path: 'notification', loadChildren: './pages/notification/notification.module#NotificationPageModule' }

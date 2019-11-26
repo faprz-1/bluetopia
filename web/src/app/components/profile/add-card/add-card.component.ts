@@ -38,18 +38,41 @@ export class AddCardComponent implements OnInit {
     this.close.emit();
   }
 
-  createTokoenCard() {
-    console.log(Conekta);
-    
-    Conekta.setPublicKey(this.PUBLIC_KEY);
+  asignedMeConekta() {
+    let endpoint = `/conekta/asignedConekta`;
 
+    let info = {
+      name: this.user.username,
+      email: this.user.email
+    }
+
+    this.api.post(endpoint,{info:info, userId:this.user.id},true).subscribe( res => {
+      this.createTokoenCard();
+    }, err => {
+      console.log(err);
+    });
+  }
+
+  checkUser() {
+    if(this.user != null) {
+      if(this.user.customerId == null) {
+        this.asignedMeConekta();
+      } else {
+        this.createTokoenCard();
+      }
+    }
+  }
+
+  createTokoenCard() {
+    Conekta.setPublicKey(this.PUBLIC_KEY);
+  
     let numberValidate = Conekta.Card.validateNumber(this.data.card.number);
     let expValidate = Conekta.Card.validateExpirationDate(this.data.card.exp_month,this.data.card.exp_year);
     let cvcValidate = Conekta.Card.validateCVC(this.data.card.cvc);
 
     var successHandler = (token) => {
       /* token keys: id, livemode, used, object */
-      console.log(token);
+      // console.log(token);
       this.onSuccesFulToken(token);
 
     };
@@ -68,17 +91,11 @@ export class AddCardComponent implements OnInit {
   }
 
   onSuccesFulToken(token) {
-      console.log(token);
-
       var Token = token.id;
-
-      console.log(Token);
 
       let enpoint = "/conekta/addCardToUser";
       
-
       this.api.post(enpoint,{cardToken:Token, customerId: this.user.customerId},true).subscribe( res => {
-        console.log(res);
         this.close.emit();
       }, err => {
         console.log(err);
