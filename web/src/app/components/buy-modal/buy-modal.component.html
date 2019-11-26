@@ -1,6 +1,6 @@
 <div class="modal-content" >
     <div class="modal-header bg-dark">
-      <h4 class="modal-title text-white pull-left ">Forma de pago</h4>
+      <h4 class="modal-title text-white pull-left ">Forma de Pago</h4>
       <button type="button" class="close text-white pull-right" aria-label="Close" (click)="closeModal();">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -8,7 +8,7 @@
   
     <div class="modal-body pb-1">
       <div class="form-group bg-light">
-        <label for="exampleInputEmail1">Opcion de pago</label>
+        <label for="exampleInputEmail1">Opciones de Pago</label>
         <select name="opc" id="opdId" class="form-control" [(ngModel)]="opcBuy">
           <option *ngIf="user != null && cards.length > 0 && user.customerId != null" value="Default">Default</option>
           <option *ngIf="user != null && cards.length > 0 && user.customerId != null" value="especifica">Tarjeta Especifica</option>
@@ -24,7 +24,7 @@
       </ng-container>
       <ng-container *ngIf="opcBuy == 'especifica'">
           <div class="form-group">
-            <label for="exampleInputEmail1">Tarjeta</label>
+            <label for="exampleInputEmail1">Tarjeta/s</label>
             <select name="opc" id="opdId" class="form-control" [(ngModel)]="selectedCard">
               <option value="1">Selecciona una tarjeta</option>
               <option *ngFor="let c of cards" [value]="c.id">**** **** **** {{c?.last4}} {{c?.brand}} {{c?.exp_month}}/{{c?.exp_year}}</option>

@@ -9,12 +9,7 @@
 
 <ion-content>
     <ion-list>
-      <ion-item *ngIf="loggedUser != null && loggedUser.customerId == null" (click)="asignedMeConekta()">
-        <p>Conectar con Conekta</p>
-        <ion-ripple-effect></ion-ripple-effect>
-      </ion-item>
-
-      <ion-item *ngIf="loggedUser != null && loggedUser.customerId != null" (click)="goToAddCard()">
+      <ion-item *ngIf="loggedUser != null" (click)="goToAddCard()">
         <p>Agregar Tarjeta</p>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-item>

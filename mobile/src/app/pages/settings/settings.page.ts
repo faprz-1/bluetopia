@@ -21,7 +21,7 @@ export class SettingsPage extends ComponentBase implements OnInit {
   }
 
   public openPasswordChangePage() {
-    this.navController.navigateRoot('/settings/password-change')
+    this.navController.navigateRoot('/settings/password-change');
   }
 
   public logout() {

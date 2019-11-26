@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Forma de Pago</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ng-container>
+          <ion-label><h2 class="ion-text-center">Opciones de Pago</h2></ion-label>
+          <ion-select interface="popover" [(ngModel)]="opcBuy">
+            <ion-select-option value="Default" *ngIf="loggedUser != null && cards.length > 0 && loggedUser.customerId != null" selected>Default</ion-select-option>
+            <ion-select-option value="especifica" *ngIf="loggedUser != null && cards.length > 0 && loggedUser.customerId != null">Tarjeta Especifica</ion-select-option>
+            <ion-select-option value="token">Otra Tarjeta</ion-select-option>
+          </ion-select>
+        </ng-container>
+      </ion-col>
+    </ion-row>
+    <hr>
+    <ion-row>
+      <ion-col>
+        <ng-container *ngIf="opcBuy == 'Default'">
+          <ion-label>
+            <h2 class="ion-text-center">Tarjeta por default</h2>
+            <h3 class="ion-text-center">**** **** **** {{defCard?.last4}} {{defCard?.brand}} {{defCard?.exp_month}}/{{defCard?.exp_year}}</h3>
+          </ion-label>
+        </ng-container>
+        <ng-container *ngIf="opcBuy == 'especifica'">
+          <ion-label><h2 class="ion-text-center">Tarjeta/s</h2></ion-label>
+          <ion-select interface="popover" [(ngModel)]="selectedCard">
+            <ion-select-option value="1">Selecciona una tarjeta</ion-select-option>
+            <ion-select-option *ngFor="let c of cards" [value]="c.id">**** **** **** {{c?.last4}} {{c?.brand}} {{c?.exp_month}}/{{c?.exp_year}}</ion-select-option>
+          </ion-select>
+        </ng-container>
+        <ng-container *ngIf="opcBuy == 'token'">
+          <form>
+              <ion-list lines="full" class="ion-no-margin ion-no-padding">
+                <ion-item>
+                  <ion-label position="stacked">Nombre del Tarjetahabiente <ion-text color="danger">*</ion-text></ion-label>
+                  <ion-input required type="text" maxlength="20" name="name" [(ngModel)]="data.card.name"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="stacked">Correo Electronico <ion-text color="danger">*</ion-text></ion-label>
+                  <ion-input required type="email" name="email" [(ngModel)]="userInfo.email"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="stacked">Numero de Telefono <ion-text color="danger">*</ion-text></ion-label>
+                  <ion-input required type="text" maxlength="10" name="phone" [(ngModel)]="userInfo.phone"></ion-input>
+                </ion-item>
+        
+                <ion-item>
+                  <ion-label position="stacked">Número de tarjeta de crédito <ion-text color="danger">*</ion-text></ion-label>
+                  <ion-input required type="text" maxlength="20" name="number" [(ngModel)]="data.card.number"></ion-input>
+                </ion-item>
+                
+                <ion-item>
+                  <ion-label position="stacked">CVC <ion-text color="danger">*</ion-text></ion-label>
+                  <ion-input required type="text" maxlength="4" name="cvc" [(ngModel)]="data.card.cvc"></ion-input>
+                </ion-item>
+                
+                <ion-item>
+                  <ion-label position="stacked">Fecha de expiración (MM/AAAA) <ion-text color="danger">*</ion-text></ion-label>
+                  <ion-grid class="ion-no-padding">
+                    <ion-row class="ion-no-padding">
+                      <ion-col class="ion-no-padding" size="5"><ion-input class="ion-text-center" required type="text" maxlength="2" name="exp_month" [(ngModel)]="data.card.exp_month"></ion-input></ion-col>
+                      <ion-col class="ion-no-padding ion-align-self-center" size="2"><h3 class="ion-text-center ion-no-margin">/</h3></ion-col>
+                      <ion-col class="ion-no-padding" size="5"><ion-input class="ion-text-center" required type="text" maxlength="4" name="exp_year" [(ngModel)]="data.card.exp_year"></ion-input></ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-item>
+              </ion-list>
+            </form>
+        </ng-container>
+      </ion-col>
+    </ion-row>
+    <hr>
+    <ion-row>
+      <ion-col>
+          <ion-button expand="block" type="button" class="ion-no-margin" *ngIf="opcBuy == 'Default'" type="button" class="btn btn-primary float-left" (click)="buy()"> Comprar </ion-button>
+          <ion-button expand="block" type="button" class="ion-no-margin" *ngIf="opcBuy == 'especifica'" type="button" class="btn btn-primary float-left" (click)="buy()" [disabled]="selectedCard == '1' && opcBuy == 'especifica'"> Comprar </ion-button>
+          <ion-button expand="block" type="button" class="ion-no-margin" *ngIf="opcBuy == 'token'" type="button" class="btn btn-primary float-left" (click)="buy()" [disabled]="getStatusData()"> Comprar </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

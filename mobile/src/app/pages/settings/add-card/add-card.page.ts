@@ -41,21 +41,14 @@ export class AddCardPage extends ComponentBase implements OnInit {
       email: this.loggedUser.email
     }
 
-    this.api.post(endpoint,{info:info, userId:this.loggedUser.id},true).subscribe( res => {
-      console.log(res);
-      // this.reload();
-    }, err => {
-      console.log(err);
-    });
+    this.api.post(endpoint,{info:info, userId:this.loggedUser.id},true).subscribe( res => { this.createTokoenCard(); },
+    err => { this.errorAlert("No se pudo crear usuario en conekta"); });
   }
 
   public checkUser() {
     if(this.loggedUser != null) {
-      if(this.loggedUser.customerId == null) {
-        this.asignedMeConekta();
-      } else {
-        this.createTokoenCard();
-      }
+      if(this.loggedUser.customerId == null) { this.asignedMeConekta(); }
+      else { this.createTokoenCard(); }
     }
   }
 
@@ -70,22 +63,16 @@ export class AddCardPage extends ComponentBase implements OnInit {
 
     var successHandler = (token) => {
       /* token keys: id, livemode, used, object */
-      // console.log(token);
       this.onSuccesFulToken(token);
-
     };
      
     var errorHandler = (err) => {
       /* err keys: object, type, message, message_to_purchaser, param, code */
-      console.log(err);
       this.onErrorToken(err);
     };
 
-    if(numberValidate && expValidate && cvcValidate) {
-      Conekta.Token.create(this.data, successHandler, errorHandler);
-    } else {
-      this.errorAlert('No se pudo agregar la tarjeta');
-    }
+    if(numberValidate && expValidate && cvcValidate) { Conekta.Token.create(this.data, successHandler, errorHandler); }
+    else { this.errorAlert('No se pudo agregar la tarjeta'); }
   }
 
   async errorAlert(msn) {
@@ -127,9 +114,7 @@ export class AddCardPage extends ComponentBase implements OnInit {
           'No', 
           () => {}
         )
-      }, err => {
-        console.log(err);
-      });
+      }, err => { this.errorAlert("No se pudo agregar la tarjeta"); });
   }
 
   public onErrorToken(error) {
@@ -138,11 +123,9 @@ export class AddCardPage extends ComponentBase implements OnInit {
   }
 
   public getStatusData() {
-    if(this.data.card.number == "" || this.data.card.name == "" || this.data.card.exp_year == "" || this.data.card.exp_month == ""  || this.data.card.cvc == "") {
-      return true;
-    } else {
-      return false;
-    }
+    if(this.data.card.number == "" || this.data.card.name == "" || this.data.card.exp_year == "" || this.data.card.exp_month == ""  ||
+       this.data.card.cvc == "") { return true; }
+    else { return false; }
   }
 
 }

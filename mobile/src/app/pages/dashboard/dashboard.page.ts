@@ -11,4 +11,8 @@ export class DashboardPage extends ComponentBase {
   public openNotifications() {
     this.navController.navigateRoot('/notification');
   }
+
+  public goTo() {
+    this.navController.navigateRoot('/buy-page');
+  }
 }

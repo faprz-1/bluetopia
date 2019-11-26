@@ -1,18 +1,16 @@
-import { Component, OnInit, Input, Output ,EventEmitter } from '@angular/core';
-import { ToastService } from '../../services/toast.service';
-import { ApiService } from '../../services/api.service';
+import { Component, OnInit } from '@angular/core';
+import { ComponentBase } from 'src/app/base/component-base';
 
 declare var Conekta;
 
 @Component({
-  selector: 'app-buy-modal',
-  templateUrl: './buy-modal.component.html',
-  styleUrls: ['./buy-modal.component.scss']
+  selector: 'app-buy-page',
+  templateUrl: './buy-page.page.html',
+  styleUrls: ['./buy-page.page.scss'],
 })
-export class BuyModalComponent implements OnInit {
+export class BuyPagePage extends ComponentBase implements OnInit {
 
-  @Input() user:any = null;
-  @Output('close') close = new EventEmitter<any>();
+  public loggedUser: any;
 
   opcBuy:any = "Default"
   cards:any = [];
@@ -55,21 +53,25 @@ export class BuyModalComponent implements OnInit {
     },
   ]
 
-  constructor(
-    private api: ApiService,
-    private toast: ToastService
-  ) { }
-
   ngOnInit() {
-    this.reload();
+    this.getProfile();
   }
 
-  reload() {
+  async errorAlert(msn) {
+    const alert = await this.alertController.create({
+      header: 'Error',
+      subHeader: '',
+      message: msn,
+      buttons: ['Aceptar']
+    });
+
+    await alert.present();
+  }
+
+  private async getProfile() {
+    this.loggedUser = await this.storage.get("user");
+    this.loggedUser.imgperfil = this.loggedUser.profileImage != null ? this.api.getBaseURL() + this.loggedUser.profileImage.URL : 'assets/imgs/default_avatar.jpg';
     this.getCards();
-  }
-
-  closeModal(){
-    this.close.emit();
   }
 
   filterDefCard() {
@@ -79,26 +81,30 @@ export class BuyModalComponent implements OnInit {
   getCards() {
     let endpoint = "/conekta/getCards";
 
-    this.api.post(endpoint,{cutomerId:this.user.customerId},true).subscribe(res => {
+    this.api.post(endpoint,{cutomerId:this.loggedUser.customerId},true).subscribe(res => {
       this.cards = res;
       this.filterDefCard();
-    }, err => { this.toast.showError("Error al obetener las tarjetas"); });
+    }, err => {
+      this.errorAlert("Error al obetener las tarjetas");      
+    });
   }
 
   buy() {
+    let endpoint = "/conekta/orderFromCustomer";
+
     if(this.opcBuy == "Default") { this.postBuy(null); }
     else if(this.opcBuy == "especifica") {
       if(this.selectedCard != '1') { this.postBuy(this.selectedCard); }
-      else { this.toast.showError("Tarjeta seleccionada incorrecta"); }
+      else { this.errorAlert("Tarjeta seleccionada incorrecta"); }
     } else if(this.opcBuy == "token") { this.createTokoenCard(); }
+
   }
 
-  postBuy(cardId) {
+  public postBuy(cardId) {
     let endpoint = "/conekta/orderFromCustomer";
 
     this.api.post(endpoint,{cutomerId:this.user.customerId, productsItems:this.lisrProducts,cardId:cardId}).subscribe( res => {
-      this.close.emit();
-    }, err => { this.toast.showError("No se pudo hacer el cobro"); });
+    }, err => { this.errorAlert("No se pudo hacer el cobro"); });
   }
 
   createTokoenCard() {
@@ -119,7 +125,7 @@ export class BuyModalComponent implements OnInit {
     };
 
     if(numberValidate && expValidate && cvcValidate) { Conekta.Token.create(this.data, successHandler, errorHandler); }
-    else { this.toast.showError("Datos Incorrectos"); }
+    else { this.errorAlert("Datos Incorrectos"); }
   }
 
   onSuccesFulToken(token) {
@@ -130,16 +136,17 @@ export class BuyModalComponent implements OnInit {
       this.userInfo.name = this.data.card.name;
 
       this.api.post(enpoint,{productsItems: this.lisrProducts, tokenId: Token, userI:this.userInfo},true).subscribe( res => {
-        this.close.emit();
-      }, err => { this.toast.showError("No se pudo hacer el cobro"); });
+      }, err => { this.errorAlert("No se pudo hacer el cobro"); });
   }
 
-  onErrorToken(error) { this.toast.showError(error); }
+  onErrorToken(error) {
+    this.errorAlert(error);
+  }
 
   getStatusData() {
     if(this.data.card.number == "" || this.data.card.name == "" || this.data.card.exp_year == "" || this.data.card.exp_month == ""  || this.data.card.cvc == ""
     || this.userInfo.email == "" || this.userInfo.phone == "") { return true; }
-    else {return false; }
+    else { return false; }
   }
 
 }

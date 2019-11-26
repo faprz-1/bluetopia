@@ -46,20 +46,14 @@ export class AddCardComponent implements OnInit {
       email: this.user.email
     }
 
-    this.api.post(endpoint,{info:info, userId:this.user.id},true).subscribe( res => {
-      this.createTokoenCard();
-    }, err => {
-      console.log(err);
-    });
+    this.api.post(endpoint,{info:info, userId:this.user.id},true).subscribe( res => { this.createTokoenCard(); },
+    err => { this.toast.showError("No se pudo crear usuario en conekta"); });
   }
 
   checkUser() {
     if(this.user != null) {
-      if(this.user.customerId == null) {
-        this.asignedMeConekta();
-      } else {
-        this.createTokoenCard();
-      }
+      if(this.user.customerId == null) { this.asignedMeConekta(); }
+      else { this.createTokoenCard(); }
     }
   }
 
@@ -72,22 +66,16 @@ export class AddCardComponent implements OnInit {
 
     var successHandler = (token) => {
       /* token keys: id, livemode, used, object */
-      // console.log(token);
       this.onSuccesFulToken(token);
-
     };
      
     var errorHandler = (err) => {
       /* err keys: object, type, message, message_to_purchaser, param, code */
-      console.log(err);
       this.onErrorToken(err);
     };
 
-    if(numberValidate && expValidate && cvcValidate) {
-      Conekta.Token.create(this.data, successHandler, errorHandler);
-    } else {
-      this.toast.showError("Datos Incorrectos");
-    }
+    if(numberValidate && expValidate && cvcValidate) { Conekta.Token.create(this.data, successHandler, errorHandler); }
+    else { this.toast.showError("Datos Incorrectos"); }
   }
 
   onSuccesFulToken(token) {
@@ -95,23 +83,16 @@ export class AddCardComponent implements OnInit {
 
       let enpoint = "/conekta/addCardToUser";
       
-      this.api.post(enpoint,{cardToken:Token, customerId: this.user.customerId},true).subscribe( res => {
-        this.close.emit();
-      }, err => {
-        console.log(err);
-      });
+      this.api.post(enpoint,{cardToken:Token, customerId: this.user.customerId},true).subscribe( res => { this.close.emit(); },
+      err => { this.toast.showError("No se pudo agregar la tarjeta"); });
   }
 
-  onErrorToken(error) {
-    this.toast.showError(error);
-  }
+  onErrorToken(error) { this.toast.showError(error); }
 
   getStatusData() {
-    if(this.data.card.number == "" || this.data.card.name == "" || this.data.card.exp_year == "" || this.data.card.exp_month == ""  || this.data.card.cvc == "") {
-      return true;
-    } else {
-      return false;
-    }
+    if(this.data.card.number == "" || this.data.card.name == "" || this.data.card.exp_year == "" || this.data.card.exp_month == ""  ||
+       this.data.card.cvc == "") { return true; }
+    else { return false; }
   }
 
 }
