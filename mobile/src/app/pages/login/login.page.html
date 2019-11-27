@@ -17,7 +17,16 @@
             <ion-row>
                 <ion-col size="12">
                     <ion-label position="floating">Contraseña</ion-label>
-                    <ion-input placeholder="Contraseña" type="password" (keyup.enter)="OnLogin()" [(ngModel)]="loginAccount.password"></ion-input>
+                    <ion-input placeholder="Contraseña" type="password" [(ngModel)]="loginAccount.password"></ion-input>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col size="12">
+                    <ion-item>
+                        <ion-checkbox slot="start" color="secondary" [(ngModel)]="dontClose"></ion-checkbox>
+                        <ion-label >Mantener sesion iniciada</ion-label>
+                    </ion-item>
                 </ion-col>
             </ion-row>
 

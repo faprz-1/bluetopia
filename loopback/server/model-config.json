@@ -32,6 +32,7 @@
     "dataSource": "mysqlDev",
     "public": true,
     "options": {
+    "allowEternalTokens": true,
       "remoting": {
         "sharedMethods": {
           "*": false,

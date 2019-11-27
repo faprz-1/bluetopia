@@ -6,6 +6,7 @@ import * as moment from 'moment';
 class Account {
   email: string;
   password: string;
+  ttl:number;
 }
 
 @Component({
@@ -15,6 +16,7 @@ class Account {
 })
 export class LoginPage extends ComponentBase implements OnInit {
   loginAccount: Account = new Account();
+  dontClose : boolean = true;
 
   ngOnInit() {
     this.disableMenu();
@@ -22,6 +24,11 @@ export class LoginPage extends ComponentBase implements OnInit {
 
   public async OnLogin() {
     this.ShowLoading()
+    if(this.dontClose){
+      this.loginAccount.ttl= -1
+    }else{
+      delete this.loginAccount.ttl;
+    }
     this.api.post("/Usuarios/login", this.loginAccount, false).subscribe(
       userToken => this.GetUserWithAPIToken(userToken),
       error => this.HandleAPIError(error)
