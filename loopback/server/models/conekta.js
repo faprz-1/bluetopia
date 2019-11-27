@@ -1,19 +1,9 @@
 'use strict';
 
-const assert = require('assert')
-// const nock = require('nock')
-const fs = require('fs')
-
 const conekta = require('conekta')
-const base64 = require('conekta/lib/base64')
 const LOCALE = 'es'
-const PUBLIC_KEY = 'key_MjbjZMy9XbTrWK4pCWBFjHg'
 const PRIVATE_KEY = 'key_zWSg5irfMiBhZ2omH7Kw2w'
 const API_VERSION = '2.0.0'
-const PRODUCTION_KEY = '9YxqfRnx4sMQDnRsqdYn'
-const TIMEOUT = 30000
-
-var moment = require('moment');
 
 conekta.api_key = PRIVATE_KEY;
 conekta.api_version  = API_VERSION;
@@ -31,6 +21,7 @@ module.exports = function(Conekta) {
       var userI = data.userI;
       var productsItems = data.productsItems;
       var tokenId = data.tokenId;
+      var meses = data.meses;
 
       let orderBody = {
         currency: "MXN",
@@ -42,6 +33,9 @@ module.exports = function(Conekta) {
             token_id: tokenId
           }
         }]
+      }
+      if(meses.requerido == 1) {
+        orderBody.charges[0].monthly_installments = meses.cantidad
       }
 
         conekta.Order.create(orderBody, (err, order) => {
@@ -141,6 +135,7 @@ module.exports = function(Conekta) {
     var cutomerId = data.cutomerId;
     var productsItems = data.productsItems;
     var cardId = data.cardId;
+    var meses = data.meses;
 
     let orderBody = {
       currency: "MXN",
@@ -151,6 +146,10 @@ module.exports = function(Conekta) {
       charges: [{
         payment_method: null
       }]
+    }
+
+    if(meses.requerido == 1) {
+      orderBody.charges[0].monthly_installments = meses.cantidad
     }
 
     if(cardId == null) {

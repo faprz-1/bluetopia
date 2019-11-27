@@ -4,15 +4,13 @@ import { ComponentBase } from 'src/app/base/component-base';
 declare var Conekta;
 
 @Component({
-  selector: 'app-buy-page',
-  templateUrl: './buy-page.page.html',
-  styleUrls: ['./buy-page.page.scss'],
+  selector: 'app-buy',
+  templateUrl: './buy.component.html',
+  styleUrls: ['./buy.component.scss'],
 })
-export class BuyPagePage extends ComponentBase implements OnInit {
+export class BuyComponent extends ComponentBase implements OnInit {
 
-  @Input() prueba:any;
-
-  public loggedUser: any;
+  @Input() loggedUser: any;
 
   opcBuy:any = "Default"
   cards:any = [];
@@ -60,7 +58,7 @@ export class BuyPagePage extends ComponentBase implements OnInit {
   numMeses:any = 3;
 
   ngOnInit() {
-    this.getProfile();
+    this.getCards();
   }
 
   async errorAlert(msn) {
@@ -72,12 +70,6 @@ export class BuyPagePage extends ComponentBase implements OnInit {
     });
 
     await alert.present();
-  }
-
-  private async getProfile() {
-    this.loggedUser = await this.storage.get("user");
-    this.loggedUser.imgperfil = this.loggedUser.profileImage != null ? this.api.getBaseURL() + this.loggedUser.profileImage.URL : 'assets/imgs/default_avatar.jpg';
-    this.getCards();
   }
 
   filterDefCard() {
@@ -109,15 +101,15 @@ export class BuyPagePage extends ComponentBase implements OnInit {
   public postBuy(cardId) {
     let endpoint = "/conekta/orderFromCustomer";
     let objToBuy = {
-      cutomerId: this.user.customerId,
+      cutomerId: this.loggedUser.customerId,
       productsItems: this.lisrProducts,
       cardId: cardId,
       meses: {
         requerido:this.mesesSinIntereses,
         cantidad:this.numMeses
       }
-    }
-    
+    };
+
     this.api.post(endpoint,objToBuy).subscribe( res => {
     }, err => { this.errorAlert("No se pudo hacer el cobro"); });
   }
