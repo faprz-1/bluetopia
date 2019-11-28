@@ -1,13 +1,13 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Forma de Pago</ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content>
+<!-- <ion-content>
   <ion-grid>
     <ion-row>
       <ion-col size="12">
@@ -103,7 +103,6 @@
     <ion-row>
       <ion-col>
         <ng-container *ngIf="mesesSinIntereses == 1">
-          <!-- <ion-label><h2 class="ion-text-center">Opciones de Pago</h2></ion-label> -->
           <ion-select interface="popover" [(ngModel)]="numMeses">
             <ion-select-option [value]="3">3 Meses</ion-select-option>
             <ion-select-option [value]="6">6 Meses</ion-select-option>
@@ -122,4 +121,5 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-</ion-content>
+</ion-content> -->
+<app-buy *ngIf="loggedUser != null" [loggedUser]="loggedUser"></app-buy>

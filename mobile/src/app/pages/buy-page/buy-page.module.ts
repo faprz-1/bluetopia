@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { BuyPagePage } from './buy-page.page';
 
+import { ComponentsModule } from "../../components/components.module";
+
 const routes: Routes = [
   {
     path: '',
@@ -19,8 +21,10 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    ComponentsModule
   ],
-  declarations: [BuyPagePage]
+  declarations: [BuyPagePage],
+  entryComponents: [BuyPagePage]
 })
 export class BuyPagePageModule {}

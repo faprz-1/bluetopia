@@ -16,7 +16,7 @@ export class DashboardPage extends ComponentBase implements OnInit {
 
   async presentModal() {
     const modal = await this.modalController.create({
-      component: BuyComponent
+      component: BuyPagePage
     });
     return await modal.present();
   }
