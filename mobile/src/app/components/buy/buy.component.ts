@@ -10,14 +10,14 @@ declare var Conekta;
 })
 export class BuyComponent extends ComponentBase implements OnInit {
 
+  PUBLIC_KEY = 'key_MjbjZMy9XbTrWK4pCWBFjHg';
+
   @Input() loggedUser: any;
 
   opcBuy:any = "Default"
   cards:any = [];
   selectedCard:any = "1";
   defCard:any;
-
-  PUBLIC_KEY = 'key_MjbjZMy9XbTrWK4pCWBFjHg';
   
   data = {
     card: {
@@ -58,7 +58,16 @@ export class BuyComponent extends ComponentBase implements OnInit {
   numMeses:any = 3;
 
   ngOnInit() {
+    console.log(this.loggedUser);
     this.getCards();
+  }
+
+  checkLogUser() {
+    if(this.loggedUser != null && this.cards.length > 0 && this.loggedUser.customerId != null) {
+      return true;
+    }
+
+    return false;
   }
 
   async errorAlert(msn) {
@@ -111,6 +120,8 @@ export class BuyComponent extends ComponentBase implements OnInit {
     };
 
     this.api.post(endpoint,objToBuy).subscribe( res => {
+      console.log(res);
+      
     }, err => { this.errorAlert("No se pudo hacer el cobro"); });
   }
 

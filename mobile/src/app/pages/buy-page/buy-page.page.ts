@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ComponentBase } from 'src/app/base/component-base';
 
 declare var Conekta;
-
 @Component({
   selector: 'app-buy-page',
   templateUrl: './buy-page.page.html',
@@ -10,9 +9,7 @@ declare var Conekta;
 })
 export class BuyPagePage extends ComponentBase implements OnInit {
 
-  @Input() prueba:any;
-
-  public loggedUser: any;
+  @Input() loggedUser: any;
 
   opcBuy:any = "Default"
   cards:any = [];
@@ -61,6 +58,12 @@ export class BuyPagePage extends ComponentBase implements OnInit {
 
   ngOnInit() {
     this.getProfile();
+  }
+
+  public dismissModal() {
+    // using the injected ModalController this page
+    // can "dismiss" itself and optionally pass back data
+    this.modalController.dismiss();
   }
 
   async errorAlert(msn) {

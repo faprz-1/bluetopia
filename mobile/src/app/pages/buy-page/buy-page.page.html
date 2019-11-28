@@ -1,11 +1,11 @@
-<!-- <ion-header>
+<ion-header translucent>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+    <ion-title>Formas de Pago</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Close</ion-button>
     </ion-buttons>
-    <ion-title>Forma de Pago</ion-title>
   </ion-toolbar>
-</ion-header> -->
+</ion-header>
 
 <!-- <ion-content>
   <ion-grid>
@@ -122,4 +122,16 @@
     </ion-row>
   </ion-grid>
 </ion-content> -->
-<app-buy *ngIf="loggedUser != null" [loggedUser]="loggedUser"></app-buy>
+<!-- <ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Formas de Pago</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header> -->
+<ion-content fullscreen>
+    <ion-grid>
+      <app-buy *ngIf="loggedUser != null" [loggedUser]="loggedUser"></app-buy>
+    </ion-grid>
+</ion-content>

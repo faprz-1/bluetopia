@@ -1,13 +1,17 @@
-<ion-content>
-  <ion-grid>
-    <ion-row>
+
+  <!-- <ion-row>
+    <ion-col >
+      <p>Hola</p>
+    </ion-col>
+  </ion-row> -->
+  <ion-row>
       <ion-col>
         <ng-container>
           <ion-label><h2 class="ion-text-center">Opciones de Pago</h2></ion-label>
           <ion-select interface="popover" [(ngModel)]="opcBuy">
-            <ion-select-option value="Default" *ngIf="loggedUser != null && cards.length > 0 && loggedUser.customerId != null" selected>Default</ion-select-option>
-            <ion-select-option value="especifica" *ngIf="loggedUser != null && cards.length > 0 && loggedUser.customerId != null">Tarjeta Especifica</ion-select-option>
-            <ion-select-option value="token">Otra Tarjeta</ion-select-option>
+            <ion-select-option [value]="'Default'" *ngIf="checkLogUser()">Default</ion-select-option>
+            <ion-select-option [value]="'especifica'" *ngIf="checkLogUser()">Tarjeta Especifica</ion-select-option>
+            <ion-select-option [value]="'token'">Otra Tarjeta</ion-select-option>
           </ion-select>
         </ng-container>
       </ion-col>
@@ -74,26 +78,18 @@
     <hr>
     <ion-row>
       <ion-col>
-        <ion-radio-group [(ngModel)]="mesesSinIntereses">
-          <ion-list-header>
-            <ion-label>Meses sin intereses</ion-label>
-          </ion-list-header>
-          <ion-item>
-            <ion-label>Si</ion-label>
-            <ion-radio slot="start" color="success" [value]="1" checked></ion-radio>
-          </ion-item>
-
-          <ion-item>
-            <ion-label>No</ion-label>
-            <ion-radio slot="start" color="success" [value]="0"></ion-radio>
-          </ion-item>
-        </ion-radio-group>
+        <ion-label><h2 class="ion-text-center">Conatdo</h2></ion-label>
+        <ion-select interface="popover" [(ngModel)]="mesesSinIntereses">
+          <ion-select-option [value]="1">Si</ion-select-option>
+          <ion-select-option [value]="0">No</ion-select-option>
+        </ion-select>
       </ion-col>
     </ion-row>
     <hr>
     <ion-row>
       <ion-col>
-        <ng-container *ngIf="mesesSinIntereses == 1">
+        <ng-container *ngIf="mesesSinIntereses == 0">
+          <ion-label><h2 class="ion-text-center">Meses sin intereses</h2></ion-label>
           <ion-select interface="popover" [(ngModel)]="numMeses">
             <ion-select-option [value]="3">3 Meses</ion-select-option>
             <ion-select-option [value]="6">6 Meses</ion-select-option>
@@ -111,5 +107,4 @@
           <ion-button expand="block" type="button" class="ion-no-margin" *ngIf="opcBuy == 'token'" type="button" class="btn btn-primary float-left" (click)="buy()" [disabled]="getStatusData()"> Comprar </ion-button>
       </ion-col>
     </ion-row>
-  </ion-grid>
-</ion-content>
+  

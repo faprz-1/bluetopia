@@ -24,7 +24,6 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ComponentsModule
   ],
-  declarations: [BuyPagePage],
-  entryComponents: [BuyPagePage]
+  declarations: [BuyPagePage]
 })
 export class BuyPagePageModule {}

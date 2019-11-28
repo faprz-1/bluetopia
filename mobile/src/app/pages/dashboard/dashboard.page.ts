@@ -10,26 +10,21 @@ import { BuyPagePage } from "../buy-page/buy-page.page";
 })
 export class DashboardPage extends ComponentBase implements OnInit {
 
+  public loggedUser:any;
+
   ngOnInit() {
     this.getProfile();
   }
 
   async presentModal() {
     const modal = await this.modalController.create({
-      component: BuyPagePage
+      component: BuyPagePage,
+      componentProps: {
+        'loggedUser': this.loggedUser
+      }
     });
     return await modal.present();
   }
-
-  dismiss() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
-    this.modalController.dismiss({
-      'dismissed': true
-    });
-  }
-  
-  public loggedUser:any;
 
   public openNotifications() {
     this.navController.navigateRoot('/notification');

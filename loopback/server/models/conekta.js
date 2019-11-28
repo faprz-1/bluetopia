@@ -34,7 +34,7 @@ module.exports = function(Conekta) {
           }
         }]
       }
-      if(meses.requerido == 1) {
+      if(meses.requerido == 0) {
         orderBody.charges[0].monthly_installments = meses.cantidad
       }
 
@@ -148,7 +148,7 @@ module.exports = function(Conekta) {
       }]
     }
 
-    if(meses.requerido == 1) {
+    if(meses.requerido == 0) {
       orderBody.charges[0].monthly_installments = meses.cantidad
     }
 
