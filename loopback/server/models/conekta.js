@@ -135,7 +135,10 @@ module.exports = function(Conekta) {
     var cutomerId = data.cutomerId;
     var productsItems = data.productsItems;
     var cardId = data.cardId;
-    var meses = data.meses;
+    var mesesCantidad = data.mesesCantidad;
+
+    console.log(meses);
+    
 
     let orderBody = {
       currency: "MXN",
@@ -144,23 +147,26 @@ module.exports = function(Conekta) {
       },
       line_items: productsItems,
       charges: [{
+        
         payment_method: null
       }]
     }
 
-    if(meses.requerido == 0) {
-      orderBody.charges[0].monthly_installments = meses.cantidad
-    }
+    
 
     if(cardId == null) {
       orderBody.charges[0].payment_method = {
-        "type": "default"
+        type: "default"
       }
     } else {
       orderBody.charges[0].payment_method = {
         type: "card",
         payment_source_id: cardId
       }
+    }
+
+    if(mesesCantidad > 1) {
+      orderBody.charges[0].payment_method.monthly_installments = meses.cantidad
     }
 
     conekta.Order.create(orderBody, function(err, order) {

@@ -38,24 +38,22 @@ export class BuyComponent extends ComponentBase implements OnInit {
   lisrProducts = [
     {
       name: "Product 1",
-      unit_price: 3500,
+      unit_price: 35000,
       quantity: 1
     },
     {
       name: "Product 2",
-      unit_price: 1000,
+      unit_price: 10000,
       quantity: 3
     },
     {
       name: "Product 3",
-      unit_price: 100,
+      unit_price: 1000,
       quantity: 10
     },
   ]
 
-  mesesSinIntereses:any = 1;
-
-  numMeses:any = 3;
+  numMeses:any = 1;
 
   ngOnInit() {
     console.log(this.loggedUser);
@@ -83,6 +81,13 @@ export class BuyComponent extends ComponentBase implements OnInit {
 
   filterDefCard() {
     this.cards.forEach(card => { if(card.default) this.defCard = card; });
+    this.chechDefCard();
+  }
+
+  chechDefCard() {
+    this.selectedCard = this.defCard.id;
+    // if(card.last4 == this.defCard.last4 && card.brand == this.defCard.brand && card.exp_month == this.defCard.exp_month && card.exp_month == this.defCard.exp_month){
+    // }  
   }
 
   getCards() {
@@ -97,8 +102,6 @@ export class BuyComponent extends ComponentBase implements OnInit {
   }
 
   buy() {
-    if(this.mesesSinIntereses == 0) { this.numMeses = null;}
-
     if(this.opcBuy == "Default") { this.postBuy(null); }
     else if(this.opcBuy == "especifica") {
       if(this.selectedCard != '1') { this.postBuy(this.selectedCard); }
@@ -113,10 +116,7 @@ export class BuyComponent extends ComponentBase implements OnInit {
       cutomerId: this.loggedUser.customerId,
       productsItems: this.lisrProducts,
       cardId: cardId,
-      meses: {
-        requerido:this.mesesSinIntereses,
-        cantidad:this.numMeses
-      }
+      mesesCantidad: this.numMeses
     };
 
     this.api.post(endpoint,objToBuy).subscribe( res => {
@@ -157,10 +157,7 @@ export class BuyComponent extends ComponentBase implements OnInit {
         productsItems: this.lisrProducts,
         tokenId: Token,
         userI:this.userInfo,
-        meses: {
-          requerido:this.mesesSinIntereses,
-          cantidad:this.numMeses
-        }
+        mesesCantidad: this.numMeses
       }
 
       this.api.post(enpoint,objToBuy,true).subscribe( res => {

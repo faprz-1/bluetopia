@@ -4,7 +4,7 @@
       <p>Hola</p>
     </ion-col>
   </ion-row> -->
-  <ion-row>
+  <!-- <ion-row>
       <ion-col>
         <ng-container>
           <ion-label><h2 class="ion-text-center">Opciones de Pago</h2></ion-label>
@@ -16,22 +16,20 @@
         </ng-container>
       </ion-col>
     </ion-row>
-    <hr>
+    <hr> -->
     <ion-row>
       <ion-col>
-        <ng-container *ngIf="opcBuy == 'Default'">
+        <!-- <ng-container *ngIf="opcBuy == 'Default'">
           <ion-label>
             <h2 class="ion-text-center">Tarjeta por default</h2>
             <h3 class="ion-text-center">**** **** **** {{defCard?.last4}} {{defCard?.brand}} {{defCard?.exp_month}}/{{defCard?.exp_year}}</h3>
           </ion-label>
-        </ng-container>
-        <ng-container *ngIf="opcBuy == 'especifica'">
-          <ion-label><h2 class="ion-text-center">Tarjeta/s</h2></ion-label>
-          <ion-select interface="popover" [(ngModel)]="selectedCard">
-            <ion-select-option value="1">Selecciona una tarjeta</ion-select-option>
-            <ion-select-option *ngFor="let c of cards" [value]="c.id">**** **** **** {{c?.last4}} {{c?.brand}} {{c?.exp_month}}/{{c?.exp_year}}</ion-select-option>
-          </ion-select>
-        </ng-container>
+        </ng-container> -->
+        <ion-label><h2 class="ion-text-center">Tarjeta/s</h2></ion-label>
+        <ion-select interface="popover" [(ngModel)]="selectedCard">
+          <ion-select-option *ngFor="let c of cards" [value]="c.id">**** ... {{c?.last4}} {{c?.brand}} {{c?.exp_month}}/{{c?.exp_year}}</ion-select-option>
+          <ion-select-option value="1">Nueva Tarjeta</ion-select-option>
+        </ion-select>
         <ng-container *ngIf="opcBuy == 'token'">
           <form>
               <ion-list lines="full" class="ion-no-margin ion-no-padding">
@@ -78,25 +76,14 @@
     <hr>
     <ion-row>
       <ion-col>
-        <ion-label><h2 class="ion-text-center">Conatdo</h2></ion-label>
-        <ion-select interface="popover" [(ngModel)]="mesesSinIntereses">
-          <ion-select-option [value]="1">Si</ion-select-option>
-          <ion-select-option [value]="0">No</ion-select-option>
+        <ion-label><h2 class="ion-text-center">Metodo de pago</h2></ion-label>
+        <ion-select interface="popover" [(ngModel)]="numMeses">
+          <ion-select-option [value]="1">Un solo pago</ion-select-option>
+          <ion-select-option [value]="3">3 Meses</ion-select-option>
+          <ion-select-option [value]="6">6 Meses</ion-select-option>
+          <ion-select-option [value]="9">9 Meses</ion-select-option>
+          <ion-select-option [value]="12">12 Meses</ion-select-option>
         </ion-select>
-      </ion-col>
-    </ion-row>
-    <hr>
-    <ion-row>
-      <ion-col>
-        <ng-container *ngIf="mesesSinIntereses == 0">
-          <ion-label><h2 class="ion-text-center">Meses sin intereses</h2></ion-label>
-          <ion-select interface="popover" [(ngModel)]="numMeses">
-            <ion-select-option [value]="3">3 Meses</ion-select-option>
-            <ion-select-option [value]="6">6 Meses</ion-select-option>
-            <ion-select-option [value]="9">9 Meses</ion-select-option>
-            <ion-select-option [value]="12">12 Meses</ion-select-option>
-          </ion-select>
-        </ng-container>
       </ion-col>
     </ion-row>
     <hr>
