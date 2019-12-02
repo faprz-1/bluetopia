@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ComponentBase } from 'src/app/base/component-base';
 
 declare var Conekta;
@@ -13,6 +13,17 @@ export class BuyComponent extends ComponentBase implements OnInit {
   PUBLIC_KEY = 'key_MjbjZMy9XbTrWK4pCWBFjHg';
 
   @Input() loggedUser: any;
+  @Input() listProducts: any = null;
+  _isAddCard:boolean;
+  @Input()
+  set isAddCard(val: boolean) {
+    this.isAddCardChange.emit(val);
+    this._isAddCard = val;
+  }
+  get isAddCard() {
+    return this._isAddCard;
+  }
+  @Output() isAddCardChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   opcBuy:any = "Default"
   cards:any = [];
@@ -35,35 +46,18 @@ export class BuyComponent extends ComponentBase implements OnInit {
     phone: ""
   }
 
-  lisrProducts = [
-    {
-      name: "Product 1",
-      unit_price: 35000,
-      quantity: 1
-    },
-    {
-      name: "Product 2",
-      unit_price: 10000,
-      quantity: 3
-    },
-    {
-      name: "Product 3",
-      unit_price: 1000,
-      quantity: 10
-    },
-  ]
-
   numMeses:any = 1;
 
+  formatProducts:any = [];
+
   ngOnInit() {
-    console.log(this.loggedUser);
+    console.log(this.listProducts);
+    
     this.getCards();
   }
 
   checkLogUser() {
-    if(this.loggedUser != null && this.cards.length > 0 && this.loggedUser.customerId != null) {
-      return true;
-    }
+    if(this.loggedUser != null && this.cards.length > 0 && this.loggedUser.customerId != null) { return true; }
 
     return false;
   }
@@ -71,6 +65,17 @@ export class BuyComponent extends ComponentBase implements OnInit {
   async errorAlert(msn) {
     const alert = await this.alertController.create({
       header: 'Error',
+      subHeader: '',
+      message: msn,
+      buttons: ['Aceptar']
+    });
+
+    await alert.present();
+  }
+
+  async Alert(msn) {
+    const alert = await this.alertController.create({
+      header: 'Pago',
       subHeader: '',
       message: msn,
       buttons: ['Aceptar']
@@ -101,28 +106,42 @@ export class BuyComponent extends ComponentBase implements OnInit {
     });
   }
 
-  buy() {
-    if(this.opcBuy == "Default") { this.postBuy(null); }
-    else if(this.opcBuy == "especifica") {
-      if(this.selectedCard != '1') { this.postBuy(this.selectedCard); }
-      else { this.errorAlert("Tarjeta seleccionada incorrecta"); }
-    } else if(this.opcBuy == "token") { this.createTokoenCard(); }
+  getCardsNoFilter() {
+    let endpoint = "/conekta/getCards";
 
+    this.api.post(endpoint,{cutomerId:this.loggedUser.customerId},true).subscribe(res => {
+      this.cards = res;
+    }, err => {
+      this.errorAlert("Error al obetener las tarjetas");      
+    });
   }
 
-  public postBuy(cardId) {
+  convertProducts() {
+    this.listProducts.forEach(p => {
+      this.formatProducts.push({
+        name: p.name,
+        unit_price: p.unit_price,
+        quantity: p.quantity
+      });
+    });
+  }
+
+  buy() {
     let endpoint = "/conekta/orderFromCustomer";
     let objToBuy = {
       cutomerId: this.loggedUser.customerId,
-      productsItems: this.lisrProducts,
-      cardId: cardId,
+      productsItems: this.formatProducts,
+      cardId: this.selectedCard,
       mesesCantidad: this.numMeses
     };
 
+    this.convertProducts();
+
     this.api.post(endpoint,objToBuy).subscribe( res => {
       console.log(res);
-      
-    }, err => { this.errorAlert("No se pudo hacer el cobro"); });
+      this.Alert('La compra se a realizado correctamente');
+      this.modalController.dismiss();
+    }, err => { this.errorAlert(err.error.error.details[0].message); });
   }
 
   createTokoenCard() {
@@ -143,25 +162,23 @@ export class BuyComponent extends ComponentBase implements OnInit {
     };
 
     if(numberValidate && expValidate && cvcValidate) { Conekta.Token.create(this.data, successHandler, errorHandler); }
-    else { this.errorAlert("Datos Incorrectos"); }
+    else if(!numberValidate) { this.errorAlert("Numero de tarjeta invalido"); }
+    else if(!expValidate) { this.errorAlert("Fecha de tarjeta invalido"); }
+    else if(!cvcValidate) { this.errorAlert("CVC de tarjeta invalido"); }
+    // else { this.errorAlert("Datos Incorrectos"); }
   }
 
   onSuccesFulToken(token) {
       var Token = token.id;
 
-      let enpoint = "/conekta/createOrder";
-      
-      this.userInfo.name = this.data.card.name;
+      let enpoint = "/conekta/addCardToUser";
 
-      let objToBuy = {
-        productsItems: this.lisrProducts,
-        tokenId: Token,
-        userI:this.userInfo,
-        mesesCantidad: this.numMeses
-      }
-
-      this.api.post(enpoint,objToBuy,true).subscribe( res => {
-      }, err => { this.errorAlert("No se pudo hacer el cobro"); });
+      let newCard;
+      this.api.post(enpoint,{cardToken:Token, customerId: this.loggedUser.customerId},true).subscribe( res => {
+        newCard = res;
+        this.selectedCard = newCard.id;
+        this.getCardsNoFilter();
+      }, err => { this.errorAlert("No se pudo agregar la tarjeta"); });
   }
 
   onErrorToken(error) {
@@ -172,6 +189,18 @@ export class BuyComponent extends ComponentBase implements OnInit {
     if(this.data.card.number == "" || this.data.card.name == "" || this.data.card.exp_year == "" || this.data.card.exp_month == ""  || this.data.card.cvc == ""
     || this.userInfo.email == "" || this.userInfo.phone == "") { return true; }
     else { return false; }
+  }
+
+  getTotal() {
+    let sum = 0;
+
+    this.listProducts.forEach(p => {
+      sum += (p.unit_price * p.quantity);
+    });
+
+    if(this.listProducts == null) return 0;
+    
+    return sum;
   }
 
 }

@@ -43,30 +43,7 @@ module.exports = function(Conekta) {
             
             var orderObj = order.toObject();
 
-            console.log(orderObj);
             return callback(null,orderObj)
-        });
-    };
-
-    /**
-     *
-     * @param {object} data
-     * @param {Function(Error, object)} callback
-     */
-
-    Conekta.createCharge = function(data, callback) {
-        conekta.Order.find("ord_2mfSdoXykjusvNjJJ", function(err, order) {
-            if(err) return console.log(err);
-
-            order.createCharge({
-            "payment_method": {
-              "type": "oxxo_cash",
-              "expires_at": 1479167175
-            }
-          }, function(err, charge) {
-                console.log(charge);
-                callback(null, charge);
-            });
         });
     };
 
@@ -137,9 +114,6 @@ module.exports = function(Conekta) {
     var cardId = data.cardId;
     var mesesCantidad = data.mesesCantidad;
 
-    console.log(meses);
-    
-
     let orderBody = {
       currency: "MXN",
       customer_info: {
@@ -147,32 +121,20 @@ module.exports = function(Conekta) {
       },
       line_items: productsItems,
       charges: [{
-        
-        payment_method: null
+        payment_method: {
+          type: "card",
+          payment_source_id: cardId
+        }
       }]
-    }
+    }    
 
-    
-
-    if(cardId == null) {
-      orderBody.charges[0].payment_method = {
-        type: "default"
-      }
-    } else {
-      orderBody.charges[0].payment_method = {
-        type: "card",
-        payment_source_id: cardId
-      }
-    }
-
-    if(mesesCantidad > 1) {
-      orderBody.charges[0].payment_method.monthly_installments = meses.cantidad
+    if(mesesCantidad != 1) {
+      orderBody.charges[0].payment_method.monthly_installments = mesesCantidad
     }
 
     conekta.Order.create(orderBody, function(err, order) {
       if(err) return callback(err);
 
-        console.log(order);
       return callback(null,order);
     })
   };
@@ -190,7 +152,6 @@ module.exports = function(Conekta) {
       if(err) return callback(err);
 
       let c = customer.toObject();
-      console.log(c);
       
       let cards = c.payment_sources.data;
 

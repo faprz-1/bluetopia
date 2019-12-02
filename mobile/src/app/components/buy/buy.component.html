@@ -1,36 +1,37 @@
+<h4 *ngIf="listProducts == null" class="ion-text-center"> No hay productos en la lista</h4>
 
-  <!-- <ion-row>
-    <ion-col >
-      <p>Hola</p>
-    </ion-col>
-  </ion-row> -->
-  <!-- <ion-row>
+    <ion-row *ngIf="listProducts != null && selectedCard != -1">
       <ion-col>
-        <ng-container>
-          <ion-label><h2 class="ion-text-center">Opciones de Pago</h2></ion-label>
-          <ion-select interface="popover" [(ngModel)]="opcBuy">
-            <ion-select-option [value]="'Default'" *ngIf="checkLogUser()">Default</ion-select-option>
-            <ion-select-option [value]="'especifica'" *ngIf="checkLogUser()">Tarjeta Especifica</ion-select-option>
-            <ion-select-option [value]="'token'">Otra Tarjeta</ion-select-option>
-          </ion-select>
-        </ng-container>
+          <ion-label><h2 class="ion-text-center">Producto/s</h2></ion-label>
+          <ion-list>
+            <ion-item *ngFor="let p of listProducts">
+                <ion-avatar slot="start">
+                  <img [src]="p.img">
+                </ion-avatar>
+                <ion-label>
+                  <h2>{{p?.name}}</h2>
+                  <h3>Cantidad: {{p?.quantity}}</h3>
+                  <p>{{(p?.unit_price * p?.quantity) | UnitCurrency}}</p>
+                </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-avatar slot="start"></ion-avatar>
+              <ion-label>
+                <h2>Total: {{getTotal() | UnitCurrency}}</h2>
+              </ion-label>
+            </ion-item>
+          </ion-list>
       </ion-col>
     </ion-row>
-    <hr> -->
-    <ion-row>
+    
+    <ion-row *ngIf="listProducts != null">
       <ion-col>
-        <!-- <ng-container *ngIf="opcBuy == 'Default'">
-          <ion-label>
-            <h2 class="ion-text-center">Tarjeta por default</h2>
-            <h3 class="ion-text-center">**** **** **** {{defCard?.last4}} {{defCard?.brand}} {{defCard?.exp_month}}/{{defCard?.exp_year}}</h3>
-          </ion-label>
-        </ng-container> -->
-        <ion-label><h2 class="ion-text-center">Tarjeta/s</h2></ion-label>
+        <ion-label><h2 class="ion-text-center">Tarjetas</h2></ion-label>
         <ion-select interface="popover" [(ngModel)]="selectedCard">
-          <ion-select-option *ngFor="let c of cards" [value]="c.id">**** ... {{c?.last4}} {{c?.brand}} {{c?.exp_month}}/{{c?.exp_year}}</ion-select-option>
-          <ion-select-option value="1">Nueva Tarjeta</ion-select-option>
+          <ion-select-option *ngFor="let c of cards" [value]="c.id">{{c?.brand | titlecase}} **** **** **** **** {{c?.last4}}</ion-select-option>
+          <ion-select-option value="-1">Agregar Tarjeta</ion-select-option>
         </ion-select>
-        <ng-container *ngIf="opcBuy == 'token'">
+        <ng-container *ngIf="selectedCard == -1">
           <form>
               <ion-list lines="full" class="ion-no-margin ion-no-padding">
                 <ion-item>
@@ -69,29 +70,34 @@
                   </ion-grid>
                 </ion-item>
               </ion-list>
+              <div class="ion-padding">
+                <ion-button expand="block" type="button" class="ion-no-margin" [disabled]="getStatusData()" (click)="createTokoenCard()">Agregar Tarjeta</ion-button>
+              </div>
             </form>
         </ng-container>
       </ion-col>
     </ion-row>
-    <hr>
-    <ion-row>
-      <ion-col>
-        <ion-label><h2 class="ion-text-center">Metodo de pago</h2></ion-label>
-        <ion-select interface="popover" [(ngModel)]="numMeses">
-          <ion-select-option [value]="1">Un solo pago</ion-select-option>
-          <ion-select-option [value]="3">3 Meses</ion-select-option>
-          <ion-select-option [value]="6">6 Meses</ion-select-option>
-          <ion-select-option [value]="9">9 Meses</ion-select-option>
-          <ion-select-option [value]="12">12 Meses</ion-select-option>
-        </ion-select>
-      </ion-col>
-    </ion-row>
-    <hr>
-    <ion-row>
-      <ion-col>
-          <ion-button expand="block" type="button" class="ion-no-margin" *ngIf="opcBuy == 'Default'" type="button" class="btn btn-primary float-left" (click)="buy()"> Comprar </ion-button>
-          <ion-button expand="block" type="button" class="ion-no-margin" *ngIf="opcBuy == 'especifica'" type="button" class="btn btn-primary float-left" (click)="buy()" [disabled]="selectedCard == '1' && opcBuy == 'especifica'"> Comprar </ion-button>
-          <ion-button expand="block" type="button" class="ion-no-margin" *ngIf="opcBuy == 'token'" type="button" class="btn btn-primary float-left" (click)="buy()" [disabled]="getStatusData()"> Comprar </ion-button>
-      </ion-col>
-    </ion-row>
+    <ng-container *ngIf="selectedCard != -1 && listProducts != null">
+      <hr>
+      <ion-row>
+        <ion-col>
+          <ion-label><h2 class="ion-text-center">Metodo de pago</h2></ion-label>
+          <ion-select interface="popover" [(ngModel)]="numMeses">
+            <ion-select-option [value]="1">Un solo pago</ion-select-option>
+            <ion-select-option [value]="3">3 Meses</ion-select-option>
+            <ion-select-option [value]="6">6 Meses</ion-select-option>
+            <ion-select-option [value]="9">9 Meses</ion-select-option>
+            <ion-select-option [value]="12">12 Meses</ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+      <hr>
+      <ion-row>
+        <ion-col>
+            <ion-button expand="block" type="button" class="ion-no-margin" *ngIf="opcBuy == 'Default'" type="button" class="btn btn-primary float-left" (click)="buy()"> Comprar </ion-button>
+            <ion-button expand="block" type="button" class="ion-no-margin" *ngIf="opcBuy == 'especifica'" type="button" class="btn btn-primary float-left" (click)="buy()" [disabled]="selectedCard == '1' && opcBuy == 'especifica'"> Comprar </ion-button>
+            <ion-button expand="block" type="button" class="ion-no-margin" *ngIf="opcBuy == 'token'" type="button" class="btn btn-primary float-left" (click)="buy()" [disabled]="getStatusData()"> Comprar </ion-button>
+        </ion-col>
+      </ion-row>
+    </ng-container>
   

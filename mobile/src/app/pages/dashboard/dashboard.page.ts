@@ -12,6 +12,27 @@ export class DashboardPage extends ComponentBase implements OnInit {
 
   public loggedUser:any;
 
+  listProducts = [
+    {
+      img: "../../../assets/img/avatar.jpg",
+      name: "Product 1",
+      unit_price: 123456,
+      quantity: 1
+    },
+    {
+      img: "../../../assets/img/avatar.jpg",
+      name: "Product 2",
+      unit_price: 150,
+      quantity: 3
+    },
+    {
+      img: "../../../assets/img/avatar.jpg",
+      name: "Product 3",
+      unit_price: 100,
+      quantity: 10
+    }
+  ]
+
   ngOnInit() {
     this.getProfile();
   }
@@ -20,7 +41,8 @@ export class DashboardPage extends ComponentBase implements OnInit {
     const modal = await this.modalController.create({
       component: BuyPagePage,
       componentProps: {
-        'loggedUser': this.loggedUser
+        'loggedUser': this.loggedUser,
+        'listProducts': this.listProducts
       }
     });
     return await modal.present();

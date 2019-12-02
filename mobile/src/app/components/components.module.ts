@@ -8,6 +8,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { BuyComponent } from "../components/buy/buy.component";
+import { unit_currency } from "../../pipes/unit_currency.pipe";
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { BuyComponent } from "../components/buy/buy.component";
   ],
   declarations: [
     SocialMediaLoginButtonsComponent,
-    BuyComponent
+    BuyComponent,
+    unit_currency
   ],
   exports: [
     SocialMediaLoginButtonsComponent,

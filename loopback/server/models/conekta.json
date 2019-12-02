@@ -38,34 +38,6 @@
         }
       ]
     },
-    "createCharge": {
-      "accepts": [
-        {
-          "arg": "data",
-          "type": "object",
-          "required": true,
-          "description": "",
-          "http": {
-            "source": "body"
-          }
-        }
-      ],
-      "returns": [
-        {
-          "arg": "newDAta",
-          "type": "object",
-          "root": true,
-          "description": ""
-        }
-      ],
-      "description": "",
-      "http": [
-        {
-          "path": "/createCharge",
-          "verb": "post"
-        }
-      ]
-    },
     "asignedConekta": {
       "accepts": [
         {
