@@ -60,6 +60,7 @@
                   <div scrollY="true" id="myFixZone">
                     <ion-item lines="none" *ngFor="let c of cards">
                       **** **** **** {{c?.last4}} {{c?.brand}} &nbsp; <strong>{{c?.exp_month}}/{{c?.exp_year}}</strong> &nbsp; <span *ngIf="c.default">Default</span>
+                      <ion-icon name="close" style="color: red !important;" (click)="deleteCard(c)"></ion-icon>
                     </ion-item>
                   </div>
                 </ion-list>

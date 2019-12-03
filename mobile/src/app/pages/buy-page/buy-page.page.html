@@ -1,6 +1,8 @@
 <ion-header translucent>
   <ion-toolbar>
-    <ion-icon name="arrow-back"></ion-icon>
+    <ion-buttons slot="start" *ngIf="isAddCard">
+      <ion-icon name="arrow-back" size="large" (click)="isAddCard = false;"></ion-icon>
+    </ion-buttons>
     <ion-title>Formas de Pago</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="dismissModal()">Close</ion-button>
@@ -10,7 +12,11 @@
 
 <ion-content fullscreen>
     <ion-grid>
-      <app-buy *ngIf="loggedUser != null && listProducts != null" [loggedUser]="loggedUser" [listProducts]="listProducts" [(isAddCard)]="isAddCard"></app-buy>
-      <h4 *ngIf="listProducts == null" class="ion-text-center"> No hay productos en la lista</h4>
+      <ng-container *ngIf="!isAddCard">
+        <app-buy *ngIf="loggedUser != null && listProducts != null" [loggedUser]="loggedUser" [listProducts]="listProducts"
+        [isAddCard]="isAddCard" (isAddCardChange)="changValueAddCard($event)" [selectedCard]="selectedCard"></app-buy>
+        <h4 *ngIf="listProducts == null" class="ion-text-center"> No hay productos en la lista</h4>
+      </ng-container>
+      <app-card *ngIf="isAddCard" [loggedUser]="loggedUser" (tokenCard)="getTokenCard($event)"></app-card>
     </ion-grid>
 </ion-content>

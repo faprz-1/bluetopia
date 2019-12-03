@@ -17,6 +17,17 @@ export class ProfilePage extends ComponentBase {
     this.getProfile();
   }
 
+  async errorAlert(msn) {
+    const alert = await this.alertController.create({
+      header: 'Error',
+      subHeader: '',
+      message: msn,
+      buttons: ['Aceptar']
+    });
+
+    await alert.present();
+  }
+
   private async getProfile() {
     this.loggedUser = await this.storage.get("user");
     this.loggedUser.imgperfil = this.loggedUser.profileImage != null ? this.api.getBaseURL() + this.loggedUser.profileImage.URL : 'assets/imgs/default_avatar.jpg';
@@ -56,6 +67,16 @@ export class ProfilePage extends ComponentBase {
       this.cards = res;
     }, err => {
       console.log(err);
+    });
+  }
+
+  public deleteCard(card) {
+    let enpoint = "/conekta/deleteCard";
+
+    this.api.post(enpoint,{cutomerId:this.loggedUser.customerId, cardId: card.id},true).subscribe( res => {
+      this.getProfile();
+    }, err => {
+      this.errorAlert("No se pudo eliminar la tarjeta");
     });
   }
 

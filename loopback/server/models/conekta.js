@@ -93,10 +93,13 @@ module.exports = function(Conekta) {
         token_id: cardToken
       }
 
+      let c = customer.toObject();
+      
+      let cards = c.payment_sources.data;
+
       customer.createPaymentSource(infoCard, function(err, res) {
         if(err) return callback(err);
 
-        console.log(res);
         return callback(null, res);
       });
     });
@@ -156,6 +159,45 @@ module.exports = function(Conekta) {
       let cards = c.payment_sources.data;
 
       return callback(null,cards);
+    });
+  };
+
+  /**
+   *
+   * @param {object} data
+   * @param {Function(Error, object)} callback
+   */
+
+  Conekta.deleteCard = function(data, callback) {
+    var cutomerId = data.cutomerId;
+    var cardId = data.cardId;
+
+    conekta.Customer.find(cutomerId, function(err, customer) {
+      if(err) return callback(err);
+
+      let c = customer.toObject();
+      
+      let cards = c.payment_sources.data;
+
+      console.log(cards);
+
+      let i = 0;
+      let index;
+      
+      cards.forEach(ps => {
+        if(ps.id == cardId) {
+          index = i;
+          console.log(index);
+        }
+        i++;
+      });
+
+      if(i == cards.length) {
+        customer.payment_sources.get(index).delete(function(err, resp) {
+          if(err) return callback(err);
+          return callback(null,resp)
+        })
+      }
     });
   };
 
