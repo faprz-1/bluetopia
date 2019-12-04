@@ -42,7 +42,7 @@ import { AuthSGuard } from './services/authSuser.guard';
   ],
   declarations: [
     AppComponent,
-    FilterPipe
+    FilterPipe,
   ],
 providers: [
     SharedService,

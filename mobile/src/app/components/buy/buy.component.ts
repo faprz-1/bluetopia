@@ -103,6 +103,8 @@ export class BuyComponent extends ComponentBase implements OnInit {
   }
 
   buy() {
+    this.convertProducts();
+
     let endpoint = "/conekta/orderFromCustomer";
     let objToBuy = {
       cutomerId: this.loggedUser.customerId,
@@ -110,8 +112,6 @@ export class BuyComponent extends ComponentBase implements OnInit {
       cardId: this.selectedCard,
       mesesCantidad: this.numMeses
     };
-
-    this.convertProducts();
 
     this.api.post(endpoint,objToBuy).subscribe( res => {
       console.log(res);

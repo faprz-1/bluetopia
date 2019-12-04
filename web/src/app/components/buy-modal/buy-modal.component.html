@@ -7,31 +7,41 @@
     </div>
   
     <div class="modal-body pb-1">
-      <div class="form-group bg-light">
-        <label for="exampleInputEmail1">Opciones de Pago</label>
-        <select name="opc" id="opdId" class="form-control" [(ngModel)]="opcBuy">
-          <option *ngIf="user != null && cards.length > 0 && user.customerId != null" value="Default">Default</option>
-          <option *ngIf="user != null && cards.length > 0 && user.customerId != null" value="especifica">Tarjeta Especifica</option>
-          <option value="token">Otra Tarjeta</option>
-        </select>
-        <!-- <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"> -->
-      </div>
-      <ng-container *ngIf="opcBuy == 'Default'">
-          <div class="form-group">
-            <label for="exampleInputEmail1">Tarjeta por default</label>
-            <p>**** **** **** {{defCard?.last4}} {{defCard?.brand}} {{defCard?.exp_month}}/{{defCard?.exp_year}}</p>
-          </div>
-      </ng-container>
-      <ng-container *ngIf="opcBuy == 'especifica'">
-          <div class="form-group">
-            <label for="exampleInputEmail1">Tarjeta/s</label>
+      <ng-container *ngIf="selectedCard != -1">
+          <ul class="list-group p-0" *ngIf="listProducts.length > 0">
+            <li class="list-group-item p-0" *ngFor="let lP of listProducts">
+              <div class="row mb-2">
+                <div class="col-4 p-0 d-flex justify-content-center align-items-center">
+                    <img class="card-img-top imgUser" src="{{lP.img}}" onerror="this.src='assets/fondo/user.png'">
+                </div>
+                <div class="col-8 p-0">
+                  <h4 class="mb-1"><small><strong>{{lP?.name}}</strong></small></h4>
+                  <h5 class="mb-1"><small>Cantidad: {{lP?.quantity}}</small></h5>
+                  <h5 class="mb-1 text-muted"><small>{{lP?.unit_price | unitCurrency}}</small></h5>
+                  <hr>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <div class="form-group mt-3">
+            <label>Tarjeta/s</label>
             <select name="opc" id="opdId" class="form-control" [(ngModel)]="selectedCard">
-              <option value="1">Selecciona una tarjeta</option>
-              <option *ngFor="let c of cards" [value]="c.id">**** **** **** {{c?.last4}} {{c?.brand}} {{c?.exp_month}}/{{c?.exp_year}}</option>
+              <option *ngFor="let c of cards" [value]="c.id">{{c?.brand | titlecase}} **** **** **** {{c?.last4}}</option>
+              <option [value]="-1">Agregar Tarjeta</option>
+            </select>
+          </div>
+          <div class="form-group mt-2">
+            <label>Metodo de pago</label>
+            <select name="opc" id="opdId" class="form-control" [(ngModel)]="numMeses">
+              <option [value]="1">Un solo pago</option>
+              <option [value]="3">3 Meses</option>
+              <option [value]="6">6 Meses</option>
+              <option [value]="9">9 Meses</option>
+              <option [value]="12">12 Meses</option>
             </select>
           </div>
       </ng-container>
-      <ng-container *ngIf="opcBuy == 'token'">
+      <ng-container *ngIf="selectedCard == -1">
           <div class="form-row form-group">
               <label>Nombre del Tarjetahabiente</label>
               <input class="form-control" type="text" size="20" name="name" [(ngModel)]="data.card.name">
@@ -71,10 +81,12 @@
   
     <div class="modal-footer">
       <div class="row mt-4">
+        <div class="col-6" *ngIf="selectedCard == -1">
+          <button type="button" class="btn btn-primary float-left" (click)="selectedCard = defCard.id"> Atras </button>
+        </div>
         <div class="col-6">
-          <button *ngIf="opcBuy == 'Default'" type="button" class="btn btn-primary float-left" (click)="buy()"> Comprar </button>
-          <button *ngIf="opcBuy == 'especifica'" type="button" class="btn btn-primary float-left" (click)="buy()" [disabled]="selectedCard == '1' && opcBuy == 'especifica'"> Comprar </button>
-          <button *ngIf="opcBuy == 'token'" type="button" class="btn btn-primary float-left" (click)="buy()" [disabled]="getStatusData()"> Comprar </button>
+          <button *ngIf="selectedCard != -1" type="button" class="btn btn-primary float-left" (click)="buy()" [disabled]="selectedCard == -1"> Comprar </button>
+          <button *ngIf="selectedCard == -1" type="button" class="btn btn-primary float-left" (click)="createTokoenCard()" [disabled]="getStatusData()"> Agregar </button>
         </div>
       </div>
     </div>

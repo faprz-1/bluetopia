@@ -13,10 +13,12 @@ export class BuyModalComponent implements OnInit {
 
   @Input() user:any = null;
   @Output('close') close = new EventEmitter<any>();
+  @Input() listProducts:any = [];
+  @Output() addCardChange: EventEmitter<number> = new EventEmitter<number>();
 
   opcBuy:any = "Default"
   cards:any = [];
-  selectedCard:any = "1";
+  selectedCard:any;
   defCard:any;
 
   PUBLIC_KEY = 'key_MjbjZMy9XbTrWK4pCWBFjHg';
@@ -37,23 +39,9 @@ export class BuyModalComponent implements OnInit {
     phone: ""
   }
 
-  lisrProducts = [
-    {
-      name: "Product 1",
-      unit_price: 3500,
-      quantity: 1
-    },
-    {
-      name: "Product 2",
-      unit_price: 1000,
-      quantity: 3
-    },
-    {
-      name: "Product 3",
-      unit_price: 100,
-      quantity: 10
-    },
-  ]
+  numMeses:any = 1;
+
+  formatProducts:any = [];
 
   constructor(
     private api: ApiService,
@@ -74,31 +62,49 @@ export class BuyModalComponent implements OnInit {
 
   filterDefCard() {
     this.cards.forEach(card => { if(card.default) this.defCard = card; });
+    this.selectedCard = this.defCard.id;
   }
 
-  getCards() {
+  getCards(card = null) {
     let endpoint = "/conekta/getCards";
 
     this.api.post(endpoint,{cutomerId:this.user.customerId},true).subscribe(res => {
       this.cards = res;
       this.filterDefCard();
+      if(card != null) {
+        this.selectedCard = card.id;
+        this.toast.showSuccess("Se a agregado la tarjeta correctamente");
+        this.addCardChange.emit(1);
+      }
     }, err => { this.toast.showError("Error al obetener las tarjetas"); });
   }
 
-  buy() {
-    if(this.opcBuy == "Default") { this.postBuy(null); }
-    else if(this.opcBuy == "especifica") {
-      if(this.selectedCard != '1') { this.postBuy(this.selectedCard); }
-      else { this.toast.showError("Tarjeta seleccionada incorrecta"); }
-    } else if(this.opcBuy == "token") { this.createTokoenCard(); }
+  convertProducts() {
+    this.listProducts.forEach(p => {
+      this.formatProducts.push({
+        name: p.name,
+        unit_price: p.unit_price,
+        quantity: p.quantity
+      });
+    });
   }
 
-  postBuy(cardId) {
-    let endpoint = "/conekta/orderFromCustomer";
+  buy() {
+    this.convertProducts();
 
-    this.api.post(endpoint,{cutomerId:this.user.customerId, productsItems:this.lisrProducts,cardId:cardId}).subscribe( res => {
-      this.close.emit();
-    }, err => { this.toast.showError("No se pudo hacer el cobro"); });
+    let endpoint = "/conekta/orderFromCustomer";
+    let objToBuy = {
+      cutomerId: this.user.customerId,
+      productsItems: this.formatProducts,
+      cardId: this.selectedCard,
+      mesesCantidad: this.numMeses
+    };
+
+    this.api.post(endpoint,objToBuy).subscribe( res => {
+      console.log(res);
+      this.toast.showSuccess("La compra se a realizado correctamente");
+      this.closeModal();
+    }, err => { this.toast.showError(err.error.error.details[0].message); });
   }
 
   createTokoenCard() {
@@ -119,19 +125,25 @@ export class BuyModalComponent implements OnInit {
     };
 
     if(numberValidate && expValidate && cvcValidate) { Conekta.Token.create(this.data, successHandler, errorHandler); }
-    else { this.toast.showError("Datos Incorrectos"); }
+    else if(!numberValidate) { this.toast.showError("Numero de tarjeta invalido"); }
+    else if(!expValidate) { this.toast.showError("Fecha de tarjeta invalido"); }
+    else if(!cvcValidate) { this.toast.showError("CVC de tarjeta invalido"); }
   }
 
   onSuccesFulToken(token) {
       var Token = token.id;
 
-      let enpoint = "/conekta/createOrder";
+      let enpoint = "/conekta/addCardToUser";
       
-      this.userInfo.name = this.data.card.name;
+      var card;
 
-      this.api.post(enpoint,{productsItems: this.lisrProducts, tokenId: Token, userI:this.userInfo},true).subscribe( res => {
-        this.close.emit();
-      }, err => { this.toast.showError("No se pudo hacer el cobro"); });
+      if(this.cards.length < 5) {
+        this.api.post(enpoint,{cardToken:Token, customerId: this.user.customerId},true).subscribe( res => {
+          this.getCards(res);
+        }, err => { this.toast.showError("No se pudo agregar la tarjeta"); });
+      } else {
+        this.toast.showError("No puedes agregar mas de 5 tarjetas");
+      }
   }
 
   onErrorToken(error) { this.toast.showError(error); }

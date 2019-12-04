@@ -34,6 +34,7 @@ module.exports = function(Conekta) {
           }
         }]
       }
+
       if(meses.requerido == 0) {
         orderBody.charges[0].monthly_installments = meses.cantidad
       }
@@ -93,10 +94,6 @@ module.exports = function(Conekta) {
         token_id: cardToken
       }
 
-      let c = customer.toObject();
-      
-      let cards = c.payment_sources.data;
-
       customer.createPaymentSource(infoCard, function(err, res) {
         if(err) return callback(err);
 
@@ -155,7 +152,6 @@ module.exports = function(Conekta) {
       if(err) return callback(err);
 
       let c = customer.toObject();
-      
       let cards = c.payment_sources.data;
 
       return callback(null,cards);
@@ -176,18 +172,13 @@ module.exports = function(Conekta) {
       if(err) return callback(err);
 
       let c = customer.toObject();
-      
       let cards = c.payment_sources.data;
-
-      console.log(cards);
-
       let i = 0;
       let index;
       
       cards.forEach(ps => {
         if(ps.id == cardId) {
           index = i;
-          console.log(index);
         }
         i++;
       });

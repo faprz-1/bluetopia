@@ -1,6 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { BsModalRef, BsModalService, idLocale } from 'ngx-bootstrap';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-profile',
@@ -15,9 +16,31 @@ export class ProfileComponent implements OnInit {
 
   cards:any = [];
 
+  listProducts = [
+    {
+      img: "../../../assets/img/avatar.jpg",
+      name: "Product 1",
+      unit_price: 123456,
+      quantity: 1
+    },
+    {
+      img: "../../../assets/img/avatar.jpg",
+      name: "Product 2",
+      unit_price: 150,
+      quantity: 3
+    },
+    {
+      img: "../../../assets/img/avatar.jpg",
+      name: "Product 3",
+      unit_price: 100,
+      quantity: 10
+    }
+  ]
+
   constructor(
     private api : ApiService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private toast: ToastService
     ) { }
 
   ngOnInit() {
@@ -53,6 +76,20 @@ export class ProfileComponent implements OnInit {
     }, err => {
       console.log(err);
     });
+  }
+
+  deleteCard(card) {
+    let enpoint = "/conekta/deleteCard";
+
+    this.api.post(enpoint,{cutomerId:this.user.customerId, cardId: card.id},true).subscribe( res => {
+      this.reload();
+    }, err => {
+      this.toast.showError("Error al eliminar la tarjeta");
+    });
+  }
+
+  checkAddCardInModal(val) {
+    if(val == 1) { this.reload(); }
   }
 
 }

@@ -83,8 +83,10 @@ export class AddCardComponent implements OnInit {
 
       let enpoint = "/conekta/addCardToUser";
       
-      this.api.post(enpoint,{cardToken:Token, customerId: this.user.customerId},true).subscribe( res => { this.close.emit(); },
-      err => { this.toast.showError("No se pudo agregar la tarjeta"); });
+      this.api.post(enpoint,{cardToken:Token, customerId: this.user.customerId},true).subscribe( res => {
+        this.toast.showSuccess("Se a agregado la tarjeta correctamente");
+        this.close.emit();
+      }, err => { this.toast.showError("No se pudo agregar la tarjeta"); });
   }
 
   onErrorToken(error) { this.toast.showError(error); }
