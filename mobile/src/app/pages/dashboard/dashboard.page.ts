@@ -39,11 +39,9 @@ export class DashboardPage extends ComponentBase implements OnInit {
     }
   ]
 
-  ngOnInit() {
-    this.getProfile();
-  }
+  ngOnInit() { this.getProfile(); }
 
-  async presentModal() {
+  async buyModal() {
     const modal = await this.modalController.create({
       component: BuyPagePage,
       componentProps: {
@@ -54,13 +52,7 @@ export class DashboardPage extends ComponentBase implements OnInit {
     return await modal.present();
   }
 
-  public openNotifications() {
-    this.navController.navigateRoot('/notification');
-  }
-
-  public goTo() {
-    this.navController.navigateRoot('/buy-page');
-  }
+  public openNotifications() { this.navController.navigateRoot('/notification'); }
 
   private async getProfile() {
     this.loggedUser = await this.storage.get("user");

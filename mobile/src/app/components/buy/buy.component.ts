@@ -8,7 +8,6 @@ import { ComponentBase } from 'src/app/base/component-base';
 })
 export class BuyComponent extends ComponentBase implements OnInit {
 
-
   @Input() loggedUser: any;
   @Input() listProducts: any = null;
   @Input() isAddCard:boolean;
@@ -17,18 +16,12 @@ export class BuyComponent extends ComponentBase implements OnInit {
 
   cards:any = [];
   defCard:any;
-
   numMeses:any = 1;
-
   formatProducts:any = [];
 
-  ngOnInit() {    
-    this.getCards();    
-  }
+  ngOnInit() { this.getCards(); }
 
-  changValueAddCard(val) {
-    if(val == -1) { this.isAddCardChange.emit(true) }
-  }
+  changValueAddCard(val) { if(val == -1) { this.isAddCardChange.emit(true) } }
 
   checkLogUser() {
     if(this.loggedUser != null && this.cards.length > 0 && this.loggedUser.customerId != null) { return true; }
@@ -63,9 +56,7 @@ export class BuyComponent extends ComponentBase implements OnInit {
     this.chechDefCard();
   }
 
-  chechDefCard() {
-    if(this.selectedCard == null) { this.selectedCard = this.defCard.id; }
-  }
+  chechDefCard() { if(this.selectedCard == null) { this.selectedCard = this.defCard.id; } }
 
   getCards() {
     let endpoint = "/conekta/getCards";
@@ -81,11 +72,8 @@ export class BuyComponent extends ComponentBase implements OnInit {
   getCardsNoFilter() {
     let endpoint = "/conekta/getCards";
 
-    this.api.post(endpoint,{cutomerId:this.loggedUser.customerId},true).subscribe(res => {
-      this.cards = res;
-    }, err => {
-      this.errorAlert("Error al obetener las tarjetas");      
-    });
+    this.api.post(endpoint,{cutomerId:this.loggedUser.customerId},true).subscribe(res => { this.cards = res; },
+    err => { this.errorAlert("Error al obetener las tarjetas"); });
   }
 
   convertProducts() {

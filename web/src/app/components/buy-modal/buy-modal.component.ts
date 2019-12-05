@@ -101,22 +101,19 @@ export class BuyModalComponent implements OnInit {
 
   buy() {
     this.convertProducts();
-
-    console.log(this.formatProducts);
     
-    
-    // let endpoint = "/conekta/orderFromCustomer";
-    // let objToBuy = {
-    //   cutomerId: this.user.customerId,
-    //   productsItems: this.formatProducts,
-    //   cardId: this.selectedCard,
-    //   mesesCantidad: this.numMeses
-    // };
+    let endpoint = "/conekta/orderFromCustomer";
+    let objToBuy = {
+      cutomerId: this.user.customerId,
+      productsItems: this.formatProducts,
+      cardId: this.selectedCard,
+      mesesCantidad: this.numMeses
+    };
 
-    // this.api.post(endpoint,objToBuy).subscribe( res => {
-    //   this.toast.showSuccess("La compra se a realizado correctamente");
-    //   this.closeModal();
-    // }, err => { this.toast.showError(err.error.error.details[0].message); });
+    this.api.post(endpoint,objToBuy).subscribe( res => {
+      this.toast.showSuccess("La compra se a realizado correctamente");
+      this.closeModal();
+    }, err => { this.toast.showError(err.error.error.details[0].message); });
   }
 
   createTokoenCard() {

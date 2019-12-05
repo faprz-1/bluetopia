@@ -17,11 +17,7 @@ export class BuyPagePage extends ComponentBase implements OnInit {
 
   changValueAddCard(val) { this.isAddCard = val; }
 
-  public dismissModal() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
-    this.modalController.dismiss();
-  }
+  public dismissModal() { this.modalController.dismiss(); }
 
   async errorAlert(msn) {
     const alert = await this.alertController.create({
