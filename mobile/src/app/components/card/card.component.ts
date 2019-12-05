@@ -26,12 +26,6 @@ export class CardComponent extends ComponentBase implements OnInit {
     }
   };
 
-  userInfo = {
-    name: "",
-    email: "",
-    phone: ""
-  }
-
   cards:any = [];
 
   ngOnInit() { this.getCards(); }
@@ -112,9 +106,8 @@ export class CardComponent extends ComponentBase implements OnInit {
   }
 
   getStatusData() {
-    if(this.data.card.number == "" || this.data.card.name == "" || this.data.card.exp_year == "" || this.data.card.exp_month == ""  || this.data.card.cvc == ""
-    || this.userInfo.email == "" || this.userInfo.phone == "") { return true; }
-    else { return false; }
+    if(this.data.card.number == "" || this.data.card.name == "" || this.data.card.exp_year == "" || this.data.card.exp_month == ""  || this.data.card.cvc == "")
+    { return true; } else { return false; }
   }
 
 }

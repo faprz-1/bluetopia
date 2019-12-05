@@ -11,13 +11,13 @@
               <ion-label>
                 <h2>{{p?.name}}</h2>
                 <h3>Cantidad: {{p?.quantity}}</h3>
-                <p>{{(p?.unit_price * p?.quantity) | UnitCurrency}}</p>
+                <p>{{(p?.price) | currency}}</p>
               </ion-label>
           </ion-item>
           <ion-item>
             <ion-avatar slot="start"></ion-avatar>
             <ion-label>
-              <h2>Total: {{getTotal() | UnitCurrency}}</h2>
+              <h2>Total: {{getTotal() | currency}}</h2>
             </ion-label>
           </ion-item>
         </ion-list>

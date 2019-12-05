@@ -59,15 +59,11 @@ export class BuyComponent extends ComponentBase implements OnInit {
   }
 
   filterDefCard() {
-    console.log(this.cards);
-
     this.cards.forEach(card => { if(card.default) this.defCard = card; });
     this.chechDefCard();
   }
 
   chechDefCard() {
-    console.log(this.selectedCard);
-
     if(this.selectedCard == null) { this.selectedCard = this.defCard.id; }
   }
 
@@ -94,12 +90,29 @@ export class BuyComponent extends ComponentBase implements OnInit {
 
   convertProducts() {
     this.listProducts.forEach(p => {
+      let intPrice;
+      let floatPrice = parseFloat(p.price).toFixed(2);
+      let stringPrice = floatPrice.toString();
+      intPrice = this.convertPrice(stringPrice);
+
       this.formatProducts.push({
         name: p.name,
-        unit_price: p.unit_price,
+        unit_price: intPrice,
         quantity: p.quantity
       });
     });
+  }
+
+  convertPrice(price) {
+    let intPrice;
+    if(price.indexOf(".") != -1) {
+      intPrice= parseInt(price.replace(".",""))
+    } else if(price.indexOf(".") == -1) {
+      let axuPrice = price+"00";
+      intPrice = parseInt(axuPrice);
+    }
+
+    return intPrice;
   }
 
   buy() {
@@ -114,7 +127,6 @@ export class BuyComponent extends ComponentBase implements OnInit {
     };
 
     this.api.post(endpoint,objToBuy).subscribe( res => {
-      console.log(res);
       this.Alert('La compra se a realizado correctamente');
       this.modalController.dismiss();
     }, err => { this.errorAlert(err.error.error.details[0].message); });
@@ -126,7 +138,7 @@ export class BuyComponent extends ComponentBase implements OnInit {
     let sum = 0;
 
     this.listProducts.forEach(p => {
-      sum += (p.unit_price * p.quantity);
+      sum += (p.price * p.quantity);
     });
 
     if(this.listProducts == null) return 0;

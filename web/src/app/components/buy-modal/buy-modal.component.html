@@ -9,16 +9,26 @@
     <div class="modal-body pb-1">
       <ng-container *ngIf="selectedCard != -1">
           <ul class="list-group p-0" *ngIf="listProducts.length > 0">
-            <li class="list-group-item p-0" *ngFor="let lP of listProducts">
+            <li class="list-group-item p-0" *ngFor="let lP of listProducts; let i = index;">
               <div class="row mb-2">
                 <div class="col-4 p-0 d-flex justify-content-center align-items-center">
                     <img class="card-img-top imgUser" src="{{lP.img}}" onerror="this.src='assets/fondo/user.png'">
                 </div>
                 <div class="col-8 p-0">
+                    <!-- <i class="zmdi zmdi-close float-right color-red cP" (click)="listProducts.splice(i,1);"></i> -->
                   <h4 class="mb-1"><small><strong>{{lP?.name}}</strong></small></h4>
                   <h5 class="mb-1"><small>Cantidad: {{lP?.quantity}}</small></h5>
-                  <h5 class="mb-1 text-muted"><small>{{lP?.unit_price | unitCurrency}}</small></h5>
-                  <hr>
+                  <h5 class="mb-1 text-muted"><small>{{lP?.price | currency}}</small></h5>
+                  <hr class="mt-0 mb-1">
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item p-0">
+              <div class="row mb-2">
+                <div class="col-4 p-0 d-flex justify-content-center align-items-center"></div>
+                <div class="col-8 p-0">
+                  <h4 class="mb-1"><small><strong>Total: {{getTotal() | currency}}</strong></small></h4>
+                  <hr class="mt-0 mb-1">
                 </div>
               </div>
             </li>
@@ -45,14 +55,6 @@
           <div class="form-row form-group">
               <label>Nombre del Tarjetahabiente</label>
               <input class="form-control" type="text" size="20" name="name" [(ngModel)]="data.card.name">
-            </div>
-          <div class="form-row form-group">
-              <label>Correo Electronico</label>
-              <input class="form-control" type="email" size="20" name="email" [(ngModel)]="userInfo.email">
-            </div>
-          <div class="form-row form-group">
-              <label>Numero de Telefono</label>
-              <input class="form-control" type="text" size="10" name="phone" [(ngModel)]="userInfo.phone">
             </div>
             <div class="form-row form-group">
               <label>Número de tarjeta de crédito</label>

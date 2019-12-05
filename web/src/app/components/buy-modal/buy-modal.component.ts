@@ -16,7 +16,6 @@ export class BuyModalComponent implements OnInit {
   @Input() listProducts:any = [];
   @Output() addCardChange: EventEmitter<number> = new EventEmitter<number>();
 
-  opcBuy:any = "Default"
   cards:any = [];
   selectedCard:any;
   defCard:any;
@@ -32,12 +31,6 @@ export class BuyModalComponent implements OnInit {
       cvc: ""
     }
   };
-
-  userInfo = {
-    name: "",
-    email: "",
-    phone: ""
-  }
 
   numMeses:any = 1;
 
@@ -81,30 +74,49 @@ export class BuyModalComponent implements OnInit {
 
   convertProducts() {
     this.listProducts.forEach(p => {
+      let intPrice;
+      let floatPrice = parseFloat(p.price).toFixed(2);
+      let stringPrice = floatPrice.toString();
+      intPrice = this.convertPrice(stringPrice);
+
       this.formatProducts.push({
         name: p.name,
-        unit_price: p.unit_price,
+        unit_price: intPrice,
         quantity: p.quantity
       });
     });
   }
 
+  convertPrice(price) {
+    let intPrice;
+    if(price.indexOf(".") != -1) {
+      intPrice= parseInt(price.replace(".",""))
+    } else if(price.indexOf(".") == -1) {
+      let axuPrice = price+"00";
+      intPrice = parseInt(axuPrice);
+    }
+
+    return intPrice;
+  }
+
   buy() {
     this.convertProducts();
 
-    let endpoint = "/conekta/orderFromCustomer";
-    let objToBuy = {
-      cutomerId: this.user.customerId,
-      productsItems: this.formatProducts,
-      cardId: this.selectedCard,
-      mesesCantidad: this.numMeses
-    };
+    console.log(this.formatProducts);
+    
+    
+    // let endpoint = "/conekta/orderFromCustomer";
+    // let objToBuy = {
+    //   cutomerId: this.user.customerId,
+    //   productsItems: this.formatProducts,
+    //   cardId: this.selectedCard,
+    //   mesesCantidad: this.numMeses
+    // };
 
-    this.api.post(endpoint,objToBuy).subscribe( res => {
-      console.log(res);
-      this.toast.showSuccess("La compra se a realizado correctamente");
-      this.closeModal();
-    }, err => { this.toast.showError(err.error.error.details[0].message); });
+    // this.api.post(endpoint,objToBuy).subscribe( res => {
+    //   this.toast.showSuccess("La compra se a realizado correctamente");
+    //   this.closeModal();
+    // }, err => { this.toast.showError(err.error.error.details[0].message); });
   }
 
   createTokoenCard() {
@@ -132,10 +144,7 @@ export class BuyModalComponent implements OnInit {
 
   onSuccesFulToken(token) {
       var Token = token.id;
-
       let enpoint = "/conekta/addCardToUser";
-      
-      var card;
 
       if(this.cards.length < 5) {
         this.api.post(enpoint,{cardToken:Token, customerId: this.user.customerId},true).subscribe( res => {
@@ -149,9 +158,20 @@ export class BuyModalComponent implements OnInit {
   onErrorToken(error) { this.toast.showError(error); }
 
   getStatusData() {
-    if(this.data.card.number == "" || this.data.card.name == "" || this.data.card.exp_year == "" || this.data.card.exp_month == ""  || this.data.card.cvc == ""
-    || this.userInfo.email == "" || this.userInfo.phone == "") { return true; }
-    else {return false; }
+    if(this.data.card.number == "" || this.data.card.name == "" || this.data.card.exp_year == "" || this.data.card.exp_month == ""  || this.data.card.cvc == "")
+    { return true; } else {return false; }
+  }
+
+  getTotal() {
+    let sum = 0;
+
+    this.listProducts.forEach(p => {
+      sum += (p.price * p.quantity);
+    });
+
+    if(this.listProducts == null) return 0;
+    
+    return sum;
   }
 
 }

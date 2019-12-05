@@ -20,19 +20,25 @@ export class ProfileComponent implements OnInit {
     {
       img: "../../../assets/img/avatar.jpg",
       name: "Product 1",
-      unit_price: 123456,
+      price: "1234",
       quantity: 1
     },
     {
       img: "../../../assets/img/avatar.jpg",
       name: "Product 2",
-      unit_price: 150,
+      price: "150.00",
       quantity: 3
     },
     {
       img: "../../../assets/img/avatar.jpg",
       name: "Product 3",
-      unit_price: 100,
+      price: 100.50,
+      quantity: 10
+    },
+    {
+      img: "../../../assets/img/avatar.jpg",
+      name: "Product 4",
+      price: 1000,
       quantity: 10
     }
   ]
