@@ -53,6 +53,14 @@
       "model": "UserPermissionPolicyNode",
       "foreignKey": "",
       "through": "UserPermissionPolicyRelation"
+    },
+    "ordersHistories": {
+      "type": "hasMany",
+      "model": "ordersHistory",
+      "foreignKey": "userId",
+      "options": {
+        "nestRemoting": true
+      }
     }
   },
   "acls": [

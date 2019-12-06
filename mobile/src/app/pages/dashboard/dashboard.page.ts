@@ -35,7 +35,7 @@ export class DashboardPage extends ComponentBase implements OnInit {
       img: "../../../assets/img/avatar.jpg",
       name: "Product 4",
       price: 1000,
-      quantity: 10
+      quantity: 1
     }
   ]
 

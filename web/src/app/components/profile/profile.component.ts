@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ApiService } from '../../services/api.service';
-import { BsModalRef, BsModalService, idLocale } from 'ngx-bootstrap';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { ToastService } from '../../services/toast.service';
 
 @Component({
@@ -39,7 +39,7 @@ export class ProfileComponent implements OnInit {
       img: "../../../assets/img/avatar.jpg",
       name: "Product 4",
       price: 1000,
-      quantity: 10
+      quantity: 1
     }
   ]
 

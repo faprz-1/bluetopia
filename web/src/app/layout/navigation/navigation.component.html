@@ -16,13 +16,18 @@
                 <a class="dropdown-item" (click)="cerrarSession()" href="">Cerrar sesion</a>
             </div>
         </div>
-        <!-- ESTE SERA EL NAVIGATION PARA LOS USUARIOS QUE NO SON SUPER USUARIO-->
-        <ul class="navigation" *ngIf="user.role.id!='3'">
+        <!-- ESTE SERA EL NAVIGATION PARA LOS USUARIOS NORMALES-->
+        <ul class="navigation" *ngIf="user.role[0].id=='1'">
             <li routerLinkActive="navigation__active" *ngFor="let link of userPages">
             <a [routerLink]="['/'+link.action]"><i class="zmdi zmdi-home"></i> {{link.name}}</a></li>
         </ul>
-  <!-- ESTE SERA EL NAVIGATION PARA LOS USUARIOS QUE SON SUPER USUARIO-->
-        <ul class="navigation" *ngIf="user.role.id=='3'">
+        <!-- ESTE SERA EL NAVIGATION PARA LOS USUARIOS ADMIN-->
+        <ul class="navigation" *ngIf="user.role[0].id=='2'">
+            <li routerLinkActive="navigation__active" *ngFor="let link of adminPages">
+            <a [routerLink]="['/'+link.action]"><i class="zmdi zmdi-home"></i> {{link.name}}</a></li>
+        </ul>
+        <!-- ESTE SERA EL NAVIGATION PARA LOS USUARIOS QUE SON SUPER USUARIO-->
+        <ul class="navigation" *ngIf="user.role[0].id=='3'">
                 <li routerLinkActive="navigation__active" *ngFor="let link of  superUserPages">
                 <a [routerLink]="['/'+link.action]"><i class="{{link.icon}}"></i> {{link.name}}</a></li>
             </ul>

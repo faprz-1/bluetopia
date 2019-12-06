@@ -86,7 +86,7 @@ module.exports = function(Conekta) {
     var cardToken = data.cardToken;
     var customerId = data.customerId;
 
-    conekta.Customer.find(customerId, function(err, customer) {
+    conekta.Customer.find(customerId, (err, customer) => {
       if(err) return callback(err);
 
       let infoCard = {
@@ -94,7 +94,7 @@ module.exports = function(Conekta) {
         token_id: cardToken
       }
 
-      customer.createPaymentSource(infoCard, function(err, res) {
+      customer.createPaymentSource(infoCard, (err, res) => {
         if(err) return callback(err);
 
         return callback(null, res);
@@ -109,10 +109,13 @@ module.exports = function(Conekta) {
    */
 
   Conekta.orderFromCustomer = function(data, callback) {
+    var userId = data.userId;
     var cutomerId = data.cutomerId;
     var productsItems = data.productsItems;
     var cardId = data.cardId;
     var mesesCantidad = data.mesesCantidad;
+
+    let orderHist = Conekta.app.models.ordersHistory;
 
     let orderBody = {
       currency: "MXN",
@@ -132,10 +135,23 @@ module.exports = function(Conekta) {
       orderBody.charges[0].payment_method.monthly_installments = mesesCantidad
     }
 
-    conekta.Order.create(orderBody, function(err, order) {
+    conekta.Order.create(orderBody, (err, order) => {
       if(err) return callback(err);
 
-      return callback(null,order);
+      let o = order.toObject();
+
+      let objOrdHist = {
+        orderId: o.id,
+        productsList: productsItems,
+        totalPrice: o.amount,
+        userId: userId
+      }
+
+      orderHist.create(objOrdHist, (err, newOrdHIst) => {
+        if(err) return callback(err);
+
+        return callback(null,order);
+      });
     })
   };
 
@@ -148,7 +164,7 @@ module.exports = function(Conekta) {
   Conekta.getCards = function(data, callback) {
     var cutomerId = data.cutomerId;
 
-    conekta.Customer.find(cutomerId, function(err, customer) {
+    conekta.Customer.find(cutomerId, (err, customer) => {
       if(err) return callback(err);
 
       let c = customer.toObject();
@@ -168,7 +184,7 @@ module.exports = function(Conekta) {
     var cutomerId = data.cutomerId;
     var cardId = data.cardId;
 
-    conekta.Customer.find(cutomerId, function(err, customer) {
+    conekta.Customer.find(cutomerId, (err, customer) => {
       if(err) return callback(err);
 
       let c = customer.toObject();
@@ -184,7 +200,7 @@ module.exports = function(Conekta) {
       });
 
       if(i == cards.length) {
-        customer.payment_sources.get(index).delete(function(err, resp) {
+        customer.payment_sources.get(index).delete((err, resp) => {
           if(err) return callback(err);
           return callback(null,resp)
         })

@@ -6,11 +6,24 @@ import { AuthSGuard } from '../services/authSuser.guard';
 
 const LAYOUT_ROUTES: Routes = [
     { path: '', component: LayoutComponent, children: [
-        { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-        { path: 'dashboard', loadChildren: '../components/dashboard/dashboard.module#DashboardModule' },
+        { path: '', redirectTo: '', pathMatch: 'full' },
         { path: 'perfil', loadChildren: '../components/profile/profile.module#ProfileModule' },
-        { path: 'registro', loadChildren: '../components/register-user/register-user.module#RegisterUserModule',  canActivate: [AuthSGuard] },
-        { path: 'usuarios', loadChildren: '../components/super-user/users/users.module#UsersModule',  canActivate: [AuthSGuard] }, 
+        { path: 'user',  canActivate: [AuthGuard],  data: {role : "User"},
+    	children: [
+                { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+                { path: 'dashboard', loadChildren: '../components/dashboard/dashboard.module#DashboardModule' }
+        ]},
+        { path: 'admin',  canActivate: [AuthGuard],  data: {role : "Admin"},
+    	children: [
+                { path: '', redirectTo: 'refounds', pathMatch: 'full' },
+                { path: 'refounds', loadChildren: '../components/admin/refunds/refunds.module#RefundsModule' }
+        ]},
+        { path: 'superuser',  canActivate: [AuthGuard],  data: {role : "SuperUser"},
+    	children: [
+                { path: '', redirectTo: 'usuarios', pathMatch: 'full' },
+                { path: 'registro', loadChildren: '../components/register-user/register-user.module#RegisterUserModule' },
+                { path: 'usuarios', loadChildren: '../components/super-user/users/users.module#UsersModule' }
+        ]}         
     ]}
 ];
 

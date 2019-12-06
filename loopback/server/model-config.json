@@ -108,5 +108,9 @@
   "conekta": {
     "dataSource": "mysqlDev",
     "public": true
+  },
+  "ordersHistory": {
+    "dataSource": "mysqlDev",
+    "public": true
   }
 }

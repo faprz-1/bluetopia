@@ -79,11 +79,17 @@ export class BuyModalComponent implements OnInit {
       let stringPrice = floatPrice.toString();
       intPrice = this.convertPrice(stringPrice);
 
+      console.log(intPrice);
+      
+
       this.formatProducts.push({
         name: p.name,
         unit_price: intPrice,
         quantity: p.quantity
       });
+
+      console.log(this.formatProducts);
+      
     });
   }
 
@@ -104,6 +110,7 @@ export class BuyModalComponent implements OnInit {
     
     let endpoint = "/conekta/orderFromCustomer";
     let objToBuy = {
+      userId: this.user.id,
       cutomerId: this.user.customerId,
       productsItems: this.formatProducts,
       cardId: this.selectedCard,

@@ -38,7 +38,13 @@
               <strong> {{user?.email}}</strong>
             </p>
           </div>
-  
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-5 col-sm-7 pl-0">
+      <div class="card ml-3">
+        <h5 class="card-header">Tarjetas</h5>
+        <div class="card-body">
           <div class="form-group row mb-2" *ngIf="user.customerId != null && cards.length > 0">
             <p class="w-100">Tarjetas en conekta:</p>
             <span class="w-100" *ngFor="let c of cards">
@@ -54,7 +60,7 @@
       </div>
     </div>
   </div>
-  <!-- <button class="btn btn-primary" (click)="openModal(buyMod,$event)">ClickMePLS</button> -->
+  <button class="btn btn-primary" (click)="openModal(buyMod,$event)">ClickMePLS</button>
 </section>
 
 <ng-template #addCard>

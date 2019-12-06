@@ -108,6 +108,7 @@ export class BuyComponent extends ComponentBase implements OnInit {
 
     let endpoint = "/conekta/orderFromCustomer";
     let objToBuy = {
+      userId: this.loggedUser.id,
       cutomerId: this.loggedUser.customerId,
       productsItems: this.formatProducts,
       cardId: this.selectedCard,

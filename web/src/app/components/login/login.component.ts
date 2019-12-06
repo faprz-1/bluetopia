@@ -23,6 +23,8 @@ export class LoginComponent implements OnInit {
   changuePass:boolean=false;
   tryPin:boolean=false;
   successUpdate: boolean=false;
+  users = {1:'user',2:'admin',3:'superuser'};
+
   constructor(
     vcr: ViewContainerRef,
     public toast: ToastService,
@@ -31,7 +33,10 @@ export class LoginComponent implements OnInit {
     private notiServ : NotificationService
   ) {
     if(localStorage.getItem("token")) {
-      this.router.navigate(['/inicio/dashboard'])
+      let user = JSON.parse(localStorage.getItem("user"));
+      console.log(this.users[user.role[0].id]);
+      
+      this.router.navigate([`/inicio/${this.users[user.role[0].id]}/`]);
     }
   }
 
@@ -56,7 +61,9 @@ export class LoginComponent implements OnInit {
         localStorage.setItem("ttl", moment().add(1209600, 's').toISOString() )
         this.notiServ.loadNotifications()
         this.toast.showSuccess("Sesion Iniciada Exitosamente");
-        this.router.navigate(['/inicio/dashboard']);
+        let user = JSON.parse(localStorage.getItem("user"));
+        console.log(this.users[user.role[0].id]);
+        this.router.navigate([`/inicio/${this.users[user.role[0].id]}/`]);
       }, (err: any) => {
         this.procesando = false;
         this.toast.showError(err.error.error.message);
