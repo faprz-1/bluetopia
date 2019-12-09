@@ -17,7 +17,8 @@ const routes: Routes = [
       { path: 'add-card', loadChildren: './pages/settings/add-card/add-card.module#AddCardPageModule' }
     ]
   },
-  { path: 'notification', loadChildren: './pages/notification/notification.module#NotificationPageModule' },  { path: 'buy-page', loadChildren: './pages/buy-page/buy-page.module#BuyPagePageModule' }
+  { path: 'notification', loadChildren: './pages/notification/notification.module#NotificationPageModule' },  { path: 'buy-page', loadChildren: './pages/buy-page/buy-page.module#BuyPagePageModule' },
+  { path: 'refounds', loadChildren: './pages/refounds/refounds.module#RefoundsPageModule' }
 
 ];
 

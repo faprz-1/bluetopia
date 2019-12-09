@@ -59,7 +59,8 @@ export class NavigationComponent implements OnInit {
   ];
 
   adminPages = [
-    {name: "Inicio",action: "/inicio/admin/refounds", icon: "zmdi zmdi-home"}
+    {name: "Inicio",action: "/inicio/admin/dashboard", icon: "zmdi zmdi-home"},
+    {name: "Reembolsos",action: "/inicio/admin/refounds", icon: "zmdi zmdi-money-off"}
   ];
 
   superUserPages = [

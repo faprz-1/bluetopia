@@ -177,6 +177,34 @@
           "verb": "post"
         }
       ]
+    },
+    "refoundOrder": {
+      "accepts": [
+        {
+          "arg": "data",
+          "type": "object",
+          "required": true,
+          "description": "",
+          "http": {
+            "source": "body"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "dataRefound",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/refoundOrder",
+          "verb": "post"
+        }
+      ]
     }
   }
 }

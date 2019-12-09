@@ -208,4 +208,36 @@ module.exports = function(Conekta) {
     });
   };
 
+  /**
+   *
+   * @param {object} data
+   * @param {Function(Error, object)} callback
+   */
+
+  Conekta.refoundOrder = function(data, callback) {
+    var orderId = data.orderId;
+    var objRefound = data.objRefound;
+    var orderH = data.orderH;
+
+    conekta.Order.find(orderId, (err, order) => {
+      if(err) return callback(err);
+
+      order.createRefund(objRefound, (err, res) => {
+        if(err) return callback(err);
+
+        let orderHist = Conekta.app.models.ordersHistory;
+
+        orderH.refounded = true;
+        
+        orderHist.updateAll({orderId: orderId}, orderH, (err,nothing) => {
+          if(err) return callback(err);
+          
+          return callback(null, res);
+        });
+
+      });
+    });
+
+  };
+
 };

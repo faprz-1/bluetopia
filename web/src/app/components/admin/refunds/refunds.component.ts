@@ -14,6 +14,8 @@ export class RefundsComponent implements OnInit {
 
   refounds:any = [];
 
+  reasonRefound:string = "";
+
   constructor(
     private api: ApiService,
     private toast: ToastService,
@@ -25,9 +27,7 @@ export class RefundsComponent implements OnInit {
   openModal(template: TemplateRef<any>, event) {
     event.stopPropagation();
     this.mtModalRef = this.modalService.show(
-      template, {
-        backdrop: 'static'
-      }
+      template, { backdrop: 'static' }
     );
   }
 
@@ -40,10 +40,36 @@ export class RefundsComponent implements OnInit {
 
     this.api.get(endpoint).subscribe( res => {
       this.refounds = res;
-      console.log(this.refounds);
-      
+
+      this.refounds.forEach(r => { r.change = false; });
     }, err => {
       this.toast.showError("No se pudo obetener el listado de devoluciones");
     });
+  }
+
+  refound(refoundObj) {
+    let enpoint = "/conekta/refoundOrder";
+
+    if(this.reasonRefound == "") {
+      this.toast.showError("No se pudo hacer la devolucion, por que no se agrego una razón");
+      refoundObj.change = !refoundObj.change;
+    } else {
+
+      let objRefound = { reason: this.reasonRefound }
+
+      this.api.post(enpoint, {orderId:refoundObj.orderId, objRefound:objRefound, orderH:refoundObj}, ).subscribe(res => {
+        refoundObj.change = !refoundObj.change;
+        this.toast.showSuccess("El reembolso se a realizado correctamente");
+        this.reload();
+      }, err => { this.toast.showError(err.error.error.details[0].message); });
+    }
+  }
+
+  converPrice(price) {
+    let priceLength = price.length;
+    let pricePart1 = price.slice(0,priceLength-2);
+    let pricePart2 = price.slice(priceLength-2,priceLength);
+
+    return parseInt(pricePart1+'.'+pricePart2);
   }
 }

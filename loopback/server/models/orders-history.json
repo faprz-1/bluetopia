@@ -19,6 +19,10 @@
     "totalPrice": {
       "type": "string",
       "required": true
+    },
+    "refounded": {
+      "type": "boolean",
+      "default": false
     }
   },
   "validations": [],

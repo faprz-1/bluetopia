@@ -25,7 +25,7 @@ export class AuthGuard implements CanActivate {
 	}
 
     if (next.data.hasOwnProperty("role")) {
-		return next.data.role == JSON.parse(localStorage.getItem("user")).role[0].name
+		return next.data.role == JSON.parse(localStorage.getItem("user")).role.name
     } else if (token) {
       return true;
 	}

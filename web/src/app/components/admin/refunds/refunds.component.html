@@ -30,8 +30,16 @@
                       <div class="col-4 p-0 m-0"> <h5 class="mb-1 text-muted text-center"><small>{{pl?.unit_price | currency}}</small></h5> </div>
                     </div>
                   </td>
-                  <td class="text-center">{{r.totalPrice | unitCurrency}}</td>
-                  <td class="text-center px-0"><button class="btn btn-primary" (click)="openModal(refoundModal,$event)">Hacer Reembolso</button></td>
+                  <td class="text-center">{{converPrice(r.totalPrice) | currency}}</td>
+                  <td class="text-center px-0">
+                    <button *ngIf="!r.change && !r.refounded" class="btn btn-primary" (click)="r.change = !r.change">Hacer Reembolso</button>
+                    <span *ngIf="r.refounded">Reembolsado</span>
+                    <div class="form-group" *ngIf="r.change">
+                        <label>Razón:</label>
+                        <textarea class="form-control textARefound" rows="3" cols="3" [(ngModel)]="reasonRefound"
+                        (blur)="refound(r)" (keydown.enter)="refound(r)"></textarea>
+                      </div>
+                  </td>
                 </tr>
               </ng-container>
             </tbody>

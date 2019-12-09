@@ -89,7 +89,7 @@ module.exports = function(Usuario) {
         var RoleMapping = app.models.RoleMapping;
         var Role = app.models.Role;
 
-        Usuario.find({
+        Usuario.findOne({
             where: {
                 id: id
             }
@@ -104,18 +104,18 @@ module.exports = function(Usuario) {
             }, function(error, roleM) {
                 if (error) return callback(error)
 
-                Role.find({
+                Role.findOne({
                     where: {
                         id: roleM[0].roleId
                     }
                 }, function(error, role) {
                     if (error) return callback(error)
 
-                    user[0].role = role[0];
-                    userWithCredentials = user[0];
+                    user.role = role;
+                    userWithCredentials = user;
 
-                    console.log("auth:", role[0].name)
-                    if (role[0].name == 'SuperUser') {
+                    console.log("auth:", role.name)
+                    if (role.name == 'SuperUser') {
                         // TODO
                         return callback(null, userWithCredentials);
                     } else {

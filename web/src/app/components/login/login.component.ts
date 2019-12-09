@@ -34,9 +34,9 @@ export class LoginComponent implements OnInit {
   ) {
     if(localStorage.getItem("token")) {
       let user = JSON.parse(localStorage.getItem("user"));
-      console.log(this.users[user.role[0].id]);
+      console.log(this.users[user.role.id]);
       
-      this.router.navigate([`/inicio/${this.users[user.role[0].id]}/`]);
+      this.router.navigate([`/inicio/${this.users[user.role.id]}/`]);
     }
   }
 
@@ -62,8 +62,10 @@ export class LoginComponent implements OnInit {
         this.notiServ.loadNotifications()
         this.toast.showSuccess("Sesion Iniciada Exitosamente");
         let user = JSON.parse(localStorage.getItem("user"));
-        console.log(this.users[user.role[0].id]);
-        this.router.navigate([`/inicio/${this.users[user.role[0].id]}/`]);
+        console.log(user.role);
+        console.log(this.users[user.role.id]);
+
+        this.router.navigate([`/inicio/${this.users[user.role.id]}/`]);
       }, (err: any) => {
         this.procesando = false;
         this.toast.showError(err.error.error.message);

@@ -20,14 +20,36 @@
             </ion-label>
           </ion-item>
 
-          <ion-menu-toggle auto-hide="false" *ngFor="let item of menuItems">
-            <ion-item [routerDirection]="'root'" [routerLink]="[item.url]">
-              <ion-icon slot="start" [name]="item.icon"></ion-icon>
-              <ion-label>
-                {{item.title}}
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
+          <ng-container *ngIf="loggedUser!=null && loggedUser.role.id == 1">
+            <ion-menu-toggle auto-hide="false" *ngFor="let item of menuItemsUser">
+              <ion-item [routerDirection]="'root'" [routerLink]="[item.url]">
+                <ion-icon slot="start" [name]="item.icon"></ion-icon>
+                <ion-label>
+                  {{item.title}}
+                </ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ng-container>
+          <ng-container *ngIf="loggedUser!=null && loggedUser.role.id == 2">
+            <ion-menu-toggle auto-hide="false" *ngFor="let item of menuItemsAdmin">
+              <ion-item [routerDirection]="'root'" [routerLink]="[item.url]">
+                <ion-icon slot="start" [name]="item.icon"></ion-icon>
+                <ion-label>
+                  {{item.title}}
+                </ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ng-container>
+          <ng-container *ngIf="loggedUser!=null && loggedUser.role.id == 3">
+            <ion-menu-toggle auto-hide="false" *ngFor="let item of menuItemsSuperUser">
+              <ion-item [routerDirection]="'root'" [routerLink]="[item.url]">
+                <ion-icon slot="start" [name]="item.icon"></ion-icon>
+                <ion-label>
+                  {{item.title}}
+                </ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ng-container>
         </ion-list>
       </ion-content>
     </ion-menu>

@@ -16,6 +16,7 @@ const LAYOUT_ROUTES: Routes = [
         { path: 'admin',  canActivate: [AuthGuard],  data: {role : "Admin"},
     	children: [
                 { path: '', redirectTo: 'refounds', pathMatch: 'full' },
+                { path: 'dashboard', loadChildren: '../components/dashboard/dashboard.module#DashboardModule' },
                 { path: 'refounds', loadChildren: '../components/admin/refunds/refunds.module#RefundsModule' }
         ]},
         { path: 'superuser',  canActivate: [AuthGuard],  data: {role : "SuperUser"},
