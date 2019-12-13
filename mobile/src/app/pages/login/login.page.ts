@@ -17,6 +17,7 @@ class Account {
 export class LoginPage extends ComponentBase implements OnInit {
   loginAccount: Account = new Account();
   dontClose : boolean = true;
+  loggedUser:any;
 
   ngOnInit() {
     this.disableMenu();
@@ -47,6 +48,7 @@ export class LoginPage extends ComponentBase implements OnInit {
   }
 
   private async SaveUserData(userFromServer: JSON) {
+    this.loggedUser = userFromServer;
     await this.storage.set("user", userFromServer)
     await this.storage.set("ttl", moment().add(1209600, 's').toISOString())
     await this.AfterSuccessfulLogin()
@@ -64,7 +66,11 @@ export class LoginPage extends ComponentBase implements OnInit {
     this.DismissLoading()
     this.enableMenu()
     this.events.publish('user:logged', true)
-    this.navController.navigateRoot('dashboard')
+    if(this.loggedUser.role.id == 2) {
+      this.navController.navigateRoot('refounds')
+    } else {
+      this.navController.navigateRoot('dashboard')
+    }
   }
 
   public goToUrl(url) {

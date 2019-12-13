@@ -9,6 +9,8 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { DashboardPage } from './dashboard.page';
 
+import { BuyPagePage } from "../../pages/buy-page/buy-page.page";
+
 const routes: Routes = [
   {
     path: '',
@@ -25,6 +27,7 @@ const routes: Routes = [
     TranslateModule.forRoot(),
     ComponentsModule
   ],
-  declarations: [DashboardPage]
+  declarations: [DashboardPage,BuyPagePage],
+  entryComponents: [BuyPagePage]
 })
 export class DashboardPageModule {}

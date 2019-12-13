@@ -134,7 +134,9 @@ export class ComponentBase {
 
     protected async HandleAPIError(error) {
         this.DismissLoading()
-        this.ShowToast(error.error.error.message)
+        if(error.error.error != undefined) {
+            this.ShowToast(error.error.error.message);
+        }
     }
 
     protected async takePicture() {

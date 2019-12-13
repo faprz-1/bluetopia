@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { TooltipModule } from 'ngx-tooltip';
 
 import { ProfileComponent } from './profile.component';
+import { AddCardModule } from "./add-card/add-card.module";
+import { BuyModalModule } from '../buy-modal/buy-modal.module';
 
 const MODULE_ROUTES = [
   { path: '', component: ProfileComponent }
@@ -16,6 +18,8 @@ const MODULE_ROUTES = [
     CommonModule ,FormsModule,TooltipModule,
     RouterModule.forChild(MODULE_ROUTES),
     ProfileImageEditorModule,
+    AddCardModule,
+    BuyModalModule
   ],
   declarations: [ProfileComponent]
 })
