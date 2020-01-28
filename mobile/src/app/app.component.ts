@@ -14,7 +14,38 @@ import * as moment from "moment";
 export class AppComponent {
   public loggedUser : any;
 
-  public menuItems = [
+  public menuItemsUser = [
+    {
+      title: 'Inicio',
+      url: '/dashboard',
+      icon: 'home',
+    },
+    {
+      title: 'Ajustes',
+      url: '/settings',
+      icon: 'settings'
+    }
+  ];
+
+  public menuItemsAdmin = [
+    {
+      title: 'Inicio',
+      url: '/dashboard',
+      icon: 'home',
+    },
+    {
+      title: 'Reembolsos',
+      url: '/refounds',
+      icon: 'cash',
+    },
+    {
+      title: 'Ajustes',
+      url: '/settings',
+      icon: 'settings'
+    }
+  ];
+
+  public menuItemsSuperUser = [
     {
       title: 'Inicio',
       url: '/dashboard',
@@ -76,5 +107,10 @@ export class AppComponent {
 
   private async getUserData(data : any = null) {
     this.loggedUser = await this.storage.get("user");
+    if(this.loggedUser != null) {
+      if(this.loggedUser.role.id == 2) {
+        this.navController.navigateRoot('/refounds')
+      }
+    }
   }
 }

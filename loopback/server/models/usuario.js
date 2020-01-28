@@ -7,25 +7,10 @@ module.exports = function(Usuario) {
 
     Usuario.testPush = function(callback) {
         // Enviar push 
-        var notificacion = Usuario.app.models.Notification;
+        var notificacion = this.app.models.Notification;
         var res = notificacion.setByRoleNotification("admin", {
-            onclick: () => {
-                console.log("clickeado");
-                alert("hello")
-            },
             title: "titulo de prueba",
             tag: "tag1",
-            content: "un push de prueba se ha enviado para revisar que todo este bien",
-            link: notificacion.baseURL + "/inicio",
-            "image": "https://scontent.fgdl4-1.fna.fbcdn.net/v/t1.0-9/50728512_2110076052393262_3123088630382329856_o.png?_nc_cat=103&_nc_ht=scontent.fgdl4-1.fna&oh=045b806a600cd3dc959b54ae1e739d73&oe=5D2B7633"
-        });
-        var res = notificacion.setByRoleNotification("admin", {
-            onclick: () => {
-                console.log("clickeado");
-                alert("hello")
-            },
-            title: "titulo de prueba 2",
-            tag: "tag2",
             content: "un push de prueba se ha enviado para revisar que todo este bien",
             link: notificacion.baseURL + "/inicio",
             "image": "https://scontent.fgdl4-1.fna.fbcdn.net/v/t1.0-9/50728512_2110076052393262_3123088630382329856_o.png?_nc_cat=103&_nc_ht=scontent.fgdl4-1.fna&oh=045b806a600cd3dc959b54ae1e739d73&oe=5D2B7633"
@@ -104,7 +89,7 @@ module.exports = function(Usuario) {
         var RoleMapping = app.models.RoleMapping;
         var Role = app.models.Role;
 
-        Usuario.find({
+        Usuario.findOne({
             where: {
                 id: id
             }
@@ -119,18 +104,18 @@ module.exports = function(Usuario) {
             }, function(error, roleM) {
                 if (error) return callback(error)
 
-                Role.find({
+                Role.findOne({
                     where: {
                         id: roleM[0].roleId
                     }
                 }, function(error, role) {
                     if (error) return callback(error)
 
-                    user[0].role = role[0];
-                    userWithCredentials = user[0];
+                    user.role = role;
+                    userWithCredentials = user;
 
-                    console.log("auth:", role[0].name)
-                    if (role[0].name == 'SuperUser') {
+                    console.log("auth:", role.name)
+                    if (role.name == 'SuperUser') {
                         // TODO
                         return callback(null, userWithCredentials);
                     } else {
@@ -715,7 +700,6 @@ module.exports = function(Usuario) {
         })
     }
 
-
     Usuario.prototype.loadUserData = function(callback) {
         let userWithCredentials = this
         let permissionsFilter = {}
@@ -731,6 +715,4 @@ module.exports = function(Usuario) {
             })
         })
     }
-
-
 };

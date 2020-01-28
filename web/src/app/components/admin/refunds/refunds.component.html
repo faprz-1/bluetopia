@@ -1,0 +1,75 @@
+<section class="content">
+  <div class="row">
+    <div class="col-12">
+      <div class="display-4">
+        Reembolso
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col-12">
+        <table class="table table-bordered table-sm">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col" class="text-center">Usuario</th>
+                <th scope="col" class="text-center">Lista de productos</th>
+                <th scope="col" class="text-center">Total</th>
+                <th scope="col" class="text-center">Reembolso</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="refounds.length == 0"><th><h3>NO HAY DEVOLUCIONES</h3></th></tr>
+              <ng-container *ngIf="refounds.length > 0">
+                <tr *ngFor="let r of refounds">
+                  <th class="text-center">{{r?.usuario?.username}}</th>
+                  <td class="px-0">
+                    <div class="row p-0 m-0" *ngFor="let pl of r.productsList">
+                      <div class="col-4 p-0 m-0"> <h4 class="mb-1 text-center"><small><strong>{{pl?.name}}</strong></small></h4> </div>
+                      <div class="col-4 p-0 m-0"> <h5 class="mb-1 text-center"><small>Cantidad: {{pl?.quantity}}</small></h5> </div>
+                      <div class="col-4 p-0 m-0"> <h5 class="mb-1 text-muted text-center"><small>{{pl?.unit_price | currency}}</small></h5> </div>
+                    </div>
+                  </td>
+                  <td class="text-center">{{converPrice(r.totalPrice) | currency}}</td>
+                  <td class="text-center px-0">
+                    <button *ngIf="!r.change && !r.refounded" class="btn btn-primary" (click)="r.change = !r.change">Hacer Reembolso</button>
+                    <span *ngIf="r.refounded">Reembolsado</span>
+                    <div class="form-group" *ngIf="r.change">
+                        <label>Razón:</label>
+                        <textarea class="form-control textARefound" rows="3" cols="3" [(ngModel)]="reasonRefound"
+                        (blur)="refound(r)" (keydown.enter)="refound(r)"></textarea>
+                      </div>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+    </div>
+  </div>
+</section>
+
+<ng-template #refoundModal>
+    <div class="modal-content" >
+        <div class="modal-header bg-dark">
+          <h4 class="modal-title text-white pull-left ">Reembolso</h4>
+          <button type="button" class="close text-white pull-right" aria-label="Close" (click)="closeModal();">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      
+        <div class="modal-body pb-1">
+          <div class="form-group">
+            <label>Razón:</label>
+            <textarea class="form-control" rows="3"></textarea>
+          </div>
+        </div>
+      
+        <div class="modal-footer">
+          <div class="row mt-4">
+            <div class="col-6">
+              <button type="button" class="btn btn-primary float-left"> Aceptar </button>
+            </div>
+          </div>
+        </div>
+      </div>
+</ng-template>

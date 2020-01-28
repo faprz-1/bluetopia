@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef} from '@angular/core';
 import { RouterModule, Routes ,Router} from '@angular/router';
-
-import {TooltipModule} from "ngx-tooltip";
+import { ApiService } from '../../services/api.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,8 +9,13 @@ import {TooltipModule} from "ngx-tooltip";
   styleUrls: ['./dashboard.component.css']
 })
 
-export class DashboardComponent implements OnInit {  
+export class DashboardComponent implements OnInit {
   
-	constructor(private router: Router) {}
+	constructor(
+    private router: Router,
+    private api: ApiService,
+    private toast: ToastService
+    ) {}
   ngOnInit() {}
+
 }

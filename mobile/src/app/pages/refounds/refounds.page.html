@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Reembolsos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+      <ion-list>
+        <ion-item *ngFor="let r of refounds">
+          <ion-label>
+            <h2>{{r?.usuario?.username}}</h2>
+            <h3 *ngFor="let pl of r.productsList">
+              <ion-row>
+                <ion-col size="6">{{pl?.name}} ({{pl?.quantity}})</ion-col>
+                <ion-col size="6">{{pl?.unit_price | currency}}</ion-col>
+              </ion-row>
+            </h3>
+            <p>Total: {{converPrice(r.totalPrice) | currency}}</p>
+          </ion-label>
+          <span *ngIf="r.refounded">Reembolsado</span>
+          <ion-button *ngIf="!r.change && !r.refounded" (click)="r.change = !r.change">Reembolsar</ion-button>
+          <div *ngIf="r.change">
+            <ion-row>
+              <ion-col size="6">
+                  <ion-label position="stacked">Rason</ion-label>
+                  <ion-textarea [(ngModel)]="reasonRefound"></ion-textarea>
+              </ion-col>
+              <ion-col size="6"><ion-button (click)="refound(r)">Aceptar</ion-button></ion-col>
+            </ion-row>
+          </div>
+        </ion-item>
+      </ion-list>
+  </ion-card>
+</ion-content>

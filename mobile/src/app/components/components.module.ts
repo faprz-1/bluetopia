@@ -7,7 +7,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { IonicStorageModule } from '@ionic/storage';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
-
+import { BuyComponent } from "../components/buy/buy.component";
+import { CardComponent } from "../components/card/card.component";
+import { unit_currency } from "../../pipes/unit_currency.pipe"
 @NgModule({
   imports: [
     CommonModule,
@@ -16,8 +18,17 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
     TranslateModule.forRoot(),
     IonicStorageModule.forRoot()
   ],
-  declarations: [SocialMediaLoginButtonsComponent],
-  exports: [SocialMediaLoginButtonsComponent],
+  declarations: [
+    SocialMediaLoginButtonsComponent,
+    BuyComponent,
+    CardComponent,
+    unit_currency
+  ],
+  exports: [
+    SocialMediaLoginButtonsComponent,
+    BuyComponent,
+    CardComponent
+  ],
   providers: [
     Storage,
     Facebook,

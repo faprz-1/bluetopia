@@ -1,0 +1,123 @@
+Manual de uso de Conekta
+
+¡¡¡IMPORTANTE!!!
+	Para la lista de productos que se mandan a conekta tiene que ser en un formato en especifico, que seria el siguente
+	let lisrProducts = [ 		<- Arreglo de la lista de productos
+		{				<- Objeto (Producto)
+		name: "Product 1",	<- Nombre del producto
+		unit_price: 350000,	<- Precio del producto
+		quantity: 1		<- Cantidad que se compraran
+		},
+		{
+		name: "Product 2",
+		unit_price: 100000,
+		quantity: 3
+		},
+		{
+		name: "Product 3",
+		unit_price: 10000,
+		quantity: 10
+		},
+	]
+
+	Tanto para web como para mobile ya hay unas funciones que convierten los precios que normalmente se ingresan, a este formato.
+
+	Por ejemplo en la DB los productos pueden estar asi:
+
+	{
+		name: "Product 3",
+		price: 100,			<- Precio que esta en la DB
+		description: "",
+		etc: ""
+	}
+
+	Lo que se tendiria que hacer es un push a una lista auxiliar, en donde pondremos cada producto pero con la cantidad para que quede de la siguiente manera:
+
+	{
+		name: "Product 3",
+		price: 100,			<- Precio que esta en la DB
+		description: "",
+		etc: ""
+		quantity: xCantidad
+	}
+
+	Y lo que hace la funcion es agarrar, el name, el price y el quantity (Es necesario que tenga estos nombres en concreto, de otra forma habria que
+	cambiarlos en la funcion "convertProducts"), para ponerlo en otra lista pero con el formato requerido.
+
+	Las funciones para convertir lo que hacen es agarrar el precio ingresado (puede ser string, o numbre, o float), y las convierte a precio unitario por lo que quedaria de
+	la siguiente manera:
+
+	{
+		name: "Product 3",
+		price: 10000,		<- Este es el precio con el formato correcto, los ceros que se le agregaron son los decimales.
+		description: "",
+		etc: ""
+		quantity: xCantidad
+	}
+
+	Practicamente hace lo siguiente:
+	200			-> 20000
+	10.5		-> 1050
+	342.51		-> 34251
+	972.1234	-> 97212 Nota: Si tiene mas de dos decimales primero lo redondea y luego lo convierte.
+
+En Web:
+	En web hay un componente modal que sirve para hacer las tokenizaciones de las tarjetas y asignarlas al usuario.
+	Esto esta en el perfil en el icono de la tarjeta, el usuario puede agregar hasta 5 tarjetas solamente.
+	Las tarjetas se muestran debajo de la informacion del usuario, y tambien podran eliminarlas.
+	
+	Tambien hay otro componente modal en el cual se hacen las compras, que para utilizarlo se utiliza lo siguiente:
+
+	<app-buy-modal [user]="user" [listProducts]="listProducts" (close)="closeModal()" (addCardChange)="checkAddCardInModal($event)"></app-buy-modal>
+	user 			<- Es el usuario que esta logueado.
+	listProducts 	<- Esta no es la lista que viene de la DB, es la lista que generamos cuando agregamos un nuevo producto con cantidad.
+	close 			<- Es la funcion que cierra el modal.
+	addCardChange 	<- Es la funcion que cambia el estado por si se quiere agregar otra tarjeta desde ese modal.
+
+	Nota: Especifico, practicamente para lo de los productos se necesitan tres listas
+		1.- Lista que viene de la DB.
+		2.- Lista que se genera cuando agregamos un producto con la cantidad.
+		3.- Lista con el formato necesario
+
+		Esta ultima se genera en automatico, simpre y cuando tenga el name, price, y quantity (Es necesario que tenga estos nombres en concreto, de otra forma habria que
+		cambiarlos en la funcion "convertProducts").
+
+	Se puede utilizar un componente de carrito donde se vallan guardando todos los productos, y desde ahi abrir el modal de las compras.
+
+	En el profile component, hay un boton de prueba que habre ese modal, y la informacion que se le manda es de un JSON, no viene de la DB.
+
+En Mobile:
+	Aqui tenemos una pagina dentro de ajustes donde se hace la tokenizacion y agregar las tarjetas al usuario.
+
+	Despues tenemos un page que usamos como modal, en la cual esta de la siguiente manera, y con los siguientes parametros:
+
+	async buyModal() {
+		const modal = await this.modalController.create({
+		component: BuyPagePage,
+		componentProps: {
+			'loggedUser': this.loggedUser,		<- Usuario actualmente logueado.
+			'listProducts': this.listProducts	<- Lista de productos (no DB).
+		}
+		});
+		return await modal.present();
+	}
+
+	Se crearon dos componentes uno de la compra, y otro para tokenizacion pero desde el modal, este ultimo se creo ya que si se utilizaba el de la page se iba a mostrar
+	dos heads, y aparte por que es mas facil utilizar los input y outputs, para saber que tarjeta se creo, ya lo mencionare.
+
+	Inicialmente se va a mandar a llamar el componente de compra que seria de la siguiente manera:
+
+	<app-buy *ngIf="loggedUser != null && listProducts != null" [loggedUser]="loggedUser" [listProducts]="listProducts"
+        [isAddCard]="isAddCard" (isAddCardChange)="changValueAddCard($event)" [selectedCard]="selectedCard"></app-buy>
+
+		loggedUser 			<- Usuario actualmente logueado.
+		listProducts		<- Lista de productos.
+		isAddCard			<- Esto es para saber el estado en el que se encuntra es decir si esta comprando o agregando tarjeta desde el modal.
+		isAddCardChange		<- Cambia el valor de isAddCard (True o False).
+		selectedCard		<- Esto es para cuando agregan una tarjeta nueva desde el modal, y que cuando regrese a la vista de compras este seleccionada la nueva.
+
+	Tambien tienen las funciones de convercion tanto de la lista, como la de los precios.
+
+	Tambien se recomienda una page de carrito para la lista de productos y llamar el modal de compras.
+
+	El boton de prueba esta en el dashboard.

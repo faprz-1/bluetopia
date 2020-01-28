@@ -55,13 +55,17 @@ export class NavigationComponent implements OnInit {
   }
 
   userPages = [
-    {name: "Inicio",action: "/inicio/dashboard", icon: "zmdi zmdi-home"}
+    {name: "Inicio",action: "/inicio/user/dashboard", icon: "zmdi zmdi-home"}
+  ];
+
+  adminPages = [
+    {name: "Inicio",action: "/inicio/admin/dashboard", icon: "zmdi zmdi-home"},
+    {name: "Reembolsos",action: "/inicio/admin/refounds", icon: "zmdi zmdi-money-off"}
   ];
 
   superUserPages = [
-    {name: "Inicio",action: "/inicio/dashboard", icon: "zmdi zmdi-home"},
-    {name:"Registrar Usuario", action: "/inicio/registro", icon: "zmdi zmdi-account-add"}, 
-    {name: "Usuarios",  action: "/inicio/usuarios", icon : "accounts"}, 
+    {name:"Registrar Usuario", action: "/inicio/superuser/registro", icon: "zmdi zmdi-account-add"}, 
+    {name: "Usuarios",  action: "/inicio/superuser/usuarios", icon : "accounts"}, 
   ];
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user'));
