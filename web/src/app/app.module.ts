@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
+import { PapaParseModule } from 'ngx-papaparse';
 
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
@@ -37,7 +38,8 @@ import { AuthSGuard } from './services/authSuser.guard';
     routing,
     AngularFireModule.initializeApp(firebaseConfig),  
     AngularFireDatabaseModule,
-    ToastrModule.forRoot() 
+    ToastrModule.forRoot(), 
+    PapaParseModule
   ],
   declarations: [
     AppComponent,
