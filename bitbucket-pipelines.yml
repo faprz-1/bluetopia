@@ -21,6 +21,12 @@ definitions:
         deployment: staging
         script:
           - echo "Deploying to test environment"
+          - pipe: atlassian/ssh-run:0.2.4
+            variables:
+              SSH_USER: $SSH_DEVELOP_USER
+              SERVER: $SHH_DEVELOP_SERVER
+              COMMAND: './deploy-script-develop.sh'
+
 
 pipelines:
   branches:
