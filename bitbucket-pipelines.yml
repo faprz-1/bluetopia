@@ -1,0 +1,27 @@
+# This is a sample build configuration for JavaScript.
+# Check our guides at https://confluence.atlassian.com/x/14UWN for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: node:10.15.3
+
+pipelines:
+  branches:
+    '{develop, master}':
+    - step:
+        caches:
+          - node
+        script: # Modify the commands below to build your repository.
+          - cd web
+          - npm install
+          - npm rebuild node-sass
+          - npm run build --prod
+    master:
+    - step:
+        name: Deploy to develop
+        deployment: develop
+        # trigger: manual  # Uncomment to make this a manual deployment.
+        script:
+          - echo "Deploying to test environment"
+
+          
