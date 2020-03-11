@@ -19,14 +19,14 @@ pipelines:
           - npm run build --prod
     master:
     - step:
-      name: Run tests
-      caches:
-        - node
-      script:
-        - cd web
-        - npm install
-        - npm rebuild node-sass
-        - npm run build --prod
+        name: Run tests
+        caches:
+          - node
+        script:
+          - cd web
+          - npm install
+          - npm rebuild node-sass
+          - npm run build --prod
     - step:
         name: Deploy to staging
         deployment: staging
