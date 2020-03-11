@@ -7,7 +7,7 @@ image: node:10.15.3
 
 pipelines:
   branches:
-    develop:
+    '{develop, master}':
     - step:
         caches:
           - node
@@ -16,3 +16,12 @@ pipelines:
           - npm install
           - npm rebuild node-sass
           - npm run build --prod
+    master:
+    - step:
+        name: Deploy to develop
+        deployment: develop
+        # trigger: manual  # Uncomment to make this a manual deployment.
+        script:
+          - echo "Deploying to test environment"
+
+          
