@@ -19,7 +19,7 @@ pipelines:
     master:
     - step:
         name: Deploy to develop
-        deployment: develop
+        deployment: Staging
         # trigger: manual  # Uncomment to make this a manual deployment.
         script:
           - echo "Deploying to test environment"
