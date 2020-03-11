@@ -2,11 +2,11 @@ FROM keymetrics/pm2:latest-alpine
 
 # Set Enviroment
 # COPY . /app
-VOLUME [ "/app" ]
+#VOLUME [ "/app" ]
 WORKDIR /app
 
 # Install app dependencies
-# RUN npm install
+RUN npm install
 
 # Expose the listening port of your app
 EXPOSE 3000

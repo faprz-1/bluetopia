@@ -3,34 +3,55 @@ version: '3'
 services:
 
   mysql:
-    image: mysql-server-dev
+    image: loopback-mysql-dev
     build: ./mysql
-    container_name: mysql-server-dev
+    container_name: loopback-mysql-dev
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 8RyC?LL6Dww_G?#yC7fTYsWEV
       MYSQL_DATABASE: template3
     ports:
-      - '3306:3306'
+      - "3306:3306"
     volumes:
-      - ./mysql/local_db:/var/lib/mysql
+      - ./persistence/mysql_db:/var/lib/mysql
 
   loopback:
-    image: loopback-server-dev
-    container_name: loopback-server-dev
+    image: loopback-server
+    container_name: loopback-server
     restart: always
     depends_on:
       - mysql
     links:
       - mysql
+    ports:
+      - "3000:3000"
     build:
       context: ./loopback
-      dockerfile: Dockerfile-dev
-    ports:
-      - '3000:3000'
-      - '9615:9615'
-      - '43554:43554'
+      dockerfile: Dockerfile
     volumes:
-      - ./loopback:/app
-    command: ["npm", "install"]
-    entrypoint: [ "pm2-runtime", "start", "pm2.config.js" ]
+      - ./persistence/loopback_storage:/app/server/storage
+
+  Angular-Compiler:
+    image: angular-compiler-server-dev
+    build:
+      context: ./web
+      dockerfile: Dockerfile-Compiler
+    container_name: angular-compiler-server-dev
+    volumes:
+      - angular-volume:/app/dist
+
+  Angular:
+    image: angular-server-dev
+    build: ./web
+    container_name: angular-server-dev
+    restart: always
+    depends_on:
+      - Angular-Compiler
+    ports:
+      - "80:80"
+    volumes:
+      - angular-volume:/usr/share/nginx/html
+
+volumes:
+  angular-volume:
+    
