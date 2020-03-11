@@ -11,7 +11,7 @@ definitions:
       name: Run tests
       caches:
         - node
-      script: # Modify the commands below to build your repository.
+      script:
         - cd web
         - npm install
         - npm rebuild node-sass
@@ -21,7 +21,7 @@ definitions:
       deployment: staging
       script:
         - echo "Deploying to test environment"
-        
+
 pipelines:
   branches:
     '{develop, master}':
@@ -29,6 +29,3 @@ pipelines:
     master:
     - step: *Test-step
     - step: *Deploy-step
-          
-
-          
