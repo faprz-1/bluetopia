@@ -27,5 +27,4 @@ pipelines:
     '{develop, master}':
     - step: *Test-step
     master:
-    - step: *Test-step
     - step: *Deploy-step
