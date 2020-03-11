@@ -7,7 +7,7 @@ image: node:10.15.3
 
 pipelines:
   branches:
-    '{develop, master}':
+    '{develop,master}':
     - step:
         name: Run tests
         caches:
