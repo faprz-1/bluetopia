@@ -6,7 +6,6 @@
 image: node:10.15.3
 
 definitions:
-  services: ... # Service definitions go there
   steps:
     - step: &Test-step
       name: Run tests
