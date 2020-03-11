@@ -5,26 +5,21 @@
 # You can specify a custom docker image from Docker Hub as your build environment.
 image: node:10.15.3
 
-definitions:
-  steps:
-    - step: &Test-step
-      name: Run tests
-      caches:
-        - node
-      script:
-        - cd web
-        - npm install
-        - npm rebuild node-sass
-        - npm run build --prod
-    - step: &Deploy-step
-      name: Deploy to staging
-      deployment: staging
-      script:
-        - echo "Deploying to test environment"
-
 pipelines:
   branches:
     '{develop, master}':
-    - step: *Test-step
+    - step:
+        name: Run tests
+        caches:
+          - node
+        script:
+          - cd web
+          - npm install
+          - npm rebuild node-sass
+          - npm run build --prod
     master:
-    - step: *Deploy-step
+    - step:
+        name: Deploy to staging
+        deployment: staging
+        script:
+          - echo "Deploying to test environment"
