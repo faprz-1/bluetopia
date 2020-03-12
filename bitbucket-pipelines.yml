@@ -6,9 +6,8 @@
 image: node:10.15.3
 
 definitions:
-  definitions:
-    caches:
-      angular-modules: web/node_modules
+  caches:
+    angular-modules: web/node_modules
   steps:
     - step: &Test-step
         name: Run tests
