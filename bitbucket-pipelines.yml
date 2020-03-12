@@ -25,7 +25,7 @@ definitions:
             variables:
               SSH_USER: $SSH_DEVELOP_USER
               SERVER: $SHH_DEVELOP_SERVER
-              COMMAND: '~/repos/template4.0/deploy-script-develop.sh'
+              COMMAND: 'chmod -x ~/repos/template4.0/deploy-script-develop.sh; ~/repos/template4.0/deploy-script-develop.sh'
 
 
 pipelines:
