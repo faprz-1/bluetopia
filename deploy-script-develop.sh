@@ -5,7 +5,7 @@ echo "Switching dir to proyect: $PROYECT"
 cd ~/repos/$PROYECT
 
 echo "Setting Rep"
-#git reset --hard
+git reset --hard
 git checkout master
 git pull
 
