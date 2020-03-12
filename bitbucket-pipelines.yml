@@ -24,7 +24,6 @@ definitions:
           - pipe: atlassian/ssh-run:0.2.4
             variables:
               SSH_USER: $SSH_DEVELOP_USER
-              SSH_KEY: $SSH_DEVELOP_KEY
               SERVER: $SHH_DEVELOP_SERVER
               COMMAND: './deploy-script-develop.sh'
 
