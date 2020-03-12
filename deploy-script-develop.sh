@@ -1,8 +1,8 @@
 #!/bin/bash
 
 cd ~/repos/template4.0
-git checkout master
 git reset --hard
+git checkout master
 git pull
 
 docker-compose -f docker-compose-dev.yml down --rmi all

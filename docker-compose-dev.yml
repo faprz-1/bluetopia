@@ -10,8 +10,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 8RyC?LL6Dww_G?#yC7fTYsWEV
       MYSQL_DATABASE: template3
-    ports:
-      - "3306:3306"
+    #ports:
+      #- "3306:3306"
     volumes:
       - ./persistence/mysql_db:/var/lib/mysql
 
@@ -24,7 +24,7 @@ services:
     links:
       - mysql
     ports:
-      - "3000:3000"
+      - "3010:3000"
     build:
       context: ./loopback
       dockerfile: Dockerfile
@@ -48,7 +48,7 @@ services:
     depends_on:
       - Angular-Compiler
     ports:
-      - "80:80"
+      - "8080:80"
     volumes:
       - angular-volume:/usr/share/nginx/html
 
