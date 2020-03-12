@@ -34,4 +34,4 @@ pipelines:
       - step: *Test-step
     master:
       - step: *Test-step
-      - step: *Deploy-step
+      #- step: *Deploy-step
