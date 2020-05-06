@@ -35,7 +35,6 @@ import { environment } from '../environments/environment';
     SplashScreen,
     Camera,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    Storage,
     AuthGuard
   ],
   bootstrap: [
