@@ -30,7 +30,6 @@ import { unit_currency } from "../../pipes/unit_currency.pipe"
     CardComponent
   ],
   providers: [
-    Storage,
     Facebook,
     GooglePlus
   ]
