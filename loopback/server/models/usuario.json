@@ -95,14 +95,11 @@
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW",
-      "property": "userWithCredentials"
-    },
-    {
-      "accessType": "EXECUTE",
-      "principalType": "ROLE",
-      "principalId": "$authenticated",
-      "permission": "ALLOW",
-      "property": "testPush"
+      "property": [
+        "userWithCredentials",
+        "updatePushToken",
+        "testPush"
+      ]
     },
     {
       "accessType": "EXECUTE",

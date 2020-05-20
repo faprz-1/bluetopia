@@ -23,7 +23,6 @@ export class LoginComponent implements OnInit {
   changuePass:boolean=false;
   tryPin:boolean=false;
   successUpdate: boolean=false;
-  users = {1:'user',2:'admin',3:'superuser'};
 
   constructor(
     vcr: ViewContainerRef,
@@ -34,9 +33,9 @@ export class LoginComponent implements OnInit {
   ) {
     if(localStorage.getItem("token")) {
       let user = JSON.parse(localStorage.getItem("user"));
-      console.log(this.users[user.role.id]);
       
-      this.router.navigate([`/inicio/${this.users[user.role.id]}/`]);
+      let role = user.role.name.toLowerCase()
+      this.router.navigate([`/inicio/${role}/`]);
     }
   }
 
@@ -60,12 +59,11 @@ export class LoginComponent implements OnInit {
         localStorage.setItem("user", JSON.stringify(userFromServer));
         localStorage.setItem("ttl", moment().add(1209600, 's').toISOString() )
         this.notiServ.loadNotifications()
-        this.toast.showSuccess("Sesion Iniciada Exitosamente");
+        this.toast.showSuccess("Sesión iniciada exitosamente");
         let user = JSON.parse(localStorage.getItem("user"));
-        console.log(user.role);
-        console.log(this.users[user.role.id]);
+        let role = user.role.name.toLowerCase()
 
-        this.router.navigate([`/inicio/${this.users[user.role.id]}/`]);
+        this.router.navigate([`/inicio/${role}/`]);
       }, (err: any) => {
         this.procesando = false;
         this.toast.showError(err.error.error.message);
@@ -78,12 +76,10 @@ export class LoginComponent implements OnInit {
 
   sendEmail(email){
    
-    console.log(email.emailtoRecover);
   this.email=email.emailtoRecover;
   this.procesandoEmail = true;
   this.api.post('/PasswordResetPINs/createAndSend', {email: this.email}, false).subscribe(
     (msg: any)=>{
-      console.log(msg);
   if(msg.msg=='notRegistered'){
     this.toast.showError('Usuario no registrado');
     this.procesando = false;

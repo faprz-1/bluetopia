@@ -4,6 +4,7 @@ import { ApiService } from '../../services/api.service';
 import { MessagingService } from '../../services/messaging.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Action } from 'rxjs/internal/scheduler/Action';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-navigation',
@@ -48,7 +49,7 @@ export class NavigationComponent implements OnInit {
     this.navigationSubState[menu] = (this.navigationSubState[menu] === 'inactive' ? 'active' : 'inactive');
   }
 
-  constructor(private sharedService: SharedService, public api: ApiService, public messagingService: MessagingService) {
+  constructor(private sharedService: SharedService, public api: ApiService, public messagingService: MessagingService, private router: Router) {
     sharedService.sidebarVisibilitySubject.subscribe((value) => {
       this.sidebarVisible = value;
     })
@@ -76,5 +77,10 @@ export class NavigationComponent implements OnInit {
       localStorage.clear();
     });
     localStorage.clear();
+  }
+  GoTo(link){
+    console.log("link a sdasd",link)
+    this.router.navigate([link]);
+    this.sharedService.toggleSidebarVisibilty();
   }
 }

@@ -47,7 +47,7 @@ module.exports = function(app) {
           name: "Admin",
           username: "templateAdmin",
           password: "j4r4b3s0",
-          email: "admin@test.com",
+          email: "admin@jarabepruebas.com",
           emailVerified: true
         },
         Role: "Admin"
@@ -57,7 +57,7 @@ module.exports = function(app) {
           name: "User",
           username: "templateUser",
           password: "j4r4b3s0",
-          email: "user@test.com",
+          email: "user@jarabepruebas.com",
           emailVerified: true
         },
         Role: "User"
@@ -67,7 +67,7 @@ module.exports = function(app) {
           name: "SuperUser",
           username: "SuperUser",
           password: "j4r4b3s0",
-          email: "superuser@test.com",
+          email: "superuser@jarabepruebas.com",
           emailVerified: true
         },
         Role: "SuperUser"
