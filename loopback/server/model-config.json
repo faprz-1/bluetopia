@@ -41,6 +41,7 @@
           "logout": true,
           "register": true,
           "registerAdmins": true,
+          "RegisterWithEmailVerification": true,
           "userWithCredentials": true,
           "getAnyUsers": true,
           "prototype.updateAnyUser": true,
@@ -106,11 +107,11 @@
     "dataSource": "mysqlDev",
     "public": false
   },
-  "conekta": {
+  "Conekta": {
     "dataSource": "mysqlDev",
     "public": true
   },
-  "ordersHistory": {
+  "OrdersHistory": {
     "dataSource": "mysqlDev",
     "public": true
   }
