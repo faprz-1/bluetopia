@@ -21,8 +21,7 @@
       "type": "string"
     },
     "active": {
-      "type": "boolean",
-      "default": true
+      "type": "boolean"
     },
     "customerId": {
       "type": "string"
@@ -84,7 +83,7 @@
       "property": [
         "register",
         "getRoles",
-        "registerAdminis",
+        "registerAdmins",
         "registerAdmin",
         "loginBySocialMedia",
         "loginIfActive"
@@ -261,7 +260,7 @@
         }
       ]
     },
-    "registerAdminis": {
+    "registerAdmins": {
       "accepts": [
         {
           "arg": "newUser",
@@ -284,7 +283,7 @@
       "description": "registers a new admin with a profile picture",
       "http": [
         {
-          "path": "/registerAdminis",
+          "path": "/registerAdmins",
           "verb": "post"
         }
       ]

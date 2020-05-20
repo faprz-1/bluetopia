@@ -40,7 +40,7 @@
           "loginIfActive": true,
           "logout": true,
           "register": true,
-          "registerAdminis": true,
+          "registerAdmins": true,
           "userWithCredentials": true,
           "getAnyUsers": true,
           "prototype.updateAnyUser": true,

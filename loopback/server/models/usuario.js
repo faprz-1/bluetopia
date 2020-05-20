@@ -18,6 +18,7 @@ module.exports = function(Usuario) {
         //    var res = notificacion.setByRoleNotification("admin",{title:"Push prueba3", content:"Animo!!",link:"http://localhost:4200/#/inicio/administrador/tickets/1","image":"http://elvwdetuvida.com.mx/img/decada/highlights/d70s/icon-historias-volkswagen-aniversario-h-16.svg"});
         callback(null, res);
     }
+    
     Usuario.findByRole = function(role, includes = null, callback) {
         var RoleMapping = app.models.RoleMapping;
         var Role = app.models.Role;
@@ -193,7 +194,7 @@ module.exports = function(Usuario) {
      * @param {Function(Error, object)} callback
      */
 
-    Usuario.registerAdminis = function(newUser, callback) {
+    Usuario.registerAdmins = function(newUser, callback) {
         var Role = app.models.Role;
         var RoleMapping = app.models.RoleMapping;
         Usuario.create(newUser, function(err, user) {
