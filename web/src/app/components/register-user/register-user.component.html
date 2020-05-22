@@ -22,7 +22,7 @@
                 <label class="principalLabel">Nombre de Usuario</label>
                 <div class="form-group">
                 <!-- Validaciones del nombre -->
-                <input class="form-control text-center" type="text" id="username2" placeholder="Ej. Juan Perez" name="username" ngModel required #username="ngModel">
+                <input autocomplete="username" class="form-control text-center" type="text"  placeholder="Ej. Juan Perez" name="username" ngModel required #username="ngModel">
                 <!-- Mensajes de las validaciones -->
                 <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert alert-danger">
                     <div *ngIf="username.errors.required" class="form-control-feedback text-center">Campo obligatorio* </div>
@@ -32,7 +32,7 @@
                 <label class="principalLabel">Correo electrónico</label>
                 <div class="form-group">
                 <!-- Validaciones del campo del correo -->
-                <input class="form-control text-center" type="email" id="email" placeholder="ejemplo@email.com" name="email" ngModel required pattern="[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #email="ngModel">
+                <input autocomplete="email" class="form-control text-center" type="email" id="email" placeholder="ejemplo@email.com" name="email" ngModel required pattern="[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #email="ngModel">
                 <!-- Mensajes de las validaciones -->
                 <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
                     <div *ngIf="email.errors?.required" class="form-control-feedback text-center">Campo obligatorio* </div>
@@ -43,7 +43,7 @@
                 <label class="principalLabel">Contraseña</label>
                 <div class="form-group">
                 <!-- Validaciones del campo de la contraseña -->
-                <input class="form-control text-center" type="password" placeholder="Contraseña" name="password" required ngModel #password="ngModel">
+                <input autocomplete="new-password" class="form-control text-center" type="password" placeholder="Contraseña" name="password" required ngModel #password="ngModel">
                 <!-- Mensaje de las validaciones -->
                 <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
                     <div *ngIf="password.errors?.required" class="form-control-feedback text-center">"Campo obligatorio"</div>
@@ -53,7 +53,7 @@
                 <label class="principalLabel">Confirmación de Contraseña</label>
                 <div class="form-group">
                 <!-- Validaciones del campo de la contraseña -->
-                <input class="form-control text-center" type="password" placeholder="Confirmar Contraseña" name="passwordConfirm" required ngModel #passwordConfirm="ngModel">
+                <input autocomplete="new-password" class="form-control text-center" type="password" placeholder="Confirmar Contraseña" name="passwordConfirm" required ngModel #passwordConfirm="ngModel">
                 <!-- Mensaje de las validaciones -->
                 <div *ngIf="passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched)" class="alert alert-danger">
                     <div *ngIf="passwordConfirm.errors?.required " class="form-control-feedback text-center">"Campo obligatorio"</div>

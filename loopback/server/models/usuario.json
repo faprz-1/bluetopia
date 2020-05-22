@@ -22,7 +22,7 @@
     },
     "active": {
       "type": "boolean",
-      "default": true
+      "default": false
     },
     "customerId": {
       "type": "string"
@@ -84,10 +84,12 @@
       "property": [
         "register",
         "getRoles",
-        "registerAdminis",
+        "registerAdmins",
         "registerAdmin",
         "loginBySocialMedia",
-        "loginIfActive"
+        "loginIfActive",
+        "RegisterWithEmailVerification",
+        "VerifyEmail"
       ]
     },
     {
@@ -95,14 +97,11 @@
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW",
-      "property": "userWithCredentials"
-    },
-    {
-      "accessType": "EXECUTE",
-      "principalType": "ROLE",
-      "principalId": "$authenticated",
-      "permission": "ALLOW",
-      "property": "testPush"
+      "property": [
+        "userWithCredentials",
+        "updatePushToken",
+        "testPush"
+      ]
     },
     {
       "accessType": "EXECUTE",
@@ -264,7 +263,35 @@
         }
       ]
     },
-    "registerAdminis": {
+    "RegisterWithEmailVerification": {
+      "accepts": [
+        {
+          "arg": "newUser",
+          "type": "object",
+          "required": true,
+          "description": "new User object to be stored",
+          "http": {
+            "source": "body"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "user",
+          "type": "object",
+          "root": true,
+          "description": "user in DB"
+        }
+      ],
+      "description": "registers a new user and send verification email",
+      "http": [
+        {
+          "path": "/registerWithVerification",
+          "verb": "post"
+        }
+      ]
+    },
+    "registerAdmins": {
       "accepts": [
         {
           "arg": "newUser",
@@ -287,7 +314,7 @@
       "description": "registers a new admin with a profile picture",
       "http": [
         {
-          "path": "/registerAdminis",
+          "path": "/registerAdmins",
           "verb": "post"
         }
       ]
@@ -483,6 +510,31 @@
         {
           "path": "/login",
           "verb": "post"
+        }
+      ]
+    },
+    "VerifyEmail": {
+      "accepts": [
+        {
+          "arg": "code",
+          "type": "string",
+          "required": true,
+          "description": "Verification Code"
+        }
+      ],
+      "returns": [
+        {
+          "arg": "verified",
+          "type": "boolean",
+          "root": true,
+          "description": "was verified"
+        }
+      ],
+      "description": "Login to platform",
+      "http": [
+        {
+          "path": "/verify/:code",
+          "verb": "patch"
         }
       ]
     }

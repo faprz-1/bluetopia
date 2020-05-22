@@ -1,0 +1,111 @@
+
+$textColor: orange;
+$colorFondo: #fff;
+$cardColor: rgba($colorFondo, 0.95);
+$navColor: rgba($colorFondo, 0.9);
+$imagenFondo: "/assets/fondo/jarabe.jpg";
+@import "../../../assets/scss/variables";
+
+span {
+  color: white;
+  font-size: 20px;
+}
+
+.card {
+  cursor: pointer;
+}
+
+.btn--icon{
+color: #ffffff !important;
+}
+.btn-outline-light:hover{
+background-color: transparent !important;
+border-color: transparent !important;
+color: #ffffff !important;
+}
+
+.not-signed {
+  background-color: $gray-600 !important;
+}
+
+.signed {
+background-color: $green !important;
+}
+
+.btn-link {
+  color: white;
+  font-size: 20px;
+}
+
+.verification {
+  padding-bottom: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+  background-image: url($imagenFondo);
+  background-position: center center;
+  background-color: $textColor !important;
+  background-attachment: scroll;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+}
+
+.title-segment {
+  margin-bottom: 1px;
+  /*// margin-top: 20px;*/
+  padding: 10px;
+  background-color: $navColor;
+}
+
+.title {
+  font-size: 2em;
+  text-align: center;
+}
+
+.logo-img {
+  height: 100px;
+}
+
+.icon-app {
+  height: 50px;
+  border-radius: 10px;
+}
+
+.catchword {
+  font-size: 2em;
+  text-align: center;
+  padding-top: 30px;
+}
+
+.color.white {
+  color: white;
+}
+
+.circular-segment {
+  margin-left: auto;
+  margin-right: auto;
+  background-color: $cardColor !important;
+  padding: 2em;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 20px;
+  width: 90vw;
+  height: auto;
+}
+.canvas{
+  width: 30%;
+  height: 20%;
+  background-color: gainsboro;
+  border-color: gray;
+  border: dashed;
+  margin-left: 30%;
+}
+.abs-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.link:hover{
+  text-decoration: underline;
+}

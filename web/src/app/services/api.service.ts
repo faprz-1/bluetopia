@@ -113,6 +113,21 @@ export class ApiService {
   }
 
   /**
+   * Metodo patch para conectarse con la api
+   * @param endPoint string con el end pint a usar ej: "Usuarios/1"
+   * @param body object objeto para enviar al servidor
+   * @param useToken boolean para  intentar usar token en la peticion default: true
+   */
+  public linePatch(endPoint: string, useToken:boolean = true,filter={}): Observable<object>{
+    let link: string = this.genLink(endPoint, useToken,filter);
+    return this.http.patch<JSON>(link, this.headers).pipe(
+      retryWhen(err =>this.conditionalRetry(err)),
+      // retry(this.retryAttempts),
+      // catchError(err =>this.handleError(err, link))
+    );
+  }
+
+  /**
    * Metodo delete para conectarse con la api
    * @param endPoint string con el end pint a usar ej: "Usuarios/1"
    * @param useToken boolean para  intentar usar token en la peticion default: true

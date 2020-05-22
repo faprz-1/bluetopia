@@ -1,5 +1,8 @@
-'use strict';
+    'use strict';
 var disableRelationMethods = require("../model-methods-helper").disableRelationMethods;
+var uuidV4 = require('uuid/v4');
+var loopback = require("loopback");
+var path = require('path');
 
 module.exports = function(Usuario) {
     var app = require('../../server/server');
@@ -18,6 +21,7 @@ module.exports = function(Usuario) {
         //    var res = notificacion.setByRoleNotification("admin",{title:"Push prueba3", content:"Animo!!",link:"http://localhost:4200/#/inicio/administrador/tickets/1","image":"http://elvwdetuvida.com.mx/img/decada/highlights/d70s/icon-historias-volkswagen-aniversario-h-16.svg"});
         callback(null, res);
     }
+    
     Usuario.findByRole = function(role, includes = null, callback) {
         var RoleMapping = app.models.RoleMapping;
         var Role = app.models.Role;
@@ -130,13 +134,7 @@ module.exports = function(Usuario) {
         })
     };
 
-    /**
-     * registers a new user with a profile picture
-     * @param {object} newUser new User object to be stored
-     * @param {Function(Error, object)} callback
-     */
-
-    Usuario.register = function(newUser, callback) {
+    Usuario.CreateNew = function(newUser, callback) {
         var Role = app.models.Role;
         var RoleMapping = app.models.RoleMapping;
         if (!newUser.type) newUser.type = "User";
@@ -153,10 +151,10 @@ module.exports = function(Usuario) {
             if (err) return callback(err);
 
             if (userWR) {
-                if (userWR.email == newUser.email) return callback('Correo inválido');
-                return callback('Nombre de usuario inválido');
+                return callback('Nombre de usuario o correo inválido');
             }
 
+            newUser.verificationToken = uuidV4();
             Usuario.create(newUser, function(err, user) {
                 if (err) return callback(err);
                 Role.find({
@@ -166,17 +164,14 @@ module.exports = function(Usuario) {
                 }, function(err, res) {
                     if (err) return callback(err);
                     var role = res[0];
+
                     role.principals.create({
                         principalType: RoleMapping.USER,
                         principalId: user.id
                     }, function(err, principal) {
                         if (err) throw err;
 
-                        Usuario.login(newUser, function(err, accessToken) {
-                            if (err) return callback(err)
-
-                            return callback(null, accessToken)
-                        })
+                        return callback(null, user)
 
                     });
                 });
@@ -184,7 +179,89 @@ module.exports = function(Usuario) {
         });
     };
 
+    /**
+     * registers a new user with a profile picture
+     * @param {object} newUser new User object to be stored
+     * @param {Function(Error, object)} callback
+     */
 
+    Usuario.register = function(newUser, callback) {
+        
+        Usuario.CreateNew(newUser, (error, createdUser) => {
+            if (error) return callback(error);
+
+            Usuario.login(createdUser, (err, accessToken) => {
+                if (err) return callback(err)
+
+                return callback(null, accessToken)
+            })
+
+        });
+    };
+
+    /**
+     * registers a new user and send verification email
+     * @param {object} newUser new User object to be stored
+     * @param {Function(Error, object)} callback
+     */
+
+    Usuario.RegisterWithEmailVerification = function(newUser, callback) {
+       Usuario.CreateNew(newUser, (error, createdUser) => {
+            var emailData = {};
+            emailData.email = createdUser.email;
+            emailData.username = createdUser.username;
+            emailData.path = require("../helpers/constants").hostURL + 'verificacion/' + createdUser.verificationToken; 
+
+            var renderer = loopback.template(path.resolve(__dirname, '../emails/email-verificatio.ejs'))
+            var html_body = renderer(emailData);
+
+            Usuario.app.models.adminMail.send({
+                to: createdUser.email,
+                from: 'testmail@jarabesoft.com',
+                subject: 'Confirmación de correo electrónico',
+                html: html_body
+            }, function( err, res ){
+                if (err) return callback(err);
+
+               return callback(null, { email : createdUser.email });
+            })
+
+        });
+    };
+
+
+    /**
+     * Verify user email
+     * @param {string} Verification code
+     * @param {Function(Error, boolean)} callback
+     */
+
+    Usuario.VerifyEmail = function(code, callback) {
+        let filter = {
+            where : {
+                verificationToken : code
+            }
+        }
+
+        let errorMsg = 'Ocurrió un error al verificar correo electrónico';
+        Usuario.findOne(filter, (err, userDB)=> {
+           if(err){
+                console.error(err);
+                return callback(errorMsg);
+           }
+
+           if(!userDB) return callback(errorMsg);
+           
+           userDB.updateAttributes({ emailVerified : true }, (err, userVerified)=> {
+               if(err){
+                    console.error(err);
+                    return callback(errorMsg);
+               }
+               
+               return callback(null, true)
+           })
+       })
+    };
 
 
     /**
@@ -193,7 +270,7 @@ module.exports = function(Usuario) {
      * @param {Function(Error, object)} callback
      */
 
-    Usuario.registerAdminis = function(newUser, callback) {
+    Usuario.registerAdmins = function(newUser, callback) {
         var Role = app.models.Role;
         var RoleMapping = app.models.RoleMapping;
         Usuario.create(newUser, function(err, user) {
@@ -223,6 +300,7 @@ module.exports = function(Usuario) {
                     app.models.Upload.newBase64File(profileImage, function(err, img) {
                         if (err) return callback(err);
                         user.profileImage(img);
+
                         Usuario.upsert(user, function(err, updatedUser) {
                             if (err) return callback(err);
                             Usuario.find({

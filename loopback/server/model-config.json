@@ -40,7 +40,8 @@
           "loginIfActive": true,
           "logout": true,
           "register": true,
-          "registerAdminis": true,
+          "registerAdmins": true,
+          "RegisterWithEmailVerification": true,
           "userWithCredentials": true,
           "getAnyUsers": true,
           "prototype.updateAnyUser": true,
@@ -53,7 +54,8 @@
           "prototype.updatePushToken": true,
           "prototype.updatePushTokenMobile": true,
           "prototype.changeProfileImage": true,
-          "loginBySocialMedia": true
+          "loginBySocialMedia": true,
+          "VerifyEmail": true
         }
       }
     }
@@ -106,11 +108,11 @@
     "dataSource": "mysqlDev",
     "public": false
   },
-  "conekta": {
+  "Conekta": {
     "dataSource": "mysqlDev",
     "public": true
   },
-  "ordersHistory": {
+  "OrdersHistory": {
     "dataSource": "mysqlDev",
     "public": true
   }

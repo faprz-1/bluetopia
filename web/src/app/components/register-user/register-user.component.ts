@@ -23,26 +23,21 @@ export class RegisterUserComponent implements OnInit {
   
   ngOnInit() {
     this.api.get("/Usuarios/getRoles",true).subscribe(roles=>{
-      console.log(roles);
       this.Roles=roles;
       
     })
   }
   registrarUsuario(user,valid,registerForm)	{
-   console.log(user.user.type);
    
     if(!valid){
 			this.toastr.showError("Completar los datos");
-			console.log("sin datos");
 			return
     }else if(user.user.password != user.user.passwordConfirm){
 			this.toastr.showError("Las contraseñas no coinciden");
-			console.log("sin datos");
 			return
 		}
    
-      this.api.post("/Usuarios/registerAdminis", user.user, false).subscribe((resp: any) =>{
-        console.log(resp);
+      this.api.post("/Usuarios/registerAdmins", user.user, false).subscribe((resp: any) =>{
         this.toastr.showSuccess("Se genero correctamente el usuario.");
         registerForm.reset();
       },err=>{
