@@ -88,7 +88,8 @@
         "registerAdmin",
         "loginBySocialMedia",
         "loginIfActive",
-        "RegisterWithEmailVerification"
+        "RegisterWithEmailVerification",
+        "VerifyEmail"
       ]
     },
     {
@@ -509,6 +510,31 @@
         {
           "path": "/login",
           "verb": "post"
+        }
+      ]
+    },
+    "VerifyEmail": {
+      "accepts": [
+        {
+          "arg": "code",
+          "type": "string",
+          "required": true,
+          "description": "Verification Code"
+        }
+      ],
+      "returns": [
+        {
+          "arg": "verified",
+          "type": "boolean",
+          "root": true,
+          "description": "was verified"
+        }
+      ],
+      "description": "Login to platform",
+      "http": [
+        {
+          "path": "/verify/:code",
+          "verb": "patch"
         }
       ]
     }

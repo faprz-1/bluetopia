@@ -207,20 +207,18 @@ module.exports = function(Usuario) {
 
     Usuario.RegisterWithEmailVerification = function(newUser, callback) {
        Usuario.CreateNew(newUser, (error, createdUser) => {
-           console.log('Created user', createdUser)
             var emailData = {};
             emailData.email = createdUser.email;
             emailData.username = createdUser.username;
-            emailData.path = require("../helpers/constants").hostURL + 'verifyEmail/' + createdUser.verificationToken; 
+            emailData.path = require("../helpers/constants").hostURL + 'verificacion/' + createdUser.verificationToken; 
 
-            console.log(emailData)
             var renderer = loopback.template(path.resolve(__dirname, '../emails/email-verificatio.ejs'))
             var html_body = renderer(emailData);
 
             Usuario.app.models.adminMail.send({
                 to: createdUser.email,
                 from: 'testmail@jarabesoft.com',
-                subject: 'Confirmacion de correo electrónico',
+                subject: 'Confirmación de correo electrónico',
                 html: html_body
             }, function( err, res ){
                 if (err) return callback(err);
@@ -229,6 +227,40 @@ module.exports = function(Usuario) {
             })
 
         });
+    };
+
+
+    /**
+     * Verify user email
+     * @param {string} Verification code
+     * @param {Function(Error, boolean)} callback
+     */
+
+    Usuario.VerifyEmail = function(code, callback) {
+        let filter = {
+            where : {
+                verificationToken : code
+            }
+        }
+
+        let errorMsg = 'Ocurrió un error al verificar correo electrónico';
+        Usuario.findOne(filter, (err, userDB)=> {
+           if(err){
+                console.error(err);
+                return callback(errorMsg);
+           }
+
+           if(!userDB) return callback(errorMsg);
+           
+           userDB.updateAttributes({ emailVerified : true }, (err, userVerified)=> {
+               if(err){
+                    console.error(err);
+                    return callback(errorMsg);
+               }
+               
+               return callback(null, true)
+           })
+       })
     };
 
 

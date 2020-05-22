@@ -54,7 +54,8 @@
           "prototype.updatePushToken": true,
           "prototype.updatePushTokenMobile": true,
           "prototype.changeProfileImage": true,
-          "loginBySocialMedia": true
+          "loginBySocialMedia": true,
+          "VerifyEmail": true
         }
       }
     }

@@ -79,7 +79,7 @@ export class NavigationComponent implements OnInit {
     localStorage.clear();
   }
   GoTo(link){
-    console.log("link a sdasd",link)
+    
     this.router.navigate([link]);
     this.sharedService.toggleSidebarVisibilty();
   }
