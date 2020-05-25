@@ -4,9 +4,13 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } fro
   selector: 'template-file-chooser',
   templateUrl: './file-chooser.component.html',
   styleUrls: ['./file-chooser.component.scss'],
-  encapsulation: ViewEncapsulation.Native
+  encapsulation: ViewEncapsulation.ShadowDom
+
 })
 export class FileChooserComponent implements OnInit {
+  @Input() notPreview : boolean = false
+  @Input() resize : boolean = false
+  @Input() title : string = ""
   @Input() fileType : string
   @Input() extensionFilter : string
   @Output('onChange') onChange = new EventEmitter<any>()
@@ -34,6 +38,8 @@ export class FileChooserComponent implements OnInit {
         this.fileData = {
           "encodedFileContainer": this.fileType,
           "base64File": btoa(binaryString),
+          "fileName": file.name,
+          "resize": this.resize,
           "fileExtention": "." + file.name.split('.').pop().toLowerCase()
         }
         console.log('Got the file')
