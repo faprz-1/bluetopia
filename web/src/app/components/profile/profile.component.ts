@@ -13,6 +13,13 @@ export class ProfileComponent implements OnInit {
   ready : boolean = true
   user : any
   mtModalRef: BsModalRef;
+  isFormSended: boolean = false;
+  isPromiseActive: boolean = false;
+  userPasswords: any = {
+    oldPassword: "",
+    newPassword: "",
+    newPassword2: ""
+  }
 
   cards:any = [];
 
@@ -51,7 +58,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.api.get("/Usuarios/withCredentials", true).subscribe((userFromServer: any)=>{  
-      localStorage.setItem("user", JSON.stringify(userFromServer))
+      localStorage.setItem("user", JSON.stringify(userFromServer));
       this.reload();
     })
   }
@@ -59,7 +66,7 @@ export class ProfileComponent implements OnInit {
   reload() {
     this.ready = false;
     this.user = JSON.parse(localStorage.getItem("user"))
-    this.getCards();
+    // this.getCards();
     this.ready = true;
   }
 
@@ -72,7 +79,7 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  closeModal() {this.mtModalRef.hide();}
+  CloseModal() {this.mtModalRef.hide();}
 
   getCards() {
     let endpoint = "/conekta/getCards";
@@ -96,6 +103,62 @@ export class ProfileComponent implements OnInit {
 
   checkAddCardInModal(val) {
     if(val == 1) { this.reload(); }
+  }
+
+  ChangeUserPassword(){
+    this.isFormSended = true;
+    if(!this.IsPasswordFormValid() || this.isPromiseActive){
+      return;
+    }
+    let postParams = {
+      oldPassword: this.userPasswords.oldPassword,
+      newPassword: this.userPasswords.newPassword
+    }
+    this.isPromiseActive = true;
+    this.api.post(`/Usuarios/change-password`, postParams).subscribe((passwordChanged: any) => {
+      this.toast.showSuccess('Cotraseña actualizada correctamente');
+      this.CloseModal();
+      this.CleanForm();
+      this.isPromiseActive = false;
+    }, err => {
+      this.toast.showError(`Error al actualizar la contraseña ${err.error.error.message}`);
+      this.isPromiseActive = false;
+    })
+  }
+
+  CleanForm(){
+    for(const key in this.userPasswords){
+      if(this.userPasswords.hasOwnProperty(key)){
+        this.userPasswords[key] = "";
+      }
+    }
+    this.isFormSended = false;
+  }
+
+  IsNewPasswordValid(newPassword: string){
+    if(!newPassword) return false;
+    if(newPassword.length < 3) return false;
+    return true;
+  }
+  
+  IsNewPassword2Valid(newPassword: string){
+    if(!newPassword) return false;
+    if(newPassword != this.userPasswords.newPassword) return 'no-match';
+    return true;
+  }
+
+  IsPasswordFormValid(){
+    let valid = true;
+    if(!this.IsNewPassword2Valid(this.userPasswords.newPassword2) || this.IsNewPassword2Valid(this.userPasswords.newPassword2) == 'no-match'){
+      valid = false;
+    }
+    if(!this.IsNewPasswordValid(this.userPasswords.newPassword)){
+      valid = false;
+    }
+    if(!this.userPasswords.oldPassword.length){
+      valid = false;
+    }
+    return valid;
   }
 
 }

@@ -4,6 +4,7 @@ import { ProfileImageEditorModule } from '../shared/profile-image-editor/profile
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TooltipModule } from 'ngx-tooltip';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { ProfileComponent } from './profile.component';
 import { AddCardModule } from "./add-card/add-card.module";
@@ -19,7 +20,8 @@ const MODULE_ROUTES = [
     RouterModule.forChild(MODULE_ROUTES),
     ProfileImageEditorModule,
     AddCardModule,
-    BuyModalModule
+    BuyModalModule,
+    ModalModule.forRoot()
   ],
   declarations: [ProfileComponent]
 })
