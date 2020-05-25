@@ -48,7 +48,8 @@ module.exports = function(app) {
           username: "templateAdmin",
           password: "j4r4b3s0",
           email: "admin@jarabepruebas.com",
-          emailVerified: true
+          emailVerified: true,
+          active: true
         },
         Role: "Admin"
       },
@@ -58,7 +59,8 @@ module.exports = function(app) {
           username: "templateUser",
           password: "j4r4b3s0",
           email: "user@jarabepruebas.com",
-          emailVerified: true
+          emailVerified: true,
+          active: true
         },
         Role: "User"
       },
@@ -68,7 +70,8 @@ module.exports = function(app) {
           username: "SuperUser",
           password: "j4r4b3s0",
           email: "superuser@jarabepruebas.com",
-          emailVerified: true
+          emailVerified: true,
+          active: true
         },
         Role: "SuperUser"
       }
