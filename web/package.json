@@ -36,7 +36,7 @@
     "easy-pie-chart": "^2.1.7",
     "firebase": "^5.7.0",
     "flot": "^0.8.0-alpha",
-    "jarabe-angular-pipes": "^0.0.5",
+    "jarabe-angular-pipes": "0.0.5",
     "jquery": "^3.2.1",
     "jquery-sparkline": "^2.4.0",
     "jqvmap": "^1.5.1",
