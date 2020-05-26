@@ -206,7 +206,7 @@ module.exports = function(Usuario) {
      */
 
     Usuario.RegisterWithEmailVerification = function(newUser, callback) {
-        Usuario.app.models.adminMail.CheckDomainAvailability(createdUser.email.split('@')[1], (err, domainValid) => {
+        Usuario.app.models.adminMail.CheckDomainAvailability(newUser.email.split('@')[1], (err, domainValid) => {
             if(err) return callback(err);
             if(domainValid){
                 
