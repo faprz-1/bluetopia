@@ -216,7 +216,7 @@ module.exports = function(Usuario) {
                      emailData.username = createdUser.username;
                      emailData.path = require("../helpers/constants").hostURL + 'verificacion/' + createdUser.verificationToken; 
          
-                     var renderer = loopback.template(path.resolve(__dirname, '../emails/email-verificatio.ejs'))
+                     var renderer = loopback.template(path.resolve(__dirname, '../emails/email-verification.ejs'))
                      var html_body = renderer(emailData);
          
                      Usuario.app.models.adminMail.send({
