@@ -206,27 +206,36 @@ module.exports = function(Usuario) {
      */
 
     Usuario.RegisterWithEmailVerification = function(newUser, callback) {
-       Usuario.CreateNew(newUser, (error, createdUser) => {
-            var emailData = {};
-            emailData.email = createdUser.email;
-            emailData.username = createdUser.username;
-            emailData.path = require("../helpers/constants").hostURL + 'verificacion/' + createdUser.verificationToken; 
+        Usuario.app.models.adminMail.CheckDomainAvailability(createdUser.email.split('@')[1], (err, domainValid) => {
+            if(err) return callback(err);
+            if(domainValid){
+                
+                Usuario.CreateNew(newUser, (error, createdUser) => {
+                     var emailData = {};
+                     emailData.email = createdUser.email;
+                     emailData.username = createdUser.username;
+                     emailData.path = require("../helpers/constants").hostURL + 'verificacion/' + createdUser.verificationToken; 
+         
+                     var renderer = loopback.template(path.resolve(__dirname, '../emails/email-verificatio.ejs'))
+                     var html_body = renderer(emailData);
+         
+                     Usuario.app.models.adminMail.send({
+                         to: createdUser.email,
+                         from: 'testmail@jarabesoft.com',
+                         subject: 'Confirmación de correo electrónico',
+                         html: html_body
+                     }, function( err, res ){
+                         if (err) return callback(err);
+         
+                        return callback(null, { email : createdUser.email });
+                     })
+         
+                });
 
-            var renderer = loopback.template(path.resolve(__dirname, '../emails/email-verificatio.ejs'))
-            var html_body = renderer(emailData);
-
-            Usuario.app.models.adminMail.send({
-                to: createdUser.email,
-                from: 'testmail@jarabesoft.com',
-                subject: 'Confirmación de correo electrónico',
-                html: html_body
-            }, function( err, res ){
-                if (err) return callback(err);
-
-               return callback(null, { email : createdUser.email });
-            })
-
-        });
+            }else{
+                return callback('Dominio no valido');
+            }
+        })
     };
 
 

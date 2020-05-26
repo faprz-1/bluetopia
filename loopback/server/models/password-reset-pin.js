@@ -36,16 +36,25 @@ module.exports = function(Passwordresetpin) {
     
                 var renderer = loopback.template(path.resolve(__dirname, '../emails/user-reset-pin.ejs'))
                 var html_body = renderer(msg);
-    
-                Passwordresetpin.app.models.adminMail.send({
-                    to: pinObj.email,
-                    from: 'testmail@jarabesoft.com',
-                    subject: 'Confirmacion de reinicio de contraseña',
-                    html: html_body
-                }, function( err, res ){
-                    if (err) return callback(err);
-                    
-                   return callback(null, {msg: 'success'});
+
+                Passwordresetpin.app.models.adminMail.CheckDomainAvailability(pinObj.email.split('@')[1], (err, domainValid) => {
+                    if(err) return callback(err);
+                    if(domainValid){
+                        
+                        Passwordresetpin.app.models.adminMail.send({
+                            to: pinObj.email,
+                            from: 'testmail@jarabesoft.com',
+                            subject: 'Confirmacion de reinicio de contraseña',
+                            html: html_body
+                        }, function( err, res ){
+                            if (err) return callback(err);
+                            
+                           return callback(null, {msg: 'success'});
+                        })
+
+                    }else{
+                        return callback('Dominio no valido');
+                    }
                 })
             });
         }
