@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage';
 import { ComponentBase } from 'src/app/base/component-base';
 import { NavController, AlertController, ToastController, ModalController, LoadingController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { SignInWithApple, AppleSignInResponse, AppleSignInErrorResponse, ASAuthorizationAppleIDRequest } from '@ionic-native/sign-in-with-apple/ngx';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -15,12 +16,20 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class SocialMediaLoginButtonsComponent {
 
+  loginType:any="";
+  isApple: boolean = false;
+
   constructor(
     public  translate: TranslateService,
     private facebook: Facebook,
     private googlePlus: GooglePlus,
+    private signInWithApple: SignInWithApple,
+    private platform: Platform,
     private api: ApiService
-  ) { 
+  ) {
+    if(this.platform.is('ios')){
+      this.isApple = true;
+    };
   }
 
   @Output('onSocialLoginStart') 
@@ -78,6 +87,25 @@ export class SocialMediaLoginButtonsComponent {
   private async RetrieveExistingFacebookLoginData(token: string) {
     let userData = await this.facebook.api("/me?fields=name,email", []);
     this.LoginBySocialMedia(userData.name, userData.email, token);
+  }
+
+  public async AppleUserLogin(){
+    this.loginType = "Apple";
+    this.onSocialLoginStart.emit();
+  
+    this.signInWithApple.signin({
+      requestedScopes: [
+        ASAuthorizationAppleIDRequest.ASAuthorizationScopeFullName,
+        ASAuthorizationAppleIDRequest.ASAuthorizationScopeEmail
+      ]
+    })
+    .then((res: AppleSignInResponse) => {
+      this.LoginBySocialMedia(res.fullName.givenName, res.email, res.identityToken);
+    })
+    .catch((error: AppleSignInErrorResponse) => {
+      alert(error.code + ' ' + error.localizedDescription);
+      console.error(error);
+    });
   }
 
 

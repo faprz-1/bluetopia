@@ -7,3 +7,6 @@
 <ion-button (click)="GooglePlusUserLogin()">
     <img src="assets/social-media/google/logo.png">
 </ion-button>
+<ion-button (click)="AppleUserLogin()" *ngIf="isApple">
+  <img src="assets/social-media/apple/apple.png">
+</ion-button>

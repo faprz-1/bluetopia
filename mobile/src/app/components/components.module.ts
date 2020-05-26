@@ -7,9 +7,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { IonicStorageModule } from '@ionic/storage';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx'
 import { BuyComponent } from "../components/buy/buy.component";
 import { CardComponent } from "../components/card/card.component";
-import { unit_currency } from "../../pipes/unit_currency.pipe"
+import { unit_currency } from "../../pipes/unit_currency.pipe";
+
 @NgModule({
   imports: [
     CommonModule,
@@ -31,7 +33,8 @@ import { unit_currency } from "../../pipes/unit_currency.pipe"
   ],
   providers: [
     Facebook,
-    GooglePlus
+    GooglePlus,
+    SignInWithApple
   ]
 })
 export class ComponentsModule {}
