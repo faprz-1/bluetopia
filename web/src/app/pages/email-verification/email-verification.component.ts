@@ -22,15 +22,15 @@ export class EmailVerificationComponent implements OnInit {
     private route: ActivatedRoute,
     private api: ApiService,
   ) { }
-  
+
   ngOnInit() {
-    this.VerifyEmail(); 
+    this.VerifyEmail();
   }
 
   VerifyEmail() {
     this.route.params.subscribe(params => {
       let code = params['code'];
-      this.api.linePatch('/Usuarios/verify/' + code, false).subscribe((success: any[]) => {
+      this.api.Patch('/Usuarios/verify/' + code, {}, false).subscribe((success: any[]) => {
         this.verified = true;
         this.loading = false;
       }, err => {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Papa, ParseResult } from 'ngx-papaparse';
+import { Papa, PapaParseResult } from 'ngx-papaparse';
 import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
 
 @Injectable()
@@ -14,7 +14,7 @@ export class CsvFileService {
 
  	constructor( private papa: Papa,  ) { }
 
-    public ReadCSV (file_data : string) : Promise<ParseResult>
+    public ReadCSV (file_data : string) : Promise<PapaParseResult>
     {
         const options = {
             header : true,
@@ -24,7 +24,7 @@ export class CsvFileService {
                 return results.data;
             }
         };
-        return Promise.resolve(this.papa.parse(file_data, options));	    
+        return Promise.resolve(this.papa.parse(file_data, options));
 	}
 
     public GenerateCSV (name, data, keys = [], headers = [])
