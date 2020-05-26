@@ -4,11 +4,11 @@
     "connector": "memory"
   },
   "mysqlDev": {
-    "host": "mysql",
-    "port": 3306,
+    "host": "localhost",
+    "port": 8889,
     "url": "",
-    "database": "template3",
-    "password": "8RyC?LL6Dww_G?#yC7fTYsWEV",
+    "database": "template",
+    "password": "root",
     "name": "mysqlDev",
     "user": "root",
     "connector": "mysql"

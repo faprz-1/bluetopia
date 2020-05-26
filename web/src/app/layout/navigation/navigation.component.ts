@@ -53,6 +53,7 @@ export class NavigationComponent implements OnInit {
     sharedService.sidebarVisibilitySubject.subscribe((value) => {
       this.sidebarVisible = value;
     })
+    this.sharedService.userProfileImageUpdated$.subscribe(user=>this.user.profileImage=user)
   }
 
   userPages = [

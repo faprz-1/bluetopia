@@ -1,12 +1,12 @@
 import { Routes, RouterModule } from '@angular/router';
-import {LoginComponent } from './components/login/login.component';
+import {LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './services/auth.guard';
 
 
 const ROUTES: Routes = [
     { path: '', redirectTo: 'login', pathMatch:'full' },
-    { path: 'login', loadChildren: './components/login/login.module#LoginModule'},
-    { path: 'verificacion/:code', loadChildren: './components/email-verification/email-verification.module#EmailVerificationModule'},
+    { path: 'login', loadChildren: './pages/login/login.module#LoginModule'},
+    { path: 'verificacion/:code', loadChildren: './pages/email-verification/email-verification.module#EmailVerificationModule'},
     { path: 'inicio', loadChildren: './layout/layout.module#LayoutModule' , canActivate: [AuthGuard]},
 ];
 

@@ -3,8 +3,8 @@
 
         <div class="user" dropdown>
             <div class="user__info" dropdownToggle>
-                <img  class="user__img" style="object-fit: cover" *ngIf="user.profile_image!=null" src="{{this.baseurl._imgUrl+user.profile_image}}" alt="{{this.baseurl._imgUrl+user.profile_image}}">
-                <img *ngIf="user.profile_image==null" class="user__img" style="object-fit: cover" src="assets/fondo/user.png" alt=""> 
+                <img  class="user__img" style="object-fit: cover" *ngIf="user.profileImage!=null" src="{{user.profileImage.URL | jarabeImage:'avatar':api}}" alt="Profile image">
+                <img *ngIf="user.profileImage==null" class="user__img" style="object-fit: cover" src="assets/fondo/user.png" alt=""> 
                 <div>
                     <div class="user__name">{{user.username}}</div>
                     <div class="user__email">{{user.email}}</div>
@@ -12,7 +12,7 @@
             </div>
 
             <div *dropdownMenu class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" [routerLink]="['/inicio/perfil']">Ver perfil</a>
+                <a class="dropdown-item" (click)="GoTo('/inicio/perfil')">Ver perfil</a>
                 <a class="dropdown-item" (click)="cerrarSession()" href="">Cerrar sesión</a>
             </div>
         </div>

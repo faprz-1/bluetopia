@@ -99,6 +99,7 @@
       "permission": "ALLOW",
       "property": [
         "userWithCredentials",
+        "changeProfileImage",
         "updatePushToken",
         "testPush"
       ]

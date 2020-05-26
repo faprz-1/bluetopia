@@ -331,8 +331,10 @@ module.exports = function(Usuario) {
         // TODO
         var newProfileImage = {
             encodedFileContainer: "profileImages",
-            base64File: newImage.profileImage.base64ProfileImage,
-            fileExtention: newImage.profileImage.base64ProfileImageExtention
+            name: newImage.name,
+            resize: newImage.resize,
+            base64File: newImage.base64ProfileImage,
+            fileExtention: newImage.base64ProfileImageExtention
         }
         Upload.replaceFileBase64File(actual.profileImageId, newProfileImage, function(err, res) {
             if (err) return callback(err);
@@ -737,6 +739,8 @@ module.exports = function(Usuario) {
         // TODO
         var newProfileImage = {
             encodedFileContainer: "profileImages",
+            name: profileImage.name,
+            resize: profileImage.resize,
             base64File: profileImage.base64File,
             fileExtention: profileImage.fileExtention
         }

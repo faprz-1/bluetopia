@@ -44,28 +44,6 @@ module.exports = function(app) {
     var users = [
       {
         User: {
-          name: "Admin",
-          username: "templateAdmin",
-          password: "j4r4b3s0",
-          email: "admin@jarabepruebas.com",
-          emailVerified: true,
-          active: true
-        },
-        Role: "Admin"
-      },
-      {
-        User: {
-          name: "User",
-          username: "templateUser",
-          password: "j4r4b3s0",
-          email: "user@jarabepruebas.com",
-          emailVerified: true,
-          active: true
-        },
-        Role: "User"
-      },
-      {
-        User: {
           name: "SuperUser",
           username: "SuperUser",
           password: "j4r4b3s0",

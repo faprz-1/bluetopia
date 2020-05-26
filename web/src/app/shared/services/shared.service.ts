@@ -1,4 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable, NgZone, EventEmitter} from '@angular/core';
 import { Subject } from 'rxjs';
 
 /**
@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 @Injectable()
 export class SharedService {
 
+    public userProfileImageUpdated$: EventEmitter<Object> = new EventEmitter<Object>()
     // Sidebar visibility
     sidebarVisible: boolean
     sidebarVisibilitySubject: Subject<boolean> = new Subject<boolean>()

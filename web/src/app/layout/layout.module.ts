@@ -16,6 +16,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { NavigationTriggerComponent } from './header/navigation-trigger/navigation-trigger.component';
 import { NotificationService } from "../services/notification.service"; 
 import { SocketService } from "../services/socket.service";
+import { JarabeAngularPipesModule } from 'jarabe-angular-pipes';
 
 const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -32,6 +33,7 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   imports: [
     CommonModule,
     LayoutRouting,
+    JarabeAngularPipesModule,
     FormsModule,
     BsDropdownModule.forRoot(),
     ProgressbarModule.forRoot(),
