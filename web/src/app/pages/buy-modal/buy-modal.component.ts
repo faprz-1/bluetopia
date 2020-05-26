@@ -61,15 +61,15 @@ export class BuyModalComponent implements OnInit {
   getCards(card = null) {
     let endpoint = "/conekta/getCards";
 
-    this.api.post(endpoint,{cutomerId:this.user.customerId},true).subscribe(res => {
+    this.api.Post(endpoint,{cutomerId:this.user.customerId},true).subscribe(res => {
       this.cards = res;
       this.filterDefCard();
       if(card != null) {
         this.selectedCard = card.id;
-        this.toast.showSuccess("Se a agregado la tarjeta correctamente");
+        this.toast.ShowSuccess("Se a agregado la tarjeta correctamente");
         this.addCardChange.emit(1);
       }
-    }, err => { this.toast.showError("Error al obetener las tarjetas"); });
+    }, err => { this.toast.ShowError("Error al obetener las tarjetas"); });
   }
 
   convertProducts() {
@@ -117,10 +117,10 @@ export class BuyModalComponent implements OnInit {
       mesesCantidad: this.numMeses
     };
 
-    this.api.post(endpoint,objToBuy).subscribe( res => {
-      this.toast.showSuccess("La compra se a realizado correctamente");
+    this.api.Post(endpoint,objToBuy).subscribe( res => {
+      this.toast.ShowSuccess("La compra se a realizado correctamente");
       this.closeModal();
-    }, err => { this.toast.showError(err.error.error.details[0].message); });
+    }, err => { this.toast.ShowError(err.error.error.details[0].message); });
   }
 
   createTokoenCard() {
@@ -141,9 +141,9 @@ export class BuyModalComponent implements OnInit {
     };
 
     if(numberValidate && expValidate && cvcValidate) { Conekta.Token.create(this.data, successHandler, errorHandler); }
-    else if(!numberValidate) { this.toast.showError("Numero de tarjeta invalido"); }
-    else if(!expValidate) { this.toast.showError("Fecha de tarjeta invalido"); }
-    else if(!cvcValidate) { this.toast.showError("CVC de tarjeta invalido"); }
+    else if(!numberValidate) { this.toast.ShowError("Numero de tarjeta invalido"); }
+    else if(!expValidate) { this.toast.ShowError("Fecha de tarjeta invalido"); }
+    else if(!cvcValidate) { this.toast.ShowError("CVC de tarjeta invalido"); }
   }
 
   onSuccesFulToken(token) {
@@ -151,15 +151,15 @@ export class BuyModalComponent implements OnInit {
       let enpoint = "/conekta/addCardToUser";
 
       if(this.cards.length < 5) {
-        this.api.post(enpoint,{cardToken:Token, customerId: this.user.customerId},true).subscribe( res => {
+        this.api.Post(enpoint,{cardToken:Token, customerId: this.user.customerId},true).subscribe( res => {
           this.getCards(res);
-        }, err => { this.toast.showError("No se pudo agregar la tarjeta"); });
+        }, err => { this.toast.ShowError("No se pudo agregar la tarjeta"); });
       } else {
-        this.toast.showError("No puedes agregar mas de 5 tarjetas");
+        this.toast.ShowError("No puedes agregar mas de 5 tarjetas");
       }
   }
 
-  onErrorToken(error) { this.toast.showError(error); }
+  onErrorToken(error) { this.toast.ShowError(error); }
 
   getStatusData() {
     if(this.data.card.number == "" || this.data.card.name == "" || this.data.card.exp_year == "" || this.data.card.exp_month == ""  || this.data.card.cvc == "")

@@ -24,7 +24,7 @@ export class MessagingService {
 
   updateToken(token) {
 
-    this.api.post("/Usuarios/" + this.user.id + "/updatePushToken", {
+    this.api.Post("/Usuarios/" + this.user.id + "/updatePushToken", {
       token: {
         id: token,
         isMobile: false

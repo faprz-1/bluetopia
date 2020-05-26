@@ -74,7 +74,7 @@ export class NavigationComponent implements OnInit {
   }
 
   cerrarSession() {
-    this.api.post('/Usuarios/logout', { tokens: localStorage.getItem("fireTokens") != null ? localStorage.getItem("fireTokens") : [] }, true).subscribe(() => {
+    this.api.Post('/Usuarios/logout', { tokens: localStorage.getItem("fireTokens") != null ? localStorage.getItem("fireTokens") : [] }, true).subscribe(() => {
       localStorage.clear();
     });
     localStorage.clear();

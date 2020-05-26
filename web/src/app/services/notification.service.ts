@@ -8,64 +8,60 @@ export class NotificationService {
   constructor(
     private socket: SocketService,
     private api: ApiService,
-  ) {
-  }
+  ) 
+  {}
   
-  Init() {
-    this.loadNotifications();
-    this.susbcribeToNotifications();
+  public Init() 
+  {
+    this.LoadNotifications();
+    this.SusbcribeToNotifications();
   }
 
-  susbcribeToNotifications() {
-    //Suscripcion a notificaciones
-    this.socket.subscribe({
-        model: 'notifications',
-        id: JSON.parse(localStorage.getItem("user")).id,
-        method: 'getNew'
-      },
+  public SusbcribeToNotifications() 
+  {
+    this.socket.Subscribe('notifications', JSON.parse(localStorage.getItem("user")).id, 'getNew',
       (socket) => {
-        console.log("notificacion rebibida por socket", socket)
-        this.notifications.unshift(socket)
+        this.notifications.unshift(socket);
       }
     );
   }
-  loadNotifications(last_id: boolean = false) {
-    console.log("adnotifications", last_id);
-    let url = "/Notifications/getLast5"
-    url += (last_id) ? "/" + last_id : "";
-    console.log("adnotifications", url);
 
-    this.api.get(url).subscribe((data) => {
+  public LoadNotifications(last_id: boolean = false) 
+  {
+    let url = "/Notifications/getLast5";
+    url += (last_id) ? "/" + last_id : "";
+
+    this.api.Get(url).subscribe((data) => {
       this.notifications.push.apply(this.notifications, data);
     })
   }
 
-  countUnseen() {
+  public CountUnseen() 
+  {
     let count = 0;
     this.notifications.forEach(element => {
       if (element.seen == null)
         count++;
-
     });
+
     return count;
   }
-  setSeen(not) {
-    let url = "/Notifications/setSeen/" + not.id
-    if (not.seen == null) {
 
-      this.api.get(url).subscribe((data) => {
-        console.log(data)
-        this.notifications.forEach((el, index) => {
-          if (el.id == not.id) {
-            this.notifications[index] = data;
-            console.log("seen")
-          }
-        })
+  public async SetSeen(notification: any) 
+  {
+    if (notification.seen == null) 
+    {
+      let data = await this.api.Get("/Notifications/setSeen/" + notification.id);
+
+      this.notifications.forEach((notification, index) => {
+        if (notification.id == notification.id) 
+          this.notifications[index] = data;
       })
     }
   }
 
-  prepareUrl(url){
-    return (url.split("/#"))[1]
+  public PrepareUrl(url: string)
+  {
+    return (url.split("/#"))[1];
   }
 }

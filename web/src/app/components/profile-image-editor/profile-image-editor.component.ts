@@ -70,7 +70,7 @@ export class ProfileImageEditorComponent implements OnInit {
   
       let endpoint = "/Usuarios/" + this.user.id + "/changeProfileImage"
   
-      this.api.post(endpoint, data, true).subscribe(
+      this.api.Post(endpoint, data, true).subscribe(
         (success : any) => {
           this.processing = false
           this.zone.run(()=>{

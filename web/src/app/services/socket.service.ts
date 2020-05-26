@@ -3,78 +3,66 @@ import * as io from "socket.io-client";
 import { ApiService } from './api.service';
 
 @Injectable()
-export class SocketService {
-  container: any = [];
-  socket: any;
-  constructor(private api:ApiService) {
-    var url = this.api.baseURL.replace("/api", "");
-    let socket = io.connect(url);
-  
-    if(JSON.parse(localStorage.getItem("user")) == null)
-      return 
+export class SocketService 
+{
+  listeners: string[] = [];
+  socket: SocketIOClient.Socket;
 
-    var id = localStorage.getItem('token');
-    var userId = JSON.parse(localStorage.getItem("user")).id;
+  constructor(private api:ApiService) 
+  {
+    let serverBaseURL = this.api.GetBaseURL().replace("/api", "");
+    let socket = io.connect(serverBaseURL);
   
-    // console.log("conectando auth socket",id,userId);
-    socket.on('connect', function(){
+    if(JSON.parse(localStorage.getItem("user")) != null) 
+    {
+      let id = localStorage.getItem('token');
+      let userId = JSON.parse(localStorage.getItem("user")).id;
+    
+      socket.on('connect', function() {
         socket.emit('authentication', {id: id, userId: userId });
-        socket.on('authenticated', function() {
-            // use the socket as usual
-            // console.log('User is authenticated');
-        });
-    });
-  
-    this.socket = socket;
+        //socket.on('authenticated', function() {});
+      });
+    
+      this.socket = socket;
+    }
   }
 
-  subscribe(options, callback) {
-    if (options) {
-      var model = options.model;
-      var method = options.method;
-      var id = options.id;
-
-      var name = ""
-      name += (model) ? '/' + model : '';
-      name += (id) ? '/' + id : '';
-      name += (method) ? '/' + method : '';
-      console.log("socket", name);
-      this.socket.on(name, callback);
-      //Push the container..
-      this.pushContainer(name);
-    } else {
-      throw 'Error: Option must be an object';
-    }
-  } //end subscribe
-
-  pushContainer(subscriptionName) {
-    this.container.push(subscriptionName);
+  public Subscribe(model: string, id: string, method: string, callback)
+  {
+    let name = this.BuildListenerString(model, id, method);
+    this.socket.on(name, callback);
+    this.listeners.push(name); 
   }
 
-  //Unsubscribe all containers..
-  unSubscribeAll() {
-    console.log("desuscribiendo");
-    for (var i = 0; i < this.container.length; i++) {
-      this.socket.removeAllListeners(this.container[i]);
-    }
-    //Now reset the this.container..
-    this.container = [];
+  //Unsubscribe all containers
+  public UnsubscribeAllContainers() 
+  {
+    for (let i = 0; i < this.listeners.length; i++) 
+      this.socket.removeAllListeners();
+    this.listeners = [];
   }
 
   //Unsubscribe one container..
-  unSubscribeOne(options) {
-    var model = options.model;
-    var method = options.method;
-    var id = options.id;
+  public UnsubscribeContainer(model: string, id: string, method: string) 
+  {
+    let name = this.BuildListenerString(model, id, method);
+    this.socket.removeEventListener(name);
 
-    var name = ""
-    name += (model) ? '/' + model : '';
-    name += (id) ? '/' + id : '';
-    name += (method) ? '/' + method : '';
+    // Remove listener from list
+    this.listeners = this.listeners.filter(listener => listener != name);
+  }
 
-    this.socket.removeAllListeners(name);
+  private BuildListenerString(model: string, id: string, method: string) : string
+  {
+    if(!model || model.length === 0)
+      throw 'Model is empty or not defined!';
 
-    //Now reset the this.container..
-    // this.container.splice(this.container.indexOf(name));
+    if(!id || id.length === 0)
+      throw 'ID is empty or not defined!';
+
+    if(!method || method.length === 0)
+      throw 'Method is empty or not defined!';
+
+    return `/${model}/${id}/${method}`;
   }
 }

@@ -93,7 +93,7 @@ export class UsersComponent implements OnInit {
 
   getUsers(){
     this.loading = true
-    this.api.get('/Usuarios/users').subscribe(
+    this.api.Get('/Usuarios/users').subscribe(
       (users: Array<any>) => {
         this.users = users
         // console.log("usuarios", users);
@@ -101,18 +101,18 @@ export class UsersComponent implements OnInit {
       },
       (err: any) => {
         this.loading = false
-        this.toast.showError("Error al traer usuarios del servidor: " + err.error.error.message)
+        this.toast.ShowError("Error al traer usuarios del servidor: " + err.error.error.message)
       }
     )
   }
 
   getUserPermissionPolicyNodes(){
-    this.api.get("/UserPermissionPolicyNodes").subscribe(
+    this.api.Get("/UserPermissionPolicyNodes").subscribe(
       (policyNodes: Array<any>) => {
         this.policyNodes = this.parsePolicyNodesToExpandAll(policyNodes);
       },
       (err) => {
-        this.toast.showError("Error al permisos del servidor: " + err.error.error.message)
+        this.toast.ShowError("Error al permisos del servidor: " + err.error.error.message)
       }
     )
   }
@@ -179,18 +179,18 @@ export class UsersComponent implements OnInit {
     this.loading = true;
     this.updtUser.permissionNodeIds = this.selectedNodes;
     if(this.validEmail.state){
-      this.api.post("/Usuarios/"+this.updtUser.id+"/updateUs", this.updtUser).subscribe(
+      this.api.Post("/Usuarios/"+this.updtUser.id+"/updateUs", this.updtUser).subscribe(
         (users: Array<any>) => {
           this.users = users
           this.loading = false;
-          this.toast.showSuccess('Información actualizada')
+          this.toast.ShowSuccess('Información actualizada')
           this.getUsers()
           this.getUserPermissionPolicyNodes()
           this.closeModal()
         },
         (err:any) => {
           this.loading = false;
-          this.toast.showError('Error al intentar actualizar datos :' + err.error.error.message)
+          this.toast.ShowError('Error al intentar actualizar datos :' + err.error.error.message)
         }
       )
     }
@@ -199,15 +199,15 @@ export class UsersComponent implements OnInit {
   updateUserPassword(){
     this.loading = true;
     if(this.validEmail.state){
-      this.api.post("/Usuarios/updatePass", this.changePasswordData).subscribe(
+      this.api.Post("/Usuarios/updatePass", this.changePasswordData).subscribe(
         (msg: Array<any>) => {
           this.loading = false;
-          this.toast.showSuccess('Información actualizada :' + msg)
+          this.toast.ShowSuccess('Información actualizada :' + msg)
           this.closeModal()
         },
         (err:any) => {
           this.loading = false;
-          this.toast.showError('Error al intentar actualizar datos :' + err.error.error.message)
+          this.toast.ShowError('Error al intentar actualizar datos :' + err.error.error.message)
         }
       )
     }

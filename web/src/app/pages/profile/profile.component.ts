@@ -59,7 +59,7 @@ export class ProfileComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.api.get("/Usuarios/withCredentials", true).subscribe((userFromServer: any)=>{  
+    this.api.Get("/Usuarios/withCredentials", true).subscribe((userFromServer: any)=>{
       localStorage.setItem("user", JSON.stringify(userFromServer));
       this.reload();
     })
@@ -86,7 +86,7 @@ export class ProfileComponent implements OnInit {
   getCards() {
     let endpoint = "/conekta/getCards";
 
-    this.api.post(endpoint,{cutomerId:this.user.customerId},true).subscribe(res => {
+    this.api.Post(endpoint,{cutomerId:this.user.customerId},true).subscribe(res => {
       this.cards = res;
     }, err => {
       console.log(err);
@@ -96,10 +96,10 @@ export class ProfileComponent implements OnInit {
   deleteCard(card) {
     let enpoint = "/conekta/deleteCard";
 
-    this.api.post(enpoint,{cutomerId:this.user.customerId, cardId: card.id},true).subscribe( res => {
+    this.api.Post(enpoint,{cutomerId:this.user.customerId, cardId: card.id},true).subscribe( res => {
       this.reload();
     }, err => {
-      this.toast.showError("Error al eliminar la tarjeta");
+      this.toast.ShowError("Error al eliminar la tarjeta");
     });
   }
 
@@ -117,13 +117,13 @@ export class ProfileComponent implements OnInit {
       newPassword: this.userPasswords.newPassword
     }
     this.isPromiseActive = true;
-    this.api.post(`/Usuarios/change-password`, postParams).subscribe((passwordChanged: any) => {
-      this.toast.showSuccess('Cotraseña actualizada correctamente');
+    this.api.Post(`/Usuarios/change-password`, postParams).subscribe((passwordChanged: any) => {
+      this.toast.ShowSuccess('Cotraseña actualizada correctamente');
       this.CloseModal();
       this.CleanForm();
       this.isPromiseActive = false;
     }, err => {
-      this.toast.showError(`Error al actualizar la contraseña ${err.error.error.message}`);
+      this.toast.ShowError(`Error al actualizar la contraseña ${err.error.error.message}`);
       this.isPromiseActive = false;
     })
   }
@@ -142,7 +142,7 @@ export class ProfileComponent implements OnInit {
     if(newPassword.length < 3) return false;
     return true;
   }
-  
+
   IsNewPassword2Valid(newPassword: string){
     if(!newPassword) return false;
     if(newPassword != this.userPasswords.newPassword) return 'no-match';

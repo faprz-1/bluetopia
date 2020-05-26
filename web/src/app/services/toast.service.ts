@@ -1,25 +1,29 @@
-import { Injectable,ViewContainerRef } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
-export class ToastService {
+export class ToastService 
+{
+  constructor(public toastr: ToastrService) 
+  {}
 
-  constructor(public toastr: ToastrService) {    
-	}
-
-	showSuccess(msg) {
+  ShowSuccess(msg) 
+  {
     return this.toastr.success(msg, 'Correcto');
   }
     
-  showError(msg) {
+  ShowError(msg) 
+  {
     return this.toastr.error(msg, 'Error');
   }
     
-  showWarning(msg) {
+  ShowWarning(msg) 
+  {
     return this.toastr.warning(msg, 'Alerta!');
   }
     
-  showInfo(msg) {
+  ShowInfo(msg) 
+  {
     return this.toastr.info(msg);
   }
 }

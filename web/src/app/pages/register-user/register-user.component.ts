@@ -20,30 +20,30 @@ export class RegisterUserComponent implements OnInit {
   constructor( vcr: ViewContainerRef, private router: Router, private api: ApiService, public toastr: ToastService) {
   }
 
-  
+
   ngOnInit() {
-    this.api.get("/Usuarios/getRoles",true).subscribe(roles=>{
+    this.api.Get("/Usuarios/getRoles",true).subscribe(roles=>{
       this.Roles=roles;
-      
+
     })
   }
   registrarUsuario(user,valid,registerForm)	{
-   
+
     if(!valid){
-			this.toastr.showError("Completar los datos");
+			this.toastr.ShowError("Completar los datos");
 			return
     }else if(user.user.password != user.user.passwordConfirm){
-			this.toastr.showError("Las contraseñas no coinciden");
+			this.toastr.ShowError("Las contraseñas no coinciden");
 			return
 		}
-   
-      this.api.post("/Usuarios/registerAdmins", user.user, false).subscribe((resp: any) =>{
-        this.toastr.showSuccess("Se genero correctamente el usuario.");
+
+      this.api.Post("/Usuarios/registerAdmins", user.user, false).subscribe((resp: any) =>{
+        this.toastr.ShowSuccess("Se genero correctamente el usuario.");
         registerForm.reset();
       },err=>{
-        this.toastr.showError(err.error.error.details.messages.email);
+        this.toastr.ShowError(err.error.error.details.messages.email);
       });
-  
+
 	}
 
 }

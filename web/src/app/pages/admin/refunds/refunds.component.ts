@@ -38,12 +38,12 @@ export class RefundsComponent implements OnInit {
   getRefunds() {
     let endpoint = "/ordersHistories/getOrdHist";
 
-    this.api.get(endpoint).subscribe( res => {
+    this.api.Get(endpoint).subscribe( res => {
       this.refounds = res;
 
       this.refounds.forEach(r => { r.change = false; });
     }, err => {
-      this.toast.showError("No se pudo obetener el listado de devoluciones");
+      this.toast.ShowError("No se pudo obetener el listado de devoluciones");
     });
   }
 
@@ -51,17 +51,17 @@ export class RefundsComponent implements OnInit {
     let enpoint = "/conekta/refoundOrder";
 
     if(this.reasonRefound == "") {
-      this.toast.showError("No se pudo hacer la devolucion, por que no se agrego una razón");
+      this.toast.ShowError("No se pudo hacer la devolucion, por que no se agrego una razón");
       refoundObj.change = !refoundObj.change;
     } else {
 
       let objRefound = { reason: this.reasonRefound }
 
-      this.api.post(enpoint, {orderId:refoundObj.orderId, objRefound:objRefound, orderH:refoundObj}, ).subscribe(res => {
+      this.api.Post(enpoint, {orderId:refoundObj.orderId, objRefound:objRefound, orderH:refoundObj}, ).subscribe(res => {
         refoundObj.change = !refoundObj.change;
-        this.toast.showSuccess("El reembolso se a realizado correctamente");
+        this.toast.ShowSuccess("El reembolso se a realizado correctamente");
         this.reload();
-      }, err => { this.toast.showError(err.error.error.details[0].message); });
+      }, err => { this.toast.ShowError(err.error.error.details[0].message); });
     }
   }
 

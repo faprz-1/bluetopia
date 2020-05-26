@@ -1,143 +1,162 @@
-
-import {throwError as observableThrowError,  of ,  Observable } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, retryWhen, mergeMap, take } from 'rxjs/operators';
 
-@Injectable()
-export class ApiService {
-  public baseURL: string = "http://localhost:3000/api"
-  public headers: any = {'Content-Type': 'application/json'};
-  public retryAttempts: number = 5
-  public token: string = "";
+import { retryWhen, mergeMap, tap, delay, catchError } from 'rxjs/operators';
+import { Observable, timer, throwError, of } from 'rxjs';
+import { ToastService } from './toast.service';
+import { LoadingService } from './loading.service';
 
-  constructor(private http: HttpClient) {
-    this.getToken();
-  }
+export const BASEURL      = "http://localhost:3000/api"
+export const BASEURL_DEV  = "http://192.168.16.165:3022/api/"
 
-  private genLink(endPoint: string, useToken: boolean,filter:any=false): string {
-    let link=this.baseURL+endPoint;
-    let params=0;
-    if(!(!useToken || !(this.token.length > 0 && this.token != ""))) { 
-     
-      link+= `${(params==0)?'?':'&'}access_token=`+this.token;
-      params++;
-    }
-     if(filter) { 
-      link+= `${(params==0)?'?':'&'}filter=`+JSON.stringify(filter);
-      params++;
-    }
-    return link;
-  }
-  
-  private conditionalRetry(error: Observable<any>): Observable<any> {
-    
-    return error.pipe(
-      mergeMap((error: any)=>{
-        // solo hace retry en codigos de error: 408: Request Time-out, 504: Gateway Time-out, de ahi en mas para todo hace retry
-        if(((error.status >= 400 && error.status <= 407) || (error.status >= 409 && error.status <= 451) ) 
-        || 
-        (error.status >= 500 && error.status <= 503) || error.status == 505){
-            return observableThrowError(error)
-          }
-          return of(error.status)
-      }),
-      take(this.retryAttempts)
+export const TOKEN_LOCALSTORAGE_KEY = "token"
+export const USER_LOCALSTORAGE_KEY  = "user"
+export const TTL_LOCALSTORAGE_KEY   = "ttl"
+export const NXT_LOCALSTORAGE_KEY   = "nxt"
+
+const HTTP_HEADERS                = new HttpHeaders({'Content-Type': 'application/json'});
+const RETRY_ATTEMPTS              = 5
+const RETRY_STATUS_CODES          = [ 408, 429, 504]
+const RETRY_MILLISECONDS          = 10000
+export const TTL_SECONDS          = 1209600;
+
+import * as moment from 'moment';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ApiService
+{
+  private token: string = "";
+  private debugMode: boolean = false;
+
+  public isPaymentSystemOnline: boolean = true;
+
+  constructor(
+    private http: HttpClient,
+    private toastService: ToastService,
+    private loadingService: LoadingService
     )
+    {
+    this.token = this.GetToken();
+    this.GetDebugMode();
   }
 
-  private handleError(error: HttpErrorResponse, link: string){
-    console.error(link,error)
-    return of(error)
+  public GetBaseURL()
+  {
+    return this.debugMode ? BASEURL_DEV : BASEURL;
   }
 
-  /**
-   * Refleja el estado del provider al checar el token de sesion
-   * @returns {boolean} Retorna el estado de la obtencion del token de sesion
-   */
-  public ready(): boolean {
-    return this.token != ""
+  private GetHeaders() : HttpHeaders {
+    let headers = {
+      'Content-Type': 'application/json'
+    };
+
+    return new HttpHeaders(headers);
   }
 
-  /**
-   * Trata de obtener el token de localStorage
-   * Este metodo es ejecutado en el contructor de la clase
-   */
-  public getToken() {
-    this.token = localStorage.getItem("token")
+  public Get(endPoint: string, getVariables : any = {}, useToken:boolean = true, displayErrors: boolean = true): Observable<any>
+  {
+    let link: string = this.GenLink(endPoint, useToken, getVariables);
+    return this.ProcessHttpRequest(this.http.get<JSON>(link, { headers: this.GetHeaders() }), displayErrors);
   }
 
-  /**
-   * Metodo get para conectarse con la api
-   * @param endPoint string con el end pint a usar ej: "Usuarios/1"
-   * @param useToken boolean para  intentar usar token en la peticion default: true
-   */
-  public get(endPoint: string, useToken:boolean = true,filter={}): Observable<object>{
-    let link: string = this.genLink(endPoint, useToken,filter);
-    return this.http.get<JSON>(link, this.headers).pipe(
-      retryWhen(err =>this.conditionalRetry(err)),
-      // retry(this.retryAttempts),
-      // catchError(err =>this.handleError(err, link))
+  public Post(endPoint: string, body: object, useToken:boolean = true, displayErrors: boolean = true): Observable<any>
+  {
+    let link: string = this.GenLink(endPoint, useToken);
+    return this.ProcessHttpRequest(this.http.post<JSON>(link, body, { headers: this.GetHeaders() }), displayErrors);
+  }
+
+  public Patch(endPoint: string, body: object, useToken:boolean = true, displayErrors: boolean = true): Observable<any>
+  {
+    let link: string = this.GenLink(endPoint, useToken);
+    return this.ProcessHttpRequest(this.http.patch<JSON>(link, body, { headers: this.GetHeaders() }), displayErrors);
+  }
+
+  public Put(endPoint: string, body: object, useToken:boolean = true, displayErrors: boolean = true): Observable<any>
+  {
+    let link: string = this.GenLink(endPoint, useToken);
+    return this.ProcessHttpRequest(this.http.put<JSON>(link, body, { headers: this.GetHeaders() }), displayErrors);
+  }
+
+  public Delete(endPoint: string, useToken:boolean = true, displayErrors: boolean = true): Observable<any>
+  {
+    let link: string = this.GenLink(endPoint, useToken);
+    return this.ProcessHttpRequest(this.http.delete<JSON>(link, { headers: this.GetHeaders() }), displayErrors);
+  }
+
+  public GetUser() : any
+  {
+    return JSON.parse(localStorage.getItem(USER_LOCALSTORAGE_KEY));
+  }
+  public SetUser(user: string)
+  {
+    localStorage.setItem(USER_LOCALSTORAGE_KEY, JSON.stringify(user));
+  }
+
+  public GetTTL() : any
+  {
+    return localStorage.getItem(TTL_LOCALSTORAGE_KEY);
+  }
+  public ResetTTL()
+  {
+    localStorage.setItem(TTL_LOCALSTORAGE_KEY, moment().add(TTL_SECONDS, 's').toISOString());
+  }
+
+  public GetToken() : string
+  {
+    return localStorage.getItem(TOKEN_LOCALSTORAGE_KEY);
+  }
+  public SetToken(token: string)
+  {
+    localStorage.setItem(TOKEN_LOCALSTORAGE_KEY, token);
+    this.token = token;
+  }
+
+  private ProcessHttpRequest(request: Observable<JSON>, displayErrors): Observable<JSON>
+  {
+    return request.pipe(
+      retryWhen(errorResponse => this.RetryOnConnectionError(errorResponse, displayErrors)),
     );
   }
 
-  /**
-   * Metodo post para conectarse con la api
-   * @param endPoint string con el end pint a usar ej: "Usuarios/1"
-   * @param body object objeto para enviar al servidor
-   * @param useToken boolean para  intentar usar token en la peticion default: true
-   */
-  public post(endPoint: string, body: object, useToken:boolean = true,filter={}): Observable<object>{
-    let link: string = this.genLink(endPoint, useToken,filter);
-    return this.http.post<JSON>(link, body, this.headers).pipe(
-      retryWhen(err =>this.conditionalRetry(err)),
-      // retry(this.retryAttempts),
-      // catchError(err =>this.handleError(err, link))
+  private GenLink(endPoint: string, useToken: boolean, getVars: any[] = []): string
+  {
+    this.token = localStorage.getItem(TOKEN_LOCALSTORAGE_KEY);
+    useToken = useToken && this.token && this.token.length > 0;
+
+    let baseURL = this.GetBaseURL() + endPoint + "?";
+    for(let variable in getVars)
+      baseURL = `${baseURL}${variable}=${getVars[variable]}&`;
+
+    return useToken ? baseURL + "access_token=" + this.token : baseURL;
+  }
+
+  private RetryOnConnectionError(errorResponse: Observable<any>, displayErrors): Observable<any>
+  {
+    return errorResponse.pipe(
+      mergeMap(
+        (error, retryAttempts) =>
+        {
+          if(retryAttempts >= RETRY_ATTEMPTS || !RETRY_STATUS_CODES.find(code => error.status == code))
+            return throwError(error)
+
+          if(displayErrors)
+            this.ShowToast(`Connection lost. Retrying in ${RETRY_MILLISECONDS/1000} seconds...`);
+
+          return timer(RETRY_MILLISECONDS)
+        }
+      )
     );
   }
 
-
-  /**
-   * Metodo patch para conectarse con la api
-   * @param endPoint string con el end pint a usar ej: "Usuarios/1"
-   * @param body object objeto para enviar al servidor
-   * @param useToken boolean para  intentar usar token en la peticion default: true
-   */
-  public patch(endPoint: string, body: object, useToken:boolean = true,filter={}): Observable<object>{
-    let link: string = this.genLink(endPoint, useToken,filter);
-    return this.http.patch<JSON>(link, body, this.headers).pipe(
-      retryWhen(err =>this.conditionalRetry(err)),
-      // retry(this.retryAttempts),
-      // catchError(err =>this.handleError(err, link))
-    );
+  private ShowToast(message: string)
+  {
+    return this.toastService.ShowError(message);
   }
 
-  /**
-   * Metodo patch para conectarse con la api
-   * @param endPoint string con el end pint a usar ej: "Usuarios/1"
-   * @param body object objeto para enviar al servidor
-   * @param useToken boolean para  intentar usar token en la peticion default: true
-   */
-  public linePatch(endPoint: string, useToken:boolean = true,filter={}): Observable<object>{
-    let link: string = this.genLink(endPoint, useToken,filter);
-    return this.http.patch<JSON>(link, this.headers).pipe(
-      retryWhen(err =>this.conditionalRetry(err)),
-      // retry(this.retryAttempts),
-      // catchError(err =>this.handleError(err, link))
-    );
-  }
-
-  /**
-   * Metodo delete para conectarse con la api
-   * @param endPoint string con el end pint a usar ej: "Usuarios/1"
-   * @param useToken boolean para  intentar usar token en la peticion default: true
-   */
-  public delete(endPoint: string, useToken:boolean = true,filter={}): Observable<object>{
-    let link: string = this.genLink(endPoint, useToken,filter);
-    return this.http.delete<JSON>(link, this.headers).pipe(
-      retryWhen(err =>this.conditionalRetry(err)),
-      // retry(this.retryAttempts),
-      // catchError(err =>this.handleError(err, link))
-    );
+  private GetDebugMode() : boolean
+  {
+    return this.debugMode;
   }
 }

@@ -10,24 +10,25 @@ import { PapaParseModule } from 'ngx-papaparse';
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 
-// firebase  
-import { AngularFireModule } from 'angularfire2';  
-import * as firebase from 'firebase';  
-import { firebaseConfig } from './../environments/firebase.config';  
-import { AngularFireDatabaseModule } from 'angularfire2/database';  
-firebase.initializeApp(firebaseConfig);  
+// firebase
+import { AngularFireModule } from 'angularfire2';
+import * as firebase from 'firebase';
+import { firebaseConfig } from './../environments/firebase.config';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+firebase.initializeApp(firebaseConfig);
 
 ///services
 import { SharedService } from "./shared/services/shared.service";
 import { ApiService } from "./services/api.service";
 import { HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from './services/auth.guard';
-import { MessagingService } from './services/messaging.service';  
-import { AngularFireAuth } from 'angularfire2/auth'; 
+import { MessagingService } from './services/messaging.service';
+import { AngularFireAuth } from 'angularfire2/auth';
 import { FilterPipe } from './filter.pipe';
 import { ToastService } from './services/toast.service';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthSGuard } from './services/authSuser.guard';
+import { LoadingService } from './services/loading.service';
 @NgModule({
   imports: [
     BrowserModule,
@@ -36,14 +37,14 @@ import { AuthSGuard } from './services/authSuser.guard';
     BrowserAnimationsModule,
     FormsModule,
     routing,
-    AngularFireModule.initializeApp(firebaseConfig),  
+    AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
-    ToastrModule.forRoot(), 
+    ToastrModule.forRoot(),
     PapaParseModule
   ],
   declarations: [
     AppComponent,
-    FilterPipe,
+    FilterPipe
   ],
 providers: [
     SharedService,
@@ -54,10 +55,10 @@ providers: [
     ApiService,
     AuthGuard,
     AuthSGuard,
-    MessagingService,  
+    MessagingService,
     AngularFireAuth,
-    ToastService
-
+    ToastService,
+    LoadingService
   ],
   bootstrap: [AppComponent]
 })

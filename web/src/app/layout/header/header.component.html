@@ -6,36 +6,36 @@
     <h1><a [routerLink]="['']"><img class="header__logo logo-img" src="assets/img/logo.png" alt=""></a></h1>
   </div>
 
-  <nav aria-label="breadcrumb" *ngIf="sharedService.breadcrumbs.length!=0"> 
-    <ol class="breadcrumb"> 
-      <li class="breadcrumb-item" *ngFor="let i of sharedService.breadcrumbs"> 
-        <a *ngIf="i.link!=''" [routerLink]="[i.link]">{{i.title}}</a> 
-        <a *ngIf="i.link==''">{{i.title}}</a> 
- 
-      </li> 
-    </ol> 
-  </nav> 
+  <nav aria-label="breadcrumb" *ngIf="sharedService.breadcrumbs.length!=0">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item" *ngFor="let i of sharedService.breadcrumbs">
+        <a *ngIf="i.link!=''" [routerLink]="[i.link]">{{i.title}}</a>
+        <a *ngIf="i.link==''">{{i.title}}</a>
+
+      </li>
+    </ol>
+  </nav>
 
   <ul class="top-nav">
       <li dropdown>
         <a dropdownToggle>
           <i class="zmdi zmdi-notifications"></i>
-          <div class="badge badge-pill badge-white" *ngIf="notiServ.countUnseen()!=0">{{notiServ.countUnseen()}}</div>
+          <div class="badge badge-pill badge-white" *ngIf="notiServ.CountUnseen()!=0">{{notiServ.CountUnseen()}}</div>
         </a>
         <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown-menu--block" role="menu">
           <div class="listview listview--hover" style="max-height:40vh;overflow:scroll;">
             <div class="listview__header">
               Notificaciones
-  
+
               <div class="actions">
                 <a class="actions__item zmdi zmdi-plus"></a>
               </div>
             </div>
-  
+
             <a *ngFor="let message of notiServ.notifications" [routerLink]="[notiServ.prepareUrl(message.link)]" routerLinkActive="router-link-active" (click)="notiServ.setSeen(message)"
               class="listview__item" [ngClass]="{'unseen':message.seen==null}">
               <img [src]="message.image" class="listview__img" alt="">
-  
+
               <div class="listview__content">
                 <h3 class="listview__heading">
                   {{ message.title }}
@@ -44,20 +44,20 @@
                 <p>{{ message.content }}</p>
               </div>
             </a>
-  
+
             <div (click)="notiServ.loadNotifications(
               notiServ.notifications[notiServ.notifications.length-1].id
             )" class="view-more">Cargar más</div>
           </div>
         </div>
       </li>
-  
-  
+
+
       <li dropdown>
         <a dropdownToggle>
           <i class="zmdi zmdi-triangle-down"></i>
         </a>
-  
+
         <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown-menu--block" role="menu">
           <div class="listview listview--hover">
             <div class="listview__header">
@@ -65,23 +65,23 @@
             </div>
             <div class="dropdown-item theme-switch">
                 Theme Switch
-      
+
                 <div class="btn-group btn-group--colors mt-2 d-block">
                   <label class="btn bg-green" [(ngModel)]="maThemeModel" btnRadio="green" uncheckable (click)="setTheme()"></label>
                   <label class="btn bg-blue" [(ngModel)]="maThemeModel" btnRadio="blue" uncheckable (click)="setTheme()"></label>
                   <label class="btn bg-red" [(ngModel)]="maThemeModel" btnRadio="red" uncheckable (click)="setTheme()"></label>
                   <label class="btn bg-orange" [(ngModel)]="maThemeModel" btnRadio="orange" uncheckable (click)="setTheme()"></label>
                   <label class="btn bg-teal" [(ngModel)]="maThemeModel" btnRadio="teal" uncheckable (click)="setTheme()"></label>
-      
+
                   <br>
-      
+
                   <label class="btn bg-cyan" [(ngModel)]="maThemeModel" btnRadio="cyan" uncheckable (click)="setTheme()"></label>
                   <label class="btn bg-blue-grey" [(ngModel)]="maThemeModel" btnRadio="blue-grey" uncheckable (click)="setTheme()"></label>
                   <label class="btn bg-purple" [(ngModel)]="maThemeModel" btnRadio="purple" uncheckable (click)="setTheme()"></label>
                   <label class="btn bg-indigo" [(ngModel)]="maThemeModel" btnRadio="indigo" uncheckable (click)="setTheme()"></label>
                   <label class="btn bg-lime" [(ngModel)]="maThemeModel" btnRadio="lime" uncheckabl (click)="setTheme()"e></label>
                 </div>
-              </div> 
+              </div>
             <a class="dropdown-item" (click)="cerrarSession()" href="">Cerrar sesión</a>
           </div>
         </div>
