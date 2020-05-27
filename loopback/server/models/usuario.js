@@ -190,7 +190,7 @@ module.exports = function(Usuario) {
         Usuario.CreateNew(newUser, (error, createdUser) => {
             if (error) return callback(error);
 
-            Usuario.login(createdUser, (err, accessToken) => {
+            Usuario.login(newUser, (err, accessToken) => {
                 if (err) return callback(err)
 
                 return callback(null, accessToken)
