@@ -1,0 +1,12 @@
+{
+  "mysqlDev": {
+    "host": "jarabeapi.com",
+    "port": 3306,
+    "url": "",
+    "database": "template",
+    "password": "bq32H9?xyDYbaj6_",
+    "name": "mysqlDev",
+    "user": "jarabe_dev",
+    "connector": "mysql"
+  }
+}
