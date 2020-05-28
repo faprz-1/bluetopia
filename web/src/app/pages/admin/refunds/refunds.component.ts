@@ -9,10 +9,10 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
   styleUrls: ['./refunds.component.scss']
 })
 export class RefundsComponent implements OnInit {
-  
+
   mtModalRef: BsModalRef;
 
-  refounds:any = [];
+  refunds:any = [];
 
   reasonRefound:string = "";
 
@@ -39,9 +39,9 @@ export class RefundsComponent implements OnInit {
     let endpoint = "/ordersHistories/getOrdHist";
 
     this.api.Get(endpoint).subscribe( res => {
-      this.refounds = res;
+      this.refunds = res;
 
-      this.refounds.forEach(r => { r.change = false; });
+      this.refunds.forEach(r => { r.change = false; });
     }, err => {
       this.toast.ShowError("No se pudo obetener el listado de devoluciones");
     });

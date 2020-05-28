@@ -1,10 +1,18 @@
 import { Component, OnInit} from '@angular/core';
-import { SharedService } from "../../shared/services/shared.service";
+import { SharedService } from '../../shared/services/shared.service';
 import { ApiService } from '../../services/api.service';
 import { MessagingService } from '../../services/messaging.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Action } from 'rxjs/internal/scheduler/Action';
 import { Router } from '@angular/router';
+
+import { ADMIN_MENU_PAGES } from '../layout.routing';
+
+class UserPage {
+  public name: string;
+  public action: string;
+  public icon: string;
+}
 
 @Component({
     selector: 'app-navigation',
@@ -40,8 +48,10 @@ export class NavigationComponent implements OnInit {
   };
 
   user: any = {
-    "username": "Usuario"
+    'username': 'Usuario'
   };
+
+  public activeUserPages: UserPage[] = [];
 
   // Toggle sub menu
   toggleNavigationSub(menu, event) {
@@ -49,38 +59,37 @@ export class NavigationComponent implements OnInit {
     this.navigationSubState[menu] = (this.navigationSubState[menu] === 'inactive' ? 'active' : 'inactive');
   }
 
-  constructor(private sharedService: SharedService, public api: ApiService, public messagingService: MessagingService, private router: Router) {
+  constructor(
+    private sharedService: SharedService,
+    public api: ApiService,
+    public messagingService: MessagingService,
+    private router: Router
+  )
+  {
     sharedService.sidebarVisibilitySubject.subscribe((value) => {
       this.sidebarVisible = value;
     })
     this.sharedService.userProfileImageUpdated$.subscribe(user=>this.user.profileImage=user)
   }
 
-  userPages = [
-    {name: "Inicio",action: "/inicio/user/dashboard", icon: "zmdi zmdi-home"}
-  ];
-
-  adminPages = [
-    {name: "Inicio",action: "/inicio/admin/dashboard", icon: "zmdi zmdi-home"},
-    {name: "Reembolsos",action: "/inicio/admin/refounds", icon: "zmdi zmdi-money-off"}
-  ];
-
-  superUserPages = [
-    {name:"Registrar Usuario", action: "/inicio/superuser/registro", icon: "zmdi zmdi-account-add"}, 
-    {name: "Usuarios",  action: "/inicio/superuser/usuarios", icon : "accounts"}, 
-  ];
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem('user'));
+    this.user = this.user = this.api.GetUser();
+    this.activeUserPages = ADMIN_MENU_PAGES[this.user.role.name] ? ADMIN_MENU_PAGES[this.user.role.name] : [];
   }
 
-  cerrarSession() {
-    this.api.Post('/Usuarios/logout', { tokens: localStorage.getItem("fireTokens") != null ? localStorage.getItem("fireTokens") : [] }, true).subscribe(() => {
-      localStorage.clear();
-    });
+  LogOut()
+  {
+    const data = {
+      tokens: localStorage.getItem('fireTokens') != null ? localStorage.getItem('fireTokens') : []
+    };
+
+    this.api.Post('/Usuarios/logout', data, true).subscribe(() => {});
     localStorage.clear();
+    this.router.navigate(['/']);
   }
-  GoTo(link){
-    
+
+  GoTo(link)
+  {
     this.router.navigate([link]);
     this.sharedService.toggleSidebarVisibilty();
   }
