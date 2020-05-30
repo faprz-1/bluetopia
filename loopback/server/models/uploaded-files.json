@@ -17,6 +17,14 @@
       "type": "string",
       "required": true
     },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "resize": {
+      "type": "string",
+      "required": true
+    },
     "uploaded": {
       "type": "date",
       "defaultFn": "now"
