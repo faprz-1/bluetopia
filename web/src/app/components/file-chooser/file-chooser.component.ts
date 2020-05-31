@@ -51,7 +51,7 @@ export class FileChooserComponent {
         this.fileData = {
           "encodedFileContainer": this.fileType,
           "base64File": btoa(binaryString),
-          "fileName": file.name,
+          "name": file.name,
           "resize": this.resize,
           "fileExtention": "." + file.name.split('.').pop().toLowerCase()
         }

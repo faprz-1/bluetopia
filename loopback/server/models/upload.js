@@ -26,7 +26,7 @@ module.exports = function (Upload) {
             if (err) return callback(err);
             UploadedFiles.create({
                 id: newFileId,
-                name: ""||newFile.name,
+                name: "no-name"||newFile.name,
                 resize: false || newFile.resize,
                 URL: "/Uploads/" + encodedFileContainer + "/download/" + fileName
             }, function (err, res) {
