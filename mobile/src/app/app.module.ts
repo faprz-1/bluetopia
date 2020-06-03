@@ -16,6 +16,7 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { AuthGuard } from './services/auth.guard';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { environment } from '../environments/environment';
     SplashScreen,
     Camera,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    AuthGuard
+    AuthGuard,
+    OneSignal
   ],
   bootstrap: [
     AppComponent,

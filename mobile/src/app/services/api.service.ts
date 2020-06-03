@@ -6,7 +6,7 @@ import { ToastController } from '@ionic/angular';
 import { retryWhen, mergeMap, tap, delay, catchError } from 'rxjs/operators'; 
 import { Observable, timer, throwError, of } from 'rxjs';
 
-export const BASEURL             = "http://localhost:3000/api"
+export const BASEURL             = "http://192.168.0.100:3000/api"
 export const BASEURL_DEV         = "http://192.168.16.165:3022/api/"
 const HTTP_HEADERS        = new HttpHeaders({'Content-Type': 'application/json'});
 const RETRY_ATTEMPTS      = 5

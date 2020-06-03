@@ -11,7 +11,7 @@ module.exports = function(Usuario) {
     Usuario.testPush = function(callback) {
         // Enviar push 
         var notificacion = this.app.models.Notification;
-        var res = notificacion.setByRoleNotification("admin", {
+        var res = notificacion.setByRoleNotification("SuperUser", {
             title: "titulo de prueba",
             tag: "tag1",
             content: "un push de prueba se ha enviado para revisar que todo este bien",
@@ -371,18 +371,18 @@ module.exports = function(Usuario) {
      */
 
     Usuario.prototype.updatePushToken = function(data, callback) {
-        let PushToken = Usuario.app.models.PushToken;
+        let PushTokens = Usuario.app.models.PushTokens;
         let actual = this;
         // TODO 
-        PushToken.findById(data.token, function(err, existing) {
+        PushTokens.findById(data.token.id, function(err, existing) {
             if (err) return callback(err);
             if(existing){ return callback(null, true) }
             let newToken = {
-                id: data.token,
+                id: data.token.id,
                 usuarioId: actual.id,
-                mobile: data.isMobile
+                mobile: data.token.isMobile
             }
-            PushToken.create(newToken, function(err, res) {
+            PushTokens.create(newToken, function(err, res) {
                 if (err) return callback(err);
 
                 return callback(null, true);
@@ -398,13 +398,13 @@ module.exports = function(Usuario) {
      */
 
     Usuario.deletePushToken = function(token, callback) {
-        let PushToken = Usuario.app.models.PushToken;
+        let PushTokens = Usuario.app.models.PushTokens;
        
-        PushToken.findById(token, function(err, res) {
+        PushTokens.findById(token, function(err, res) {
             if (err) return callback(err);
 
             if (!res) { return callback(null, true ) }
-            PushToken.destroyById(token, function(err, res) {
+            PushTokens.destroyById(token, function(err, res) {
                 if (err) return callback(err);
 
                 return callback(null, true);

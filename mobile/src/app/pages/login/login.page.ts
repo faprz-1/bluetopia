@@ -51,6 +51,7 @@ export class LoginPage extends ComponentBase implements OnInit {
     this.loggedUser = userFromServer;
     await this.storage.set("user", userFromServer)
     await this.storage.set("ttl", moment().add(1209600, 's').toISOString())
+    this.pushService.updatePushToken();
     await this.AfterSuccessfulLogin()
   }  
 

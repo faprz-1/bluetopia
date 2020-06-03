@@ -6,6 +6,7 @@ import { ApiService } from '../services/api.service';
 import { Storage } from '@ionic/storage';
 import { NotificationsService } from '../services/notifications.service';
 import { CameraOptions, Camera } from "@ionic-native/camera/ngx";
+import { PushService } from '../services/push.service';
 
 const BASE_LOADING_MESSAGE = "Cargando..."
 const BASE_LOADING_DURATION = 2000
@@ -32,7 +33,8 @@ export class ComponentBase {
         public camera: Camera,
         public translate: TranslateService,
         public api: ApiService,
-        public notifications: NotificationsService
+        public notifications: NotificationsService,
+        public pushService: PushService
     ) {
         this.InitializeLoadingElement()
         this.enableMenu()

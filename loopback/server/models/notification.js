@@ -40,7 +40,7 @@ module.exports = function (Notification) {
 
     Notification.setSingleNotification = function (userId, notification, callback) {
         let Usuario = Notification.app.models.Usuario;
-        let PushToken = Notification.app.models.PushToken;
+        let PushTokens = Notification.app.models.PushTokens;
 
         notification.usuarioId = userId;
         // notification.link = hostURL + notification.link;
@@ -55,7 +55,7 @@ module.exports = function (Notification) {
             Usuario.findOne(filter, (err, user) => {
                 if (err) return callback(err);
                 user = JSON.parse(JSON.stringify(user))
-                PushToken.sendMobilePushNotification(user.pushTokens, notification, function (err, res) {
+                PushTokens.sendMobilePushNotification(user.pushTokens, notification, function (err, res) {
                     if (err) return callback(err);
 
                 })

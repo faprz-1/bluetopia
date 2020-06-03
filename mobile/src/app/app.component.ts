@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Storage } from '@ionic/storage';
 import * as moment from "moment";
+import { PushService } from './services/push.service';
 
 @Component({
   selector: 'app-root',
@@ -65,7 +66,8 @@ export class AppComponent {
     private navController: NavController,
     private menuController: MenuController,
     private events: Events,
-    private storage: Storage
+    private storage: Storage,
+    private pushService: PushService
   ) {
     this.initializeApp();
   }
@@ -73,7 +75,9 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       this.storage.get('token').then((token)=>{
+        this.pushService.startUpCOnfig();
         if(token){
+          this.pushService.updatePushToken();
           this.storage.get("ttl").then((ttl)=>{ 
             if(ttl != null && moment().isSameOrAfter(ttl) ) {
               this.storage.clear()
