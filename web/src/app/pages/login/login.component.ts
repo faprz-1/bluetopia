@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem("user", JSON.stringify(userFromServer));
         localStorage.setItem("ttl", moment().add(1209600, 's').toISOString() )
         this.notiServ.LoadNotifications();
-        this.pushService.UpdatePushToken();
+        this.pushService.getUserID();
         this.toast.ShowSuccess("Sesión iniciada exitosamente");
         let user = JSON.parse(localStorage.getItem("user"));
         let role = user.role.name.toLowerCase()

@@ -11,7 +11,7 @@ module.exports = function(Usuario) {
     Usuario.testPush = function(callback) {
         // Enviar push 
         var notificacion = this.app.models.Notification;
-        var res = notificacion.setByRoleNotification("SuperUser", {
+        var res = notificacion.p("SuperUser", {
             title: "titulo de prueba",
             tag: "tag1",
             content: "un push de prueba se ha enviado para revisar que todo este bien",

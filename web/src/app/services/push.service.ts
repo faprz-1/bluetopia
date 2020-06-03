@@ -11,12 +11,12 @@ export class PushService {
   private oneSignalInit:any = false;
   public oneSignalId: any = ""
   constructor( private api: ApiService) {
-    // console.log('OneSignal Service Init', this.oneSignalInit);
+
   }
 
   // Call this method to start the onesignal process.
   public init() {
-      this.oneSignalId = localStorage.getItem("pushtoken")
+      // this.oneSignalId = localStorage.getItem("pushtoken")
       this.initOneSignal();
   }
 
@@ -41,20 +41,17 @@ export class PushService {
         subdomainName: "templatejarabe",
       });
     });
-    console.log('OneSignal Initialized');
     // OneSignal.push(function() {
     //   OneSignal.on('permissionPromptDisplay', function () {
-    //     console.log("The prompt displayed");
+    
     //     this.getUserID();
     //   });
     // });
    
     if(this.oneSignalId){
-      console.log('Push notifications are enabled!');
       OneSignal.push(function() {
         OneSignal.on('notificationPermissionChange', function(permissionChange) {
           var currentPermission = permissionChange.to;
-          console.log('New permission state:', currentPermission);
         });        
       });
     }else{
@@ -62,72 +59,55 @@ export class PushService {
     }
   }
 
-  subscribe() {
+  subscribe(self = this) {
     OneSignal.push(() => {
-        console.log('Register For Push');
         OneSignal.push(['registerForPushNotifications'])
         OneSignal.on('subscriptionChange', function(isSubscribed){
-            console.log('The user\'s subscription state is now:', isSubscribed);
             OneSignal.getUserId().then((userId) => {
-                console.log('User ID is', userId);
-                this.oneSignalId = userId;
-                this.UpdatePushToken();
+              self.UpdatePushToken(userId)
             });
         });
     });
   }
 
   listenForNotification() {
-    console.log('Initalize Listener');
     OneSignal.on('notificationDisplay', (event) => {
-        console.log('OneSignal notification displayed:', event);
     });
   }
 
-  getUserID() {
-    OneSignal.getUserId().then((userId) => {
-        console.log('User ID is', userId);
-        this.oneSignalId = userId;
+  getUserID(self = this) {
+    OneSignal.getUserId().then(function(userId) {
+      self.UpdatePushToken(userId)
     });
   }
 
   checkIfSubscribed() {
     let self=this;
-    console.log('checkIfSubscribed');
     OneSignal.push(function(){
         OneSignal.isPushNotificationsEnabled().then(function(isEnabled){
-        console.log("enabled",isEnabled);
         if (isEnabled) {
-          console.log('Push notifications are enabled!');
-          self.getUserID();
-          console.log('Push notifications are enabled!');
+          self.getUserID(self);
         } else {
-          console.log('Push notifications are not enabled yet.');
           self.subscribe();
         }
       });
     })
     }
 
-  UpdatePushToken() {
-    // let token = localStorage.getItem('token');  
-    // if(token){
-    //   let user = JSON.parse(localStorage.getItem("user"))
-    //   console.log('UpdatePushToken', OneSignal);
-    //   OneSignal.getUserId().then((userId) => {
-    //     console.log('User ID is', userId);
-    //     this.oneSignalId = userId;
-    //     this.api.Post("/Usuarios/" + user.id + "/updatePushToken", {
-    //       token: {
-    //         token: userId,
-    //         isMobile: true
-    //       }
-    //     }).subscribe(() => {});
-    //   },(err) =>{
-    //     console.log("Error getting user Id", err);
-        
-    //   });
-    // }
+  UpdatePushToken(newtoken) {
+    this.oneSignalId = localStorage.getItem("pushtoken")
+    if(!this.oneSignalId || newtoken != this.oneSignalId ){
+      localStorage.setItem("pushtoken",newtoken);
+      let user = JSON.parse(localStorage.getItem("user"));
+      if(user){
+        this.api.Post("/Usuarios/" + user.id + "/updatePushToken", {
+          token: {
+            id: newtoken,
+            isMobile: false
+          }
+        }).subscribe(() => {})
+      }
+    }
   }
 
 }

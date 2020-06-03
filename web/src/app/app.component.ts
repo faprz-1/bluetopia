@@ -19,7 +19,6 @@ export class AppComponent {
     this.pushService.init();
     let token = localStorage.getItem('token');  
     if(token){
-      this.pushService.UpdatePushToken();
       this.msgService.getPermission()  
       this.msgService.receiveMessage()  
       this.message = this.msgService.currentMessage  

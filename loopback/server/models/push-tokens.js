@@ -30,9 +30,7 @@ module.exports = function (PushTokens) {
             // "image": "https://scontent.fgdl4-1.fna.fbcdn.net/v/t1.0-9/50728512_2110076052393262_3123088630382329856_o.png?_nc_cat=103&_nc_ht=scontent.fgdl4-1.fna&oh=045b806a600cd3dc959b54ae1e739d73&oe=5D2B7633"
         }
         pushTokens.forEach(token => {
-            if (token.mobile == true){
-                notificationBody.include_player_ids.push(token.id)
-            }
+            notificationBody.include_player_ids.push(token.id)
         });
         
         console.log(notificationBody);
@@ -41,8 +39,7 @@ module.exports = function (PushTokens) {
             body: JSON.stringify(notificationBody),
             headers: headers
         }, function (err, response, body) {
-            console.log(response);
-            
+            console.log(err);
             if (err) return callback(err);
             return callback(null, true);
         })
