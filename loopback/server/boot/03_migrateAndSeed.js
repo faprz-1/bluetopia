@@ -52,6 +52,17 @@ module.exports = function(app) {
           active: true
         },
         Role: "SuperUser"
+      },
+      {
+        User: {
+          name: "Admin",
+          username: "Admin",
+          password: "j4r4b3s0",
+          email: "admin@jarabepruebas.com",
+          emailVerified: true,
+          active: true
+        },
+        Role: "Admin"
       }
     ]
 

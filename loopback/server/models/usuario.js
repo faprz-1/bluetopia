@@ -11,7 +11,7 @@ module.exports = function(Usuario) {
     Usuario.testPush = function(callback) {
         // Enviar push 
         var notificacion = this.app.models.Notification;
-        var res = notificacion.setByRoleNotification("admin", {
+        var res = notificacion.setByRoleNotification("SuperUser", {
             title: "titulo de prueba",
             tag: "tag1",
             content: "un push de prueba se ha enviado para revisar que todo este bien",
@@ -364,91 +364,56 @@ module.exports = function(Usuario) {
     };
 
 
-    /**
-     * updates a user's push token
-     * @param {object} body token to be saved
-     * @param {Function(Error)} callback
-     */
-
-    Usuario.prototype.updatePushToken = function(body, callback) {
-        var PushTokens = Usuario.app.models.PushTokens;
-        var actual = this;
-        // TODO
-        PushTokens.findById(body.token.id, function(err, res) {
-            if (err) return callback(err);
-
-            if (!res) {
-                var newToken = {
-                    id: body.token.id,
-                    usuarioId: actual.id,
-                    mobile: true
-                }
-                PushTokens.create(newToken, function(err, res) {
-                    if (err) return callback(err);
-
-                    callback(null, true);
-                })
-            } else {
-                callback(null, false)
-            }
-        })
-    };
-
     /** 
      * updates a user's push token 
-     * @param {object} body token to be saved 
+     * @param {object} data token to be saved 
      * @param {Function(Error)} callback 
      */
 
-    Usuario.prototype.updatePushTokenMobile = function(body, callback) {
-        var PushTokens = Usuario.app.models.PushTokens;
-        var actual = this;
+    Usuario.prototype.updatePushToken = function(data, callback) {
+        let PushTokens = Usuario.app.models.PushTokens;
+        let actual = this;
         // TODO 
-        PushTokens.findById(body.token, function(err, res) {
+        PushTokens.findById(data.token.id, function(err, existing) {
             if (err) return callback(err);
-
-            if (!res) {
-                var newToken = {
-                    id: body.token,
-                    usuarioId: actual.id,
-                    mobile: true
-                }
-                PushTokens.create(newToken, function(err, res) {
-                    if (err) return callback(err);
-
-                    callback(null, "Registro exitoso");
-                })
-            } else {
-                PushTokens.upsert({ id: res.id, mobile: true }, (err, updated) => {
-                    if (err) return callback(err)
-
-                    return callback(null, "token ya registrado");
-                })
+            if(existing){ return callback(null, true) }
+            let newToken = {
+                id: data.token.id,
+                usuarioId: actual.id,
+                mobile: data.token.isMobile
             }
+            PushTokens.create(newToken, function(err, res) {
+                if (err) return callback(err);
+
+                return callback(null, true);
+            })
+            
         })
     };
+
     /**
      * updates a user's push token
-     * @param {object} body token to be saved
+     * @param {object} data token to be saved
      * @param {Function(Error)} callback
      */
 
-    Usuario.prototype.deletePushToken = function(body, callback) {
-        var PushTokens = Usuario.app.models.PushTokens;
-        var actual = this;
-        // TODO
-        actual.PushTokens.findById(body.token, function(err, res) {
+    Usuario.deletePushToken = function(token, callback) {
+        let PushTokens = Usuario.app.models.PushTokens;
+       
+        PushTokens.findById(token, function(err, res) {
             if (err) return callback(err);
-            if (res) {
-                PushTokens.destroyById(body.token, function(err, res) {
-                    if (err) return callback(err);
 
-                    callback(null);
-                })
-            }
+            if (!res) { return callback(null, true ) }
+            PushTokens.destroyById(token, function(err, res) {
+                if (err) return callback(err);
+
+                return callback(null, true);
+            })
+            
         })
     };
 
+    
     /**
      * Deletes push tokens before logout
      * @param {object} body token to be saved

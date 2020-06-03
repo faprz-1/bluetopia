@@ -34,7 +34,6 @@
     "core-js": "^2.4.1",
     "dropzone": "^5.1.1",
     "easy-pie-chart": "^2.1.7",
-    "firebase": "^5.7.0",
     "flot": "^0.8.0-alpha",
     "jarabe-angular-pipes": "0.0.5",
     "jquery": "^3.2.1",
