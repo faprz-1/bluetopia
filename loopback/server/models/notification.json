@@ -69,11 +69,11 @@
       "description": "traer a las notificaciones de un usuario por Id",
       "http": [
         {
-          "path": "/getLast5/:id",
+          "path": "/getLast55/:id",
           "verb": "get"
         },
         {
-          "path": "/getLast5",
+          "path": "/getLast55",
           "verb": "get"
         }
       ]

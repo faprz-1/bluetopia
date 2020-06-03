@@ -6,6 +6,7 @@ import { ToastService } from '../../services/toast.service';
 import { NotificationService } from '../../services/notification.service';
 
 import * as moment from 'moment';
+import { PushService } from '../../services/push.service';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +30,8 @@ export class LoginComponent implements OnInit {
     public toast: ToastService,
     private router: Router,
     private api: ApiService,
-    private notiServ : NotificationService
+    private notiServ: NotificationService,
+    private pushService: PushService
   ) {
     if(localStorage.getItem("token")) {
       let user = JSON.parse(localStorage.getItem("user"));
@@ -57,7 +59,8 @@ export class LoginComponent implements OnInit {
         this.procesando = false;
         localStorage.setItem("user", JSON.stringify(userFromServer));
         localStorage.setItem("ttl", moment().add(1209600, 's').toISOString() )
-        this.notiServ.LoadNotifications()
+        this.notiServ.LoadNotifications();
+        this.pushService.UpdatePushToken();
         this.toast.ShowSuccess("Sesión iniciada exitosamente");
         let user = JSON.parse(localStorage.getItem("user"));
         let role = user.role.name.toLowerCase()

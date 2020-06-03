@@ -13,6 +13,7 @@ import { routing } from './app.routing';
 ///services
 import { SharedService } from "./shared/services/shared.service";
 import { ApiService } from "./services/api.service";
+import { PushService } from "./services/push.service";
 import { HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from './services/auth.guard';
 import { MessagingService } from './services/messaging.service';
@@ -43,6 +44,7 @@ providers: [
       useClass: HashLocationStrategy
     },
     ApiService,
+    PushService,
     AuthGuard,
     AuthSGuard,
     MessagingService,

@@ -19,6 +19,55 @@
   <script type="text/javascript" src="./assets/conekta/conekta.js"></script>
   <!-- Google -->
   <script src="https://maps.googleapis.com/maps/api/js?libraries=places,map&key=AIzaSyDgR7x4pm_QjsTZDP1EeuI8yzeSulfnhCQ"></script>
+  <!-- OneSignal -->
+  <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+  <script type="text/javascript" src="./assets/OneSignal/OneSignalSDKUpdaterWorker.js"></script>
+  <script type="text/javascript" src="./assets/OneSignal/OneSignalSDKWorker.js"></script>
+  <script>var OneSignal = OneSignal || [];</script>
+  <script>console.log("OneSignalHTML",OneSignal)</script>
+  <!-- <script>
+    OneSignal.push(function () {
+        console.log('Register For Push');
+        OneSignal.setSubscription(true);
+        OneSignal.on('subscriptionChange', function (isSubscribed) {
+          console.log("The user's subscription state is now:", isSubscribed);
+              OneSignal.getUserId().then(function (userId) {
+                  console.log("User ID is", userId);
+              });
+          });
+    });
+    OneSignal[OneSignal.length-1]();
+
+    OneSignal.push(["isPushNotificationsEnabled", function(permission) {
+      console.log("Site isPushNotificationsEnabled:", permission);
+      // (Output) Site Notification Permission: default
+    }]);
+    OneSignal[OneSignal.length-1]();
+
+    OneSignal.push(function() {
+    /* These examples are all valid */
+    OneSignal.getUserId(function(userId) {
+      console.log("OneSignal User ID:", userId);
+      // (Output) OneSignal User ID: 270a35cd-4dda-4b3f-b04e-41d7463a2316    
+    });
+    OneSignal[OneSignal.length-1]();
+                
+    OneSignal.getUserId().then(function(userId) {
+      console.log("OneSignal User ID:", userId);
+      // (Output) OneSignal User ID: 270a35cd-4dda-4b3f-b04e-41d7463a2316    
+    });
+    OneSignal[OneSignal.length-1]();
+
+  });
+  </script> -->
+  <!-- <script>
+    var OneSignal = window.OneSignal || [];
+    OneSignal.push(function() {
+      OneSignal.init({
+        appId: "540412ae-b99e-4c4c-843f-f05dabbb6a25",
+      });
+    });
+  </script> -->
   <!-- Import manifest.json -->  
   <!-- <script src="../manifest.json"></script>  --> 
   <!-- <link rel="manifest" href="./manifest.json">   -->

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MessagingService } from './services/messaging.service';  
+import { PushService } from './services/push.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html'
@@ -10,12 +11,15 @@ export class AppComponent {
   message = null;  
   
   constructor(  
-    private msgService: MessagingService  
+    private msgService: MessagingService,
+    private pushService: PushService
   ) {}  
   
-  ngOnInit() {  
+  ngOnInit() {
+    this.pushService.init();
     let token = localStorage.getItem('token');  
-    if(token){  
+    if(token){
+      this.pushService.UpdatePushToken();
       this.msgService.getPermission()  
       this.msgService.receiveMessage()  
       this.message = this.msgService.currentMessage  
