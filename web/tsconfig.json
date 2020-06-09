@@ -19,7 +19,7 @@
     "types": [
       "firebase"
     ],
-    "module": "es2015",
+    "module": "esnext",
     "baseUrl": "./"
   }
 }

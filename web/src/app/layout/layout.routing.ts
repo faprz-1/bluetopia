@@ -21,23 +21,23 @@ export const ADMIN_MENU_PAGES = {
 const LAYOUT_ROUTES: Routes = [
     { path: '', component: LayoutComponent, children: [
         { path: '', redirectTo: '', pathMatch: 'full' },
-        { path: 'perfil', loadChildren: '../pages/profile/profile.module#ProfileModule' },
+        { path: 'perfil', loadChildren: () => import('../pages/profile/profile.module').then(m => m.ProfileModule) },
         { path: 'user',  canActivate: [AuthGuard],  data: {role : 'User'},
     	children: [
                 { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-                { path: 'dashboard', loadChildren: '../pages/dashboard/dashboard.module#DashboardModule' }
+                { path: 'dashboard', loadChildren: () => import('../pages/dashboard/dashboard.module').then(m => m.DashboardModule) }
         ]},
         { path: 'admin',  canActivate: [AuthGuard],  data: {role : 'Admin'},
     	children: [
                 { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-                { path: 'dashboard', loadChildren: '../pages/dashboard/dashboard.module#DashboardModule' },
-                { path: 'refunds', loadChildren: '../pages/admin/refunds/refunds.module#RefundsModule' }
+                { path: 'dashboard', loadChildren: () => import('../pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
+                { path: 'refunds', loadChildren: () => import('../pages/admin/refunds/refunds.module').then(m => m.RefundsModule) }
         ]},
         { path: 'superuser',  canActivate: [AuthGuard],  data: {role : 'SuperUser'},
     	children: [
                 { path: '', redirectTo: 'usuarios', pathMatch: 'full' },
-                { path: 'registro', loadChildren: '../pages/register-user/register-user.module#RegisterUserModule' },
-                { path: 'usuarios', loadChildren: '../pages/super-user/users/users.module#UsersModule' }
+                { path: 'registro', loadChildren: () => import('../pages/register-user/register-user.module').then(m => m.RegisterUserModule) },
+                { path: 'usuarios', loadChildren: () => import('../pages/super-user/users/users.module').then(m => m.UsersModule) }
         ]}
     ]}
 ];
