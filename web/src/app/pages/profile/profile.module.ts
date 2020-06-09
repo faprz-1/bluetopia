@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ProfileImageEditorModule } from '../../components/profile-image-editor/profile-image-editor.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { TooltipModule } from 'ngx-tooltip';
+import { TooltipModule } from "ngx-bootstrap/tooltip";
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { JarabeAngularPipesModule } from 'jarabe-angular-pipes';
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Papa, PapaParseResult } from 'ngx-papaparse';
-import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
+import { json2csv } from 'json2csv'; //NO REVISADO DESPUES DE MOVER A ANGULAR 9
 
 @Injectable()
 export class CsvFileService {
@@ -32,6 +32,6 @@ export class CsvFileService {
         this.options.keys = keys;
         this.options.headers = headers;
 
-        new Angular5Csv(data, name, this.options);
+        new json2csv(data, name, this.options);  //NO REVISADO DESPUES DE MOVER A ANGULAR 9
     }
 }
