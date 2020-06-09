@@ -2,7 +2,6 @@
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { PapaParseModule } from 'ngx-papaparse';
@@ -25,7 +24,6 @@ import { LoadingService } from './services/loading.service';
 @NgModule({
   imports: [
     BrowserModule,
-    HttpModule,
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
