@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { MessagingService } from './services/messaging.service';  
 import { PushService } from './services/push.service';
 @Component({
   selector: 'app-root',
@@ -11,18 +10,11 @@ export class AppComponent {
   message = null;  
   
   constructor(  
-    private msgService: MessagingService,
     private pushService: PushService
   ) {}  
   
   ngOnInit() {
     this.pushService.init();
-    let token = localStorage.getItem('token');  
-    if(token){
-      this.msgService.getPermission()  
-      this.msgService.receiveMessage()  
-      this.message = this.msgService.currentMessage  
-    }  
   }  
 }
 

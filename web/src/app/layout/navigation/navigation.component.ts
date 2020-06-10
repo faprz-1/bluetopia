@@ -1,7 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { SharedService } from '../../shared/services/shared.service';
 import { ApiService } from '../../services/api.service';
-import { MessagingService } from '../../services/messaging.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Action } from 'rxjs/internal/scheduler/Action';
 import { Router } from '@angular/router';
@@ -62,7 +61,6 @@ export class NavigationComponent implements OnInit {
   constructor(
     private sharedService: SharedService,
     public api: ApiService,
-    public messagingService: MessagingService,
     private router: Router
   )
   {

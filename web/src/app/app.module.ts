@@ -15,7 +15,6 @@ import { ApiService } from "./services/api.service";
 import { PushService } from "./services/push.service";
 import { HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from './services/auth.guard';
-import { MessagingService } from './services/messaging.service';
 import { FilterPipe } from './filter.pipe';
 import { ToastService } from './services/toast.service';
 import { ToastrModule } from 'ngx-toastr';
@@ -45,7 +44,6 @@ providers: [
     PushService,
     AuthGuard,
     AuthSGuard,
-    MessagingService,
     ToastService,
     LoadingService
   ],
