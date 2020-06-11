@@ -373,6 +373,9 @@ module.exports = function(Usuario) {
         let PushTokens = Usuario.app.models.PushTokens;
         let actual = this;
         // TODO 
+        if(!data.token.id){
+            return callback("Invalid data");
+        }
         PushTokens.findById(data.token.id, function(err, existing) {
             if (err) return callback(err);
             if(existing){ return callback(null, true) }

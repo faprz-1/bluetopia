@@ -167,6 +167,8 @@ module.exports = function(Conekta) {
     conekta.Customer.find(cutomerId, (err, customer) => {
       if(err) return callback(err);
 
+      if(!customer) return callback(null, 'customer not found');
+
       let c = customer.toObject();
       let cards = c.payment_sources.data;
 
