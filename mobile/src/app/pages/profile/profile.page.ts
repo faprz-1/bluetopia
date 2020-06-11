@@ -47,7 +47,7 @@ export class ProfilePage extends ComponentBase {
       this.loggedUser.profileImage = res.profileImage;
       this.loggedUser.imgperfil = this.loggedUser.profileImage != null ? this.api.getBaseURL() + this.loggedUser.profileImage.URL : this.api.getBaseURL()
       this.storage.set("user", this.loggedUser).then(() => {
-        this.events.publish("UpdatedUser");
+        this.events.publish("user:updated");
       })
       this.DismissLoading()
     }, err => {

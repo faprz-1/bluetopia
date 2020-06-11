@@ -1,4 +1,4 @@
-import { NavController, NavParams, AlertController, ToastController, ModalController, LoadingController, IonRefresher, Platform, MenuController, Events } from '@ionic/angular';
+import { NavController, NavParams, AlertController, ToastController, ModalController, LoadingController, IonRefresher, Platform, MenuController } from '@ionic/angular';
 import { stringify } from '@angular/compiler/src/util';
 import { AlertInput, AlertButton } from '@ionic/core';
 import { TranslateService } from '@ngx-translate/core';
@@ -7,6 +7,7 @@ import { Storage } from '@ionic/storage';
 import { NotificationsService } from '../services/notifications.service';
 import { CameraOptions, Camera } from "@ionic-native/camera/ngx";
 import { PushService } from '../services/push.service';
+import { EventsService } from '../services/events.service';
 
 const BASE_LOADING_MESSAGE = "Cargando..."
 const BASE_LOADING_DURATION = 2000
@@ -29,7 +30,7 @@ export class ComponentBase {
         protected platform: Platform,
         protected storage: Storage,
         protected menuController: MenuController,
-        protected events: Events,
+        protected events: EventsService,
         public camera: Camera,
         public translate: TranslateService,
         public api: ApiService,
