@@ -108,26 +108,4 @@ export class SocialMediaLoginButtonsComponent {
     });
   }
 
-
-  // LoginToAPI(token) {
-  //   this.storage.clear().then(()=>{
-  //     this.storage.set("token",token.id);
-  //     this.api.token= token.id;
-  //     this.api.get("/Usuarios/withCredentials", true).subscribe((userFromServer: any)=>{
-  //       this.storage.set("user", userFromServer).then(()=>{
-  //         this.storage.set("ttl", moment().add(1209600, 's').toISOString()).then(() => {
-  //           this.loading.dismiss();
-  //           this.menuCtrl.enable(true);
-  
-  //           this.notiCtrl.loadNotifications()
-  //           this.events.publish('user:logged', true);
-  //           this.navCtrl.setRoot('DashboardPage');
-  //         })
-  //       })
-  //     })
-  //     }, (error: any) => {
-  //       console.log("error Override:", error);
-  //       this.loading.dismiss();
-  //     })
-  //   }
 }

@@ -31,7 +31,7 @@ export class ProfilePage extends ComponentBase {
   private async getProfile() {
     this.loggedUser = await this.storage.get("user");
     this.loggedUser.imgperfil = this.loggedUser.profileImage != null ? this.api.getBaseURL() + this.loggedUser.profileImage.URL : 'assets/imgs/default_avatar.jpg';
-    this.getCards();
+    // this.getCards();
   }
 
   async updateProfilePic(){
@@ -47,7 +47,7 @@ export class ProfilePage extends ComponentBase {
       this.loggedUser.profileImage = res.profileImage;
       this.loggedUser.imgperfil = this.loggedUser.profileImage != null ? this.api.getBaseURL() + this.loggedUser.profileImage.URL : this.api.getBaseURL()
       this.storage.set("user", this.loggedUser).then(() => {
-        this.events.publish("UpdatedUser");
+        this.events.publish("user:updated");
       })
       this.DismissLoading()
     }, err => {
@@ -60,24 +60,24 @@ export class ProfilePage extends ComponentBase {
     this.navController.navigateRoot('/settings');
   }
 
-  public getCards() {
-    let endpoint = "/conekta/getCards";
+  // public getCards() {
+  //   let endpoint = "/conekta/getCards";
 
-    this.api.post(endpoint,{cutomerId:this.loggedUser.customerId},true).subscribe(res => {
-      this.cards = res;
-    }, err => {
-      console.log(err);
-    });
-  }
+  //   this.api.post(endpoint,{cutomerId:this.loggedUser.customerId},true).subscribe(res => {
+  //     this.cards = res;
+  //   }, err => {
+  //     console.log(err);
+  //   });
+  // }
 
-  public deleteCard(card) {
-    let enpoint = "/conekta/deleteCard";
+  // public deleteCard(card) {
+  //   let enpoint = "/conekta/deleteCard";
 
-    this.api.post(enpoint,{cutomerId:this.loggedUser.customerId, cardId: card.id},true).subscribe( res => {
-      this.getProfile();
-    }, err => {
-      this.errorAlert("No se pudo eliminar la tarjeta");
-    });
-  }
+  //   this.api.post(enpoint,{cutomerId:this.loggedUser.customerId, cardId: card.id},true).subscribe( res => {
+  //     this.getProfile();
+  //   }, err => {
+  //     this.errorAlert("No se pudo eliminar la tarjeta");
+  //   });
+  // }
 
 }

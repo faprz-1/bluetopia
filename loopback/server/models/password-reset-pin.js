@@ -14,7 +14,6 @@ module.exports = function(Passwordresetpin) {
         var email = emailObj.email;
         var pin = '';
         var pinObj = {};
-        console.log(emailObj.email);
         
         var sendEmail = () =>{
             //Genera una cadena con 4 digitos aleatorios
