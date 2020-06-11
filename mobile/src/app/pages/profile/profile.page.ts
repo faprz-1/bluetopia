@@ -31,7 +31,7 @@ export class ProfilePage extends ComponentBase {
   private async getProfile() {
     this.loggedUser = await this.storage.get("user");
     this.loggedUser.imgperfil = this.loggedUser.profileImage != null ? this.api.getBaseURL() + this.loggedUser.profileImage.URL : 'assets/imgs/default_avatar.jpg';
-    this.getCards();
+    // this.getCards();
   }
 
   async updateProfilePic(){
