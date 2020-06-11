@@ -84,8 +84,6 @@
       "property": [
         "register",
         "getRoles",
-        "registerAdmins",
-        "registerAdmin",
         "loginBySocialMedia",
         "loginIfActive",
         "RegisterWithEmailVerification",
@@ -112,6 +110,8 @@
       "property": [
         "getAnyUsers",
         "updateAnyUser",
+        "registerAdmins",
+        "registerAdmin",
         "changeAnyPassword"
       ]
     }

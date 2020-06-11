@@ -10,7 +10,6 @@ const mobileKey = "Basic NTYzMWM4MzktODNmMi00M2EyLWIzN2YtNzc2MTdhMzI0Nzdk";
 module.exports = function (PushTokens) {
 
     PushTokens.sendMobilePushNotification = function (pushTokens, notification, callback) {
-        console.log("Enviare notifcacion");
         
         if (!pushTokens || pushTokens.length <= 0) {
             return callback(null, 'No tokens');
@@ -33,7 +32,6 @@ module.exports = function (PushTokens) {
             notificationBody.include_player_ids.push(token.id)
         });
         
-        console.log(notificationBody);
         
         request.post(oneSignalURL, {
             body: JSON.stringify(notificationBody),

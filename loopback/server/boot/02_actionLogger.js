@@ -123,7 +123,7 @@ module.exports = (app) => {
     }
     let body = ctx.req.body;
     let blacklistedWords =["login", "contraseña", "password"]
-    console.log("Blacklisted");
+
     function includes(target, pattern){
       var value = false;
       pattern.forEach(function(word){
@@ -132,17 +132,16 @@ module.exports = (app) => {
       return (value)
   }
     if(includes(ctx.req._parsedUrl.pathname.toLowerCase(),blacklistedWords)){
-      console.log("contiene login o contraseña",ctx.req._parsedUrl.pathname);
+
       if(!!body && typeof(body)=="object"){
-        console.log("bodyBefore",body);
+
         let keys = Object.keys(body);
-        console.log("keysDirect",keys);
+
         keys = keys.filter(k=>includes(k.toLowerCase(),blacklistedWords))
-        console.log("keysFiltert",keys);
+
         keys.forEach(key => {
           body[key]="**********"
         });
-        console.log("bodyAfter",body);
       }
     }
 

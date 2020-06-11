@@ -61,7 +61,6 @@ module.exports = function(UserPermissionPolicyNode) {
     UserPermissionPolicyNode.preselectNodes = function(preselectedUserPolicyNodes, callback) {
         let preselectNode = function(node, policyNode) {
             if(node.id == policyNode.id) {
-                console.log("Found: ", policyNode.key)
                 policyNode.selected = true
             }
             else {

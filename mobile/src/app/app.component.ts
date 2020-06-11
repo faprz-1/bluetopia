@@ -116,7 +116,7 @@ export class AppComponent {
     this.loggedUser = await this.storage.get("user");
     if(this.loggedUser != null) {
       if(this.loggedUser.role.id == 2) {
-        this.navController.navigateRoot('/refounds')
+        this.navController.navigateRoot('/dashboard')
       }
     }
   }

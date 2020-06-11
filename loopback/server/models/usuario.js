@@ -118,7 +118,6 @@ module.exports = function(Usuario) {
                     user.role = role;
                     userWithCredentials = user;
 
-                    console.log("auth:", role.name)
                     if (role.name == 'SuperUser') {
                         // TODO
                         return callback(null, userWithCredentials);

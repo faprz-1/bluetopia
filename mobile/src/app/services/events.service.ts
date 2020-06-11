@@ -11,7 +11,6 @@ export class EventsService {
   	private updatedUserSubject = new Subject<any>();
 
     publish(name:string, data: any = true) {
-    	console.log('Publicar en ' + name + ' -> ' + data )
     	switch (name) {
     		case "user:logged":
     			this.loggedSubject.next(data);
@@ -28,7 +27,6 @@ export class EventsService {
     }
 
     getObservable(name:string): Subject<any> {
-    	console.log('Suscribir a ' + name  )
     	switch (name) {
     		case "user:logged":
     			return this.loggedSubject;
