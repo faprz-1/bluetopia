@@ -30,6 +30,11 @@ $colors-list: (
   .color-#{nth($current-color, 1)} {
     color: #{nth($current-color, 2)} !important;
   }
+
+  .border-color-#{nth($current-color, 1)} {
+    border:solid 1px #{nth($current-color, 2)} !important;
+  }
+  
 }
 
 // Overflow

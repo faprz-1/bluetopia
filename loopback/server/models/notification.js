@@ -64,6 +64,23 @@ module.exports = function (Notification) {
         })
     };
 
+    Notification.setSomeNotification = function (ids=[], notification) {
+        var user = Notification.app.models.Usuario;
+        user.find({where:{id:ids},include:"pushTokens"}, function (err, users) {
+            if (err) return err;
+            var DBpushTokens = [];
+            users.forEach(u => {
+                Notification.setSingleNotification(u.id, notification);
+                DBpushTokens = DBpushTokens.concat(u.toJSON().pushTokens)
+            });
+            var PushTokens = Notification.app.models.PushTokens;
+            PushTokens.sendPushNotification(DBpushTokens, notification, function (err, res) {
+                if (err) return err;
+            })
+            return users;
+        })
+    };
+
     Notification.setByRoleNotification = function (Role, notification) {
         var Usuario = Notification.app.models.Usuario;
 
