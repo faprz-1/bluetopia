@@ -43,6 +43,12 @@ export class ProfilePage extends ComponentBase {
   }
 
   private async saveProfilePic(newImage: any){
+    newImage.base64ProfileImage = newImage.base64Image;
+    newImage.base64ProfileImageExtention = newImage.base64ImageExtention;
+
+    delete newImage.base64Image;
+    delete newImage.base64ImageExtention;
+    
     this.api.post("/Usuarios/" + this.loggedUser.id + "/changeProfileImage", newImage, true).subscribe((res: any) => {
       this.loggedUser.profileImage = res.profileImage;
       this.loggedUser.imgperfil = this.loggedUser.profileImage != null ? this.api.getBaseURL() + this.loggedUser.profileImage.URL : this.api.getBaseURL()

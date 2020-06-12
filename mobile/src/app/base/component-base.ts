@@ -155,11 +155,10 @@ export class ComponentBase {
         };
         try {
             let imageData = await  this.camera.getPicture(options);
-            return {
-                profileImage: {
-                  base64ProfileImage: imageData,
-                  base64ProfileImageExtention: ".jpeg"
-                }
+            return  {
+                  base64Image: imageData,
+                  base64ImageExtention: ".jpeg",
+                  resize : false
               };
         }
         catch(e) {
