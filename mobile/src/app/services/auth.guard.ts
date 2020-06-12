@@ -21,20 +21,16 @@ export class AuthGuard implements CanActivate {
 	
 	let ttl = this.storage.get("ttl").toString();
 	if(ttl != null && moment().isSameOrAfter(ttl) ) {
-		console.log("HI")
 		this.storage.clear();
 		return false
 	}
 
-  console.log(next);
-  console.log(token);
   
   if (next.data.hasOwnProperty("role")) {
     return next.data.role == JSON.parse(JSON.stringify(this.storage.get("user"))).role.name
   } else if (token) {
     return true;
 	}
-  console.log("-----");
 	
     this.navController.navigateRoot('/login');
     return false;
