@@ -47,6 +47,13 @@ module.exports = function (Notification) {
 
         Notification.create(notification, function (err, notification) {
             if (err) return callback(err);
+            var socket = Notification.app.io;
+            pubsub.publish(socket, {
+                model: 'notifications',
+                id: id,
+                data: notification,
+                method: 'getNew'
+            });
             let filter = {
                 where: { id: userId },
                 fields : { id : true },
