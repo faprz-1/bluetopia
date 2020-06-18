@@ -1,0 +1,24 @@
+# Deploy Instructions
+
+- change MYSQL_ROOT_PASSWORD y MYSQL_DATABASE from docker-compose.yml
+- change baseURL from api.service web & mobil
+- `cd web` & `ng build --pord`
+- change root(line 71) for compiled angular folder root on nginx.conf
+- change ssl config(lines 111, 112) projecto.com to project domain
+- push to master
+- ssh into server
+- `sudo apt update && sudo apt upgrade`
+- clone repo: `git clone https://craypro:9PZm8TnZkcSbWEWN67ug@bitbucket.org/jarabesoft/[PROYECTO].git`
+- `git checkout master && git pull`
+- install docker: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04
+- install docker-compose: https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-18-04
+- install nginx: https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-18-04
+- install certbot: https://certbot.eff.org/lets-encrypt/ubuntubionic-nginx
+- `sudo certbot --nginx`
+- email: desarrollo@jarabesoft.com
+- `sudo docker-compose up -d --build`
+- `sudo docker exec -it <mysql container> /bin/bash`
+- `mysql -uroot -p` use mysql password
+- `GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;`
+- `exit`
+- replace /etc/nginx/nginx.conf with nginx/nginx.conf

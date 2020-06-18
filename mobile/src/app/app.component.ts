@@ -75,8 +75,8 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
+      this.pushService.startUpCOnfig();
       this.storage.get('token').then((token)=>{
-        this.pushService.startUpCOnfig();
         if(token){
           this.pushService.updatePushToken();
           this.storage.get("ttl").then((ttl)=>{ 

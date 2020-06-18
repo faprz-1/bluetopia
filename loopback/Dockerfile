@@ -6,6 +6,7 @@ WORKDIR /app
 
 # Install app dependencies
 ENV NPM_CONFIG_LOGLEVEL warn
+ENV NODE_ENV production
 RUN npm install --production
 
 # Expose the listening port of your app
