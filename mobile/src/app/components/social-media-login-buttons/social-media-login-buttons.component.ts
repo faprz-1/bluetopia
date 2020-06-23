@@ -40,6 +40,7 @@ export class SocialMediaLoginButtonsComponent {
   onSocialLoginError : EventEmitter<any> = new EventEmitter();
 
   public async FacebookUserLogin() {
+    this.loginType = "Facebook";
     this.onSocialLoginStart.emit();
 
     try {
@@ -62,31 +63,53 @@ export class SocialMediaLoginButtonsComponent {
   }
 
   public async GooglePlusUserLogin(){
+    this.loginType = "Google";
     this.onSocialLoginStart.emit();
 
     try {
       let googleLoginData = await this.googlePlus.login({});
-      this.LoginBySocialMedia(googleLoginData.displayName, googleLoginData.email, googleLoginData.accessToken);
+      this.LoginBySocialMedia({name:googleLoginData.displayName, email:googleLoginData.email, token:googleLoginData.accessToken});
     }
     catch(errorData) {
 			this.onSocialLoginError.emit(errorData)
 	  }
   }
 
-  private async LoginBySocialMedia(username: string, email: string, socialToken: string) {
-    let user = {
-      username: username,
-      email: email,
-      token: socialToken
+  private async LoginBySocialMedia(user,socialMediaUserId?) {
+ 
+    user.loginType = this.loginType
+    if(socialMediaUserId){
+      user.socialMediaId = socialMediaUserId;
     }
 
-    let token = await this.api.post('/Usuarios/loginBySocialMedia', user, false)
-    this.onSocialLoginSuccess.emit(token)    
+    this.api.post('/Usuarios/loginBySocialMedia', user, false).subscribe((token) => {
+      console.log("token success", token);
+        this.onSocialLoginSuccess.emit(token)
+    }, (err) => {
+      this.onSocialLoginError.emit(err);
+    }) 
   }
 
   private async RetrieveExistingFacebookLoginData(token: string) {
-    let userData = await this.facebook.api("/me?fields=name,email", []);
-    this.LoginBySocialMedia(userData.name, userData.email, token);
+    let user = {
+      username: "",
+      email: "",
+      token: "",
+      firstName: "",
+      lastName: "",
+      loginType: "Facebook",
+      profileImageUrl: ""
+    };
+    let userData = await this.facebook.api("/me?fields=name,email,first_name,last_name,id", []);
+    let userName = `${userData.first_name.toLowerCase().replace(".", "")}.${userData.last_name.toLowerCase().replace(".", "")}`;
+    userName = userName.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    userName = userName.replace(/\s/g, "_");
+    user.firstName = userData.first_name;
+    user.lastName = userData.last_name;
+    user.username = userName;
+    user.email = userData.email;
+    user.token = token;
+    this.LoginBySocialMedia(user,userData.id);
   }
 
   public async AppleUserLogin(){
@@ -100,7 +123,7 @@ export class SocialMediaLoginButtonsComponent {
       ]
     })
     .then((res: AppleSignInResponse) => {
-      this.LoginBySocialMedia(res.fullName.givenName, res.email, res.identityToken);
+      this.LoginBySocialMedia({name:res.fullName.givenName, email:res.email, token:res.identityToken});
     })
     .catch((error: AppleSignInErrorResponse) => {
       alert(error.code + ' ' + error.localizedDescription);

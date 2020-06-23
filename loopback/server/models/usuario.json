@@ -19,6 +19,12 @@
     },
     "GToken": {
       "type": "string"
+    },   
+    "AppleToken": {
+      "type": "string",
+      "mysql": {
+        "dataType": "LONGTEXT"
+      }
     },
     "active": {
       "type": "boolean",

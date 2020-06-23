@@ -500,6 +500,7 @@ module.exports = function(Usuario) {
 
     Usuario.loginBySocialMedia = function(user, callback) {
         var user;
+        let mediaImage = {email:user.email,socialMediaId:user.socialMediaId}
         let mediaFilter = {}
             // TODO
         switch (user.loginType) {
@@ -517,6 +518,12 @@ module.exports = function(Usuario) {
                     }
                 }
                 break;
+            case "Apple":
+                mediaFilter = {
+                    where: {
+                        AppleToken: user.token,
+                    }
+                }
             default:
                 return callback('Undefined token type', null);
                 break;
@@ -529,9 +536,10 @@ module.exports = function(Usuario) {
                 if (res.email == user.email) {
 
                     // console.log('Found user with that key')
-                    res.createAccessToken(5000, function(err, token) {
+                    res.createAccessToken(10000000, function(err, token) {
                         if (err) return callback(err, null);
-
+                        Usuario.setProfilePictureFromSocialMedia(mediaImage,(err,res)=>{
+                        })
                         callback(null, token);
                     });
                 } else {
@@ -557,6 +565,9 @@ module.exports = function(Usuario) {
                             case "Google":
                                 userWithEmail.GToken = user.token
                                 break;
+                            case "Apple":
+                                userWithEmail.AppleToken = user.token
+                                break;
                             default:
                                 return callback('Undefined token type', null);
                                 break;
@@ -565,9 +576,10 @@ module.exports = function(Usuario) {
                         Usuario.upsert(userWithEmail, function(err, updatedUser) {
                             if (err) return callback(err);
 
-                            updatedUser.createAccessToken(5000, function(err, token) {
+                            updatedUser.createAccessToken(10000000, function(err, token) {
                                 if (err) return callback(err, null);
-
+                                Usuario.setProfilePictureFromSocialMedia(mediaImage,(err,res)=>{
+                                })
                                 callback(null, token);
                             });
                         })
@@ -589,9 +601,10 @@ module.exports = function(Usuario) {
                         Usuario.register(user, function(err, userWR) {
                             if (err) return callback(err);
 
-                            userWR.createAccessToken(5000, function(err, token) {
+                            userWR.createAccessToken(10000000, function(err, token) {
                                 if (err) return callback(err, null);
-
+                                Usuario.setProfilePictureFromSocialMedia(mediaImage,(err,res)=>{
+                                })
                                 callback(null, token);
                             });
 
