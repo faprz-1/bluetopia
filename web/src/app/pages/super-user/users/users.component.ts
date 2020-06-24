@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ApiService } from '../../../services/api.service';
 import { ToastService } from '../../../services/toast.service';
 import { FileChooserComponent } from '../../../components/file-chooser/file-chooser.component';

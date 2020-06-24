@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ApiService } from '../../services/api.service';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastService } from '../../services/toast.service';
 import { SharedService } from '../../shared/services/shared.service';
 

@@ -5,7 +5,7 @@ import { NgModule } from "@angular/core";
 import { LayoutRouting } from "./layout.routing";
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
-import { ButtonsModule } from 'ngx-bootstrap';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 

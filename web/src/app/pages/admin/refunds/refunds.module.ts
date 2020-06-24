@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RefundsComponent } from "./refunds.component";
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { ModalModule } from 'ngx-bootstrap';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 const MODULE_ROUTES = [
   { path: '', component: RefundsComponent }
