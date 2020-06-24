@@ -73,7 +73,7 @@ module.exports = function (Notification) {
 
     Notification.setSomeNotification = function (ids=[], notification) {
         var user = Notification.app.models.Usuario;
-        user.find({where:{id:ids},include:"pushTokens"}, function (err, users) {
+        user.find({where:{id:{inq:ids}},include:"pushTokens"}, function (err, users) {
             if (err) return err;
             var DBpushTokens = [];
             users.forEach(u => {

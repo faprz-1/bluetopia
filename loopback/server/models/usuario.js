@@ -8,6 +8,7 @@ module.exports = function(Usuario) {
     var app = require('../../server/server');
     disableRelationMethods(Usuario);
 
+    delete Usuario.validations.username;
     Usuario.testPush = function(callback) {
         // Enviar push 
         var notificacion = this.app.models.Notification;
