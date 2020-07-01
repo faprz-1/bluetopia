@@ -123,11 +123,11 @@ export class SocialMediaLoginButtonsComponent {
       ]
     })
     .then((res: AppleSignInResponse) => {
-      this.LoginBySocialMedia({name:res.fullName.givenName, email:res.email, token:res.identityToken});
+      this.LoginBySocialMedia({name:res.fullName.givenName, email:res.email, token:res.user});
     })
     .catch((error: AppleSignInErrorResponse) => {
       alert(error.code + ' ' + error.localizedDescription);
-      console.error(error);
+      console.error("Error tomando datos",error);
     });
   }
 

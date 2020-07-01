@@ -4,9 +4,9 @@ var hostURL = require("../helpers/constants").hostURL;
 
 module.exports = function (Notification) {
 
-    Notification.setSeen = function ( notificationId, callback) {
+    Notification.setSeen = function (ctx, id, callback) {
 
-        Notification.upsert( { id : notificationId, seen: new Date() }, (err, res) => {
+        Notification.upsert( { id, seen: new Date() }, (err, res) => {
             if (err) return callback(err, 'Error al marcar como visto');
             return callback(null, res);
         });
