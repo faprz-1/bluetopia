@@ -1,12 +1,12 @@
 
 <div class="connect-label">o conectate con...<div>
 
-<ion-button (click)="FacebookUserLogin()">
-  <img src="assets/social-media/facebook/f_logo_RGB-Blue_58.png">
-</ion-button>
-<ion-button (click)="GooglePlusUserLogin()">
-    <img src="assets/social-media/google/logo.png">
-</ion-button>
-<ion-button (click)="AppleUserLogin()" *ngIf="isApple">
-  <img src="assets/social-media/apple/apple.png">
-</ion-button>
+  <ion-button *ngIf="isApple"  color="light"  expand="block" (click)="AppleUserLogin()">
+    <ion-icon slot="start" name="logo-apple"></ion-icon> Apple
+  </ion-button>
+  <ion-button color="light"  expand="block" (click)="FacebookUserLogin()">
+    <ion-icon slot="start" name="logo-facebook"></ion-icon> Facebook
+  </ion-button>
+  <!-- <ion-button color="light"  expand="block" (click)="GooglePlusUserLogin()">
+    <ion-icon slot="start" name="logo-google"></ion-icon> Google
+  </ion-button> -->
