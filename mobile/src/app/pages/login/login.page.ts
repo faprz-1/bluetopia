@@ -42,15 +42,15 @@ export class LoginPage extends ComponentBase implements OnInit {
     await this.api.setToken(token.id)
 
     this.api.get("/Usuarios/withCredentials", true).subscribe(
-      userFromServer => this.SaveUserData(userFromServer),
+      userFromServer => this.SaveUserData(userFromServer,token),
       error => this.HandleAPIError(error)     
     )
   }
 
-  private async SaveUserData(userFromServer: JSON) {
+  private async SaveUserData(userFromServer: JSON,token) {
     this.loggedUser = userFromServer;
     await this.storage.set("user", userFromServer)
-    await this.storage.set("ttl", moment().add(1209600, 's').toISOString())
+    await this.storage.set("ttl", token)
     this.pushService.updatePushToken();
     await this.AfterSuccessfulLogin()
   }  

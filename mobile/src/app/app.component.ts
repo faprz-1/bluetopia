@@ -38,7 +38,7 @@ export class AppComponent {
         if(token){
           this.pushService.updatePushToken();
           this.storage.get("ttl").then((ttl)=>{ 
-            if(ttl != null && moment().isSameOrAfter(ttl) ) {
+            if((ttl != null || moment().isSameOrBefore(moment(ttl.created).add(ttl.ttl,"s")))&& ttl.ttl!=-1) {
               this.storage.clear()
               this.navController.navigateRoot('/login')
             }
