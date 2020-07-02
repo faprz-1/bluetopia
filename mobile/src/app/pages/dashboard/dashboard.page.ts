@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ComponentBase } from 'src/app/base/component-base';
 import { BuyComponent } from "../../components/buy/buy.component";
-import { BuyPagePage } from "../buy-page/buy-page.page";
+import { BuyPagePage } from "../payment-stuff/buy-page/buy-page.page";
 
 @Component({
   selector: 'app-dashboard',

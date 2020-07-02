@@ -17,6 +17,7 @@ import { AuthGuard } from './services/auth.guard';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { BuyPagePageModule } from './pages/payment-stuff/buy-page/buy-page.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { OneSignal } from '@ionic-native/onesignal/ngx';
     AppRoutingModule,
     TranslateModule.forRoot(),
     ComponentsModule, 
+    BuyPagePageModule,
     IonicStorageModule.forRoot(), ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [

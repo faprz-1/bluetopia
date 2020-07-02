@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>Añadir Tarjeta</ion-title>
   </ion-toolbar>
@@ -17,7 +17,7 @@
 
         <ion-item>
           <ion-label position="stacked">Número de tarjeta de crédito <ion-text color="danger">*</ion-text></ion-label>
-          <ion-input required type="text" maxlength="20" name="number" [(ngModel)]="data.card.number"></ion-input>
+          <ion-input required type="text" maxlength="16" name="number" [(ngModel)]="data.card.number"></ion-input>
         </ion-item>
         
         <ion-item>
@@ -38,7 +38,7 @@
       </ion-list>
 
       <div class="ion-padding">
-        <ion-button expand="block" type="button" class="ion-no-margin" [disabled]="getStatusData()" (click)="createTokoenCard()">Agregar Tarjeta</ion-button>
+        <ion-button expand="block" type="button" class="ion-no-margin" [disabled]="getStatusData()" (click)="createTokenCard()">Agregar Tarjeta</ion-button>
       </div>
     </form>
 </ion-content>

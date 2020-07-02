@@ -8,7 +8,13 @@ import { ComponentBase } from 'src/app/base/component-base';
 })
 export class RefoundsPage extends ComponentBase implements OnInit {
   refounds:any = [];
-
+  reasonsRefound:any=[
+    {id:"requested_by_client",reason:"Peticion del cliente"},
+    {id:"cannot_be_fulfilled",reason:"cannot_be_fulfilled"},
+    {id:"duplicated_transaction",reason:"Transaccion duplicada"},
+    {id:"suspected_fraud",reason:"Sospecha de fraude"},
+    {id:"other",reason:"Otro"},
+  ]
   reasonRefound:string = "";
 
   ngOnInit() { this.reload(); }
@@ -49,8 +55,8 @@ export class RefoundsPage extends ComponentBase implements OnInit {
     });
   }
 
-  refound(refoundObj) {
-    let enpoint = "/conekta/refoundOrder";
+  processRefound(refoundObj) {
+    let enpoint = "/Conekta/refoundOrder";
 
     if(this.reasonRefound == "") {
       this.errorAlert("No se pudo hacer la devolucion, por que no se agrego una razón");

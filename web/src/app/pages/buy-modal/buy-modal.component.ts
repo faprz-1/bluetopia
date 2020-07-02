@@ -59,7 +59,7 @@ export class BuyModalComponent implements OnInit {
   }
 
   getCards(card = null) {
-    let endpoint = "/conekta/getCards";
+    let endpoint = "/Conekta/getCards";
 
     this.api.Post(endpoint,{cutomerId:this.user.customerId},true).subscribe(res => {
       this.cards = res;
@@ -108,7 +108,7 @@ export class BuyModalComponent implements OnInit {
   buy() {
     this.convertProducts();
     
-    let endpoint = "/conekta/orderFromCustomer";
+    let endpoint = "/Conekta/orderFromCustomer";
     let objToBuy = {
       userId: this.user.id,
       cutomerId: this.user.customerId,
@@ -148,7 +148,7 @@ export class BuyModalComponent implements OnInit {
 
   onSuccesFulToken(token) {
       var Token = token.id;
-      let enpoint = "/conekta/addCardToUser";
+      let enpoint = "/Conekta/addCardToUser";
 
       if(this.cards.length < 5) {
         this.api.Post(enpoint,{cardToken:Token, customerId: this.user.customerId},true).subscribe( res => {

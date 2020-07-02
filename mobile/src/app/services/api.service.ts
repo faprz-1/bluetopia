@@ -19,7 +19,7 @@ const RETRY_MILLISECONDS  = 10000
 })
 export class ApiService {
   public token: string = "";
-  public debugMode: boolean;
+  public debugMode: boolean = false;
 
   constructor(
     private http: HttpClient, 

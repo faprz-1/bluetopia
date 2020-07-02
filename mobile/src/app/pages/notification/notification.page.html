@@ -13,9 +13,13 @@
           <ion-avatar item-start>
             <img [src]="n.image" class="listview__img" alt="">
           </ion-avatar>
-          <h2>{{n.title}}</h2>
-          <h3>{{n.content}}</h3>
-          <p item-end>{{n.timestamp|date}}</p>
+          <ion-item>
+            <ion-label>
+              <h3>{{n.title}}</h3>
+              <p>{{n.content}}</p>
+            </ion-label>
+          </ion-item>
+          <p slot="end">{{n.timestamp|date}}</p>
     
         </ion-item>
       </ion-list>

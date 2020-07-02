@@ -55,7 +55,7 @@ export class CardComponent extends ComponentBase implements OnInit {
   onErrorToken(error) { this.errorAlert(error); }
 
   getCards() {
-    let endpoint = "/conekta/getCards";
+    let endpoint = "/Conekta/getCards";
 
     this.api.post(endpoint,{cutomerId:this.loggedUser.customerId},true).subscribe(res => {
       this.cards = res;
@@ -91,7 +91,7 @@ export class CardComponent extends ComponentBase implements OnInit {
   onSuccesFulToken(token) {
       var Token = token.id;
 
-      let enpoint = "/conekta/addCardToUser";
+      let enpoint = "/Conekta/addCardToUser";
 
       var card;
 

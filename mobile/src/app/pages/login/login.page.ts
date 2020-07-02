@@ -68,9 +68,9 @@ export class LoginPage extends ComponentBase implements OnInit {
     this.enableMenu()
     this.events.publish('user:logged', true)
     
-    if(this.loggedUser.role.id == 2) {
+    // if(this.loggedUser.role.id == 2) {
       this.navController.navigateRoot('dashboard')
-    }
+    // }
   }
 
   public goToUrl(url) {

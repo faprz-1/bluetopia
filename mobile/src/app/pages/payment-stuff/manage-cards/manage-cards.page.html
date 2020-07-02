@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Metodos de pago</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+    <ion-grid class="ion-no-padding">
+      <ion-row class="ion-justify-content-center ion-no-padding">
+        <ion-col size="12" size-md="6">
+          <ion-list>
+            <ion-item>
+              <ion-icon slot="start" name="card"></ion-icon>
+              <ion-label>Tarjetas en Conekta:</ion-label>
+            </ion-item>
+          <ng-container *ngIf="user != null && cards.length > 0 && user.customerId != null" no-lines>
+                  <ion-item lines="none" *ngFor="let c of cards">
+                    <ion-label>
+                      **** **** **** {{c?.last4}} {{c?.brand}} &nbsp; <strong>{{c?.exp_month}}/{{c?.exp_year}}</strong> &nbsp; <span *ngIf="c.default">Default</span>
+                    </ion-label>
+                    <ion-icon name="close" color="danger" slot="end" (click)="deleteCard(c)"></ion-icon>
+                  </ion-item>
+              </ng-container>
+            <ion-item>
+              <ion-label (click)="goToAddCard()">Add Card</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+</ion-content>

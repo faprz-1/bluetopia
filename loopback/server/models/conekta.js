@@ -115,7 +115,7 @@ module.exports = function(Conekta) {
     var cardId = data.cardId;
     var mesesCantidad = data.mesesCantidad;
 
-    let orderHist = Conekta.app.models.ordersHistory;
+    let orderHistory = Conekta.app.models.OrdersHistory;
 
     let orderBody = {
       currency: "MXN",
@@ -147,7 +147,7 @@ module.exports = function(Conekta) {
         userId: userId
       }
 
-      orderHist.create(objOrdHist, (err, newOrdHIst) => {
+      orderHistory.create(objOrdHist, (err, newOrdHIst) => {
         if(err) return callback(err);
 
         return callback(null,order);
@@ -227,11 +227,11 @@ module.exports = function(Conekta) {
       order.createRefund(objRefound, (err, res) => {
         if(err) return callback(err);
 
-        let orderHist = Conekta.app.models.ordersHistory;
+        let orderHistory = Conekta.app.models.OrdersHistory;
 
         orderH.refounded = true;
         
-        orderHist.updateAll({orderId: orderId}, orderH, (err,nothing) => {
+        orderHistory.updateAll({orderId: orderId}, orderH, (err,nothing) => {
           if(err) return callback(err);
           
           return callback(null, res);

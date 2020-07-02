@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-8">
       <div class="display-4">
-        Perfil
+        Perfil <button class="btn btn-primary" (click)="openModal(buyMod,$event)">Test Modal de compra</button>
       </div>
     </div>
     <div class="col-4 d-flex align-items-center justify-content-end">
@@ -15,7 +15,7 @@
         <div class="card-img">
   
           <template-profile-image-editor style="top: 10px; right:15px; position:absolute" (imageChanged)="ImageChanged($event)"></template-profile-image-editor>
-          <img class="card-img-top" [src]="user?.profileImage?.URL| jarabeImage:'small':api" onerror="this.src='assets/fondo/user.png'"
+          <img class="card-img-top" [src]="user?.profileImage| jarabeImage:'small':api" onerror="this.src='assets/fondo/user.png'"
             alt="Card image cap">
         </div>
   
@@ -65,7 +65,7 @@
       </div>
     </div>
   </div>
-  <!-- <button class="btn btn-primary" (click)="openModal(buyMod,$event)">ClickMePLS</button> -->
+  
 </section>
 
 <ng-template #addCard>

@@ -11,7 +11,6 @@ export class ProfilePage extends ComponentBase {
 
   public loggedUser: any;
 
-  cards: any = [];
 
   ngOnInit() {
     this.getProfile();
@@ -30,25 +29,52 @@ export class ProfilePage extends ComponentBase {
 
   private async getProfile() {
     this.loggedUser = await this.storage.get("user");
-    this.loggedUser.imgperfil = this.loggedUser.profileImage != null ? this.api.getBaseURL() + this.loggedUser.profileImage.URL : 'assets/imgs/default_avatar.jpg';
-    // this.getCards();
   }
+  async ShowChangeProfileImageOptions(){
 
-  async updateProfilePic(){
-    let newImage = await this.takePicture();
-
-    if(newImage!=null){
-      await this.saveProfilePic(newImage)
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Obtener imagen de:',
+      buttons: [
+        {
+          text: 'Camara',
+          icon: 'camera',
+          handler: () => {
+            this.updateProfilePhotoPic();
+          }
+        }, {
+          text: 'Galeria',
+          icon: 'images',
+          handler: () => {
+            this.updateProfileGalleryPic();
+          }
+        },
+        {
+          text: 'Cancelar',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }]
+      });
+      await actionSheet.present();
+      
+}
+  async updateProfilePhotoPic(){
+    let newImage = await this.imageService.takePicture();
+    if( newImage){
+      this.saveProfilePic(newImage);
+    }
+  }
+  async updateProfileGalleryPic(){
+    let newImage = await this.imageService.openGallery();
+    if( newImage){
+      this.saveProfilePic(newImage);
     }
   }
 
   private async saveProfilePic(newImage: any){
-    newImage.base64ProfileImage = newImage.base64Image;
-    newImage.base64ProfileImageExtention = newImage.base64ImageExtention;
 
-    delete newImage.base64Image;
-    delete newImage.base64ImageExtention;
-    
     this.api.post("/Usuarios/" + this.loggedUser.id + "/changeProfileImage", newImage, true).subscribe((res: any) => {
       this.loggedUser.profileImage = res.profileImage;
       this.loggedUser.imgperfil = this.loggedUser.profileImage != null ? this.api.getBaseURL() + this.loggedUser.profileImage.URL : this.api.getBaseURL()
@@ -66,24 +92,5 @@ export class ProfilePage extends ComponentBase {
     this.navController.navigateRoot('/settings');
   }
 
-  // public getCards() {
-  //   let endpoint = "/conekta/getCards";
-
-  //   this.api.post(endpoint,{cutomerId:this.loggedUser.customerId},true).subscribe(res => {
-  //     this.cards = res;
-  //   }, err => {
-  //     console.log(err);
-  //   });
-  // }
-
-  // public deleteCard(card) {
-  //   let enpoint = "/conekta/deleteCard";
-
-  //   this.api.post(enpoint,{cutomerId:this.loggedUser.customerId, cardId: card.id},true).subscribe( res => {
-  //     this.getProfile();
-  //   }, err => {
-  //     this.errorAlert("No se pudo eliminar la tarjeta");
-  //   });
-  // }
 
 }

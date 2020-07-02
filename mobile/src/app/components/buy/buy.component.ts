@@ -59,7 +59,7 @@ export class BuyComponent extends ComponentBase implements OnInit {
   chechDefCard() { if(this.selectedCard == null) { this.selectedCard = this.defCard.id; } }
 
   getCards() {
-    let endpoint = "/conekta/getCards";
+    let endpoint = "/Conekta/getCards";
 
     this.api.post(endpoint,{cutomerId:this.loggedUser.customerId},true).subscribe(res => {
       this.cards = res;
@@ -70,7 +70,7 @@ export class BuyComponent extends ComponentBase implements OnInit {
   }
 
   getCardsNoFilter() {
-    let endpoint = "/conekta/getCards";
+    let endpoint = "/Conekta/getCards";
 
     this.api.post(endpoint,{cutomerId:this.loggedUser.customerId},true).subscribe(res => { this.cards = res; },
     err => { this.errorAlert("Error al obetener las tarjetas"); });
@@ -81,7 +81,7 @@ export class BuyComponent extends ComponentBase implements OnInit {
       let intPrice;
       let floatPrice = parseFloat(p.price).toFixed(2);
       let stringPrice = floatPrice.toString();
-      intPrice = this.convertPrice(stringPrice);
+      intPrice = this.convertPrice(parseFloat(p.price).toFixed(2));
 
       this.formatProducts.push({
         name: p.name,
@@ -106,7 +106,7 @@ export class BuyComponent extends ComponentBase implements OnInit {
   buy() {
     this.convertProducts();
 
-    let endpoint = "/conekta/orderFromCustomer";
+    let endpoint = "/Conekta/orderFromCustomer";
     let objToBuy = {
       userId: this.loggedUser.id,
       cutomerId: this.loggedUser.customerId,

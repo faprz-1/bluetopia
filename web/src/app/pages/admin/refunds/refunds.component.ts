@@ -13,7 +13,13 @@ export class RefundsComponent implements OnInit {
   mtModalRef: BsModalRef;
 
   refunds:any = [];
-
+  reasonsRefound:any=[
+    {id:"requested_by_client",reason:"Peticion del cliente"},
+    {id:"cannot_be_fulfilled",reason:"cannot_be_fulfilled"},
+    {id:"duplicated_transaction",reason:"Transaccion duplicada"},
+    {id:"suspected_fraud",reason:"Sospecha de fraude"},
+    {id:"other",reason:"Otro"},
+  ]
   reasonRefound:string = "";
 
   constructor(
@@ -47,8 +53,8 @@ export class RefundsComponent implements OnInit {
     });
   }
 
-  refound(refoundObj) {
-    let enpoint = "/conekta/refoundOrder";
+  processRefound(refoundObj) {
+    let enpoint = "/Conekta/refoundOrder";
 
     if(this.reasonRefound == "") {
       this.toast.ShowError("No se pudo hacer la devolucion, por que no se agrego una razón");

@@ -68,7 +68,7 @@ export class ProfileComponent implements OnInit {
   reload() {
     this.ready = false;
     this.user = JSON.parse(localStorage.getItem("user"))
-    // this.getCards();
+    this.getCards();
     this.ready = true;
   }
 
@@ -84,7 +84,7 @@ export class ProfileComponent implements OnInit {
   CloseModal() {this.mtModalRef.hide();}
 
   getCards() {
-    let endpoint = "/conekta/getCards";
+    let endpoint = "/Conekta/getCards";
 
     this.api.Post(endpoint,{cutomerId:this.user.customerId},true).subscribe(res => {
       this.cards = res;
@@ -94,7 +94,7 @@ export class ProfileComponent implements OnInit {
   }
 
   deleteCard(card) {
-    let enpoint = "/conekta/deleteCard";
+    let enpoint = "/Conekta/deleteCard";
 
     this.api.Post(enpoint,{cutomerId:this.user.customerId, cardId: card.id},true).subscribe( res => {
       this.reload();

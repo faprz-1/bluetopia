@@ -50,6 +50,6 @@ export class SettingsPage extends ComponentBase implements OnInit {
   }
 
   public goToAddCard() {
-    this.navController.navigateRoot('/settings/add-card')
+    this.navController.navigateForward('/settings/manage-cards')
   }
 }

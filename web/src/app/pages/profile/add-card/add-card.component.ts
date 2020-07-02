@@ -39,7 +39,7 @@ export class AddCardComponent implements OnInit {
   }
 
   asignedMeConekta() {
-    let endpoint = `/conekta/asignedConekta`;
+    let endpoint = `/Conekta/asignedConekta`;
 
     let info = {
       name: this.user.username,
@@ -47,7 +47,7 @@ export class AddCardComponent implements OnInit {
     }
 
     this.api.Post(endpoint,{info:info, userId:this.user.id},true).subscribe( res => { this.createTokoenCard(); },
-    err => { this.toast.ShowError("No se pudo crear usuario en conekta"); });
+    err => { this.toast.ShowError("No se pudo crear usuario en Conekta"); });
   }
 
   checkUser() {
@@ -83,7 +83,7 @@ export class AddCardComponent implements OnInit {
   onSuccesFulToken(token) {
       var Token = token.id;
 
-      let enpoint = "/conekta/addCardToUser";
+      let enpoint = "/Conekta/addCardToUser";
 
       this.api.Post(enpoint,{cardToken:Token, customerId: this.user.customerId},true).subscribe( res => {
         this.toast.ShowSuccess("Se a agregado la tarjeta correctamente");

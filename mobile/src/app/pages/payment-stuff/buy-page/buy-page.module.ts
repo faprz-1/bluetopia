@@ -4,14 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
-import { JarabeAngularPipesModule } from 'jarabe-angular-pipes';
 
-import { ProfilePage } from './profile.page';
+import { BuyPagePage } from './buy-page.page';
+
+import { ComponentsModule } from "../../../components/components.module";
 
 const routes: Routes = [
   {
     path: '',
-    component: ProfilePage
+    component: BuyPagePage
   }
 ];
 
@@ -20,9 +21,9 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    JarabeAngularPipesModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    ComponentsModule
   ],
-  declarations: [ProfilePage]
+  declarations: [BuyPagePage]
 })
-export class ProfilePageModule {}
+export class BuyPagePageModule {}

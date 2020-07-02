@@ -52,7 +52,13 @@
           }
         },
         {
-          "arg": "id",
+          "arg": "limit",
+          "required": false,
+          "type": "string",
+          "description": "ultimo id de notificacion"
+        },
+        {
+          "arg": "lastId",
           "required": false,
           "type": "string",
           "description": "ultimo id de notificacion"
@@ -69,11 +75,11 @@
       "description": "traer a las notificaciones de un usuario por Id",
       "http": [
         {
-          "path": "/getLast55/:id",
+          "path": "/getLast5/:id",
           "verb": "get"
         },
         {
-          "path": "/getLast55",
+          "path": "/getLast5",
           "verb": "get"
         }
       ]

@@ -1,12 +1,24 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ComponentBase } from 'src/app/base/component-base';
+import { ModalController, AlertController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-buy-page',
   templateUrl: './buy-page.page.html',
   styleUrls: ['./buy-page.page.scss'],
 })
-export class BuyPagePage extends ComponentBase implements OnInit {
+export class BuyPagePage implements OnInit {
+  
+  constructor(
+    private modalController:ModalController,
+    private alertController:AlertController,
+    private api:ApiService,
+    private storage:Storage
+    ){
+
+  }
 
   @Input() loggedUser: any;
   @Input() listProducts: any = null;

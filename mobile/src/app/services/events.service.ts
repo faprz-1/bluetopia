@@ -9,6 +9,7 @@ export class EventsService {
 
   	private loggedSubject = new Subject<any>();
   	private updatedUserSubject = new Subject<any>();
+  	private newCardCreated = new Subject<any>();
 
     publish(name:string, data: any = true) {
     	switch (name) {
@@ -17,6 +18,9 @@ export class EventsService {
     			break;
     		case "user:updated":
     			this.updatedUserSubject.next(data);
+    			break;
+    		case "card:newCardCreated":
+    			this.newCardCreated.next(data);
     			break;
     		
     		default:
@@ -33,6 +37,9 @@ export class EventsService {
     			break;
     		case "user:updated":
     			return this.updatedUserSubject;
+    			break;
+    		case "card:newCardCreated":
+    			return this.newCardCreated;
     			break;
     		
     		default:
