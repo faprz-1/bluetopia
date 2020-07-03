@@ -14,7 +14,6 @@ export class ManageCardsPage extends ComponentBase implements OnInit {
   ngOnInit(): void {
     this.getProfile()
     this.events.getObservable("card:newCardCreated").subscribe((card)=>{
-      console.log("card",card);
       
       this.cards.unshift(card);
     })
@@ -44,7 +43,18 @@ export class ManageCardsPage extends ComponentBase implements OnInit {
     this.api.post(enpoint,{cutomerId:this.user.customerId, cardId: card.id},true).subscribe( res => {
       this.getProfile();
     }, err => {
-      this.errorAlert("No se pudo eliminar la tarjeta");
+      this.errorAlert("No fue posible eliminar la tarjeta");
     });
+  }
+  
+  async errorAlert(msn) {
+    const alert = await this.alertController.create({
+      header: 'Error',
+      subHeader: '',
+      message: msn,
+      buttons: ['Aceptar']
+    });
+
+    await alert.present();
   }
 }
