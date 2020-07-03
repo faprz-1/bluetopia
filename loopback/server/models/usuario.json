@@ -129,10 +129,7 @@
           "arg": "newImage",
           "type": "object",
           "required": true,
-          "description": "new image in base 64",
-          "http": {
-            "source": "body"
-          }
+          "description": "new image in base 64"
         }
       ],
       "returns": [

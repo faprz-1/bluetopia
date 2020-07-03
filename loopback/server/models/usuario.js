@@ -540,9 +540,7 @@ module.exports = function(Usuario) {
                     res.createAccessToken(-1, function(err, token) {
                         if (err) return callback(err, null);
                            if(user.loginType=="Facebook"){
-                            Usuario.setProfilePictureFromSocialMedia(mediaImage,(err,res)=>{
-                            
-                                })
+                            Usuario.setProfilePictureFromSocialMedia(mediaImage,(err,res)=>{})
                             }
                         callback(null, token);
                     });
@@ -579,8 +577,9 @@ module.exports = function(Usuario) {
 
                             updatedUser.createAccessToken(-1, function(err, token) {
                                 if (err) return callback(err, null);
-                                Usuario.setProfilePictureFromSocialMedia(mediaImage,(err,res)=>{
-                                })
+                                 if(user.loginType=="Facebook"){
+                                    Usuario.setProfilePictureFromSocialMedia(mediaImage,(err,res)=>{})
+                                    }
                                 callback(null, token);
                             });
                         })
@@ -604,8 +603,9 @@ module.exports = function(Usuario) {
 
                             userWR.createAccessToken(-1, function(err, token) {
                                 if (err) return callback(err, null);
-                                Usuario.setProfilePictureFromSocialMedia(mediaImage,(err,res)=>{
-                                })
+                                 if(user.loginType=="Facebook"){
+                                    Usuario.setProfilePictureFromSocialMedia(mediaImage,(err,res)=>{})
+                                    }
                                 callback(null, token);
                             });
 
@@ -787,4 +787,26 @@ module.exports = function(Usuario) {
             })
         })
     }
+    Usuario.setProfilePictureFromSocialMedia = function ( data, callback) {    
+        Usuario.findOne({ where: { email: data.email } }, function (err, usr) {
+          if (err) {
+            console.log('ERROR: ' + err);
+            return callback(err);
+          }
+    
+          if (!usr.profileImageId) {
+            console.log('Usuario de social media sin foto de perfil');
+            var imageId = uuidV4();
+            app.models.UploadedFiles.create({ id: imageId,resize:false, URL: `https://graph.facebook.com/${data.socialMediaId}/picture?width=600&height=600` }, function (err, res) {
+              if (err) return callback(err);
+              let newUser = { profileImageId: res.id };
+              usr.updateAttributes(newUser, function (err, updated) {
+                if (err) return callback(err);
+                callback(null, updated);
+              });
+            });
+          }
+        });
+      };
+
 };
