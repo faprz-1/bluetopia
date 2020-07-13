@@ -58,7 +58,7 @@ export class BuyComponent extends ComponentBase implements OnInit {
 
   chechDefCard() { if(this.selectedCard == null) { this.selectedCard = this.defCard.id; } }
 
-  getCards() {
+  /* getCards() {
     let endpoint = "/Conekta/getCards";
 
     this.api.post(endpoint,{cutomerId:this.loggedUser.customerId},true).subscribe(res => {
@@ -74,7 +74,7 @@ export class BuyComponent extends ComponentBase implements OnInit {
 
     this.api.post(endpoint,{cutomerId:this.loggedUser.customerId},true).subscribe(res => { this.cards = res; },
     err => { this.errorAlert("Error al obetener las tarjetas"); });
-  }
+  } */
 
   convertProducts() {
     this.listProducts.forEach(p => {
@@ -103,23 +103,6 @@ export class BuyComponent extends ComponentBase implements OnInit {
     return intPrice;
   }
 
-  buy() {
-    this.convertProducts();
-
-    let endpoint = "/Conekta/orderFromCustomer";
-    let objToBuy = {
-      userId: this.loggedUser.id,
-      cutomerId: this.loggedUser.customerId,
-      productsItems: this.formatProducts,
-      cardId: this.selectedCard,
-      mesesCantidad: this.numMeses
-    };
-
-    this.api.post(endpoint,objToBuy).subscribe( res => {
-      this.Alert('La compra se a realizado correctamente');
-      this.modalController.dismiss();
-    }, err => { this.errorAlert(err.error.error.details[0].message); });
-  }
 
   onErrorToken(error) { this.errorAlert(error); }
 
