@@ -6,46 +6,20 @@ import {Subject} from 'rxjs';
   providedIn: 'root'
 })
 export class EventsService {
+	
+	private observables = [];
 
-  	private loggedSubject = new Subject<any>();
-  	private updatedUserSubject = new Subject<any>();
-  	private newCardCreated = new Subject<any>();
-
-    publish(name:string, data: any = true) {
-    	switch (name) {
-    		case "user:logged":
-    			this.loggedSubject.next(data);
-    			break;
-    		case "user:updated":
-    			this.updatedUserSubject.next(data);
-    			break;
-    		case "card:newCardCreated":
-    			this.newCardCreated.next(data);
-    			break;
-    		
-    		default:
-    			console.log('Event '+ name +' not found')
-    			break;
-    	}
-        
+    publish(name:string, ...data) {
+		if(!this.observables[name]){
+			this.observables[name] = new Subject<any>();
+		}
+		return this.observables[name].next(data);
     }
 
     getObservable(name:string): Subject<any> {
-    	switch (name) {
-    		case "user:logged":
-    			return this.loggedSubject;
-    			break;
-    		case "user:updated":
-    			return this.updatedUserSubject;
-    			break;
-    		case "card:newCardCreated":
-    			return this.newCardCreated;
-    			break;
-    		
-    		default:
-    			console.log('Event '+ name +' not found')
-    			break;
-    	}
-        
+		if(!this.observables[name]){
+			this.observables[name] = new Subject<any>();
+		}
+		return this.observables[name];
     }
 }

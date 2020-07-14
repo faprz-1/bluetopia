@@ -22,7 +22,7 @@ export class SocketService {
         this.storage.get("user").then((user) =>{ 
           var id = token; 
           var userId = user.id; 
-          +   this.init(id,userId); 
+          this.init(id,userId); 
         }); 
       }
     }); 
