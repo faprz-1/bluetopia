@@ -31,7 +31,8 @@ import { BuyPagePageModule } from './pages/payment-stuff/buy-page/buy-page.modul
     TranslateModule.forRoot(),
     ComponentsModule, 
     BuyPagePageModule,
-    IonicStorageModule.forRoot(), ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    IonicStorageModule.forRoot(), 
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     StatusBar,
