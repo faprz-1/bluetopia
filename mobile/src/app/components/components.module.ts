@@ -7,9 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { IonicStorageModule } from '@ionic/storage';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
-import { SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx'
-import { BuyComponent } from "../components/buy/buy.component";
-import { CardComponent } from "../components/card/card.component";
+import { SignInWithApple } from '@ionic-native/sign-in-with-apple/ngx';
 import { unit_currency } from "../../pipes/unit_currency.pipe";
 
 @NgModule({
@@ -22,14 +20,10 @@ import { unit_currency } from "../../pipes/unit_currency.pipe";
   ],
   declarations: [
     SocialMediaLoginButtonsComponent,
-    BuyComponent,
-    CardComponent,
     unit_currency
   ],
   exports: [
-    SocialMediaLoginButtonsComponent,
-    BuyComponent,
-    CardComponent
+    SocialMediaLoginButtonsComponent
   ],
   providers: [
     Facebook,

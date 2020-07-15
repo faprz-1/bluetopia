@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-8">
       <div class="display-4">
-        Perfil <button class="btn btn-primary" (click)="openModal(buyMod,$event)">Test Modal de compra</button>
+        Perfil
       </div>
     </div>
     <div class="col-4 d-flex align-items-center justify-content-end">
@@ -42,24 +42,6 @@
             <button class="btn btn-block btn-primary" (click)="openModal(changePassword, $event)">
               Cambiar contraseña
             </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-3 col-md-5 col-sm-6 pl-0" *ngIf="user.customerId">
-      <div class="card ml-3">
-        <h5 class="card-header">Tarjetas</h5>
-        <div class="card-body">
-          <i class="zmdi zmdi-plus zmdi-hc-2x pointer float-right" data-toggle="tooltip" data-placement="top" title="Agregar Tarjeta" (click)="openModal(addCard,$event)"></i>
-          <div class="form-group row mb-2" *ngIf="user.customerId != null && cards.length > 0">
-            <p class="w-100">Tarjetas en conekta:</p>
-            <span class="w-100" *ngFor="let c of cards">
-              <p>
-                **** **** **** {{c?.last4}} {{c?.brand}} <strong>{{c?.exp_month}}/{{c?.exp_year}}</strong>
-                <span *ngIf="c.default"> Default</span>
-                <i class="zmdi zmdi-close color-red ml-2 cP" data-toggle="tooltip" data-placement="bottom" title="Eliminar Tarjeta" (click)="deleteCard(c)"></i>
-              </p>
-            </span>
           </div>
         </div>
       </div>

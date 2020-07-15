@@ -110,8 +110,7 @@
               "src/assets/vendors/bower_components/flot.curvedlines/curvedLines.js",
               "src/assets/vendors/bower_components/flot.orderbars/js/jquery.flot.orderBars.js",
               "node_modules/jqvmap/dist/jquery.vmap.min.js",
-              "node_modules/jqvmap/dist/maps/jquery.vmap.world.js",
-              "src/assets/conekta/conekta.js"
+              "node_modules/jqvmap/dist/maps/jquery.vmap.world.js"
             ],
             "styles": [
               "node_modules/material-design-iconic-font/dist/css/material-design-iconic-font.min.css",

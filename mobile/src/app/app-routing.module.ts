@@ -13,14 +13,10 @@ const routes: Routes = [
   {
     path: 'settings', children: [
       { path: '', loadChildren: './pages/settings/settings.module#SettingsPageModule' },
-      { path: 'password-change', loadChildren: './pages/settings/password-change/password-change.module#PasswordChangePageModule' },
-      { path: 'manage-cards', loadChildren: './pages/payment-stuff/manage-cards/manage-cards.module#ManageCardsPageModule' },
-      { path: 'add-card', loadChildren: './pages/payment-stuff/add-card/add-card.module#AddCardPageModule' }
+      { path: 'password-change', loadChildren: './pages/settings/password-change/password-change.module#PasswordChangePageModule' }
     ]
   },
-  { path: 'notification', loadChildren: './pages/notification/notification.module#NotificationPageModule' },
-  // { path: 'buy-page', loadChildren: './pages/payment-stuff/buy-page/buy-page.module#BuyPagePageModule' },
-  { path: 'refounds', loadChildren: './pages/payment-stuff/refounds/refounds.module#RefoundsPageModule' }
+  { path: 'notification', loadChildren: './pages/notification/notification.module#NotificationPageModule' }
 
 ];
 
