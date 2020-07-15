@@ -9,7 +9,7 @@
       <ion-list>
         <ion-item *ngIf="user!=null" (click)="goToUrl('/profile');"> 
           <ion-avatar slot="start">
-            <img src="{{prepareURL(user.profileImage,'avatar')}}" onerror="this.src='assets/img/avatar.jpg'">
+            <img src="{{prepareURL(user?.profileImage,'avatar')}}" onerror="this.src='assets/img/avatar.jpg'">
           </ion-avatar>
           <ion-label>
             <h2>{{user.name}}</h2> 

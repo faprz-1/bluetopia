@@ -49,7 +49,4 @@ export class SettingsPage extends ComponentBase implements OnInit {
     )
   }
 
-  public goToAddCard() {
-    this.navController.navigateForward('/settings/manage-cards')
-  }
 }
