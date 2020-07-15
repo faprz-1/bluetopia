@@ -52,7 +52,7 @@ export class ComponentBase {
     protected async InitializeLoadingElement() {
         this.loadingElement = await this.loadingController.create({
             message: BASE_LOADING_MESSAGE,
-            duration: BASE_LOADING_DURATION,
+            duration: BASE_LOADING_DURATION
         })
     }
 

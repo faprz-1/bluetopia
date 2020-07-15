@@ -22,35 +22,6 @@ export class ProfileComponent implements OnInit {
     newPassword2: ""
   }
 
-  cards:any = [];
-
-  listProducts = [
-    {
-      img: "../../../assets/img/avatar.jpg",
-      name: "Product 1",
-      price: "1234",
-      quantity: 1
-    },
-    {
-      img: "../../../assets/img/avatar.jpg",
-      name: "Product 2",
-      price: "150.00",
-      quantity: 3
-    },
-    {
-      img: "../../../assets/img/avatar.jpg",
-      name: "Product 3",
-      price: 100.50,
-      quantity: 10
-    },
-    {
-      img: "../../../assets/img/avatar.jpg",
-      name: "Product 4",
-      price: 1000,
-      quantity: 1
-    }
-  ]
-
   constructor(
     private sharedService : SharedService,
     private api : ApiService,
@@ -68,7 +39,6 @@ export class ProfileComponent implements OnInit {
   reload() {
     this.ready = false;
     this.user = JSON.parse(localStorage.getItem("user"))
-    this.getCards();
     this.ready = true;
   }
 
@@ -82,30 +52,6 @@ export class ProfileComponent implements OnInit {
   }
 
   CloseModal() {this.mtModalRef.hide();}
-
-  getCards() {
-    let endpoint = "/Conekta/getCards";
-
-    this.api.Post(endpoint,{cutomerId:this.user.customerId},true).subscribe(res => {
-      this.cards = res;
-    }, err => {
-      console.log(err);
-    });
-  }
-
-  deleteCard(card) {
-    let enpoint = "/Conekta/deleteCard";
-
-    this.api.Post(enpoint,{cutomerId:this.user.customerId, cardId: card.id},true).subscribe( res => {
-      this.reload();
-    }, err => {
-      this.toast.ShowError("Error al eliminar la tarjeta");
-    });
-  }
-
-  checkAddCardInModal(val) {
-    if(val == 1) { this.reload(); }
-  }
 
   ChangeUserPassword(){
     this.isFormSended = true;

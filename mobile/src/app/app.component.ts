@@ -110,20 +110,6 @@ export class AppComponent {
         role:"Admin"
       },
       {
-        title: 'Reembolsos',
-        url: '/refounds',
-        icon: 'cash',
-        navigationType: 'root',
-        role:"Admin"
-      },
-      {
-        title: 'buy-page',
-        url: '/buy-page',
-        icon: 'cart',
-        navigationType: 'push',
-        role:"Admin"
-      },
-      {
         title: 'Ajustes',
         url: '/settings',
         icon: 'settings',

@@ -8,7 +8,6 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { DashboardPage } from './dashboard.page';
-import { BuyPagePageModule } from '../payment-stuff/buy-page/buy-page.module';
 
 const routes: Routes = [
   {
