@@ -9,9 +9,12 @@ export class EventsService {
 	
 	private observables = [];
 
-    publish(name:string, ...data) {
+    publish(name:string,data, ...others) {
 		if(!this.observables[name]){
 			this.observables[name] = new Subject<any>();
+		}
+		if (others.length!=0){
+			data = [...others,data ]
 		}
 		return this.observables[name].next(data);
     }
