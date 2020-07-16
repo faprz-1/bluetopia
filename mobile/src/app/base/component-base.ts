@@ -9,6 +9,7 @@ import { CameraOptions, Camera } from "@ionic-native/camera/ngx";
 import { PushService } from '../services/push.service';
 import { EventsService } from '../services/events.service';
 import { GetImageService } from '../services/get-image.service';
+import { Directive } from "@angular/core";
 
 const BASE_LOADING_MESSAGE = "Cargando..."
 const BASE_LOADING_DURATION = 2000
@@ -21,6 +22,7 @@ const enum SupportedPlatformsEnum {
     iOS
 }
 
+@Directive()
 export class ComponentBase {
     constructor(
         protected navController: NavController,
