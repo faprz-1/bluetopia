@@ -302,8 +302,8 @@ module.exports = function(Usuario) {
 
                     var profileImage = {
                         encodedFileContainer: "profileImages",
-                        base64File: newUser.profileImage.base64ProfileImage,
-                        fileExtention: newUser.profileImage.base64ProfileImageExtention
+                        base64File: newUser.profileImage.base64File,
+                        fileExtention: newUser.profileImage.fileExtention
                     }
 
                     app.models.Upload.newBase64File(profileImage, function(err, img) {
@@ -342,8 +342,8 @@ module.exports = function(Usuario) {
             encodedFileContainer: "profileImages",
             name: newImage.name,
             resize: newImage.resize,
-            base64File: newImage.base64ProfileImage,
-            fileExtention: newImage.base64ProfileImageExtention
+            base64File: newImage.base64File,
+            fileExtention: newImage.fileExtention
         }
         Upload.replaceFileBase64File(actual.profileImageId, newProfileImage, function(err, res) {
             if (err) return callback(err);

@@ -43,7 +43,7 @@ export class AppComponent {
               this.navController.navigateRoot('/login')
             }
             else {
-              this.navController.navigateRoot('/dashboard')
+              this.getUserData();
             }
           });
         } else {
@@ -52,7 +52,6 @@ export class AppComponent {
         this.statusBar.styleDefault();
         this.splashScreen.hide();
   
-        this.getUserData();
         this.initializeEvents();
       })
     });
