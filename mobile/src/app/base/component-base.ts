@@ -161,8 +161,8 @@ export class ComponentBase {
         try {
             let imageData = await  this.camera.getPicture(options);
             return  {
-                  base64Image: imageData,
-                  base64ImageExtention: ".jpeg",
+                  base64File: imageData,
+                  fileExtention: ".jpeg",
                   resize : true
               };
         }

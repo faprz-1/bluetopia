@@ -32,7 +32,7 @@ export class ProfileImageEditorComponent implements OnInit {
     openFileBrowser(event: any){
       event.preventDefault();
 
-      const e: HTMLElement = document.getElementById('base64ProfileImage') as HTMLElement;
+      const e: HTMLElement = document.getElementById('base64File') as HTMLElement;
       e.click();
     }
 
