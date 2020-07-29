@@ -278,7 +278,6 @@ module.exports = function(Usuario) {
      * @param {object} newUser new User object to be stored
      * @param {Function(Error, object)} callback
      */
-
     Usuario.registerAdmins = function(newUser, callback) {
         var Role = app.models.Role;
         var RoleMapping = app.models.RoleMapping;
@@ -329,14 +328,14 @@ module.exports = function(Usuario) {
 
 
     /**
-     * changes the user's prifile image for a new one
+     * changes the user's profile image for a new one
      * @param {object} newImage new image in base 64
      * @param {Function(Error, object)} callback
      */
-
     Usuario.prototype.changeProfileImage = function(newImage, callback) {
-        var Upload = app.models.Upload
+        var Upload = app.models.Upload;
         var actual = this;
+
         // TODO
         var newProfileImage = {
             encodedFileContainer: "profileImages",
@@ -344,7 +343,7 @@ module.exports = function(Usuario) {
             resize: newImage.resize,
             base64File: newImage.base64File,
             fileExtention: newImage.fileExtention
-        }
+        };
         Upload.replaceFileBase64File(actual.profileImageId, newProfileImage, function(err, res) {
             if (err) return callback(err);
 
@@ -718,7 +717,7 @@ module.exports = function(Usuario) {
 
 
     /**
-     * changes the user's prifile image for a new one
+     * changes the user's profile image for a new one
      * @param {object} newImage new image in base 64
      * @param {Function(Error, object)} callback
      */

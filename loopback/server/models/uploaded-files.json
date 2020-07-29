@@ -22,8 +22,7 @@
       "required": true
     },
     "resize": {
-      "type": "string",
-      "required": true
+      "type": "boolean"
     },
     "uploaded": {
       "type": "date",

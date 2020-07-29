@@ -17,6 +17,7 @@ module.exports = function(Upload) {
         let newFileId = uuidV4();
         var fileName = newFileId + newFile.fileExtention;
         var UploadedFiles = Upload.app.models.UploadedFiles;
+        
         // TODO
         var uploadStream = Upload.uploadStream(
             encodedFileContainer,
@@ -24,13 +25,16 @@ module.exports = function(Upload) {
         );
         uploadStream.end(encodedFile, 'base64', async err => {
             if (err) return callback(err);
+
             UploadedFiles.create({
                 id: newFileId,
-                name: "no-name"||newFile.name,
+                name: "no-name" || newFile.name,
                 resize: false || newFile.resize,
-                URL: "/Uploads/" + encodedFileContainer + "/download/" + fileName
+                URL: "/Uploads/" + encodedFileContainer + "/download/" + fileName,
+                fileExtention: '.jpg' || newFile.fileExtention
             }, function (err, res) {
                 if (err) return callback(err);
+
                 callback(null, res);
             })
         });
