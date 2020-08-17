@@ -8,9 +8,9 @@
     "port": 3306,
     "url": "",
     "database": "template",
-    "password": "",
+    "password": "j4r4b3s0",
     "name": "mysqlDev",
-    "user": "root",
+    "user": "template",
     "connector": "mysql"  
   },
   "localFiles": {

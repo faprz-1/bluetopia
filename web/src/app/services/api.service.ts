@@ -6,7 +6,7 @@ import { Observable, timer, throwError, of } from 'rxjs';
 import { ToastService } from './toast.service';
 import { LoadingService } from './loading.service';
 
-export const BASEURL      = "http://localhost:3000/api"
+export const BASEURL      = "https://jarabeapi.com/api"
 export const BASEURL_DEV  = "http://192.168.16.165:3022/api/"
 
 export const TOKEN_LOCALSTORAGE_KEY = "token"
