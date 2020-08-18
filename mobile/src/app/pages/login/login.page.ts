@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ComponentBase } from 'src/app/base/component-base';
 
 import * as moment from 'moment';
+import { environment } from 'src/environments/environment';
 
 class Account {
   email: string;
   password: string;
   ttl:number;
 }
-
 @Component({
   selector: 'template-login-page',
   templateUrl: './login.page.html',
@@ -19,6 +19,7 @@ export class LoginPage extends ComponentBase implements OnInit {
   dontClose : boolean = true;
   loggedUser:any;
 
+  environment = environment;
   ngOnInit() {
     this.disableMenu();
   }

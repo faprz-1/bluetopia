@@ -5,9 +5,9 @@ import { ToastController } from '@ionic/angular';
 
 import { retryWhen, mergeMap, tap, delay, catchError } from 'rxjs/operators'; 
 import { Observable, timer, throwError, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
-export const BASEURL             = "https://jarabeapi.com/api"
-export const BASEURL_DEV         = "http://192.168.16.165:3022/api/"
+export const BASEURL             = environment.baseURL
 const HTTP_HEADERS        = new HttpHeaders({'Content-Type': 'application/json'});
 const RETRY_ATTEMPTS      = 5
 const RETRY_STATUS_CODES  = [ 408, 429, 504]
@@ -72,7 +72,7 @@ export class ApiService {
   private genLink(endPoint: string, useToken: boolean, getVars: any[] = []): string {
     useToken = useToken && this.token && this.token.length > 0;
 
-    let baseURL = (this.debugMode ? BASEURL_DEV : BASEURL) + endPoint + "?";
+    let baseURL = BASEURL + endPoint + "?";
     if(getVars != null && getVars.length > 0) {
       for(let variable of getVars) 
         baseURL = `${baseURL}${variable}=${getVars[variable]}&`;
@@ -121,6 +121,6 @@ export class ApiService {
   }
 
   public getBaseURL(){
-    return this.debugMode ? BASEURL_DEV : BASEURL
+    return BASEURL;
   }
 }

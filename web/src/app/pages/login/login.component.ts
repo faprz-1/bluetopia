@@ -7,6 +7,7 @@ import { NotificationService } from '../../services/notification.service';
 
 import * as moment from 'moment';
 import { PushService } from '../../services/push.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,8 @@ import { PushService } from '../../services/push.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
+  environment = environment;
 
   passwordForgotten:boolean = false;
   public procesando: boolean = false;

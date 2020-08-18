@@ -3,7 +3,9 @@
         <ion-row class="ion-justify-content-center ion-no-padding">
           <ion-col size="12" size-md="8" size-lg="6">
     <div class="welcome-screen">
-        <h3>JarabeTemplate</h3>
+        <h3 *ngIf="environment.production && !environment.staging">JarabeTemplate</h3>
+        <h3 *ngIf="!environment.production && environment.staging">JarabeTemplate staging</h3>
+        <h3 *ngIf="!environment.production && !environment.staging">JarabeTemplate LOCAL</h3>
         <img src="/assets/img/logo.png">
     </div>
 

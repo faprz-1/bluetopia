@@ -3,7 +3,9 @@
     <div class="col-auto">
       <!-- <div class="title colorPrincipal">JarabeSoft</div> -->
       <img class="logo-img" src="assets/img/logo.png" alt="">
-      <div class="lema">Jarabe Template</div>
+      <div class="lema" *ngIf="environment.production && !environment.staging">JarabeTemplate</div>
+      <div class="lema" *ngIf="!environment.production && environment.staging">JarabeTemplate STAGING</div>
+      <div class="lema" *ngIf="!environment.production && !environment.staging">JarabeTemplate LOCAL</div>
     </div>
   </div>
 

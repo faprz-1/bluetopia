@@ -6,8 +6,7 @@ import { Observable, timer, throwError, of } from 'rxjs';
 import { ToastService } from './toast.service';
 import { LoadingService } from './loading.service';
 
-export const BASEURL      = "https://jarabeapi.com/api"
-export const BASEURL_DEV  = "http://192.168.16.165:3022/api/"
+import { environment } from '../../environments/environment'
 
 export const TOKEN_LOCALSTORAGE_KEY = "token"
 export const USER_LOCALSTORAGE_KEY  = "user"
@@ -44,7 +43,7 @@ export class ApiService
 
   public GetBaseURL()
   {
-    return this.debugMode ? BASEURL_DEV : BASEURL;
+    return environment.baseURL;
   }
 
   private GetHeaders() : HttpHeaders {
