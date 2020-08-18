@@ -49,8 +49,12 @@ export class AppComponent {
         } else {
           this.navController.navigateRoot('/login')
         }
-        this.statusBar.styleDefault();
-        this.splashScreen.hide();
+        this.statusBar.styleLightContent();
+        setTimeout(
+          ()=>
+            this.splashScreen.hide()
+          ,2000
+        )
   
         this.initializeEvents();
       })
