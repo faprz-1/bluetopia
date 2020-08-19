@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
   staging: false,
-  baseURL: "https://template.jarabeapi.com/"
+  baseURL: "https://template.jarabeapi.com/api"
 };
 
