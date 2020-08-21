@@ -13,15 +13,15 @@
         <ion-card-content>
             <ion-row>
                 <ion-col size="12">
-                    <ion-label position="floating">Email</ion-label>
-                    <ion-input placeholder="Correo electrónico" type="email" [(ngModel)]="loginAccount.email"></ion-input>
+                    <ion-label position="floating"> {{'loginPage.emailLabel' | translate}} </ion-label>
+                    <ion-input placeholder="{{'loginPage.emailPlaceholder' | translate}}" type="email" [(ngModel)]="loginAccount.email"></ion-input>
                 </ion-col>
             </ion-row>
 
             <ion-row>
                 <ion-col size="12">
-                    <ion-label position="floating">Contraseña</ion-label>
-                    <ion-input placeholder="Contraseña" type="password" [(ngModel)]="loginAccount.password"></ion-input>
+                    <ion-label position="floating"> {{'loginPage.passwordLabel' | translate}} </ion-label>
+                    <ion-input placeholder="{{'loginPage.passwordPlaceholder' | translate}}" type="password" [(ngModel)]="loginAccount.password"></ion-input>
                 </ion-col>
             </ion-row>
 
@@ -29,14 +29,14 @@
                 <ion-col size="12">
                     <ion-item>
                         <ion-checkbox slot="start" color="secondary" [(ngModel)]="dontClose"></ion-checkbox>
-                        <ion-label >Mantener sesion iniciada</ion-label>
+                        <ion-label> {{'loginPage.keepSessionAlive' | translate}} </ion-label>
                     </ion-item>
                 </ion-col>
             </ion-row>
 
             <ion-row>
                 <ion-col size="12">
-                    <ion-button color="primary" (click)="OnLogin()">Login</ion-button>
+                    <ion-button color="primary" (click)="OnLogin()">{{'loginPage.loginButton' | translate}}</ion-button>
                 </ion-col>
             </ion-row>
 

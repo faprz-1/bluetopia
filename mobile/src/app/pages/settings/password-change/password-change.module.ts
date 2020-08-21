@@ -23,7 +23,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
-    TranslateModule.forRoot(),
+    TranslateModule.forChild(),
     ComponentsModule
   ],
   declarations: [PasswordChangePage]

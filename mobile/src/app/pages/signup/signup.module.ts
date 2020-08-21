@@ -22,7 +22,7 @@ const routes: Routes = [
     IonicModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
-    TranslateModule.forRoot(),
+    TranslateModule.forChild(),
     ComponentsModule
   ],
   declarations: [SignupPage]

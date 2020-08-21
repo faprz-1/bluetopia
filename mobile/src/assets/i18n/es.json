@@ -1,0 +1,19 @@
+{
+    "loginPage": {
+        "emailLabel": "Correo electrónico",
+        "emailPlaceholder": "Correo electrónico",
+        "passwordLabel": "Constraseña",
+        "passwordPlaceholder": "Constraseña",
+        "loginButton": "Entrar",
+        "alertHeader": "Error",
+        "alertSubHeader": "Algo salió mal.",
+        "alertButtonText": "Aceptar",
+        "updateAlertHeader": "Hay una nueva actualización.",
+        "keepSessionAlive": "Mantener sesión iniciada",
+        "updateAlertSubHeader": "Es necesario actualizar a la última versión de la aplicación.",
+        "updateAlertButtonText": "Actualizar"
+    },
+    "appComponent": {
+        "logoutLabel": "Cerrar sesión"
+    }
+}

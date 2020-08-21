@@ -15,7 +15,7 @@ import { unit_currency } from "../../pipes/unit_currency.pipe";
     CommonModule,
     FormsModule,
     IonicModule,
-    TranslateModule.forRoot(),
+    TranslateModule.forChild(),
     IonicStorageModule.forRoot()
   ],
   declarations: [

@@ -1,0 +1,19 @@
+{
+    "loginPage": {
+        "emailLabel": "Email",
+        "emailPlaceholder": "Email",
+        "passwordLabel": "Password",
+        "passwordPlaceholder": "Password",
+        "loginButton": "Login",
+        "alertHeader": "There is an error.",
+        "alertSubHeader": "Somethings went wrong",
+        "alertButtonText": "Ok",
+        "updateAlertHeader": "There is a new update.",
+        "keepSessionAlive": "keep my session alive.",
+        "updateAlertSubHeader": "It is necessary to update to the latest version of the application",
+        "updateAlertButtonText": "Update"
+    },
+    "appComponent": {
+        "logoutLabel": "LogOut"
+    }
+}

@@ -21,7 +21,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    TranslateModule.forRoot(),
+    TranslateModule.forChild(),
     ComponentsModule
   ],
   declarations: [LoginPage]

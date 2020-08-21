@@ -22,6 +22,8 @@ export class LoginPage extends ComponentBase implements OnInit {
   environment = environment;
   ngOnInit() {
     this.disableMenu();
+   console.log("translate",this.translate);
+   
   }
 
   public async OnLogin() {
