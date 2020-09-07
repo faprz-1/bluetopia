@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { PasswordRecoveryPage } from './password-recovery.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
+    TranslateModule.forChild(),
     ComponentsModule
   ],
   declarations: [PasswordRecoveryPage]

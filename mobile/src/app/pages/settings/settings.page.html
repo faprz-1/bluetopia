@@ -3,19 +3,19 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Ajustes</ion-title>
+    <ion-title>{{'settings.title' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
     <ion-list>
       <ion-item (click)="openPasswordChangePage()">
-        <p>Cambiar contraseña</p>
+        <p>{{'settings.changePassword.title' | translate}}</p>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-item>
 
       <ion-item class="logout" ion-item (click)="logout()">
-        <p>Cerrar sesión</p>
+        <p>{{'settings.logOut' | translate}}</p>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-item>
     </ion-list>

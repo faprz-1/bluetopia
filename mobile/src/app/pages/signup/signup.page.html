@@ -1,60 +1,50 @@
 <ion-content class="background-gradient-primary">
-
+    
     <div class="welcome-screen">
-        <!-- <h3>JarabeTemplate</h3> -->
         <img src="/assets/img/logo.png">
+        <h3>{{'signUp.title' | translate}}</h3>
     </div>
+<ion-row class="ion-justify-content-center">
+    <ion-col size="12" size-md="8" size-lg="6">
 
     <ion-card class="login-card">
         <ion-card-content >
             <form [formGroup]="signupForm">
-                <ion-row>
-                    <ion-col size="12">
-                        <ion-label position="floating">Usuario</ion-label>
-                        <ion-input placeholder="Nombre de usuario" type="text" formControlName="username"></ion-input>
+                
+                        <ion-label position="floating">{{'signUp.typeUserName' | translate}}</ion-label>
+                        <ion-input placeholder="{{'signUp.typeUserNamePlaceholder' | translate}}" type="text" formControlName="username"></ion-input>
                         <!--  <mat-error *ngIf="myForm.hasError('required', 'password')">
                             Please enter your new password
                         </mat-error> -->
-                    </ion-col>
-                </ion-row>
+                    
 
-                <ion-row>
-                    <ion-col size="12">
-                        <ion-label position="floating">Email</ion-label>
-                        <ion-input placeholder="Correo electrónico" type="email" formControlName="email"></ion-input>
-                    </ion-col>
-                </ion-row>
+                
+                        <ion-label position="floating">{{'signUp.typeMail' | translate}}</ion-label>
+                        <ion-input placeholder="{{'signUp.typeMailPlaceholder' | translate}}" type="email" formControlName="email"></ion-input>
+                    
 
-                <ion-row>
-                    <ion-col size="12">
-                        <ion-label position="floating">Contraseña</ion-label>
+                
+                        <ion-label position="floating">{{'signUp.typePassword' | translate}}</ion-label>
                         <!-- <ion-input placeholder="Contraseña" type="password" (keyup.enter)="OnLogin()" formControlName="password"></ion-input> -->
-                        <ion-input placeholder="Contraseña" type="password" formControlName="password"></ion-input>
-                    </ion-col>
-                </ion-row>
+                        <ion-input placeholder="{{'signUp.typePasswordPlaceholder' | translate}}" type="password" formControlName="password"></ion-input>
+                    
 
-                <ion-row>
-                    <ion-col size="12">
-                        <ion-label position="floating">Repetir Contraseña</ion-label>
+                
+                        <ion-label position="floating">{{'signUp.typeRepeatPassword' | translate}}</ion-label>
                         <!-- <ion-input placeholder="Contraseña" type="password" (keyup.enter)="OnLogin()" formControlName="repeatPassword"></ion-input> -->
-                        <ion-input placeholder="Contraseña" type="password" formControlName="repeatPassword"></ion-input>
-                    </ion-col>
-                </ion-row>
+                        <ion-input placeholder="{{'signUp.typeRepeatPasswordPlaceholder' | translate}}" type="password" formControlName="repeatPassword"></ion-input>
+                    
 
             </form>
-            <ion-row>
-                <ion-col size="12">
-                    <ion-button color="primary" [disabled]="!this.signupForm.valid" (click)="OnSignup()">Ingresar</ion-button>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col size="12">
-                    <div color="secondary" class="login-label" (click)="goToUrl('/login');">Ya tengo cuenta</div>
-                </ion-col>
-            </ion-row>
+            
+                    <ion-button color="primary" [disabled]="!this.signupForm.valid" (click)="OnSignup()">{{'signUp.register' | translate}}</ion-button>
+            
+                    <div color="secondary" class="login-label" (click)="goToUrl('/login');" [innerHTML]="'signUp.alreadyAnAccount' | translate"></div>
 
             <template-social-media-login-buttons (onSocialLoginStart)="OnSocialLoginStart()" (onSocialLoginSuccess)="GetUserWithAPIToken($event)" (onSocialLoginError)="OnSocialLoginError($event)"></template-social-media-login-buttons>
         </ion-card-content>
     </ion-card>
 
+</ion-col>
+</ion-row>
 </ion-content>

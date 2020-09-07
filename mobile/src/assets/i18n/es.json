@@ -13,6 +13,52 @@
         "updateAlertSubHeader": "Es necesario actualizar a la última versión de la aplicación.",
         "updateAlertButtonText": "Actualizar"
     },
+    "signUp": {
+        "title": "Crear cuenta",
+        "typeUserName": "Nombre",
+        "typeUserNamePlaceholder": "Nombre y apellidos",
+        "typeMail": "Email",
+        "typeMailPlaceholder": "Correo electronico",
+        "typePassword": "Contraseña",
+        "typePasswordPlaceholder": "Contraseña",
+        "typeRepeatPassword": "Repetir contraseña",
+        "typeRepeatPasswordPlaceholder": "Contraseña",
+        "register": "Registrar",
+        "alreadyAnAccount": "<i>Ya tengo una cuenta</i>"
+    },
+    "passwordRecovery": {
+        "title": "Recuperar Contraseña",
+        "typeMail": "Ingresa aqui tu email de la cuenta para recuperar",
+        "typeMailPlaceholder": "Correo electrónico",
+        "continue": "Continuar",
+        "cancel": "Cancelar",
+        "back": "Volver",
+        "typePin": "Ingresar PIN",
+        "typePinPlaceholcer": "0000",
+        "typeNewPassword": "Ingresa tu nueva contraseña",
+        "typeNewPasswordPlaceholcer": "contraseña",
+        "endProcess": "Terminar"
+    },
+    "settings": {
+        "title": "Ajustes",
+        "logOut": "Terminar sesion",
+        "changePassword": {
+            "title": "Cambiar contraseña",
+            "previusPassword": "Contraseña anterior",
+            "previusPasswordPlaceholder": "Contraseña anterior",
+            "newPassword": "Nueva contraseña",
+            "newPasswordPlaceholder": "Contraseña",
+            "repeatPassword": "Confirmación de Nueva contraseña",
+            "repeatPasswordPlaceholder": "Confirmar Contraseña",
+            "save": "Guardar",
+            "cancel": "Cancelar"
+        }
+    },
+    "profile": {
+        "title": "Perfil",
+        "name": "Nombre",
+        "mail": "Correo:"
+    },
     "appComponent": {
         "logoutLabel": "Cerrar sesión"
     }

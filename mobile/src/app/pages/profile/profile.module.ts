@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { JarabeAngularPipesModule } from 'jarabe-angular-pipes';
 
 import { ProfilePage } from './profile.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     JarabeAngularPipesModule,
+    TranslateModule.forChild(),
     RouterModule.forChild(routes)
   ],
   declarations: [ProfilePage]
