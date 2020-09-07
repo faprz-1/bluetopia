@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Perfil</ion-title>
+    <ion-title>{{'profile.title' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -19,7 +19,7 @@
     <ng-container *ngIf="loggedUser!=null">
         <ion-list text-wrap>
           <ion-item no-lines>
-            <ion-label>Usuario</ion-label>
+            <ion-label>{{'profile.name' | translate}}</ion-label>
             <ion-text>
               <strong>
                 {{loggedUser?.username}}
@@ -36,17 +36,17 @@
             </ion-text>
           </ion-item> -->
     
-          <ion-item no-lines *ngIf="loggedUser?.phone">
+          <!-- <ion-item no-lines *ngIf="loggedUser?.phone">
             <ion-label>Teléfono:</ion-label>
             <ion-text>
               <strong>
                 {{loggedUser?.phone ? loggedUser?.phone :'---'}}
               </strong>
             </ion-text>
-          </ion-item>
+          </ion-item> -->
     
           <ion-item no-lines>
-            <ion-label>Correo:</ion-label>
+            <ion-label>{{'profile.mail' | translate}}</ion-label>
             <ion-text>
               <strong>
                 {{loggedUser?.email}}

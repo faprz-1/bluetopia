@@ -6,60 +6,60 @@
         "passwordPlaceholder": "Password",
         "loginButton": "Login",
         "alertHeader": "There is an error.",
-        "alertSubHeader": "Somethings went wrong",
+        "alertSubHeader": "Something went wrong",
         "alertButtonText": "Ok",
-        "updateAlertHeader": "There is a new update.",
+        "updateAlertHeader": "There is an update.",
         "keepSessionAlive": "keep my session alive.",
-        "updateAlertSubHeader": "It is necessary to update to the latest version of the application",
+        "updateAlertSubHeader": "You need to update to the latest version of the app",
         "updateAlertButtonText": "Update"
     },
     "signUp": {
-        "title": "Crear cuenta",
-        "typeUserName": "Nombre",
-        "typeUserNamePlaceholder": "Nombre y apellidos",
+        "title": "Create Account",
+        "typeUserName": "Name",
+        "typeUserNamePlaceholder": "Type your Name and last name",
         "typeMail": "Email",
-        "typeMailPlaceholder": "Correo electronico",
-        "typePassword": "Contraseña",
-        "typePasswordPlaceholder": "Contraseña",
-        "typeRepeatPassword": "Repetir contraseña",
-        "typeRepeatPasswordPlaceholder": "Contraseña",
-        "register": "Registrar",
-        "alreadyAnAccount": "<i>Ya tengo una cuenta</i>"
+        "typeMailPlaceholder": "Type your email",
+        "typePassword": "Password",
+        "typePasswordPlaceholder": "Type your password",
+        "typeRepeatPassword": "Confirm your password",
+        "typeRepeatPasswordPlaceholder": "Repeat your password",
+        "register": "Sign Up",
+        "alreadyAnAccount": "<i>Already have an account</i>"
     },
     "passwordRecovery": {
-        "title": "Recuperar Contraseña",
-        "typeMail": "Ingresa aqui tu email de la cuenta para recuperar",
-        "typeMailPlaceholder": "Correo electrónico",
-        "continue": "Continuar",
-        "cancel": "Cancelar",
-        "back": "Volver",
-        "typePin": "Ingresar PIN",
+        "title": "Forgot your password?",
+        "typeMail": "Type in your email that's linked to the app, and we'll send you a link to set up your new password.",
+        "typeMailPlaceholder": "Type your email",
+        "continue": "Send email",
+        "cancel": "Cancel",
+        "back": "Return",
+        "typePin": "Type the 4 digit PIN that was sent to your email",
         "typePinPlaceholcer": "0000",
-        "typeNewPassword": "Ingresa tu nueva contraseña",
-        "typeNewPasswordPlaceholcer": "contraseña",
-        "endProcess": "Terminar"
+        "typeNewPassword": "Type your new password",
+        "typeNewPasswordPlaceholcer": "New Password",
+        "endProcess": "Done!"
     },
     "settings": {
-        "title": "Ajustes",
-        "logOut": "Terminar sesion",
+        "title": "Settings",
+        "logOut": "Exit",
         "changePassword": {
-            "title": "Cambiar contraseña",
-            "previusPassword": "Contraseña anterior",
-            "previusPasswordPlaceholder": "Contraseña anterior",
-            "newPassword": "Nueva contraseña",
-            "newPasswordPlaceholder": "Contraseña",
-            "repeatPassword": "Confirmación de Nueva contraseña",
-            "repeatPasswordPlaceholder": "Confirmar Contraseña",
-            "save": "Guardar",
-            "cancel": "Cancelar"
+            "title": "Change Password",
+            "previusPassword": "Current Password",
+            "previusPasswordPlaceholder": "Type your current password",
+            "newPassword": "New password",
+            "newPasswordPlaceholder": "Type your new password",
+            "repeatPassword": "Repeat your new password",
+            "repeatPasswordPlaceholder": "New password",
+            "save": "Save changes",
+            "cancel": "Cancel"
         }
     },
     "profile": {
-        "title": "Perfil",
-        "name": "Nombre",
-        "mail": "Correo:"
+        "title": "My Profile",
+        "name": "Name",
+        "mail": "Email:"
     },
     "appComponent": {
-        "logoutLabel": "LogOut"
+        "logoutLabel": "Exit"
     }
 }
