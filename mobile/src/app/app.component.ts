@@ -9,6 +9,7 @@ import { PushService } from './services/push.service';
 import { EventsService } from './services/events.service';
 import { ApiService } from './services/api.service';
 import { TranslateService } from '@ngx-translate/core';
+import { UserDataService } from './services/user-data.service';
 
 @Component({
   selector: 'app-root',
@@ -28,39 +29,25 @@ export class AppComponent {
     private storage: Storage,
     private api: ApiService,
     private translate: TranslateService,
+    private userData: UserDataService,
     private pushService: PushService
   ) {
+    this.initializeEvents();
     this.initializeApp();
     this.InitTranslate();
   }
+  subscription:any;
 
   initializeApp() {
     this.platform.ready().then(() => {
       this.pushService.startUpCOnfig();
-      this.storage.get('token').then((token)=>{
-        if(token){
-          this.pushService.updatePushToken();
-          this.storage.get("ttl").then((ttl)=>{ 
-            if((ttl != null && moment().isAfter(moment(ttl.created).add(ttl.ttl,"s")))&& ttl.ttl!=-1) {
-              this.storage.clear()
-              this.navController.navigateRoot('/login')
-            }
-            else {
-              this.getUserData();
-            }
-          });
-        } else {
-          this.navController.navigateRoot('/login')
-        }
+      this.userData.getUserData();
         this.statusBar.styleLightContent();
         setTimeout(
           ()=>
             this.splashScreen.hide()
-          ,2000
+          ,1000
         )
-  
-        this.initializeEvents();
-      })
     });
   }
 
@@ -77,21 +64,14 @@ export class AppComponent {
   }
 
   public initializeEvents() {
-    let _this = this;
-    this.events.getObservable("user:logged").subscribe((data) => {
-        _this.getUserData();
-    });
+    this.subscription = this.userData.loggedUser$.subscribe((user)=>{
+    this.user = user;
+      console.log("this.user after event",user);
+      this.InitializeMenu()
+    })
   }
 
-  private async getUserData(data : any = null) {
-    this.user = await this.storage.get("user");
-    if(this.user != null) {
-      if(this.user.role.name == "Admin" || this.user.role.name == "User") {
-        this.navController.navigateRoot('/dashboard')
-        this.InitializeMenu()
-      }
-    }
-  }
+
   InitializeMenu(){
     this.menuItemsUser = [
       {

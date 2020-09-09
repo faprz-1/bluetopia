@@ -10,6 +10,7 @@ import { PushService } from '../services/push.service';
 import { EventsService } from '../services/events.service';
 import { GetImageService } from '../services/get-image.service';
 import { Directive } from "@angular/core";
+import { UserDataService } from '../services/user-data.service';
 
 const BASE_LOADING_MESSAGE = "Cargando..."
 const BASE_LOADING_DURATION = 2000
@@ -38,6 +39,7 @@ export class ComponentBase {
         public imageService: GetImageService,
         public camera: Camera,
         public translate: TranslateService,
+        public userData: UserDataService,
         public api: ApiService,
         public notifications: NotificationsService,
         public pushService: PushService

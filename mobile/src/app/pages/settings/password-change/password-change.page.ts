@@ -47,25 +47,18 @@ export class PasswordChangePage extends ComponentBase implements OnInit {
 
   public async GetUserWithAPIToken(token) {
     this.ShowLoading();
-    await this.storage.clear();
-    await this.api.setToken(token.id);
+    if(token){
+      this.userData.GetUserWithAPIToken(token)
+      await this.AfterSuccessfulSignup();
+    }else{
 
-    this.api.get("/Usuarios/withCredentials", true).subscribe(
-      userFromServer => this.SaveUserData(userFromServer,token),
-      error => this.HandleAPIError(error)
-    )
-  }
-
-  private async SaveUserData(userFromServer: JSON,token) {
-    await this.storage.set("user", userFromServer);
-    await this.storage.set("ttl", token);
-    await this.AfterSuccessfulSignup();
+    }
   }
 
   private async AfterSuccessfulSignup() {
     this.DismissLoading();
     this.enableMenu();
-    this.events.publish('user:logged', true);
+    this.userData.loggedUser$.emit(true);
     this.navController.navigateRoot('dashboard');
   }
 

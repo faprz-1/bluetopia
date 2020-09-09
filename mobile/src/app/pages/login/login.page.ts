@@ -17,7 +17,6 @@ class Account {
 export class LoginPage extends ComponentBase implements OnInit {
   loginAccount: Account = new Account();
   dontClose : boolean = true;
-  loggedUser:any;
 
   environment = environment;
   ngOnInit() {
@@ -34,29 +33,17 @@ export class LoginPage extends ComponentBase implements OnInit {
       delete this.loginAccount.ttl;
     }
     this.api.post("/Usuarios/login", this.loginAccount, false).subscribe(
-      userToken => this.GetUserWithAPIToken(userToken),
+      userToken => {
+      this.GetUserCredentials(userToken);
+      },
       error => this.HandleAPIError(error)
     )
   }
-
-  public async GetUserWithAPIToken(token) {
-    this.ShowLoading()
-    await this.storage.clear()
-    await this.api.setToken(token.id)
-
-    this.api.get("/Usuarios/withCredentials", true).subscribe(
-      userFromServer => this.SaveUserData(userFromServer,token),
-      error => this.HandleAPIError(error)     
-    )
-  }
-
-  private async SaveUserData(userFromServer: JSON,token) {
-    this.loggedUser = userFromServer;
-    await this.storage.set("user", userFromServer)
-    await this.storage.set("ttl", token)
-    this.pushService.updatePushToken();
-    await this.AfterSuccessfulLogin()
-  }  
+GetUserCredentials(token){
+  this.userData.GetUserWithAPIToken(token).then(()=>{
+    this.AfterSuccessfulLogin();
+  },error => this.HandleAPIError(error))
+}
 
   public async OnSocialLoginStart() {
     this.ShowLoading()
@@ -69,9 +56,10 @@ export class LoginPage extends ComponentBase implements OnInit {
   private async AfterSuccessfulLogin() {
     this.DismissLoading()
     this.enableMenu()
-    this.events.publish('user:logged', true)
-    
-    // if(this.loggedUser.role.id == 2) {
+   
+    // if(this.userData.loggedUser.role.id == 2) {
+    //   this.navController.navigateRoot('refounds')
+    // } else {
       this.navController.navigateRoot('dashboard')
     // }
   }

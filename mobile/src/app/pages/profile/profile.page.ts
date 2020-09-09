@@ -73,18 +73,17 @@ export class ProfilePage extends ComponentBase {
     }
   }
 
-  private async saveProfilePic(newImage: any){
-
-    this.api.post("/Usuarios/" + this.loggedUser.id + "/changeProfileImage", { newImage: newImage }, true).subscribe((res: any) => {
-      this.loggedUser.profileImage = res.profileImage;
-      this.loggedUser.imgperfil = this.loggedUser.profileImage != null ? this.api.getBaseURL() + this.loggedUser.profileImage.URL : this.api.getBaseURL()
-      this.storage.set("user", this.loggedUser).then(() => {
-        this.events.publish("user:updated", true);
+private async saveProfilePic(newImage: any){
+    
+    this.api.post("/Usuarios/" + this.user.id + "/changeProfileImage",{ newImage: newImage }, true).subscribe((res: any) => {
+      this.user.profileImage = res.profileImage;
+      this.storage.set("user", this.user).then(() => {
+      // this.userData.GetUserWithAPIToken(this.api.token);
+       this.ShowToast('guardado', 2000)
+       this.userData.getUserData();
       })
-      this.DismissLoading()
     }, err => {
        this.ShowToast('Error al actualizar imagen de perfil', 3000)
-       this.DismissLoading()
     });
   }
 
