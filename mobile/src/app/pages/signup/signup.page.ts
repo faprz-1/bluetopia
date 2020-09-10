@@ -1,20 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import { ComponentBase } from 'src/app/base/component-base';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { NavController } from '@ionic/angular';
+
+import { MenuService } from '../../services/menu.service';
+import { LoadingService } from '../../services/loading.service';
+import { ApiService } from '../../services/api.service';
+import { EventsService } from '../../services/events.service';
+import { ToastAlertService } from '../../services/toast-alert.service';
 
 import * as moment from 'moment';
-
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
   styleUrls: ['./signup.page.scss'],
 })
-export class SignupPage extends ComponentBase implements OnInit {
+export class SignupPage implements OnInit {
   signupForm : FormGroup;
 
+  constructor(
+    protected navController: NavController,
+    protected loading: LoadingService,
+    public menu: MenuService,
+    protected events: EventsService,
+    public api: ApiService,
+    public toastAlert: ToastAlertService,
+    protected storage: Storage,
+  ){}
+
   ngOnInit() {
-    this.disableMenu();
+    this.menu.Disable();
 
     this.signupForm = new FormGroup({
       username: new FormControl('', Validators.required),
@@ -27,25 +42,25 @@ export class SignupPage extends ComponentBase implements OnInit {
   public async OnSignup() {
     if(!this.signupForm.valid)return;
     if(this.signupForm.value.password != this.signupForm.value.repeatPassword){
-      this.ShowToast("La contraseña no coincide")
+      this.toastAlert.ShowToast("La contraseña no coincide")
       return;
     }
 
-    this.ShowLoading()
+     this.loading.Show()
     this.api.post("/Usuarios/register", this.signupForm.value, false).subscribe(
       userToken => this.GetUserWithAPIToken(userToken),
-      error => this.HandleAPIError(error)
+      error => this.api.HandleAPIError(error)
     )
   }
 
   public async GetUserWithAPIToken(token) {
-    this.ShowLoading();
+     this.loading.Show();
     await this.storage.clear();
     await this.api.setToken(token.id);
 
     this.api.get("/Usuarios/withCredentials", true).subscribe(
       userFromServer => this.SaveUserData(userFromServer,token),
-      error => this.HandleAPIError(error)
+      error => this.api.HandleAPIError(error)
     )
   }
 
@@ -56,8 +71,8 @@ export class SignupPage extends ComponentBase implements OnInit {
   }  
 
   private async AfterSuccessfulSignup() {
-    this.DismissLoading();
-    this.enableMenu();
+    this.loading.Dismiss();
+    this.menu.Enable();
     this.events.publish('user:logged', true);
     this.navController.navigateRoot('dashboard');
   }
@@ -67,10 +82,10 @@ export class SignupPage extends ComponentBase implements OnInit {
   }
 
   public async OnSocialLoginStart() {
-    this.ShowLoading();
+     this.loading.Show();
   }
 
   public async OnSocialLoginError(data) {
-    this.ShowToast(data);
+    this.toastAlert.ShowToast(data);
   }
 }

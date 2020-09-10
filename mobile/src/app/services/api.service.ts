@@ -1,17 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
-import { ToastController } from '@ionic/angular';
+import { ToastController, NavController, MenuController } from '@ionic/angular';
 
 import { retryWhen, mergeMap, tap, delay, catchError } from 'rxjs/operators'; 
 import { Observable, timer, throwError, of } from 'rxjs';
-import { environment } from 'src/environments/environment';
 
-export const BASEURL             = environment.baseURL
+import { LoadingService } from './loading.service';
+import { ToastAlertService } from './toast-alert.service';
+
+export const BASEURL             = "https://jarabesystem.jarabeapi.com/api";
+export const BASEURL_DEV         = "http://192.168.16.165:3022/api/";
 const HTTP_HEADERS        = new HttpHeaders({'Content-Type': 'application/json'});
-const RETRY_ATTEMPTS      = 5
-const RETRY_STATUS_CODES  = [ 408, 429, 504]
-const RETRY_MILLISECONDS  = 10000
+const RETRY_ATTEMPTS      = 5;
+const RETRY_STATUS_CODES  = [ 408, 429, 504];
+const RETRY_MILLISECONDS  = 10000;
+const EXPIRED_CODE        = 401;
 
 
 @Injectable({
@@ -24,12 +28,15 @@ export class ApiService {
   constructor(
     private http: HttpClient, 
     private storage: Storage,
+    private navController: NavController,
     private toastController: ToastController,
+    private menuController: MenuController,
+    protected loading: LoadingService,
+    public toastAlert: ToastAlertService,
     ) { 
     this.getToken();
     this.getDebugMode();
   }
-
   
   public get(endPoint: string, getVariables : any = {}, useToken:boolean = true, displayErrors: boolean = true): Observable<JSON> {
     let link: string = this.genLink(endPoint, useToken, getVariables)
@@ -72,24 +79,30 @@ export class ApiService {
   private genLink(endPoint: string, useToken: boolean, getVars: any[] = []): string {
     useToken = useToken && this.token && this.token.length > 0;
 
-    let baseURL = BASEURL + endPoint + "?";
+    let baseURL = (this.debugMode ? BASEURL_DEV : BASEURL) + endPoint + "?";
     if(getVars != null && getVars.length > 0) {
       for(let variable of getVars) 
         baseURL = `${baseURL}${variable}=${getVars[variable]}&`;
     }
 
-    console.info(useToken ? baseURL + "access_token=" + this.token : baseURL)
     return useToken ? baseURL + "access_token=" + this.token : baseURL;
   }
 
   private retryOnConnectionError(errorResponse: Observable<any>, displayErrors): Observable<any> {
     return errorResponse.pipe(
       mergeMap( (error, retryAttempts) => {
+
+        if (error.status === EXPIRED_CODE) {
+          this.storage.clear();
+          this.navController.navigateRoot('/login');
+          this.menuController.enable(false, 'mainMenu');
+        }
+
         if(retryAttempts >= RETRY_ATTEMPTS || !RETRY_STATUS_CODES.find(code => error.status == code)) 
           return throwError(error)
 
         if(displayErrors)
-          this.showToast(`Connection lost. Retrying in ${RETRY_MILLISECONDS/1000} seconds...`, 1000);
+          this.toastAlert.ShowToast(`Connection lost. Retrying in ${RETRY_MILLISECONDS/1000} seconds...`, 1000);
 
         return timer(RETRY_MILLISECONDS)
       })
@@ -121,6 +134,13 @@ export class ApiService {
   }
 
   public getBaseURL(){
-    return BASEURL;
+    return this.debugMode ? BASEURL_DEV : BASEURL
+  }
+
+  public async HandleAPIError(error) {
+    this.loading.Show()
+    if(error.error.error != undefined) {
+        this.toastAlert.ShowToast(error.error.error.message);
+    }
   }
 }

@@ -1,15 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { ComponentBase } from 'src/app/base/component-base';
+import { NavController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
 })
-export class DashboardPage extends ComponentBase implements OnInit {
+export class DashboardPage implements OnInit {
 
   public loggedUser:any;
 
+  constructor(
+    protected storage: Storage,
+    protected navController: NavController,
+  ){}
 
   ngOnInit() { this.getProfile(); }
 

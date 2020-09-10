@@ -1,15 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { ComponentBase } from 'src/app/base/component-base';
-import { Storage } from "@ionic/storage";
+import { NavController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
+
+import { ToastAlertService } from '../../services/toast-alert.service';
+import { LoadingService } from '../../services/loading.service';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
 })
-export class SettingsPage extends ComponentBase implements OnInit {
+export class SettingsPage   implements OnInit {
 
   public loggedUser: any;
+
+  constructor(
+    protected navController: NavController,
+    protected loading: LoadingService,
+    protected storage: Storage,
+    public api: ApiService,
+    public toastAlert: ToastAlertService,
+  ){}
 
   ngOnInit() {
     this.getProfile();
@@ -25,22 +37,17 @@ export class SettingsPage extends ComponentBase implements OnInit {
   }
 
   public logout() {
-    this.ShowPromptAlert(
+    this.toastAlert.ShowPromptAlert(
       "¿Desea cerrar sesión?", 
       null, 
       'Si', 
       () => {
-        console.log("ASD")
         this.storage.clear();
-        this.DismissLoading();
+        this.loading.Dismiss();
         this.navController.navigateRoot('/login');
 
-        this.ShowLoading();
-        this.api.post("/Usuarios/logout", null, true).subscribe(async () => {
-          // await this.storage.clear();
-          // this.DismissLoading();
-          // this.navController.navigateRoot('/login');
-        })
+        this.loading.Show();
+        this.api.post("/Usuarios/logout", null, true).subscribe(async () => { })
       }, 
       'No', 
       () => {

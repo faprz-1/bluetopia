@@ -3,7 +3,6 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { Storage } from '@ionic/storage';
 
-import { ComponentBase } from 'src/app/base/component-base';
 import { NavController, AlertController, ToastController, ModalController, LoadingController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { SignInWithApple, AppleSignInResponse, AppleSignInErrorResponse, ASAuthorizationAppleIDRequest } from '@ionic-native/sign-in-with-apple/ngx';

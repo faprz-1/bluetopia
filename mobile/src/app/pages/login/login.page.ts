@@ -1,5 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ComponentBase } from 'src/app/base/component-base';
+import { NavController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
+import { TranslateService } from '@ngx-translate/core';
+
+import { MenuService } from '../../services/menu.service';
+import { LoadingService } from '../../services/loading.service';
+import { ApiService } from '../../services/api.service';
+import { PushService } from '../../services/push.service';
+import { EventsService } from '../../services/events.service';
+import { ToastAlertService } from '../../services/toast-alert.service';
 
 import * as moment from 'moment';
 import { environment } from 'src/environments/environment';
@@ -14,20 +23,33 @@ class Account {
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage extends ComponentBase implements OnInit {
+export class LoginPage implements OnInit {
   loginAccount: Account = new Account();
   dontClose : boolean = true;
   loggedUser:any;
 
   environment = environment;
+
+  constructor(
+    protected navController: NavController,
+    protected loading: LoadingService,
+    public menu: MenuService,
+    protected events: EventsService,
+    public api: ApiService,
+    public pushService: PushService,
+    public toastAlert: ToastAlertService,
+    public translate: TranslateService,
+    protected storage: Storage
+  ){}
+
   ngOnInit() {
-    this.disableMenu();
+    this.menu.Disable();
    console.log("translate",this.translate);
    
   }
 
   public async OnLogin() {
-    this.ShowLoading()
+     this.loading.Show()
     if(this.dontClose){
       this.loginAccount.ttl= -1
     }else{
@@ -35,18 +57,18 @@ export class LoginPage extends ComponentBase implements OnInit {
     }
     this.api.post("/Usuarios/login", this.loginAccount, false).subscribe(
       userToken => this.GetUserWithAPIToken(userToken),
-      error => this.HandleAPIError(error)
+      error => this.api.HandleAPIError(error)
     )
   }
 
   public async GetUserWithAPIToken(token) {
-    this.ShowLoading()
+     this.loading.Show()
     await this.storage.clear()
     await this.api.setToken(token.id)
 
     this.api.get("/Usuarios/withCredentials", true).subscribe(
       userFromServer => this.SaveUserData(userFromServer,token),
-      error => this.HandleAPIError(error)     
+      error => this.api.HandleAPIError(error)     
     )
   }
 
@@ -59,16 +81,16 @@ export class LoginPage extends ComponentBase implements OnInit {
   }  
 
   public async OnSocialLoginStart() {
-    this.ShowLoading()
+     this.loading.Show()
   }
 
   public async OnSocialLoginError(data) {
-    this.ShowToast(data)
+    this.toastAlert.ShowToast(data)
   }
 
   private async AfterSuccessfulLogin() {
-    this.DismissLoading()
-    this.enableMenu()
+    this.loading.Dismiss()
+    this.menu.Enable()
     this.events.publish('user:logged', true)
     
     // if(this.loggedUser.role.id == 2) {
