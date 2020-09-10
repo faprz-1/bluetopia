@@ -67,11 +67,9 @@ export class AppComponent {
   public goToUrl(url,type="push") {
     this.menuController.close();
     if(type=="push"){
-      console.log("pushh");
       
       this.navController.navigateForward(url);
     }else{
-      console.log("other");
       this.navController.navigateRoot(url);
     }
   }

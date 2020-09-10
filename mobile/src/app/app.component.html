@@ -5,9 +5,9 @@
         <ion-title>JarabeSoft</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content>
-      <ion-list>
-        <ion-item *ngIf="user!=null" (click)="goToUrl('/profile');"> 
+    <ion-content color="secondary">
+      <ion-list color="secondary">
+        <ion-item *ngIf="user!=null" (click)="goToUrl('/profile');" color="secondary"> 
           <ion-avatar slot="start">
             <img src="{{prepareURL(user?.profileImage,'avatar')}}" onerror="this.src='assets/img/avatar.jpg'">
           </ion-avatar>
