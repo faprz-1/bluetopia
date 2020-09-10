@@ -13,16 +13,16 @@
       <ion-button (click)="ShowChangeProfileImageOptions()">
         <ion-icon slot="icon-only" name="camera"></ion-icon>
       </ion-button>
-      <img [src]="loggedUser?.profileImage | jarabeImage:'medium':api" onerror="this.src='../../../assets/img/avatar.jpg'">
+      <img [src]="user?.profileImage | jarabeImage : size : api" onerror="this.src='../../../assets/img/avatar.jpg'">
     </div>
 
-    <ng-container *ngIf="loggedUser!=null">
+    <ng-container *ngIf="user!=null">
         <ion-list text-wrap>
           <ion-item no-lines>
             <ion-label>{{'profile.name' | translate}}</ion-label>
             <ion-text>
               <strong>
-                {{loggedUser?.username}}
+                {{user?.username}}
               </strong>
             </ion-text>
           </ion-item>
@@ -31,16 +31,16 @@
             <ion-label>Nombre</ion-label>
             <ion-text>
               <strong>
-                {{loggedUser?.teacher.middleName + ' ' + loggedUser?.teacher.lastName + ' ' + loggedUser?.teacher.name }}
+                {{user?.teacher.middleName + ' ' + user?.teacher.lastName + ' ' + user?.teacher.name }}
               </strong>
             </ion-text>
           </ion-item> -->
     
-          <!-- <ion-item no-lines *ngIf="loggedUser?.phone">
+          <!-- <ion-item no-lines *ngIf="user?.phone">
             <ion-label>Teléfono:</ion-label>
             <ion-text>
               <strong>
-                {{loggedUser?.phone ? loggedUser?.phone :'---'}}
+                {{user?.phone ? user?.phone :'---'}}
               </strong>
             </ion-text>
           </ion-item> -->
@@ -49,7 +49,7 @@
             <ion-label>{{'profile.mail' | translate}}</ion-label>
             <ion-text>
               <strong>
-                {{loggedUser?.email}}
+                {{user?.email}}
               </strong>
             </ion-text>
           </ion-item>

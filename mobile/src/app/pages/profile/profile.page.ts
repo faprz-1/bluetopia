@@ -9,8 +9,9 @@ import { Storage } from "@ionic/storage";
 })
 export class ProfilePage extends ComponentBase {
 
-  public loggedUser: any;
+  public user: any;
 
+  public size = "small";
 
   ngOnInit() {
     this.getProfile();
@@ -28,7 +29,7 @@ export class ProfilePage extends ComponentBase {
   }
 
   private async getProfile() {
-    this.loggedUser = await this.storage.get("user");
+    this.user = await this.storage.get("user");
   }
   async ShowChangeProfileImageOptions(){
 
@@ -76,10 +77,10 @@ export class ProfilePage extends ComponentBase {
 private async saveProfilePic(newImage: any){
     
     this.api.post("/Usuarios/" + this.user.id + "/changeProfileImage",{ newImage: newImage }, true).subscribe((res: any) => {
+      this.size = "";
       this.user.profileImage = res.profileImage;
       this.storage.set("user", this.user).then(() => {
       // this.userData.GetUserWithAPIToken(this.api.token);
-       this.ShowToast('guardado', 2000)
        this.userData.getUserData();
       })
     }, err => {
