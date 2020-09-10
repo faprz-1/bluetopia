@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ComponentBase } from 'src/app/base/component-base';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Storage } from '@ionic/storage';
+
+import { ApiService } from '../../../services/api.service';
+import { NavController } from '@ionic/angular';
+import { MenuService } from '../../../services/menu.service';
+import { LoadingService } from '../../../services/loading.service';
+import { EventsService } from '../../../services/events.service';
+import { ToastAlertService } from '../../../services/toast-alert.service';
+
 import * as moment from 'moment';
 
 @Component({
@@ -8,10 +16,21 @@ import * as moment from 'moment';
   templateUrl: './password-change.page.html',
   styleUrls: ['./password-change.page.scss'],
 })
-export class PasswordChangePage extends ComponentBase implements OnInit {
+export class PasswordChangePage   implements OnInit {
 
   public changePassForm: FormGroup;
-  
+  public user: any;
+
+  constructor(
+    protected navController: NavController,
+    protected loading: LoadingService,
+    protected storage: Storage,
+    public menu: MenuService,
+    protected events: EventsService,
+    public api: ApiService,
+    public toastAlert: ToastAlertService,
+    ){}
+
   ngOnInit() {
     this.changePassForm = new FormGroup({
       oldPassword: new FormControl('', Validators.required),
@@ -24,35 +43,35 @@ export class PasswordChangePage extends ComponentBase implements OnInit {
     if (!this.changePassForm.valid) {
       return;
     }
-    this.ShowLoading()
+    this.loading.Show()
     if (this.CheckNewPasswrd()) {
       await this.storage.get("user").then((user)=>{
-        this.user = user
+        this.user = this.storage.get("user");
       })
       let userLogin = { 'email' : this.user.email, 'password' : this.changePassForm.value.newPassword }
       this.api.post('/Usuarios/change-password', this.changePassForm.value).subscribe(
         output => this.login(userLogin),
-        error => this.HandleAPIError(error)
+        error => this.api.HandleAPIError(error)
       )
     }
   }
 
   public async login(data:any){
-    this.ShowLoading()
+    this.loading.Show()
     this.api.post("/Usuarios/login", data, false).subscribe(
       userToken => this.GetUserWithAPIToken(userToken),
-      error => this.HandleAPIError(error)
+      error => this.api.HandleAPIError(error)
     )
   }
 
   public async GetUserWithAPIToken(token) {
-    this.ShowLoading();
+    this.loading.Show();
     await this.storage.clear();
     await this.api.setToken(token.id);
 
     this.api.get("/Usuarios/withCredentials", true).subscribe(
       userFromServer => this.SaveUserData(userFromServer,token),
-      error => this.HandleAPIError(error)
+      error => this.api.HandleAPIError(error)
     )
   }
 
@@ -63,16 +82,16 @@ export class PasswordChangePage extends ComponentBase implements OnInit {
   }
 
   private async AfterSuccessfulSignup() {
-    this.DismissLoading();
-    this.enableMenu();
+    this.loading.Dismiss();
+    this.menu.Enable();
     this.events.publish('user:logged', true);
     this.navController.navigateRoot('dashboard');
   }
 
   private async CheckNewPasswrd() {
     if (this.changePassForm.value.newPassword != this.changePassForm.value.repPassword || this.changePassForm.value.newPassword == this.changePassForm.value.oldPassword) {
-      this.ShowToast('Hubo un error al cambiar la contraseña. Por favor revise si no hay errores.', 3000)
-      this.DismissLoading()
+      this.toastAlert.ShowToast('Hubo un error al cambiar la contraseña. Por favor revise si no hay errores.', 3000)
+      this.loading.Dismiss()
       return false
     } else { return true }
   }

@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ComponentBase } from 'src/app/base/component-base';
+import { NavController } from '@ionic/angular';
+
+import { LoadingService } from '../../services/loading.service';
+import { ApiService } from '../../services/api.service';
+import { ToastAlertService } from '../../services/toast-alert.service';
+import { EventsService } from '../../services/events.service';
+import { GetImageService } from '../../services/get-image.service';
+
 import { Storage } from "@ionic/storage";
 
 @Component({
@@ -7,17 +14,26 @@ import { Storage } from "@ionic/storage";
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
-export class ProfilePage extends ComponentBase {
+export class ProfilePage   {
 
   public loggedUser: any;
 
+  constructor(
+    protected storage: Storage,
+    protected navController: NavController,
+    public api: ApiService,
+    protected loading: LoadingService,
+    public toastAlert: ToastAlertService,
+    public events: EventsService,
+    public imageService: GetImageService,
+  ){}
 
   ngOnInit() {
     this.getProfile();
   }
 
   async errorAlert(msn) {
-    const alert = await this.alertController.create({
+    const alert = await this.toastAlert.alertController.create({
       header: 'Error',
       subHeader: '',
       message: msn,
@@ -32,7 +48,7 @@ export class ProfilePage extends ComponentBase {
   }
   async ShowChangeProfileImageOptions(){
 
-    const actionSheet = await this.actionSheetController.create({
+    const actionSheet = await this.toastAlert.actionSheetController.create({
       header: 'Obtener imagen de:',
       buttons: [
         {
@@ -81,10 +97,10 @@ export class ProfilePage extends ComponentBase {
       this.storage.set("user", this.loggedUser).then(() => {
         this.events.publish("user:updated", true);
       })
-      this.DismissLoading()
+      this.loading.Dismiss()
     }, err => {
-       this.ShowToast('Error al actualizar imagen de perfil', 3000)
-       this.DismissLoading()
+       this.toastAlert.ShowToast('Error al actualizar imagen de perfil', 3000)
+       this.loading.Dismiss()
     });
   }
 

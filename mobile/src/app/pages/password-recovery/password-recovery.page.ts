@@ -1,5 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ComponentBase } from 'src/app/base/component-base';
+import { NavController } from '@ionic/angular';
+
+import { MenuService } from '../../services/menu.service';
+import { LoadingService } from '../../services/loading.service';
+import { ApiService } from '../../services/api.service';
+import { ToastAlertService } from '../../services/toast-alert.service';
+
 import { IonSlides } from '@ionic/angular';
 
 @Component({
@@ -7,7 +13,7 @@ import { IonSlides } from '@ionic/angular';
   templateUrl: './password-recovery.page.html',
   styleUrls: ['./password-recovery.page.scss'],
 })
-export class PasswordRecoveryPage extends ComponentBase implements OnInit {
+export class PasswordRecoveryPage   implements OnInit {
   @ViewChild('slides', {static: true}) slides: IonSlides;
 
   email: string;
@@ -19,8 +25,16 @@ export class PasswordRecoveryPage extends ComponentBase implements OnInit {
     speed: 400
   };
 
+  constructor(
+    protected navController: NavController,
+    protected loading: LoadingService,
+    public menu: MenuService,
+    public api: ApiService,
+    public toastAlert: ToastAlertService,
+  ){}
+
   ngOnInit() {
-    this.disableMenu();
+    this.menu.Disable();
     this.slides.lockSwipes(true);
   }
 
@@ -36,18 +50,18 @@ export class PasswordRecoveryPage extends ComponentBase implements OnInit {
 
   public sendEmail(){
     //Validations
-    if(this.email == "" || !this.email) return this.ShowToast("Email inválido");
-    this.ShowLoading();
+    if(this.email == "" || !this.email) return this.toastAlert.ShowToast("Email inválido");
+    this.loading.Show();
     this.api.post("/PasswordResetPINs/createAndSend", { email : this.email }, false).subscribe(
       response => this.successfullStep("Correo enviado correctamente"),
-      error => this.HandleAPIError(error)     
+      error => this.api.HandleAPIError(error)     
     )
   }
 
   private async successfullStep(toastText: string = null) {
 
-    this.DismissLoading();
-    if(toastText) this.ShowToast(toastText);
+    this.loading.Dismiss();
+    if(toastText) this.toastAlert.ShowToast(toastText);
     this.slides.lockSwipes(false);
     this.slides.slideNext();
     this.slides.lockSwipes(true);
@@ -56,27 +70,27 @@ export class PasswordRecoveryPage extends ComponentBase implements OnInit {
 
   public validatePIN(){
     //Validations
-    this.ShowLoading()
+    this.loading.Show()
     this.api.post("/PasswordResetPINs/consume", { pin: this.pin, email: this.email }, false).subscribe(
       (response:any) => {
         if(response.msg == "Pin correcto"){
           this.successfullStep();
           return;
         }  
-        this.ShowToast(response.msg);
+        this.toastAlert.ShowToast(response.msg);
       } ,
-      error => this.HandleAPIError(error)     
+      error => this.api.HandleAPIError(error)     
     )
   }
 
   public setNewPassword(){
-    this.ShowLoading()
+    this.loading.Show()
     this.api.post("/PasswordResetPINs/resetPassword", { password: this.password , email: this.email }, false).subscribe(
       (response:any) => {
-        this.ShowToast("Contraseña actualizada");
+        this.toastAlert.ShowToast("Contraseña actualizada");
         this.goToUrl('/login');
       },
-      error => this.HandleAPIError(error)     
+      error => this.api.HandleAPIError(error)     
     )
   }
 
