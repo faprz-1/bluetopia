@@ -9,7 +9,7 @@ import { Observable, timer, throwError, of } from 'rxjs';
 import { LoadingService } from './loading.service';
 import { ToastAlertService } from './toast-alert.service';
 
-export const BASEURL             = "https://jarabesystem.jarabeapi.com/api";
+export const BASEURL             = "https://template.jarabeapi.com/api";
 export const BASEURL_DEV         = "http://192.168.16.165:3022/api/";
 const HTTP_HEADERS        = new HttpHeaders({'Content-Type': 'application/json'});
 const RETRY_ATTEMPTS      = 5;

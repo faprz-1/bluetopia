@@ -44,7 +44,6 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.menu.Disable();
-   console.log("translate",this.translate);
    
   }
 
