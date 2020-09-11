@@ -45,7 +45,7 @@
                     <div class="register-label" (click)="goToUrl('/signup');"><u> No tengo cuenta, quiero registrarme </u></div>
                 </ion-col>
             </ion-row>
-            <template-social-media-login-buttons (onSocialLoginStart)="OnSocialLoginStart()" (onSocialLoginSuccess)="GetUserWithAPIToken($event)" (onSocialLoginError)="OnSocialLoginError($event)"></template-social-media-login-buttons>
+            <template-social-media-login-buttons (onSocialLoginStart)="OnSocialLoginStart()" (onSocialLoginSuccess)="GetUserCredentials($event)" (onSocialLoginError)="OnSocialLoginError($event)"></template-social-media-login-buttons>
 
             <ion-row>
                 <ion-col size="12">

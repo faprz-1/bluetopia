@@ -8,6 +8,7 @@ import { EventsService } from '../../services/events.service';
 import { GetImageService } from '../../services/get-image.service';
 
 import { Storage } from "@ionic/storage";
+import { UserDataService } from 'src/app/services/user-data.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,18 +17,19 @@ import { Storage } from "@ionic/storage";
 })
 export class ProfilePage   {
 
-  public loggedUser: any;
+  public user: any;
 
   constructor(
     protected storage: Storage,
     protected navController: NavController,
     public api: ApiService,
+    public userData: UserDataService,
     protected loading: LoadingService,
     public toastAlert: ToastAlertService,
     public events: EventsService,
     public imageService: GetImageService,
   ){}
-
+  public size = "small";
   ngOnInit() {
     this.getProfile();
   }
@@ -44,7 +46,7 @@ export class ProfilePage   {
   }
 
   private async getProfile() {
-    this.loggedUser = await this.storage.get("user");
+    this.user = await this.storage.get("user");
   }
   async ShowChangeProfileImageOptions(){
 
@@ -89,18 +91,20 @@ export class ProfilePage   {
     }
   }
 
-  private async saveProfilePic(newImage: any){
-
-    this.api.post("/Usuarios/" + this.loggedUser.id + "/changeProfileImage", { newImage: newImage }, true).subscribe((res: any) => {
-      this.loggedUser.profileImage = res.profileImage;
-      this.loggedUser.imgperfil = this.loggedUser.profileImage != null ? this.api.getBaseURL() + this.loggedUser.profileImage.URL : this.api.getBaseURL()
-      this.storage.set("user", this.loggedUser).then(() => {
-        this.events.publish("user:updated", true);
+private async saveProfilePic(newImage: any){
+  this.loading.Show()
+    
+    this.api.post("/Usuarios/" + this.user.id + "/changeProfileImage",{ newImage: newImage }, true).subscribe((res: any) => {
+      this.size = "";
+      this.user.profileImage = res.profileImage;
+      this.storage.set("user", this.user).then(() => {
+      // this.userData.GetUserWithAPIToken(this.api.token);
+       this.userData.getUserData();
       })
       this.loading.Dismiss()
     }, err => {
+      this.loading.Dismiss()
        this.toastAlert.ShowToast('Error al actualizar imagen de perfil', 3000)
-       this.loading.Dismiss()
     });
   }
 

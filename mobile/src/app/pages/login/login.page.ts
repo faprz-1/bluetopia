@@ -12,6 +12,7 @@ import { ToastAlertService } from '../../services/toast-alert.service';
 
 import * as moment from 'moment';
 import { environment } from 'src/environments/environment';
+import { UserDataService } from 'src/app/services/user-data.service';
 
 class Account {
   email: string;
@@ -26,7 +27,6 @@ class Account {
 export class LoginPage implements OnInit {
   loginAccount: Account = new Account();
   dontClose : boolean = true;
-  loggedUser:any;
 
   environment = environment;
 
@@ -38,6 +38,7 @@ export class LoginPage implements OnInit {
     public api: ApiService,
     public pushService: PushService,
     public toastAlert: ToastAlertService,
+    public userData: UserDataService,
     public translate: TranslateService,
     protected storage: Storage
   ){}
@@ -55,29 +56,17 @@ export class LoginPage implements OnInit {
       delete this.loginAccount.ttl;
     }
     this.api.post("/Usuarios/login", this.loginAccount, false).subscribe(
-      userToken => this.GetUserWithAPIToken(userToken),
+      userToken => {
+      this.GetUserCredentials(userToken);
+      },
       error => this.api.HandleAPIError(error)
     )
   }
-
-  public async GetUserWithAPIToken(token) {
-     this.loading.Show()
-    await this.storage.clear()
-    await this.api.setToken(token.id)
-
-    this.api.get("/Usuarios/withCredentials", true).subscribe(
-      userFromServer => this.SaveUserData(userFromServer,token),
-      error => this.api.HandleAPIError(error)     
-    )
-  }
-
-  private async SaveUserData(userFromServer: JSON,token) {
-    this.loggedUser = userFromServer;
-    await this.storage.set("user", userFromServer)
-    await this.storage.set("ttl", token)
-    this.pushService.updatePushToken();
-    await this.AfterSuccessfulLogin()
-  }  
+GetUserCredentials(token){
+  this.userData.GetUserWithAPIToken(token).then(()=>{
+    this.AfterSuccessfulLogin();
+  },error => this.api.HandleAPIError(error))
+}
 
   public async OnSocialLoginStart() {
      this.loading.Show()
@@ -90,9 +79,10 @@ export class LoginPage implements OnInit {
   private async AfterSuccessfulLogin() {
     this.loading.Dismiss()
     this.menu.Enable()
-    this.events.publish('user:logged', true)
-    
-    // if(this.loggedUser.role.id == 2) {
+   
+    // if(this.userData.loggedUser.role.id == 2) {
+    //   this.navController.navigateRoot('refounds')
+    // } else {
       this.navController.navigateRoot('dashboard')
     // }
   }

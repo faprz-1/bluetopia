@@ -10,6 +10,7 @@ import { EventsService } from '../../../services/events.service';
 import { ToastAlertService } from '../../../services/toast-alert.service';
 
 import * as moment from 'moment';
+import { UserDataService } from 'src/app/services/user-data.service';
 
 @Component({
   selector: 'app-password-change',
@@ -28,6 +29,7 @@ export class PasswordChangePage   implements OnInit {
     public menu: MenuService,
     protected events: EventsService,
     public api: ApiService,
+    public userData: UserDataService,
     public toastAlert: ToastAlertService,
     ){}
 
@@ -66,25 +68,18 @@ export class PasswordChangePage   implements OnInit {
 
   public async GetUserWithAPIToken(token) {
     this.loading.Show();
-    await this.storage.clear();
-    await this.api.setToken(token.id);
+    if(token){
+      this.userData.GetUserWithAPIToken(token)
+      await this.AfterSuccessfulSignup();
+    }else{
 
-    this.api.get("/Usuarios/withCredentials", true).subscribe(
-      userFromServer => this.SaveUserData(userFromServer,token),
-      error => this.api.HandleAPIError(error)
-    )
-  }
-
-  private async SaveUserData(userFromServer: JSON,token) {
-    await this.storage.set("user", userFromServer);
-    await this.storage.set("ttl", token);
-    await this.AfterSuccessfulSignup();
+    }
   }
 
   private async AfterSuccessfulSignup() {
     this.loading.Dismiss();
     this.menu.Enable();
-    this.events.publish('user:logged', true);
+    this.userData.loggedUser$.emit(true);
     this.navController.navigateRoot('dashboard');
   }
 
