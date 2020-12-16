@@ -18,9 +18,19 @@ definitions:
           - npm install
           - npm rebuild node-sass
           - npm run build -- --prod
-    - step: &Deploy-step
+    - step: &Deploydev-step
         name: Deploy to staging
         deployment: staging
+        script:
+          - echo "Deploying to test environment"
+          - pipe: atlassian/ssh-run:0.2.4
+            variables:
+              SSH_USER: $SSH_DEVELOP_USER
+              SERVER: $SHH_DEVELOP_SERVER
+              COMMAND: '~/repos/restart_proyect template4.0 template'
+    - step: &Deploy-step
+        name: Deploy to production
+        deployment: production
         script:
           - echo "Deploying to test environment"
           - pipe: atlassian/ssh-run:0.2.4
@@ -34,6 +44,7 @@ pipelines:
   branches:
     develop:
       - step: *Test-step
+      - step: *Deploydev-step
     master:
       - step: *Test-step
       #- step: *Deploy-step
