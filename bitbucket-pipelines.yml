@@ -27,7 +27,7 @@ definitions:
             variables:
               SSH_USER: $SSH_DEVELOP_USER
               SERVER: $SHH_DEVELOP_SERVER
-              COMMAND: 'cd ~/repos && ./restart_proyect/template4.0 template'
+              COMMAND: 'cd ~/repos && ./restart_proyect template4.0 template'
     - step: &Deploy-step
         name: Deploy to production
         deployment: production
