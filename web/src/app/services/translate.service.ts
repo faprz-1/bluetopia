@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import * as moment from 'moment';
 
 @Injectable({
@@ -16,6 +16,8 @@ export class TranslateService {
 
   public defaultFormat: string = 'MMMM DD, YYYY, h:mm a';
 
+  public languageChangeEmitter = new EventEmitter<string>();
+
   constructor() {
     this.language = window.navigator.language;
   }
@@ -26,5 +28,6 @@ export class TranslateService {
 
   private SetLanguage() {
     moment.locale(this.language);
+    this.languageChangeEmitter.emit(this.language);
   }
 }
