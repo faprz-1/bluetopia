@@ -10,6 +10,7 @@ import { ToastAlertService } from '../../services/toast-alert.service';
 
 import * as moment from 'moment';
 import { UserDataService } from 'src/app/services/user-data.service';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-signup',
@@ -35,44 +36,40 @@ export class SignupPage implements OnInit {
 
     this.signupForm = new FormGroup({
       username: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^\\s*[-+.\\w]+@[-.\\w]+.[-.\\w]+\\s*$')
+      ])),
       password: new FormControl('', Validators.required),
       repeatPassword: new FormControl('', Validators.required),
-    })
+    });
   }
 
   public async OnSignup() {
-    if(!this.signupForm.valid)return;
-    if(this.signupForm.value.password != this.signupForm.value.repeatPassword){
+    if (!this.signupForm.valid) return;
+    if (this.signupForm.value.password != this.signupForm.value.repeatPassword){
       this.toastAlert.ShowToast("La contraseña no coincide")
       return;
     }
-
-     this.loading.Show()
-    this.api.post("/Usuarios/register", this.signupForm.value, false).subscribe(
+    this.api.Post("/Usuarios/register", this.signupForm.value, false).subscribe(
       userToken => this.GetUserWithAPIToken(userToken),
       error => this.api.HandleAPIError(error)
     )
   }
 
   public async GetUserWithAPIToken(token) {
-    this.loading.Show();
-    if(token){
-      this.userData.GetUserWithAPIToken(token)
+    if(token) {
+      await this.userData.GetUserWithAPIToken(token);
       await this.AfterSuccessfulSignup();
-    }else{
-
     }
   } 
 
   private async AfterSuccessfulSignup() {
-    this.loading.Dismiss();
     this.menu.Enable();
-    this.userData.loggedUser$.emit(true);
     this.navController.navigateRoot('dashboard');
   }
 
-  public goToUrl(url) {
+  public GoToUrl(url) {
     this.navController.navigateRoot(url);
   }
 
