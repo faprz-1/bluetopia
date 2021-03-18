@@ -1,58 +1,72 @@
 import { Injectable, NgZone, EventEmitter } from '@angular/core';
 import { ApiService } from './api.service';
-import * as moment from 'moment';
-import { resolve } from 'url';
 import { Storage } from '@ionic/storage';
-import { PushService } from './push.service'
+import { PushService } from './push.service';
+
+const ROLES = ['User'];
+
 @Injectable({
   providedIn: 'root'
 })
 export class UserDataService {
-  public loggedUser:any =[];
-  public loggedUser$:EventEmitter<Object> = new EventEmitter<Object>();
+  public loggedUser: any = [];
+  public loggedUser$: EventEmitter<any> = new EventEmitter<any>();
+
   constructor(
-    private storage: Storage,
     private api: ApiService,
-    private zone: NgZone,
-    private pushService : PushService
-  ) { 
+    private pushService: PushService
+  ) {
+    this.pushService.Initialize();
+    this.GetUserData();
   }
-  ngOnInit(): void {
-    this.getUserData()
-  }
-  public async getUserData(data : any = null) {
-      await this.storage.ready()
-      this.loggedUser = await this.storage.get("user");
+
+  public async GetUserData() {
+    this.loggedUser = await this.api.GetUser();
+
+    if (!this.loggedUser || !this.loggedUser.role || !ROLES.includes(this.loggedUser.role.name)) {
+      this.LogOut();
+    } else {
       this.loggedUser$.emit(this.loggedUser);
+    }
   }
+
   public async GetUserWithAPIToken(token) {
-    return new Promise(async(resolve,reject)=>{
-
-      await this.storage.clear()
-      await this.api.setToken(token.id)
-      console.log("GetUserWithAPIToken");
-      this.api.get("/Usuarios/withCredentials", true).subscribe(
-        userFromServer => this.SaveUserData(userFromServer,token,resolve),
-        error => {reject()}
-        )
-      })
+    console.log("GetUserWithAPIToken")
+    await this.api.ClearStorage();
+    await this.api.SetToken(token.id);
+    const userFromServer = await this.api.Get('/Usuarios/withCredentials', true).toPromise();
+    await this.SaveUserData(userFromServer, token);
   }
-  public async refreshUser() {
-    return new Promise(async(resolve,reject)=>{
 
-      let token = await this.storage.get("ttl");
-      this.api.get("/Usuarios/withCredentials", true).subscribe(
-        userFromServer => this.SaveUserData(userFromServer,token,resolve),
-        error => {reject()}
-        )
-      })
+  public async RefreshUser() {
+    const userFromServer = await this.api.Get('/Usuarios/withCredentials', true).toPromise();
+    await this.SaveUserData(userFromServer);
   }
-  private async SaveUserData (userFromServer: JSON,ttl,resolve=()=>{}) {
+
+  public async SaveUserData(userFromServer: object, token? : {id, ttl}) {
+    if (token) {
+      await this.api.SetToken(token.id);
+      await this.api.SetTTL(token.ttl);
+    }
+
     this.loggedUser = userFromServer;
-    await this.storage.set("user", userFromServer)
-    await this.storage.set("ttl",ttl)
-    this.pushService.updatePushToken();
-    this.getUserData();
-    resolve();
-  }  
+
+    if (!this.loggedUser || !this.loggedUser.role || !ROLES.includes(this.loggedUser.role.name)) {
+      this.LogOut();
+    } else {
+      await this.api.SetUser(userFromServer);
+    
+      this.pushService.UpdatePushToken();
+      this.loggedUser$.emit(this.loggedUser);
+    }
+  }
+
+  public async LogOut() {
+    if(await this.api.GetToken()) {
+      await this.api.Post('/Usuarios/logout', null, true).toPromise();
+      this.loggedUser = [];
+      this.loggedUser$.emit(this.loggedUser);
+    }
+    await this.api.ClearStorage();
+  }
 }
