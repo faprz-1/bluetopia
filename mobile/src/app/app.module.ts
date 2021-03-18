@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ComponentsModule } from './components/components.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { IonicStorageModule } from '@ionic/storage';
+import { IonicStorageModule, Storage } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera/ngx';
 import { AuthGuard } from './services/auth.guard';
 import { ServiceWorkerModule } from '@angular/service-worker';

@@ -7,9 +7,9 @@
     </ion-header>
     <ion-content >
       <ion-list >
-        <ion-item *ngIf="user!=null" (click)="goToUrl('/profile');" > 
+        <ion-item *ngIf="user!=null" (click)="GoToUrl('/profile');" > 
           <ion-avatar slot="start">
-            <img src="{{prepareURL(user?.profileImage,'avatar')}}" onerror="this.src='assets/img/avatar.jpg'">
+            <img src="{{PrepareImageUrl(user?.profileImage,'avatar')}}" onerror="this.src='assets/img/avatar.jpg'">
           </ion-avatar>
           <ion-label>
             <h2>{{user.name}}</h2> 
@@ -21,7 +21,7 @@
 
         <ng-container  *ngFor="let item of menuItemsUser">
           <ion-menu-toggle auto-hide="false">
-            <ion-item (click)="goToUrl(item.url,item.navigateType)">
+            <ion-item (click)="GoToUrl(item.url,item.navigateType)">
               <ion-icon slot="start" [name]="item.icon"></ion-icon>
               <ion-label>
                 {{item.title}}
