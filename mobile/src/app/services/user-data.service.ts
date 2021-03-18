@@ -31,7 +31,6 @@ export class UserDataService {
   }
 
   public async GetUserWithAPIToken(token) {
-    console.log("GetUserWithAPIToken")
     await this.api.ClearStorage();
     await this.api.SetToken(token.id);
     const userFromServer = await this.api.Get('/Usuarios/withCredentials', true).toPromise();
