@@ -16,8 +16,8 @@ import { UserDataService } from 'src/app/services/user-data.service';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage   {
-
   public user: any;
+  public size = "small";
 
   constructor(
     protected storage: Storage,
@@ -29,7 +29,7 @@ export class ProfilePage   {
     public events: EventsService,
     public imageService: GetImageService,
   ){}
-  public size = "small";
+
   ngOnInit() {
     this.getProfile();
   }
@@ -46,8 +46,9 @@ export class ProfilePage   {
   }
 
   private async getProfile() {
-    this.user = await this.storage.get("user");
+    this.user = await this.api.GetUser();
   }
+
   async ShowChangeProfileImageOptions(){
 
     const actionSheet = await this.toastAlert.actionSheetController.create({
@@ -91,26 +92,19 @@ export class ProfilePage   {
     }
   }
 
-private async saveProfilePic(newImage: any){
-  this.loading.Show()
-    
-    this.api.post("/Usuarios/" + this.user.id + "/changeProfileImage",{ newImage: newImage }, true).subscribe((res: any) => {
+private async saveProfilePic(newImage: any) {
+    this.api.Post("/Usuarios/" + this.user.id + "/changeProfileImage",{ newImage: newImage }, true).subscribe((res: any) => {
       this.size = "";
       this.user.profileImage = res.profileImage;
       this.storage.set("user", this.user).then(() => {
-      // this.userData.GetUserWithAPIToken(this.api.token);
-       this.userData.getUserData();
-      })
-      this.loading.Dismiss()
+        this.userData.GetUserWithAPIToken(this.api.token);
+      });
     }, err => {
-      this.loading.Dismiss()
-       this.toastAlert.ShowToast('Error al actualizar imagen de perfil', 3000)
+       this.toastAlert.ShowToast('Error al actualizar imagen de perfil', 3000);
     });
   }
 
   goToSettings(){
     this.navController.navigateRoot('/settings');
   }
-
-
 }
