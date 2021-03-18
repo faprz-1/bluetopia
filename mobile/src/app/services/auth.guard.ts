@@ -5,45 +5,43 @@ import { NavController } from '@ionic/angular';
 import * as moment from 'moment';
 import { Storage } from '@ionic/storage';
 import { UserDataService } from './user-data.service';
-
-// import { UserService } from '../services/user.service';
+import { ApiService } from './api.service';
 
 @Injectable()
-
 export class AuthGuard implements CanActivate {
-
   id: any;
   params: any;
 
-  constructor(private navController: NavController, private storage: Storage, private userData: UserDataService) {}
+  constructor(
+    private navController: NavController, 
+    private storage: Storage, 
+    private userData: UserDataService,
+    private api: ApiService,
+  ) {}
 
-   canActivate(next: ActivatedRouteSnapshot): Observable < boolean > | Promise < boolean > | boolean {
-     return new Promise(async resolve => {
+  canActivate(next: ActivatedRouteSnapshot): Observable < boolean > | Promise < boolean > | boolean {
+    return new Promise(async resolve => {
+      const token = await this.api.GetToken();
+      const ttlSeconds = this.api.ttl || await this.api.GetTTL();
+      const ttlDate = moment().add(ttlSeconds, 'seconds');
 
-       let token = await this.storage.get('token');
-
-       let ttl = await this.storage.get("ttl");
-       if(this.userData.loggedUser===[]){
-          this.userData.getUserData();
-       }
-       if ((ttl != null && moment().isAfter(moment(ttl.created).add(ttl.ttl,"s")))&& ttl.ttl!=-1) {
-         this.storage.clear();
-       resolve( false);
-       return
+      if (!this.userData.loggedUser) {
+        await this.userData.GetUserData();
       }
-      
-      
-      if (next.data.hasOwnProperty("role")) {
-        resolve( next.data.role == JSON.parse(JSON.stringify(this.storage.get("user"))).role.name);
-        return
+
+      if (!token || !ttlSeconds || ttlSeconds > 0 && moment().isAfter(ttlDate)) {
+        await this.api.ClearStorage();
+        resolve(false);
+      } else if (next.data.hasOwnProperty('role')) {
+        resolve(next.data.role == this.userData.loggedUser.role.name);
       } else if (token) {
-        resolve( true);
-        return
+        resolve(true);
+      } else {
+        await this.api.ClearStorage();
+        resolve(false);
       }
-      
-       this.navController.navigateRoot('/login');
-       resolve( false);
-       return
-     })
-   }
+    }).then(res => {
+      return Boolean(res);
+    });
+  }
 }

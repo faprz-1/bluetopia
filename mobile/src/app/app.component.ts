@@ -1,76 +1,116 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 
-import { Platform, NavController, MenuController } from '@ionic/angular';
+import { Platform, NavController, MenuController, LoadingController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Storage } from '@ionic/storage';
-import * as moment from "moment";
-import { PushService } from './services/push.service';
-import { EventsService } from './services/events.service';
+import * as moment from 'moment';
 import { ApiService } from './services/api.service';
-import { TranslateService } from '@ngx-translate/core';
+import { LoadingService } from './services/loading.service';
+import { Router } from '@angular/router';
 import { UserDataService } from './services/user-data.service';
+import { Subscription } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent {
-  public user : any;
-  public menuItemsUser:any;
+export class AppComponent implements OnDestroy {
+  public user: any;
+  public menuItemsUser: any[];
+  private userChangedSub: Subscription;
+  sizes: Array < String > = ['', 'avatar', 'thumb', 'small', 'medium', 'big'];
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private navController: NavController,
+    private router: Router,
     private menuController: MenuController,
-    private events: EventsService,
     private storage: Storage,
     private api: ApiService,
-    private translate: TranslateService,
     private userData: UserDataService,
-    private pushService: PushService
+    private loadingController: LoadingController,
+    private loadingService: LoadingService,
+    private translate: TranslateService,
   ) {
-    this.initializeEvents();
-    this.initializeApp();
-    this.InitTranslate();
-  }
-  subscription:any;
-
-  initializeApp() {
-    this.platform.ready().then(() => {
-      this.pushService.startUpCOnfig();
-      this.userData.getUserData();
-        this.statusBar.styleLightContent();
-        setTimeout(
-          ()=>
-            this.splashScreen.hide()
-          ,1000
-        )
-    });
+    this.InitializeApp();
   }
 
-  public goToUrl(url,type="push") {
-    this.menuController.close();
-    if(type=="push"){
-      
-      this.navController.navigateForward(url);
-    }else{
-      this.navController.navigateRoot(url);
+  ngOnDestroy() {
+    if (this.userChangedSub) {
+      this.userChangedSub.unsubscribe();
     }
   }
 
-  public initializeEvents() {
-    this.subscription = this.userData.loggedUser$.subscribe((user)=>{
-    this.user = user;
-      console.log("this.user after event",user);
-      this.InitializeMenu()
-    })
+  async InitializeApp() {
+    await this.platform.ready();
+    await this.GetUserData();
+    await this.InitializeLoadingElement();
+
+    await this.storage.ready();
+    await this.SetDefaultRoute();
+
+    this.splashScreen.hide();
+    this.statusBar.backgroundColorByHexString('006241');
+
+    this.InitializeEvents();
+    this.InitTranslate();
+    this.InitializeMenu();
   }
 
+  public async SetDefaultRoute() {
+    const token = await this.api.GetToken();
+    const ttlSeconds = this.api.ttl || await this.api.GetTTL();
+    const ttlDate = moment().add(ttlSeconds, 'seconds');
 
-  InitializeMenu(){
+    if (!token || !ttlSeconds || ttlSeconds > 0 && moment().isAfter(ttlDate)) {
+      this.LogOut();
+    } else if (this.router.url.startsWith('/login')) {
+      this.router.navigate(['/tab']);
+    }
+  }
+
+  private async LogOut() {
+    try {
+      await this.userData.LogOut();
+    } catch {
+      this.api.ClearStorage();
+    }
+    // this.router.navigate(['/login']); //Apple dice que los dejemos pasar :(
+  }
+
+  private async InitializeLoadingElement() {
+    this.loadingService.Initialize(this.loadingController);
+  }
+
+  public GoToUrl(url) {
+    this.menuController.close();
+    this.navController.navigateRoot([url]);
+  }
+
+  public InitializeEvents() {
+    this.userChangedSub = this.userData.loggedUser$
+      .subscribe(() => this.GetUserData());
+  }
+
+  public PrepareImageUrl(file: any, name: any) {
+    if (!file || !file.URL) {
+      return "assets/img/no-image-found.png"
+    }
+    file.URL = this.GetFullUrl(file.URL);
+    if (!file.resize) return file.URL;
+
+    name = this.CheckSizeName(name);
+    return this.AddSuffixToUrl(file.URL, name);
+  }
+
+  async InitializeMenu() {
+    if (!this.user) this.user = await this.api.GetUser();
+
     this.menuItemsUser = [
       {
         title: 'Inicio',
@@ -114,63 +154,7 @@ export class AppComponent {
         navigationType: 'push',
         role:"SuperUser"
       }
-    ].filter((item)=>{
-      return this.ShowItemMenu(item);
-    });
-  }
-  ShowItemMenu(item){
-    let found = false;
-    if(this.user){
-      if(this.user.role[0]){
-        found = this.user.role.find((role)=>{
-          return role.name == item.role
-        })
-      }else{
-        return this.user.role.name == item.role
-      }
-    }
-    return !!found
-  }
-  prepareURL(file: any, name: any) {
-    var api = this.api;
-    
-    if (!file || !file.URL) {
-      return "assets/img/no-image-found.png"
-    }
-    file.URL = this.GetFullUrl(file.URL, api);
-    if (!file.resize) return file.URL
-
-    name = this.CheckSizeName(name);
-    return this.PepareUrlWithSufix(file.URL, name);
-
-  }
-
-  private GetFullUrl(url: string, api: any) {
-    if (!(url.includes('https://') || url.includes('http://'))) {
-      if (api) {
-        if (api.hasOwnProperty('baseURL')) {
-          url = api['baseURL'] + url;
-        } else if (api.getBaseURL) {
-          url = api['getBaseURL']() + url;
-          console.log(api['getBaseURL'](),"this.debugMode",url);
-        }
-      }
-    }
-    return url;
-  }
-  sizes: Array < String > = ['', 'avatar', 'thumb', 'small', 'medium', 'big'];
-  private CheckSizeName(name) {
-    if (this.sizes.findIndex(size => size === name) === -1) {
-      name = '';
-    }
-    return name;
-  }
-
-  private PepareUrlWithSufix(url, name) {
-    let newUrl = url.split('/').reverse();
-    newUrl[0] = `${name}` + newUrl[0];
-    newUrl = newUrl.reverse().join('/');
-    return newUrl;
+    ].filter((item)=> item.role == this.user.role.name);
   }
 
   InitTranslate() {
@@ -192,5 +176,31 @@ export class AppComponent {
     } else {
       this.translate.use('es');
     }
+  }
+
+  private async GetUserData() {
+    await this.userData.GetUserData();
+  }
+
+  private GetFullUrl(url: string) {
+    if (!url.includes('https://') && !url.includes('http://')) {
+      return this.api.baseURL + url;
+    } else {
+      return url;
+    }
+  }
+
+  private CheckSizeName(name) {
+    if (this.sizes.findIndex(size => size === name) === -1) {
+      name = '';
+    }
+    return name;
+  }
+
+  private AddSuffixToUrl(url, name) {
+    let newUrl = url.split('/').reverse();
+    newUrl[0] = `${name}` + newUrl[0];
+    newUrl = newUrl.reverse().join('/');
+    return newUrl;
   }
 }

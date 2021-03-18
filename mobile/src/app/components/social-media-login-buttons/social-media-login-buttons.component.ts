@@ -81,7 +81,7 @@ export class SocialMediaLoginButtonsComponent {
       user.socialMediaId = socialMediaUserId;
     }
 
-    this.api.post('/Usuarios/loginBySocialMedia', user, false).subscribe((token) => {
+    this.api.Post('/Usuarios/loginBySocialMedia', user, false).subscribe((token) => {
       console.log("token success", token);
         this.onSocialLoginSuccess.emit(token)
     }, (err) => {

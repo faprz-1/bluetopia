@@ -49,24 +49,18 @@ export class LoginPage implements OnInit {
   }
 
   public async OnLogin() {
-     this.loading.Show()
-    if(this.dontClose){
-      this.loginAccount.ttl= -1
-    }else{
-      delete this.loginAccount.ttl;
-    }
-    this.api.post("/Usuarios/login", this.loginAccount, false).subscribe(
-      userToken => {
-      this.GetUserCredentials(userToken);
-      },
+    this.loginAccount.ttl = this.dontClose ? -1 : undefined;
+    this.api.Post("/Usuarios/login", this.loginAccount, false).subscribe(
+      userToken => this.GetUserCredentials(userToken),
       error => this.api.HandleAPIError(error)
     )
   }
-GetUserCredentials(token){
-  this.userData.GetUserWithAPIToken(token).then(()=>{
-    this.AfterSuccessfulLogin();
-  },error => this.api.HandleAPIError(error))
-}
+
+  GetUserCredentials(token){
+    this.userData.GetUserWithAPIToken(token).then(()=>{
+      this.AfterSuccessfulLogin();
+    },error => this.api.HandleAPIError(error))
+  }
 
   public async OnSocialLoginStart() {
      this.loading.Show()
@@ -77,17 +71,11 @@ GetUserCredentials(token){
   }
 
   private async AfterSuccessfulLogin() {
-    this.loading.Dismiss()
-    this.menu.Enable()
-   
-    // if(this.userData.loggedUser.role.id == 2) {
-    //   this.navController.navigateRoot('refounds')
-    // } else {
-      this.navController.navigateRoot('dashboard')
-    // }
+    this.menu.Enable();
+    this.navController.navigateRoot('dashboard');
   }
 
-  public goToUrl(url) {
+  public GoToUrl(url) {
     this.navController.navigateRoot(url);
   }
 }

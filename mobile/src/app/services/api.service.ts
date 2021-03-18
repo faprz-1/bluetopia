@@ -1,146 +1,175 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
-import { ToastController, NavController, MenuController } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 
-import { retryWhen, mergeMap, tap, delay, catchError } from 'rxjs/operators'; 
-import { Observable, timer, throwError, of } from 'rxjs';
-
+import { retryWhen, mergeMap, tap } from 'rxjs/operators';
+import { Observable, timer, throwError } from 'rxjs';
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { LoadingService } from './loading.service';
 import { ToastAlertService } from './toast-alert.service';
 
-export const BASEURL             = "https://template.jarabeapi.com/api";
-export const BASEURL_DEV         = "http://192.168.16.165:3022/api/";
 const HTTP_HEADERS        = new HttpHeaders({'Content-Type': 'application/json'});
 const RETRY_ATTEMPTS      = 5;
 const RETRY_STATUS_CODES  = [ 408, 429, 504];
 const RETRY_MILLISECONDS  = 10000;
-const EXPIRED_CODE        = 401;
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  public token: string = "";
-  public debugMode: boolean = false;
+  public token = '';
+  public user: any = null;
+  public ttl: number;
+
+  public get baseURL() {
+    return environment.baseURL;
+  }
+
+  public getBaseURL() {
+    return environment.baseURL;
+  }
 
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private storage: Storage,
-    private navController: NavController,
-    private toastController: ToastController,
-    private menuController: MenuController,
-    protected loading: LoadingService,
-    public toastAlert: ToastAlertService,
-    ) { 
-    this.getToken();
-    this.getDebugMode();
-  }
-  
-  public get(endPoint: string, getVariables : any = {}, useToken:boolean = true, displayErrors: boolean = true): Observable<JSON> {
-    let link: string = this.genLink(endPoint, useToken, getVariables)
-    return this.processHttpRequest(this.http.get<JSON>(link, { headers: HTTP_HEADERS }), displayErrors);
+    private router: Router,
+    private platform: Platform,
+    private loading: LoadingService,
+    private toastAlert: ToastAlertService,
+    ) {
+    this.GetToken();
   }
 
-  public post(endPoint: string, body: object, useToken:boolean = true, displayErrors: boolean = true): Observable<JSON>{
-    let link: string = this.genLink(endPoint, useToken);
-    return this.processHttpRequest(this.http.post<JSON>(link, body, { headers: HTTP_HEADERS }), displayErrors);
+  public Get(endPoint: string, getVariables: any = {}, useToken: boolean = true, displayErrors: boolean = true): Observable<any> {
+    const link: string = this.GenLink(endPoint, useToken, getVariables);
+    return this.ProcessHttpRequest(this.http.get<JSON>(link, { headers: HTTP_HEADERS }), displayErrors);
   }
 
-  public patch(endPoint: string, body: object, useToken:boolean = true, displayErrors: boolean = true): Observable<JSON>{
-    let link: string = this.genLink(endPoint, useToken);
-    return this.processHttpRequest(this.http.patch<JSON>(link, body, { headers: HTTP_HEADERS }), displayErrors);
+  public Post(endPoint: string, body: object, useToken: boolean = true, displayErrors: boolean = true): Observable<any> {
+    const link: string = this.GenLink(endPoint, useToken);
+    return this.ProcessHttpRequest(this.http.post<JSON>(link, body, { headers: HTTP_HEADERS }), displayErrors);
   }
 
-  public put(endPoint: string, body: object, useToken:boolean = true, displayErrors: boolean = true): Observable<JSON>{
-    let link: string = this.genLink(endPoint, useToken);
-    return this.processHttpRequest(this.http.put<JSON>(link, body, { headers: HTTP_HEADERS }), displayErrors);
+  public Patch(endPoint: string, body: object, useToken: boolean = true, displayErrors: boolean = true): Observable<any> {
+    const link: string = this.GenLink(endPoint, useToken);
+    return this.ProcessHttpRequest(this.http.patch<JSON>(link, body, { headers: HTTP_HEADERS }), displayErrors);
   }
 
-  public delete(endPoint: string, useToken:boolean = true, displayErrors: boolean = true): Observable<JSON>{
-    let link: string = this.genLink(endPoint, useToken);
-    return this.processHttpRequest(this.http.delete<JSON>(link, { headers: HTTP_HEADERS }), displayErrors);
+  public Put(endPoint: string, body: object, useToken: boolean = true, displayErrors: boolean = true): Observable<any> {
+    const link: string = this.GenLink(endPoint, useToken);
+    return this.ProcessHttpRequest(this.http.put<JSON>(link, body, { headers: HTTP_HEADERS }), displayErrors);
   }
 
-  public async setToken(token: string) {
-    await this.storage.ready();
-    await this.storage.set("token", token);
-    this.token = token
+  public Delete(endPoint: string, useToken: boolean = true, displayErrors: boolean = true): Observable<any> {
+    const link: string = this.GenLink(endPoint, useToken);
+    return this.ProcessHttpRequest(this.http.delete<JSON>(link, { headers: HTTP_HEADERS }), displayErrors);
   }
 
+  public async SetToken(token: string) {
+    this.token = token;
+    await this.CheckReadiness();
+    await this.storage.set('token', token);
+  }
 
-  private processHttpRequest(request: Observable<JSON>, displayErrors): Observable<JSON> {
+  public async SetUser(user: any) {
+    this.user = user;
+    await this.CheckReadiness();
+    await this.storage.set('user', JSON.stringify(user));
+  }
+
+  public async SetTTL(ttl: number) {
+    this.ttl = ttl;
+    await this.CheckReadiness();
+    await this.storage.set('ttl', Number(ttl));
+  }
+
+  public async GetToken() {
+    await this.CheckReadiness();
+    this.token = await this.storage.get('token');
+    return this.token;
+  }
+
+  public async GetUser() {
+    try {
+      await this.CheckReadiness();
+      this.user = JSON.parse(await this.storage.get('user'));
+      return this.user;
+    } catch {
+      return null;
+    }
+  }
+
+  public async GetTTL(): Promise<number> {
+    await this.CheckReadiness();
+    this.ttl = await this.storage.get('ttl');
+    return this.ttl;
+  }
+
+  public async ClearStorage() {
+    await this.CheckReadiness();
+    await this.storage.clear();
+  }
+
+  public async HandleAPIError(error) {
+    if(error.error.error != undefined) {
+        this.toastAlert.ShowToast(error.error.error.message);
+    }
+  }
+
+  private ProcessHttpRequest(request: Observable<JSON>, displayErrors): Observable<JSON> {
+    this.loading.Show();
     return request.pipe(
-      retryWhen(errorResponse => this.retryOnConnectionError(errorResponse, displayErrors))
+      tap(
+        () => this.loading.Dismiss(),
+        error => {
+          this.loading.Dismiss();
+          if(!environment.production) {
+            this.toastAlert.ShowToast(JSON.stringify(error), 5000);
+          }
+          if (error && error.status == 401) {
+            localStorage.clear();
+            this.router.navigate(['login']);
+          }
+        },
+      ),
+      retryWhen(errorResponse => this.RetryOnConnectionError(errorResponse, displayErrors)),
     );
   }
 
-  private genLink(endPoint: string, useToken: boolean, getVars: any[] = []): string {
+  private GenLink(endPoint: string, useToken: boolean, getVars: any[] = []): string {
     useToken = useToken && this.token && this.token.length > 0;
 
-    let baseURL = (this.debugMode ? BASEURL_DEV : BASEURL) + endPoint + "?";
-    if(getVars != null && getVars.length > 0) {
-      for(let variable of getVars) 
-        baseURL = `${baseURL}${variable}=${getVars[variable]}&`;
+    let baseURL = `${this.getBaseURL()}${endPoint}?`;
+    if (!!getVars) {
+      for (const variable in getVars) {
+        if (getVars[variable]) {
+          baseURL = `${baseURL}${variable}=${getVars[variable]}&`;
+        }
+      }
     }
-
-    return useToken ? baseURL + "access_token=" + this.token : baseURL;
+    return useToken ? baseURL + 'access_token=' + this.token : baseURL;
   }
 
-  private retryOnConnectionError(errorResponse: Observable<any>, displayErrors): Observable<any> {
+  private RetryOnConnectionError(errorResponse: Observable<any>, displayErrors): Observable<any> {
     return errorResponse.pipe(
       mergeMap( (error, retryAttempts) => {
-
-        if (error.status === EXPIRED_CODE) {
-          this.storage.clear();
-          this.navController.navigateRoot('/login');
-          this.menuController.enable(false, 'mainMenu');
+        if (retryAttempts >= RETRY_ATTEMPTS || !RETRY_STATUS_CODES.find(code => error.status == code)) {
+          return throwError(error);
         }
 
-        if(retryAttempts >= RETRY_ATTEMPTS || !RETRY_STATUS_CODES.find(code => error.status == code)) 
-          return throwError(error)
+        if (displayErrors) {
+          this.toastAlert.ShowToast(`Connection lost. Retrying in ${RETRY_MILLISECONDS / 1000} seconds...`, 1000);
+        }
 
-        if(displayErrors)
-          this.toastAlert.ShowToast(`Connection lost. Retrying in ${RETRY_MILLISECONDS/1000} seconds...`, 1000);
-
-        return timer(RETRY_MILLISECONDS)
+        return timer(RETRY_MILLISECONDS);
       })
     );
   }
 
-  private async showToast(message: string, duration = 3000) {
-    let toast = await this.toastController.create({
-        message: message,
-        duration: duration
-    })
-    await toast.present()
-    return toast
-}
-
-  private async getDebugMode() {
+  private async CheckReadiness() {
+    await this.platform.ready();
     await this.storage.ready();
-    this.debugMode = await this.storage.get("debugMode");
-  }
-
-  private async setDebugMode() {
-    await this.storage.ready();
-    this.debugMode = await this.storage.get("debugMode");
-  }
-
-  private async getToken() {
-    await this.storage.ready();
-    this.token = await this.storage.get("token");
-  }
-
-  public getBaseURL(){
-    return this.debugMode ? BASEURL_DEV : BASEURL
-  }
-
-  public async HandleAPIError(error) {
-    this.loading.Show()
-    if(error.error.error != undefined) {
-        this.toastAlert.ShowToast(error.error.error.message);
-    }
   }
 }

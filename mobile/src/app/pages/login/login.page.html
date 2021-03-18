@@ -42,14 +42,14 @@
 
             <ion-row>
                 <ion-col size="12" class="ion-margin-top">
-                    <div class="register-label" (click)="goToUrl('/signup');"><u> No tengo cuenta, quiero registrarme </u></div>
+                    <div class="register-label" (click)="GoToUrl('/signup');"><u> No tengo cuenta, quiero registrarme </u></div>
                 </ion-col>
             </ion-row>
             <template-social-media-login-buttons (onSocialLoginStart)="OnSocialLoginStart()" (onSocialLoginSuccess)="GetUserCredentials($event)" (onSocialLoginError)="OnSocialLoginError($event)"></template-social-media-login-buttons>
 
             <ion-row>
                 <ion-col size="12">
-                    <div color="secondary" class="password-recover-label" (click)="goToUrl('/password-recovery');">Olvidé mi contraseña</div>
+                    <div color="secondary" class="password-recover-label" (click)="GoToUrl('/password-recovery');">Olvidé mi contraseña</div>
                 </ion-col>
             </ion-row>
 

@@ -45,13 +45,13 @@ export class PasswordChangePage   implements OnInit {
     if (!this.changePassForm.valid) {
       return;
     }
-    this.loading.Show()
+    
     if (this.CheckNewPasswrd()) {
       await this.storage.get("user").then((user)=>{
         this.user = this.storage.get("user");
       })
       let userLogin = { 'email' : this.user.email, 'password' : this.changePassForm.value.newPassword }
-      this.api.post('/Usuarios/change-password', this.changePassForm.value).subscribe(
+      this.api.Post('/Usuarios/change-password', this.changePassForm.value).subscribe(
         output => this.login(userLogin),
         error => this.api.HandleAPIError(error)
       )
@@ -60,7 +60,7 @@ export class PasswordChangePage   implements OnInit {
 
   public async login(data:any){
     this.loading.Show()
-    this.api.post("/Usuarios/login", data, false).subscribe(
+    this.api.Post("/Usuarios/login", data, false).subscribe(
       userToken => this.GetUserWithAPIToken(userToken),
       error => this.api.HandleAPIError(error)
     )
@@ -77,7 +77,6 @@ export class PasswordChangePage   implements OnInit {
   }
 
   private async AfterSuccessfulSignup() {
-    this.loading.Dismiss();
     this.menu.Enable();
     this.userData.loggedUser$.emit(true);
     this.navController.navigateRoot('dashboard');
@@ -86,7 +85,6 @@ export class PasswordChangePage   implements OnInit {
   private async CheckNewPasswrd() {
     if (this.changePassForm.value.newPassword != this.changePassForm.value.repPassword || this.changePassForm.value.newPassword == this.changePassForm.value.oldPassword) {
       this.toastAlert.ShowToast('Hubo un error al cambiar la contraseña. Por favor revise si no hay errores.', 3000)
-      this.loading.Dismiss()
       return false
     } else { return true }
   }

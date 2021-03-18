@@ -38,7 +38,7 @@ export class PasswordRecoveryPage   implements OnInit {
     this.slides.lockSwipes(true);
   }
 
-  public goToUrl(url: string) {
+  public GoToUrl(url: string) {
     this.navController.navigateRoot(url);
   }
 
@@ -52,7 +52,7 @@ export class PasswordRecoveryPage   implements OnInit {
     //Validations
     if(this.email == "" || !this.email) return this.toastAlert.ShowToast("Email inválido");
     this.loading.Show();
-    this.api.post("/PasswordResetPINs/createAndSend", { email : this.email }, false).subscribe(
+    this.api.Post("/PasswordResetPINs/createAndSend", { email : this.email }, false).subscribe(
       response => this.successfullStep("Correo enviado correctamente"),
       error => this.api.HandleAPIError(error)     
     )
@@ -71,7 +71,7 @@ export class PasswordRecoveryPage   implements OnInit {
   public validatePIN(){
     //Validations
     this.loading.Show()
-    this.api.post("/PasswordResetPINs/consume", { pin: this.pin, email: this.email }, false).subscribe(
+    this.api.Post("/PasswordResetPINs/consume", { pin: this.pin, email: this.email }, false).subscribe(
       (response:any) => {
         if(response.msg == "Pin correcto"){
           this.successfullStep();
@@ -85,10 +85,10 @@ export class PasswordRecoveryPage   implements OnInit {
 
   public setNewPassword(){
     this.loading.Show()
-    this.api.post("/PasswordResetPINs/resetPassword", { password: this.password , email: this.email }, false).subscribe(
+    this.api.Post("/PasswordResetPINs/resetPassword", { password: this.password , email: this.email }, false).subscribe(
       (response:any) => {
         this.toastAlert.ShowToast("Contraseña actualizada");
-        this.goToUrl('/login');
+        this.GoToUrl('/login');
       },
       error => this.api.HandleAPIError(error)     
     )

@@ -1,40 +1,66 @@
 import { Injectable } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 
-const BASE_LOADING_MESSAGE = "Cargando...";
-const BASE_LOADING_DURATION = 2000;
+const BASE_LOADING_MESSAGE = 'Cargando...';
+const BASE_LOADING_DURATION = 0;
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: 'root'
 })
 export class LoadingService {
+  public get isLoading() {
+    return this.loadingLevel > 0;
+  }
+  public loadingLevel = 0;
 
-	private loadingElement: HTMLIonLoadingElement;
-    private isLoading: boolean = false;
+  private loadingController: LoadingController;
+  private loadingElement: HTMLIonLoadingElement;
+  private isBusy = false;
 
-  	constructor(protected loadingController: LoadingController) { 
-  		this.InitializeLoadingElement();
-  	}
+  constructor() {}
 
-  	public async InitializeLoadingElement() {
-        this.loadingElement = await this.loadingController.create({
-            // message: BASE_LOADING_MESSAGE,
-            duration: BASE_LOADING_DURATION,
-            translucent : true
-        })
+  public Initialize(loadingController: LoadingController) {
+    this.loadingController = loadingController;
+  }
+
+  public async Show() {
+    if(this.isBusy) await this.WaitUntilFree();
+    this.loadingLevel++;
+    if (this.isLoading) await this.CreateElement();
+  }
+
+  public async Dismiss() {
+    if(this.isBusy) await this.WaitUntilFree();
+    this.loadingLevel--;
+    if (!this.isLoading) await this.DeleteElement();
+  }
+
+  private async CreateElement() {
+    if (!this.loadingElement) {
+      this.isBusy = true;
+      this.loadingElement = await this.loadingController.create({
+        message: BASE_LOADING_MESSAGE,
+        duration: BASE_LOADING_DURATION,
+      });
+      await this.loadingElement.present();
+      this.isBusy = false;
     }
+  }
 
-    public Show() {
-        if (this.loadingElement && !this.isLoading) {
-            this.loadingElement.present()
-            this.isLoading = true
-        }
+  private async DeleteElement() {
+    if (this.loadingElement) {
+      this.isBusy = true;
+      await this.loadingElement.dismiss();
+      this.loadingElement = undefined;
+      this.isBusy = false;
     }
+  }
 
-    public Dismiss() {
-        if (this.loadingElement) {
-            this.loadingElement.dismiss()
-            this.isLoading = false
-        }
-    }
+  private async WaitUntilFree() {
+    while(this.isBusy) await this.Sleep(50);
+  }
+
+  Sleep(milliseconds: number) {
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
+  }
 }
