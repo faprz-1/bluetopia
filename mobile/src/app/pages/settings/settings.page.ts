@@ -47,7 +47,7 @@ export class SettingsPage   implements OnInit {
         this.navController.navigateRoot('/login');
 
         this.loading.Show();
-        this.api.post("/Usuarios/logout", null, true).subscribe(async () => { })
+        this.api.Post("/Usuarios/logout", null, true).subscribe(async () => { })
       }, 
       'No', 
       () => {

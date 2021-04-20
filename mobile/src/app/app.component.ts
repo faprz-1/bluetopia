@@ -110,6 +110,7 @@ export class AppComponent implements OnDestroy {
 
   async InitializeMenu() {
     if (!this.user) this.user = await this.api.GetUser();
+    if(!this.user) return;
 
     this.menuItemsUser = [
       {

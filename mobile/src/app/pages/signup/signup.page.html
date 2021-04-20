@@ -13,33 +13,20 @@
                 
                         <ion-label position="floating">{{'signUp.typeUserName' | translate}}</ion-label>
                         <ion-input placeholder="{{'signUp.typeUserNamePlaceholder' | translate}}" type="text" formControlName="username"></ion-input>
-                        <!--  <mat-error *ngIf="myForm.hasError('required', 'password')">
-                            Please enter your new password
-                        </mat-error> -->
-                    
-
                 
                         <ion-label position="floating">{{'signUp.typeMail' | translate}}</ion-label>
                         <ion-input placeholder="{{'signUp.typeMailPlaceholder' | translate}}" type="email" formControlName="email"></ion-input>
-                    
-
-                
+                                   
                         <ion-label position="floating">{{'signUp.typePassword' | translate}}</ion-label>
-                        <!-- <ion-input placeholder="Contraseña" type="password" (keyup.enter)="OnLogin()" formControlName="password"></ion-input> -->
                         <ion-input placeholder="{{'signUp.typePasswordPlaceholder' | translate}}" type="password" formControlName="password"></ion-input>
-                    
-
+                
                 
                         <ion-label position="floating">{{'signUp.typeRepeatPassword' | translate}}</ion-label>
-                        <!-- <ion-input placeholder="Contraseña" type="password" (keyup.enter)="OnLogin()" formControlName="repeatPassword"></ion-input> -->
                         <ion-input placeholder="{{'signUp.typeRepeatPasswordPlaceholder' | translate}}" type="password" formControlName="repeatPassword"></ion-input>
-                    
-
             </form>
-            
                     <ion-button color="primary" [disabled]="!this.signupForm.valid" (click)="OnSignup()">{{'signUp.register' | translate}}</ion-button>
-            
-                    <div color="secondary" class="login-label" (click)="goToUrl('/login');" [innerHTML]="'signUp.alreadyAnAccount' | translate"></div>
+        
+                    <div color="secondary" class="login-label" (click)="GoToUrl('/login');" [innerHTML]="'signUp.alreadyAnAccount' | translate"></div>
 
             <template-social-media-login-buttons (onSocialLoginStart)="OnSocialLoginStart()" (onSocialLoginSuccess)="GetUserWithAPIToken($event)" (onSocialLoginError)="OnSocialLoginError($event)"></template-social-media-login-buttons>
         </ion-card-content>
