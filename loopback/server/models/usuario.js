@@ -765,7 +765,7 @@ module.exports = function(Usuario) {
       if (!usr.profileImageId) {
         console.log('Usuario de social media sin foto de perfil');
         var imageId = uuidV4();
-        app.models.UploadedFiles.create({id: imageId, resize: false, URL: `https://graph.facebook.com/${data.socialMediaId}/picture?width=600&height=600`}, function(err, res) {
+        app.models.UploadedFiles.create({id: imageId, name: 'FacebookProfileImage', resize: false, URL: `https://graph.facebook.com/${data.socialMediaId}/picture?width=600&height=600`}, function(err, res) {
           if (err) return callback(err);
           let newUser = {profileImageId: res.id};
           usr.updateAttributes(newUser, function(err, updated) {
