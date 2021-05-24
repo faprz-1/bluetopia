@@ -33,7 +33,7 @@ export class PushService {
     OneSignal.push(function() {
       OneSignal.init({
         appId: APP_ID,
-        path:"/assets/OneSignal/",
+        path:"/",
         // notifyButton: {
         //   enable: true,
         // },

@@ -21,6 +21,8 @@
               "src/assets",
               "src/favicon.ico",
               "src/firebase-messaging-sw.js",
+              "src/OneSignalSDKUpdaterWorker.js",
+              "src/OneSignalSDKWorker.js",
               "src/manifest.json"
             ],
             "styles": [
