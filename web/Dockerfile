@@ -1,2 +1,0 @@
-#Run
-FROM nginx:alpine

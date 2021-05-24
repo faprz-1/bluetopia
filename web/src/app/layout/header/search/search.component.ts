@@ -1,11 +1,10 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'header-search',
+  selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
-
 export class SearchComponent implements OnInit {
   searchActive:boolean = false;
   searchValue:string = '';
@@ -13,7 +12,7 @@ export class SearchComponent implements OnInit {
 
   closeSearch() {
     this.searchActive = false; // Close the search block
-    this.searchValue = null; // Empty the search field
+    this.searchValue = ''; // Empty the search field
     this.searchFocused = false;
   }
 
@@ -21,4 +20,5 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
   }
+
 }

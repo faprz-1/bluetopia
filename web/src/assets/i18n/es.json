@@ -1,0 +1,180 @@
+{
+    "app": {
+        "name": "AFP"
+    },
+    "loading": {
+        "message": "Cargando..."
+    },
+    "refresher": {
+        "updatingLabel": "Actualizando...",
+        "updateLabel": "Actualizar"
+    },
+    "okButtonLabel": "Aceptar",
+    "cancelButtonLabel": "Cancelar",
+    "loginPage": {
+        "emailLabel": "Correo electrónico",
+        "emailPlaceholder": "Correo electrónico",
+        "passwordLabel": "Constraseña",
+        "passwordPlaceholder": "Constraseña",
+        "loginButton": "Entrar",
+        "alertHeader": "Error",
+        "alertSubHeader": "Algo salió mal.",
+        "alertButtonLabel": "Aceptar",
+        "updateAlertHeader": "Hay una nueva actualización.",
+        "keepSessionAlive": "Mantener sesión iniciada",
+        "updateAlertSubHeader": "Es necesario actualizar a la última versión de la aplicación.",
+        "updateAlertButtonLabel": "Actualizar"
+    },
+    "signUp": {
+        "title": "Crear cuenta",
+        "typeUserName": "Nombre",
+        "typeUserNamePlaceholder": "Nombre y apellidos",
+        "typeName": "Usuario",
+        "typeNamePlaceholder": "Nombre de usuario",
+        "typeMail": "Email",
+        "typeMailPlaceholder": "Correo electrónico",
+        "typePhone": "Teléfono",
+        "typePhonePlaceholder": "Número telefónico",
+        "typePassword": "Contraseña",
+        "typePasswordPlaceholder": "Contraseña",
+        "typeRepeatPassword": "Repetir contraseña",
+        "typeRepeatPasswordPlaceholder": "Contraseña",
+        "register": "Registrar",
+        "alreadyAnAccount": "<i>Ya tengo una cuenta</i>"
+    },
+    "passwordRecovery": {
+        "title": "Recuperar Contraseña",
+        "typeMail": "Ingresa aqui tu email de la cuenta para recuperar",
+        "typeMailPlaceholder": "Correo electrónico",
+        "continue": "Continuar",
+        "cancel": "Cancelar",
+        "back": "Volver",
+        "typePin": "Ingresar PIN",
+        "typePinPlaceholcer": "0000",
+        "typeNewPassword": "Ingresa tu nueva contraseña",
+        "typeNewPasswordPlaceholcer": "contraseña",
+        "endProcess": "Terminar"
+    },
+    "settings": {
+        "title": "Ajustes",
+        "logOut": {
+            "label": "Terminar sesión",
+            "prompt": "¿Desea cerrar sesión?"
+        },
+        "changePassword": {
+            "title": "Cambiar contraseña",
+            "previusPassword": "Contraseña anterior",
+            "previusPasswordPlaceholder": "Contraseña anterior",
+            "newPassword": "Nueva contraseña",
+            "newPasswordPlaceholder": "Contraseña",
+            "repeatPassword": "Confirmación de Nueva contraseña",
+            "repeatPasswordPlaceholder": "Confirmar Contraseña",
+            "save": "Guardar",
+            "cancel": "Cancelar"
+        }
+    },
+    "profile": {
+        "title": "Perfil",
+        "name": "Nombre",
+        "username": "Usuario",
+        "email": "Correo:",
+        "phone": "Teléfono",
+        "save": "Guardar cambios"
+    },
+    "appComponent": {
+        "logoutLabel": "Cerrar sesión",
+        "homeLabel": "Inicio",
+        "settingsLabel": "Ajustes"
+    },
+    "notifications": {
+        "title": "Mis Notificaciones"
+    },
+    "selectAsset": {
+        "title": "Seleccione un activo",
+        "firstTimeTitle": "Agregue un activo para iniciar",
+        "searchLabel": "Buscar activo...",
+        "categoryLabel": "Categoría",
+        "addCustomAssetLabel": "¿No puede encontrar un activo?"
+    },
+    "assets": {
+        "title": "Mis Bienes",
+        "delete": {
+            "header": "¿Eliminar activo?",
+            "subHeader": "No se puede deshacer",
+            "success": "Se ha eliminado el activo"
+        },
+        "no-content": {
+            "title": "No se han agregado activos",
+            "message": "Da click en \"+\" para agregar un nuevo activo"
+        },
+        "form": {
+            "name": "Nombre",
+            "namePlaceholder": "Ingrese nombre...",
+            "amount": "Monto",
+            "amountPlaceholder": "Ingrese monto",
+            "price": "Precio",
+            "pricePlaceholder": "Ingrese precio...",
+            "market": "Categoría",
+            "marketPlaceholder": "Ingrese categoría...",
+            "ticker": "Ticker",
+            "tickerPlaceholder": "Ingrese ticker..."
+        }
+    },
+    "newAsset": {
+        "title": "Agregar activo",
+        "custom": {
+            "title": "Agregar nuevo activo"
+        },
+        "saveLabel": "Guardar"
+    },
+    "portfolio": {
+        "title": "Portafolio"
+    },
+    "dashboard": {
+        "title": "Mi Perfil",
+        "subtitle": "Esta es tu distribución de inversiones",
+        "searchButtonLabel": "Buscador de acciones",
+        "share-settings": {
+            "title": "Compartir portafolio",
+            "active": "Activo",
+            "link": "Link",
+            "copy": "Compartir",
+            "backButton": "Volver"
+        }
+    },
+    "alerts": {
+        "title": "Alertas",
+        "subtitle": "Notificaciones de la Bolsa",
+        "delete": {
+            "header": "¿Eliminar alerta?",
+            "subHeader": "Se puede volver a crear",
+            "success": "Se ha eliminado la alerta"
+        },
+        "new": {
+            "title": "Crear alerta"
+        },
+        "edit": {
+            "title": "Editar alerta"
+        },
+        "presets": {
+            "title": "Alertas prefabricadas"
+        },
+        "no-content": {
+            "title": "No se han agregado alertas",
+            "message": "Da click en \"+\" para agregar una nueva alerta"
+        },
+        "form": {
+            "success": "Se ha actulizado la alerta",
+            "name": "Nombre",
+            "namePlaceholder": "Ingrese nombre...",
+            "minPrice": "Cuando baje de...",
+            "minPricePlaceholder": "Ingrese precio...",
+            "maxPrice": "Cuando suba de...",
+            "maxPricePlaceholder": "Ingrese precio...",
+            "market": "Categoría",
+            "marketPlaceholder": "Ingrese categoría...",
+            "ticker": "Ticker",
+            "tickerPlaceholder": "Ingrese ticker..."
+        }
+    }
+}

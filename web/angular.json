@@ -3,206 +3,133 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "material": {
+    "TemplateWeb": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
       "root": "",
       "sourceRoot": "src",
-      "projectType": "application",
+      "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "aot": true,
-            "outputPath": "./dist",
+            "outputPath": "dist/TemplateWeb",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
             "assets": [
-              "src/assets",
               "src/favicon.ico",
-              "src/firebase-messaging-sw.js",
-              "src/manifest.json"
+              "src/assets"
             ],
             "styles": [
-              "node_modules/material-design-iconic-font/dist/css/material-design-iconic-font.min.css",
-              "node_modules/animate.css/animate.min.css",
-              "node_modules/dropzone/dist/min/dropzone.min.css",
-              "node_modules/nouislider/distribute/nouislider.min.css",
-              "node_modules/ngx-toastr/toastr.css",
               "src/styles.scss"
             ],
-            "scripts": [
-              "node_modules/jquery/dist/jquery.js",
-              "node_modules/select2/dist/js/select2.full.min.js",
-              "node_modules/jquery-sparkline/jquery.sparkline.min.js",
-              "node_modules/easy-pie-chart/dist/jquery.easypiechart.min.js",
-              "node_modules/dropzone/dist/dropzone.js",
-              "node_modules/nouislider/distribute/nouislider.min.js",
-              "node_modules/flot/jquery.flot.js",
-              "node_modules/flot/jquery.flot.pie.js",
-              "src/assets/vendors/bower_components/flot.curvedlines/curvedLines.js",
-              "src/assets/vendors/bower_components/flot.orderbars/js/jquery.flot.orderBars.js",
-              "src/assets/OneSignal/OneSignalSDKUpdaterWorker.js",
-              "src/assets/OneSignal/OneSignalSDKWorker.js",
-              "node_modules/jqvmap/dist/jquery.vmap.min.js",
-              "node_modules/jqvmap/dist/maps/jquery.vmap.world.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
+                  "maximumWarning": "200kb",
+                  "maximumError": "400kb"
                 }
               ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "outputPath": "../persistence/compiled_angular",
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
-              ]
+              ],
+              "outputHashing": "all"
             },
             "staging": {
               "budgets": [
                 {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
+                  "maximumWarning": "200kb",
+                  "maximumError": "400kb"
                 }
               ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "outputPath": "../persistence/compiled_angular_staging",
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.staging.ts"
                 }
-              ]
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
-          }
+          },
+          "defaultConfiguration": "staging"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "material:build"
-          },
           "configurations": {
             "production": {
-              "browserTarget": "material:build:production"
+              "browserTarget": "TemplateWeb:build:production"
             },
             "staging": {
-              "browserTarget": "material:build:staging"
+              "browserTarget": "TemplateWeb:build:staging"
+            },
+            "development": {
+              "browserTarget": "TemplateWeb:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "material:build"
+            "browserTarget": "TemplateWeb:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "src/test.ts",
-            "karmaConfig": "./karma.conf.js",
             "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "scripts": [
-              "node_modules/jquery/dist/jquery.js",
-              "node_modules/select2/dist/js/select2.full.min.js",
-              "node_modules/jquery-sparkline/jquery.sparkline.min.js",
-              "node_modules/easy-pie-chart/dist/jquery.easypiechart.min.js",
-              "node_modules/dropzone/dist/dropzone.js",
-              "node_modules/nouislider/distribute/nouislider.min.js",
-              "node_modules/flot/jquery.flot.js",
-              "node_modules/flot/jquery.flot.pie.js",
-              "src/assets/vendors/bower_components/flot.curvedlines/curvedLines.js",
-              "src/assets/vendors/bower_components/flot.orderbars/js/jquery.flot.orderBars.js",
-              "node_modules/jqvmap/dist/jquery.vmap.min.js",
-              "node_modules/jqvmap/dist/maps/jquery.vmap.world.js"
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
             ],
             "styles": [
-              "node_modules/material-design-iconic-font/dist/css/material-design-iconic-font.min.css",
-              "node_modules/animate.css/animate.min.css",
-              "node_modules/dropzone/dist/min/dropzone.min.css",
-              "node_modules/ngx-toastr/toastr.css",
-              "node_modules/nouislider/distribute/nouislider.min.css",
               "src/styles.scss"
             ],
-            "assets": [
-              "src/assets",
-              "src/favicon.ico",
-              "src/manifest.json"
-            ]
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "material-e2e": {
-      "root": "e2e",
-      "sourceRoot": "e2e",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "material:serve"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "scripts": []
           }
         }
       }
     }
   },
-  "defaultProject": "material",
-  "schematics": {
-    "@schematics/angular:component": {
-      "prefix": "app",
-      "style": "scss"
-    },
-    "@schematics/angular:directive": {
-      "prefix": "app"
-    }
-  }
+  "defaultProject": "TemplateWeb"
 }

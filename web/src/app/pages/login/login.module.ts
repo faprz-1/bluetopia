@@ -1,32 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { LoginComponent } from './login.component';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import {TooltipModule} from "ngx-bootstrap/tooltip";
-
-import { LoginComponent } from "./login.component";
-import { NotificationService } from '../../services/notification.service';
-import { SocketService } from '../../services/socket.service';
-import { ToastrModule } from 'ngx-toastr';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ControlMessagesModule } from 'src/app/components/control-messages/control-messages.module';
 
 const MODULE_ROUTES = [
-    { path: '', component: LoginComponent }
+  { path: '', component: LoginComponent }
 ];
 
 @NgModule({
+  declarations: [
+    LoginComponent
+  ],
   imports: [
-    CommonModule ,FormsModule,TooltipModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild(MODULE_ROUTES),
-  	ToastrModule.forRoot()
-  ]
-  ,
-  declarations: [LoginComponent]
-  ,providers:[
-    NotificationService,
-    SocketService
+    ControlMessagesModule
   ]
 })
 export class LoginModule { }
-
-

@@ -1,13 +1,11 @@
-// Functions
-@import "../node_modules/bootstrap/scss/functions";
+// Bootstrap imports (must go first)
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/variables";
 
-
-// Site + Bootstrap Variable and Mixins
-@import "./assets/scss/variables";
-@import "../node_modules/bootstrap/scss/variables";
+// Import mixins are variables (critical)
 @import "./assets/scss/mixins";
-@import "./assets/scss/bootstrap-overrides/mixins";
-@import "./assets/scss/bootstrap-imports";
+@import "./assets/scss/variables";
 
 
 // Site Styles
@@ -60,4 +58,6 @@
 
 
 // App Global Styles
+@import './assets/scss/toastr';
+@import '~ngx-toastr/toastr.css';
 @import "./assets/scss/misc";

@@ -15,19 +15,24 @@
       <div class="col-12 col-lg-4">
         <div class="circular segment">
           <h2 class="m-4">Ingresa tu correo</h2>
-          <form (ngSubmit)="sendEmail(recoverPassword.value)" #recoverPassword="ngForm">
+          <form (ngSubmit)="SendEmail(recoverPassword.value)" #recoverPassword="ngForm">
             <label class="colorPrincipal">Correo electrónico</label>
             <div class="form-group">
               <!-- Validaciones del campo del correo -->
-              <input class="form-control text-center" type="email" id="email" name="emailtoRecover" ngModel required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #emailtoRecover="ngModel">
+              <input class="form-control text-center" type="email" id="email" name="emailtoRecover" ngModel required
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #emailtoRecover="ngModel">
               <!-- Mensajes de las validaciones -->
-              <div *ngIf="emailtoRecover.invalid && (emailtoRecover.dirty || emailtoRecover.touched)" class="alert alert-danger">
-                <div *ngIf="emailtoRecover.errors?.required" class="form-control-feedback text-center">Campo obligatorio* </div>
-                <div *ngIf="emailtoRecover.errors?.pattern" class="form-control-feedback text-center">Correo electrónico no valido</div>
+              <div *ngIf="emailtoRecover.invalid && (emailtoRecover.dirty || emailtoRecover.touched)"
+                class="alert alert-danger">
+                <div *ngIf="emailtoRecover.errors?.required" class="form-control-feedback text-center">
+                  Campo obligatorio* </div>
+                <div *ngIf="emailtoRecover.errors?.pattern" class="form-control-feedback text-center">
+                  Correo electrónico no valido</div>
               </div>
             </div>
             <br>
-            <button *ngIf="!procesandoEmail" [disabled]="!recoverPassword.valid" class="btn colorPrincipal fondo"type="submit">CONTINUAR</button>
+            <button *ngIf="!procesandoEmail" [disabled]="!recoverPassword.valid" class="btn colorPrincipal fondo"
+              type="submit">CONTINUAR</button>
           </form>
 
           <!--FORMULARIO INGRESAR PIN-->
@@ -36,16 +41,17 @@
             <br>
             <input type="number" [(ngModel)]="pin" name="pin">
             <br><br>
-            <button (click)="tryPIN()" [disabled]="pin==''" class="btn colorPrincipal fondo">CONTINUAR</button>
+            <button (click)="TryPIN()" [disabled]="pin==''" class="btn colorPrincipal fondo">CONTINUAR</button>
             <br><br>
           </div>
 
           <!--FORMULARIO PARA INGRESAR LA NUEVA CONTRASEÑA-->
           <div *ngIf="changuePass==true">
             <h2 class="m-4">Ingresa tu nueva contraseña</h2>
-              <input type="password" class="form-control-feedback text-center" [(ngModel)]="newPassword" name="newPassword">
-              <br><br>
-            <button (click)="setPassword()"  [disabled]="successUpdate"class="btn colorPrincipal fondo">ACEPTAR</button>  
+            <input type="password" class="form-control-feedback text-center" [(ngModel)]="newPassword"
+              name="newPassword">
+            <br><br>
+            <button (click)="SetPassword()" [disabled]="successUpdate" class="btn colorPrincipal fondo">ACEPTAR</button>
           </div>
         </div>
       </div>
@@ -58,30 +64,23 @@
       <div class="col-12 col-lg-4">
         <div class="circular segment">
           <h2 class="m-4">Iniciar sesión</h2>
-          <form (ngSubmit)="login(loginForm.value)" #loginForm="ngForm">
+          <form (ngSubmit)="Login(loginForm.value)" [formGroup]="loginForm">
             <label class="colorPrincipal">Correo electrónico</label>
             <div class="form-group">
-              <!-- Validaciones del campo del correo -->
               <input class="form-control text-center" type="email" id="email" placeholder="ejemplo@email.com"
-                name="email" ngModel required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #email="ngModel">
-              <!-- Mensajes de las validaciones -->
-              <div *ngIf="email.touched && email.dirty">
-                <div *ngIf="email.errors?.required" class="form-control-feedback text-center">"Este campo es obligatorio"</div>
-                <div *ngIf="email.errors?.pattern" class="form-control-feedback text-center">"No cumple con los caracteres"</div>
-              </div>
+                name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" formControlName="email">
+              <app-control-messages [control]="loginForm.get('email')"></app-control-messages>
             </div>
             <label class="colorPrincipal">Contraseña</label>
             <div class="form-group">
-              <!-- Validaciones del campo de la contraseña -->
-              <input class="form-control text-center" type="password" placeholder="Contraseña" name="password" required ngModel #password="ngModel">
-              <!-- Mensaje de las validaciones -->
-              <div *ngIf="password.touched && password.dirty">
-                <div *ngIf="password.errors?.required" class="form-control-feedback text-center">"Campo obligatorio"</div>
-              </div>
+              <input class="form-control text-center" type="password" placeholder="Contraseña" name="password" required
+                formControlName="password">
+              <app-control-messages [control]="loginForm.get('name')"></app-control-messages>
             </div>
             <br>
-            <button *ngIf="!procesando" [disabled]="loginForm.email==''|| loginForm.password==''"class="btn colorPrincipal fondo" type="submit">CONTINUAR</button>
-            <!-- <button  class="btn btn-primary" type="submit"  [disabled]="loginForm.email==''||loginForm.password==''">Continuar</button> -->
+            <button *ngIf="!procesando" [disabled]="!loginForm.valid" class="btn colorPrincipal fondo" type="submit">
+              CONTINUAR
+            </button>
           </form>
           <br>
           <div>

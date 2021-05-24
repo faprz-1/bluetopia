@@ -1,9 +1,10 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FileChooserComponent } from 'src/app/components/file-chooser/file-chooser.component';
+import { ApiService } from 'src/app/services/api.service';
+import { ToastService } from 'src/app/services/toast.service';
+import { TREE_ACTIONS, KEYS, IActionMapping, ITreeOptions, TreeModel, ITreeState } from '@circlon/angular-tree-component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { ApiService } from '../../../services/api.service';
-import { ToastService } from '../../../services/toast.service';
-import { FileChooserComponent } from '../../../components/file-chooser/file-chooser.component';
-import { TREE_ACTIONS, KEYS, IActionMapping, ITreeOptions, TreeModel, ITreeState} from 'angular-tree-component';
+
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -23,7 +24,7 @@ export class UsersComponent implements OnInit {
   }
   emailRegexp = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   
-  @ViewChild('tree') tree
+  @ViewChild('tree') tree!: any;
   
   validEmail: any = {
     reason: "Campo requerido",
@@ -38,7 +39,6 @@ export class UsersComponent implements OnInit {
   checked: boolean = false
   
   changePassword: boolean = false
-  
   changePasswordData: any = {
     userId: 0,
     newPassword: "",
@@ -48,7 +48,7 @@ export class UsersComponent implements OnInit {
   //Tree properties
   selectedNodes: Array<any> = [];
 
-  state: ITreeState;
+  state!: ITreeState;
 
   policyNodes: Array<any> = []
 
@@ -59,12 +59,12 @@ export class UsersComponent implements OnInit {
     hasChildrenField: 'nodes',
     actionMapping: {
       mouse: {
-        dblClick: (tree, node, $event) => {
+        dblClick: (tree: any, node: any, $event: any) => {
           if (node.hasChildren) TREE_ACTIONS.TOGGLE_EXPANDED(tree, node, $event);
         }
       },
       keys: {
-        [KEYS.ENTER]: (tree, node, $event) => {
+        [KEYS.ENTER]: (tree: any, node: { expandAll: () => void; }, $event: any) => {
           node.expandAll();
         }
       }
@@ -84,7 +84,8 @@ export class UsersComponent implements OnInit {
     public toast: ToastService
   ) { }
 
-  @ViewChild(FileChooserComponent) fileChooser : FileChooserComponent;
+  @ViewChild(FileChooserComponent)
+  fileChooser!: FileChooserComponent;
 
   ngOnInit() {
     this.getUsers();
@@ -117,8 +118,8 @@ export class UsersComponent implements OnInit {
     )
   }
 
-  parsePolicyNodesToExpandAll(policyNodes): Array<any>{
-    policyNodes.forEach(pn => {
+  parsePolicyNodesToExpandAll(policyNodes: any[]): Array<any>{
+    policyNodes.forEach((pn: { expanded: boolean; children: any[]; }) => {
       pn.expanded = true;
       if(pn.children && pn.children.length > 0){
         pn.children = this.parsePolicyNodesToExpandAll(pn.children)
@@ -128,7 +129,7 @@ export class UsersComponent implements OnInit {
     return policyNodes
   }
 
-  mtModalRef: BsModalRef;
+  mtModalRef!: BsModalRef;
   openModal(template: TemplateRef<any>) {
     this.validEmail.state = true
     this.mtModalRef = this.modalService.show(template);
@@ -136,8 +137,8 @@ export class UsersComponent implements OnInit {
   }
 
   parsePolicyNodesToShowCurrentPermissions(){
-    let userPermissions = {};
-    this.updtUser.userPermissions.forEach(up => {
+    let userPermissions: any = {};
+    this.updtUser.userPermissions.forEach((up: any) => {
       userPermissions[up.id] = true
     });
     this.state = {
@@ -146,7 +147,7 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  setUpdatingUser(userToUpdate){
+  setUpdatingUser(userToUpdate: { id: any; }){
     this.updtUser = JSON.parse(JSON.stringify(userToUpdate))
     if(this.updtUser.hasOwnProperty('userPermissions')) this.parsePolicyNodesToShowCurrentPermissions();
     this.changePassword = false;
@@ -163,7 +164,7 @@ export class UsersComponent implements OnInit {
     this.updtUser.hasChangedProfileImage = true
   }
 
-  validateAnEmail(email){
+  validateAnEmail(email: string){
     if(this.emailRegexp.test(email)){
       this.validEmail.state = true
     }
@@ -213,7 +214,7 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  updateSelectedNodes(event) {
+  updateSelectedNodes(event: { selectedLeafNodeIds: { [s: string]: unknown; } | ArrayLike<unknown>; }) {
     // console.log("tree",this.state);
     
     let selectedTreeList = Object.entries(event.selectedLeafNodeIds)

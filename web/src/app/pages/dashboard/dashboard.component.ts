@@ -1,21 +1,15 @@
-import { Component, OnInit, TemplateRef} from '@angular/core';
-import { RouterModule, Routes ,Router} from '@angular/router';
-import { ApiService } from '../../services/api.service';
-import { ToastService } from '../../services/toast.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.scss']
 })
-
 export class DashboardComponent implements OnInit {
-  
-	constructor(
-    private router: Router,
-    private api: ApiService,
-    private toast: ToastService
-    ) {}
-  ngOnInit() {}
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
 
 }

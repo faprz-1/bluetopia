@@ -1,54 +1,48 @@
-import { Injectable, NgZone, EventEmitter} from '@angular/core';
+import { EventEmitter, Injectable, NgZone } from '@angular/core';
 import { Subject } from 'rxjs';
 
-/**
- * A través de este componente se cambia el tema de la aplicación al color especificado. Se pueden añadir mas colores añadiendo entradas
- * al archivo assets/scss/_theme.scss
- */
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class SharedService {
+  public userProfileImageUpdated$: EventEmitter<Object> = new EventEmitter<Object>();
+  public sidebarVisible: boolean;
+  public sidebarVisibilitySubject: Subject<boolean> = new Subject<boolean>();
 
-    public userProfileImageUpdated$: EventEmitter<Object> = new EventEmitter<Object>()
-    // Sidebar visibility
-    sidebarVisible: boolean
-    sidebarVisibilitySubject: Subject<boolean> = new Subject<boolean>()
-    
-    public breadcrumbs : Array<any> = [] 
+  public breadcrumbs: any[] = [];
 
-    toggleSidebarVisibilty() {
-        this.sidebarVisible = !this.sidebarVisible
-        this.sidebarVisibilitySubject.next(this.sidebarVisible)
+  public toggleSidebarVisibilty() {
+    this.sidebarVisible = !this.sidebarVisible;
+    this.sidebarVisibilitySubject.next(this.sidebarVisible);
+  }
+
+  // Theming
+  public maTheme: string;
+  public maThemeSubject: Subject<string> = new Subject<string>();
+
+  public setTheme(color: string) {
+    this.maTheme = color
+    this.maThemeSubject.next(this.maTheme)
+    localStorage.setItem("theme", color);
+  }
+
+  constructor(private zone: NgZone) {
+    // Hide the sidebar by default
+    this.sidebarVisible = true
+
+    // Set default theme
+    let theme = localStorage.getItem("theme");
+    if (!theme) {
+      localStorage.setItem("theme", "teal");
+      theme = "teal";
     }
 
-    // Theming
-    maTheme: string
-    maThemeSubject: Subject<string> = new Subject<string>()
+    this.maTheme = theme
+  }
 
-    setTheme(color) {
-        this.maTheme = color
-        this.maThemeSubject.next(this.maTheme)
-        localStorage.setItem("theme",color);
-    }
-
-    constructor(private zone : NgZone)  {
-        // Hidden the sidebar by default
-        this.sidebarVisible = true
-
-        // Set default theme
-        let theme = localStorage.getItem("theme");
-        if(!theme){
-            localStorage.setItem("theme","teal");
-            theme="teal";
-        }
-
-        this.maTheme = theme
-    }
-    
-    setBreadcrumbs(bread){ 
-        this.zone.run(()=>{ 
-            this.breadcrumbs= bread; 
-        }); 
-    } 
-
-
+  setBreadcrumbs(bread: any) {
+    this.zone.run(() => {
+      this.breadcrumbs = bread;
+    });
+  }
 }

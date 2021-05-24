@@ -12,8 +12,8 @@ import { Router } from '@angular/router';
   ]
 })
 export class HeaderComponent implements OnInit {
-  tasksData: Array < any > ;
-  maThemeModel: string;
+  tasksData: any[] = [];
+  maThemeModel!: string;
 
   setTheme() {
     this.sharedService.setTheme(this.maThemeModel)

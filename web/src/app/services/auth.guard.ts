@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
-import { TOKEN_LOCALSTORAGE_KEY, TTL_LOCALSTORAGE_KEY, USER_LOCALSTORAGE_KEY } from './api.service';
-
+import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import * as moment from 'moment';
+import { Observable } from 'rxjs';
+import { ApiService } from './api.service';
 import { ToastService } from './toast.service';
+
 
 export enum Roles
 {
@@ -18,30 +18,32 @@ export enum Roles
 
 const REDIRECTING_TO_HOME_PAGE: string = 'Ha expirado su sesión. Redireccionando a la página de inicio...'
 
-@Injectable()
-export class AuthGuard implements CanActivate
-{
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthGuard implements CanActivate {
   private id: any;
   private params: any;
 
   constructor(
     private router: Router,
-    private toastService: ToastService
-  )
-  {}
-
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable < boolean > | Promise < boolean > | boolean
-  {
-
+    private toastService: ToastService,
+    private api: ApiService,
+  ) {}
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     try
     {
-      const token = localStorage.getItem(TOKEN_LOCALSTORAGE_KEY);
-      const user = JSON.parse(localStorage.getItem(USER_LOCALSTORAGE_KEY));
+      const token = this.api.GetToken();
+      const user = this.api.GetUser();
 
       const userRole = user ? user.role.name : null;
-      const acceptedRoles = next.data.roles ? next.data.roles : (next.data.role ? [next.data.role] : []);
+      const acceptedRoles = route.data.roles ? route.data.roles : (route.data.role ? [route.data.role] : []);
 
-      const routeHasRoleInfo = !next.data.role && !next.data.roles;
+      const routeHasRoleInfo = !route.data.role && !route.data.roles;
       const isRoleValid = acceptedRoles.includes(userRole);
       let canActivate = (this.IsTTLValid() && token && user && isRoleValid) || acceptedRoles.length == 0;
 
@@ -64,8 +66,8 @@ export class AuthGuard implements CanActivate
 
   private IsTTLValid() : boolean
   {
-    let ttl = localStorage.getItem(TTL_LOCALSTORAGE_KEY);
+    let ttl = this.api.GetTTL();
     let today = moment();
     return ttl != null && today.isBefore(ttl);
-  }
+  }  
 }

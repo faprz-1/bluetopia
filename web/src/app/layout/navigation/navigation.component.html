@@ -3,7 +3,7 @@
 
         <div class="user" dropdown>
             <div class="user__info" dropdownToggle>
-                <img  class="user__img" style="object-fit: cover" *ngIf="user.profileImage!=null" src="{{user.profileImage | jarabeImage:'avatar':api}}" alt="Profile image">
+                <img  class="user__img" style="object-fit: cover" *ngIf="user.profileImage!=null" src="{{user.profileImage | jarabeImage:'avatar'}}" alt="Profile image">
                 <img *ngIf="user.profileImage==null" class="user__img" style="object-fit: cover" src="assets/fondo/user.png" alt="">
                 <div>
                     <div class="user__name">{{user.username}}</div>

@@ -1,0 +1,180 @@
+{
+    "app": {
+        "name": "AFP"
+    },
+    "loading": {
+        "message": "Loading..."
+    },
+    "refresher": {
+        "updatingLabel": "Updating...",
+        "updateLabel": "Update"
+    },
+    "okButtonLabel": "Ok",
+    "cancelButtonLabel": "Cancel",
+    "loginPage": {
+        "emailLabel": "Email",
+        "emailPlaceholder": "Email",
+        "passwordLabel": "Password",
+        "passwordPlaceholder": "Password",
+        "loginButton": "Login",
+        "alertHeader": "There is an error.",
+        "alertSubHeader": "Something went wrong",
+        "alertButtonLabel": "Ok",
+        "updateAlertHeader": "There is an update.",
+        "keepSessionAlive": "keep my session alive.",
+        "updateAlertSubHeader": "You need to update to the latest version of the app",
+        "updateAlertButtonLabel": "Update"
+    },
+    "signUp": {
+        "title": "Create Account",
+        "typeUserName": "Username",
+        "typeUserNamePlaceholder": "Enter your username",
+        "typeName": "Name",
+        "typeNamePlaceholder": "Enter your first and last name",
+        "typeMail": "Email",
+        "typeMailPlaceholder": "Enter your email",
+        "typePhone": "Phone",
+        "typePhonePlaceholder": "Enter your phone number",
+        "typePassword": "Password",
+        "typePasswordPlaceholder": "Enter your password",
+        "typeRepeatPassword": "Confirm your password",
+        "typeRepeatPasswordPlaceholder": "Repeat your password",
+        "register": "Sign Up",
+        "alreadyAnAccount": "<i>Already have an account</i>"
+    },
+    "passwordRecovery": {
+        "title": "Forgot your password?",
+        "typeMail": "Type in your email that's linked to the app, and we'll send you a link to set up your new password.",
+        "typeMailPlaceholder": "Type your email",
+        "continue": "Send email",
+        "cancel": "Cancel",
+        "back": "Return",
+        "typePin": "Type the 4 digit PIN that was sent to your email",
+        "typePinPlaceholcer": "0000",
+        "typeNewPassword": "Type your new password",
+        "typeNewPasswordPlaceholcer": "New Password",
+        "endProcess": "Done!"
+    },
+    "settings": {
+        "title": "Settings",
+        "logOut": {
+            "label": "Exit",
+            "prompt": "Log out?"
+        },
+        "changePassword": {
+            "title": "Change Password",
+            "previusPassword": "Current Password",
+            "previusPasswordPlaceholder": "Type your current password",
+            "newPassword": "New password",
+            "newPasswordPlaceholder": "Type your new password",
+            "repeatPassword": "Repeat your new password",
+            "repeatPasswordPlaceholder": "New password",
+            "save": "Save changes",
+            "cancel": "Cancel"
+        }
+    },
+    "profile": {
+        "title": "My Profile",
+        "name": "Name",
+        "username": "Username",
+        "email": "Email",
+        "phone": "Phone",
+        "saveLabel": "Save changes"
+    },
+    "appComponent": {
+        "logoutLabel": "Exit",
+        "homeLabel": "Home",
+        "settingsLabel": "Settings"
+    },
+    "notifications": {
+        "title": "My Notifications"
+    },
+    "selectAsset": {
+        "title": "Select an asset",
+        "firstTimeTitle": "Add an asset to start",
+        "searchLabel": "Search text...",
+        "categoryLabel": "Market",
+        "addCustomAssetLabel": "Can't find an asset?"
+    },
+    "assets": {
+        "delete": {
+            "header": "Delete asset?",
+            "subHeader":"This can't be undone!",
+            "success": "Asset deleted successfully"
+        },
+        "title": "My Assets",
+        "no-content": {
+            "title": "No assets added yet",
+            "message": "Click on the \"+\" symbol to add a new asset"
+        },
+        "form": {
+            "name": "Name",
+            "namePlaceholder": "Enter name...",
+            "amount": "Amount",
+            "amountPlaceholder": "Enter amount...",
+            "price": "Price",
+            "pricePlaceholder": "Enter price...",
+            "market": "Market",
+            "marketPlaceholder": "Enter market...",
+            "ticker": "Ticker",
+            "tickerPlaceholder": "Enter ticker..."
+        }
+    },
+    "newAsset": {
+        "title": "Add asset",
+        "custom": {
+            "title": "Add new asset"
+        }
+    },
+    "portfolio": {
+        "title": "Portfolio"
+    },
+    "dashboard": {
+        "title": "My Profile",
+        "subtitle": "This is your asset distribution",
+        "searchButtonLabel": "Asset search",
+        "share-settings": {
+            "title": "Share portfolio",
+            "description": "Here you can share your portfolio to other investors. Begin creating your investor network by sharing your portfolio to any app you want",
+            "active": "Active",
+            "link": "Link",
+            "copy": "Share",
+            "backButton": "Go Back"
+        }
+    },
+    "alerts": {
+        "title": "Alerts",
+        "subtitle": "Stock market notifications",
+        "delete": {
+            "header": "Delete alert?",
+            "subHeader": "You can create it again later",
+            "success": "Alert deleted successfully"
+        },
+        "new": {
+            "title": "Create alert"
+        },
+        "edit": {
+            "title": "Edit alert"
+        },
+        "presets": {
+            "title": "Presets"
+        },
+        "no-content": {
+            "title": "No alerts added yet",
+            "message": "Click on the \"+\" symbol to add a new alert"
+        },
+        "form": {
+            "success": "Alert updated successfully",
+            "name": "Name",
+            "namePlaceholder": "Enter name...",
+            "minPrice": "When it goes below...",
+            "minPricePlaceholder": "Enter price...",
+            "maxPrice": "When it goes beyond...",
+            "maxPricePlaceholder": "Enter price...",
+            "market": "Market",
+            "marketPlaceholder": "Enter market...",
+            "ticker": "Ticker",
+            "tickerPlaceholder": "Enter ticker..."
+        }
+    }
+}

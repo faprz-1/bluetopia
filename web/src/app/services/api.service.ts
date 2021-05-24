@@ -1,12 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Route } from '@angular/compiler/src/core';
 import { Injectable } from '@angular/core';
-
-import { retryWhen, mergeMap, tap, delay, catchError } from 'rxjs/operators';
-import { Observable, timer, throwError, of } from 'rxjs';
-import { ToastService } from './toast.service';
+import { Router } from '@angular/router';
+import * as moment from 'moment';
+import { Observable, throwError, timer } from 'rxjs';
+import { mergeMap, retryWhen, tap } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 import { LoadingService } from './loading.service';
-
-import { environment } from '../../environments/environment'
+import { ToastService } from './toast.service';
 
 export const TOKEN_LOCALSTORAGE_KEY = "token"
 export const USER_LOCALSTORAGE_KEY  = "user"
@@ -19,13 +20,11 @@ const RETRY_STATUS_CODES          = [ 408, 429, 504]
 const RETRY_MILLISECONDS          = 10000
 export const TTL_SECONDS          = 1209600;
 
-import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService
-{
+export class ApiService {
   private token: string = "";
   private debugMode: boolean = false;
 
@@ -34,19 +33,18 @@ export class ApiService
   constructor(
     private http: HttpClient,
     private toastService: ToastService,
-    private loadingService: LoadingService
-    )
-    {
+    private loadingService: LoadingService,
+    private router: Router
+  ) {
     this.token = this.GetToken();
     this.GetDebugMode();
   }
 
-  public GetBaseURL()
-  {
+  public GetBaseURL() {
     return environment.baseURL;
   }
 
-  private GetHeaders() : HttpHeaders {
+  private GetHeaders(): HttpHeaders {
     let headers = {
       'Content-Type': 'application/json'
     };
@@ -54,94 +52,94 @@ export class ApiService
     return new HttpHeaders(headers);
   }
 
-  public Get(endPoint: string, getVariables : any = {}, useToken:boolean = true, displayErrors: boolean = true): Observable<any>
-  {
+  public Get(endPoint: string, getVariables: any = {}, useToken: boolean = true, displayErrors: boolean = true): Observable<any> {
     let link: string = this.GenLink(endPoint, useToken, getVariables);
     return this.ProcessHttpRequest(this.http.get<JSON>(link, { headers: this.GetHeaders() }), displayErrors);
   }
 
-  public Post(endPoint: string, body: object, useToken:boolean = true, displayErrors: boolean = true): Observable<any>
-  {
+  public Post(endPoint: string, body: object, useToken: boolean = true, displayErrors: boolean = true): Observable<any> {
     let link: string = this.GenLink(endPoint, useToken);
     return this.ProcessHttpRequest(this.http.post<JSON>(link, body, { headers: this.GetHeaders() }), displayErrors);
   }
 
-  public Patch(endPoint: string, body: object, useToken:boolean = true, displayErrors: boolean = true): Observable<any>
-  {
+  public Patch(endPoint: string, body: object, useToken: boolean = true, displayErrors: boolean = true): Observable<any> {
     let link: string = this.GenLink(endPoint, useToken);
     return this.ProcessHttpRequest(this.http.patch<JSON>(link, body, { headers: this.GetHeaders() }), displayErrors);
   }
 
-  public Put(endPoint: string, body: object, useToken:boolean = true, displayErrors: boolean = true): Observable<any>
-  {
+  public Put(endPoint: string, body: object, useToken: boolean = true, displayErrors: boolean = true): Observable<any> {
     let link: string = this.GenLink(endPoint, useToken);
     return this.ProcessHttpRequest(this.http.put<JSON>(link, body, { headers: this.GetHeaders() }), displayErrors);
   }
 
-  public Delete(endPoint: string, useToken:boolean = true, displayErrors: boolean = true): Observable<any>
-  {
+  public Delete(endPoint: string, useToken: boolean = true, displayErrors: boolean = true): Observable<any> {
     let link: string = this.GenLink(endPoint, useToken);
     return this.ProcessHttpRequest(this.http.delete<JSON>(link, { headers: this.GetHeaders() }), displayErrors);
   }
 
-  public GetUser() : any
-  {
-    return JSON.parse(localStorage.getItem(USER_LOCALSTORAGE_KEY));
+  public GetUser(): any {
+    const data = localStorage.getItem(USER_LOCALSTORAGE_KEY);
+    return data ? JSON.parse(data) : undefined;
   }
-  public SetUser(user: string)
-  {
+  public SetUser(user: string) {
     localStorage.setItem(USER_LOCALSTORAGE_KEY, JSON.stringify(user));
   }
 
-  public GetTTL() : any
-  {
+  public GetTTL(): any {
     return localStorage.getItem(TTL_LOCALSTORAGE_KEY);
   }
-  public ResetTTL()
-  {
+  public ResetTTL() {
     localStorage.setItem(TTL_LOCALSTORAGE_KEY, moment().add(TTL_SECONDS, 's').toISOString());
   }
 
-  public GetToken() : string
-  {
-    return localStorage.getItem(TOKEN_LOCALSTORAGE_KEY);
+  public GetToken() {
+    return localStorage.getItem(TOKEN_LOCALSTORAGE_KEY) || '';
   }
-  public SetToken(token: string)
-  {
+  public SetToken(token: string) {
     localStorage.setItem(TOKEN_LOCALSTORAGE_KEY, token);
     this.token = token;
   }
 
-  private ProcessHttpRequest(request: Observable<JSON>, displayErrors): Observable<JSON>
-  {
+  private ProcessHttpRequest(request: Observable<JSON>, displayErrors: boolean): Observable<JSON> {
+    this.loadingService.AddLoadingLevel();
     return request.pipe(
+      tap(
+        () => this.loadingService.ReleaseLoadingLevel(),
+        error => {
+          this.loadingService.ReleaseLoadingLevel();
+          if(!environment.production) {
+            this.toastService.ShowError(JSON.stringify(error));
+          }
+          if (error && error.status == 401) {
+            localStorage.clear();
+            this.router.navigate(['login']);
+          }
+        },
+      ),
       retryWhen(errorResponse => this.RetryOnConnectionError(errorResponse, displayErrors)),
     );
   }
 
-  private GenLink(endPoint: string, useToken: boolean, getVars: any[] = []): string
-  {
-    this.token = localStorage.getItem(TOKEN_LOCALSTORAGE_KEY);
-    useToken = useToken && this.token && this.token.length > 0;
+  private GenLink(endPoint: string, useToken: boolean, getVars: any[] = []): string {
+    this.token = this.GetToken();
+    useToken = useToken && !!this.token && this.token.length > 0;
 
     let baseURL = this.GetBaseURL() + endPoint + "?";
-    for(let variable in getVars)
+    for (let variable in getVars)
       baseURL = `${baseURL}${variable}=${getVars[variable]}&`;
 
     return useToken ? baseURL + "access_token=" + this.token : baseURL;
   }
 
-  private RetryOnConnectionError(errorResponse: Observable<any>, displayErrors): Observable<any>
-  {
+  private RetryOnConnectionError(errorResponse: Observable<any>, displayErrors: boolean): Observable<any> {
     return errorResponse.pipe(
       mergeMap(
-        (error, retryAttempts) =>
-        {
-          if(retryAttempts >= RETRY_ATTEMPTS || !RETRY_STATUS_CODES.find(code => error.status == code))
+        (error, retryAttempts) => {
+          if (retryAttempts >= RETRY_ATTEMPTS || !RETRY_STATUS_CODES.find(code => error.status == code))
             return throwError(error)
 
-          if(displayErrors)
-            this.ShowToast(`Connection lost. Retrying in ${RETRY_MILLISECONDS/1000} seconds...`);
+          if (displayErrors)
+            this.ShowToast(`Connection lost. Retrying in ${RETRY_MILLISECONDS / 1000} seconds...`);
 
           return timer(RETRY_MILLISECONDS)
         }
@@ -149,13 +147,11 @@ export class ApiService
     );
   }
 
-  private ShowToast(message: string)
-  {
+  private ShowToast(message: string) {
     return this.toastService.ShowError(message);
   }
 
-  private GetDebugMode() : boolean
-  {
+  private GetDebugMode(): boolean {
     return this.debugMode;
   }
 }
