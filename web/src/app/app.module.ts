@@ -1,51 +1,61 @@
-
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import localeMx from '@angular/common/locales/es-MX';
+import { DEFAULT_CURRENCY_CODE, LOCALE_ID, NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
-import { PapaParseModule } from 'ngx-papaparse';
-
-import { AppComponent } from './app.component';
-import { routing } from './app.routing';
-
-///services
-import { SharedService } from "./shared/services/shared.service";
-import { ApiService } from "./services/api.service";
-import { PushService } from "./services/push.service";
-import { HttpClientModule } from '@angular/common/http';
-import { AuthGuard } from './services/auth.guard';
-import { FilterPipe } from './filter.pipe';
-import { ToastService } from './services/toast.service';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ToastrModule } from 'ngx-toastr';
-import { AuthSGuard } from './services/authSuser.guard';
-import { LoadingService } from './services/loading.service';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+// import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+
+
+registerLocaleData(localeMx,"es");
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+// const config: SocketIoConfig = { 
+//   url: environment.socketURL,
+// };
+
 @NgModule({
+  declarations: [
+    AppComponent
+  ],
   imports: [
+    BrowserModule,
+    AppRoutingModule,
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-    routing,
+    ReactiveFormsModule,
     ToastrModule.forRoot(),
-    PapaParseModule
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
+      }
+    }),
+    // SocketIoModule.forRoot(config)
   ],
-  declarations: [
-    AppComponent,
-    FilterPipe
-  ],
-providers: [
-    SharedService,
+  providers: [
     {
       provide: LocationStrategy,
       useClass: HashLocationStrategy
     },
-    ApiService,
-    PushService,
-    AuthGuard,
-    AuthSGuard,
-    ToastService,
-    LoadingService
+    { 
+      provide: LOCALE_ID, 
+      useValue: 'es-MX' 
+    },
+    {
+      provide: DEFAULT_CURRENCY_CODE, 
+      useValue: 'MXN'
+    }
   ],
   bootstrap: [AppComponent]
 })

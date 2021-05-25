@@ -8,8 +8,9 @@
   </div>
 
   <div class="row" *ngIf="users.length > 0; else noUsers">
-    <div class="col-lg-2 col-md-4 col-sm-6 py-2" *ngFor="let user of users" (click)="setUpdatingUser(user); openModal(editUser);">
-      <pm-user-card [data]="user"></pm-user-card>
+    <div class="col-lg-2 col-md-4 col-sm-6 py-2" *ngFor="let user of users"
+      (click)="setUpdatingUser(user); openModal(editUser);">
+      <app-user-card [data]="user"></app-user-card>
     </div>
   </div>
   <ng-template #noUsers>
@@ -20,74 +21,78 @@
 </section>
 
 <ng-template #editUser class="modal-lg">
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">Editar Usuario</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body" *ngIf="!changePassword; else changingPassword">
-      <div class="form-group">
-        <label>Nombre</label>
-        <input type="text" class="form-control" [(ngModel)]="updtUser.username" required>
-        <small class="accent" *ngIf="updtUser.username.length == 0">Campo requerido</small>
-      </div>
-  
-      <div class="form-group">
-        <label>Imagen de Perfil</label>
-        <template-file-chooser (onChange)="updateProfileImage($event)" [fileType]="'profileImage'" required
-          [extensionFilter]="'image/x-png,image/gif,image/jpeg'"></template-file-chooser>
-        <!-- <small class="form-text text-muted accent" *ngIf="updtUser.profileImage == null">Campo Requerido</small> -->
-      </div>
-  
-      <div class="form-group">
-        <label>Correo electrónico</label>
-        <input type="email" class="form-control" [(ngModel)]="updtUser.email" *ngIf="!checked">
-        <small class="accent" *ngIf="updtUser.email.length == 0">Campo requerido</small>
-        <input type="email" class="form-control border border-danger" [(ngModel)]="updtUser.email" *ngIf="checked">
-        <small class=" accent"
-          *ngIf="updtUser.email.length != 0 && !validEmail.state && checked">{{validEmail.reason}}</small>
-      </div>
-
-      <div class="form-group active-toggle">
-          <p class="card-text" *ngIf="updtUser.active">Activo :
-              si <i class="zmdi zmdi-check m-1" ></i>
-              <br>
-              <u class="text-muted" (click)="updtUser.active = !updtUser.active">Desactivar cuenta</u>
-          </p>
-          <p class="card-text" *ngIf="!updtUser.active">Activo :
-              no <i class="zmdi zmdi-close m-1" ></i>
-              <br>
-              <u class="text-muted" (click)="updtUser.active = !updtUser.active">Activar cuenta</u>
-          </p>
-      </div>
-
-      <div class="permission-card-body card-body">
-        <tree-root #tree [nodes]="policyNodes" [(state)]="state" [options]="options" (stateChange)="updateSelectedNodes($event)" (initialize)="onTreeInit(userPermissionsTree)"></tree-root>
-      </div>
-      
-      <button type="button" class="btn btn-primary btn-block" [disabled]="loading" (click)="updateUser()">Guardar</button>
-      
-      <div class="reset-pass" (click)="changePassword = true">
-        Restablecer contraseña
-      </div>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Editar Usuario</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" *ngIf="!changePassword; else changingPassword">
+    <div class="form-group">
+      <label>Nombre</label>
+      <input type="text" class="form-control" [(ngModel)]="updtUser.username" required>
+      <small class="accent" *ngIf="updtUser.username.length == 0">Campo requerido</small>
     </div>
 
-    <ng-template #changingPassword>
-      <div class="modal-body">
-        <div class="form-group">
-          <label>Contraseña</label>
-          <input type="password" class="form-control" [(ngModel)]="changePasswordData.newPassword" minlength="8">
-          <small class="accent" *ngIf="changePasswordData.newPassword.length == 0">Campo Requerido</small>
-        </div>
-    
-        <div class="form-group" *ngIf="changePasswordData.newPassword.length != 0">
-          <label>Confirma la contraseña</label>
-          <input type="password" class="form-control" [(ngModel)]="changePasswordData.newPasswordConfirm">
-          <small class="accent" *ngIf="changePasswordData.newPassword != changePasswordData.newPasswordConfirm">La contraseña no coincide</small>
-        </div>
+    <div class="form-group">
+      <label>Imagen de Perfil</label>
+      <app-file-chooser (onChange)="updateProfileImage($event)" [fileType]="'profileImage'" required
+        [extensionFilter]="'image/x-png,image/gif,image/jpeg'"></app-file-chooser>
+      <!-- <small class="form-text text-muted accent" *ngIf="updtUser.profileImage == null">Campo Requerido</small> -->
+    </div>
 
-        <button type="button" class="btn btn-primary btn-block" [disabled]="loading" (click)="updateUserPassword()">Guardar</button>
+    <div class="form-group">
+      <label>Correo electrónico</label>
+      <input type="email" class="form-control" [(ngModel)]="updtUser.email" *ngIf="!checked">
+      <small class="accent" *ngIf="updtUser.email.length == 0">Campo requerido</small>
+      <input type="email" class="form-control border border-danger" [(ngModel)]="updtUser.email" *ngIf="checked">
+      <small class=" accent"
+        *ngIf="updtUser.email.length != 0 && !validEmail.state && checked">{{validEmail.reason}}</small>
+    </div>
+
+    <div class="form-group active-toggle">
+      <p class="card-text" *ngIf="updtUser.active">Activo :
+        si <i class="zmdi zmdi-check m-1"></i>
+        <br>
+        <u class="text-muted" (click)="updtUser.active = !updtUser.active">Desactivar cuenta</u>
+      </p>
+      <p class="card-text" *ngIf="!updtUser.active">Activo :
+        no <i class="zmdi zmdi-close m-1"></i>
+        <br>
+        <u class="text-muted" (click)="updtUser.active = !updtUser.active">Activar cuenta</u>
+      </p>
+    </div>
+
+    <div class="permission-card-body card-body">
+      <tree-root #tree [nodes]="policyNodes" [(state)]="state" [options]="options"
+        (stateChange)="updateSelectedNodes($event)">
+      </tree-root>
+    </div>
+
+    <button type="button" class="btn btn-primary btn-block" [disabled]="loading" (click)="updateUser()">Guardar</button>
+
+    <div class="reset-pass" (click)="changePassword = true">
+      Restablecer contraseña
+    </div>
+  </div>
+
+  <ng-template #changingPassword>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" class="form-control" [(ngModel)]="changePasswordData.newPassword" minlength="8">
+        <small class="accent" *ngIf="changePasswordData.newPassword.length == 0">Campo Requerido</small>
       </div>
-    </ng-template>
+
+      <div class="form-group" *ngIf="changePasswordData.newPassword.length != 0">
+        <label>Confirma la contraseña</label>
+        <input type="password" class="form-control" [(ngModel)]="changePasswordData.newPasswordConfirm">
+        <small class="accent" *ngIf="changePasswordData.newPassword != changePasswordData.newPasswordConfirm">La
+          contraseña no coincide</small>
+      </div>
+
+      <button type="button" class="btn btn-primary btn-block" [disabled]="loading"
+        (click)="updateUserPassword()">Guardar</button>
+    </div>
   </ng-template>
+</ng-template>

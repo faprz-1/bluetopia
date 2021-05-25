@@ -1,8 +1,8 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { ApiService } from '../../services/api.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { ToastService } from '../../services/toast.service';
-import { SharedService } from '../../shared/services/shared.service';
+import { ApiService } from 'src/app/services/api.service';
+import { ToastService } from 'src/app/services/toast.service';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 @Component({
   selector: 'app-profile',
@@ -10,10 +10,9 @@ import { SharedService } from '../../shared/services/shared.service';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-
   ready : boolean = true
-  user : any
-  mtModalRef: BsModalRef;
+  user : any;
+  mtModalRef!: BsModalRef;
   isFormSended: boolean = false;
   isPromiseActive: boolean = false;
   userPasswords: any = {
@@ -24,7 +23,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private sharedService : SharedService,
-    private api : ApiService,
+    public api : ApiService,
     private modalService: BsModalService,
     private toast: ToastService
     ) { }
@@ -32,17 +31,17 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.api.Get("/Usuarios/withCredentials", true).subscribe((userFromServer: any)=>{
       localStorage.setItem("user", JSON.stringify(userFromServer));
-      this.reload();
+      this.Reload();
     })
   }
 
-  reload() {
+  Reload() {
     this.ready = false;
-    this.user = JSON.parse(localStorage.getItem("user"))
+    this.user = this.api.GetUser();
     this.ready = true;
   }
 
-  openModal(template: TemplateRef<any>, event) {
+  OpenModal(template: TemplateRef<any>, event: Event) {
     event.stopPropagation();
     this.mtModalRef = this.modalService.show(
       template, {
@@ -51,7 +50,9 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  CloseModal() {this.mtModalRef.hide();}
+  CloseModal() {
+    this.mtModalRef.hide();
+  }
 
   ChangeUserPassword(){
     this.isFormSended = true;
@@ -109,7 +110,7 @@ export class ProfileComponent implements OnInit {
     return valid;
   }
 
-  ImageChanged(image){
+  ImageChanged(image: any) {
     this.user.profileImage = image
     this.sharedService.userProfileImageUpdated$.emit(image)
   }

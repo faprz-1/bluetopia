@@ -1,16 +1,16 @@
-import { Component, OnInit, ViewContainerRef, NgZone, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, NgZone, OnInit, Output } from '@angular/core';
 import { ApiService } from '../../services/api.service';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
-  selector: 'template-profile-image-editor',
+  selector: 'app-profile-image-editor',
   templateUrl: './profile-image-editor.component.html',
   styleUrls: ['./profile-image-editor.component.scss']
 })
-export class ProfileImageEditorComponent implements OnInit {
+export class ProfileImageEditorComponent {
   @Output() imageChanged = new EventEmitter<any>();
 
-  img: string;
+  img: string = '';
   user: any;
   processed: any = false;
   processing: any = false;
@@ -18,76 +18,69 @@ export class ProfileImageEditorComponent implements OnInit {
   success: any = false;
 
   constructor(
-    public toastr: ToastrService,
+    public toast: ToastService,
     private api: ApiService,
-    vcr: ViewContainerRef,
     private zone: NgZone
-    ) {
-      this.user = JSON.parse(localStorage.getItem('user'));
-    }
+  ) {
+    this.user = this.api.GetUser();
+  }
 
-    ngOnInit() {
-      console.log(this.user);
-    }
-    openFileBrowser(event: any){
-      event.preventDefault();
+  openFileBrowser(event: any) {
+    event.preventDefault();
 
-      const e: HTMLElement = document.getElementById('base64File') as HTMLElement;
-      e.click();
-    }
+    const e: HTMLElement = document.getElementById('base64File') as HTMLElement;
+    e.click();
+  }
 
 
-    onFileChange(event) {
-      const reader = new FileReader();
-      if (event.target.files && event.target.files.length > 0) {
-        const file = event.target.files[0];
+  onFileChange(event: any) {
+    const reader = new FileReader();
+    if (event?.target?.files && event.target.files.length > 0) {
+      const file = event?.target?.files[0];
 
-        reader.onload = (readEvent: any) => {
-          const binaryString = readEvent.target.result;
+      reader.onload = (readEvent: any) => {
+        const binaryString = readEvent.target.result;
 
-          const file = {
-            'encodedFileContainer': 'profileImages',
-            'name': event.target.files[0].name,
-            'resize': true,
-            'base64File': btoa(binaryString),
-            'fileExtention': '.' + event.target.files[0].name.split('.').pop().toLowerCase()
-          };
-          this.newfile = file;
-          this.UpdateProfile(this.newfile);
+        const targetFile = event?.target?.files?.item(0);
+        const file = {
+          'encodedFileContainer': 'profileImages',
+          'name': targetFile?.name,
+          'resize': true,
+          'base64File': btoa(binaryString),
+          'fileExtention': '.' + targetFile?.name?.split('.')?.pop()?.toLowerCase()
         };
+        this.newfile = file;
+        this.UpdateProfile(this.newfile);
+      };
 
-        reader.readAsBinaryString(file);
+      reader.readAsBinaryString(file);
+    }
+  }
+
+  UpdateProfile(newImage: any) {
+    this.success = false;
+    this.processed = false;
+    this.processing = true;
+
+    const endpoint = `/Usuarios/${this.user.id}/changeProfileImage`;
+    this.api.Post(endpoint, {newImage}, true).subscribe(
+      (success: any) => {
+        this.processing = false;
+        this.zone.run(() => {
+          this.user.profileImage = success.profileImage;
+        });
+        this.api.SetUser(this.user);
+        this.processed = true;
+        this.success = true;
+        this.imageChanged.emit(success.profileImage);
+        this.toast.ShowSuccess('Se ha actualizado la imagen de perfil');
+      },
+      (error: any) => {
+        this.processing = false;
+        this.processed = true;
+        this.success = false;
+        this.toast.ShowError('Error al actualizar la imagen de perfil');
       }
-    }
-
-    UpdateProfile(data) {
-      this.success = false;
-      this.processed = false;
-      this.processing = true;
-
-      const endpoint = '/Usuarios/' + this.user.id + '/changeProfileImage';
-
-      this.api.Post(endpoint, { newImage: data }, true).subscribe(
-        (success: any) => {
-          this.processing = false;
-          this.zone.run(() => {
-            this.user.profileImage = success.profileImage;
-          });
-          localStorage.setItem('user', JSON.stringify(this.user) );
-          this.processed = true;
-          this.success = true;
-          this.imageChanged.emit(success.profileImage);
-        },
-        (error: any) => {
-          this.processing = false;
-
-
-          console.log( JSON.stringify(error));
-
-          this.processed = true;
-          this.success = false;
-        }
-      );
-    }
-
+    );
+  }
 }

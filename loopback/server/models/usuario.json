@@ -8,7 +8,8 @@
   "hidden": [
     "profileImageId",
     "FBToken",
-    "GToken"
+    "GToken",
+    "AppleToken"
   ],
   "scope": {
     "include": "profileImage"

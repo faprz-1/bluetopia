@@ -1,29 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UsersComponent } from './users.component';
-import { RouterModule } from '@angular/router';
-import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
-import { FileChooserModule } from '../../../components/file-chooser/file-chooser.module';
-import { TreeModule } from 'angular-tree-component';
-// import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { TreeModule } from '@circlon/angular-tree-component';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { FileChooserModule } from 'src/app/components/file-chooser/file-chooser.module';
 import { UserCardModule } from './user-card/user-card.module';
 
-
-const MODULE_ROUTES = [
-  {path:'', component: UsersComponent}
-]
 @NgModule({
-  declarations: [UsersComponent],
+  declarations: [
+    UsersComponent
+  ],
   imports: [
     CommonModule,
-    RouterModule.forChild(MODULE_ROUTES),
-    ModalModule.forRoot(),
-    UserCardModule,
     FormsModule,
+    TreeModule,
+    ModalModule.forRoot(),
     FileChooserModule,
-    // MatSlideToggleModule,
-    TreeModule.forRoot()
+    UserCardModule
   ]
 })
 export class UsersModule { }

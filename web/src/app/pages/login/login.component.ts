@@ -1,13 +1,12 @@
-import { Component, OnInit ,ViewContainerRef} from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { ApiService } from '../../services/api.service';
-import { ToastService } from '../../services/toast.service';
-import { NotificationService } from '../../services/notification.service';
-
 import * as moment from 'moment';
+import { ApiService } from '../../services/api.service';
+import { NotificationService } from '../../services/notification.service';
 import { PushService } from '../../services/push.service';
+import { ToastService } from '../../services/toast.service';
 import { environment } from '../../../environments/environment';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -18,15 +17,17 @@ export class LoginComponent implements OnInit {
 
   environment = environment;
 
-  passwordForgotten:boolean = false;
+  passwordForgotten: boolean = false;
   public procesando: boolean = false;
-  procesandoEmail:boolean = false;
-  email='';
+  procesandoEmail: boolean = false;
+  email = '';
   pin: string = '';
   newPassword: string = '';
-  changuePass:boolean=false;
-  tryPin:boolean=false;
-  successUpdate: boolean=false;
+  changuePass: boolean = false;
+  tryPin: boolean = false;
+  successUpdate: boolean = false;
+
+  loginForm: FormGroup;
 
   constructor(
     vcr: ViewContainerRef,
@@ -36,12 +37,16 @@ export class LoginComponent implements OnInit {
     private notiServ: NotificationService,
     private pushService: PushService
   ) {
-    if(localStorage.getItem("token")) {
-      let user = JSON.parse(localStorage.getItem("user"));
-
+    if (localStorage.getItem("token")) {
+      let user = this.api.GetUser();
       let role = user.role.name.toLowerCase();
       this.router.navigate([`/inicio/${role}/`]);
     }
+
+    this.loginForm = new FormGroup({
+      email: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
+    });
   }
 
   ngOnInit() {
@@ -53,19 +58,19 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  login(user) {
+  Login(user: any) {
     this.procesando = true
-    this.api.Post("/Usuarios/login", user, false).subscribe((token: any) =>{
+    this.api.Post("/Usuarios/login", user, false).subscribe((token: any) => {
       localStorage.clear()
       this.api.SetToken(token.id);
-      this.api.Get("/Usuarios/withCredentials", true).subscribe((userFromServer: any)=>{
+      this.api.Get("/Usuarios/withCredentials", true).subscribe((userFromServer: any) => {
         this.procesando = false;
         localStorage.setItem("user", JSON.stringify(userFromServer));
-        localStorage.setItem("ttl", moment().add(1209600, 's').toISOString() )
+        localStorage.setItem("ttl", moment().add(1209600, 's').toISOString())
         this.notiServ.LoadNotifications();
         this.pushService.getUserID();
         this.toast.ShowSuccess("Sesión iniciada exitosamente");
-        let user = JSON.parse(localStorage.getItem("user"));
+        let user = this.api.GetUser();
         let role = user.role.name.toLowerCase()
 
         this.router.navigate([`/inicio/${role}/`]);
@@ -79,53 +84,53 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  sendEmail(email){
+  SendEmail(email: {emailtoRecover: string}) {
+    this.email = email.emailtoRecover;
+    this.procesandoEmail = true;
+    this.api.Post('/PasswordResetPINs/createAndSend', { email: this.email }, false).subscribe(
+      (msg: any) => {
+        if (msg.msg == 'notRegistered') {
+          this.toast.ShowError('Usuario no registrado');
+          this.procesando = false;
+        } else {
+          this.toast.ShowSuccess('Se envio el correo correctamente');
+          this.tryPin = true;
+        }
+      }, (err: any) => {
+        this.toast.ShowError(err.err);
+        this.procesando = false;
+        this.tryPin = false;
+      });
+  }
 
-  this.email=email.emailtoRecover;
-  this.procesandoEmail = true;
-  this.api.Post('/PasswordResetPINs/createAndSend', {email: this.email}, false).subscribe(
-    (msg: any)=>{
-  if(msg.msg=='notRegistered'){
-    this.toast.ShowError('Usuario no registrado');
-    this.procesando = false;
-   }else{
-     this.toast.ShowSuccess('Se envio el correo correctamente');
-    this.tryPin=true;
-   }
-    },(err: any)=>{
-      this.toast.ShowError(err.err);
-      this.procesando = false;
-      this.tryPin=false;
+  TryPIN() {
+    this.api.Post('/PasswordResetPINs/consume', { pin: this.pin, email: this.email }, false).subscribe((msg: any) => {
+      if (msg.msg == 'Pin incorrecto') {
+        this.toast.ShowError('PIN incorrecto');
+        this.pin = '';
+      }
+      else {
+        this.toast.ShowSuccess('PIN correcto');
+        this.tryPin = false;
+        this.changuePass = true;
+      }
     });
   }
-  tryPIN(){
-    this.api.Post( '/PasswordResetPINs/consume', { pin: this.pin, email: this.email }, false ).subscribe( (msg: any) => {
-      if(msg.msg=='Pin incorrecto'){
-        this.toast.ShowError('PIN incorrecto');
-        this.pin='';
-      }
-      else{
-        this.toast.ShowSuccess('PIN correcto');
-        this.tryPin=false;
-        this.changuePass=true;
-      }
-  });
-  }
-  setPassword(){
-  this.api.Post( '/PasswordResetPINs/resetPassword', {password: this.newPassword , email: this.email}, false ).subscribe(
-    (res:any) => {
-      if (res.msg == "usuario actualizado") {
-        this.toast.ShowSuccess('Contraseña asignada correctamente');
-        this.successUpdate = true;
-        this.passwordForgotten=false;
-        this.changuePass=false;
-        this.procesando = false;
-      }
-      else{
-        this.toast.ShowSuccess('Sucedio un Error');
-      }
-    }
-  )
 
+  SetPassword() {
+    this.api.Post('/PasswordResetPINs/resetPassword', { password: this.newPassword, email: this.email }, false).subscribe(
+      (res: any) => {
+        if (res.msg == "usuario actualizado") {
+          this.toast.ShowSuccess('Contraseña asignada correctamente');
+          this.successUpdate = true;
+          this.passwordForgotten = false;
+          this.changuePass = false;
+          this.procesando = false;
+        }
+        else {
+          this.toast.ShowSuccess('Sucedio un Error');
+        }
+      }
+    )
   }
 }

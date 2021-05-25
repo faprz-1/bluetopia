@@ -6,11 +6,12 @@ import { Action } from 'rxjs/internal/scheduler/Action';
 import { Router } from '@angular/router';
 
 import { ADMIN_MENU_PAGES } from '../layout.routing';
+import { of } from 'rxjs';
 
 class UserPage {
-  public name: string;
-  public action: string;
-  public icon: string;
+  public name!: string;
+  public action!: string;
+  public icon!: string;
 }
 
 @Component({
@@ -32,9 +33,8 @@ class UserPage {
         ])
     ]
 })
-
 export class NavigationComponent implements OnInit {
-  sidebarVisible: boolean;
+  sidebarVisible: boolean = false;
 
   // Sub menu visibilities
   navigationSubState: any = {
@@ -53,7 +53,7 @@ export class NavigationComponent implements OnInit {
   public activeUserPages: UserPage[] = [];
 
   // Toggle sub menu
-  toggleNavigationSub(menu, event) {
+  toggleNavigationSub(menu: string, event: Event) {
     event.preventDefault();
     this.navigationSubState[menu] = (this.navigationSubState[menu] === 'inactive' ? 'active' : 'inactive');
   }
@@ -72,7 +72,8 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.user = this.api.GetUser();
-    this.activeUserPages = ADMIN_MENU_PAGES[this.user.role.name] ? ADMIN_MENU_PAGES[this.user.role.name] : [];
+    const role = this.user.role.name;
+    this.activeUserPages = ADMIN_MENU_PAGES[role] ? ADMIN_MENU_PAGES[role] : [];
   }
 
   LogOut()
@@ -86,7 +87,7 @@ export class NavigationComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
-  GoTo(link)
+  GoTo(link: string)
   {
     this.router.navigate([link]);
     this.sharedService.toggleSidebarVisibilty();

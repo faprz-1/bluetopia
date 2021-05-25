@@ -1,8 +1,8 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import * as moment from 'moment';
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: 'root'
 })
 export class TranslateService {
   public get language() {
@@ -12,8 +12,7 @@ export class TranslateService {
     this._language = lang;
     this.SetLanguage();
   }
-  private _language: string;
-
+  private _language: string = '';
   public defaultFormat: string = 'MMMM DD, YYYY, h:mm a';
 
   public languageChangeEmitter = new EventEmitter<string>();
@@ -22,7 +21,7 @@ export class TranslateService {
     this.language = window.navigator.language;
   }
 
-  public CreateTimestamp(timestamp) {
+  public CreateTimestamp(timestamp: string) {
     return moment(timestamp);
   }
 

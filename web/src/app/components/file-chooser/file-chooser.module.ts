@@ -1,14 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FileChooserComponent } from './file-chooser.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+
 
 @NgModule({
+  declarations: [
+    FileChooserComponent
+  ],
+  exports: [
+    FileChooserComponent
+  ],
   imports: [
     CommonModule,
-    FormsModule
-  ],
-  declarations: [FileChooserComponent],
-  exports: [FileChooserComponent]
+    FormsModule,
+    ReactiveFormsModule
+  ]
 })
 export class FileChooserModule { }

@@ -1,27 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import {TooltipModule} from "ngx-bootstrap/tooltip";
+import { DashboardComponent } from './dashboard.component';
+import { RouterModule, Routes } from '@angular/router';
 
-import { DashboardComponent } from "./dashboard.component";
-import { ProfileImageEditorModule } from '../../components/profile-image-editor/profile-image-editor.module';
-
-const MODULE_ROUTES = [
-    { path: '', component: DashboardComponent }
+const MODULE_ROUTES: Routes = [
+  { path: '', component: DashboardComponent }
 ];
 
 @NgModule({
+  declarations: [
+    DashboardComponent,
+  ],
   imports: [
-    CommonModule,
-    FormsModule,
-    TooltipModule,
     RouterModule.forChild(MODULE_ROUTES),
-    ProfileImageEditorModule
+    CommonModule
   ]
-  ,
-  declarations: [DashboardComponent]
 })
 export class DashboardModule { }
-
-
