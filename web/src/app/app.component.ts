@@ -7,7 +7,7 @@ import { PushService } from './services/push.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Investify';
+  title = 'Template 4.0';
   constructor(  
     private pushService: PushService,
   ) {}  
