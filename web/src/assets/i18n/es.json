@@ -1,6 +1,6 @@
 {
     "app": {
-        "name": "AFP"
+        "name": "Template 4.0"
     },
     "loading": {
         "message": "Cargando..."
@@ -44,7 +44,7 @@
     },
     "passwordRecovery": {
         "title": "Recuperar Contraseña",
-        "typeMail": "Ingresa aqui tu email de la cuenta para recuperar",
+        "typeMail": "Ingresa aquí tu email de la cuenta para recuperar",
         "typeMailPlaceholder": "Correo electrónico",
         "continue": "Continuar",
         "cancel": "Cancelar",
@@ -90,92 +90,7 @@
     "notifications": {
         "title": "Mis Notificaciones"
     },
-    "selectAsset": {
-        "title": "Seleccione un activo",
-        "firstTimeTitle": "Agregue un activo para iniciar",
-        "searchLabel": "Buscar activo...",
-        "categoryLabel": "Categoría",
-        "addCustomAssetLabel": "¿No puede encontrar un activo?"
-    },
-    "assets": {
-        "title": "Mis Bienes",
-        "delete": {
-            "header": "¿Eliminar activo?",
-            "subHeader": "No se puede deshacer",
-            "success": "Se ha eliminado el activo"
-        },
-        "no-content": {
-            "title": "No se han agregado activos",
-            "message": "Da click en \"+\" para agregar un nuevo activo"
-        },
-        "form": {
-            "name": "Nombre",
-            "namePlaceholder": "Ingrese nombre...",
-            "amount": "Monto",
-            "amountPlaceholder": "Ingrese monto",
-            "price": "Precio",
-            "pricePlaceholder": "Ingrese precio...",
-            "market": "Categoría",
-            "marketPlaceholder": "Ingrese categoría...",
-            "ticker": "Ticker",
-            "tickerPlaceholder": "Ingrese ticker..."
-        }
-    },
-    "newAsset": {
-        "title": "Agregar activo",
-        "custom": {
-            "title": "Agregar nuevo activo"
-        },
-        "saveLabel": "Guardar"
-    },
-    "portfolio": {
-        "title": "Portafolio"
-    },
     "dashboard": {
-        "title": "Mi Perfil",
-        "subtitle": "Esta es tu distribución de inversiones",
-        "searchButtonLabel": "Buscador de acciones",
-        "share-settings": {
-            "title": "Compartir portafolio",
-            "active": "Activo",
-            "link": "Link",
-            "copy": "Compartir",
-            "backButton": "Volver"
-        }
-    },
-    "alerts": {
-        "title": "Alertas",
-        "subtitle": "Notificaciones de la Bolsa",
-        "delete": {
-            "header": "¿Eliminar alerta?",
-            "subHeader": "Se puede volver a crear",
-            "success": "Se ha eliminado la alerta"
-        },
-        "new": {
-            "title": "Crear alerta"
-        },
-        "edit": {
-            "title": "Editar alerta"
-        },
-        "presets": {
-            "title": "Alertas prefabricadas"
-        },
-        "no-content": {
-            "title": "No se han agregado alertas",
-            "message": "Da click en \"+\" para agregar una nueva alerta"
-        },
-        "form": {
-            "success": "Se ha actulizado la alerta",
-            "name": "Nombre",
-            "namePlaceholder": "Ingrese nombre...",
-            "minPrice": "Cuando baje de...",
-            "minPricePlaceholder": "Ingrese precio...",
-            "maxPrice": "Cuando suba de...",
-            "maxPricePlaceholder": "Ingrese precio...",
-            "market": "Categoría",
-            "marketPlaceholder": "Ingrese categoría...",
-            "ticker": "Ticker",
-            "tickerPlaceholder": "Ingrese ticker..."
-        }
+        "title": "Dashboard"
     }
 }

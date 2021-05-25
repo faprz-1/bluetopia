@@ -1,4 +1,16 @@
 {
+    "app": {
+        "name": "Template 4.0"
+    },
+    "loading": {
+        "message": "Loading..."
+    },
+    "refresher": {
+        "updatingLabel": "Updating...",
+        "updateLabel": "Update"
+    },
+    "okButtonLabel": "Ok",
+    "cancelButtonLabel": "Cancel",
     "loginPage": {
         "emailLabel": "Email",
         "emailPlaceholder": "Email",
@@ -7,20 +19,24 @@
         "loginButton": "Login",
         "alertHeader": "There is an error.",
         "alertSubHeader": "Something went wrong",
-        "alertButtonText": "Ok",
+        "alertButtonLabel": "Ok",
         "updateAlertHeader": "There is an update.",
         "keepSessionAlive": "keep my session alive.",
         "updateAlertSubHeader": "You need to update to the latest version of the app",
-        "updateAlertButtonText": "Update"
+        "updateAlertButtonLabel": "Update"
     },
     "signUp": {
         "title": "Create Account",
-        "typeUserName": "Name",
-        "typeUserNamePlaceholder": "Type your Name and last name",
+        "typeUserName": "Username",
+        "typeUserNamePlaceholder": "Enter your username",
+        "typeName": "Name",
+        "typeNamePlaceholder": "Enter your first and last name",
         "typeMail": "Email",
-        "typeMailPlaceholder": "Type your email",
+        "typeMailPlaceholder": "Enter your email",
+        "typePhone": "Phone",
+        "typePhonePlaceholder": "Enter your phone number",
         "typePassword": "Password",
-        "typePasswordPlaceholder": "Type your password",
+        "typePasswordPlaceholder": "Enter your password",
         "typeRepeatPassword": "Confirm your password",
         "typeRepeatPasswordPlaceholder": "Repeat your password",
         "register": "Sign Up",
@@ -41,7 +57,10 @@
     },
     "settings": {
         "title": "Settings",
-        "logOut": "Exit",
+        "logOut": {
+            "label": "Exit",
+            "prompt": "Log out?"
+        },
         "changePassword": {
             "title": "Change Password",
             "previusPassword": "Current Password",
@@ -50,6 +69,7 @@
             "newPasswordPlaceholder": "Type your new password",
             "repeatPassword": "Repeat your new password",
             "repeatPasswordPlaceholder": "New password",
+            "noMatch": "The passwords don't match",
             "save": "Save changes",
             "cancel": "Cancel"
         }
@@ -57,9 +77,20 @@
     "profile": {
         "title": "My Profile",
         "name": "Name",
-        "mail": "Email:"
+        "username": "Username",
+        "email": "Email",
+        "phone": "Phone",
+        "saveLabel": "Save changes"
     },
     "appComponent": {
-        "logoutLabel": "Exit"
+        "logoutLabel": "Exit",
+        "homeLabel": "Home",
+        "settingsLabel": "Settings"
+    },
+    "notifications": {
+        "title": "My Notifications"
+    },
+    "dashboard": {
+        "title": "Dashboard"
     }
 }

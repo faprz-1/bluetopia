@@ -1,6 +1,6 @@
 {
     "app": {
-        "name": "AFP"
+        "name": "Template 4.0"
     },
     "loading": {
         "message": "Loading..."
@@ -90,92 +90,7 @@
     "notifications": {
         "title": "My Notifications"
     },
-    "selectAsset": {
-        "title": "Select an asset",
-        "firstTimeTitle": "Add an asset to start",
-        "searchLabel": "Search text...",
-        "categoryLabel": "Market",
-        "addCustomAssetLabel": "Can't find an asset?"
-    },
-    "assets": {
-        "delete": {
-            "header": "Delete asset?",
-            "subHeader":"This can't be undone!",
-            "success": "Asset deleted successfully"
-        },
-        "title": "My Assets",
-        "no-content": {
-            "title": "No assets added yet",
-            "message": "Click on the \"+\" symbol to add a new asset"
-        },
-        "form": {
-            "name": "Name",
-            "namePlaceholder": "Enter name...",
-            "amount": "Amount",
-            "amountPlaceholder": "Enter amount...",
-            "price": "Price",
-            "pricePlaceholder": "Enter price...",
-            "market": "Market",
-            "marketPlaceholder": "Enter market...",
-            "ticker": "Ticker",
-            "tickerPlaceholder": "Enter ticker..."
-        }
-    },
-    "newAsset": {
-        "title": "Add asset",
-        "custom": {
-            "title": "Add new asset"
-        }
-    },
-    "portfolio": {
-        "title": "Portfolio"
-    },
     "dashboard": {
-        "title": "My Profile",
-        "subtitle": "This is your asset distribution",
-        "searchButtonLabel": "Asset search",
-        "share-settings": {
-            "title": "Share portfolio",
-            "description": "Here you can share your portfolio to other investors. Begin creating your investor network by sharing your portfolio to any app you want",
-            "active": "Active",
-            "link": "Link",
-            "copy": "Share",
-            "backButton": "Go Back"
-        }
-    },
-    "alerts": {
-        "title": "Alerts",
-        "subtitle": "Stock market notifications",
-        "delete": {
-            "header": "Delete alert?",
-            "subHeader": "You can create it again later",
-            "success": "Alert deleted successfully"
-        },
-        "new": {
-            "title": "Create alert"
-        },
-        "edit": {
-            "title": "Edit alert"
-        },
-        "presets": {
-            "title": "Presets"
-        },
-        "no-content": {
-            "title": "No alerts added yet",
-            "message": "Click on the \"+\" symbol to add a new alert"
-        },
-        "form": {
-            "success": "Alert updated successfully",
-            "name": "Name",
-            "namePlaceholder": "Enter name...",
-            "minPrice": "When it goes below...",
-            "minPricePlaceholder": "Enter price...",
-            "maxPrice": "When it goes beyond...",
-            "maxPricePlaceholder": "Enter price...",
-            "market": "Market",
-            "marketPlaceholder": "Enter market...",
-            "ticker": "Ticker",
-            "tickerPlaceholder": "Enter ticker..."
-        }
+        "title": "Dashboard"
     }
 }

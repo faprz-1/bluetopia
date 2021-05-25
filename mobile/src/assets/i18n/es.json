@@ -1,4 +1,16 @@
 {
+    "app": {
+        "name": "Template 4.0"
+    },
+    "loading": {
+        "message": "Cargando..."
+    },
+    "refresher": {
+        "updatingLabel": "Actualizando...",
+        "updateLabel": "Actualizar"
+    },
+    "okButtonLabel": "Aceptar",
+    "cancelButtonLabel": "Cancelar",
     "loginPage": {
         "emailLabel": "Correo electrónico",
         "emailPlaceholder": "Correo electrónico",
@@ -7,18 +19,22 @@
         "loginButton": "Entrar",
         "alertHeader": "Error",
         "alertSubHeader": "Algo salió mal.",
-        "alertButtonText": "Aceptar",
+        "alertButtonLabel": "Aceptar",
         "updateAlertHeader": "Hay una nueva actualización.",
         "keepSessionAlive": "Mantener sesión iniciada",
         "updateAlertSubHeader": "Es necesario actualizar a la última versión de la aplicación.",
-        "updateAlertButtonText": "Actualizar"
+        "updateAlertButtonLabel": "Actualizar"
     },
     "signUp": {
         "title": "Crear cuenta",
         "typeUserName": "Nombre",
         "typeUserNamePlaceholder": "Nombre y apellidos",
+        "typeName": "Usuario",
+        "typeNamePlaceholder": "Nombre de usuario",
         "typeMail": "Email",
-        "typeMailPlaceholder": "Correo electronico",
+        "typeMailPlaceholder": "Correo electrónico",
+        "typePhone": "Teléfono",
+        "typePhonePlaceholder": "Número telefónico",
         "typePassword": "Contraseña",
         "typePasswordPlaceholder": "Contraseña",
         "typeRepeatPassword": "Repetir contraseña",
@@ -28,7 +44,7 @@
     },
     "passwordRecovery": {
         "title": "Recuperar Contraseña",
-        "typeMail": "Ingresa aqui tu email de la cuenta para recuperar",
+        "typeMail": "Ingresa aquí tu email de la cuenta para recuperar",
         "typeMailPlaceholder": "Correo electrónico",
         "continue": "Continuar",
         "cancel": "Cancelar",
@@ -41,7 +57,10 @@
     },
     "settings": {
         "title": "Ajustes",
-        "logOut": "Terminar sesion",
+        "logOut": {
+            "label": "Terminar sesión",
+            "prompt": "¿Desea cerrar sesión?"
+        },
         "changePassword": {
             "title": "Cambiar contraseña",
             "previusPassword": "Contraseña anterior",
@@ -50,6 +69,7 @@
             "newPasswordPlaceholder": "Contraseña",
             "repeatPassword": "Confirmación de Nueva contraseña",
             "repeatPasswordPlaceholder": "Confirmar Contraseña",
+            "noMatch": "Las contraseñas no coinciden",
             "save": "Guardar",
             "cancel": "Cancelar"
         }
@@ -57,9 +77,20 @@
     "profile": {
         "title": "Perfil",
         "name": "Nombre",
-        "mail": "Correo:"
+        "username": "Usuario",
+        "email": "Correo:",
+        "phone": "Teléfono",
+        "save": "Guardar cambios"
     },
     "appComponent": {
-        "logoutLabel": "Cerrar sesión"
+        "logoutLabel": "Cerrar sesión",
+        "homeLabel": "Inicio",
+        "settingsLabel": "Ajustes"
+    },
+    "notifications": {
+        "title": "Mis Notificaciones"
+    },
+    "dashboard": {
+        "title": "Dashboard"
     }
 }
