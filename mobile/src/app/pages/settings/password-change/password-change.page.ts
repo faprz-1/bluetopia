@@ -18,9 +18,13 @@ import { UserDataService } from 'src/app/services/user-data.service';
   styleUrls: ['./password-change.page.scss'],
 })
 export class PasswordChangePage   implements OnInit {
-
   public changePassForm: FormGroup;
   public user: any;
+
+  get doPasswordsMatch() {
+    const form = this.changePassForm.value;
+    return form.newPassword === form.repPassword;
+  }
 
   constructor(
     protected navController: NavController,
@@ -42,14 +46,12 @@ export class PasswordChangePage   implements OnInit {
   }
 
   async OnSaved() {
-    if (!this.changePassForm.valid) {
+    if (!this.changePassForm.valid || !this.doPasswordsMatch) {
       return;
     }
     
     if (this.CheckNewPasswrd()) {
-      await this.storage.get("user").then((user)=>{
-        this.user = this.storage.get("user");
-      })
+      this.user = await this.api.GetUser();
       let userLogin = { 'email' : this.user.email, 'password' : this.changePassForm.value.newPassword }
       this.api.Post('/Usuarios/change-password', this.changePassForm.value).subscribe(
         output => this.login(userLogin),

@@ -69,6 +69,7 @@
             "newPasswordPlaceholder": "Contraseña",
             "repeatPassword": "Confirmación de Nueva contraseña",
             "repeatPasswordPlaceholder": "Confirmar Contraseña",
+            "noMatch": "Las contraseñas no coinciden",
             "save": "Guardar",
             "cancel": "Cancelar"
         }

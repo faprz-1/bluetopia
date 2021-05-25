@@ -69,6 +69,7 @@
             "newPasswordPlaceholder": "Type your new password",
             "repeatPassword": "Repeat your new password",
             "repeatPasswordPlaceholder": "New password",
+            "noMatch": "The passwords don't match",
             "save": "Save changes",
             "cancel": "Cancel"
         }
