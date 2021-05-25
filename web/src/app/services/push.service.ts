@@ -41,6 +41,7 @@ export class PushService {
         subdomainName: "templatejarabe",
       });
     });
+    
     // OneSignal.push(function() {
     //   OneSignal.on('permissionPromptDisplay', function () {
 

@@ -26,7 +26,7 @@ export class ValidationService {
       },
       {
         name: 'invalidPassword',
-        label: 'Las contraseña no coinciden',
+        label: 'Las contraseñas no coinciden',
       },
       {
         name: 'minlength',
