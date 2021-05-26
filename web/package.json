@@ -5,8 +5,8 @@
     "ng": "ng",
     "start": "ng serve --port 4199 --open",
     "build": "ng build",
-    "build-staging": "ng build --configuration staging",
-    "build-prod": "ng build --configuration production",
+    "build-staging": "./web-compile-staging.sh $1",
+    "build-prod": "./web-compile-prod.sh $1",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

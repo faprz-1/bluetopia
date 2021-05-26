@@ -9,7 +9,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build-staging": "./app-compile-staging.sh $1",
+    "build-prod": "./app-compile-prod.sh $1"
   },
   "private": true,
   "dependencies": {
