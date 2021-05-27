@@ -21,7 +21,7 @@
 
         <ng-container  *ngFor="let item of menuItemsUser">
           <ion-menu-toggle auto-hide="false">
-            <ion-item (click)="GoToUrl(item.url,item.navigateType)">
+            <ion-item (click)="GoToUrl(item.url)">
               <ion-icon slot="start" [name]="item.icon"></ion-icon>
               <ion-label>
                 {{item.title}}

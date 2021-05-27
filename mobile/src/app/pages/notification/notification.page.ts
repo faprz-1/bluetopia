@@ -42,7 +42,7 @@ export class NotificationPage {
   }
 
   constructor(
-    private notifications: NotificationsService,
+    public notifications: NotificationsService,
     private navController: NavController,
   ) {}
 
