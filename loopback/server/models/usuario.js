@@ -750,7 +750,7 @@ module.exports = function(Usuario) {
       Usuario.app.models.UserPermissionPolicyNode.preselectNodes(userPermissions, function(err, parsedUserPermissions) {
         if (err) return callback(err);
 
-        userWithCredentials.permissions = parsedUserPermissions;
+        // userWithCredentials.permissions = parsedUserPermissions;
         return callback(null, userWithCredentials);
       });
     });
