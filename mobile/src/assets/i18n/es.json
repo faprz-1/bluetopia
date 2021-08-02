@@ -58,7 +58,7 @@
     "settings": {
         "title": "Ajustes",
         "logOut": {
-            "label": "Terminar sesión",
+            "label": "Cerrar sesión",
             "prompt": "¿Desea cerrar sesión?"
         },
         "changePassword": {

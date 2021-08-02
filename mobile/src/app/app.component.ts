@@ -94,7 +94,10 @@ export class AppComponent implements OnDestroy {
 
   public InitializeEvents() {
     this.userChangedSub = this.userData.loggedUser$
-      .subscribe(() => this.GetUserData());
+      .subscribe(() => {
+        this.GetUserData()
+      });
+
   }
 
   public PrepareImageUrl(file: any, name: any) {
@@ -109,7 +112,7 @@ export class AppComponent implements OnDestroy {
   }
 
   async InitializeMenu() {
-    if (!this.user) this.user = await this.api.GetUser();
+    if (!this.user)  await this.GetUserData();
     if(!this.user) return;
 
     this.menuItemsUser = [
@@ -180,7 +183,7 @@ export class AppComponent implements OnDestroy {
   }
 
   private async GetUserData() {
-    await this.userData.GetUserData();
+    this.user = await this.api.GetUser();
   }
 
   private GetFullUrl(url: string) {
