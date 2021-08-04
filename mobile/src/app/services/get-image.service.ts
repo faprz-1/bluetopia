@@ -57,12 +57,13 @@ export class GetImageService {
   }
 
   public async GetImageActionSheet(){
-    this.translate.get([
+    const translation = this.translate.get([
       'imageActionSheet.header',
       'imageActionSheet.cameraLabel',
       'imageActionSheet.galleryLabel',
       'cancelButtonLabel',
-    ]).subscribe(translation => {
+    ]).toPromise();
+
     let data;
     const actionSheet = await this.actionSheetController.create({
       header: translation['imageActionSheet.header'],
