@@ -25,8 +25,6 @@ export class UserDataService {
 
     if (!this.loggedUser || !this.loggedUser.role || !ROLES.includes(this.loggedUser.role.name)) {
       this.LogOut();
-    } else {
-      this.loggedUser$.emit(this.loggedUser);
     }
   }
 
