@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem("user", JSON.stringify(userFromServer));
         localStorage.setItem("ttl", moment().add(1209600, 's').toISOString())
         this.notiServ.LoadNotifications();
-        this.pushService.getUserID();
+        this.pushService.GetUserID();
         this.toast.ShowSuccess("Sesión iniciada exitosamente");
         let user = this.api.GetUser();
         let role = user.role.name.toLowerCase()
@@ -96,10 +96,12 @@ export class LoginComponent implements OnInit {
           this.toast.ShowSuccess('Se envio el correo correctamente');
           this.tryPin = true;
         }
+        this.procesandoEmail = false;
       }, (err: any) => {
         this.toast.ShowError(err.err);
         this.procesando = false;
         this.tryPin = false;
+        this.procesandoEmail = false;
       });
   }
 
