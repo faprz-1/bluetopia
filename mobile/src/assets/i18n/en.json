@@ -11,6 +11,11 @@
     },
     "okButtonLabel": "Ok",
     "cancelButtonLabel": "Cancel",
+    "imageActionSheet": {
+      "header": "Get image from...",
+      "cameraLabel": "Camera",
+      "galleryLabel": "Gallery"
+    },
     "loginPage": {
         "emailLabel": "Email",
         "emailPlaceholder": "Email",

@@ -694,23 +694,24 @@ module.exports = function(Usuario) {
     */
 
   Usuario.prototype.changeMyProfileImage = function(profileImage, callback) {
-    var Upload = Usuario.app.models.Upload;
-    var actual = this;
-    // TODO
-    var newProfileImage = {
+    if (!profileImage) return callback(null, this);
+
+    const Upload = Usuario.app.models.Upload;
+    const newProfileImage = {
       encodedFileContainer: 'profileImages',
       name: profileImage.name,
       resize: profileImage.resize,
       base64File: profileImage.base64File,
       fileExtention: profileImage.fileExtention,
     };
-    Upload.replaceFileBase64File(actual.profileImageId, newProfileImage, function(err, res) {
+    Upload.replaceFileBase64File(this.profileImageId, newProfileImage, (err, res) => {
       if (err) return callback(err);
 
-      actual.profileImage(res);
-      Usuario.upsert(actual, function(err, updatedUser) {
+      this.profileImage(res);
+      Usuario.upsert(this, (err, updatedUser) => {
         if (err) return callback(err);
-        Usuario.findOne({where: {id: updatedUser.id}}, function(err, userWR) {
+
+        Usuario.findOne({where: {id: updatedUser.id}}, (err, userWR) => {
           if (err) return callback(err);
           callback(null, userWR);
         });
@@ -755,6 +756,7 @@ module.exports = function(Usuario) {
       });
     });
   };
+
   Usuario.setProfilePictureFromSocialMedia = function(data, callback) {
     Usuario.findOne({where: {email: data.email}}, function(err, usr) {
       if (err) {
@@ -774,6 +776,63 @@ module.exports = function(Usuario) {
           });
         });
       }
+    });
+  };
+
+  Usuario.prototype.UpdateProfile = function(newInformation, callback) {
+    this.hasPassword(newInformation.password, (err, isMatch) => {
+      if (err) return callback(err);
+
+      const emailChanged = newInformation.email != this.email;
+      if(emailChanged && !isMatch)
+        return callback('Passwords do not match');
+
+      this.changeMyProfileImage(newInformation.profileImage, (err, updatedUser) => {
+        if (err) return callback(err);
+
+        newInformation.name = newInformation.username;
+        updatedUser.ChangeEmailAndUsername(newInformation, (err, userUpdated) => {
+          if (err) return callback(err);
+
+          if (emailChanged) {
+            Usuario.login(newInformation, function(err, accessToken) {
+              if (err) return callback(err);
+
+              return callback(null, accessToken);
+            });
+          } else {
+            return callback(null, {});
+          }
+        });
+      });
+    });
+  };
+
+  Usuario.prototype.ChangeEmailAndUsername = function(newInformation, callback) {
+    Usuario.findOne({
+      where: {
+        or: [
+          {email: newInformation.email},
+          {username: newInformation.name},
+        ],
+      }
+    }, (err, user) => {
+      if (err) 
+        return callback(err);
+      if (user && user.id != this.id) {
+        if (user.email == newInformation.email) 
+          return callback('Este correo ya existe.');
+        if (user.username == newInformation.name) 
+          return callback('Este usuario ya existe.');
+      }
+
+      this.email = newInformation.email;
+      this.username = newInformation.name;
+      this.phone = newInformation.phone;
+      this.save((err, userUpdated) => {
+        if (err) return callback(err);
+        return callback(null, userUpdated);
+      });
     });
   };
 };

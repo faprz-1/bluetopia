@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 
-const BASE_LOADING_MESSAGE = 'Cargando...';
 const BASE_LOADING_DURATION = 0;
 
 @Injectable({
@@ -17,7 +17,13 @@ export class LoadingService {
   private loadingElement: HTMLIonLoadingElement;
   private isBusy = false;
 
-  constructor() {}
+  constructor(
+    private translate: TranslateService,
+  ) {}
+
+  public async IsInitialized() {
+    while(!this.loadingController) await this.Sleep(50);
+  }
 
   public Initialize(loadingController: LoadingController) {
     this.loadingController = loadingController;
@@ -36,15 +42,23 @@ export class LoadingService {
   }
 
   private async CreateElement() {
-    if (!this.loadingElement) {
-      this.isBusy = true;
-      this.loadingElement = await this.loadingController.create({
-        message: BASE_LOADING_MESSAGE,
-        duration: BASE_LOADING_DURATION,
-      });
-      await this.loadingElement.present();
-      this.isBusy = false;
-    }
+    return new Promise(resolve => {
+      this.translate.get('loading.message').subscribe(
+        async (message) => {
+          if (!this.loadingElement) {
+            await this.WaitUntilControllerExists();
+            this.isBusy = true;
+            this.loadingElement = await this.loadingController.create({
+              message,
+              duration: BASE_LOADING_DURATION,
+            });
+            await this.loadingElement.present();
+            this.isBusy = false;
+            resolve(true);
+          }
+        }
+      );
+    });
   }
 
   private async DeleteElement() {
@@ -58,6 +72,10 @@ export class LoadingService {
 
   private async WaitUntilFree() {
     while(this.isBusy) await this.Sleep(50);
+  }
+
+  private async WaitUntilControllerExists() {
+    while(!this.loadingController) await this.Sleep(50);
   }
 
   Sleep(milliseconds: number) {

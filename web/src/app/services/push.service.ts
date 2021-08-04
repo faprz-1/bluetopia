@@ -17,10 +17,10 @@ export class PushService {
   // Call this method to start the onesignal process.
   public init() {
     // this.oneSignalId = localStorage.getItem("pushtoken")
-    this.initOneSignal();
+    this.InitOneSignal();
   }
 
-  addScript(fileSrc: string, callback: ((this: GlobalEventHandlers, ev: Event) => any) | null) {
+  AddScript(fileSrc: string, callback: ((this: GlobalEventHandlers, ev: Event) => any) | null) {
     const head = document.getElementsByTagName('head')[0];
     const script = document.createElement('script');
     script.type = 'text/javascript';
@@ -29,7 +29,7 @@ export class PushService {
     head.appendChild(script);
   }
 
-  initOneSignal() {
+  InitOneSignal() {
     OneSignal.push(function () {
       OneSignal.init({
         appId: APP_ID,
@@ -45,7 +45,7 @@ export class PushService {
     // OneSignal.push(function() {
     //   OneSignal.on('permissionPromptDisplay', function () {
 
-    //     this.getUserID();
+    //     this.GetUserID();
     //   });
     // });
 
@@ -56,38 +56,38 @@ export class PushService {
         });
       });
     } else {
-      this.checkIfSubscribed();
+      this.CheckIfSubscribed();
     }
   }
 
-  subscribe(self = this) {
+  Subscribe(self = this) {
     OneSignal.push(() => {
       OneSignal.push(['registerForPushNotifications'])
       OneSignal.on('subscriptionChange', function (isSubscribed: any) {
-        self.getUserID();
+        self.GetUserID();
       });
     });
   }
 
-  listenForNotification() {
+  ListenForNotification() {
     OneSignal.on('notificationDisplay', (event: any) => {
     });
   }
 
-  getUserID(self = this) {
+  GetUserID(self = this) {
     OneSignal.getUserId().then(function (userId: any) {
       self.UpdatePushToken(userId)
     });
   }
 
-  checkIfSubscribed() {
+  CheckIfSubscribed() {
     let self = this;
     OneSignal.push(function () {
       OneSignal.isPushNotificationsEnabled().then(function (isEnabled: any) {
         if (isEnabled) {
-          self.getUserID(self);
+          self.GetUserID(self);
         } else {
-          self.subscribe();
+          self.Subscribe();
         }
       });
     })

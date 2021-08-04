@@ -31,6 +31,9 @@
       "type": "boolean",
       "default": false
     },
+    "phone": {
+      "type": "string"
+    },
     "customerId": {
       "type": "string"
     }
@@ -81,7 +84,11 @@
       "accessType": "*",
       "principalType": "ROLE",
       "principalId": "$owner",
-      "permission": "ALLOW"
+      "permission": "ALLOW",
+      "property": [
+        "updatePushToken",
+        "UpdateProfile"
+      ]
     },
     {
       "accessType": "EXECUTE",
@@ -106,7 +113,8 @@
         "userWithCredentials",
         "changeProfileImage",
         "updatePushToken",
-        "testPush"
+        "testPush",
+        "UpdateProfile"
       ]
     },
     {
@@ -445,7 +453,7 @@
           "description": "Message of success"
         }
       ],
-      "description": "Update ana user's password",
+      "description": "Update a user's password",
       "http": [
         {
           "path": "/updatePass",
@@ -539,6 +547,34 @@
       "http": [
         {
           "path": "/verify/:code",
+          "verb": "patch"
+        }
+      ]
+    },
+    "prototype.UpdateProfile": {
+      "accepts": [
+        {
+          "arg": "newInformation",
+          "type": "object",
+          "required": true,
+          "description": "{email, phone, name}",
+          "http": {
+            "source": "body"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "token",
+          "type": "object",
+          "root": true,
+          "description": "Updated information"
+        }
+      ],
+      "description": "Update Profile data",
+      "http": [
+        {
+          "path": "/",
           "verb": "patch"
         }
       ]

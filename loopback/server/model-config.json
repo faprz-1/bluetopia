@@ -54,6 +54,7 @@
           "prototype.updatePushToken": true,
           "prototype.updatePushTokenMobile": true,
           "prototype.changeProfileImage": true,
+          "prototype.UpdateProfile": true,
           "loginBySocialMedia": true,
           "VerifyEmail": true
         }
