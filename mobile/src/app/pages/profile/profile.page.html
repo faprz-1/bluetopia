@@ -10,8 +10,8 @@
 <ion-content fullscreen>
   <ion-card>
     <div class="profileImg">
-      <ion-button (click)="ShowChangeProfileImageOptions()">
-        <ion-icon slot="icon-only" name="camera"></ion-icon>
+      <ion-button [routerLink]="['/profile/edit']">
+        <ion-icon slot="icon-only" name="pencil"></ion-icon>
       </ion-button>
       <img [src]="user?.profileImage | jarabeImage : size : api" onerror="this.src='../../../assets/img/avatar.jpg'">
     </div>

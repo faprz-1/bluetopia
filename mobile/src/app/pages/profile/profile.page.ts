@@ -31,7 +31,11 @@ export class ProfilePage   {
   ){}
 
   ngOnInit() {
-    this.getProfile();
+    this.GetProfile();
+  }
+
+  ionViewWillEnter() {
+    this.GetProfile();
   }
 
   async errorAlert(msn) {
@@ -45,7 +49,7 @@ export class ProfilePage   {
     await alert.present();
   }
 
-  private async getProfile() {
+  private async GetProfile() {
     this.user = await this.api.GetUser();
   }
 

@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'dashboard', loadChildren: './pages/dashboard/dashboard.module#DashboardPageModule' , canActivate: [AuthGuard] },
   { path: 'settings', loadChildren: './pages/settings/settings.module#SettingsPageModule' , canActivate: [AuthGuard] },
   { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule' , canActivate: [AuthGuard] },
+  { path: 'profile/edit', loadChildren: './pages/profile/edit/edit.module#EditPageModule' , canActivate: [AuthGuard] },
   { path: 'signup', loadChildren: './pages/signup/signup.module#SignupPageModule' },
   { path: 'password-recovery', loadChildren: './pages/password-recovery/password-recovery.module#PasswordRecoveryPageModule' },
   {

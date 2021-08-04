@@ -12,7 +12,10 @@ module.exports = function(Upload) {
 
   Upload.newBase64File = function(newFile, callback) {
     const encodedFileContainer = newFile.encodedFileContainer;
-    const encodedFile = newFile.base64File;
+    const encodedFile = newFile.base64File
+      .replace('data:image/png;base64,', '')
+      .replace('data:image/jpeg;base64,', '');
+
     let newFileId = uuidV4();
     var fileName = newFileId + newFile.fileExtention;
     var UploadedFiles = Upload.app.models.UploadedFiles;
