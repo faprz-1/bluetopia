@@ -1,5 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
-
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Platform, NavController, MenuController, LoadingController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -9,6 +8,8 @@ import { ApiService } from './services/api.service';
 import { LoadingService } from './services/loading.service';
 import { Router } from '@angular/router';
 import { UserDataService } from './services/user-data.service';
+import { DarkModeService } from './services/dark-mode.service';
+import { PushService } from './services/push.service';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -17,7 +18,8 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent implements OnInit, OnDestroy {
+  public logoUrl: string;
   public user: any;
   public menuItemsUser: any[];
   private userChangedSub: Subscription;
@@ -36,6 +38,8 @@ export class AppComponent implements OnDestroy {
     private loadingController: LoadingController,
     private loadingService: LoadingService,
     private translate: TranslateService,
+    private pushService: PushService,
+    public darkMode: DarkModeService,
   ) {
     this.InitializeApp();
   }
@@ -46,41 +50,42 @@ export class AppComponent implements OnDestroy {
     }
   }
 
+  ngOnInit(): void {
+    this.darkMode.CheckDarkMode().then(() => {
+      this.CheckDarkMode();
+      this.darkMode.colorScheme$.subscribe(() => this.CheckDarkMode());
+    });
+  }
+
+  async CheckDarkMode() {
+    this.logoUrl = await this.darkMode.GetLogoUrl();
+  }
+  
   async InitializeApp() {
     await this.platform.ready();
-    await this.GetUserData();
+    this.InitializeEvents();
+    this.InitTranslate();
+
+    await this.pushService.Initialize();
     await this.InitializeLoadingElement();
 
-    await this.storage.ready();
-    await this.SetDefaultRoute();
+    await this.LoadUserData();
 
     this.splashScreen.hide();
     this.statusBar.backgroundColorByHexString('006241');
 
-    this.InitializeEvents();
-    this.InitTranslate();
     this.InitializeMenu();
   }
 
-  public async SetDefaultRoute() {
+  public async LoadUserData() {
     const token = await this.api.GetToken();
-    const ttlSeconds = this.api.ttl || await this.api.GetTTL();
-    const ttlDate = moment().add(ttlSeconds, 'seconds');
-
-    if (!token || !ttlSeconds || ttlSeconds > 0 && moment().isAfter(ttlDate)) {
-      this.LogOut();
-    } else if (this.router.url.startsWith('/login')) {
-      this.router.navigate(['/tab']);
-    }
-  }
-
-  private async LogOut() {
-    try {
+    if (token) {
+      this.pushService.UpdatePushToken();
+      await this.userData.RefreshUser();
+    } else {
       await this.userData.LogOut();
-    } catch {
-      this.api.ClearStorage();
+      this.navController.navigateRoot('/login');
     }
-    // this.router.navigate(['/login']); //Apple dice que los dejemos pasar :(
   }
 
   private async InitializeLoadingElement() {
@@ -181,6 +186,7 @@ export class AppComponent implements OnDestroy {
 
   private async GetUserData() {
     await this.userData.GetUserData();
+    this.InitializeMenu();
   }
 
   private GetFullUrl(url: string) {

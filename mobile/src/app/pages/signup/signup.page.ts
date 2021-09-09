@@ -7,6 +7,7 @@ import { LoadingService } from '../../services/loading.service';
 import { ApiService } from '../../services/api.service';
 import { EventsService } from '../../services/events.service';
 import { ToastAlertService } from '../../services/toast-alert.service';
+import { DarkModeService } from '../../services/dark-mode.service';
 
 import * as moment from 'moment';
 import { UserDataService } from 'src/app/services/user-data.service';
@@ -19,16 +20,18 @@ import { Storage } from '@ionic/storage';
 })
 export class SignupPage implements OnInit {
   signupForm : FormGroup;
+  logoUrl: string;
 
   constructor(
-    protected navController: NavController,
-    protected loading: LoadingService,
-    public menu: MenuService,
-    protected events: EventsService,
     public api: ApiService,
     public userData: UserDataService,
     public toastAlert: ToastAlertService,
-    protected storage: Storage,
+    public menu: MenuService,
+    private navController: NavController,
+    private loading: LoadingService,
+    private events: EventsService,
+    private storage: Storage,
+    private darkMode: DarkModeService,
   ){}
 
   ngOnInit() {
@@ -43,6 +46,15 @@ export class SignupPage implements OnInit {
       password: new FormControl('', Validators.required),
       repeatPassword: new FormControl('', Validators.required),
     });
+
+    this.darkMode.CheckDarkMode().then(() => {
+      this.CheckDarkMode();
+      this.darkMode.colorScheme$.subscribe(() => this.CheckDarkMode());
+    });
+  }
+
+  async CheckDarkMode() {
+    this.logoUrl = await this.darkMode.GetLogoUrl();
   }
 
   public async OnSignup() {
