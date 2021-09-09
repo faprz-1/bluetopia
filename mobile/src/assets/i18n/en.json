@@ -16,6 +16,12 @@
       "cameraLabel": "Camera",
       "galleryLabel": "Gallery"
     },
+    "darkMode": {
+      "selectLabel": "Theme",
+      "defaultLabel": "Default",
+      "lightLabel": "Light",
+      "darkLabel": "Dark"
+    },
     "loginPage": {
         "emailLabel": "Email",
         "emailPlaceholder": "Email",

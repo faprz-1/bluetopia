@@ -3,6 +3,7 @@ import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 
 import { ToastAlertService } from '../../services/toast-alert.service';
+import { UserDataService } from '../../services/user-data.service';
 import { LoadingService } from '../../services/loading.service';
 import { ApiService } from '../../services/api.service';
 
@@ -21,39 +22,33 @@ export class SettingsPage   implements OnInit {
     protected storage: Storage,
     public api: ApiService,
     public toastAlert: ToastAlertService,
+    private userData: UserDataService,
   ){}
 
   ngOnInit() {
-    this.getProfile();
+    this.GetUser();
   }
 
-  private async getProfile() {
-    this.loggedUser = await this.storage.get("user");
-    this.loggedUser.imgperfil = this.loggedUser.profileImage != null ? this.api.getBaseURL() + this.loggedUser.profileImage.URL : 'assets/imgs/default_avatar.jpg';
+  private async GetUser() {
+    this.loggedUser = this.userData.loggedUser;
   }
 
-  public openPasswordChangePage() {
+  public OpenPasswordChangePage() {
     this.navController.navigateRoot('/settings/password-change');
   }
 
-  public logout() {
+  public LogOut() {
     this.toastAlert.ShowPromptAlert(
       "¿Desea cerrar sesión?", 
       null, 
       'Si', 
-      () => {
-        this.storage.clear();
-        this.loading.Dismiss();
+      async () => {
+        await this.userData.LogOut();
         this.navController.navigateRoot('/login');
-
-        this.loading.Show();
-        this.api.Post("/Usuarios/logout", null, true).subscribe(async () => { })
       }, 
       'No', 
-      () => {
-        
-      }
-    )
+      () => undefined,
+    );
   }
 
 }

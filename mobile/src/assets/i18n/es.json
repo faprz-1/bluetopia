@@ -16,6 +16,12 @@
       "cameraLabel": "Cámara",
       "galleryLabel": "Galería"
     },
+    "darkMode": {
+      "selectLabel": "Tema",
+      "defaultLabel": "Predeterminado",
+      "lightLabel": "Claro",
+      "darkLabel": "Oscuro"
+    },
     "loginPage": {
         "emailLabel": "Correo electrónico",
         "emailPlaceholder": "Correo electrónico",
