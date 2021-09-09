@@ -9,13 +9,13 @@
 
 <ion-content>
     <ion-list>
-      <ion-item (click)="openPasswordChangePage()">
+      <ion-item (click)="OpenPasswordChangePage()">
         <p>{{'settings.changePassword.title' | translate}}</p>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-item>
 
-      <ion-item class="logout" ion-item (click)="logout()">
-        <p>{{'settings.logOut' | translate}}</p>
+      <ion-item class="logout" ion-item (click)="LogOut()">
+        <p>{{'settings.logOut.label' | translate}}</p>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-item>
     </ion-list>

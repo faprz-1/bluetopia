@@ -5,7 +5,7 @@ import { LoadingService } from '../../services/loading.service';
 import { ApiService } from '../../services/api.service';
 import { ToastAlertService } from '../../services/toast-alert.service';
 import { EventsService } from '../../services/events.service';
-import { GetImageService } from '../../services/get-image.service';
+import { GetFileService } from '../../services/get-file.service';
 
 import { Storage } from "@ionic/storage";
 import { UserDataService } from 'src/app/services/user-data.service';
@@ -27,15 +27,15 @@ export class ProfilePage   {
     protected loading: LoadingService,
     public toastAlert: ToastAlertService,
     public events: EventsService,
-    public imageService: GetImageService,
+    public getFile: GetFileService,
   ){}
 
   ngOnInit() {
-    this.GetProfile();
+    this.GetUser();
   }
 
   ionViewWillEnter() {
-    this.GetProfile();
+    this.GetUser();
   }
 
   async errorAlert(msn) {
@@ -49,63 +49,8 @@ export class ProfilePage   {
     await alert.present();
   }
 
-  private async GetProfile() {
+  private async GetUser() {
     this.user = await this.api.GetUser();
-  }
-
-  async ShowChangeProfileImageOptions(){
-
-    const actionSheet = await this.toastAlert.actionSheetController.create({
-      header: 'Obtener imagen de:',
-      buttons: [
-        {
-          text: 'Camara',
-          icon: 'camera',
-          handler: () => {
-            this.updateProfilePhotoPic();
-          }
-        }, {
-          text: 'Galeria',
-          icon: 'images',
-          handler: () => {
-            this.updateProfileGalleryPic();
-          }
-        },
-        {
-          text: 'Cancelar',
-          icon: 'close',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }]
-      });
-      await actionSheet.present();
-      
-}
-  async updateProfilePhotoPic(){
-    let newImage = await this.imageService.takePicture();
-    if( newImage){
-      this.saveProfilePic(newImage);
-    }
-  }
-  async updateProfileGalleryPic(){
-    let newImage = await this.imageService.openGallery();
-    if( newImage){
-      this.saveProfilePic(newImage);
-    }
-  }
-
-private async saveProfilePic(newImage: any) {
-    this.api.Post("/Usuarios/" + this.user.id + "/changeProfileImage",{ newImage: newImage }, true).subscribe((res: any) => {
-      this.size = "";
-      this.user.profileImage = res.profileImage;
-      this.storage.set("user", this.user).then(() => {
-        this.userData.GetUserWithAPIToken(this.api.token);
-      });
-    }, err => {
-       this.toastAlert.ShowToast('Error al actualizar imagen de perfil', 3000);
-    });
   }
 
   goToSettings(){

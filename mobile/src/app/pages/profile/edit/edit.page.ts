@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { ApiService } from 'src/app/services/api.service';
 import { UserDataService } from 'src/app/services/user-data.service';
-import { GetImageService } from 'src/app/services/get-image.service';
+import { GetFileService } from 'src/app/services/get-file.service';
 import { ToastAlertService } from 'src/app/services/toast-alert.service';
 import User from 'src/app/interfaces/user.interface';
 
@@ -18,6 +18,8 @@ export class EditPage implements OnInit {
   profileForm: FormGroup;
   profileImage: any;
 
+  @ViewChild('fileInput', {static: false}) fileInput: ElementRef<any>;
+
   get requiresPassword() {
     return this.profileForm.value.email != this.user.email;
   }
@@ -29,7 +31,7 @@ export class EditPage implements OnInit {
   constructor(
     private api: ApiService,
     private userData: UserDataService,
-    private getImage: GetImageService,
+    private getFile: GetFileService,
     private toastAlert: ToastAlertService,
     private router: Router,
   ) {
@@ -54,7 +56,7 @@ export class EditPage implements OnInit {
   }
 
   async GetProfileImage() {
-    this.profileImage = await this.getImage.GetImageActionSheet();
+    this.profileImage = (await this.getFile.GetImage(this.fileInput))[0];
   }
   
   public Save() {
