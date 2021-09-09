@@ -63,7 +63,6 @@ export class AppComponent implements OnInit, OnDestroy {
   
   async InitializeApp() {
     await this.platform.ready();
-    this.InitializeEvents();
     this.InitTranslate();
 
     await this.pushService.Initialize();
@@ -74,6 +73,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.splashScreen.hide();
     this.statusBar.backgroundColorByHexString('006241');
 
+    this.InitializeEvents();
     this.InitializeMenu();
   }
 
@@ -99,7 +99,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public InitializeEvents() {
     this.userChangedSub = this.userData.loggedUser$
-      .subscribe(() => this.GetUserData());
+      .subscribe(() => {
+        this.GetUserData()
+      });
+
   }
 
   public PrepareImageUrl(file: any, name: any) {
@@ -114,7 +117,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   async InitializeMenu() {
-    if (!this.user) this.user = await this.api.GetUser();
+    if (!this.user)  await this.GetUserData();
     if(!this.user) return;
 
     this.menuItemsUser = [
@@ -186,6 +189,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private async GetUserData() {
     await this.userData.GetUserData();
+    this.user = this.userData.loggedUser;
     this.InitializeMenu();
   }
 

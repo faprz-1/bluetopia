@@ -17,7 +17,7 @@ rm temp-$logFile
 echo "----------------------------------------------------------------------------------------------------"
 echo "[$creator] Construyendo la aplicación... $comand -c $angularConfiguration"
 echo "----------------------------------------------------------------------------------------------------"
-$comand --prod -c $angularConfiguration
+$comand -c $angularConfiguration
 
 echo "----------------------------------------------------------------------------------------------------"
 echo "[$creator] Deployment completo."

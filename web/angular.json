@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/TemplateWeb",
+            "outputPath": "../persistence/compiled_angular/test",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -58,6 +58,7 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+              "outputPath": "../persistence/compiled_angular/prod",
               "outputHashing": "all"
             },
             "staging": {
@@ -79,6 +80,7 @@
                   "with": "src/environments/environment.staging.ts"
                 }
               ],
+              "outputPath": "../persistence/compiled_angular/staging",
               "outputHashing": "all"
             },
             "development": {
