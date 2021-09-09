@@ -22,7 +22,6 @@ export class UserDataService {
 
   public async GetUserData() {
     this.loggedUser = await this.api.GetUser();
-
     if (!this.loggedUser || !this.loggedUser.role || !ROLES.includes(this.loggedUser.role.name)) {
       this.LogOut();
     }
@@ -47,7 +46,6 @@ export class UserDataService {
     }
 
     this.loggedUser = userFromServer;
-
     if (!this.loggedUser || !this.loggedUser.role || !ROLES.includes(this.loggedUser.role.name)) {
       this.LogOut();
     } else {
