@@ -6,8 +6,7 @@ repoPathName="~/repos/"
 Front_domain="template.jarabepruebas.com"
 Front_domainFolder="template_jarabe"
 Front_nginxFolder="/var/www/$Front_domainFolder"
-sourceHtmlFolder="../persistence/compiled_angular/staging"
-# sourceHtmlFolder="../persistence/compiled_angular/prod"
-
 
 ProjectFullPath="$repoPathName$repoFolderName"
+sourceHtmlFolder="$ProjectFullPath/persistence/compiled_angular/staging"
+# sourceHtmlFolder="$ProjectFullPath/persistence/compiled_angular/prod"
