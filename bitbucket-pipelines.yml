@@ -45,7 +45,6 @@ pipelines:
     develop:
       - step: *Test-step
       - step: *Deploy-staging-step
-      - step: *Deploy-staging-front-step
     staging:
       - step: *Test-step
     master:
