@@ -18,7 +18,7 @@ definitions:
           - npm install
           - npm rebuild node-sass
           - npm run build -- --prod
-    - step: &Deploydev-step
+    - step: &Deploy-staging-step
         name: Deploy to staging
         deployment: staging
         script:
@@ -27,7 +27,7 @@ definitions:
             variables:
               SSH_USER: $SSH_DEVELOP_USER
               SERVER: $SHH_DEVELOP_SERVER
-              COMMAND: '~/repos/restart_proyect template4.0 template'
+              COMMAND: '~/repos/template/deploy-pm2/deploy-dev.sh'
     - step: &Deploy-step
         name: Deploy to production
         deployment: production
@@ -44,7 +44,10 @@ pipelines:
   branches:
     develop:
       - step: *Test-step
-      - step: *Deploydev-step
+      - step: *Deploy-staging-step
+      - step: *Deploy-staging-front-step
+    staging:
+      - step: *Test-step
     master:
       - step: *Test-step
       #- step: *Deploy-step
