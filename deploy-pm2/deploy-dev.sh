@@ -1,5 +1,6 @@
 #bash
-source "$ProjectFullPath/config-pm2/config-dev.sh"
+cd $ProjectFullPath/config-pm2
+source /config-dev.sh
 
 echo "Liberando $project en $type"
 cd $ProjectFullPath
