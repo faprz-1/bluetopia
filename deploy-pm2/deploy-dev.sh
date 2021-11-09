@@ -1,7 +1,7 @@
 #bash
 
 repoFolderName="template4.0"
-cd /home/$SSH_DEVELOP_USER/repos/$repoFolderName/deploy-pm2
+cd repos/$repoFolderName/deploy-pm2
 
 source config-dev.sh
 echo "estoy en $PWD"
