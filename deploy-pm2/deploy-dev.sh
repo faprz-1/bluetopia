@@ -1,6 +1,7 @@
 #bash
-# cd $ProjectFullPath/deploy-pm2
+cd $ProjectFullPath/deploy-pm2
 echo "estoy en $PWD"
+echo "deberia en $ProjectFullPath"
 source config-dev.sh
 
 echo "Liberando $project en $type"
