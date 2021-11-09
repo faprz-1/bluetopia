@@ -14,9 +14,9 @@ echo "Liberando $project en $type"
 echo "Trayendo ultimo commit"
 git pull
 echo "Eliminando $Front_nginxFolder" # si es mas de un front... duplicar aqui.
-sudo rm -rf $Front_nginxFolder
+rm -rf $Front_nginxFolder
 echo "Copiando compiledAngular a nginx" # si es mas de un front... duplicar aqui.
-sudo cp -R $sourceHtmlFolder $Front_nginxFolder
+cp -R $sourceHtmlFolder $Front_nginxFolder
 echo "Front Actualizado"
 echo "Reiniciando PM2"
 pm2 restart $project
