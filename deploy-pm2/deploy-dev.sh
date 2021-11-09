@@ -1,5 +1,5 @@
 #bash
-cd $ProjectFullPath/config-pm2
+cd $ProjectFullPath/deploy-pm2
 pwd
 source config-dev.sh
 
