@@ -1,6 +1,6 @@
 #bash
 cd $ProjectFullPath/deploy-pm2
-pwd
+echo "estoy en $PWD"
 source config-dev.sh
 
 echo "Liberando $project en $type"
