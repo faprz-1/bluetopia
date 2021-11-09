@@ -1,8 +1,11 @@
 #bash
-cd $ProjectFullPath/deploy-pm2
+
+repoFolderName="template4.0"
+cd /home/$SSH_DEVELOP_USER/$repoFolderName/deploy-pm2
+
+source config-dev.sh
 echo "estoy en $PWD"
 echo "deberia en $ProjectFullPath"
-source config-dev.sh
 
 echo "Liberando $project en $type"
 cd $ProjectFullPath
