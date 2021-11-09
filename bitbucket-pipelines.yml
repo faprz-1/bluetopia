@@ -27,7 +27,7 @@ definitions:
             variables:
               SSH_USER: $SSH_DEVELOP_USER
               SERVER: $SHH_DEVELOP_SERVER
-              MODE: 'script'
+              MODE: 'command'
               COMMAND: '/home/jarabe/repos/template4.0/deploy-pm2/deploy-dev.sh'
     - step: &Deploy-step
         name: Deploy to production
