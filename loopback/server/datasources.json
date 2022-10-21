@@ -7,7 +7,7 @@
     "host": "localhost",
     "port": 3306,
     "url": "",
-    "database": "template",
+    "database": "bluetopia",
     "password": "j4r4b3s0",
     "name": "mysqlDev",
     "user": "template",

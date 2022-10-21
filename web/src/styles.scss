@@ -61,3 +61,31 @@
 @import './assets/scss/toastr';
 @import '~ngx-toastr/toastr.css';
 @import "./assets/scss/misc";
+
+.full-page {
+    height: 100vh;
+    width: 100vw;
+}
+
+.btn-outline-primary {
+    color: #1081FB;
+    border-color: #1081FB;
+    border-width: 3px;
+}
+.btn-outline-primary:hover {
+    color: white;
+    background-color: #1081FB;
+    border-color: #1081FB;
+    border-width: 3px;
+}
+.btn-outline-success {
+    color: #2ED2A3;
+    border-color: #2ED2A3;
+    border-width: 3px;
+}
+.btn-outline-success:hover {
+    color: white;
+    border-color: #2ED2A3;
+    background-color: #2ED2A3;
+    border-width: 3px;
+}
