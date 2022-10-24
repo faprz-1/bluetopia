@@ -1,1 +1,59 @@
-<p>register-user works!</p>
+<div class="full-page">
+    <div class="d-flex h-100">
+        <div class="vertical-text-container">
+            <div class="vertical-text faded-title">
+                {{userType}}
+            </div>
+        </div>
+        <div class="w-100">
+            <div class="row m-0">
+                <div class="col-12 text-center">
+                    <div>
+                        <img class="title-img" src="assets/img/project_name.png" alt="Bluetopia">
+                    </div>
+                    
+                    <div class="header-container">
+                        <div class="title">
+                            ¡bienvenido!
+                        </div>
+                        <div class="text">
+                            Comienza grátis tu registro hoy
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <form class="form d-inline-block" [formGroup]="userForm">
+                            <div class="input-container">
+                                <div class="input-icon-container text-center">
+                                    <img src="assets/icons/user.png">
+                                </div>
+                                <input class="form-control" type="text" placeholder="Nombre" formControlName="name">
+                            </div>
+                            <div class="input-container">
+                                <div class="input-icon-container text-center">
+                                    <img src="assets/icons/mail.png">
+                                </div>
+                                <input class="form-control" type="text" placeholder="Correo electronico" formControlName="email">
+                            </div>
+                            <div class="input-container">
+                                <div class="input-icon-container text-center">
+                                    <img src="assets/icons/lock.png">
+                                </div>
+                                <input class="form-control" type="text" placeholder="Contraseña" formControlName="password">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="btns-container">
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-primary">
+                                Registrarme
+                            </button>
+                            <button class="btn btn-success">
+                                Iniciar sesión
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
