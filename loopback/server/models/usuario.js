@@ -80,27 +80,39 @@ module.exports = function(Usuario) {
     });
   };
 
-  Usuario.RegisterUser = function(user, userData, callback) {
+  Usuario.RegisterUser = function (user, userData, callback) {
     var RoleMapping = app.models.RoleMapping;
     var Role = app.models.Role;
 
-    Usuario.create(user, function(err, newU) {
-      if (err) return callback(err);
-
-      Role.findOne({
-        where: {
-          or: [{name: {like: `${role}`}}, {description: {like: `${role}`}}],
-        },
-      }, function(err, role) {
+    Role.findOne({
+      where: {
+        or: [{ name: { like: `${role}` } }, { description: { like: `${role}` } }],
+      },
+    }, (err, role) => {
+      if(err) return callback(err);
+      Usuario.create(user, (err, newU) => {
         if (err) return callback(err);
 
         role.principals.create({
           principalType: RoleMapping.USER,
           principalId: newU.id,
-        }, function(err, principal) {
+        }, function (err, principal) {
           if (err) callback(err);
 
-          callback(null, newU);
+          if (userData) {
+            userData.userId = newU.id;
+            Usuario.app.models.UserData.create(userData, (err, newUserData) => {
+              if (err) {
+                newU.destroy((err2, destroyed) => {
+                  if (err2) return callback(err2);
+                  return callback(err);
+                });
+              }
+
+              return callback(null, newU);
+            });
+          }
+          else callback(null, newU);
         });
       });
     });

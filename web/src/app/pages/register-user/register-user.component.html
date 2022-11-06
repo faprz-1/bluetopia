@@ -30,18 +30,21 @@
                                             <img src="assets/icons/user.png">
                                         </div>
                                         <input class="form-control" type="text" placeholder="Nombre" formControlName="name">
+                                        <app-control-messages [control]="userForm.get('name')"></app-control-messages>
                                     </div>
                                     <div class="input-container">
                                         <div class="input-icon-container text-center">
                                             <img src="assets/icons/mail.png">
                                         </div>
                                         <input class="form-control" type="text" placeholder="Correo electronico" formControlName="email">
+                                        <app-control-messages [control]="userForm.get('email')"></app-control-messages>
                                     </div>
                                     <div class="input-container">
                                         <div class="input-icon-container text-center">
                                             <img src="assets/icons/lock.png">
                                         </div>
                                         <input class="form-control" type="password" placeholder="Contraseña" formControlName="password">
+                                        <app-control-messages [control]="userForm.get('password')"></app-control-messages>
                                     </div>
                                 </form>
                                 <div class="link">
@@ -76,6 +79,7 @@
                                             <img src="assets/icons/school.png">
                                         </div>
                                         <input class="form-control" type="text" placeholder="Nombre de la institución" formControlName="schoolName">
+                                        <app-control-messages [control]="userRegisterForm.get('schoolName')"></app-control-messages>
                                         <span class="required-span">*</span>
                                     </div>
                                     <div class="input-container">
@@ -83,6 +87,7 @@
                                             <img src="assets/icons/users-group.png">
                                         </div>
                                         <input class="form-control" type="text" placeholder="Puesto" formControlName="workTitle">
+                                        <app-control-messages [control]="userRegisterForm.get('workTitle')"></app-control-messages>
                                         <span class="required-span">*</span>
                                     </div>
                                     <div class="input-container">
@@ -90,6 +95,7 @@
                                             <img src="assets/icons/location.png">
                                         </div>
                                         <input class="form-control" type="text" placeholder="Dirección" formControlName="address">
+                                        <app-control-messages [control]="userRegisterForm.get('address')"></app-control-messages>
                                         <span class="required-span">*</span>
                                     </div>
                                     <div class="input-container">
@@ -97,6 +103,7 @@
                                             <img src="assets/icons/mail.png">
                                         </div>
                                         <input class="form-control" type="text" placeholder="Correo" formControlName="email">
+                                        <app-control-messages [control]="userRegisterForm.get('email')"></app-control-messages>
                                         <span class="required-span">*</span>
                                     </div>
                                     <div class="input-container">
@@ -104,6 +111,7 @@
                                             <img src="assets/icons/phone.png">
                                         </div>
                                         <input class="form-control" type="text" placeholder="Teléfono" formControlName="phone">
+                                        <app-control-messages [control]="userRegisterForm.get('phone')"></app-control-messages>
                                         <span class="required-span">*</span>
                                     </div>
                                     <div class="input-container">
@@ -111,7 +119,7 @@
                                             <img src="assets/icons/user-phone.png">
                                         </div>
                                         <input class="form-control" type="text" placeholder="Teléfono escolar" formControlName="schoolPhone">
-                                        <span class="required-span">*</span>
+                                        <app-control-messages [control]="userRegisterForm.get('schoolPhone')"></app-control-messages>
                                     </div>
                                 </form>
                                 <div class="btns-container">

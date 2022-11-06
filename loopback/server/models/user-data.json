@@ -8,7 +8,8 @@
   },
   "properties": {
     "schoolName": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "workTitle": {
       "type": "string",

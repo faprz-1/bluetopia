@@ -28,8 +28,8 @@ export class RegisterUserComponent implements OnInit {
     workTitle: new FormControl(null, [Validators.required]),
     address: new FormControl(null, [Validators.required, Validators.minLength(3)]),
     email: new FormControl(null, [Validators.required, Validators.email]),
-    phone: new FormControl(null, [Validators.required, ValidationService.CheckOnlyNumbers]),
-    schoolPhone: new FormControl(null, [Validators.required, ValidationService.CheckOnlyNumbers]),
+    phone: new FormControl(null, [Validators.required, ValidationService.CheckOnlyIntegerNumbers]),
+    schoolPhone: new FormControl(null, [ValidationService.CheckOnlyIntegerNumbers]),
   });
 
   constructor(

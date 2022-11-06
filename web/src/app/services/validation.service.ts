@@ -40,13 +40,31 @@ export class ValidationService {
         name: 'invalidNumber',
         label: `Solo números enteros, o con decimal`
       },
+      {
+        name: 'invalidIntegerNumber',
+        label: `Solo números enteros`
+      },
     ];
 
     return config.find(v => v.name == validatorName);
   }
 
+  static CheckOnlyIntegerNumbers(control: AbstractControl | null) {
+    const patron = /^[0-9]+$/;
+    if(!control?.value) return null;
+    if (patron.test(control?.value)) {
+      if (control?.value == 0) {
+        return { 'invalidIntegerNumber': true };
+      }
+      return null;
+    } else {
+      return { 'invalidIntegerNumber': true };
+    }
+  }
+  
   static CheckOnlyNumbers(control: AbstractControl | null) {
     const patron = /^[1-9]\d*\.?\d*$/;
+    if(!control?.value) return null;
     if (patron.test(control?.value)) {
       if (control?.value == 0) {
         return { 'invalidNumber': true };
