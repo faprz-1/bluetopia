@@ -11,7 +11,7 @@
   }
 
   &.toggled {
-    box-shadow: 5px 0 10px rgba($black, 0.08);
+    // box-shadow: 5px 0 10px rgba($black, 0.08);
     opacity: 1;
     transform: translate3d(0, 0, 0);
   }
@@ -26,7 +26,7 @@
   overflow: hidden;
   z-index: $sidebar-z-index;
 
-  @include media-breakpoint-down(lg) {
+  @include media-breakpoint-down(xl) {
     @include sidebar-toggled();
   }
 
@@ -43,7 +43,7 @@
 
 // User
 .user {
-  background-color: $navigation-link-hover-bg;
+  background-color: none;
   border-radius: $border-radius;
   margin: 0 0 1.5rem 0;
   position: relative;

@@ -2,7 +2,6 @@
 @import "../../../assets/scss/inner-imports";
 //Tamaño de logo
   .logo-img{
-    width: 50px;
   }
 
 // Notificaciones 
@@ -27,16 +26,18 @@
   position: fixed;
   width: 100%;
   height: $header-height;
-  box-shadow: $header-shadow;
-  color: $white;
+  // box-shadow: $header-shadow;
+  color: #1081FB;
+  background-color: white !important;
   padding: 0 2rem;
   z-index: $header-z-index;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   top: 0;
   left: 0;
 
-  @include clearfix();
+  // @include clearfix();
 
   .ma-backdrop {
     position: absolute;
@@ -45,6 +46,7 @@
 
 // Logo
 .header__logo {
+  text-align: right;
   @include media-breakpoint-up(xl) {
     min-width: calc(#{$sidebar-width} - 15rem);
   }

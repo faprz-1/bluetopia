@@ -15,7 +15,7 @@ export const ADMIN_MENU_PAGES: any = {
     { name: 'Inicio', action: '/inicio/user/dashboard', icon: 'zmdi zmdi-home' }
   ],
   'School': [
-    { name: 'Maestros', action: '/inicio/school/maestros', icon: 'zmdi zmdi-home' }
+    { name: 'Maestros', action: '/inicio/school/registrar-maestros', icon: 'zmdi zmdi-home' }
   ]
 };
 
@@ -48,7 +48,7 @@ const LAYOUT_ROUTES: Routes = [
         ]
       },
       {
-        path: 'school', canActivate: [AuthSuserGuard], data: { role: 'School' },
+        path: 'school', canActivate: [AuthGuard], data: { role: 'School' },
         children: [
           { path: '', redirectTo: 'home', pathMatch: 'full' },
           { path: 'home', loadChildren: () => import('../pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
@@ -56,7 +56,7 @@ const LAYOUT_ROUTES: Routes = [
         ]
       },
       {
-        path: 'teacher', canActivate: [AuthSuserGuard], data: { role: 'Teacher' },
+        path: 'teacher', canActivate: [AuthGuard], data: { role: 'Teacher' },
         children: [
           { path: '', redirectTo: 'home', pathMatch: 'full' },
           { path: 'home', loadChildren: () => import('../pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
