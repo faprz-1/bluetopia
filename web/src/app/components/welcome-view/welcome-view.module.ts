@@ -4,23 +4,23 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlMessagesModule } from 'src/app/components/control-messages/control-messages.module';
 
-import { SchoolTeachersComponent } from './school-teachers.component';
+import { WelcomeViewComponent } from './welcome-view.component';
 
 const MODULE_ROUTES = [
-  { path: '', component: SchoolTeachersComponent }
+  { path: '', component: WelcomeViewComponent }
 ];
 
 @NgModule({
   declarations: [
-    SchoolTeachersComponent
+    WelcomeViewComponent
   ],
   imports: [
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
     ControlMessagesModule,
-    RouterModule.forChild(MODULE_ROUTES),
+    // RouterModule.forChild(MODULE_ROUTES),
   ],
-  // exports: [SchoolTeachersComponent]
+  exports: [WelcomeViewComponent]
 })
-export class SchoolTeachersModule { }
+export class WelcomeViewModule { }

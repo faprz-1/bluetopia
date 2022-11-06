@@ -29,8 +29,8 @@
                                         <div class="input-icon-container text-center">
                                             <img src="assets/icons/user.png">
                                         </div>
-                                        <input class="form-control" type="text" placeholder="Nombre" formControlName="name">
-                                        <app-control-messages [control]="userForm.get('name')"></app-control-messages>
+                                        <input class="form-control" type="text" placeholder="Nombre" formControlName="username">
+                                        <app-control-messages [control]="userForm.get('username')"></app-control-messages>
                                     </div>
                                     <div class="input-container">
                                         <div class="input-icon-container text-center">
@@ -132,6 +132,10 @@
                                         </button>
                                     </div>
                                 </div>
+                            </div>
+                            <!-- Welcome page -->
+                            <div class="mb-0" *ngSwitchCase="3">
+                                <app-welcome-view></app-welcome-view>
                             </div>
                         </div>
 

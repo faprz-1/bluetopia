@@ -80,7 +80,7 @@ module.exports = function(Usuario) {
     });
   };
 
-  Usuario.RegisterUser = function (user, userData, callback) {
+  Usuario.RegisterUser = function (user, userData, role, callback) {
     var RoleMapping = app.models.RoleMapping;
     var Role = app.models.Role;
 
@@ -90,6 +90,8 @@ module.exports = function(Usuario) {
       },
     }, (err, role) => {
       if(err) return callback(err);
+
+      if(!role) return callback('Role not specified');
       Usuario.create(user, (err, newU) => {
         if (err) return callback(err);
 

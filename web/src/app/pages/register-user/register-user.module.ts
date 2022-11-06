@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlMessagesModule } from 'src/app/components/control-messages/control-messages.module';
 
 import { RegisterUserComponent } from './register-user.component';
+import { WelcomeViewModule } from 'src/app/components/welcome-view/welcome-view.module';
 
 const MODULE_ROUTES = [
   { path: '', component: RegisterUserComponent }
@@ -17,6 +18,7 @@ const MODULE_ROUTES = [
   imports: [
     FormsModule,
     CommonModule,
+    WelcomeViewModule,
     ReactiveFormsModule,
     ControlMessagesModule,
     RouterModule.forChild(MODULE_ROUTES),

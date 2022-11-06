@@ -16,10 +16,10 @@ import { ValidationService } from 'src/app/services/validation.service';
 })
 export class RegisterUserComponent implements OnInit {
 
-  registerStep: number = 2;
+  registerStep: number = 3;
   userType: string = '';
   userForm: FormGroup = new FormGroup({
-    name: new FormControl(null, [Validators.required]),
+    username: new FormControl(null, [Validators.required]),
     email: new FormControl(null, [Validators.required, Validators.email]),
     password: new FormControl(null, [Validators.required, Validators.minLength(3)]),
   });
@@ -52,17 +52,22 @@ export class RegisterUserComponent implements OnInit {
   }
 
   Register() {
-    if(this.userForm.invalid) {
+    console.log(this.userForm);
+    if(!this.userForm.valid) {
       this.toast.ShowWarning('Favor de llenar todos los campos para registrarse');
       return;
     }
     this.userRegisterForm.controls['email'].setValue(this.userForm.controls['email'].value);
     this.userRegisterForm.updateValueAndValidity();
-    this.registerStep++;
+    this.Forward();
   }
 
   Back() {
     this.registerStep--;
+  }
+
+  Forward() {
+    this.registerStep++;
   }
 
   RegisterUser() {
@@ -71,9 +76,14 @@ export class RegisterUserComponent implements OnInit {
       return;
     }
     let user = {...this.userForm.value, ...this.userRegisterForm.value};
+    let userData = {...this.userRegisterForm.value, name: user.username};
     user.active = true;
-    this.api.Post(`/Usuarios`, { user, role: this.userType.toLowerCase() }).subscribe(newUser => {
-      this.api.Post('/usuario/login', { credentials: user }).subscribe(token => {
+    this.api.Post(`/Usuarios`, { user, userData, role: this.userType.toLowerCase() }).subscribe(newUser => {
+      let credentials = {
+        email: user.email,
+        password: user.password
+      };
+      this.api.Post('/Usuarios/login', credentials).subscribe(token => {
         localStorage.clear();
         this.api.SetToken(token.id);
         this.api.Get("/Usuarios/withCredentials", true).subscribe((userFromServer: any) => {
@@ -85,11 +95,11 @@ export class RegisterUserComponent implements OnInit {
           let user = this.api.GetUser();
           let role = user.role.name.toLowerCase();
 
-          //this.navigation.GoTo(`/inicio/${role}/`);
+          this.Forward();
+          // this.navigation.GoTo(`/inicio/${role}/`);
         }, (err: any) => {
           this.toast.ShowError(err.error.error.message);
         });
-        console.log(token);
       });
     });
   }
@@ -101,7 +111,11 @@ export class RegisterUserComponent implements OnInit {
       return;
     }
 
-    this.api.Post("/Usuarios/login", user, false).subscribe((token: any) => {
+    let credentials = {
+      email: user.email,
+      password: user.password
+    };
+    this.api.Post("/Usuarios/login", credentials, false).subscribe((token: any) => {
       localStorage.clear()
       this.api.SetToken(token.id);
       this.api.Get("/Usuarios/withCredentials", true).subscribe((userFromServer: any) => {

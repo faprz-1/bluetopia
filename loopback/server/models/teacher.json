@@ -18,10 +18,28 @@
       "type": "boolean",
       "required": true,
       "default": false
+    },
+    "grade": {
+      "type": "string",
+      "required": true
+    },
+    "group": {
+      "type": "string",
+      "required": true
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "subjects": {
+      "type": "hasMany",
+      "model": "Subject",
+      "foreignKey": "",
+      "options": {
+        "nestRemoting": true
+      },
+      "through": "TeacherSubject"
+    }
+  },
   "acls": [],
   "methods": {}
 }

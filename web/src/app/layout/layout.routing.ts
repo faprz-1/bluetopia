@@ -50,8 +50,16 @@ const LAYOUT_ROUTES: Routes = [
       {
         path: 'school', canActivate: [AuthSuserGuard], data: { role: 'School' },
         children: [
-          { path: '', redirectTo: 'maestros', pathMatch: 'full' },
-          { path: 'maestros', loadChildren: () => import('../pages/school-teachers/school-teachers.module').then(m => m.SchoolTeachersModule) },
+          { path: '', redirectTo: 'home', pathMatch: 'full' },
+          { path: 'home', loadChildren: () => import('../pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
+          { path: 'registrar-maestros', loadChildren: () => import('../pages/school-teachers/school-teachers.module').then(m => m.SchoolTeachersModule) },
+        ]
+      },
+      {
+        path: 'teacher', canActivate: [AuthSuserGuard], data: { role: 'Teacher' },
+        children: [
+          { path: '', redirectTo: 'home', pathMatch: 'full' },
+          { path: 'home', loadChildren: () => import('../pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
         ]
       },
     ]
