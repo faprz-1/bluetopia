@@ -113,5 +113,17 @@
   "OrdersHistory": {
     "dataSource": "mysqlDev",
     "public": true
+  },
+  "UserData": {
+    "dataSource": "mysqlDev",
+    "public": true
+  },
+  "Teacher": {
+    "dataSource": "mysqlDev",
+    "public": true
+  },
+  "Student": {
+    "dataSource": "mysqlDev",
+    "public": true
   }
 }

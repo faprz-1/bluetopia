@@ -20,7 +20,7 @@
     },
     "GToken": {
       "type": "string"
-    },   
+    },
     "AppleToken": {
       "type": "string",
       "mysql": {
@@ -67,6 +67,14 @@
     "ordersHistories": {
       "type": "hasMany",
       "model": "ordersHistory",
+      "foreignKey": "userId",
+      "options": {
+        "nestRemoting": true
+      }
+    },
+    "data": {
+      "type": "hasOne",
+      "model": "UserData",
       "foreignKey": "userId",
       "options": {
         "nestRemoting": true
