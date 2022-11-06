@@ -56,7 +56,8 @@
           "prototype.changeProfileImage": true,
           "prototype.UpdateProfile": true,
           "loginBySocialMedia": true,
-          "VerifyEmail": true
+          "VerifyEmail": true,
+          "RegisterUser": true
         }
       }
     }

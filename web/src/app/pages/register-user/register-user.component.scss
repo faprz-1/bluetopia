@@ -18,11 +18,6 @@
     color: #BDDDFF55;
 }
 
-.title-img {
-    margin-top: 96px;
-    margin-bottom: 38px;
-}
-
 .header-container {
     margin-bottom: 58px;
     max-width: 500px;
@@ -31,13 +26,15 @@
 
 .btn {
     font-size: 1.25rem;
-    padding: 16px 60px;
+    width: 225px;
+    padding: 16px 0;
     font-weight: 800;
 }
 
 .btns-container {
     width: 100%;
     max-width: 550px;
+    margin-bottom: 2rem;
     display: inline-block;
 }
 
@@ -45,4 +42,11 @@
     margin-bottom: 74px;
     width: 100%;
     max-width: 380px;
+}
+
+.link {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #1081FB;
+    margin-bottom: 74px;
 }

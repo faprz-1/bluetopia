@@ -84,7 +84,15 @@ module.exports = function(app) {
       {
         name:"SuperUser",
         description: 'the most powerful user'
-      }
+      },
+      {
+        name:"School",
+        description: 'escuela'
+      },
+      {
+        name:"Teacher",
+        description: 'maestro'
+      },
     ]
 
     // console.log("Seeding Model: Role");

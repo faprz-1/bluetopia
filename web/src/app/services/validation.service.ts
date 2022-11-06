@@ -47,7 +47,7 @@ export class ValidationService {
 
   static CheckOnlyNumbers(control: AbstractControl | null) {
     const patron = /^[1-9]\d*\.?\d*$/;
-    if (control?.value.match(patron)) {
+    if (patron.test(control?.value)) {
       if (control?.value == 0) {
         return { 'invalidNumber': true };
       }

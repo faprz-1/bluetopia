@@ -1,6 +1,10 @@
-.title-img {
-    margin-top: 96px;
-    margin-bottom: 38px;
+.title {
+    margin: 1rem 0;
+}
+
+.landing-image {
+    margin: 38px 0;
+    max-height: 150px;
 }
 
 .header-container {
@@ -9,7 +13,7 @@
 }
 
 .subtitle {
-    font-size: 2.25rem;
+    font-size: 1.75rem;
     font-weight: 500;
     color: #758CA6;
     margin-bottom: 50px;

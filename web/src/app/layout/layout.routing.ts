@@ -13,6 +13,9 @@ export const ADMIN_MENU_PAGES: any = {
   ],
   'User': [
     { name: 'Inicio', action: '/inicio/user/dashboard', icon: 'zmdi zmdi-home' }
+  ],
+  'School': [
+    { name: 'Maestros', action: '/inicio/school/maestros', icon: 'zmdi zmdi-home' }
   ]
 };
 
@@ -43,7 +46,14 @@ const LAYOUT_ROUTES: Routes = [
           { path: 'registro', loadChildren: () => import('../pages/register-user/register-user.module').then(m => m.RegisterUserModule) },
           { path: 'usuarios', loadChildren: () => import('../pages/super-user/users/users.module').then(m => m.UsersModule) }
         ]
-      }
+      },
+      {
+        path: 'school', canActivate: [AuthSuserGuard], data: { role: 'School' },
+        children: [
+          { path: '', redirectTo: 'maestros', pathMatch: 'full' },
+          { path: 'maestros', loadChildren: () => import('../pages/school-teachers/school-teachers.module').then(m => m.SchoolTeachersModule) },
+        ]
+      },
     ]
   }
 ];

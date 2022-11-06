@@ -5,52 +5,128 @@
                 {{userType}}
             </div>
         </div>
-        <div class="w-100">
+        <div class="w-100 vertical-content">
             <div class="row m-0">
                 <div class="col-12 text-center">
                     <div>
-                        <img class="title-img" src="assets/img/project_name.png" alt="Bluetopia">
+                        <img class="title-img" src="assets/img/project_name_medium.png" alt="Bluetopia">
                     </div>
                     
-                    <div class="header-container">
-                        <div class="title">
-                            ¡bienvenido!
-                        </div>
-                        <div class="text">
-                            Comienza grátis tu registro hoy
-                        </div>
-                    </div>
                     <div class="text-center">
-                        <form class="form d-inline-block" [formGroup]="userForm">
-                            <div class="input-container">
-                                <div class="input-icon-container text-center">
-                                    <img src="assets/icons/user.png">
+                        <div [ngSwitch]="registerStep">
+                            <!-- Register 1st part -->
+                            <div class="header-container mb-0" *ngSwitchCase="1">
+                                <div class="header-container">
+                                    <div class="title">
+                                        ¡bienvenido!
+                                    </div>
+                                    <div class="text">
+                                        Comienza grátis tu registro hoy
+                                    </div>
                                 </div>
-                                <input class="form-control" type="text" placeholder="Nombre" formControlName="name">
-                            </div>
-                            <div class="input-container">
-                                <div class="input-icon-container text-center">
-                                    <img src="assets/icons/mail.png">
+                                <form class="form d-inline-block" [formGroup]="userForm">
+                                    <div class="input-container">
+                                        <div class="input-icon-container text-center">
+                                            <img src="assets/icons/user.png">
+                                        </div>
+                                        <input class="form-control" type="text" placeholder="Nombre" formControlName="name">
+                                    </div>
+                                    <div class="input-container">
+                                        <div class="input-icon-container text-center">
+                                            <img src="assets/icons/mail.png">
+                                        </div>
+                                        <input class="form-control" type="text" placeholder="Correo electronico" formControlName="email">
+                                    </div>
+                                    <div class="input-container">
+                                        <div class="input-icon-container text-center">
+                                            <img src="assets/icons/lock.png">
+                                        </div>
+                                        <input class="form-control" type="password" placeholder="Contraseña" formControlName="password">
+                                    </div>
+                                </form>
+                                <div class="link">
+                                    <a>
+                                        ¿Olvidaste tu contraseña?
+                                    </a>
                                 </div>
-                                <input class="form-control" type="text" placeholder="Correo electronico" formControlName="email">
-                            </div>
-                            <div class="input-container">
-                                <div class="input-icon-container text-center">
-                                    <img src="assets/icons/lock.png">
+                                <div class="btns-container">
+                                    <div class="d-flex justify-content-between">
+                                        <button class="btn btn-primary" (click)="Register()">
+                                            Registrarme
+                                        </button>
+                                        <button class="btn btn-success" (click)="LoginUser()">
+                                            Iniciar sesión
+                                        </button>
+                                    </div>
                                 </div>
-                                <input class="form-control" type="text" placeholder="Contraseña" formControlName="password">
                             </div>
-                        </form>
-                    </div>
-                    <div class="btns-container">
-                        <div class="d-flex justify-content-between">
-                            <button class="btn btn-primary">
-                                Registrarme
-                            </button>
-                            <button class="btn btn-success">
-                                Iniciar sesión
-                            </button>
+                            <!-- Register 2nd part -->
+                            <div class="header-container mb-0" *ngSwitchCase="2">
+                                <div class="header-container">
+                                    <div class="title">
+                                        Cuentanos más sobre tí
+                                    </div>
+                                    <div class="text">
+                                        Y más sobre la institución que representas
+                                    </div>
+                                </div>
+                                <form class="form d-inline-block" [formGroup]="userRegisterForm">
+                                    <div class="input-container">
+                                        <div class="input-icon-container text-center">
+                                            <img src="assets/icons/school.png">
+                                        </div>
+                                        <input class="form-control" type="text" placeholder="Nombre de la institución" formControlName="schoolName">
+                                        <span class="required-span">*</span>
+                                    </div>
+                                    <div class="input-container">
+                                        <div class="input-icon-container text-center">
+                                            <img src="assets/icons/users-group.png">
+                                        </div>
+                                        <input class="form-control" type="text" placeholder="Puesto" formControlName="workTitle">
+                                        <span class="required-span">*</span>
+                                    </div>
+                                    <div class="input-container">
+                                        <div class="input-icon-container text-center">
+                                            <img src="assets/icons/location.png">
+                                        </div>
+                                        <input class="form-control" type="text" placeholder="Dirección" formControlName="address">
+                                        <span class="required-span">*</span>
+                                    </div>
+                                    <div class="input-container">
+                                        <div class="input-icon-container text-center">
+                                            <img src="assets/icons/mail.png">
+                                        </div>
+                                        <input class="form-control" type="text" placeholder="Correo" formControlName="email">
+                                        <span class="required-span">*</span>
+                                    </div>
+                                    <div class="input-container">
+                                        <div class="input-icon-container text-center">
+                                            <img src="assets/icons/phone.png">
+                                        </div>
+                                        <input class="form-control" type="text" placeholder="Teléfono" formControlName="phone">
+                                        <span class="required-span">*</span>
+                                    </div>
+                                    <div class="input-container">
+                                        <div class="input-icon-container text-center">
+                                            <img src="assets/icons/user-phone.png">
+                                        </div>
+                                        <input class="form-control" type="text" placeholder="Teléfono escolar" formControlName="schoolPhone">
+                                        <span class="required-span">*</span>
+                                    </div>
+                                </form>
+                                <div class="btns-container">
+                                    <div class="d-flex justify-content-between">
+                                        <button class="btn btn-outline-primary" (click)="Back()">
+                                            Volver
+                                        </button>
+                                        <button class="btn btn-primary" (click)="RegisterUser()">
+                                            Registrar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
