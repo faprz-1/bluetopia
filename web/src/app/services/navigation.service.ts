@@ -17,7 +17,7 @@ export class NavigationService {
     return route.charAt(0) == '/';
   }
 
-  public GoTo(route: string) {
+  public GoToUserRoute(route: string) {
     const user = this.api.GetUser();
     if(user && user.role && !route.includes(user.role.name.toLowerCase())) {
       this.router.navigate(
@@ -29,6 +29,12 @@ export class NavigationService {
         [`${this.HasInitialSlash(route) ? '' : '/'}${route}`]
         );
     }
+  }
+
+  public GoTo(route: string) {
+    this.router.navigate(
+      [`${this.HasInitialSlash(route) ? '' : '/'}${route}`]
+      );
   }
 
 }
