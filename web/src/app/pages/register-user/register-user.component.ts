@@ -16,7 +16,7 @@ import { ValidationService } from 'src/app/services/validation.service';
 })
 export class RegisterUserComponent implements OnInit {
 
-  registerStep: number = 3;
+  registerStep: number = 1;
   userType: string = '';
   userForm: FormGroup = new FormGroup({
     username: new FormControl(null, [Validators.required]),
@@ -127,7 +127,7 @@ export class RegisterUserComponent implements OnInit {
         let user = this.api.GetUser();
         let role = user.role.name.toLowerCase();
 
-        //this.navigation.GoTo(`/inicio/${role}/`);
+        this.navigation.GoTo(`/inicio/${role}/`);
       }, (err: any) => {
         this.toast.ShowError(err.error.error.message);
       })

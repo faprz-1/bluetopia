@@ -61,6 +61,7 @@
 @import './assets/scss/toastr';
 @import '~ngx-toastr/toastr.css';
 @import "./assets/scss/misc";
+@import "~@ng-select/ng-select/themes/default.theme.css";
 
 .full-page {
     height: 100vh;
@@ -74,6 +75,10 @@
 
 $primary: #1081FB;
 $success: #2ED2A3;
+
+.clickeable {
+    cursor: pointer;
+}
 
 .btn-primary {
     color: white;
@@ -146,7 +151,61 @@ $success: #2ED2A3;
     border-radius: 12px;
 }
 
+// ng-select overrides
+.ng-select-container {
+    border: none !important;
+    background-color: #F6F7F8 !important;
+    padding-left: 40px !important;
+}
+ng-select.form-control {
+    border: none;
+    border-radius: 6px;
+    background-color: #F6F7F8;
+}
+.ng-placeholder {
+    color: #92A5B991 !important;
+}
+
 // Input styles
+.checkbox-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 45px;
+    margin-bottom: 24px;
+
+    label {
+        color: #92A5B9;
+        font-size: 1.25rem;
+        font-weight: 500;
+        margin: 0;
+    }
+    input {
+        display: none;
+    }
+
+    input:checked ~ .checkmark::after {
+        display: block;
+    }
+    .checkmark {
+        width: 30px;
+        height: 30px;
+        background-color: none;
+        border: 2px solid #9B9B9B;
+        border-radius: 6px;
+    }
+}
+.checkbox-container input:checked ~ .checkmark {
+    background-color: #1081FB;
+}
+.checkbox-container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+.checkbox-container:hover input:checked ~ .checkmark {
+    background-color: #1081FBaa;
+}
 .input-container {
     position: relative;
     width: 100%;
@@ -168,6 +227,7 @@ $success: #2ED2A3;
     height: 50%;
     left: 5px;
     top: 25%;
+    z-index: 2;
 }
 .input-icon-container img {
     max-height: 100%;

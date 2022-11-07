@@ -1,30 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlMessagesModule } from 'src/app/components/control-messages/control-messages.module';
 
-import { SchoolTeachersComponent } from './school-teachers.component';
-import { TeacherCardModule } from 'src/app/components/teacher-card/teacher-card.module';
+import { TeacherCardComponent } from './teacher-card.component';
 
 const MODULE_ROUTES = [
-  { path: '', component: SchoolTeachersComponent }
+  { path: '', component: TeacherCardComponent }
 ];
 
 @NgModule({
   declarations: [
-    SchoolTeachersComponent
+    TeacherCardComponent
   ],
   imports: [
     FormsModule,
     CommonModule,
-    NgSelectModule,
-    TeacherCardModule,
     ReactiveFormsModule,
     ControlMessagesModule,
-    RouterModule.forChild(MODULE_ROUTES),
+    // RouterModule.forChild(MODULE_ROUTES),
   ],
-  // exports: [SchoolTeachersComponent]
+  exports: [TeacherCardComponent]
 })
-export class SchoolTeachersModule { }
+export class TeacherCardModule { }

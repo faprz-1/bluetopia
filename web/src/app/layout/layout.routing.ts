@@ -15,7 +15,10 @@ export const ADMIN_MENU_PAGES: any = {
     { name: 'Inicio', action: '/inicio/user/dashboard', icon: 'zmdi zmdi-home' }
   ],
   'School': [
-    { name: 'Maestros', action: '/inicio/school/registrar-maestros', icon: 'zmdi zmdi-home' }
+    { name: 'Inicio', action: '/inicio/school/dashboard', icon: 'zmdi zmdi-home' }
+  ],
+  'Teacher': [
+    { name: 'Inicio', action: '/inicio/teacher/dashboard', icon: 'zmdi zmdi-home' }
   ]
 };
 

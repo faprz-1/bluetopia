@@ -14,13 +14,13 @@
   "validations": [],
   "relations": {
     "teachers": {
-      "type": "hasMany",
+      "type": "hasAndBelongsToMany",
       "model": "Teacher",
-      "foreignKey": "",
+      "foreignKey": "subjectId",
       "options": {
         "nestRemoting": true
       },
-      "through": "TeacherSubject"
+      "throughTable": "TeacherSubject"
     }
   },
   "acls": [

@@ -5,7 +5,16 @@
   "options": {
     "validateUpsert": true
   },
-  "properties": {},
+  "properties": {
+    "teacherId": {
+      "type": "number",
+      "required": false
+    },
+    "subjectId": {
+      "type": "number",
+      "required": false
+    }
+  },
   "validations": [],
   "relations": {},
   "acls": [],

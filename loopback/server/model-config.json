@@ -131,7 +131,8 @@
     "options": {
       "remoting": {
         "sharedMethods": {
-          "*": false
+          "*": false,
+          "AddTeachers": true
         }
       }
     }

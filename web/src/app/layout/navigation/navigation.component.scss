@@ -11,7 +11,7 @@
   }
 
   &.toggled {
-    // box-shadow: 5px 0 10px rgba($black, 0.08);
+    box-shadow: 5px 5px 10px rgba($black, 0.08);
     opacity: 1;
     transform: translate3d(0, 0, 0);
   }
@@ -93,7 +93,7 @@
 
   li {
     a {
-      color: $navigation-link-color;
+      color: #2369B5 !important;
       @include transition(background-color 300ms, color 300ms);
       font-weight: $font-weight-bold;
       display: block;

@@ -21,25 +21,67 @@
     },
     "grade": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "group": {
       "type": "string",
-      "required": true
+      "required": false
     }
   },
   "validations": [],
   "relations": {
     "subjects": {
-      "type": "hasMany",
+      "type": "hasAndBelongsToMany",
       "model": "Subject",
-      "foreignKey": "",
+      "foreignKey": "teacherId",
       "options": {
         "nestRemoting": true
       },
-      "through": "TeacherSubject"
+      "throughTable": "TeacherSubject"
     }
   },
-  "acls": [],
-  "methods": {}
+  "acls": [
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "School",
+      "permission": "ALLOW",
+      "property": [
+        "AddTeachers"
+      ]
+    }
+  ],
+  "methods": {
+    "AddTeachers": {
+      "accepts": [
+        {
+          "arg": "teachers",
+          "type": "array",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "newTeachers",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/Array",
+          "verb": "post"
+        }
+      ]
+    }
+  }
 }

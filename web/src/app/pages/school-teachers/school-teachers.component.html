@@ -1,3 +1,108 @@
 <div class="content">
-    <p>school-teachers works!</p>
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8 col-xl-6">
+            <div class="text-center">
+                <div class="title">
+                    Invita a tus docentes
+                </div>
+                <div class="text">
+                    Mientras más mejor
+                </div>
+            </div>
+        
+            <div class="teacher-cards">
+                <div class="d-inline-block mr-3" *ngFor="let teacher of teachers">
+                    <app-teacher-card [teacher]="teacher" (onDelete)="DeleteTeacher($event)"></app-teacher-card>
+                </div>
+            </div>
+            
+            <div class="teacher-form">
+                <form [formGroup]="teacherForm">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="input-container">
+                                <div class="input-icon-container text-center">
+                                    <img src="assets/icons/user.png">
+                                </div>
+                                <input class="form-control" type="text" placeholder="Nombre" formControlName="name">
+                                <app-control-messages [control]="teacherForm.get('name')"></app-control-messages>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="input-container">
+                                <div class="input-icon-container text-center">
+                                    <img src="assets/icons/book.png">
+                                </div>
+                                <ng-select
+                                    class="ng-select form-control"
+                                    [items]="subjects"
+                                    [multiple]="true"
+                                    bindLabel="name"
+                                    placeholder="Asignaturas"
+                                    formControlName="subjects">
+                                </ng-select>
+                                <app-control-messages [control]="teacherForm.get('subjects')"></app-control-messages>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="input-container">
+                                <div class="input-icon-container text-center">
+                                    <img src="assets/icons/mail.png">
+                                </div>
+                                <input class="form-control" type="text" placeholder="Correo electrónico de trabajo" formControlName="email">
+                                <app-control-messages [control]="teacherForm.get('email')"></app-control-messages>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="checkbox-container clickeable">
+                                <div class="mr-2" (click)="extracurricularsInput.click()">
+                                    <img src="assets/icons/star.png">
+                                </div>
+                                <label class="mr-2 clickeable" (click)="extracurricularsInput.click()">Extracurriculares</label>
+                                <input type="checkbox" #extracurricularsInput formControlName="extracurricular">
+                                <span class="checkmark" (click)="extracurricularsInput.click()"></span>
+                                <app-control-messages [control]="teacherForm.get('extracurricular')"></app-control-messages>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-xl-4">
+                            <div class="input-container">
+                                <div class="input-icon-container text-center">
+                                    <img src="assets/icons/users.png">
+                                </div>
+                                <input class="form-control" type="text" placeholder="Grado" formControlName="grade">
+                                <app-control-messages [control]="teacherForm.get('grade')"></app-control-messages>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-xl-4">
+                            <div class="input-container">
+                                <div class="input-icon-container text-center">
+                                    <img src="assets/icons/users-group.png">
+                                </div>
+                                <input class="form-control" type="text" placeholder="Grupo" formControlName="group">
+                                <app-control-messages [control]="teacherForm.get('group')"></app-control-messages>
+                            </div>
+                        </div>
+                        <div class="col-12 col-xl-4 text-right">
+                            <button class="btn btn-outline-success save-button" (click)="AddTeacher()">
+                                Guardar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+            <div class="w-100 text-center">
+                <div class="btns-container">
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-outline-primary btn-bottom-menu">
+                            Volver
+                        </button>
+                        <button class="btn btn-primary btn-bottom-menu" (click)="SaveTeachers()">
+                            Continuar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
