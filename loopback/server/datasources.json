@@ -11,7 +11,7 @@
     "password": "j4r4b3s0",
     "name": "mysqlDev",
     "user": "template",
-    "connector": "mysql"  
+    "connector": "mysql"
   },
   "localFiles": {
     "name": "localFiles",

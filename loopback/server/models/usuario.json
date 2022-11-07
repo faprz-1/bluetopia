@@ -20,7 +20,7 @@
     },
     "GToken": {
       "type": "string"
-    },   
+    },
     "AppleToken": {
       "type": "string",
       "mysql": {
@@ -71,6 +71,14 @@
       "options": {
         "nestRemoting": true
       }
+    },
+    "data": {
+      "type": "hasOne",
+      "model": "UserData",
+      "foreignKey": "userId",
+      "options": {
+        "nestRemoting": true
+      }
     }
   },
   "acls": [
@@ -101,7 +109,8 @@
         "loginBySocialMedia",
         "loginIfActive",
         "RegisterWithEmailVerification",
-        "VerifyEmail"
+        "VerifyEmail",
+        "RegisterUser"
       ]
     },
     {
@@ -132,6 +141,43 @@
     }
   ],
   "methods": {
+    "RegisterUser": {
+      "accepts": [
+        {
+          "arg": "user",
+          "type": "object",
+          "required": true,
+          "description": "user"
+        },
+        {
+          "arg": "userData",
+          "type": "object",
+          "required": false,
+          "description": "userData"
+        },
+        {
+          "arg": "role",
+          "type": "string",
+          "required": true,
+          "description": "new user role"
+        }
+      ],
+      "returns": [
+        {
+          "arg": "newUser",
+          "type": "object",
+          "root": true,
+          "description": "new user in db"
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/",
+          "verb": "post"
+        }
+      ]
+    },
     "prototype.changeProfileImage": {
       "accepts": [
         {

@@ -84,12 +84,54 @@ module.exports = function(app) {
       {
         name:"SuperUser",
         description: 'the most powerful user'
-      }
+      },
+      {
+        name:"School",
+        description: 'escuela'
+      },
+      {
+        name:"Teacher",
+        description: 'maestro'
+      },
     ]
 
     // console.log("Seeding Model: Role");
     sequentialSeed(appRoles, "name", app.models.Role, seedUsers);
     
+  }
+
+  var seedSubjects = function() {
+    const subjects = [
+      {
+        name: "Español"
+      },
+      {
+        name: "Matemáticas"
+      },
+      {
+        name: "Biología"
+      },
+      {
+        name: "Historia"
+      },
+      {
+        name: "Geografía"
+      },
+      {
+        name: "Educacion física"
+      },
+      {
+        name: "Formación civica y ética"
+      },
+    ];
+
+    let cont = 0, limit = subjects.length;
+    subjects.forEach(subject => {
+      app.models.Subject.CreateOneWithoutRepeat(subject, (err, newSubject) => {
+        if(err) throw err;
+        if(++cont == limit) console.log("Subjects seeded succesfully");
+      });
+    });
   }
 
   var seedUploadContainers = function(){
@@ -172,7 +214,8 @@ module.exports = function(app) {
 
   var Seeders = [
     seedRoles,
-    seedUploadContainers
+    seedUploadContainers,
+    seedSubjects
   ]
 
   // Migrate

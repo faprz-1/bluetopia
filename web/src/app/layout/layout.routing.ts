@@ -13,6 +13,12 @@ export const ADMIN_MENU_PAGES: any = {
   ],
   'User': [
     { name: 'Inicio', action: '/inicio/user/dashboard', icon: 'zmdi zmdi-home' }
+  ],
+  'School': [
+    { name: 'Inicio', action: '/inicio/school/dashboard', icon: 'zmdi zmdi-home' }
+  ],
+  'Teacher': [
+    { name: 'Inicio', action: '/inicio/teacher/dashboard', icon: 'zmdi zmdi-home' }
   ]
 };
 
@@ -43,7 +49,23 @@ const LAYOUT_ROUTES: Routes = [
           { path: 'registro', loadChildren: () => import('../pages/register-user/register-user.module').then(m => m.RegisterUserModule) },
           { path: 'usuarios', loadChildren: () => import('../pages/super-user/users/users.module').then(m => m.UsersModule) }
         ]
-      }
+      },
+      {
+        path: 'school', canActivate: [AuthGuard], data: { role: 'School' },
+        children: [
+          { path: '', redirectTo: 'home', pathMatch: 'full' },
+          { path: 'home', loadChildren: () => import('../pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
+          { path: 'registrar-maestros', loadChildren: () => import('../pages/school-teachers/school-teachers.module').then(m => m.SchoolTeachersModule) },
+          { path: 'registrar-maestros/csv', loadChildren: () => import('../pages/teachers-csv/teachers-csv.module').then(m => m.TeachersCsvModule) },
+        ]
+      },
+      {
+        path: 'teacher', canActivate: [AuthGuard], data: { role: 'Teacher' },
+        children: [
+          { path: '', redirectTo: 'home', pathMatch: 'full' },
+          { path: 'home', loadChildren: () => import('../pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
+        ]
+      },
     ]
   }
 ];

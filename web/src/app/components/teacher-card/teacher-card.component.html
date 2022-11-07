@@ -1,0 +1,25 @@
+<div class="card position-relative">
+    <span class="delete clickeable" (click)="OnDeletedPressed()">
+        &times;
+    </span>
+    <div class="card-body">
+        <div class="text-row">
+            <div class="img-container">
+                <img src="assets/icons/user-green.png" alt="user">
+            </div>
+            <span>{{teacher?.name}}</span>
+        </div>
+        <div class="text-row">
+            <div class="img-container">
+                <img src="assets/icons/mail-green.png" alt="mail">
+            </div>
+            <span>{{teacher?.email}}</span>
+        </div>
+        <div class="text-row">
+            <div class="img-container">
+                <img src="assets/icons/book-green.png" alt="book">
+            </div>
+            <span *ngFor="let subject of teacher?.subjects; let l = last">{{subject.name + ( l ? "" : "," )}}</span>
+        </div>
+    </div>
+</div>

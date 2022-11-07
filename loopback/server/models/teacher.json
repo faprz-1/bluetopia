@@ -1,0 +1,87 @@
+{
+  "name": "Teacher",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "string",
+      "required": true
+    },
+    "active": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "grade": {
+      "type": "string",
+      "required": false
+    },
+    "group": {
+      "type": "string",
+      "required": false
+    }
+  },
+  "validations": [],
+  "relations": {
+    "subjects": {
+      "type": "hasAndBelongsToMany",
+      "model": "Subject",
+      "foreignKey": "teacherId",
+      "options": {
+        "nestRemoting": true
+      },
+      "throughTable": "TeacherSubject"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "School",
+      "permission": "ALLOW",
+      "property": [
+        "AddTeachers"
+      ]
+    }
+  ],
+  "methods": {
+    "AddTeachers": {
+      "accepts": [
+        {
+          "arg": "teachers",
+          "type": "array",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "newTeachers",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/Array",
+          "verb": "post"
+        }
+      ]
+    }
+  }
+}

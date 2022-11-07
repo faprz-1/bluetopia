@@ -1,6 +1,10 @@
-.title-img {
-    margin-top: 96px;
-    margin-bottom: 38px;
+.title {
+    margin: 1rem 0;
+}
+
+.landing-image {
+    margin: 38px 0;
+    max-height: 150px;
 }
 
 .header-container {
@@ -8,26 +12,11 @@
     display: inline-block;
 }
 
-.title {
-    margin-bottom: 12px;
-    font-size: 3rem;
-    color: #2369B5;
-    line-height: 60px;
-    font-weight: 700;
-    text-transform: capitalize;
-}
-
 .subtitle {
-    font-size: 2.25rem;
+    font-size: 1.75rem;
     font-weight: 500;
     color: #758CA6;
     margin-bottom: 50px;
-}
-
-.text {
-    font-size: 1.5rem;
-    line-height: 30px;
-    color: #758CA6;
 }
 
 .btn {

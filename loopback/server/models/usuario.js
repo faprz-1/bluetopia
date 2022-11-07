@@ -80,6 +80,46 @@ module.exports = function(Usuario) {
     });
   };
 
+  Usuario.RegisterUser = function (user, userData, role, callback) {
+    var RoleMapping = app.models.RoleMapping;
+    var Role = app.models.Role;
+
+    Role.findOne({
+      where: {
+        or: [{ name: { like: `${role}` } }, { description: { like: `${role}` } }],
+      },
+    }, (err, role) => {
+      if(err) return callback(err);
+
+      if(!role) return callback('Role not specified');
+      Usuario.create(user, (err, newU) => {
+        if (err) return callback(err);
+
+        role.principals.create({
+          principalType: RoleMapping.USER,
+          principalId: newU.id,
+        }, function (err, principal) {
+          if (err) callback(err);
+
+          if (userData) {
+            userData.userId = newU.id;
+            Usuario.app.models.UserData.create(userData, (err, newUserData) => {
+              if (err) {
+                newU.destroy((err2, destroyed) => {
+                  if (err2) return callback(err2);
+                  return callback(err);
+                });
+              }
+
+              return callback(null, newU);
+            });
+          }
+          else callback(null, newU);
+        });
+      });
+    });
+  }
+
   /**
    * Gets an user with his credentials
    * @param {object} ctx Current Context

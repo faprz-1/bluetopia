@@ -1,11 +1,11 @@
 <div class="full-page">
     <div class="d-flex h-100">
         <img class="h-100" src="assets/img/landing_page_side.png" alt="Side img">
-        <div class="w-100">
+        <div class="w-100 vertical-content">
             <div class="row m-0">
-                <div class="col-12 text-center title-img">
+                <div class="col-12 text-center">
                     <div>
-                        <img class="" src="assets/img/project_name.png" alt="Bluetopia">
+                        <img class="title-img" src="assets/img/project_name.png" alt="Bluetopia">
                     </div>
                     
                     <div class="header-container">
@@ -17,17 +17,17 @@
                         </div>
                     </div>
                     <div>
-                        <img class="" style="margin: 38px 0;" src="assets/img/landing_page_img.png" alt="Image">
+                        <img class="landing-image" src="assets/img/landing_page_img.png" alt="Image">
                     </div>
                     <div class="subtitle">
                         ¿Cómo te gustaría acceder?
                     </div>
                     <div class="btns-container">
                         <div class="d-flex justify-content-between">
-                            <button class="btn btn-outline-primary">
+                            <button class="btn btn-outline-primary" (click)="navigation.GoTo('registro/escuela')">
                                 Escuela
                             </button>
-                            <button class="btn btn-outline-success">
+                            <button class="btn btn-outline-success" (click)="navigation.GoTo('registro/maestro')">
                                 Maestro
                             </button>
                         </div>

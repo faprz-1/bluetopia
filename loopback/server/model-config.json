@@ -56,7 +56,8 @@
           "prototype.changeProfileImage": true,
           "prototype.UpdateProfile": true,
           "loginBySocialMedia": true,
-          "VerifyEmail": true
+          "VerifyEmail": true,
+          "RegisterUser": true
         }
       }
     }
@@ -112,5 +113,62 @@
   "OrdersHistory": {
     "dataSource": "mysqlDev",
     "public": true
+  },
+  "UserData": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "Teacher": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "AddTeachers": true
+        }
+      }
+    }
+  },
+  "Student": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "Subject": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "GetAll": true
+        }
+      }
+    }
+  },
+  "TeacherSubject": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
   }
 }

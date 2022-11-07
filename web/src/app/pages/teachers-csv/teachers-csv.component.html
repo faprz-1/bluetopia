@@ -1,0 +1,103 @@
+<div class="content">
+    <div class="title">
+        Es fácil registrar a tus maestros
+    </div>
+
+    <div class="text">
+        Simplemente baja nuestra plantilla de Excel, llénala y súbela de nuevo
+    </div>
+
+    <div class="steps">
+        <div class="d-flex">
+            <div class="radio-button checked"></div>
+            <div class="instructions">
+                <div class="step">1) Descarga el formato de Excel</div>
+                <div class="mb-5">
+                    <img class="img-template" src="assets/icons/excel.png" alt="CSV file">
+                    <a class="link" (click)="DownloadTemplate()">Descargar</a>
+                </div>
+                <div class="text">Si tienes más de un nivel, repetir el proceso</div>
+            </div>
+        </div>
+        <div class="d-flex">
+            <div class="radio-button"></div>
+            <div class="instructions">
+                <div class="step">2) Llena la plantilla, te explicamos cómo.</div>
+                <div class="link">
+                    <div class="title-fake-line mb-2"></div>
+                    <div class="fake-line-lg mb-2"></div>
+                    <div class="fake-line-sm mb-2"></div>
+                    <div class="fake-line-md last-line mb-2"></div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex">
+            <div class="radio-button"></div>
+            <div class="instructions">
+                <div class="step">3) Sube la plantilla con los datos de tus maestros</div>
+                <input class="d-none" #teachersCsv type="file" (change)="OnFileChanged($event)">
+                <div class="upload-container clickeable" (click)="teachersCsv.click()">
+                    <img src="assets/icons/upload.png" alt="CSV file">
+                    Subir excel de alumnos
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="btns-group mb-5">
+        <button class="btn btn-outline-primary">
+            Cancelar
+        </button>
+        <button class="btn btn-primary" (click)="nav.GoTo('home');">
+            Continuar
+        </button>
+    </div>
+</div>
+
+<div class="modal fade" bsModal #verifyTeachersDataModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
+    tabindex="-1" role="dialog" aria-labelledby="first-time-configuration">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="first-time-configuration" class="modal-title pull-left">Verifica los datos</h4>
+                <span class="close" (click)="verifyTeachersDataModal.hide(); teachersCsv.value = ''">
+                    &times;
+                </span>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Asignaturas</th>
+                            <th>Extracurricular</th>
+                            <th>Grado</th>
+                            <th>Grupo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let teacher of teachers">
+                            <th>{{teacher.name}}</th>
+                            <th>{{teacher.email}}</th>
+                            <th>{{teacher.subjects}}</th>
+                            <th>{{teacher.extracurricular == 1 ? "SI" : "NO"}}</th>
+                            <th>{{teacher.grade}}</th>
+                            <th>{{teacher.group}}</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline-primary" [disabled]="loading.uploading"
+                (click)="verifyTeachersDataModal.hide(); teachersCsv.value = ''">
+                    Cancelar
+                </button>
+                <button class="btn btn-primary" [disabled]="loading.uploading"
+                (click)="UploadTeachers()">
+                    Subir
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
