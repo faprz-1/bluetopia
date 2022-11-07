@@ -56,6 +56,7 @@ const LAYOUT_ROUTES: Routes = [
           { path: '', redirectTo: 'home', pathMatch: 'full' },
           { path: 'home', loadChildren: () => import('../pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
           { path: 'registrar-maestros', loadChildren: () => import('../pages/school-teachers/school-teachers.module').then(m => m.SchoolTeachersModule) },
+          { path: 'registrar-maestros/csv', loadChildren: () => import('../pages/teachers-csv/teachers-csv.module').then(m => m.TeachersCsvModule) },
         ]
       },
       {

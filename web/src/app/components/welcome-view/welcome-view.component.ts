@@ -19,7 +19,12 @@ export class WelcomeViewComponent implements OnInit {
   
   GoToAddTeachers() {
     const user = this.api.GetUser();
-    this.nav.GoTo(`inicio/${user.role.name.toLowerCase()}/registrar-maestros`)
+    this.nav.GoTo(`inicio/${user.role.name.toLowerCase()}/registrar-maestros`);
+  }
+
+  GoToAddTeachersByCsv() {
+    const user = this.api.GetUser();
+    this.nav.GoTo(`inicio/${user.role.name.toLowerCase()}/registrar-maestros/csv`);
   }
 
 }

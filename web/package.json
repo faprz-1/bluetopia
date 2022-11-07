@@ -24,6 +24,7 @@
     "@ng-select/ng-select": "^7.4.0",
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
+    "angular5-csv": "^0.2.11",
     "bootstrap": "^4.6.0",
     "json2csv": "^5.0.6",
     "moment": "^2.29.1",

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Papa, ParseResult } from 'ngx-papaparse';
-import { json2csv } from 'json2csv';
+import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +15,9 @@ export class CsvFileService {
 
   constructor(
     private papa: Papa
-  ) {}
+  ) { }
 
-  public ReadCSV(file_data: string): Promise<ParseResult> {
+  public ReadCSV(file_data: string | any): Promise<ParseResult> {
     const options = {
       header: true,
       skipEmptyLines: true,
@@ -33,6 +33,6 @@ export class CsvFileService {
     this.options.keys = keys;
     this.options.headers = headers;
 
-    new json2csv(data, name, this.options);  //NO REVISADO DESPUES DE MOVER A ANGULAR 9
+    return new Angular5Csv(data, name, this.options);
   }
 }
