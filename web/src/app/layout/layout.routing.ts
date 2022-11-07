@@ -5,20 +5,22 @@ import { AuthSuserGuard } from '../services/auth-suser.guard';
 
 export const ADMIN_MENU_PAGES: any = {
   'Admin': [
-    { name: 'Inicio', action: '/inicio/admin/dashboard', icon: 'zmdi zmdi-home' }
+    { name: 'Inicio', action: '/inicio/admin/dashboard', icon: 'zmdi zmdi-home' },
   ],
   'SuperUser': [
     { name: 'Registrar Usuario', action: '/inicio/super-usuario/registro', icon: 'zmdi zmdi-account-add' },
-    { name: 'Usuarios', action: '/inicio/super-usuario/usuarios', icon: 'accounts' }
+    { name: 'Usuarios', action: '/inicio/super-usuario/usuarios', icon: 'accounts' },
   ],
   'User': [
-    { name: 'Inicio', action: '/inicio/user/dashboard', icon: 'zmdi zmdi-home' }
+    { name: 'Inicio', action: '/inicio/user/dashboard', icon: 'zmdi zmdi-home' },
   ],
   'School': [
-    { name: 'Inicio', action: '/inicio/school/dashboard', icon: 'zmdi zmdi-home' }
+    { name: 'Inicio', action: '/inicio/school/home', icon: 'zmdi zmdi-home' },
+    { name: 'Maestros', action: '/inicio/school/registrar-maestros/csv', icon: 'zmdi zmdi-home' },
+    { name: 'Estudiantes', action: '/inicio/school/registrar-estudiantes/csv', icon: 'zmdi zmdi-home' },
   ],
   'Teacher': [
-    { name: 'Inicio', action: '/inicio/teacher/dashboard', icon: 'zmdi zmdi-home' }
+    { name: 'Inicio', action: '/inicio/teacher/home', icon: 'zmdi zmdi-home' },
   ]
 };
 
@@ -57,6 +59,7 @@ const LAYOUT_ROUTES: Routes = [
           { path: 'home', loadChildren: () => import('../pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
           { path: 'registrar-maestros', loadChildren: () => import('../pages/school-teachers/school-teachers.module').then(m => m.SchoolTeachersModule) },
           { path: 'registrar-maestros/csv', loadChildren: () => import('../pages/teachers-csv/teachers-csv.module').then(m => m.TeachersCsvModule) },
+          { path: 'registrar-estudiantes/csv', loadChildren: () => import('../pages/students-csv/students-csv.module').then(m => m.StudentsCsvModule) },
         ]
       },
       {

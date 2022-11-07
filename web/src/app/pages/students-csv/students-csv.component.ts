@@ -7,26 +7,30 @@ import { NavigationService } from 'src/app/services/navigation.service';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
-  selector: 'app-teachers-csv',
-  templateUrl: './teachers-csv.component.html',
-  styleUrls: ['./teachers-csv.component.scss']
+  selector: 'app-students-csv',
+  templateUrl: './students-csv.component.html',
+  styleUrls: ['./students-csv.component.scss']
 })
-export class TeachersCsvComponent implements OnInit {
+export class StudentsCsvComponent implements OnInit {
 
   @ViewChild('verifyTeachersDataModal') verifyTeachersDataModal?: ModalDirective;
 
   dataConversions: Array<any> = [
     {
-      oldKey: 'Asignaturas',
-      newKey: 'subjects'
+      oldKey: 'Nombre',
+      newKey: 'name'
     },
     {
-      oldKey: 'Correo',
-      newKey: 'email'
+      oldKey: 'Apellido P',
+      newKey: 'fatherLastname'
     },
     {
-      oldKey: 'Extracurriculares',
-      newKey: 'extracurricular'
+      oldKey: 'Apellido M',
+      newKey: 'motherLastname'
+    },
+    {
+      oldKey: 'Numero de registro',
+      newKey: 'registerNumber'
     },
     {
       oldKey: 'Grado',
@@ -36,15 +40,12 @@ export class TeachersCsvComponent implements OnInit {
       oldKey: 'Grupo',
       newKey: 'group'
     },
-    {
-      oldKey: 'Nombre',
-      newKey: 'name'
-    },
   ];
-  teachers: Array<any> = [];
+  students: Array<any> = [];
   loading: any = {
     uploading: false
   }
+  step: number = 1;
 
   constructor(
     private downloadFile: DownloadFileService,
@@ -58,7 +59,7 @@ export class TeachersCsvComponent implements OnInit {
   }
 
   DownloadTemplate() {
-    this.downloadFile.DownloadWithoutApi("assets/docs/teachersTemplate.csv", 'teachersTemplate.csv');
+    this.downloadFile.DownloadWithoutApi("assets/docs/studentsTemplate.csv", 'studentsTemplate.csv');
   }
 
   OnFileChanged(event: any): void {
@@ -67,32 +68,33 @@ export class TeachersCsvComponent implements OnInit {
     const FILE_READER = new FileReader();
     FILE_READER.onload = (reader) => {
       this.csvService.ReadCSV(FILE_READER.result).then(res => {
-        this.teachers = this.FormatData(res.data);
+        this.students = this.FormatData(res.data);
+        console.log(this.students);
+        // this.step++;
         this.verifyTeachersDataModal?.show();
       });
     };
     if(file) FILE_READER.readAsText(file, 'ISO-8859-1');
   }
-
-  FormatData(teachers: Array<any>) {
-    return teachers.map(teacher => {
-      let teacherFormatted: any = {};
+  
+  FormatData(students: Array<any>) {
+    return students.map(teacher => {
+      let studentFormatted: any = {};
       this.dataConversions.forEach(conversion => {
-        teacherFormatted[conversion.newKey] = teacher[conversion.oldKey];
+        studentFormatted[conversion.newKey] = teacher[conversion.oldKey];
       });
-      teacherFormatted.subjects = teacherFormatted.subjects.split(',').map((s: string) => s.trim());
-      return teacherFormatted;
+      return studentFormatted;
     });
   }
-
-  UploadTeachers() {
+  
+  UploadStudents() {
     this.loading.uploading = true;
-    this.api.Post(`/Teachers/Array`, {teachers: this.teachers}).subscribe(newTeachers => {
-      this.toast.ShowSuccess(`Maestros agregados correctamente: ${newTeachers.length}`);
+    this.api.Post(`/Students/Array`, {students: this.students}).subscribe((newStudents: any) => {
+      this.toast.ShowSuccess(`Maestros agregados correctamente: ${newStudents.length}`);
       this.loading.uploading = false;
       this.verifyTeachersDataModal?.hide();
     }, err => {
-      console.error("Error at uploading teachers", err);
+      console.error("Error at uploading students", err);
       this.loading.uploading = false;
     });
   }

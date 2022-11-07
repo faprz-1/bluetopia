@@ -9,10 +9,72 @@
     "name": {
       "type": "string",
       "required": true
+    },
+    "fatherLastname": {
+      "type": "string",
+      "required": true
+    },
+    "motherLastname": {
+      "type": "string",
+      "required": true
+    },
+    "registerNumber": {
+      "type": "string",
+      "required": true
+    },
+    "grade": {
+      "type": "string",
+      "required": true
+    },
+    "group": {
+      "type": "string",
+      "required": true
     }
   },
   "validations": [],
   "relations": {},
-  "acls": [],
-  "methods": {}
+  "acls": [
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "School",
+      "permission": "ALLOW",
+      "property": [
+        "AddStudents"
+      ]
+    }
+  ],
+  "methods": {
+    "AddStudents": {
+      "accepts": [
+        {
+          "arg": "students",
+          "type": "array",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "newStudents",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/Array",
+          "verb": "post"
+        }
+      ]
+    }
+  }
 }
