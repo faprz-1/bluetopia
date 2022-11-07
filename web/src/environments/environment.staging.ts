@@ -1,9 +1,9 @@
 export const environment = {
   production: false,
   staging: true,
-  baseURL: "https://template.jarabeapi.com/api",
+  baseURL: "https://bluetopia.jarabeapi.com/api",
   socketURL: "https://template.jarabeapi.com",
-  host: 'http://template.jarabepruebas.com/#',
+  host: 'http://bluetopia.jarabepruebas.com/#',
 };
   
   
