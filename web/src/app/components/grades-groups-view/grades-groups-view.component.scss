@@ -2,3 +2,46 @@
     width: 100%;
     max-height: 100%;
 }
+
+.tab {
+    font-size: .75rem;
+    color: #758CA6;
+    padding: 7px 5px;
+    border: 2px solid #758CA6;
+    border-radius: 6px 6px 0 0;
+    margin-right: 12px;
+}
+
+.active {
+    border-color: #1081FB !important;
+    color: #1081FB !important;
+}
+
+.group-title {
+    text-transform: capitalize;
+    font-size: 1rem;
+    color: #1081FB;
+    text-align: left;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.group-card {
+    border: 3px solid #758CA6;
+    margin-bottom: 1rem;
+    border-radius: 12px;
+    height: 200px;
+    padding: 12px 24px;
+}
+
+.students {
+    max-height: calc(100% - 40px);
+    overflow-y: auto;
+}
+.student {
+    color: #758CA6;
+    font-size: 1rem;
+    line-height: 20px;
+    text-transform: capitalize;
+    margin-bottom: 6px;
+}

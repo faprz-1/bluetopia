@@ -62,6 +62,19 @@ export class StudentsCsvComponent implements OnInit {
     this.downloadFile.DownloadWithoutApi("assets/docs/studentsTemplate.csv", 'studentsTemplate.csv');
   }
 
+  Cancel() {
+    this.step--;
+  }
+
+  Continue() {
+    switch (this.step) {
+      case 2:
+        this.UploadStudents();
+        break;
+    }
+    this.step++;
+  }
+
   OnFileChanged(event: any): void {
     const file = event.target.files[0];
     if(!file) return;
@@ -70,8 +83,8 @@ export class StudentsCsvComponent implements OnInit {
       this.csvService.ReadCSV(FILE_READER.result).then(res => {
         this.students = this.FormatData(res.data);
         console.log(this.students);
-        // this.step++;
-        this.verifyTeachersDataModal?.show();
+        this.step++;
+        // this.verifyTeachersDataModal?.show();
       });
     };
     if(file) FILE_READER.readAsText(file, 'ISO-8859-1');

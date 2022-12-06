@@ -6,8 +6,8 @@
 export const environment = {
   production: false,
   staging: false,
-  baseURL: "http://localhost:8114/api",
-  socketURL: "http://localhost:8114",
+  baseURL: "http://localhost:8127/api",
+  socketURL: "http://localhost:8127",
   host: 'http://localhost:4200/#/',
 };
 

@@ -8,9 +8,9 @@ import { Component, Input, OnInit } from '@angular/core';
 export class GradesGroupsViewComponent implements OnInit {
 
   @Input() students: Array<any> = [];
-  @Input() gradesAndGroups: Array<any> = [];
 
   grades: Array<any> = [];
+  selectedGrade: any = null;
 
   constructor() { }
 
@@ -40,7 +40,12 @@ export class GradesGroupsViewComponent implements OnInit {
       }
     }
 
-    console.log(this.grades);
+    this.grades.sort((a: any, b: any) => {
+      if(a.key > b.key) return 1;
+      if(a.key < b.key) return -1;
+      return 0;
+    })
+    if(this.grades.length > 0) this.selectedGrade = this.grades[0];
   }
 
   ObjectToArray(object: any) {
@@ -52,6 +57,10 @@ export class GradesGroupsViewComponent implements OnInit {
       }
     }
     return array;
+  }
+
+  SelectGrade(grade: any) {
+    this.selectedGrade = grade;
   }
 
 }

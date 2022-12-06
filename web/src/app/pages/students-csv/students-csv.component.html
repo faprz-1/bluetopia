@@ -37,22 +37,13 @@
                     <div class="radio-button"></div>
                     <div class="instructions">
                         <div class="step">3) Sube la plantilla con los datos de tus alumnos</div>
-                        <input class="d-none" #studentsCsv type="file" (change)="OnFileChanged($event)">
+                        <input class="d-none" #studentsCsv type="file" accept=".csv" (change)="OnFileChanged($event)">
                         <div class="upload-container clickeable" (click)="studentsCsv.click()">
                             <img src="assets/icons/upload.png" alt="CSV file">
                             Subir excel de alumnos
                         </div>
                     </div>
                 </div>
-            </div>
-        
-            <div class="btns-group mb-5">
-                <button class="btn btn-outline-primary">
-                    Cancelar
-                </button>
-                <button class="btn btn-primary" (click)="nav.GoTo('home');">
-                    Continuar
-                </button>
             </div>
         </div>
         <div *ngSwitchCase="2">
@@ -62,56 +53,46 @@
     
             <div class="text">
                 Estos son los grados y grupos que detectamos en tu archivo de excel, revisa que todo esté en orden para poder finalizar con tu registro.
-    
+            </div>
+            <div class="text">
                 Primaria
             </div>
             <app-grades-groups-view [students]="students"></app-grades-groups-view>
         </div>
     </div>
+
+    <div class="btns-group mb-5">
+        <button class="btn btn-outline-primary" [disabled]="loading.uploading" (click)="Cancel()">
+            Cancelar
+        </button>
+        <button class="btn btn-primary" [disabled]="loading.uploading" (click)="Continue()">
+            Continuar
+        </button>
+    </div>
 </div>
 
-<div class="modal fade" bsModal #verifyTeachersDataModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
-    tabindex="-1" role="dialog" aria-labelledby="first-time-configuration">
+<div class="modal fade" bsModal #studentsAlertModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
+    tabindex="-1" role="dialog" aria-labelledby="studentsAlertModal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-                <h4 id="first-time-configuration" class="modal-title pull-left">Verifica los datos</h4>
-                <span class="close" (click)="verifyTeachersDataModal.hide()">
+            <!-- <div class="modal-header">
+                <h4 id="studentsAlertModal" class="modal-title pull-left">Verifica los datos</h4>
+                <span class="close" (click)="studentsAlertModal.hide()">
                     &times;
                 </span>
-            </div>
+            </div> -->
             <div class="modal-body">
-                <table class="table">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Apellido materno</th>
-                            <th>Apellido materno</th>
-                            <th>Registro</th>
-                            <th>Grado</th>
-                            <th>Grupo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let student of students">
-                            <th>{{student.name}}</th>
-                            <th>{{student.fatherLastname}}</th>
-                            <th>{{student.motherLastname}}</th>
-                            <th>{{student.registerNumber}}</th>
-                            <th>{{student.grade}}</th>
-                            <th>{{student.group}}</th>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="text">
+                    Ha finalizado por ahora tu registro de grupos, podrás agregar grupos más tarde
+                </div>
+                <div>
+                    <img src="assets/img/teacher-celebrating.png" alt="finished">
+                </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-outline-primary" [disabled]="loading.uploading"
-                (click)="verifyTeachersDataModal.hide()">
-                    Cancelar
-                </button>
-                <button class="btn btn-primary" [disabled]="loading.uploading"
-                (click)="UploadStudents()">
-                    Subir
+                <button class="btn btn-outline-primary"
+                (click)="studentsAlertModal.hide()">
+                    Continuar
                 </button>
             </div>
         </div>
