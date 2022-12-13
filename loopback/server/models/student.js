@@ -34,4 +34,16 @@ module.exports = function(Student) {
         });
     }
 
+    Student.GetAllOfSchool = function(schoolUserId, callback) {
+        Student.find({
+            where: {
+                schoolUserId
+            }
+        }, (err, schoolStudents) => {
+            if(err) return callback(err);
+
+            return callback(null, schoolStudents);
+        });
+    }
+
 };

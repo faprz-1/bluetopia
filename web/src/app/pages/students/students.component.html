@@ -1,0 +1,27 @@
+<div class="content">
+
+    <div class="row mb-5">
+        <div class="col-12 d-flex h-100 align-items-center justify-content-between">
+            <div class="page-title">
+                Mis estudiantes
+            </div>
+
+            <button class="btn btn-primary" (click)="nav.GoToUserRoute('registrar-estudiantes/csv')">
+                <i class="zmdi zmdi-plus-circle-o zmdi-hc-lg mr-2"></i>
+                Agregar
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12" *ngIf="students?.length; else noStudents">
+            <app-grades-groups-view [students]="students"></app-grades-groups-view>
+        </div>
+    </div>
+</div>
+
+<ng-template #noStudents>
+    <div class="col-12 text-center no-items-message">
+        No hay estudiantes registrados, registre algunos con el botón de <b>Agregar</b>
+    </div>
+</ng-template>

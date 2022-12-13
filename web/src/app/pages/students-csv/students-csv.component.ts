@@ -13,7 +13,7 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class StudentsCsvComponent implements OnInit {
 
-  @ViewChild('verifyTeachersDataModal') verifyTeachersDataModal?: ModalDirective;
+  @ViewChild('studentsAlertModal') studentsAlertModal?: ModalDirective;
 
   dataConversions: Array<any> = [
     {
@@ -79,22 +79,24 @@ export class StudentsCsvComponent implements OnInit {
     const file = event.target.files[0];
     if(!file) return;
     const FILE_READER = new FileReader();
+    const user = this.api.GetUser();
     FILE_READER.onload = (reader) => {
       this.csvService.ReadCSV(FILE_READER.result).then(res => {
         this.students = this.FormatData(res.data);
-        console.log(this.students);
+        this.students.forEach(student => {
+          student.schoolUserId = user.id;
+        });
         this.step++;
-        // this.verifyTeachersDataModal?.show();
       });
     };
     if(file) FILE_READER.readAsText(file, 'ISO-8859-1');
   }
   
   FormatData(students: Array<any>) {
-    return students.map(teacher => {
+    return students.map(student => {
       let studentFormatted: any = {};
       this.dataConversions.forEach(conversion => {
-        studentFormatted[conversion.newKey] = teacher[conversion.oldKey];
+        studentFormatted[conversion.newKey] = student[conversion.oldKey];
       });
       return studentFormatted;
     });
@@ -103,9 +105,9 @@ export class StudentsCsvComponent implements OnInit {
   UploadStudents() {
     this.loading.uploading = true;
     this.api.Post(`/Students/Array`, {students: this.students}).subscribe((newStudents: any) => {
-      this.toast.ShowSuccess(`Maestros agregados correctamente: ${newStudents.length}`);
+      this.toast.ShowSuccess(`${newStudents.length} Estudiantes agregados correctamente`);
       this.loading.uploading = false;
-      this.verifyTeachersDataModal?.hide();
+      this.studentsAlertModal?.show();
     }, err => {
       console.error("Error at uploading students", err);
       this.loading.uploading = false;

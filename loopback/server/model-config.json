@@ -144,7 +144,8 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
-          "AddStudents": true
+          "AddStudents": true,
+          "GetAllOfSchool": true
         }
       }
     }

@@ -38,6 +38,14 @@
         "nestRemoting": true
       },
       "throughTable": "TeacherSubject"
+    },
+    "schoolUser": {
+      "type": "belongsTo",
+      "model": "Usuario",
+      "foreignKey": "schoolUserId",
+      "options": {
+        "nestRemoting": true
+      }
     }
   },
   "acls": [

@@ -79,6 +79,22 @@
       "options": {
         "nestRemoting": true
       }
+    },
+    "teachers": {
+      "type": "hasMany",
+      "model": "Teacher",
+      "foreignKey": "schoolUserId",
+      "options": {
+        "nestRemoting": true
+      }
+    },
+    "students": {
+      "type": "hasMany",
+      "model": "Student",
+      "foreignKey": "schoolUserId",
+      "options": {
+        "nestRemoting": true
+      }
     }
   },
   "acls": [
