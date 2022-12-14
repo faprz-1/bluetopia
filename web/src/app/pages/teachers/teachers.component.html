@@ -3,10 +3,10 @@
     <div class="row mb-5">
         <div class="col-12 d-flex h-100 align-items-center justify-content-between">
             <div class="page-title">
-                Mis estudiantes
+                Mis maestros
             </div>
 
-            <button class="btn btn-primary" (click)="nav.GoToUserRoute('registrar-estudiantes/csv')">
+            <button class="btn btn-primary" (click)="nav.GoToUserRoute('registrar-maestros/csv')">
                 <i class="zmdi zmdi-account-add zmdi-hc-lg mr-2"></i>
                 Agregar
             </button>
@@ -14,14 +14,13 @@
     </div>
 
     <div class="row">
-        <div class="col-12" *ngIf="students?.length; else noStudents">
-            <app-grades-groups-view [students]="students"></app-grades-groups-view>
+        <div class="col-12" *ngIf="teachers?.length; else noTeachers">
         </div>
     </div>
 </div>
 
-<ng-template #noStudents>
+<ng-template #noTeachers>
     <div class="col-12 text-center no-items-message">
-        No hay estudiantes registrados, registre algunos con el botón de <b>Agregar</b>
+        No hay maestros registrados, registre algunos con el botón de <b>Agregar</b>
     </div>
 </ng-template>

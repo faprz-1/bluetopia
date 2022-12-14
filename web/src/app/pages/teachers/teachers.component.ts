@@ -3,13 +3,13 @@ import { ApiService } from 'src/app/services/api.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
-  selector: 'app-students',
-  templateUrl: './students.component.html',
-  styleUrls: ['./students.component.scss']
+  selector: 'app-teachers',
+  templateUrl: './teachers.component.html',
+  styleUrls: ['./teachers.component.scss']
 })
-export class StudentsComponent implements OnInit {
+export class TeachersComponent implements OnInit {
 
-  students: Array<any> = [];
+  teachers: Array<any> = [];
   schoolUserId: number = 0;
 
   constructor(
@@ -20,15 +20,15 @@ export class StudentsComponent implements OnInit {
   ngOnInit(): void {
     const user = this.api.GetUser();
     this.schoolUserId = user.id;
-    this.GetSchoolStudents();
+    this.GetSchoolTeachers();
   }
 
-  GetSchoolStudents() {
-    this.api.Get(`/Students/OfSchool/${this.schoolUserId}`).subscribe(students => {
-      this.students = students;
+  GetSchoolTeachers() {
+    this.api.Get(`/Teachers/OfSchool/${this.schoolUserId}`).subscribe(teachers => {
+      this.teachers = teachers;
     }, err => {
-      console.error("Error getting the school students", err);
-    });
+      console.error("Error getting school teachers", err);
+    })
   }
 
 }

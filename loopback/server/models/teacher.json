@@ -61,7 +61,8 @@
       "principalId": "School",
       "permission": "ALLOW",
       "property": [
-        "AddTeachers"
+        "AddTeachers",
+        "GetAllOfSchool"
       ]
     }
   ],
@@ -88,6 +89,31 @@
         {
           "path": "/Array",
           "verb": "post"
+        }
+      ]
+    },
+    "GetAllOfSchool": {
+      "accepts": [
+        {
+          "arg": "schoolUserId",
+          "type": "number",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "teachers",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/OfSchool/:schoolUserId",
+          "verb": "get"
         }
       ]
     }

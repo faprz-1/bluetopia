@@ -16,11 +16,12 @@ export const ADMIN_MENU_PAGES: any = {
   ],
   'School': [
     { name: 'Inicio', action: '/inicio/school/home', icon: 'zmdi zmdi-home' },
-    { name: 'Registrar Maestros', action: '/inicio/school/registrar-maestros/csv', icon: 'zmdi zmdi-home' },
-    { name: 'Mis Estudiantes', action: '/inicio/school/mis-estudiantes', icon: 'zmdi zmdi-home' },
+    { name: 'Mis Maestros', action: '/inicio/school/mis-maestros', icon: 'zmdi zmdi-accounts' },
+    { name: 'Mis Estudiantes', action: '/inicio/school/mis-estudiantes', icon: 'zmdi zmdi-accounts' },
   ],
   'Teacher': [
     { name: 'Inicio', action: '/inicio/teacher/home', icon: 'zmdi zmdi-home' },
+    { name: 'Mis Estudiantes', action: '/inicio/teacher/mis-estudiantes', icon: 'zmdi zmdi-accounts' },
   ]
 };
 
@@ -58,9 +59,10 @@ const LAYOUT_ROUTES: Routes = [
           { path: '', redirectTo: 'home', pathMatch: 'full' },
           { path: 'home', loadChildren: () => import('../pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
           { path: 'registrar-maestros', loadChildren: () => import('../pages/school-teachers/school-teachers.module').then(m => m.SchoolTeachersModule) },
-          { path: 'registrar-maestros/csv', loadChildren: () => import('../pages/teachers-csv/teachers-csv.module').then(m => m.TeachersCsvModule) },
-          { path: 'registrar-estudiantes/csv', loadChildren: () => import('../pages/students-csv/students-csv.module').then(m => m.StudentsCsvModule) },
           { path: 'mis-estudiantes', loadChildren: () => import('../pages/students/students.module').then(m => m.StudentsModule) },
+          { path: 'registrar-estudiantes/csv', loadChildren: () => import('../pages/students-csv/students-csv.module').then(m => m.StudentsCsvModule) },
+          { path: 'mis-maestros', loadChildren: () => import('../pages/teachers/teachers.module').then(m => m.TeachersModule) },
+          { path: 'registrar-maestros/csv', loadChildren: () => import('../pages/teachers-csv/teachers-csv.module').then(m => m.TeachersCsvModule) },
         ]
       },
       {

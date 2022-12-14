@@ -132,7 +132,8 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
-          "AddTeachers": true
+          "AddTeachers": true,
+          "GetAllOfSchool": true
         }
       }
     }
