@@ -46,6 +46,15 @@
       "options": {
         "nestRemoting": true
       }
+    },
+    "groups": {
+      "type": "hasAndBelongsToMany",
+      "model": "Group",
+      "foreignKey": "teacherId",
+      "options": {
+        "nestRemoting": true
+      },
+      "throughTable": "TeacherGroup"
     }
   },
   "acls": [

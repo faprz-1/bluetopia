@@ -1,0 +1,28 @@
+{
+  "name": "Group",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "teachers": {
+      "type": "hasAndBelongsToMany",
+      "model": "Teacher",
+      "foreignKey": "groupId",
+      "options": {
+        "nestRemoting": true
+      },
+      "throughTable": "TeacherGroup"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
