@@ -188,5 +188,38 @@
   "TeacherGroup": {
     "dataSource": "mysqlDev",
     "public": false
+  },
+  "StudentGroup": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "Grade": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "Template": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
   }
 }
