@@ -15,6 +15,13 @@ export class GradesGroupsViewComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.students = this.students.map(student => {
+      if(student.hasOwnProperty('studentGroup')) {
+        student.group = !!student.studentGroup.group ? student.studentGroup.group.name : 'sin grupo';
+        student.grade = !!student.studentGroup.grade ? student.studentGroup.grade.name : 'sin grado';
+      }
+      return student;
+    });
     this.GroupStudents();
   }
 

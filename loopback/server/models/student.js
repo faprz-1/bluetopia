@@ -24,12 +24,27 @@ module.exports = function(Student) {
         if(!students) return callback(null, []);
         let cont = 0, limit = students.length, newStudents = [];
         if(!limit) return callback(null, newStudents);
-        students.forEach(student => {
-            Student.AddStudent(student, (err, newStudent) => {
-                if(err) return callback(err);
+        Student.app.models.Group.CreateBasedOnStudentsInCSV(students, (err, groups) => {
+            if(err) return callback(err);
 
-                newStudents.push(newStudent);
-                if(++cont == limit) return callback(null, newStudents);
+            Student.app.models.Grade.CreateBasedOnStudentsInCSV(students, (err, grades) => {
+                if(err) return callback(err);
+                
+                students.forEach(student => {
+                    Student.AddStudent(student, (err, newStudent) => {
+                        if(err) return callback(err);
+                        
+                        const studentGroup = {
+                            studentId: newStudent.id,
+                            gradeId: grades.find(g => g.name == student.grade) ? grades.find(g => g.name == student.grade).id : null,
+                            groupId: groups.find(g => g.name == student.group) ? groups.find(g => g.name == student.group).id : null
+                        }
+                        Student.app.models.StudentGroup.create(studentGroup, (err, newStudentGroupInstance) => {
+                            newStudents.push(newStudent);
+                            if(++cont == limit) return callback(null, newStudents);
+                        });
+                    });
+                });
             });
         });
     }
@@ -38,7 +53,8 @@ module.exports = function(Student) {
         Student.find({
             where: {
                 schoolUserId
-            }
+            },
+            include: {'studentGroup': ['group', 'grade', 'teacher']}
         }, (err, schoolStudents) => {
             if(err) return callback(err);
 

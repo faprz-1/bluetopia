@@ -13,6 +13,11 @@
       "model": "Student",
       "foreignKey": "studentId"
     },
+    "teacher": {
+      "type": "belongsTo",
+      "model": "Teacher",
+      "foreignKey": "teacherId"
+    },
     "group": {
       "type": "belongsTo",
       "model": "Group",
