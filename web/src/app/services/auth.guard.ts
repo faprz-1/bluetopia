@@ -52,7 +52,7 @@ export class AuthGuard implements CanActivate {
         if(routeHasRoleInfo)
           this.toastService.ShowError(REDIRECTING_TO_HOME_PAGE);
 
-        this.router.navigate(['login']);
+        this.router.navigate(['landing-page']);
       }
 
       return canActivate;

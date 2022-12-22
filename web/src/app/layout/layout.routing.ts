@@ -70,7 +70,7 @@ const LAYOUT_ROUTES: Routes = [
         children: [
           { path: '', redirectTo: 'home', pathMatch: 'full' },
           { path: 'home', loadChildren: () => import('../pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
-          { path: 'mis-estudiantes', loadChildren: () => import('../pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
+          { path: 'mis-estudiantes', loadChildren: () => import('../pages/teacher-students/teacher-students.module').then(m => m.TeacherStudentsModule) },
         ]
       },
     ]

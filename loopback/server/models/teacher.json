@@ -18,6 +18,9 @@
       "type": "boolean",
       "required": true,
       "default": false
+    },
+    "activationToken": {
+      "type": "string"
     }
   },
   "validations": [],
@@ -74,6 +77,15 @@
         "AddTeachers",
         "GetAllOfSchool"
       ]
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": [
+        "Activate"
+      ]
     }
   ],
   "methods": {
@@ -124,6 +136,24 @@
         {
           "path": "/OfSchool/:schoolUserId",
           "verb": "get"
+        }
+      ]
+    },
+    "prototype.Activate": {
+      "accepts": [],
+      "returns": [
+        {
+          "arg": "teacherSaved",
+          "type": "",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/Activate",
+          "verb": "patch"
         }
       ]
     }

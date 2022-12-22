@@ -95,8 +95,16 @@ module.exports = function(Teacher) {
                 email: this.email,
                 password: Math.random().toString(36).slice(-8)
             }
-            Teacher.app.models.Usuario.RegisterUser(user, null, '')
-            this.active = true;
+            Teacher.app.models.Usuario.RegisterUser(user, null, 'Teacher', (err, newTeacherUser) => {
+                if(err) return callback(err);
+                
+                this.active = true;
+                this.save((err, teacherSaved) => {
+                    if(err) return callback(err);
+
+                    return callback(null, teacherSaved);
+                });
+            });
         });
     }
 

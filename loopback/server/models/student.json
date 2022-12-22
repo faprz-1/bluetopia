@@ -55,6 +55,15 @@
         "AddStudents",
         "GetAllOfSchool"
       ]
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Teacher",
+      "permission": "ALLOW",
+      "property": [
+        "GetAllOfSchool"
+      ]
     }
   ],
   "methods": {
@@ -90,6 +99,18 @@
           "type": "number",
           "required": true,
           "description": ""
+        },
+        {
+          "arg": "grade",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "group",
+          "type": "string",
+          "required": false,
+          "description": ""
         }
       ],
       "returns": [
@@ -104,6 +125,10 @@
       "http": [
         {
           "path": "/OfSchool/:schoolUserId",
+          "verb": "get"
+        },
+        {
+          "path": "/OfSchool/:schoolUserId/Grade/:grade/Group/:group",
           "verb": "get"
         }
       ]

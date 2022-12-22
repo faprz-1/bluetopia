@@ -133,7 +133,8 @@
         "sharedMethods": {
           "*": false,
           "AddTeachers": true,
-          "GetAllOfSchool": true
+          "GetAllOfSchool": true,
+          "prototype.Activate": true
         }
       }
     }

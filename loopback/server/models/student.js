@@ -49,15 +49,20 @@ module.exports = function(Student) {
         });
     }
 
-    Student.GetAllOfSchool = function(schoolUserId, callback) {
+    Student.GetAllOfSchool = function(schoolUserId, grade = null, group = null, callback) {
         Student.find({
             where: {
                 schoolUserId
             },
-            include: {'studentGroup': ['group', 'grade', 'teacher']}
+            include: {'studentGroup': ['group', 'grade']}
         }, (err, schoolStudents) => {
             if(err) return callback(err);
 
+            schoolStudents = schoolStudents.filter(student => {
+                let match = false;
+                if(grade != null) match = student.studentGroup().grade().name == grade.toLowerCase();
+                if(group != null) match = student.studentGroup().group().name == group.toLowerCase();
+            });
             return callback(null, schoolStudents);
         });
     }

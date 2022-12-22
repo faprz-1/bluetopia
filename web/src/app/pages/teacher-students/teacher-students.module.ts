@@ -7,15 +7,15 @@ import { ControlMessagesModule } from 'src/app/components/control-messages/contr
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { GradesGroupsViewModule } from 'src/app/components/grades-groups-view/grades-groups-view.module';
 
-import { StudentsComponent } from './students.component';
+import { TeacherStudentsComponent } from './teacher-students.component';
 
 const MODULE_ROUTES = [
-  { path: '', component: StudentsComponent }
+  { path: '', component: TeacherStudentsComponent }
 ];
 
 @NgModule({
   declarations: [
-    StudentsComponent
+    TeacherStudentsComponent
   ],
   imports: [
     FormsModule,
@@ -27,6 +27,6 @@ const MODULE_ROUTES = [
     ModalModule.forRoot(),
     RouterModule.forChild(MODULE_ROUTES),
   ],
-  // exports: [StudentsComponent]
+  // exports: [TeacherStudentsComponent]
 })
-export class StudentsModule { }
+export class TeacherStudentsModule { }
