@@ -1,3 +1,76 @@
 <div class="content">
-    <p>teacher-students works!</p>
+
+    <div class="row mb-5">
+        <div class="col-12 d-flex h-100 align-items-center justify-content-between header-col">
+            <div class="page-title">
+                Mis estudiantes
+            </div>
+
+            <div class="input-container">
+                <div class="input-icon-container text-center">
+                    <img src="assets/icons/search.png">
+                </div>
+                <input class="form-control" type="text" placeholder="Buscar" (keyup.enter)="SearchStudent()">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-4 col-lg-3 col-xl-2 side-col">
+            <img class="side-image" src="assets/img/landing_page_img.png">
+            <div class="nearby-container">
+                <div class="container-title">
+                    Eventos proximos
+                </div>
+                <div class="event-row">
+                    <div class="event-name">
+                        Entrega de boletas
+                    </div>
+                    <div class="event-group">
+                        5°A
+                    </div>
+                </div>
+                <div class="event-row">
+                    <div class="event-name">
+                        Reunion de padres de familia
+                    </div>
+                    <div class="event-group">
+                        3°A
+                    </div>
+                </div>
+                <div class="event-row">
+                    <div class="event-name">
+                        Fiesta fin de curso
+                    </div>
+                    <div class="event-group">
+                        4°B
+                    </div>
+                </div>
+            </div>
+            <div class="nearby-container">
+                <div class="container-title">
+                    Eventos proximos
+                </div>
+                <div class="date-row">
+                    12/03/22
+                </div>
+                <div class="date-row">
+                    12/03/22
+                </div>
+                <div class="date-row highlight">
+                    21/01/22
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-8 col-lg-9 col-xl-10">
+            <app-grades-groups-view *ngIf="students?.length; else noStudents" [students]="students"
+            ></app-grades-groups-view>
+        </div>
+    </div>
 </div>
+
+<ng-template #noStudents>
+    <div class="text-center no-items-message">
+        No tiene estudiantes asignados, para más informacion contactar a su administrador
+    </div>
+</ng-template>

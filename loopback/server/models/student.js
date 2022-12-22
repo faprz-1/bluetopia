@@ -49,7 +49,7 @@ module.exports = function(Student) {
         });
     }
 
-    Student.GetAllOfSchool = function(schoolUserId, grade = null, group = null, callback) {
+    Student.GetAllOfSchool = function(schoolUserId, callback) {
         Student.find({
             where: {
                 schoolUserId
@@ -57,13 +57,40 @@ module.exports = function(Student) {
             include: {'studentGroup': ['group', 'grade']}
         }, (err, schoolStudents) => {
             if(err) return callback(err);
-
-            schoolStudents = schoolStudents.filter(student => {
-                let match = false;
-                if(grade != null) match = student.studentGroup().grade().name == grade.toLowerCase();
-                if(group != null) match = student.studentGroup().group().name == group.toLowerCase();
-            });
+            
             return callback(null, schoolStudents);
+        });
+    }
+    
+    Student.GetAllOfTeacher = function(teacherUserId, callback) {
+        Student.app.models.Teacher.findOne({where: {userId: teacherUserId}}, {
+            include: 'teacherGroups'
+        }, (err, teacher) => {
+            if(err) return callback(err);
+            
+            console.log(teacher.teacherGroups);
+            if(!teacher) return callback('Teacher not found!!');
+            if(!teacher.teacherGroups().length) return callback(null, []);
+            Student.app.models.StudentGroup.find({
+                where: {
+                    groupId: teacher.teacherGroups().map(tg => tg.groupId),
+                    gradeId: teacher.teacherGroups().map(tg => tg.gradeId),
+                },
+                include: 'student',
+            }, (err, studentGroups) => {
+                if(err) return callback(err);
+                
+                Student.find({
+                    where: {
+                        id: studentGroups.map(sg => sg.student().id)
+                    },
+                    include: {'studentGroup': ['group', 'grade']},
+                }, (err, students) => {
+                    if(err) return callback(err);
+
+                    return callback(null, students);
+                });
+            });
         });
     }
 

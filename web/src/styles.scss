@@ -288,3 +288,33 @@ ng-select.form-control {
     text-align: center;
     margin: 2rem 0;
 }
+
+
+// Responsivness
+// XS
+@media (max-width: 575px) {
+}
+
+// SM
+@media (min-width: 576px) and (max-width: 767px) {
+}
+
+// MD
+@media (min-width: 768px) and (max-width: 991px) {
+}
+
+// LG
+@media (min-width: 992px) and (max-width: 1199px) {
+}
+
+// XL
+@media (min-width: 1200px) {
+}
+
+// Custom
+@media (min-width: 0px) and (max-width: 767px) {
+    .header-col {
+        flex-direction: column;
+    }
+}
+

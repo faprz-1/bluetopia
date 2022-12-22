@@ -12,17 +12,7 @@
     }
   },
   "validations": [],
-  "relations": {
-    "teachers": {
-      "type": "hasAndBelongsToMany",
-      "model": "Teacher",
-      "foreignKey": "groupId",
-      "options": {
-        "nestRemoting": true
-      },
-      "throughTable": "TeacherGroup"
-    }
-  },
+  "relations": {},
   "acls": [],
   "methods": {}
 }

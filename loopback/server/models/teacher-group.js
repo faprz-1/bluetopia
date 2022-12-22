@@ -1,5 +1,5 @@
 'use strict';
 
-module.exports = function(Teachergroup) {
+module.exports = function(TeacherGroup) {
 
 };

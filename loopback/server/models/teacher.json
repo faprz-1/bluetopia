@@ -25,6 +25,14 @@
   },
   "validations": [],
   "relations": {
+    "user": {
+      "type": "belongsTo",
+      "model": "Usuario",
+      "foreignKey": "userId",
+      "options": {
+        "nestRemoting": true
+      }
+    },
     "subjects": {
       "type": "hasAndBelongsToMany",
       "model": "Subject",
@@ -42,23 +50,13 @@
         "nestRemoting": true
       }
     },
-    "groups": {
-      "type": "hasAndBelongsToMany",
-      "model": "Group",
+    "teacherGroups": {
+      "type": "hasMany",
+      "model": "TeacherGroup",
       "foreignKey": "teacherId",
       "options": {
         "nestRemoting": true
-      },
-      "throughTable": "TeacherGroup"
-    },
-    "grades": {
-      "type": "hasAndBelongsToMany",
-      "model": "Grade",
-      "foreignKey": "teacherId",
-      "options": {
-        "nestRemoting": true
-      },
-      "throughTable": "TeacherGrade"
+      }
     }
   },
   "acls": [

@@ -62,7 +62,7 @@
       "principalId": "Teacher",
       "permission": "ALLOW",
       "property": [
-        "GetAllOfSchool"
+        "GetAllOfTeacher"
       ]
     }
   ],
@@ -99,18 +99,6 @@
           "type": "number",
           "required": true,
           "description": ""
-        },
-        {
-          "arg": "grade",
-          "type": "string",
-          "required": false,
-          "description": ""
-        },
-        {
-          "arg": "group",
-          "type": "string",
-          "required": false,
-          "description": ""
         }
       ],
       "returns": [
@@ -126,9 +114,30 @@
         {
           "path": "/OfSchool/:schoolUserId",
           "verb": "get"
-        },
+        }
+      ]
+    },
+    "GetAllOfTeacher": {
+      "accepts": [
         {
-          "path": "/OfSchool/:schoolUserId/Grade/:grade/Group/:group",
+          "arg": "teacherUserId",
+          "type": "number",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "students",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/OfTeacher/:teacherUserId",
           "verb": "get"
         }
       ]

@@ -56,14 +56,22 @@ module.exports = function(Teacher) {
                         
                         const gradeId = grades.find(g => g.name == teacher.grade) ? grades.find(g => g.name == teacher.grade).id : null;
                         const groupId = groups.find(g => g.name == teacher.group) ? groups.find(g => g.name == teacher.group).id : null;
-                        newTeacher.groups.add(groupId, (err) => {
+                        const teacherGroupInstance = {
+                            teacherId: newTeacher.id,
+                            gradeId,
+                            groupId,
+                        }
+                        Teacher.app.models.TeacherGroup.findOrCreate({
+                            where: {
+                                groupId,
+                                gradeId,
+                                teacherId: newTeacher.id
+                            }
+                        }, teacherGroupInstance, (err, newTeacherGroup) => {
                             if(err) return callback(err);
-                            
-                            newTeacher.grades.add(gradeId, (err) => {
-                                if(err) return callback(err);
-                                if(++cont == limit) return callback(null, newTeachers);
-                            });
-                        });
+
+                            if(++cont == limit) return callback(null, newTeachers);
+                        })
                     });
                 });
             });
@@ -91,14 +99,17 @@ module.exports = function(Teacher) {
             
             if(!!userFound) return callback(null, this);
             const user = {
+                active: true,
                 username: this.name,
                 email: this.email,
-                password: Math.random().toString(36).slice(-8)
+                password: Math.random().toString(36).slice(-8),
+                schoolUserId: this.schoolUserId
             }
             Teacher.app.models.Usuario.RegisterUser(user, null, 'Teacher', (err, newTeacherUser) => {
                 if(err) return callback(err);
                 
                 this.active = true;
+                this.userId = newTeacherUser.id;
                 this.save((err, teacherSaved) => {
                     if(err) return callback(err);
 

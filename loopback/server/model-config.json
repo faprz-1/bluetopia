@@ -147,7 +147,8 @@
         "sharedMethods": {
           "*": false,
           "AddStudents": true,
-          "GetAllOfSchool": true
+          "GetAllOfSchool": true,
+          "GetAllOfTeacher": true
         }
       }
     }
@@ -188,7 +189,14 @@
   },
   "TeacherGroup": {
     "dataSource": "mysqlDev",
-    "public": false
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
   },
   "StudentGroup": {
     "dataSource": "mysqlDev",
@@ -222,10 +230,6 @@
         }
       }
     }
-  },
-  "TeacherGrade": {
-    "dataSource": "mysqlDev",
-    "public": false
   },
   "TemplateType": {
     "dataSource": "mysqlDev",
