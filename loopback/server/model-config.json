@@ -226,5 +226,21 @@
   "TeacherGrade": {
     "dataSource": "mysqlDev",
     "public": false
+  },
+  "TemplateType": {
+    "dataSource": "mysqlDev",
+    "public": true
+  },
+  "SepObjective": {
+    "dataSource": "mysqlDev",
+    "public": true
+  },
+  "Skill": {
+    "dataSource": "mysqlDev",
+    "public": true
+  },
+  "TemplateTopic": {
+    "dataSource": "mysqlDev",
+    "public": true
   }
 }
