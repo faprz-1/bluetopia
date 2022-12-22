@@ -242,5 +242,9 @@
   "TemplateTopic": {
     "dataSource": "mysqlDev",
     "public": true
+  },
+  "TemplateProductType": {
+    "dataSource": "mysqlDev",
+    "public": true
   }
 }
