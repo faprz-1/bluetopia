@@ -75,12 +75,14 @@ export class TeachersCsvComponent implements OnInit {
   }
 
   FormatData(teachers: Array<any>) {
+    const user = this.api.GetUser();
     return teachers.map(teacher => {
       let teacherFormatted: any = {};
       this.dataConversions.forEach(conversion => {
         teacherFormatted[conversion.newKey] = teacher[conversion.oldKey];
       });
       teacherFormatted.subjects = teacherFormatted.subjects.split(',').map((s: string) => s.trim());
+      teacherFormatted.schoolUserId = user.id;
       return teacherFormatted;
     });
   }

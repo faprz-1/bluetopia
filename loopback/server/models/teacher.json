@@ -18,14 +18,6 @@
       "type": "boolean",
       "required": true,
       "default": false
-    },
-    "grade": {
-      "type": "string",
-      "required": false
-    },
-    "group": {
-      "type": "string",
-      "required": false
     }
   },
   "validations": [],
@@ -55,6 +47,15 @@
         "nestRemoting": true
       },
       "throughTable": "TeacherGroup"
+    },
+    "grades": {
+      "type": "hasAndBelongsToMany",
+      "model": "Grade",
+      "foreignKey": "teacherId",
+      "options": {
+        "nestRemoting": true
+      },
+      "throughTable": "TeacherGrade"
     }
   },
   "acls": [

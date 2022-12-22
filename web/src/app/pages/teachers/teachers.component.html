@@ -6,15 +6,26 @@
                 Mis maestros
             </div>
 
-            <button class="btn btn-primary" (click)="nav.GoToUserRoute('registrar-maestros/csv')">
-                <i class="zmdi zmdi-account-add zmdi-hc-lg mr-2"></i>
-                Agregar
-            </button>
+            <div class="d-inline-block">
+                <button class="btn btn-primary mr-3" (click)="nav.GoToUserRoute('registrar-maestros')">
+                    <i class="zmdi zmdi-account-add zmdi-hc-lg mr-2"></i>
+                    Agregar
+                </button>
+                <button class="btn btn-primary" (click)="nav.GoToUserRoute('registrar-maestros/csv')">
+                    <i class="zmdi zmdi-account-add zmdi-hc-lg mr-2"></i>
+                    CSV
+                </button>
+            </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-12" *ngIf="teachers?.length; else noTeachers">
+    <div class="row" *ngIf="teachers?.length; else noTeachers">
+        <div class="col-12 col-sm-10 col-md-6 col-xl-4 mb-4" *ngFor="let teacher of teachers">
+            <app-teacher-card
+            class="clickeable"
+            [teacher]="teacher"
+            (click)="EditTeacher(teacher)"
+            ></app-teacher-card>
         </div>
     </div>
 </div>

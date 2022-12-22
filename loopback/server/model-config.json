@@ -221,5 +221,9 @@
         }
       }
     }
+  },
+  "TeacherGrade": {
+    "dataSource": "mysqlDev",
+    "public": false
   }
 }

@@ -16,7 +16,8 @@ export class TeacherCardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  OnDeletedPressed() {
+  OnDeletedPressed(event: any) {
+    event.stopPropagation();
     this.onDelete.emit(this.teacher);
   }
 

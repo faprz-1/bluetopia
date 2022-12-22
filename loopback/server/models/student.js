@@ -24,10 +24,10 @@ module.exports = function(Student) {
         if(!students) return callback(null, []);
         let cont = 0, limit = students.length, newStudents = [];
         if(!limit) return callback(null, newStudents);
-        Student.app.models.Group.CreateBasedOnStudentsInCSV(students, (err, groups) => {
+        Student.app.models.Group.CreateBasedOnCSV(students, (err, groups) => {
             if(err) return callback(err);
 
-            Student.app.models.Grade.CreateBasedOnStudentsInCSV(students, (err, grades) => {
+            Student.app.models.Grade.CreateBasedOnCSV(students, (err, grades) => {
                 if(err) return callback(err);
                 
                 students.forEach(student => {

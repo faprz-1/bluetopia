@@ -13,7 +13,7 @@ module.exports = function(Group) {
         });
     }
 
-    Group.CreateBasedOnStudentsInCSV = function(students, callback) {
+    Group.CreateBasedOnCSV = function(students, callback) {
         let groups = [], newGroups = [];
         students.forEach(student => {
             if(!groups.includes(student.group)) groups.push(student.group);

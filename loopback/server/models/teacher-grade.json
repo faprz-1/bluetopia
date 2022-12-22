@@ -1,0 +1,22 @@
+{
+  "name": "TeacherGrade",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "teacherId": {
+      "type": "number",
+      "required": true
+    },
+    "gradeId": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

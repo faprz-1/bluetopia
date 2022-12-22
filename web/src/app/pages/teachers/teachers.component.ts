@@ -31,4 +31,8 @@ export class TeachersComponent implements OnInit {
     })
   }
 
+  EditTeacher(teacher: any) {
+    console.log(teacher);
+  }
+
 }

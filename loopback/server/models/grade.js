@@ -13,7 +13,7 @@ module.exports = function(Grade) {
         });
     }
 
-    Grade.CreateBasedOnStudentsInCSV = function(students, callback) {
+    Grade.CreateBasedOnCSV = function(students, callback) {
         let grades = [], newGrades = [];
         students.forEach(student => {
             if(!grades.includes(student.grade)) grades.push(student.grade);

@@ -79,13 +79,9 @@ export class StudentsCsvComponent implements OnInit {
     const file = event.target.files[0];
     if(!file) return;
     const FILE_READER = new FileReader();
-    const user = this.api.GetUser();
     FILE_READER.onload = (reader) => {
       this.csvService.ReadCSV(FILE_READER.result).then(res => {
         this.students = this.FormatData(res.data);
-        this.students.forEach(student => {
-          student.schoolUserId = user.id;
-        });
         this.step++;
       });
     };
@@ -93,11 +89,13 @@ export class StudentsCsvComponent implements OnInit {
   }
   
   FormatData(students: Array<any>) {
+    const user = this.api.GetUser();
     return students.map(student => {
       let studentFormatted: any = {};
       this.dataConversions.forEach(conversion => {
         studentFormatted[conversion.newKey] = student[conversion.oldKey];
       });
+      studentFormatted.schoolUserId = user.id;
       return studentFormatted;
     });
   }
