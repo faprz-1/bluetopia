@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-grades-groups-view',
@@ -8,9 +8,17 @@ import { Component, Input, OnInit } from '@angular/core';
 export class GradesGroupsViewComponent implements OnInit {
 
   @Input() students: Array<any> = [];
+  @Input() adminControls: boolean = false;
+  @Input() teacherControls: boolean = false;
+
+  @Output() onAddGroup: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onAddGrade: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onApplyExistentStrategy: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onCreateNewStrategy: EventEmitter<any> = new EventEmitter<any>();
 
   grades: Array<any> = [];
   selectedGrade: any = null;
+  strategiesStatuses: Array<any> = [];
 
   constructor() { }
 
@@ -68,6 +76,10 @@ export class GradesGroupsViewComponent implements OnInit {
 
   SelectGrade(grade: any) {
     this.selectedGrade = grade;
+  }
+
+  AddGrade() {
+
   }
 
 }

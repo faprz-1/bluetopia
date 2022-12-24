@@ -34,4 +34,8 @@ export class TeacherStudentsComponent implements OnInit {
 
   }
 
+  CreateNewStrategy() {
+    this.nav.GoToUserRoute('plantillas');
+  }
+
 }

@@ -101,6 +101,10 @@ $success: #2ED2A3;
     cursor: pointer;
 }
 
+.text-success {
+    color: $success !important;
+}
+
 .btn-primary {
     color: white;
     background-color: $primary;
@@ -176,7 +180,9 @@ $success: #2ED2A3;
 .ng-select-container {
     border: none !important;
     background-color: #F6F7F8 !important;
-    padding-left: 40px !important;
+}
+.with-icon > .ng-select-container {
+    padding-left: 40px;
 }
 ng-select.form-control {
     border: none;

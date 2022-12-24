@@ -80,6 +80,14 @@
         "nestRemoting": true
       }
     },
+    "teacher": {
+      "type": "hasOne",
+      "model": "Teacher",
+      "foreignKey": "userId",
+      "options": {
+        "nestRemoting": true
+      }
+    },
     "teachers": {
       "type": "hasMany",
       "model": "Teacher",

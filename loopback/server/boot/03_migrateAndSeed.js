@@ -134,6 +134,43 @@ module.exports = function(app) {
     });
   }
 
+  var seedTemplateTypes = function() {
+    const templateTypes = [
+      {
+        id: 1,
+        name: "Aprendizaje basado en"
+      },
+      {
+        id: 2,
+        name: "Exeperiencias Gamificadas"
+      },
+      {
+        id: 3,
+        name: "Actividades de Aprendizaje"
+      },
+    ];
+
+    let cont = 0, limit = templateTypes.length;
+    templateTypes.forEach(templateType => {
+      app.models.TemplateType.CreateOne(templateType, (err, newTemplateType) => {
+        if(err) throw err;
+        if(++cont == limit) console.log("Template types seeded succesfully");
+      });
+    });
+  }
+
+  var seedTemplates = function() {
+    const templates = require('./../helpers/templates.json');
+    let cont = 0, limit = templates.length;
+    return;
+    templates.forEach(template => {
+      app.models.Template.CreateOne(template, (err, newTemplate) => {
+        if(err) throw err;
+        if(++cont == limit) console.log("Templates seeded succesfully");
+      });
+    });
+  }
+
   var seedUploadContainers = function(){
     var Upload = app.models.Upload;
     var containers = [
@@ -215,7 +252,9 @@ module.exports = function(app) {
   var Seeders = [
     seedRoles,
     seedUploadContainers,
-    seedSubjects
+    seedSubjects,
+    seedTemplateTypes,
+    seedTemplates,
   ]
 
   // Migrate

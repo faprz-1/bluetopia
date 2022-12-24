@@ -30,10 +30,15 @@
     border: 3px solid #758CA6;
     margin-bottom: 1rem;
     border-radius: 12px;
-    height: 200px;
+    height: 350px;
     padding: 12px 24px;
+    display: flex;
 }
 
+.students-list {
+    width: 50%;
+    padding-right: 1rem;
+}
 .students {
     max-height: calc(100% - 40px);
     overflow-y: auto;
@@ -44,4 +49,33 @@
     line-height: 20px;
     text-transform: capitalize;
     margin-bottom: 6px;
+}
+
+.group-controls {
+    display: flex;
+    flex-direction: column;
+    max-width: 50%;
+    
+}
+.ng-select-container {
+    padding-left: 0px !important;
+}
+
+.add-group-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+
+.btn-add-group {
+    padding: 1rem 4rem;
+    font-size: 1.25rem;
+    font-weight: 800;
+}
+
+.btn-add-grade {
+    display: flex;
+    height: 36px;
+    align-items: center;
 }

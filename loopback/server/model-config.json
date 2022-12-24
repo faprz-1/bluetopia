@@ -226,29 +226,70 @@
     "options": {
       "remoting": {
         "sharedMethods": {
-          "*": false
+          "*": false,
+          "GetAll": true
         }
       }
     }
   },
   "TemplateType": {
     "dataSource": "mysqlDev",
-    "public": true
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "GetAll": true
+        }
+      }
+    }
   },
   "SepObjective": {
     "dataSource": "mysqlDev",
-    "public": true
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "GetAll": true
+        }
+      }
+    }
   },
   "Skill": {
     "dataSource": "mysqlDev",
-    "public": true
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "GetAll": true
+        }
+      }
+    }
   },
   "TemplateTopic": {
     "dataSource": "mysqlDev",
-    "public": true
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "GetAll": true
+        }
+      }
+    }
   },
   "TemplateProductType": {
     "dataSource": "mysqlDev",
-    "public": true
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "GetAll": true
+        }
+      }
+    }
   }
 }
