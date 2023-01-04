@@ -1,0 +1,36 @@
+{
+  "name": "TeacherGroup",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "groupId": {
+      "type": "number"
+    },
+    "teacherId": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "teacher": {
+      "type": "belongsTo",
+      "model": "Teacher",
+      "foreignKey": "teacherId"
+    },
+    "group": {
+      "type": "belongsTo",
+      "model": "Group",
+      "foreignKey": "groupId"
+    },
+    "grade": {
+      "type": "belongsTo",
+      "model": "Grade",
+      "foreignKey": "gradeId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

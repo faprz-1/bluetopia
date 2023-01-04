@@ -16,11 +16,13 @@ export const ADMIN_MENU_PAGES: any = {
   ],
   'School': [
     { name: 'Inicio', action: '/inicio/school/home', icon: 'zmdi zmdi-home' },
-    { name: 'Maestros', action: '/inicio/school/registrar-maestros/csv', icon: 'zmdi zmdi-home' },
-    { name: 'Estudiantes', action: '/inicio/school/registrar-estudiantes/csv', icon: 'zmdi zmdi-home' },
+    { name: 'Mis Maestros', action: '/inicio/school/mis-maestros', icon: 'zmdi zmdi-accounts' },
+    { name: 'Mis Estudiantes', action: '/inicio/school/mis-estudiantes', icon: 'zmdi zmdi-accounts' },
   ],
   'Teacher': [
     { name: 'Inicio', action: '/inicio/teacher/home', icon: 'zmdi zmdi-home' },
+    { name: 'Mis Estudiantes', action: '/inicio/teacher/mis-estudiantes', icon: 'zmdi zmdi-accounts' },
+    { name: 'Mis Grupos', action: '/inicio/teacher/mis-asignaturas', icon: 'zmdi zmdi-assignment' },
   ]
 };
 
@@ -58,8 +60,10 @@ const LAYOUT_ROUTES: Routes = [
           { path: '', redirectTo: 'home', pathMatch: 'full' },
           { path: 'home', loadChildren: () => import('../pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
           { path: 'registrar-maestros', loadChildren: () => import('../pages/school-teachers/school-teachers.module').then(m => m.SchoolTeachersModule) },
-          { path: 'registrar-maestros/csv', loadChildren: () => import('../pages/teachers-csv/teachers-csv.module').then(m => m.TeachersCsvModule) },
+          { path: 'mis-estudiantes', loadChildren: () => import('../pages/students/students.module').then(m => m.StudentsModule) },
           { path: 'registrar-estudiantes/csv', loadChildren: () => import('../pages/students-csv/students-csv.module').then(m => m.StudentsCsvModule) },
+          { path: 'mis-maestros', loadChildren: () => import('../pages/teachers/teachers.module').then(m => m.TeachersModule) },
+          { path: 'registrar-maestros/csv', loadChildren: () => import('../pages/teachers-csv/teachers-csv.module').then(m => m.TeachersCsvModule) },
         ]
       },
       {
@@ -67,6 +71,11 @@ const LAYOUT_ROUTES: Routes = [
         children: [
           { path: '', redirectTo: 'home', pathMatch: 'full' },
           { path: 'home', loadChildren: () => import('../pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
+          { path: 'mis-estudiantes', loadChildren: () => import('../pages/teacher-students/teacher-students.module').then(m => m.TeacherStudentsModule) },
+          { path: 'mis-asignaturas', loadChildren: () => import('../pages/teacher-subjects/teacher-subjects.module').then(m => m.TeacherSubjectsModule) },
+          { path: 'grado/:grade/grupo/:group/plantillas', loadChildren: () => import('../pages/templates/templates.module').then(m => m.TemplatesModule) },
+          { path: 'grado/:grade/grupo/:group/tipo-plantillas/:templateTypeId', loadChildren: () => import('../pages/type-templates/type-templates.module').then(m => m.TypeTemplatesModule) },
+          { path: 'grado/:grade/grupo/:group/plantillas/:templateId', loadChildren: () => import('../pages/template-form/template-form.module').then(m => m.TemplateFormModule) },
         ]
       },
     ]

@@ -2,3 +2,80 @@
     width: 100%;
     max-height: 100%;
 }
+
+.tab {
+    font-size: .75rem;
+    color: #758CA6;
+    padding: 7px 5px;
+    border: 2px solid #758CA6;
+    border-radius: 6px 6px 0 0;
+    margin-right: 12px;
+}
+
+.active {
+    border-color: #1081FB !important;
+    color: #1081FB !important;
+}
+
+.group-title {
+    text-transform: capitalize;
+    font-size: 1rem;
+    color: #1081FB;
+    text-align: left;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.group-card {
+    border: 3px solid #758CA6;
+    margin-bottom: 1rem;
+    border-radius: 12px;
+    height: 350px;
+    padding: 12px 24px;
+    display: flex;
+}
+
+.students-list {
+    width: 50%;
+    padding-right: 1rem;
+}
+.students {
+    max-height: calc(100% - 40px);
+    overflow-y: auto;
+}
+.student {
+    color: #758CA6;
+    font-size: 1rem;
+    line-height: 20px;
+    text-transform: capitalize;
+    margin-bottom: 6px;
+}
+
+.group-controls {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    
+}
+.ng-select-container {
+    padding-left: 0px !important;
+}
+
+.add-group-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+
+.btn-add-group {
+    padding: 1rem 4rem;
+    font-size: 1.25rem;
+    font-weight: 800;
+}
+
+.btn-add-grade {
+    display: flex;
+    height: 36px;
+    align-items: center;
+}

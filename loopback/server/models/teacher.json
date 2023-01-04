@@ -19,17 +19,20 @@
       "required": true,
       "default": false
     },
-    "grade": {
-      "type": "string",
-      "required": false
-    },
-    "group": {
-      "type": "string",
-      "required": false
+    "activationToken": {
+      "type": "string"
     }
   },
   "validations": [],
   "relations": {
+    "user": {
+      "type": "belongsTo",
+      "model": "Usuario",
+      "foreignKey": "userId",
+      "options": {
+        "nestRemoting": true
+      }
+    },
     "subjects": {
       "type": "hasAndBelongsToMany",
       "model": "Subject",
@@ -38,6 +41,22 @@
         "nestRemoting": true
       },
       "throughTable": "TeacherSubject"
+    },
+    "schoolUser": {
+      "type": "belongsTo",
+      "model": "Usuario",
+      "foreignKey": "schoolUserId",
+      "options": {
+        "nestRemoting": true
+      }
+    },
+    "teacherGroups": {
+      "type": "hasMany",
+      "model": "TeacherGroup",
+      "foreignKey": "teacherId",
+      "options": {
+        "nestRemoting": true
+      }
     }
   },
   "acls": [
@@ -53,7 +72,27 @@
       "principalId": "School",
       "permission": "ALLOW",
       "property": [
-        "AddTeachers"
+        "AddTeachers",
+        "GetAllOfSchool",
+        "GetSubjects"
+      ]
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Teacher",
+      "permission": "ALLOW",
+      "property": [
+        "GetSubjects"
+      ]
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": [
+        "Activate"
       ]
     }
   ],
@@ -80,6 +119,74 @@
         {
           "path": "/Array",
           "verb": "post"
+        }
+      ]
+    },
+    "GetAllOfSchool": {
+      "accepts": [
+        {
+          "arg": "schoolUserId",
+          "type": "number",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "teachers",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/OfSchool/:schoolUserId",
+          "verb": "get"
+        }
+      ]
+    },
+    "prototype.Activate": {
+      "accepts": [],
+      "returns": [
+        {
+          "arg": "teacherSaved",
+          "type": "",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/Activate",
+          "verb": "patch"
+        }
+      ]
+    },
+    "GetSubjects": {
+      "accepts": [
+        {
+          "arg": "userOrTeacherId",
+          "type": "number",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "teacher",
+          "type": "",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/:userOrTeacherId/Subjects",
+          "verb": "get"
         }
       ]
     }

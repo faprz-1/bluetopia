@@ -79,6 +79,38 @@
       "options": {
         "nestRemoting": true
       }
+    },
+    "teacher": {
+      "type": "hasOne",
+      "model": "Teacher",
+      "foreignKey": "userId",
+      "options": {
+        "nestRemoting": true
+      }
+    },
+    "teachers": {
+      "type": "hasMany",
+      "model": "Teacher",
+      "foreignKey": "schoolUserId",
+      "options": {
+        "nestRemoting": true
+      }
+    },
+    "usersTeacher": {
+      "type": "hasMany",
+      "model": "Usuario",
+      "foreignKey": "schoolUserId",
+      "options": {
+        "nestRemoting": true
+      }
+    },
+    "students": {
+      "type": "hasMany",
+      "model": "Student",
+      "foreignKey": "schoolUserId",
+      "options": {
+        "nestRemoting": true
+      }
     }
   },
   "acls": [

@@ -7,6 +7,8 @@ import { ApiService } from './api.service';
 })
 export class NavigationService {
 
+  user: any = null;
+
   constructor(
     private router: Router,
     private api: ApiService
@@ -18,10 +20,11 @@ export class NavigationService {
   }
 
   public GoToUserRoute(route: string) {
-    const user = this.api.GetUser();
-    if(user && user.role && !route.includes(user.role.name.toLowerCase())) {
+    this.user = this.api.GetUser();
+    if(!this.user) return;
+    if(this.user && this.user.role && !route.includes(this.user.role.name.toLowerCase())) {
       this.router.navigate(
-        [`/inicio/${user.role.name.toLowerCase()}${this.HasInitialSlash(route) ? '' : '/'}${route}`]
+        [`/inicio/${this.user.role.name.toLowerCase()}${this.HasInitialSlash(route) ? '' : '/'}${route}`]
         );
     }
     else {

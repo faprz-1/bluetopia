@@ -13,7 +13,7 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class StudentsCsvComponent implements OnInit {
 
-  @ViewChild('verifyTeachersDataModal') verifyTeachersDataModal?: ModalDirective;
+  @ViewChild('studentsAlertModal') studentsAlertModal?: ModalDirective;
 
   dataConversions: Array<any> = [
     {
@@ -62,6 +62,19 @@ export class StudentsCsvComponent implements OnInit {
     this.downloadFile.DownloadWithoutApi("assets/docs/studentsTemplate.csv", 'studentsTemplate.csv');
   }
 
+  Cancel() {
+    this.step--;
+  }
+
+  Continue() {
+    switch (this.step) {
+      case 2:
+        this.UploadStudents();
+        break;
+    }
+    this.step++;
+  }
+
   OnFileChanged(event: any): void {
     const file = event.target.files[0];
     if(!file) return;
@@ -69,20 +82,20 @@ export class StudentsCsvComponent implements OnInit {
     FILE_READER.onload = (reader) => {
       this.csvService.ReadCSV(FILE_READER.result).then(res => {
         this.students = this.FormatData(res.data);
-        console.log(this.students);
-        // this.step++;
-        this.verifyTeachersDataModal?.show();
+        this.step++;
       });
     };
     if(file) FILE_READER.readAsText(file, 'ISO-8859-1');
   }
   
   FormatData(students: Array<any>) {
-    return students.map(teacher => {
+    const user = this.api.GetUser();
+    return students.map(student => {
       let studentFormatted: any = {};
       this.dataConversions.forEach(conversion => {
-        studentFormatted[conversion.newKey] = teacher[conversion.oldKey];
+        studentFormatted[conversion.newKey] = student[conversion.oldKey];
       });
+      studentFormatted.schoolUserId = user.id;
       return studentFormatted;
     });
   }
@@ -90,9 +103,9 @@ export class StudentsCsvComponent implements OnInit {
   UploadStudents() {
     this.loading.uploading = true;
     this.api.Post(`/Students/Array`, {students: this.students}).subscribe((newStudents: any) => {
-      this.toast.ShowSuccess(`Maestros agregados correctamente: ${newStudents.length}`);
+      this.toast.ShowSuccess(`${newStudents.length} Estudiantes agregados correctamente`);
       this.loading.uploading = false;
-      this.verifyTeachersDataModal?.hide();
+      this.studentsAlertModal?.show();
     }, err => {
       console.error("Error at uploading students", err);
       this.loading.uploading = false;

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-grades-groups-view',
@@ -8,13 +8,28 @@ import { Component, Input, OnInit } from '@angular/core';
 export class GradesGroupsViewComponent implements OnInit {
 
   @Input() students: Array<any> = [];
-  @Input() gradesAndGroups: Array<any> = [];
+  @Input() adminControls: boolean = false;
+  @Input() teacherControls: boolean = false;
+
+  @Output() onAddGroup: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onAddGrade: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onApplyExistentStrategy: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onCreateNewStrategy: EventEmitter<any> = new EventEmitter<any>();
 
   grades: Array<any> = [];
+  selectedGrade: any = null;
+  strategiesStatuses: Array<any> = [];
 
   constructor() { }
 
   ngOnInit(): void {
+    this.students = this.students.map(student => {
+      if(student.hasOwnProperty('studentGroup')) {
+        student.group = !!student.studentGroup.group ? student.studentGroup.group.name : 'sin grupo';
+        student.grade = !!student.studentGroup.grade ? student.studentGroup.grade.name : 'sin grado';
+      }
+      return student;
+    });
     this.GroupStudents();
   }
 
@@ -40,7 +55,12 @@ export class GradesGroupsViewComponent implements OnInit {
       }
     }
 
-    console.log(this.grades);
+    this.grades.sort((a: any, b: any) => {
+      if(a.key > b.key) return 1;
+      if(a.key < b.key) return -1;
+      return 0;
+    })
+    if(this.grades.length > 0) this.selectedGrade = this.grades[0];
   }
 
   ObjectToArray(object: any) {
@@ -52,6 +72,14 @@ export class GradesGroupsViewComponent implements OnInit {
       }
     }
     return array;
+  }
+
+  SelectGrade(grade: any) {
+    this.selectedGrade = grade;
+  }
+
+  AddGrade() {
+
   }
 
 }

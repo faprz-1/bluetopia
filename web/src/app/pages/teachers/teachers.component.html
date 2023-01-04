@@ -1,0 +1,37 @@
+<div class="content">
+
+    <div class="row mb-5">
+        <div class="col-12 d-flex h-100 align-items-center justify-content-between">
+            <div class="page-title">
+                Mis maestros
+            </div>
+
+            <div class="d-inline-block">
+                <button class="btn btn-primary mr-3" (click)="nav.GoToUserRoute('registrar-maestros')">
+                    <i class="zmdi zmdi-account-add zmdi-hc-lg mr-2"></i>
+                    Agregar
+                </button>
+                <button class="btn btn-primary" (click)="nav.GoToUserRoute('registrar-maestros/csv')">
+                    <i class="zmdi zmdi-account-add zmdi-hc-lg mr-2"></i>
+                    CSV
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="teachers?.length; else noTeachers">
+        <div class="col-12 col-sm-10 col-md-6 col-xl-4 mb-4" *ngFor="let teacher of teachers">
+            <app-teacher-card
+            class="clickeable"
+            [teacher]="teacher"
+            (click)="EditTeacher(teacher)"
+            ></app-teacher-card>
+        </div>
+    </div>
+</div>
+
+<ng-template #noTeachers>
+    <div class="col-12 text-center no-items-message">
+        No hay maestros registrados, registre algunos con el botón de <b>Agregar</b>
+    </div>
+</ng-template>

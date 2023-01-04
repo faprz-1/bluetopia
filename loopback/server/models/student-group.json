@@ -1,0 +1,29 @@
+{
+  "name": "StudentGroup",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "student": {
+      "type": "belongsTo",
+      "model": "Student",
+      "foreignKey": "studentId"
+    },
+    "group": {
+      "type": "belongsTo",
+      "model": "Group",
+      "foreignKey": "groupId"
+    },
+    "grade": {
+      "type": "belongsTo",
+      "model": "Grade",
+      "foreignKey": "gradeId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

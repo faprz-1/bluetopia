@@ -1,0 +1,49 @@
+.input-container {
+    max-width: 380px;
+    margin: 0;
+}
+
+// Side section
+
+@media (min-width: 660px) and (max-width: 767px) {
+    .side-col {
+        display: flex;
+    }
+}
+
+.side-image {
+    width: 100%;
+}
+
+.nearby-container {
+    padding: 1rem 30px;
+    color: #587594;
+    font-size: .75rem;
+    font-weight: 500;
+}
+.container-title {
+    color: #26D7A4;
+    font-size: .875rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.event-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 7px;
+}
+.event-group {
+    padding: .5rem;
+}
+
+.date-row {
+    width: 100%;
+    text-align: center;
+    margin-bottom: .375rem;
+}
+.highlight {
+    color: #FBCB63;
+}

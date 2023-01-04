@@ -1,0 +1,17 @@
+<div class="slider-container" id="slider-container">
+    <div class="slider-control clickeable">
+        <img src="assets/icons/arrow-left.png" alt="arrow left">
+    </div>
+
+    <!-- Templates -->
+    <div class="template clickeable" *ngFor="let pos of posistionsToShow" (click)="OnClick(templates[pos])">
+        <img class="template-icon" src="{{'assets/icons/' + templates[pos].icon}}" alt="template-icon">
+        <div class="template-name">
+            {{templates[pos].nickname ? templates[pos].nickname : templates[pos].name}}
+        </div>
+    </div>
+
+    <div class="slider-control clickeable">
+        <img src="assets/icons/arrow-right.png" alt="arrow left">
+    </div>
+</div>

@@ -9,22 +9,21 @@ export class RoleService {
     private api: ApiService,
   ) {
   }
+  
+  GetRole() {
+    const user = this.api.GetUser();
+    if (user && user.role) {
+      return user.role.name;
+    }
+    else return "NoRole";
+  }
 
   IsUser() {
-    const user = this.api.GetUser();
-    if (user && user.role) {
-      return user.role.name == "User";
-    } else {
-      return false;
-    }
+    return this.GetRole() == "User";
+  }
+  
+  IsAdmin() {
+    return this.GetRole() == "Admin";
   }
 
-  IsAdmin() {
-    const user = this.api.GetUser();
-    if (user && user.role) {
-      return user.role.name == "Admin";
-    } else {
-      return false;
-    }
-  }
 }

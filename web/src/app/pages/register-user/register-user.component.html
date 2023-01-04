@@ -36,14 +36,14 @@
                                         <div class="input-icon-container text-center">
                                             <img src="assets/icons/mail.png">
                                         </div>
-                                        <input class="form-control" type="text" placeholder="Correo electronico" formControlName="email">
+                                        <input class="form-control" type="text" placeholder="Correo electronico" formControlName="email" (keyup.enter)="LoginUser()">
                                         <app-control-messages [control]="userForm.get('email')"></app-control-messages>
                                     </div>
                                     <div class="input-container">
                                         <div class="input-icon-container text-center">
                                             <img src="assets/icons/lock.png">
                                         </div>
-                                        <input class="form-control" type="password" placeholder="Contraseña" formControlName="password">
+                                        <input class="form-control" type="password" placeholder="Contraseña" formControlName="password" (keyup.enter)="LoginUser()">
                                         <app-control-messages [control]="userForm.get('password')"></app-control-messages>
                                     </div>
                                 </form>

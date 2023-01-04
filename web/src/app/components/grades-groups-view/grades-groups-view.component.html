@@ -1,14 +1,64 @@
 <div class="component-content">
 
     <div class="d-flex">
-        <div class="tab" *ngFor="let grade of grades">
-            Grado: {{grade.key}}
+        <ng-container *ngFor="let grade of grades">
+            <div class="tab clickeable"
+            [ngClass]="{'active': grade.key == selectedGrade?.key}"
+            (click)="SelectGrade(grade)">
+                {{grade.key}}°Grado
+            </div>
+        </ng-container>
+        <div *ngIf="adminControls" class="btn-add-grade clickeable text-success"
+        (click)="AddGrade()">
+            <i class="zmdi zmdi-plus-circle-o zmdi-hc-2x"></i>
         </div>
     </div>
 
-    <div class="row">
-        <!-- <div class="col-12" *ngFor="let groups of selectedGrade">
-            
-        </div> -->
+    <div class="row mt-3">
+        <div class="col-12 col-lg-6" *ngFor="let group of selectedGrade?.groups">
+            <div class="group-card">
+                <div class="students-list">
+                    <div class="group-title">
+                        Grupo {{group[0].group}}
+                    </div>
+                    <div class="students">
+                        <div class="student" *ngFor="let student of group; let i = index">
+                            <span class="mr-2">{{i+1}}</span> {{student.name}} {{student.fatherLastname}} {{student.motherLastname}}
+                        </div>
+                    </div>
+                </div>
+                <div class="group-controls" *ngIf="teacherControls">
+                    <div class="group-title">
+                        Estrategias
+                    </div>
+                    <div class="filters">
+                        <div class="input-container">
+                            <ng-select
+                                class="form-control"
+                                [items]="strategiesStatuses"
+                                bindLabel="name"
+                                placeholder="Filtrar por estado">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="strategies">
+
+                    </div>
+                    <div class="controls">
+                        <button class="btn btn-primary btn-block" (click)="onCreateNewStrategy.emit(group)">
+                            Crear nueva estrategia
+                        </button>
+                        <button class="btn btn-outline-primary btn-block" (click)="onApplyExistentStrategy.emit(group)">
+                            Aplicar estrategia existente
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6 add-group-col" *ngIf="adminControls">
+            <button class="btn btn-success btn-add-group">
+                Agregar grupo
+            </button>
+        </div>
     </div>
 </div>

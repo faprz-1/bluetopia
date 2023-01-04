@@ -132,7 +132,10 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
-          "AddTeachers": true
+          "AddTeachers": true,
+          "GetAllOfSchool": true,
+          "prototype.Activate": true,
+          "GetSubjects": true
         }
       }
     }
@@ -144,7 +147,9 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
-          "AddStudents": true
+          "AddStudents": true,
+          "GetAllOfSchool": true,
+          "GetAllOfTeacher": true
         }
       }
     }
@@ -168,6 +173,112 @@
       "remoting": {
         "sharedMethods": {
           "*": false
+        }
+      }
+    }
+  },
+  "Group": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "TeacherGroup": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "StudentGroup": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "Grade": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "Template": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "GetAll": true
+        }
+      }
+    }
+  },
+  "TemplateType": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "GetAll": true,
+          "GetAllWithTemplates": true,
+          "GetOne": true
+        }
+      }
+    }
+  },
+  "SepObjective": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "GetAll": true
+        }
+      }
+    }
+  },
+  "Skill": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "GetAll": true
+        }
+      }
+    }
+  },
+  "TemplateTopic": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "GetAll": true
         }
       }
     }

@@ -1,0 +1,59 @@
+<div class="content">
+    <div class="row-header">
+
+    </div>
+
+    <div class="d-flex">
+        <div class="back-section">
+            <img class="back-icon clickeable" src="assets/icons/back-arrow.png" alt="back-arrow" (click)="GoBack()">
+        </div>
+        <div class="form-section">
+            <div class="title">
+                Proyectos
+            </div>
+            <div class="subtitle">
+                4°A
+            </div>
+            <div class="text">
+                <label>Selecciona la o las asignaturas</label>
+                <div class="input-container">
+                    <ng-select
+                        class="form-control with-border"
+                        [items]="teacherSubjects"
+                        bindLabel="name"
+                        [multiple]="true"
+                        placeholder="Asignaturas"
+                        [(ngModel)]="selectedSubjects">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="subjects-forms">
+                <div class="subjects-tabs">
+                    <div class="subject-tab" *ngFor="let subject of selectedSubjects">
+                        {{subject.name}}
+                    </div>
+                </div>
+                
+                <div class="subject-form">
+                    <div class="text">
+                        <label>Selecciona los objetivos de la SEP que buscas abordar en tu estrategia</label>
+                        <div class="input-container">
+                            <ng-select
+                                class="form-control with-border"
+                                [items]="sepObjectives"
+                                bindLabel="name"
+                                placeholder="Objetivos"
+                                (change)="OnObjectiveSelected($event)">
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="controls align-bottom">
+            <button class="btn btn-primary">
+                Continuar
+            </button>
+        </div>
+    </div>
+</div>
