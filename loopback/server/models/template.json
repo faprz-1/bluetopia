@@ -6,9 +6,19 @@
     "validateUpsert": true
   },
   "properties": {
+    "id": {
+      "type": "number",
+      "id": true
+    },
     "name": {
       "type": "string",
       "required": true
+    },
+    "nickname": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "string"
     },
     "description": {
       "type": "text",
@@ -16,7 +26,16 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "type": {
+      "type": "belongsTo",
+      "model": "TemplateType",
+      "foreignKey": "templateTypeId",
+      "options": {
+        "nestRemoting": true
+      }
+    }
+  },
   "acls": [
     {
       "accessType": "EXECUTE",

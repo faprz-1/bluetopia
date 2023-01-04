@@ -1,1 +1,31 @@
-<p>type-templates works!</p>
+<div class="content">
+    <div class="title-row">
+        <div>
+            <img class="clickeable" src="assets/icons/back-arrow.png" alt="back" (click)="GoBack()">
+        </div>
+        <div class="title">
+            {{templateType?.name}}
+        </div>
+        <div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <div class="templates">
+            <div class="template clickeable" *ngFor="let template of templateType?.templates" (click)="selectedTemplate = template; OpenModal(templatePreviewModal)">
+                <img class="template-icon" src="{{'assets/icons/' + template.icon}}" alt="template-icon">
+                <div class="template-name">
+                    {{template.nickname ? template.nickname : template.name}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #templatePreviewModal>
+    <app-template-preview-modal
+        [template]="selectedTemplate"
+        (onCloseModal)="CloseModal()"
+        (onUseTemplate)="CreateStrategyBasedOnTemplate($event)"
+    ></app-template-preview-modal>
+</ng-template>

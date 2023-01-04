@@ -3,7 +3,15 @@
 module.exports = function(Template) {
 
     Template.CreateOne = function(template, callback) {
+        Template.findOrCreate({
+            where: {
+                name: {like: `%${template.name}%`}
+            }
+        }, template, (err, newTemplate) => {
+            if(err) return callback(err);
 
+            return callback(null, newTemplate);
+        });
     }
 
     Template.GetAll = function(callback) {

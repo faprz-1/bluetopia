@@ -18,4 +18,28 @@ module.exports = function(TemplateType) {
         });
     }
 
+    TemplateType.GetAll = function(callback) {
+
+    }
+
+    TemplateType.GetAllWithTemplates = function(callback) {
+        TemplateType.find({
+            include: 'templates'
+        }, (err, templateTypes) => {
+            if(err) return callback(err);
+
+            return callback(null, templateTypes);
+        });
+    }
+    
+    TemplateType.GetOne = function(templateTypeId, callback) {
+        TemplateType.findById(templateTypeId, {
+            include: 'templates'
+        }, (err, templateType) => {
+            if(err) return callback(err);
+    
+            return callback(null, templateType);
+        });
+    }
+
 };

@@ -134,7 +134,8 @@
           "*": false,
           "AddTeachers": true,
           "GetAllOfSchool": true,
-          "prototype.Activate": true
+          "prototype.Activate": true,
+          "GetSubjects": true
         }
       }
     }
@@ -239,7 +240,9 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
-          "GetAll": true
+          "GetAll": true,
+          "GetAllWithTemplates": true,
+          "GetOne": true
         }
       }
     }
@@ -269,18 +272,6 @@
     }
   },
   "TemplateTopic": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "GetAll": true
-        }
-      }
-    }
-  },
-  "TemplateProductType": {
     "dataSource": "mysqlDev",
     "public": true,
     "options": {

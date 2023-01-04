@@ -5,10 +5,29 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-12">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-9 col-xl-8 mb-5" *ngFor="let templateType of templateTypes">
+            <div class="title">
+                {{templateType.name}}
+            </div>
             <app-template-slider
+            [templates]="templateType.templates"
+            [maxTemplatesToShow]="3"
+            (onClick)="selectedTemplate = $event; OpenModal(templatePreviewModal)"
             ></app-template-slider>
+            <div class="bottom-right">
+                <button class="btn btn-outline-primary btn-widder" (click)="SeeAllTemplatesOfType(templateType)">
+                    Ver todas
+                </button>
+            </div>
         </div>
     </div>
 </div>
+
+<ng-template #templatePreviewModal>
+    <app-template-preview-modal
+        [template]="selectedTemplate"
+        (onCloseModal)="CloseModal()"
+        (onUseTemplate)="CreateStrategyBasedOnTemplate($event)"
+    ></app-template-preview-modal>
+</ng-template>

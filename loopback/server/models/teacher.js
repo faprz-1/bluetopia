@@ -119,4 +119,20 @@ module.exports = function(Teacher) {
         });
     }
 
+    Teacher.GetSubjects = function(userOrTeacherId, callback) {
+        Teacher.findOne({
+            where: {
+                or: [
+                    {userId: userOrTeacherId},
+                    {id: userOrTeacherId}
+                ]
+            },
+            include: 'subjects'
+        }, (err, teacher) => {
+            if(err) return callback(err);
+
+            return callback(null, teacher.subjects());
+        });
+    }
+
 };

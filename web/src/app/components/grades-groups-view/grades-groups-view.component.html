@@ -37,8 +37,7 @@
                                 class="form-control"
                                 [items]="strategiesStatuses"
                                 bindLabel="name"
-                                placeholder="Filtrar por estado"
-                                formControlName="subjects">
+                                placeholder="Filtrar por estado">
                             </ng-select>
                         </div>
                     </div>
@@ -46,10 +45,10 @@
 
                     </div>
                     <div class="controls">
-                        <button class="btn btn-primary btn-block" (click)="onCreateNewStrategy.emit()">
+                        <button class="btn btn-primary btn-block" (click)="onCreateNewStrategy.emit(group)">
                             Crear nueva estrategia
                         </button>
-                        <button class="btn btn-outline-primary btn-block" (click)="onApplyExistentStrategy.emit()">
+                        <button class="btn btn-outline-primary btn-block" (click)="onApplyExistentStrategy.emit(group)">
                             Aplicar estrategia existente
                         </button>
                     </div>

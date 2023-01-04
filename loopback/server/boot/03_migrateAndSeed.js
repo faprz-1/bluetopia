@@ -154,19 +154,143 @@ module.exports = function(app) {
     templateTypes.forEach(templateType => {
       app.models.TemplateType.CreateOne(templateType, (err, newTemplateType) => {
         if(err) throw err;
-        if(++cont == limit) console.log("Template types seeded succesfully");
+        if(++cont == limit) {
+          seedTemplates();
+        }
       });
     });
   }
 
   var seedTemplates = function() {
-    const templates = require('./../helpers/templates.json');
+    let templates = require('./../helpers/templates.json');
     let cont = 0, limit = templates.length;
-    return;
     templates.forEach(template => {
+      console.log(template.name);
       app.models.Template.CreateOne(template, (err, newTemplate) => {
         if(err) throw err;
         if(++cont == limit) console.log("Templates seeded succesfully");
+      });
+    });
+  }
+
+  var seedSepObjectives = function() {
+    const sepObjectives = [
+      {
+        name: "Que los alumnos puedan establecer prioridades"
+      },
+      {
+        name: "Que los alumnos puedan autoevaluerase"
+      },
+      {
+        name: "Que los alumnos puedan establecer metas"
+      },
+    ];
+
+    let cont = 0, limit = sepObjectives.length;
+    sepObjectives.forEach(sepObjective => {
+      app.models.SepObjective.CreateOne(sepObjective, (err, newSepObjective) => {
+        if(err) throw err;
+        if(++cont == limit) console.log("SEP objectives seeded");
+      });
+    });
+  }
+
+  var seedSkills = function() {
+    const skills = [
+      {
+        name: 'ADAPTABILIDAD',
+      },
+      {
+        name: 'ANÁLISIS DE PROBLEMAS',
+      },
+      {
+        name: 'ANÁLISIS NUMÉRICO',
+      },
+      {
+        name: 'ASUNCIÓN DE RIESGOS',
+      },
+      {
+        name: 'AUTOMOTIVACIÓN',
+      },
+      {
+        name: 'CAPACIDAD CRÍTICA',
+      },
+      {
+        name: 'CREATIVIDAD',
+      },
+      {
+        name: 'COMUNICACIÓN VERBAL Y NO VERBAL PERSUASIVA',
+      },
+      {
+        name: 'COMUNICACIÓN ESCRITA',
+      },
+      {
+        name: 'COMPROMISO',
+      },
+      {
+        name: 'DELEGACIÓN',
+      },
+      {
+        name: 'DECISIÓN',
+      },
+      {
+        name: 'TOLERANCIA AL ESTRÉS',
+      },
+      {
+        name: 'ESCUCHA',
+      },
+      {
+        name: 'FLEXIBILIDAD',
+      },
+      {
+        name: 'INDEPENDENCIA',
+      },
+      {
+        name: 'INTEGRIDAD',
+      },
+      {
+        name: 'IMPACTO',
+      },
+      {
+        name: 'INICIATIVA',
+      },
+      {
+        name: 'LIDERAZGO',
+      },
+      {
+        name: 'METICULOSIDAD',
+      },
+      {
+        name: 'NIVELES DE TRABAJO',
+      },
+      {
+        name: 'PLANIFICACIÓN Y ORGANIZACIÓN',
+      },
+      {
+        name: 'RESISTENCIA',
+      },
+      {
+        name: 'SENSIBILIDAD ORGANIZACIONAL',
+      },
+      {
+        name: 'SENSIBILIDAD INTERPERSONAL',
+      },
+      {
+        name: 'SOCIABILIDAD',
+      },
+      {
+        name: 'TENACIDAD',
+      },
+      {
+        name: 'TRABAJO EN EQUIPO',
+      },
+    ];
+
+    let cont = 0, limit = skills.length;
+    skills.forEach(skill => {
+      app.models.Skill.CreateOne(skill, (err, newSkill) => {
+        if(err) throw err;
+        if(++cont == limit) console.log("Skills seeded");
       });
     });
   }
@@ -254,7 +378,8 @@ module.exports = function(app) {
     seedUploadContainers,
     seedSubjects,
     seedTemplateTypes,
-    seedTemplates,
+    seedSepObjectives,
+    seedSkills
   ]
 
   // Migrate

@@ -73,7 +73,17 @@
       "permission": "ALLOW",
       "property": [
         "AddTeachers",
-        "GetAllOfSchool"
+        "GetAllOfSchool",
+        "GetSubjects"
+      ]
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Teacher",
+      "permission": "ALLOW",
+      "property": [
+        "GetSubjects"
       ]
     },
     {
@@ -152,6 +162,31 @@
         {
           "path": "/Activate",
           "verb": "patch"
+        }
+      ]
+    },
+    "GetSubjects": {
+      "accepts": [
+        {
+          "arg": "userOrTeacherId",
+          "type": "number",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "teacher",
+          "type": "",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/:userOrTeacherId/Subjects",
+          "verb": "get"
         }
       ]
     }

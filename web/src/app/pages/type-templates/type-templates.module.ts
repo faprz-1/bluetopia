@@ -5,9 +5,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlMessagesModule } from 'src/app/components/control-messages/control-messages.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { GradesGroupsViewModule } from 'src/app/components/grades-groups-view/grades-groups-view.module';
 
 import { TypeTemplatesComponent } from './type-templates.component';
+import { TemplatePreviewModalModule } from 'src/app/components/template-preview-modal/template-preview-modal.module';
 
 const MODULE_ROUTES = [
   { path: '', component: TypeTemplatesComponent }
@@ -23,8 +23,8 @@ const MODULE_ROUTES = [
     NgSelectModule,
     ReactiveFormsModule,
     ControlMessagesModule,
-    GradesGroupsViewModule,
     ModalModule.forRoot(),
+    TemplatePreviewModalModule,
     RouterModule.forChild(MODULE_ROUTES),
   ],
   // exports: [TypeTemplatesComponent]

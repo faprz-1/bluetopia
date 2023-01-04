@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <img class="clickeable top-left" src="assets/icons/back-arrow.png" alt="back" (click)="CloseModal()">
+</div>
+<div class="modal-body">
+    <div class="d-flex justify-content-around mb-4">
+        <div class="template">
+            <img class="template-icon" src="{{'assets/icons/' + template.icon}}" alt="template-icon">
+        </div>
+        <div class="d-flex justify-content-center h-100 align-items-start">
+            <img class="template-icon" src="assets/img/templates.png" alt="template-icon">
+        </div>
+    </div>
+    <p *ngFor="let text of template.description.split('\n')">
+    {{text}}
+    </p>
+</div>
+<div class="modal-footer justify-content-center">
+    <button class="btn btn-primary use-template-btn" (click)="UseTemplate()">
+        Usar plantilla
+    </button>
+</div>

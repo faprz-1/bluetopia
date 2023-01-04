@@ -1,0 +1,42 @@
+.title-row {
+    display: flex;
+    height: auto;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    margin-bottom: 0;
+}
+
+.templates {
+    justify-self: center;
+    display: flex;
+    max-width: 900px;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 2rem;
+}
+.template {
+    display: flex;
+    width: 220px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #F4F5F7;
+    padding: 27px 1rem;
+    border-radius: 6px;
+    height: 200px;
+    margin: 2rem 1rem;
+}
+.template-icon {
+    width: min-content;
+}
+.template-name {
+    margin-top: 10px;
+    color: #1081FB;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 30px;
+    text-align: center;
+}

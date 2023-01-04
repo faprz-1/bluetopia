@@ -22,6 +22,7 @@ export const ADMIN_MENU_PAGES: any = {
   'Teacher': [
     { name: 'Inicio', action: '/inicio/teacher/home', icon: 'zmdi zmdi-home' },
     { name: 'Mis Estudiantes', action: '/inicio/teacher/mis-estudiantes', icon: 'zmdi zmdi-accounts' },
+    { name: 'Mis Grupos', action: '/inicio/teacher/mis-asignaturas', icon: 'zmdi zmdi-assignment' },
   ]
 };
 
@@ -71,8 +72,10 @@ const LAYOUT_ROUTES: Routes = [
           { path: '', redirectTo: 'home', pathMatch: 'full' },
           { path: 'home', loadChildren: () => import('../pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
           { path: 'mis-estudiantes', loadChildren: () => import('../pages/teacher-students/teacher-students.module').then(m => m.TeacherStudentsModule) },
-          { path: 'plantillas', loadChildren: () => import('../pages/templates/templates.module').then(m => m.TemplatesModule) },
-          { path: 'plantillas/:templateTypeid', loadChildren: () => import('../pages/templates/templates.module').then(m => m.TemplatesModule) },
+          { path: 'mis-asignaturas', loadChildren: () => import('../pages/teacher-subjects/teacher-subjects.module').then(m => m.TeacherSubjectsModule) },
+          { path: 'grado/:grade/grupo/:group/plantillas', loadChildren: () => import('../pages/templates/templates.module').then(m => m.TemplatesModule) },
+          { path: 'grado/:grade/grupo/:group/tipo-plantillas/:templateTypeId', loadChildren: () => import('../pages/type-templates/type-templates.module').then(m => m.TypeTemplatesModule) },
+          { path: 'grado/:grade/grupo/:group/plantillas/:templateId', loadChildren: () => import('../pages/template-form/template-form.module').then(m => m.TemplateFormModule) },
         ]
       },
     ]

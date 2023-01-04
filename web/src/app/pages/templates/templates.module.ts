@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlMessagesModule } from 'src/app/components/control-messages/control-messages.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TemplateSliderModule } from 'src/app/components/template-slider/template-slider.module';
+import { TemplatePreviewModalModule } from 'src/app/components/template-preview-modal/template-preview-modal.module';
 
 import { TemplatesComponent } from './templates.component';
 
@@ -25,6 +26,7 @@ const MODULE_ROUTES = [
     TemplateSliderModule,
     ControlMessagesModule,
     ModalModule.forRoot(),
+    TemplatePreviewModalModule,
     RouterModule.forChild(MODULE_ROUTES),
   ],
   // exports: [TemplatesComponent]
