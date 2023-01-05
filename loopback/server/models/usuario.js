@@ -639,7 +639,7 @@ module.exports = function(Usuario) {
   Usuario.getAnyUsers = function(ctx, callback) {
     let filter = {
       where: {
-        or: [{roleId: 2}, {roleId: 1}],
+        // or: [{roleId: 2}, {roleId: 1}],
       },
     };
 
