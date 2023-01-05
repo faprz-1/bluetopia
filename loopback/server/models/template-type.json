@@ -8,8 +8,8 @@
   "properties": {
     "id": {
       "type": "number",
-      "required": false,
-      "id": true
+      "id": true,
+      "required": false
     },
     "name": {
       "type": "string",
