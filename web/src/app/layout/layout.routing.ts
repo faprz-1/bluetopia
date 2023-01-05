@@ -8,8 +8,8 @@ export const ADMIN_MENU_PAGES: any = {
     { name: 'Inicio', action: '/inicio/admin/dashboard', icon: 'zmdi zmdi-home' },
   ],
   'SuperUser': [
-    { name: 'Registrar Usuario', action: '/inicio/super-usuario/registro', icon: 'zmdi zmdi-account-add' },
-    { name: 'Usuarios', action: '/inicio/super-usuario/usuarios', icon: 'accounts' },
+    // { name: 'Registrar Usuario', action: '/inicio/superuser/registro', icon: 'zmdi zmdi-account-add' },
+    { name: 'Usuarios', action: '/inicio/superuser/usuarios', icon: 'accounts' },
   ],
   'User': [
     { name: 'Inicio', action: '/inicio/user/dashboard', icon: 'zmdi zmdi-home' },
@@ -50,7 +50,7 @@ const LAYOUT_ROUTES: Routes = [
         path: 'superuser', canActivate: [AuthSuserGuard], data: { role: 'SuperUser' },
         children: [
           { path: '', redirectTo: 'usuarios', pathMatch: 'full' },
-          { path: 'registro', loadChildren: () => import('../pages/register-user/register-user.module').then(m => m.RegisterUserModule) },
+          // { path: 'registro', loadChildren: () => import('../pages/register-user/register-user.module').then(m => m.RegisterUserModule) },
           { path: 'usuarios', loadChildren: () => import('../pages/super-user/users/users.module').then(m => m.UsersModule) }
         ]
       },
