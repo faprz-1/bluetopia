@@ -57,6 +57,14 @@
       "options": {
         "nestRemoting": true
       }
+    },
+    "strategies": {
+      "type": "hasMany",
+      "model": "TeacherTemplate",
+      "foreignKey": "teacherId",
+      "options": {
+        "nestRemoting": true
+      }
     }
   },
   "acls": [
