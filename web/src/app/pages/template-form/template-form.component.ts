@@ -15,10 +15,12 @@ export class TemplateFormComponent implements OnInit {
   templateId: any;
   user: any;
 
-  sepObjectives: Array<any> = [];
-  skills: Array<any> = [];
+  selectedTab: any = null;
+
   teacherSubjects: Array<any> = [];
   selectedSubjects: Array<any> = [];
+  sepObjectives: Array<any> = [];
+  skills: Array<any> = [];
 
   constructor(
     private api: ApiService,
@@ -48,27 +50,54 @@ export class TemplateFormComponent implements OnInit {
   }
 
   GetTeacherSubjects() {
-    this.api.Get(`/Teachers/${this.user ? this.user.id : 0}/Subjects`).subscribe(subjects => {
+    // this.api.Get(`/Teachers/${this.user ? this.user.id : 0}/Subjects`).subscribe(subjects => {
+    this.api.Get(`/Subjects`).subscribe(subjects => {
       this.teacherSubjects = subjects;
     }, err => {
       console.error("Error getting teacher subjects", err);
-    })
+    });
   }
 
   GetSepObjectives() {
-    this.api.Get(`/SepObjectives`).subscribe(seObjectives => {
-      this.sepObjectives = this.sepObjectives;
+    this.api.Get(`/SepObjectives`).subscribe(sepObjectives => {
+      this.sepObjectives = sepObjectives;
     }, err => {
       console.error("Error getting sep objectives", err);
     });
   }
 
   GetSkills() {
-
+    this.api.Get(`/Skills`).subscribe(skills => {
+      this.skills = skills;
+    }, err => {
+      console.error("Error getting skills", err);
+    });
   }
 
-  OnObjectiveSelected(objective: any) {
-    console.log(objective);
+  OnSelectedSubjectsChange(subjects: any) {
+    this.selectedTab = subjects[subjects.length - 1];
+  }
+
+  OnObjectiveSelected(subject: any, objective: any) {
+    if(!!objective) {
+      if(!!subject.sepObjectives && Array.isArray(subject.sepObjectives)) subject.sepObjectives.push(objective);
+      else subject.sepObjectives = [objective];
+    }
+  }
+
+  OnSkillSelected(subject: any, skill: any) {
+    if(!!skill) {
+      if(!!subject.skills && Array.isArray(subject.skills)) subject.skills.push(skill);
+      else subject.skills = [skill];
+    }
+  }
+
+  SelectTab(subject: any) {
+    this.selectedTab = subject;
+  }
+
+  CreateNewProyect() {
+    this.nav.GoToUserRoute(`grado/${this.grade}/grupo/${this.group}/plantillas/${this.templateId}/nuevo-proyecto`)
   }
 
 }

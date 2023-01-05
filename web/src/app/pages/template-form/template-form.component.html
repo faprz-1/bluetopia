@@ -3,7 +3,7 @@
 
     </div>
 
-    <div class="d-flex">
+    <div class="d-flex justify-content-between">
         <div class="back-section">
             <img class="back-icon clickeable" src="assets/icons/back-arrow.png" alt="back-arrow" (click)="GoBack()">
         </div>
@@ -11,8 +11,8 @@
             <div class="title">
                 Proyectos
             </div>
-            <div class="subtitle">
-                4°A
+            <div class="subtitle text-uppercase">
+                {{grade + "°" + group}}
             </div>
             <div class="text">
                 <label>Selecciona la o las asignaturas</label>
@@ -23,35 +23,67 @@
                         bindLabel="name"
                         [multiple]="true"
                         placeholder="Asignaturas"
+                        (change)="OnSelectedSubjectsChange($event)"
                         [(ngModel)]="selectedSubjects">
                     </ng-select>
                 </div>
             </div>
             <div class="subjects-forms">
                 <div class="subjects-tabs">
-                    <div class="subject-tab" *ngFor="let subject of selectedSubjects">
-                        {{subject.name}}
+                    <div class="subject-tab clickeable" *ngFor="let subject of selectedSubjects" (click)="SelectTab(subject)"
+                    [ngClass]="{'active-tab': subject == selectedTab}">
+                        <span class="mr-2">
+                            {{subject.name}}
+                        </span>
+                        <img class="clickeable" src="assets/icons/close-circle.png" alt="eliminar">
                     </div>
                 </div>
                 
-                <div class="subject-form">
+                <div class="subject-form mb-5" *ngFor="let subject of selectedSubjects"
+                [ngClass]="{'d-none': subject != selectedTab}">
                     <div class="text">
                         <label>Selecciona los objetivos de la SEP que buscas abordar en tu estrategia</label>
                         <div class="input-container">
                             <ng-select
+                                #objectivesSelect
                                 class="form-control with-border"
                                 [items]="sepObjectives"
                                 bindLabel="name"
                                 placeholder="Objetivos"
-                                (change)="OnObjectiveSelected($event)">
+                                (change)="OnObjectiveSelected(subject, $event); objectivesSelect.handleClearClick()">
                             </ng-select>
+                        </div>
+                        <div class="list">
+                            <div class="list-item" *ngFor="let objective of subject.sepObjectives">
+                                <span>{{objective.name}}</span>
+                                <img class="clickeable" src="assets/icons/close-circle.png" alt="close.png">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text">
+                        <label>Selecciona las competencias que buscas abordar en tu estrategia</label>
+                        <div class="input-container">
+                            <ng-select
+                                #skillsSelect
+                                class="form-control with-border"
+                                [items]="skills"
+                                bindLabel="name"
+                                placeholder="Competencias"
+                                (change)="OnSkillSelected(subject, $event); skillsSelect.handleClearClick()">
+                            </ng-select>
+                        </div>
+                        <div class="list">
+                            <div class="list-item" *ngFor="let skill of subject.skills">
+                                <span>{{skill.name}}</span>
+                                <img class="clickeable" src="assets/icons/close-circle.png" alt="close.png">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="controls align-bottom">
-            <button class="btn btn-primary">
+        <div class="controls mb-5">
+            <button class="btn btn-primary" *ngIf="selectedSubjects?.length" (click)="CreateNewProyect()">
                 Continuar
             </button>
         </div>
