@@ -97,7 +97,11 @@ export class TemplateFormComponent implements OnInit {
   }
 
   CreateNewProyect() {
-    this.nav.GoToUserRoute(`grado/${this.grade}/grupo/${this.group}/plantillas/${this.templateId}/nuevo-proyecto`)
+    this.api.Post(`TeacherTemplates`, {subjects: this.selectedSubjects}).subscribe(newProject => {
+      this.nav.GoToUserRoute(`grado/${this.grade}/grupo/${this.group}/proyetco/${newProject.id}`);
+    }, err => {
+      console.error("Error creating new project", err);
+    })
   }
 
 }
