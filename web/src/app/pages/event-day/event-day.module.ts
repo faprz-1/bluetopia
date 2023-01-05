@@ -5,28 +5,26 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlMessagesModule } from 'src/app/components/control-messages/control-messages.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { RubricModule } from 'src/app/components/rubric/rubric.module';
 
-import { TeacherTemplateFormComponent } from './teacher-template-form.component';
+import { EventDayComponent } from './event-day.component';
 
 const MODULE_ROUTES = [
-  { path: '', component: TeacherTemplateFormComponent }
+  { path: '', component: EventDayComponent }
 ];
 
 @NgModule({
   declarations: [
-    TeacherTemplateFormComponent
+    EventDayComponent
   ],
   imports: [
     FormsModule,
     CommonModule,
-    RubricModule,
     NgSelectModule,
     ReactiveFormsModule,
     ControlMessagesModule,
     ModalModule.forRoot(),
-    RouterModule.forChild(MODULE_ROUTES),
+    // RouterModule.forChild(MODULE_ROUTES),
   ],
-  // exports: [TeacherTemplateFormComponent]
+  exports: [EventDayComponent]
 })
-export class TeacherTemplateFormModule { }
+export class EventDayModule { }

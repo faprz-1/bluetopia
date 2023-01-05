@@ -28,6 +28,7 @@
     "bootstrap": "^4.6.0",
     "json2csv": "^5.0.6",
     "moment": "^2.29.1",
+    "moment-timezone": "^0.5.40",
     "ngx-bootstrap": "^6.2.0",
     "ngx-papaparse": "^5.0.0",
     "ngx-perfect-scrollbar": "^10.1.1",

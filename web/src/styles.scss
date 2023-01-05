@@ -234,12 +234,12 @@ ng-select.form-control {
     background-color: #1081FBaa;
 }
 .input-container {
-    display: flex;
+    // display: flex;
     position: relative;
     width: 100%;
     height: 46px;
     margin-bottom: 24px;
-    align-items: center;
+    // align-items: center;
 }
 .input-container input {
     padding-left: 60px;
@@ -283,6 +283,9 @@ ng-select.form-control {
     right: -15px;
     top: 2px;
 }
+.no-icon {
+    padding-left: 12px !important;
+}
 
 .with-border {
     border: 2px solid #587594 !important;
@@ -299,6 +302,26 @@ ng-select.form-control {
     font-size: 1.5rem;
     text-align: center;
     margin: 2rem 0;
+}
+
+.radio-button {
+    width: 38px;
+    height: 38px;
+    margin-right: 50px;
+    background-color: none;
+    border: 3px solid #1081FB;
+    border-radius: 38px;
+}
+
+.radio-button.checked {
+    background-color: #1081FB;
+}
+
+.row-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
 }
 
 

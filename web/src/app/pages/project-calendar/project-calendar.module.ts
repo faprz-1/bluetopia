@@ -5,28 +5,28 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlMessagesModule } from 'src/app/components/control-messages/control-messages.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { RubricModule } from 'src/app/components/rubric/rubric.module';
 
-import { TeacherTemplateFormComponent } from './teacher-template-form.component';
+import { ProjectCalendarComponent } from './project-calendar.component';
+import { EventCalendarModule } from 'src/app/components/event-calendar/event-calendar.module';
 
 const MODULE_ROUTES = [
-  { path: '', component: TeacherTemplateFormComponent }
+  { path: '', component: ProjectCalendarComponent }
 ];
 
 @NgModule({
   declarations: [
-    TeacherTemplateFormComponent
+    ProjectCalendarComponent
   ],
   imports: [
     FormsModule,
     CommonModule,
-    RubricModule,
     NgSelectModule,
     ReactiveFormsModule,
+    EventCalendarModule,
     ControlMessagesModule,
     ModalModule.forRoot(),
     RouterModule.forChild(MODULE_ROUTES),
   ],
-  // exports: [TeacherTemplateFormComponent]
+  // exports: [ProjectCalendarComponent]
 })
-export class TeacherTemplateFormModule { }
+export class ProjectCalendarModule { }

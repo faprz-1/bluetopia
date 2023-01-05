@@ -1,3 +1,242 @@
 <div class="content">
-    <p>teacher-template-form works!</p>
+    <div class="row-header">
+
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="back-section">
+            <img class="back-icon clickeable" src="assets/icons/back-arrow.png" alt="back-arrow" (click)="GoBack()">
+        </div>
+
+        <div class="steps-indicator">
+            <div class="radio-button" [ngClass]="{'checked': step >= 1}"></div>
+            <div class="radio-button" [ngClass]="{'checked': step >= 2}"></div>
+            <div class="radio-button" [ngClass]="{'checked': step >= 3}"></div>
+            <div class="radio-button" [ngClass]="{'checked': step >= 4}"></div>
+        </div>
+
+        <div class="">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="d-sm-none d-md-block col-lg-2 col-xl-1">
+        </div>
+        <div class="col">
+            <div [ngSwitch]="step">
+                <div *ngSwitchCase="1">
+                    <div class="form-section">
+                        <div class="title">
+                            Ficha de descripcion del proyecto
+                        </div>
+
+                        <form [formGroup]="projectForm">
+                            <div class="text">
+                                <label>Selecciona tu temática</label>
+                                <div class="input-container">
+                                    <ng-select
+                                        class="form-control with-border"
+                                        [items]="templateTopics"
+                                        bindLabel="name"
+                                        [multiple]="false"
+                                        placeholder="Temáticas"
+                                        formControlName="topic">
+                                    </ng-select>
+                                </div>
+                            </div>
+
+                            <div class="text">
+                                <label>Rellena los campos</label>
+                                <div class="text-small">Recuerda que tu título debe ser creativo</div>
+                                <div class="input-container">
+                                    <input class="form-control no-icon w-100" type="text" placeholder="Titulo del proyecto" formControlName="title">
+                                    <app-control-messages [control]="projectForm.get('title')"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="text">
+                                <div class="input-container">
+                                    <input class="form-control no-icon w-100" type="text" placeholder="Pregunta generadora" formControlName="generatingQuestion">
+                                    <app-control-messages [control]="projectForm.get('generatingQuestion')"></app-control-messages>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div *ngSwitchCase="2">
+                    <div class="form-section">
+                        <div class="title">
+                            Productos parciales
+                        </div>
+
+                        <form [formGroup]="projectForm">
+                            <div class="text">
+                                <label>Selecciona tu tipo de producto</label>
+                                <div class="input-container">
+                                    <ng-select
+                                        class="form-control with-border"
+                                        [items]="templateTopics"
+                                        bindLabel="name"
+                                        [multiple]="false"
+                                        placeholder="Tipos de productos"
+                                        formControlName="productType">
+                                    </ng-select>
+                                </div>
+                            </div>
+
+                            <div class="text">
+                                <div class="input-container">
+                                    <input class="form-control no-icon w-100" type="text" placeholder="Nombre" formControlName="productName">
+                                    <app-control-messages [control]="projectForm.get('productName')"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="text">
+                                <div class="input-container">
+                                    <input class="form-control no-icon w-100" type="text" placeholder="Instrucciones" formControlName="productInstructions">
+                                    <app-control-messages [control]="projectForm.get('productInstructions')"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="subtitle">
+                                Configura la rúbrica
+                            </div>
+                            <div>
+                                <app-rubric
+                                (exportRubrics)="CatchRubrics($event)"
+                                ></app-rubric>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div *ngSwitchCase="3">
+                    <div class="form-section">
+                        <div class="title">
+                            Productos finales
+                        </div>
+    
+                        <form [formGroup]="projectForm">
+                            <div class="text">
+                                <label>Selecciona tu tipo de producto</label>
+                                <div class="input-container">
+                                    <ng-select
+                                        class="form-control with-border"
+                                        [items]="templateTopics"
+                                        bindLabel="name"
+                                        [multiple]="false"
+                                        placeholder="Tipos de productos"
+                                        formControlName="productType">
+                                    </ng-select>
+                                </div>
+                            </div>
+    
+                            <div class="text">
+                                <div class="input-container">
+                                    <input class="form-control no-icon w-100" type="text" placeholder="Nombre" formControlName="productName">
+                                    <app-control-messages [control]="projectForm.get('productName')"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="text">
+                                <div class="input-container">
+                                    <input class="form-control no-icon w-100" type="text" placeholder="Instrucciones" formControlName="productInstructions">
+                                    <app-control-messages [control]="projectForm.get('productInstructions')"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="subtitle">
+                                Configura la rúbrica
+                            </div>
+                            <div>
+                                <app-rubric
+                                (exportRubrics)="CatchRubrics($event)"
+                                ></app-rubric>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div *ngSwitchCase="4">
+                    <div class="form-section">
+                        <div class="title">
+                            Evento cierre
+                        </div>
+    
+                        <form [formGroup]="projectForm">
+                            <div class="text">
+                                <label>Selecciona tu tipo de evento de cierre</label>
+                                <div class="input-container">
+                                    <ng-select
+                                        class="form-control with-border"
+                                        [items]="templateTopics"
+                                        bindLabel="name"
+                                        [multiple]="false"
+                                        placeholder="Tipos de eventos de cierre"
+                                        formControlName="productType">
+                                    </ng-select>
+                                </div>
+                            </div>
+    
+                            <div class="text">
+                                <div class="input-container">
+                                    <input class="form-control no-icon w-100" type="text" placeholder="Nombre" formControlName="productName">
+                                    <app-control-messages [control]="projectForm.get('productName')"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="text">
+                                <div class="input-container">
+                                    <input class="form-control no-icon w-100" type="text" placeholder="Instrucciones" formControlName="productInstructions">
+                                    <app-control-messages [control]="projectForm.get('productInstructions')"></app-control-messages>
+                                </div>
+                            </div>
+
+                            <div class="text">
+                                <label>Selecciona la fecha de tu evento de cierre</label>
+                                <div class="input-container">
+                                    <input class="form-control no-icon" type="date">
+                                </div>
+                            </div>
+
+                            <div class="subtitle">
+                                Configura la rúbrica
+                            </div>
+                            <div>
+                                <app-rubric
+                                (exportRubrics)="CatchRubrics($event)"
+                                ></app-rubric>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls mb-5">
+        <button class="btn btn-outline-primary mr-4">
+            Guardar
+        </button>
+        <button class="btn btn-primary" (click)="NextStep(finishModal)">
+            {{nextButtonText}}
+        </button>
+    </div>
 </div>
+
+<ng-template #finishModal>
+    <div class="modal-body">
+        <div class="text text-center mt-5">
+            Se ha creado exitosamete tu proyecto 
+        </div>
+        <div class="text-center my-3">
+            <img src="assets/img/teacher-celebrating.png" alt="finish">
+        </div>
+        <div class="text text-center">
+            ¿Quieres calendarizar tu proyecto?
+        </div>
+        <div class="text text-center">
+            Ahora asigna las actividades en las fechas correspondiente
+        </div>
+    </div>
+    <div class="modal-footer d-flex justify-content-around my-4">
+        <button class="btn btn-outline-primary" (click)="SaveProject(true)">
+            Guardar y volver
+        </button>
+        <button class="btn btn-primary" (click)="GoToProjectCalendar()">
+            Calendarizar
+        </button>
+    </div>
+</ng-template>
