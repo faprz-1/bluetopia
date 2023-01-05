@@ -317,6 +317,13 @@ ng-select.form-control {
     background-color: #1081FB;
 }
 
+.row-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+}
+
 
 // Responsivness
 // XS

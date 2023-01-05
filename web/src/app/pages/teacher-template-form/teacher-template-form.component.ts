@@ -28,7 +28,7 @@ export class TeacherTemplateFormComponent implements OnInit {
     productInstructions: new FormControl(null, [Validators.required]),
   });
 
-  step: number = 4;
+  step: number = 1;
 
   public get nextButtonText() {
     switch (this.step) {
@@ -87,6 +87,11 @@ export class TeacherTemplateFormComponent implements OnInit {
   SaveProject(exit: boolean = false) {
     this.CloseModal();
     if(exit) this.nav.GoToUserRoute('mis-estudiantes');
+  }
+
+  GoToProjectCalendar() {
+    this.CloseModal();
+    this.nav.GoToUserRoute(`grado/${this.grade}/grupo/${this.group}/plantillas/${this.templateId}/proyecto/${this.projectId}/calendario`);
   }
 
 }
