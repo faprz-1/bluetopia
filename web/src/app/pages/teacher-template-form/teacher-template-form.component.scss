@@ -1,0 +1,37 @@
+.title {
+    color: #587594;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 2.3rem;
+}
+.subtitle {
+    color: #587594;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: .75rem;
+}
+.text {
+    font-size: 1.25rem;
+    color: #587594;
+}
+.text-small {
+    font-size: 1rem;
+    margin-bottom: .75rem;
+}
+
+.steps-indicator {
+    display: flex;
+}
+.radio-button {
+    margin: 0 1.5rem;
+}
+
+.controls {
+    display: flex;
+    justify-content: end;
+}
+.btn {
+    font-size: 1.25rem;
+    font-weight: 800;
+    padding: 1rem 3rem;
+}
