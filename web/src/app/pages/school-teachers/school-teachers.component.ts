@@ -14,11 +14,11 @@ export class SchoolTeachersComponent implements OnInit {
   subjects: Array<any> = [];
   teachers: Array<any> = [];
   teacherForm: FormGroup = new FormGroup({
-    name: new FormControl('Teacher test', [Validators.required]),
-    email: new FormControl('teacher@mailinator.com', [Validators.required, Validators.email]),
-    grade: new FormControl('4', [Validators.required]),
-    group: new FormControl('A', [Validators.required]),
-    subjects: new FormControl([{id:1,name:"Español"},{id:7,name:"Matemáticas"}], [Validators.required]),
+    name: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    grade: new FormControl('', [Validators.required]),
+    group: new FormControl('', [Validators.required]),
+    subjects: new FormControl([], [Validators.required]),
     extracurricular: new FormControl(false, [Validators.required]),
   });
 
@@ -46,7 +46,9 @@ export class SchoolTeachersComponent implements OnInit {
       this.toast.ShowWarning('Llena todos los campos correctamente');
       return;
     }
-    this.teachers.push(this.teacherForm.value);
+    let teacher = this.teacherForm.value;
+    teacher.schoolUserId = this.api.GetUser().id;
+    this.teachers.push(teacher);
     this.ResetForm();
   }
 
