@@ -1,1 +1,0 @@
-(self.webpackChunktemplate_web=self.webpackChunktemplate_web||[]).push([[896],{896:(e,t,r)=>{"use strict";r.r(t),r.d(t,{RegisterUserModule:()=>u});var s=r(1116),n=r(7368);let u=(()=>{class e{}return e.\u0275fac=function(t){return new(t||e)},e.\u0275mod=n.oAB({type:e}),e.\u0275inj=n.cJS({imports:[[s.ez]]}),e})()}}]);
