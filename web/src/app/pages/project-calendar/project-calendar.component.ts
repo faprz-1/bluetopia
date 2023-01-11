@@ -17,6 +17,9 @@ export class ProjectCalendarComponent implements OnInit {
   projectId: any;
 
   modalRef: BsModalRef | null = null;
+  loading: any = {
+    params: true,
+  }
 
   constructor(
     private api: ApiService,
@@ -26,6 +29,7 @@ export class ProjectCalendarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.GetParams();
   }
 
   OpenModal(template: any) {
@@ -42,6 +46,7 @@ export class ProjectCalendarComponent implements OnInit {
       this.group = params['group'];
       this.templateId = params['templateId'];
       this.projectId = params['projectId'];
+      this.loading.params = false;
     });
   }
 

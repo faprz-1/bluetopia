@@ -23,8 +23,8 @@ const MODULE_ROUTES = [
     ReactiveFormsModule,
     ControlMessagesModule,
     ModalModule.forRoot(),
-    // RouterModule.forChild(MODULE_ROUTES),
+    RouterModule.forChild(MODULE_ROUTES),
   ],
-  exports: [EventDayComponent]
+  // exports: [EventDayComponent]
 })
 export class EventDayModule { }
