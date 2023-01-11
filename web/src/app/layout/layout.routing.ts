@@ -78,6 +78,7 @@ const LAYOUT_ROUTES: Routes = [
           { path: 'grado/:grade/grupo/:group/plantillas/:templateId', loadChildren: () => import('../pages/template-form/template-form.module').then(m => m.TemplateFormModule) },
           { path: 'grado/:grade/grupo/:group/plantillas/:templateId/proyecto/:projectId', loadChildren: () => import('../pages/teacher-template-form/teacher-template-form.module').then(m => m.TeacherTemplateFormModule) },
           { path: 'grado/:grade/grupo/:group/plantillas/:templateId/proyecto/:projectId/calendario', loadChildren: () => import('../pages/project-calendar/project-calendar.module').then(m => m.ProjectCalendarModule) },
+          { path: 'grado/:grade/grupo/:group/plantillas/:templateId/proyecto/:projectId/calendario/nuevo-evento/:eventDate', loadChildren: () => import('../pages/event-day/event-day.module').then(m => m.EventDayModule) },
         ]
       },
     ]
