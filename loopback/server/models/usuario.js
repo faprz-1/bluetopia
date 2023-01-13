@@ -135,8 +135,9 @@ module.exports = function(Usuario) {
 
     Usuario.findOne({
       where: {
-        id: id,
+        id,
       },
+      include: 'data'
     }, function(error, user) {
       if (error) return callback(error, 'Error On User');
 

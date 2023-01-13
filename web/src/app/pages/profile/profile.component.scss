@@ -9,3 +9,18 @@
 .invalid{
     color: red;
 }
+
+.data-col {
+    margin-bottom: 1rem;
+
+    label {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0px;
+    }
+    
+    .text {
+        text-transform: capitalize;
+    }
+}
+

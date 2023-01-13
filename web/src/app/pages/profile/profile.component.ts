@@ -31,8 +31,9 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.api.Get("/Usuarios/withCredentials", true).subscribe((userFromServer: any)=>{
       localStorage.setItem("user", JSON.stringify(userFromServer));
+      console.log(userFromServer);
       this.Reload();
-    })
+    });
   }
 
   Reload() {
