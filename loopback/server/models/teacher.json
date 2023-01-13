@@ -82,6 +82,7 @@
       "property": [
         "AddTeachers",
         "GetAllOfSchool",
+        "UpdateData",
         "GetSubjects"
       ]
     },
@@ -152,6 +153,31 @@
         {
           "path": "/OfSchool/:schoolUserId",
           "verb": "get"
+        }
+      ]
+    },
+    "prototype.UpdateData": {
+      "accepts": [
+        {
+          "arg": "teacher",
+          "type": "object",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "teacherSaved",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/",
+          "verb": "patch"
         }
       ]
     },

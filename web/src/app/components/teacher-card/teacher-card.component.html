@@ -21,5 +21,11 @@
             </div>
             <span *ngFor="let subject of teacher?.subjects; let l = last">{{subject.name + ( l ? "" : "," )}}</span>
         </div>
+        <div class="text-row" *ngIf="showGroups">
+            <div class="img-container">
+                <i class="zmdi zmdi-accounts-outline"></i>
+            </div>
+            <span class="text-uppercase" *ngFor="let teacherGroup of teacher?.teacherGroups; let l = last">{{teacherGroup.grade?.name + teacherGroup.group?.name + ( l ? "" : "," )}}</span>
+        </div>
     </div>
 </div>

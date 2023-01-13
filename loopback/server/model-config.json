@@ -134,6 +134,7 @@
           "*": false,
           "AddTeachers": true,
           "GetAllOfSchool": true,
+          "prototype.UpdateData": true,
           "prototype.Activate": true,
           "GetSubjects": true
         }
