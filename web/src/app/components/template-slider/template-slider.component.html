@@ -1,17 +1,18 @@
 <div class="slider-container" id="slider-container">
     <div class="slider-control clickeable">
-        <img src="assets/icons/arrow-left.png" alt="arrow left">
+        <img src="assets/icons/arrow-left.png" alt="arrow left" (click)="GoLeft()">
     </div>
 
     <!-- Templates -->
-    <div class="template clickeable" *ngFor="let pos of posistionsToShow" (click)="OnClick(templates[pos])">
-        <img class="template-icon" src="{{'assets/icons/' + templates[pos].icon}}" alt="template-icon">
+    <div class="template clickeable" *ngFor="let template of templates; let i = index"
+    [ngClass]="{'template-hide': !positionsToShow.includes(i), 'template-show': positionsToShow.includes(i)}" (click)="OnClick(template)">
+        <img class="template-icon" src="{{'assets/icons/' + template.icon}}" alt="template-icon">
         <div class="template-name">
-            {{templates[pos].nickname ? templates[pos].nickname : templates[pos].name}}
+            {{template.nickname ? template.nickname : template.name}}
         </div>
     </div>
 
     <div class="slider-control clickeable">
-        <img src="assets/icons/arrow-right.png" alt="arrow left">
+        <img src="assets/icons/arrow-right.png" alt="arrow rigth" (click)="GoRight()">
     </div>
 </div>

@@ -23,6 +23,26 @@
     "description": {
       "type": "text",
       "required": true
+    },
+    "difficulty": {
+      "type": "text",
+      "required": true
+    },
+    "estimatedClasses": {
+      "type": "text",
+      "required": true
+    },
+    "suggestedAges": {
+      "type": "text",
+      "required": true
+    },
+    "suggestedSubjects": {
+      "type": "text",
+      "required": true
+    },
+    "skillsDeveloped": {
+      "type": "text",
+      "required": true
     }
   },
   "validations": [],

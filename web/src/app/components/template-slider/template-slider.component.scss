@@ -15,11 +15,12 @@
     border-radius: 6px;
     height: 200px;
 }
-
+.template-hide {
+    display: none;
+}
 .template-icon {
     width: min-content;
 }
-
 .template-name {
     margin-top: 10px;
     color: #1081FB;

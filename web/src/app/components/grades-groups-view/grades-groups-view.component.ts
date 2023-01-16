@@ -1,15 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-grades-groups-view',
   templateUrl: './grades-groups-view.component.html',
   styleUrls: ['./grades-groups-view.component.scss']
 })
-export class GradesGroupsViewComponent implements OnInit {
+export class GradesGroupsViewComponent implements OnInit, OnDestroy {
 
   @Input() students: Array<any> = [];
   @Input() adminControls: boolean = false;
   @Input() teacherControls: boolean = false;
+  @Input() onStudentSearch: EventEmitter<any> | null = null;
 
   @Output() onAddGroup: EventEmitter<any> = new EventEmitter<any>();
   @Output() onAddGrade: EventEmitter<any> = new EventEmitter<any>();
@@ -19,6 +21,8 @@ export class GradesGroupsViewComponent implements OnInit {
   grades: Array<any> = [];
   selectedGrade: any = null;
   strategiesStatuses: Array<any> = [];
+
+  subscriptions: Array<Subscription | undefined> = [];
 
   constructor() { }
 
@@ -31,6 +35,15 @@ export class GradesGroupsViewComponent implements OnInit {
       return student;
     });
     this.GroupStudents();
+
+    const sub = this.onStudentSearch?.subscribe(student => {
+      
+    });
+    this.subscriptions.push(sub);
+  }
+
+  ngOnDestroy() {
+    while(this.subscriptions.length) this.subscriptions.pop()?.unsubscribe();
   }
 
   GroupStudents() {

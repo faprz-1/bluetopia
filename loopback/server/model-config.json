@@ -136,7 +136,7 @@
           "GetAllOfSchool": true,
           "prototype.UpdateData": true,
           "prototype.Activate": true,
-          "GetSubjects": true
+          "GetData": true
         }
       }
     }

@@ -5,7 +5,12 @@
         "nickname": "Proyectos",
         "icon": "proyect.png",
         "templateTypeId": 1,
-        "description": "Aprendizaje Basado en Proyectos, metodología activa que parte de una pregunta abierta, interesante y relevante a contestar a través de la elaboración de uno o varios productos que se presentan en un evento de cierre. Integra aprendizajes esperados de diferentes asignaturas e involucra procesos de investigación y construcción de aprendizajes.\nGrado de dificultad para planear: 4 de 5 estrellas.\nTiempo de clase estimado: De 8 clases a 42 clases\nEdades sugeridas: K-12\nAsignaturas sugeridas: Todas\nCompetencias que desarrolla especialmente: Creatividad, Colaboración, Pensamiento Crítico, Comunicación"
+        "description": "Aprendizaje Basado en Proyectos, metodología activa que parte de una pregunta abierta, interesante y relevante a contestar a través de la elaboración de uno o varios productos que se presentan en un evento de cierre. Integra aprendizajes esperados de diferentes asignaturas e involucra procesos de investigación y construcción de aprendizajes.",
+        "difficulty": "Grado de dificultad para planear: 4 de 5 estrellas.",
+        "estimatedClasses": "Tiempo de clase estimado: De 8 clases a 42 clases",
+        "suggestedAges": "Edades sugeridas: K-12",
+        "suggestedSubjects": "Asignaturas sugeridas: Todas",
+        "skillsDeveloped": "Competencias que desarrolla especialmente: Creatividad, Colaboración, Pensamiento Crítico, Comunicación"
     },
     {
         "id": 2,
@@ -13,7 +18,12 @@
         "nickname": "Problemas",
         "icon": "calculator.png",
         "templateTypeId": 1,
-        "description": "Aprendizaje Basado en Problemas, metodología activa que involucra la resolución de un problema planteado a partir de diversos aprendizajes esperados que invitan a investigar, pensar críticamente y buscar soluciones creativas. El problema debe ser suficientemente complejo para implicar procesos de investigación y construcción de aprendizajes.\nGrado de dificultad para planear: 2 de 5\nTiempo de clase estimado: De 1 a 4 clases\nEdades sugeridas: 3 -12\nAsignaturas sugeridas: Matemáticas y área de ciencias\nCompetencias que desarrolla especialmente: Creatividad, Pensamiento Crítico"
+        "description": "Aprendizaje Basado en Problemas, metodología activa que involucra la resolución de un problema planteado a partir de diversos aprendizajes esperados que invitan a investigar, pensar críticamente y buscar soluciones creativas. El problema debe ser suficientemente complejo para implicar procesos de investigación y construcción de aprendizajes.",
+        "difficulty": "Grado de dificultad para planear: 2 de 5",
+        "estimatedClasses": "Tiempo de clase estimado: De 1 a 4 clases",
+        "suggestedAges": "Edades sugeridas: 3 -12",
+        "suggestedSubjects": "Asignaturas sugeridas: Matemáticas y área de ciencias",
+        "skillsDeveloped": "Competencias que desarrolla especialmente: Creatividad, Pensamiento Crítico"
     },
     {
         "id": 3,
@@ -21,7 +31,12 @@
         "nickname": "Retos",
         "icon": "extension.png",
         "templateTypeId": 1,
-        "description": "Aprendizaje Basado en Retos, metodología activa que, en un periodo de tiempo corto, plantea un reto a resolver dentro del cual se aplican distintos aprendizajes esperados. El reto debe ser original, complejo y favorecer la creatividad.\nGrado de dificultad para planear: 3 de 5\nTiempo de clase estimado: De 1 a 4 clases\nEdades sugeridas: K-12\nAsignaturas sugeridas: Todas\nCompetencias que desarrolla especialmente: Creatividad, Colaboración, Pensamiento Crítico"
+        "description": "Aprendizaje Basado en Retos, metodología activa que, en un periodo de tiempo corto, plantea un reto a resolver dentro del cual se aplican distintos aprendizajes esperados. El reto debe ser original, complejo y favorecer la creatividad.",
+        "difficulty": "Grado de dificultad para planear: 3 de 5",
+        "estimatedClasses": "Tiempo de clase estimado: De 1 a 4 clases",
+        "suggestedAges": "Edades sugeridas: K-12",
+        "suggestedSubjects": "Asignaturas sugeridas: Todas",
+        "skillsDeveloped": "Competencias que desarrolla especialmente: Creatividad, Colaboración, Pensamiento Crítico"
     },
     {
         "id": 4,
@@ -29,7 +44,12 @@
         "nickname": "Fenómenos",
         "icon": "leaf.png",
         "templateTypeId": 1,
-        "description": "Aprendizaje Basado en Fenómenos, metodología activa que presenta un fenómeno natural o social para ser investigado, explicado, demostrado y/o experimentado. \nGrado de dificultad para planear: 2 de 5\nTiempo de clase estimado: De 2 a 8 clases\nEdades sugeridas: K-12\nAsignaturas sugeridas: Área de ciencias o área de humanidades\nCompetencias que desarrolla especialmente: Comunicación, Colaboración, Pensamiento Crítico"
+        "description": "Aprendizaje Basado en Fenómenos, metodología activa que presenta un fenómeno natural o social para ser investigado, explicado, demostrado y/o experimentado. ",
+        "difficulty": "Grado de dificultad para planear: 2 de 5",
+        "estimatedClasses": "Tiempo de clase estimado: De 2 a 8 clases",
+        "suggestedAges": "Edades sugeridas: K-12",
+        "suggestedSubjects": "Asignaturas sugeridas: Área de ciencias o área de humanidades",
+        "skillsDeveloped": "Competencias que desarrolla especialmente: Comunicación, Colaboración, Pensamiento Crítico"
     },
     {
         "id": 5,
@@ -37,7 +57,12 @@
         "nickname": "Indagación",
         "icon": "search-lg.png",
         "templateTypeId": 1,
-        "description": "Aprendizaje Basado en la Indagación, metodología activa que plantea una pregunta que invite a la investigación para darle respuesta, se formula la pregunta de forma tal que despierte la curiosidad y resulte interesante. Implica responder y generar nuevas preguntas en un ciclo que se puede ir enriqueciendo según mantenga el interés de los alumnos.\nGrado de dificultad para planear: 1 de 5 estrellas.\nTiempo de clase estimado: De 2 clases a 8 clases\nEdades sugeridas: K-12\nAsignaturas sugeridas: Todas\nCompetencias que desarrolla especialmente: Colaboración, Pensamiento Crítico, Comunicación"
+        "description": "Aprendizaje Basado en la Indagación, metodología activa que plantea una pregunta que invite a la investigación para darle respuesta, se formula la pregunta de forma tal que despierte la curiosidad y resulte interesante. Implica responder y generar nuevas preguntas en un ciclo que se puede ir enriqueciendo según mantenga el interés de los alumnos.",
+        "difficulty": "Grado de dificultad para planear: 1 de 5 estrellas.",
+        "estimatedClasses": "Tiempo de clase estimado: De 2 clases a 8 clases",
+        "suggestedAges": "Edades sugeridas: K-12",
+        "suggestedSubjects": "Asignaturas sugeridas: Todas",
+        "skillsDeveloped": "Competencias que desarrolla especialmente: Colaboración, Pensamiento Crítico, Comunicación"
     },
     {
         "id": 6,
@@ -45,7 +70,12 @@
         "nickname": null,
         "icon": "smile-face.png",
         "templateTypeId": 2,
-        "description": "Experiencia de aprendizaje siguiendo una narrativa y una mecánica de juego que implica una serie de retos para ir ganando puntos y avanzando en niveles a través de los cuales se práctica o refuerza una serie de aprendizajes.\nGrado de dificultad para planear: 5 de 5 estrellas.\nTiempo de clase estimado: De 1 clases a 16 clases\nEdades sugeridas: 3 -12\nAsignaturas sugeridas: Todas\nCompetencias que desarrolla especialmente: Colaboración, Pensamiento Crítico"
+        "description": "Experiencia de aprendizaje siguiendo una narrativa y una mecánica de juego que implica una serie de retos para ir ganando puntos y avanzando en niveles a través de los cuales se práctica o refuerza una serie de aprendizajes.",
+        "difficulty": "Grado de dificultad para planear: 5 de 5 estrellas.",
+        "estimatedClasses": "Tiempo de clase estimado: De 1 clases a 16 clases",
+        "suggestedAges": "Edades sugeridas: 3 -12",
+        "suggestedSubjects": "Asignaturas sugeridas: Todas",
+        "skillsDeveloped": "Competencias que desarrolla especialmente: Colaboración, Pensamiento Crítico"
     },
     {
         "id": 7,
@@ -53,7 +83,12 @@
         "nickname": "Aulas de Escape",
         "icon": "lock-lg.png",
         "templateTypeId": 2,
-        "description": "Experiencia de aprendizaje en un corto periodo de tiempo cronometrado para resolver una serie de retos que van arrojando pistas y así lograr abrir un candado que permita salir del aula de escape. A través de la experiencia de juego se practican o refuerzan aprendizajes específicos. \nGrado de dificultad para planear: 4 de 5 estrellas. \nTiempo de clase estimado: De 1 clase a 2 clases \nEdades sugeridas: 4 -12 \nAsignaturas sugeridas: Todas \nCompetencias que desarrolla especialmente: Colaboración, Pensamiento Crítico"
+        "description": "Experiencia de aprendizaje en un corto periodo de tiempo cronometrado para resolver una serie de retos que van arrojando pistas y así lograr abrir un candado que permita salir del aula de escape. A través de la experiencia de juego se practican o refuerzan aprendizajes específicos. ",
+        "difficulty": "Grado de dificultad para planear: 4 de 5 estrellas. ",
+        "estimatedClasses": "Tiempo de clase estimado: De 1 clase a 2 clases ",
+        "suggestedAges": "Edades sugeridas: 4 -12 ",
+        "suggestedSubjects": "Asignaturas sugeridas: Todas ",
+        "skillsDeveloped": "Competencias que desarrolla especialmente: Colaboración, Pensamiento Crítico"
     },
     {
         "id": 8,
@@ -61,7 +96,12 @@
         "nickname": "Juegos",
         "icon": "dice.png",
         "templateTypeId": 2,
-        "description": "Experiencia de aprendizaje basada en un juego adaptado para despertar la curiosidad, practicar o reforzar aprendizajes específicos.\nGrado de dificultad para planear: 3 de 5 estrellas.\nTiempo de clase estimado: 1 clase\nEdades sugeridas: K -12\nAsignaturas sugeridas: Todas\nCompetencias que desarrolla especialmente: Colaboración, Pensamiento Crítico"
+        "description": "Experiencia de aprendizaje basada en un juego adaptado para despertar la curiosidad, practicar o reforzar aprendizajes específicos.",
+        "difficulty": "Grado de dificultad para planear: 3 de 5 estrellas.",
+        "estimatedClasses": "Tiempo de clase estimado: 1 clase",
+        "suggestedAges": "Edades sugeridas: K -12",
+        "suggestedSubjects": "Asignaturas sugeridas: Todas",
+        "skillsDeveloped": "Competencias que desarrolla especialmente: Colaboración, Pensamiento Crítico"
     },
     {
         "id": 9,
@@ -69,7 +109,12 @@
         "nickname": "Visual Thinking (Instrucciones)",
         "icon": "find-in-page.png",
         "templateTypeId": 3,
-        "description": "Experiencia de aprendizaje basada en el dibujo o en una composición de imágenes para expresar aprendizajes o lograr la organización de conocimientos.\nGrado de dificultad para planear: 1 de 5 estrellas.\nTiempo de clase estimado: 1 clase\nEdades sugeridas: K - 12\nAsignaturas sugeridas: Todas\nCompetencias que desarrolla especialmente: Comunicación, Creatividad"
+        "description": "Experiencia de aprendizaje basada en el dibujo o en una composición de imágenes para expresar aprendizajes o lograr la organización de conocimientos.",
+        "difficulty": "Grado de dificultad para planear: 1 de 5 estrellas.",
+        "estimatedClasses": "Tiempo de clase estimado: 1 clase",
+        "suggestedAges": "Edades sugeridas: K - 12",
+        "suggestedSubjects": "Asignaturas sugeridas: Todas",
+        "skillsDeveloped": "Competencias que desarrolla especialmente: Comunicación, Creatividad"
     },
     {
         "id": 10,
@@ -77,7 +122,12 @@
         "nickname": null,
         "icon": "lightbulb.png",
         "templateTypeId": 3,
-        "description": "Experiencia de aprendizaje a través de rutinas de pensamiento cortas que favorecen procesos cognitivos variados.\nGrado de dificultad para planear: 1 de 5 estrellas.\nTiempo de clase estimado: 1 clase\nEdades sugeridas: K - 12\nAsignaturas sugeridas: Todas\nCompetencias que desarrolla especialmente: Comunicación, Pensamiento"
+        "description": "Experiencia de aprendizaje a través de rutinas de pensamiento cortas que favorecen procesos cognitivos variados.",
+        "difficulty": "Grado de dificultad para planear: 1 de 5 estrellas.",
+        "estimatedClasses": "Tiempo de clase estimado: 1 clase",
+        "suggestedAges": "Edades sugeridas: K - 12",
+        "suggestedSubjects": "Asignaturas sugeridas: Todas",
+        "skillsDeveloped": "Competencias que desarrolla especialmente: Comunicación, Pensamiento"
     },
     {
         "id": 11,
@@ -85,7 +135,12 @@
         "nickname": null,
         "icon": "paint.png",
         "templateTypeId": 3,
-        "description": "Experiencia de aprendizaje que implica manipular y construir con materiales variados, preferentemente reciclados o reutilizables, a través de la cual se refleja la comprensión y aprendizaje de un tema concreto.\nGrado de dificultad para planear: 2 de 5 estrellas.\nTiempo de clase estimado: De 1 clase a 3 clases.\nEdades sugeridas: K - 12\nAsignaturas sugeridas: Área de Ciencias\nCompetencias que desarrolla especialmente: Comunicación, Pensamiento Crítico, Colaboración, Creatividad"
+        "description": "Experiencia de aprendizaje que implica manipular y construir con materiales variados, preferentemente reciclados o reutilizables, a través de la cual se refleja la comprensión y aprendizaje de un tema concreto.",
+        "difficulty": "Grado de dificultad para planear: 2 de 5 estrellas.",
+        "estimatedClasses": "Tiempo de clase estimado: De 1 clase a 3 clases.",
+        "suggestedAges": "Edades sugeridas: K - 12",
+        "suggestedSubjects": "Asignaturas sugeridas: Área de Ciencias",
+        "skillsDeveloped": "Competencias que desarrolla especialmente: Comunicación, Pensamiento Crítico, Colaboración, Creatividad"
     },
     {
         "id": 12,
@@ -93,6 +148,11 @@
         "nickname": null,
         "icon": "extension.png",
         "templateTypeId": 3,
-        "description": "Experiencia de aprendizaje a través del análisis de un caso preferentemente real que se elige o redacta para favorecer el estudio profundo de hechos, problemas y el planteamiento de posibles soluciones dentro del tema de interés.\nGrado de dificultad para planear: 3 de 5 estrellas.\nTiempo de clase estimado: De 1 clase a 2 clases.\nEdades sugeridas: 5 - 12\nAsignaturas sugeridas: Área de Sociales y Humanidades\nCompetencias que desarrolla especialmente: Comunicación, Pensamiento Crítico, Colaboración, Creatividad"
+        "description": "Experiencia de aprendizaje a través del análisis de un caso preferentemente real que se elige o redacta para favorecer el estudio profundo de hechos, problemas y el planteamiento de posibles soluciones dentro del tema de interés.",
+        "difficulty": "Grado de dificultad para planear: 3 de 5 estrellas.",
+        "estimatedClasses": "Tiempo de clase estimado: De 1 clase a 2 clases.",
+        "suggestedAges": "Edades sugeridas: 5 - 12",
+        "suggestedSubjects": "Asignaturas sugeridas: Área de Sociales y Humanidades",
+        "skillsDeveloped": "Competencias que desarrolla especialmente: Comunicación, Pensamiento Crítico, Colaboración, Creatividad"
     }
 ]

@@ -50,7 +50,7 @@ export class TemplateFormComponent implements OnInit {
   }
 
   GetTeacherSubjects() {
-    // this.api.Get(`/Teachers/${this.user ? this.user.id : 0}/Subjects`).subscribe(subjects => {
+    // this.api.Get(`/Teachers/${this.user ? this.user.id : 0}/Data`).subscribe(teacher => {
     this.api.Get(`/Subjects`).subscribe(subjects => {
       this.teacherSubjects = subjects;
     }, err => {

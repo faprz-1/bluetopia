@@ -138,7 +138,7 @@ module.exports = function(Teacher) {
         });
     }
 
-    Teacher.GetSubjects = function(userOrTeacherId, callback) {
+    Teacher.GetData = function(userOrTeacherId, callback) {
         Teacher.findOne({
             where: {
                 or: [
@@ -146,11 +146,11 @@ module.exports = function(Teacher) {
                     {id: userOrTeacherId}
                 ]
             },
-            include: 'subjects'
+            include: ['subjects', {'teacherGroups': ['grade', 'group']}]
         }, (err, teacher) => {
             if(err) return callback(err);
 
-            return callback(null, teacher.subjects());
+            return callback(null, teacher);
         });
     }
 

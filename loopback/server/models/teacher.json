@@ -83,7 +83,7 @@
         "AddTeachers",
         "GetAllOfSchool",
         "UpdateData",
-        "GetSubjects"
+        "GetData"
       ]
     },
     {
@@ -92,7 +92,7 @@
       "principalId": "Teacher",
       "permission": "ALLOW",
       "property": [
-        "GetSubjects"
+        "GetData"
       ]
     },
     {
@@ -199,7 +199,7 @@
         }
       ]
     },
-    "GetSubjects": {
+    "GetData": {
       "accepts": [
         {
           "arg": "userOrTeacherId",
@@ -219,7 +219,7 @@
       "description": "",
       "http": [
         {
-          "path": "/:userOrTeacherId/Subjects",
+          "path": "/:userOrTeacherId/Data",
           "verb": "get"
         }
       ]
