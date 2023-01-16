@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { NavigationService } from 'src/app/services/navigation.service';
@@ -25,7 +25,8 @@ export class TemplateFormComponent implements OnInit {
   constructor(
     private api: ApiService,
     private activatedRoute: ActivatedRoute,
-    public nav: NavigationService
+    public nav: NavigationService,
+    private zone: NgZone
   ) { }
 
   ngOnInit(): void {
@@ -74,8 +75,11 @@ export class TemplateFormComponent implements OnInit {
     });
   }
 
-  OnSelectedSubjectsChange(subjects: any) {
-    this.selectedTab = subjects[subjects.length - 1];
+  OnSelectedSubjectsChange(subject: any) {
+    if(!!subject) {
+      this.selectedSubjects.push(subject);
+      this.selectedTab = subject;
+    }
   }
 
   OnObjectiveSelected(subject: any, objective: any) {
@@ -94,6 +98,21 @@ export class TemplateFormComponent implements OnInit {
 
   SelectTab(subject: any) {
     this.selectedTab = subject;
+  }
+
+  AreFormsValid(): boolean {
+    let isValid = true;
+    this.selectedSubjects.forEach(subject => {
+      if(!subject.sepObjectives || subject.sepObjectives.length == 0) isValid = false;
+      if(!subject.skills || subject.skills.length == 0) isValid = false;
+    });
+    return isValid;
+  }
+
+  RemoveItemFromArray(array: Array<any>, idx: number) {
+    this.zone.run(() => {
+      array.splice(idx, 1);
+    });
   }
 
   CreateNewProyect() {

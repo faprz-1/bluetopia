@@ -53,7 +53,6 @@ export class TemplateSliderComponent implements OnInit {
     for (let i = newInitialPos; i < newLastPos; i++) {
       this.positionsToShow.push(i);
     }
-    console.log(this.positionsToShow);
   }
   
   GoLeft() {
@@ -65,7 +64,6 @@ export class TemplateSliderComponent implements OnInit {
     for (let i = newInitialPos; i < newLastPos; i++) {
       this.positionsToShow.push(i);
     }
-    console.log(this.positionsToShow);
   }
 
 }
