@@ -1,0 +1,29 @@
+{
+  "name": "ParcialProduct",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "instructions": {
+      "type": "string"
+    },
+    "rubric": {
+      "type": "object"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "type": {
+      "type": "belongsTo",
+      "model": "ParcialProductType",
+      "foreignKey": "parcialProductTypeId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

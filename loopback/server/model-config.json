@@ -294,5 +294,25 @@
         }
       }
     }
+  },
+  "Strategy": {
+    "dataSource": "mysqlDev",
+    "public": true
+  },
+  "ParcialProduct": {
+    "dataSource": "mysqlDev",
+    "public": true
+  },
+  "ParcialProductType": {
+    "dataSource": "mysqlDev",
+    "public": true
+  },
+  "StrategyGroup": {
+    "dataSource": "mysqlDev",
+    "public": true
+  },
+  "TeacherStrategy": {
+    "dataSource": "mysqlDev",
+    "public": false
   }
 }

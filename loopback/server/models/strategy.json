@@ -1,0 +1,29 @@
+{
+  "name": "Strategy",
+  "plural": "Strategies",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "topic": {
+      "type": "string"
+    },
+    "generatingQuestion": {
+      "type": "string"
+    },
+    "subjects": {
+      "type": [
+        "object"
+      ]
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
