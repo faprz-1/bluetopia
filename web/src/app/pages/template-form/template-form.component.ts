@@ -16,6 +16,7 @@ export class TemplateFormComponent implements OnInit {
   user: any;
 
   selectedTab: any = null;
+  loading: boolean = false;
 
   teacherSubjects: Array<any> = [];
   selectedSubjects: Array<any> = [];
@@ -51,7 +52,6 @@ export class TemplateFormComponent implements OnInit {
   }
 
   GetTeacherSubjects() {
-    // this.api.Get(`/Teachers/${this.user ? this.user.id : 0}/Data`).subscribe(teacher => {
     this.api.Get(`/Subjects`).subscribe(subjects => {
       this.teacherSubjects = subjects;
     }, err => {
@@ -116,13 +116,19 @@ export class TemplateFormComponent implements OnInit {
   }
 
   CreateNewProyect() {
-    this.nav.GoToUserRoute(`grado/${this.grade}/grupo/${this.group}/plantillas/${this.templateId}/proyecto/${1}`);
-    return;
-    this.api.Post(`TeacherTemplates`, {subjects: this.selectedSubjects}).subscribe(newProject => {
-      this.nav.GoToUserRoute(`grado/${this.grade}/grupo/${this.group}/plantillas/${this.templateId}/proyecto/${newProject.id}`);
+    this.loading = true;
+    let strategy = {
+      subjects: this.selectedSubjects,
+      templateId: this.templateId,
+      userId: this.user.id
+    }
+    this.api.Post(`/Strategies`, {strategy}).subscribe(newStrategy => {
+      this.nav.GoToUserRoute(`grado/${this.grade}/grupo/${this.group}/plantillas/${this.templateId}/estrategias/${newStrategy.id}`);
+      this.loading = false;
     }, err => {
       console.error("Error creating new project", err);
-    })
+      this.loading = false;
+    });
   }
 
 }

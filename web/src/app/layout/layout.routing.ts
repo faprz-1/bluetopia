@@ -76,9 +76,9 @@ const LAYOUT_ROUTES: Routes = [
           { path: 'grado/:grade/grupo/:group/plantillas', loadChildren: () => import('../pages/templates/templates.module').then(m => m.TemplatesModule) },
           { path: 'grado/:grade/grupo/:group/tipo-plantillas/:templateTypeId', loadChildren: () => import('../pages/type-templates/type-templates.module').then(m => m.TypeTemplatesModule) },
           { path: 'grado/:grade/grupo/:group/plantillas/:templateId', loadChildren: () => import('../pages/template-form/template-form.module').then(m => m.TemplateFormModule) },
-          { path: 'grado/:grade/grupo/:group/plantillas/:templateId/proyecto/:projectId', loadChildren: () => import('../pages/teacher-template-form/teacher-template-form.module').then(m => m.TeacherTemplateFormModule) },
-          { path: 'grado/:grade/grupo/:group/plantillas/:templateId/proyecto/:projectId/calendario', loadChildren: () => import('../pages/project-calendar/project-calendar.module').then(m => m.ProjectCalendarModule) },
-          { path: 'grado/:grade/grupo/:group/plantillas/:templateId/proyecto/:projectId/calendario/nuevo-evento/:eventDate', loadChildren: () => import('../pages/event-day/event-day.module').then(m => m.EventDayModule) },
+          { path: 'grado/:grade/grupo/:group/plantillas/:templateId/estrategias/:strategyId', loadChildren: () => import('../pages/teacher-template-form/teacher-template-form.module').then(m => m.TeacherTemplateFormModule) },
+          { path: 'grado/:grade/grupo/:group/plantillas/:templateId/estrategias/:strategyId/calendario', loadChildren: () => import('../pages/project-calendar/project-calendar.module').then(m => m.ProjectCalendarModule) },
+          { path: 'grado/:grade/grupo/:group/plantillas/:templateId/estrategias/:strategyId/calendario/nuevo-evento/:eventDate', loadChildren: () => import('../pages/event-day/event-day.module').then(m => m.EventDayModule) },
         ]
       },
     ]

@@ -23,7 +23,119 @@
     }
   },
   "validations": [],
-  "relations": {},
-  "acls": [],
-  "methods": {}
+  "relations": {
+    "template": {
+      "type": "belongsTo",
+      "model": "Template",
+      "foreignKey": "templateId",
+      "options": {
+        "nestRemoting": true
+      }
+    },
+    "user": {
+      "type": "belongsTo",
+      "model": "Usuario",
+      "foreignKey": "userId",
+      "options": {
+        "nestRemoting": true
+      }
+    },
+    "teacherGroups": {
+      "type": "hasMany",
+      "model": "StrategyGroup",
+      "foreignKey": "strategyId",
+      "options": {
+        "nestRemoting": true
+      }
+    }
+  },
+  "acls": [
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Teacher",
+      "permission": "ALLOW",
+      "property": [
+        "CreateOne",
+        "Update",
+        "GetData"
+      ]
+    }
+  ],
+  "methods": {
+    "CreateOne": {
+      "accepts": [
+        {
+          "arg": "strategy",
+          "type": "object",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "newTeachers",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/",
+          "verb": "post"
+        }
+      ]
+    },
+    "prototype.Update": {
+      "accepts": [
+        {
+          "arg": "strategy",
+          "type": "object",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "strategyUpdated",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/",
+          "verb": "post"
+        }
+      ]
+    },
+    "prototype.GetData": {
+      "accepts": [],
+      "returns": [
+        {
+          "arg": "strategy",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/",
+          "verb": "get"
+        }
+      ]
+    }
+  }
 }

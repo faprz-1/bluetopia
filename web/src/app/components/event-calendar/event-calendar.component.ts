@@ -13,7 +13,7 @@ export class EventCalendarComponent implements OnInit {
   @Input() grade: string | null = null;
   @Input() group: string | null = null;
   @Input() templateId: string | null = null;
-  @Input() projectId: string | null = null;
+  @Input() strategyId: string | null = null;
 
   weekDays: Array<any> = [
     {
@@ -90,7 +90,7 @@ export class EventCalendarComponent implements OnInit {
   
   AddEvent(weekDay: any) {
     let date = `${this.year}-${this.currentMonth+1}-${weekDay.day}`;
-    this.nav.GoToUserRoute(`/grado/${this.grade}/grupo/${this.group}/plantillas/${this.templateId}/proyecto/${this.projectId}/calendario/nuevo-evento/${date}`);
+    this.nav.GoToUserRoute(`/grado/${this.grade}/grupo/${this.group}/plantillas/${this.templateId}/estrategias/${this.strategyId}/calendario/nuevo-evento/${date}`);
   }
 
 }

@@ -14,7 +14,7 @@ export class EventDayComponent implements OnInit {
   grade: any;
   group: any;
   templateId: any;
-  projectId: any;
+  strategyId: any;
   eventDate: any;
 
   activities: Array<any> = [];
@@ -39,7 +39,7 @@ export class EventDayComponent implements OnInit {
       this.grade = params['grade'];
       this.group = params['group'];
       this.templateId = params['templateId'];
-      this.projectId = params['projectId'];
+      this.strategyId = params['strategyId'];
       this.eventDate = params['eventDate'];
     });
   }

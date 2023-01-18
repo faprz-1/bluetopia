@@ -297,22 +297,49 @@
   },
   "Strategy": {
     "dataSource": "mysqlDev",
-    "public": true
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "CreateOne": true,
+          "prototype.Update": true,
+          "prototype.GetData": true
+        }
+      }
+    }
   },
   "ParcialProduct": {
     "dataSource": "mysqlDev",
-    "public": true
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
   },
   "ParcialProductType": {
     "dataSource": "mysqlDev",
-    "public": true
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
   },
   "StrategyGroup": {
     "dataSource": "mysqlDev",
-    "public": true
-  },
-  "TeacherStrategy": {
-    "dataSource": "mysqlDev",
-    "public": false
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
   }
 }

@@ -15,11 +15,12 @@ export class TeacherTemplateFormComponent implements OnInit {
   grade: any;
   group: any;
   templateId: any;
-  projectId: any;
+  strategyId: any;
 
   modalRef: BsModalRef | null = null;
   templateTopics: Array<any> = [];
-  projectForm: FormGroup = new FormGroup({
+  strategy: any = null;
+  strategyForm: FormGroup = new FormGroup({
     topic: new FormControl(null, [Validators.required]),
     title: new FormControl(null, [Validators.required]),
     generatingQuestion: new FormControl(null, [Validators.required]),
@@ -34,7 +35,7 @@ export class TeacherTemplateFormComponent implements OnInit {
     switch (this.step) {
       case 1: return 'Crear productos parciales';
       case 2: return 'Crear productos finales';
-      case 3: return 'Crear evento cierra';
+      case 3: return 'Crear evento de cierre';
       case 4: return 'Finalizar';
       default: return 'Salir';
     }
@@ -76,7 +77,34 @@ export class TeacherTemplateFormComponent implements OnInit {
       this.grade = params['grade'];
       this.group = params['group'];
       this.templateId = params['templateId'];
-      this.projectId = params['projectId'];
+      this.strategyId = params['strategyId'];
+
+      this.GetStrategy();
+    });
+  }
+
+  InitializeStrategyForm(strategy: any) {
+    this.strategyForm.get('topic')?.setValue(strategy.topic);
+    this.strategyForm.get('title')?.setValue(strategy.title);
+    this.strategyForm.get('generatingQuestion')?.setValue(strategy.generatingQuestion);
+
+    this.strategyForm.updateValueAndValidity();
+  }
+
+  GetStrategy() {
+    this.api.Get(`/Strategies/${this.strategyId}`).subscribe(strategy => {
+      this.strategy = strategy;
+      this.InitializeStrategyForm(strategy);
+    }, err => {
+      console.error("Error getting strategy", err);
+    });
+  }
+
+  SaveStragey() {
+    this.api.Patch(`/Strategies/${this.strategyId}`, {strategy: this.strategyForm.value}).subscribe(strategySaved => {
+      this.InitializeStrategyForm(strategySaved);
+    }, err => {
+      console.error("Error updating strategy", err);
     });
   }
 
@@ -91,7 +119,7 @@ export class TeacherTemplateFormComponent implements OnInit {
 
   GoToProjectCalendar() {
     this.CloseModal();
-    this.nav.GoToUserRoute(`grado/${this.grade}/grupo/${this.group}/plantillas/${this.templateId}/proyecto/${this.projectId}/calendario`);
+    this.nav.GoToUserRoute(`grado/${this.grade}/grupo/${this.group}/plantillas/${this.templateId}/estrategias/${this.strategyId}/calendario`);
   }
 
 }
