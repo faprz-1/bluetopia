@@ -343,5 +343,13 @@
         }
       }
     }
+  },
+  "EventType": {
+    "dataSource": "mysqlDev",
+    "public": true
+  },
+  "Event": {
+    "dataSource": "mysqlDev",
+    "public": true
   }
 }

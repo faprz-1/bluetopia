@@ -1,0 +1,29 @@
+{
+  "name": "Event",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "title": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "type": {
+      "type": "belongsTo",
+      "model": "EventType",
+      "foreignKey": "eventTypeId"
+    },
+    "strategy": {
+      "type": "belongsTo",
+      "model": "Strategy",
+      "foreignKey": "strategyId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

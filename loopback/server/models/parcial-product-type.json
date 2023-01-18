@@ -7,8 +7,8 @@
   },
   "properties": {
     "id": {
-      "id": true,
       "type": "number",
+      "id": true,
       "required": true
     },
     "name": {
