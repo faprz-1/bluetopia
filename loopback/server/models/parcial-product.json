@@ -10,7 +10,7 @@
       "type": "string"
     },
     "instructions": {
-      "type": "string"
+      "type": "text"
     },
     "isFinal": {
       "type": "boolean",

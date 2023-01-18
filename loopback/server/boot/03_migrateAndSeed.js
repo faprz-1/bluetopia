@@ -350,6 +350,31 @@ module.exports = function(app) {
     });
   }
 
+  var seedEventTypes = function() {
+    const eventTypes = [
+      {
+        id: 1,
+        name: "Exposición",
+      },
+      {
+        id: 2,
+        name: "Prototipo",
+      },
+      {
+        id: 3,
+        name: "Exámen",
+      },
+    ];
+
+    let cont = 0, limit = eventTypes.length;
+    eventTypes.forEach(eventType => {
+      app.models.EventType.CreateOne(eventType, (err, newEventType) => {
+        if(err) throw err;
+        if(++cont == limit) console.log("event types seeded");
+      });
+    });
+  }
+
   var seedUploadContainers = function(){
     var Upload = app.models.Upload;
     var containers = [
@@ -437,6 +462,7 @@ module.exports = function(app) {
     seedSkills,
     seedParcialProductsTypes,
     seedTemplateTopics,
+    seedEventTypes,
   ]
 
   // Migrate

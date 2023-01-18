@@ -21,6 +21,7 @@ export class TeacherTemplateFormComponent implements OnInit {
   modalRef: BsModalRef | null = null;
   templateTopics: Array<any> = [];
   parcialProductTypes: Array<any> = [];
+  eventTypes: Array<any> = [];
   strategy: any = null;
   strategyForm: FormGroup = new FormGroup({
     id: new FormControl(null, [Validators.required]),
@@ -32,6 +33,13 @@ export class TeacherTemplateFormComponent implements OnInit {
     parcialProductTypeId: new FormControl(null, [Validators.required]),
     name: new FormControl(null, [Validators.required]),
     instructions: new FormControl(null, [Validators.required]),
+    rubric: new FormControl(null, [Validators.required]),
+  });
+  eventForm: FormGroup = new FormGroup({
+    eventTypeId: new FormControl(null, [Validators.required]),
+    name: new FormControl(null, [Validators.required]),
+    instructions: new FormControl(null, [Validators.required]),
+    date: new FormControl(null, [Validators.required]),
     rubric: new FormControl(null, [Validators.required]),
   });
 
@@ -58,6 +66,7 @@ export class TeacherTemplateFormComponent implements OnInit {
   ngOnInit(): void {
     this.GetTemplateTopics();
     this.GetParcialProductTypes();
+    this.GetEventTypes();
     this.GetParams();
   }
 
@@ -85,8 +94,7 @@ export class TeacherTemplateFormComponent implements OnInit {
       case 1: this.SaveStragey(); break;
       case 2: this.SaveParcialProduct(); break;
       case 3: this.SaveParcialProduct(true); break;
-      case 4:
-        break;
+      case 4: this.SaveEvent(); break;
       default:
         break;
     }
@@ -115,7 +123,15 @@ export class TeacherTemplateFormComponent implements OnInit {
     this.api.Get(`/ParcialProductTypes`).subscribe(types => {
       this.parcialProductTypes = types;
     }, err => {
-      console.error("Error getting types", err);
+      console.error("Error getting parcial product types", err);
+    });
+  }
+
+  GetEventTypes() {
+    this.api.Get(`/EventTypes`).subscribe(types => {
+      this.eventTypes = types;
+    }, err => {
+      console.error("Error getting event types", err);
     });
   }
 
@@ -157,13 +173,13 @@ export class TeacherTemplateFormComponent implements OnInit {
       this.parcialProductForm.markAllAsTouched();
       return;
     }
-
+    
     let parcialProductInstance = {
       ...this.parcialProductForm.value,
       isFinal: isParcialProductFinal,
       strategyId: this.strategyId,
     }
-
+    
     this.api.Post(`/ParcialProducts`, {parcialProduct: parcialProductInstance}).subscribe(newParcialProduct => {
       this.strategy.parcialProducts.push(newParcialProduct);
       this.parcialProductForm.reset();
@@ -171,18 +187,41 @@ export class TeacherTemplateFormComponent implements OnInit {
       console.error("Error posting new parcial product", err);
     });
   }
+  
+  SaveEvent() {
+    console.log(this.eventForm);
+    if(!this.eventForm.valid) {
+      this.toast.ShowWarning(`Favor de llenar todos los campos correctamente`);
+      this.eventForm.markAllAsTouched();
+      return;
+    }
 
-  CatchRubrics(rubrics: any) {
+    let event = {
+      ...this.eventForm.value,
+      strategyId: this.strategyId
+    }
+
+    this.api.Post(`/Events`, {event}).subscribe(newEvent => {
+    }, err => {
+      console.error("Erro posting new event", err);
+    })
+  }
+
+  CatchRubrics(rubric: any) {
+    console.log(this.step);
     switch (this.step) {
-      case 2: case 3: case 4:
-        this.parcialProductForm.get('rubric')?.setValue(rubrics);
+      case 2: case 3:
+        this.parcialProductForm.get('rubric')?.setValue(rubric);
+        break;
+      case 4:
+        this.eventForm.get('rubric')?.setValue(rubric);
         break;
     }
   }
 
   SaveProject(exit: boolean = false) {
     this.CloseModal();
-    if(exit) this.nav.GoToUserRoute('mis-estudiantes');
+    // if(exit) this.nav.GoToUserRoute('mis-estudiantes');
   }
 
   GoToProjectCalendar() {

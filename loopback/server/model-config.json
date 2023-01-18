@@ -344,12 +344,28 @@
       }
     }
   },
-  "EventType": {
-    "dataSource": "mysqlDev",
-    "public": true
-  },
   "Event": {
     "dataSource": "mysqlDev",
-    "public": true
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "CreateOne": true
+        }
+      }
+    }
+  },
+  "EventType": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "GetAll": true
+        }
+      }
+    }
   }
 }
