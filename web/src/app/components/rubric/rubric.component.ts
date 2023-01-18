@@ -34,7 +34,7 @@ export class RubricComponent implements OnInit {
       description: '',
       concepts: this.rubrics[0].concepts.map((concept: any) => {
         concept.description = '';
-        return concept;
+        return Object.assign({}, concept);
       })
     });
   }

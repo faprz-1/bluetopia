@@ -315,7 +315,8 @@
     "options": {
       "remoting": {
         "sharedMethods": {
-          "*": false
+          "*": false,
+          "CreateOne": true
         }
       }
     }
@@ -326,7 +327,8 @@
     "options": {
       "remoting": {
         "sharedMethods": {
-          "*": false
+          "*": false,
+          "GetAll": true
         }
       }
     }

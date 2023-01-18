@@ -134,6 +134,28 @@ module.exports = function(app) {
     });
   }
 
+  var seedTemplateTopics = function() {
+    const templateTopics = [
+      {
+        name: "Agua potable"
+      },
+      {
+        name: "Contaminación"
+      },
+      {
+        name: "Energía renovable"
+      },
+    ];
+
+    let cont = 0, limit = templateTopics.length;
+    templateTopics.forEach(templateTopic => {
+      app.models.TemplateTopic.CreateOne(templateTopic, (err, newTemplateTopic) => {
+        if(err) throw err;
+        if(++cont == limit) console.log("template topics seeded");
+      });
+    });
+  }
+
   var seedTemplateTypes = function() {
     const templateTypes = [
       {
@@ -169,6 +191,39 @@ module.exports = function(app) {
       app.models.Template.CreateOne(template, (err, newTemplate) => {
         if(err) throw err;
         if(++cont == limit) console.log("Templates seeded succesfully");
+      });
+    });
+  }
+
+  var seedParcialProductsTypes = function() {
+    const parcialProductTypes = [
+      {
+        id: 1,
+        name: "Reporte",
+      },
+      {
+        id: 2,
+        name: "Ensayo",
+      },
+      {
+        id: 3,
+        name: "Prototipo",
+      },
+      {
+        id: 4,
+        name: "Resumen",
+      },
+      {
+        id: 5,
+        name: "Presentación",
+      },
+    ];
+
+    let cont = 0, limit = parcialProductTypes.length;
+    parcialProductTypes.forEach(parcialProductType => {
+      app.models.ParcialProductType.CreateOne(parcialProductType, (err, newParcialProductType) => {
+        if(err) throw err;
+        if(++cont == limit) console.log("parcial product types seeded");
       });
     });
   }
@@ -379,7 +434,9 @@ module.exports = function(app) {
     seedSubjects,
     seedTemplateTypes,
     seedSepObjectives,
-    seedSkills
+    seedSkills,
+    seedParcialProductsTypes,
+    seedTemplateTopics,
   ]
 
   // Migrate

@@ -40,6 +40,14 @@
         "nestRemoting": true
       }
     },
+    "parcialProducts": {
+      "type": "hasMany",
+      "model": "ParcialProduct",
+      "foreignKey": "strategyId",
+      "options": {
+        "nestRemoting": true
+      }
+    },
     "teacherGroups": {
       "type": "hasMany",
       "model": "StrategyGroup",
@@ -115,7 +123,7 @@
       "http": [
         {
           "path": "/",
-          "verb": "post"
+          "verb": "patch"
         }
       ]
     },

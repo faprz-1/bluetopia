@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ApiService } from 'src/app/services/api.service';
 import { NavigationService } from 'src/app/services/navigation.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-teacher-template-form',
@@ -19,17 +20,22 @@ export class TeacherTemplateFormComponent implements OnInit {
 
   modalRef: BsModalRef | null = null;
   templateTopics: Array<any> = [];
+  parcialProductTypes: Array<any> = [];
   strategy: any = null;
   strategyForm: FormGroup = new FormGroup({
+    id: new FormControl(null, [Validators.required]),
     topic: new FormControl(null, [Validators.required]),
     title: new FormControl(null, [Validators.required]),
     generatingQuestion: new FormControl(null, [Validators.required]),
-    productType: new FormControl(null, [Validators.required]),
-    productName: new FormControl(null, [Validators.required]),
-    productInstructions: new FormControl(null, [Validators.required]),
+  });
+  parcialProductForm: FormGroup = new FormGroup({
+    parcialProductTypeId: new FormControl(null, [Validators.required]),
+    name: new FormControl(null, [Validators.required]),
+    instructions: new FormControl(null, [Validators.required]),
+    rubric: new FormControl(null, [Validators.required]),
   });
 
-  step: number = 1;
+  step: number = 4;
 
   public get nextButtonText() {
     switch (this.step) {
@@ -45,10 +51,13 @@ export class TeacherTemplateFormComponent implements OnInit {
     private api: ApiService,
     private activatedRoute: ActivatedRoute,
     public nav: NavigationService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private toast: ToastService
   ) { }
 
   ngOnInit(): void {
+    this.GetTemplateTopics();
+    this.GetParcialProductTypes();
     this.GetParams();
   }
 
@@ -66,10 +75,21 @@ export class TeacherTemplateFormComponent implements OnInit {
   }
 
   NextStep(template: any) {
-    if(this.step == 4) {
-      this.OpenModal(template);
-    }
+    this.Save();
+    if(this.step == 4) this.OpenModal(template);
     else this.step++;
+  }
+  
+  Save() {
+    switch (this.step) {
+      case 1: this.SaveStragey(); break;
+      case 2: this.SaveParcialProduct(); break;
+      case 3: this.SaveParcialProduct(true); break;
+      case 4:
+        break;
+      default:
+        break;
+    }
   }
 
   GetParams() {
@@ -83,7 +103,24 @@ export class TeacherTemplateFormComponent implements OnInit {
     });
   }
 
+  GetTemplateTopics() {
+    this.api.Get(`/TemplateTopics`).subscribe(topics => {
+      this.templateTopics = topics;
+    }, err => {
+      console.error("Erro getting template topics", err);
+    });
+  }
+
+  GetParcialProductTypes() {
+    this.api.Get(`/ParcialProductTypes`).subscribe(types => {
+      this.parcialProductTypes = types;
+    }, err => {
+      console.error("Error getting types", err);
+    });
+  }
+
   InitializeStrategyForm(strategy: any) {
+    this.strategyForm.get('id')?.setValue(strategy.id);
     this.strategyForm.get('topic')?.setValue(strategy.topic);
     this.strategyForm.get('title')?.setValue(strategy.title);
     this.strategyForm.get('generatingQuestion')?.setValue(strategy.generatingQuestion);
@@ -101,6 +138,12 @@ export class TeacherTemplateFormComponent implements OnInit {
   }
 
   SaveStragey() {
+    if(!this.strategyForm.valid) {
+      this.toast.ShowWarning(`Favor de llenar todos los campos correctamente`);
+      this.strategyForm.markAllAsTouched();
+      return;
+    }
+
     this.api.Patch(`/Strategies/${this.strategyId}`, {strategy: this.strategyForm.value}).subscribe(strategySaved => {
       this.InitializeStrategyForm(strategySaved);
     }, err => {
@@ -108,8 +151,33 @@ export class TeacherTemplateFormComponent implements OnInit {
     });
   }
 
+  SaveParcialProduct(isParcialProductFinal: boolean = false) {
+    if(!this.parcialProductForm.valid) {
+      this.toast.ShowWarning(`Favor de llenar todos los campos correctamente`);
+      this.parcialProductForm.markAllAsTouched();
+      return;
+    }
+
+    let parcialProductInstance = {
+      ...this.parcialProductForm.value,
+      isFinal: isParcialProductFinal,
+      strategyId: this.strategyId,
+    }
+
+    this.api.Post(`/ParcialProducts`, {parcialProduct: parcialProductInstance}).subscribe(newParcialProduct => {
+      this.strategy.parcialProducts.push(newParcialProduct);
+      this.parcialProductForm.reset();
+    }, err => {
+      console.error("Error posting new parcial product", err);
+    });
+  }
+
   CatchRubrics(rubrics: any) {
-    console.log(rubrics);
+    switch (this.step) {
+      case 2: case 3: case 4:
+        this.parcialProductForm.get('rubric')?.setValue(rubrics);
+        break;
+    }
   }
 
   SaveProject(exit: boolean = false) {

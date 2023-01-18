@@ -6,6 +6,11 @@
     "validateUpsert": true
   },
   "properties": {
+    "id": {
+      "id": true,
+      "type": "number",
+      "required": true
+    },
     "name": {
       "type": "string",
       "required": true
@@ -13,6 +18,41 @@
   },
   "validations": [],
   "relations": {},
-  "acls": [],
-  "methods": {}
+  "acls": [
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": [
+        "GetAll"
+      ]
+    }
+  ],
+  "methods": {
+    "GetAll": {
+      "accepts": [],
+      "returns": [
+        {
+          "arg": "parcialProductTypes",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/",
+          "verb": "get"
+        }
+      ]
+    }
+  }
 }

@@ -38,6 +38,7 @@
                                         class="form-control with-border"
                                         [items]="templateTopics"
                                         bindLabel="name"
+                                        bindValue="name"
                                         [multiple]="false"
                                         placeholder="Temáticas"
                                         formControlName="topic">
@@ -68,31 +69,32 @@
                             Productos parciales
                         </div>
 
-                        <form [formGroup]="strategyForm">
+                        <form [formGroup]="parcialProductForm">
                             <div class="text">
                                 <label>Selecciona tu tipo de producto</label>
                                 <div class="input-container">
                                     <ng-select
                                         class="form-control with-border"
-                                        [items]="templateTopics"
+                                        [items]="parcialProductTypes"
                                         bindLabel="name"
+                                        bindValue="id"
                                         [multiple]="false"
                                         placeholder="Tipos de productos"
-                                        formControlName="productType">
+                                        formControlName="parcialProductTypeId">
                                     </ng-select>
                                 </div>
                             </div>
 
                             <div class="text">
                                 <div class="input-container">
-                                    <input class="form-control no-icon w-100" type="text" placeholder="Nombre" formControlName="productName">
-                                    <app-control-messages [control]="strategyForm.get('productName')"></app-control-messages>
+                                    <input class="form-control no-icon w-100" type="text" placeholder="Nombre" formControlName="name">
+                                    <app-control-messages [control]="parcialProductForm.get('name')"></app-control-messages>
                                 </div>
                             </div>
                             <div class="text">
                                 <div class="input-container">
-                                    <input class="form-control no-icon w-100" type="text" placeholder="Instrucciones" formControlName="productInstructions">
-                                    <app-control-messages [control]="strategyForm.get('productInstructions')"></app-control-messages>
+                                    <input class="form-control no-icon w-100" type="text" placeholder="Instrucciones" formControlName="instructions">
+                                    <app-control-messages [control]="parcialProductForm.get('instructions')"></app-control-messages>
                                 </div>
                             </div>
                             <div class="subtitle">
@@ -112,31 +114,32 @@
                             Productos finales
                         </div>
     
-                        <form [formGroup]="strategyForm">
+                        <form [formGroup]="parcialProductForm">
                             <div class="text">
                                 <label>Selecciona tu tipo de producto</label>
                                 <div class="input-container">
                                     <ng-select
                                         class="form-control with-border"
-                                        [items]="templateTopics"
+                                        [items]="parcialProductTypes"
                                         bindLabel="name"
+                                        bindValue="id"
                                         [multiple]="false"
                                         placeholder="Tipos de productos"
-                                        formControlName="productType">
+                                        formControlName="parcialProductTypeId">
                                     </ng-select>
                                 </div>
                             </div>
     
                             <div class="text">
                                 <div class="input-container">
-                                    <input class="form-control no-icon w-100" type="text" placeholder="Nombre" formControlName="productName">
-                                    <app-control-messages [control]="strategyForm.get('productName')"></app-control-messages>
+                                    <input class="form-control no-icon w-100" type="text" placeholder="Nombre" formControlName="name">
+                                    <app-control-messages [control]="parcialProductForm.get('name')"></app-control-messages>
                                 </div>
                             </div>
                             <div class="text">
                                 <div class="input-container">
-                                    <input class="form-control no-icon w-100" type="text" placeholder="Instrucciones" formControlName="productInstructions">
-                                    <app-control-messages [control]="strategyForm.get('productInstructions')"></app-control-messages>
+                                    <input class="form-control no-icon w-100" type="text" placeholder="Instrucciones" formControlName="instructions">
+                                    <app-control-messages [control]="parcialProductForm.get('instructions')"></app-control-messages>
                                 </div>
                             </div>
                             <div class="subtitle">
@@ -150,7 +153,7 @@
                         </form>
                     </div>
                 </div>
-                <div *ngSwitchCase="4">
+                <div *ngSwitchCase="4 || 5">
                     <div class="form-section">
                         <div class="title">
                             Evento cierre
@@ -162,7 +165,7 @@
                                 <div class="input-container">
                                     <ng-select
                                         class="form-control with-border"
-                                        [items]="templateTopics"
+                                        [items]="parcialProductTypes"
                                         bindLabel="name"
                                         [multiple]="false"
                                         placeholder="Tipos de eventos de cierre"
@@ -173,14 +176,14 @@
     
                             <div class="text">
                                 <div class="input-container">
-                                    <input class="form-control no-icon w-100" type="text" placeholder="Nombre" formControlName="productName">
-                                    <app-control-messages [control]="strategyForm.get('productName')"></app-control-messages>
+                                    <input class="form-control no-icon w-100" type="text" placeholder="Nombre" formControlName="name">
+                                    <app-control-messages [control]="strategyForm.get('name')"></app-control-messages>
                                 </div>
                             </div>
                             <div class="text">
                                 <div class="input-container">
-                                    <input class="form-control no-icon w-100" type="text" placeholder="Instrucciones" formControlName="productInstructions">
-                                    <app-control-messages [control]="strategyForm.get('productInstructions')"></app-control-messages>
+                                    <input class="form-control no-icon w-100" type="text" placeholder="Instrucciones" formControlName="instructions">
+                                    <app-control-messages [control]="strategyForm.get('instructions')"></app-control-messages>
                                 </div>
                             </div>
 
@@ -207,7 +210,7 @@
     </div>
 
     <div class="controls mb-5">
-        <button class="btn btn-outline-primary mr-4">
+        <button class="btn btn-outline-primary mr-4" (click)="Save()">
             Guardar
         </button>
         <button class="btn btn-primary" (click)="NextStep(finishModal)">

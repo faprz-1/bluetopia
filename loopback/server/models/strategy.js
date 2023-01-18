@@ -14,13 +14,17 @@ module.exports = function(Strategy) {
         Strategy.upsert(strategy, (err, strategyUpdated) => {
             if(err) return callback(err);
             
-            return callback(null, strategyUpdated);
+            this.GetData((err, strategy) => {
+                if(err) return callback(err);
+
+                return callback(null, strategy);
+            });
         });
     }
     
     Strategy.prototype.GetData = function(callback) {
         Strategy.findById(this.id, {
-            include: ['template', 'user']
+            include: ['parcialProducts', 'template', 'user']
         }, (err, strategy) => {
             if(err) return callback(err);
 
