@@ -1,0 +1,86 @@
+{
+  "name": "ParcialProduct",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "instructions": {
+      "type": "text"
+    },
+    "isFinal": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "rubric": {
+      "type": "object"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "strategy": {
+      "type": "belongsTo",
+      "model": "Strategy",
+      "foreignKey": "strategyId"
+    },
+    "type": {
+      "type": "belongsTo",
+      "model": "ParcialProductType",
+      "foreignKey": "parcialProductTypeId"
+    },
+    "event": {
+      "type": "belongsTo",
+      "model": "Event",
+      "foreignKey": "eventId"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Teacher",
+      "permission": "ALLOW",
+      "property": [
+        "CreateOne"
+      ]
+    }
+  ],
+  "methods": {
+    "CreateOne": {
+      "accepts": [
+        {
+          "arg": "parcialProduct",
+          "type": "object",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "parcialProductSaved",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/",
+          "verb": "post"
+        }
+      ]
+    }
+  }
+}

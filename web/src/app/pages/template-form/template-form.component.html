@@ -18,24 +18,23 @@
                 <label>Selecciona la o las asignaturas</label>
                 <div class="input-container">
                     <ng-select
+                        #subjectsSelect
                         class="form-control with-border"
                         [items]="teacherSubjects"
                         bindLabel="name"
-                        [multiple]="true"
                         placeholder="Asignaturas"
-                        (change)="OnSelectedSubjectsChange($event)"
-                        [(ngModel)]="selectedSubjects">
+                        (change)="OnSelectedSubjectsChange($event); subjectsSelect.handleClearClick()">
                     </ng-select>
                 </div>
             </div>
             <div class="subjects-forms">
                 <div class="subjects-tabs">
-                    <div class="subject-tab clickeable" *ngFor="let subject of selectedSubjects" (click)="SelectTab(subject)"
+                    <div class="subject-tab clickeable" *ngFor="let subject of selectedSubjects; let i = index" (click)="SelectTab(subject)"
                     [ngClass]="{'active-tab': subject == selectedTab}">
                         <span class="mr-2">
                             {{subject.name}}
                         </span>
-                        <img class="clickeable" src="assets/icons/close-circle.png" alt="eliminar">
+                        <img class="clickeable" src="assets/icons/close-circle.png" alt="close.png" (click)="RemoveItemFromArray(selectedSubjects, i); ">
                     </div>
                 </div>
                 
@@ -54,9 +53,9 @@
                             </ng-select>
                         </div>
                         <div class="list">
-                            <div class="list-item" *ngFor="let objective of subject.sepObjectives">
+                            <div class="list-item" *ngFor="let objective of subject.sepObjectives; let i = index">
                                 <span>{{objective.name}}</span>
-                                <img class="clickeable" src="assets/icons/close-circle.png" alt="close.png">
+                                <img class="clickeable" src="assets/icons/close-circle.png" alt="close.png" (click)="RemoveItemFromArray(subject.sepObjectives, i)">
                             </div>
                         </div>
                     </div>
@@ -73,9 +72,9 @@
                             </ng-select>
                         </div>
                         <div class="list">
-                            <div class="list-item" *ngFor="let skill of subject.skills">
+                            <div class="list-item" *ngFor="let skill of subject.skills; let i = index">
                                 <span>{{skill.name}}</span>
-                                <img class="clickeable" src="assets/icons/close-circle.png" alt="close.png">
+                                <img class="clickeable" src="assets/icons/close-circle.png" alt="close.png" (click)="RemoveItemFromArray(subject.skills, i)">
                             </div>
                         </div>
                     </div>
@@ -83,8 +82,9 @@
             </div>
         </div>
         <div class="controls mb-5">
-            <button class="btn btn-primary" *ngIf="selectedSubjects?.length" (click)="CreateNewProyect()">
-                Continuar
+            <button class="btn btn-primary" *ngIf="selectedSubjects?.length" [disabled]="!AreFormsValid() || loading" (click)="CreateNewProyect()">
+                <span *ngIf="loading"><i class="zmdi zmdi-spinner zmdi-hc-lg zmdi-hc-spin"></i></span>
+                <span *ngIf="!loading">Continuar</span>
             </button>
         </div>
     </div>

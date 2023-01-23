@@ -10,8 +10,23 @@
             <img class="template-icon" src="assets/img/templates.png" alt="template-icon">
         </div>
     </div>
-    <p *ngFor="let text of template.description.split('\n')">
-    {{text}}
+    <p>
+        {{template.description}}
+    </p>
+    <p>
+        {{template.difficulty}}
+    </p>
+    <p>
+        {{template.estimatedClasses}}
+    </p>
+    <p>
+        {{template.suggestedAges}}
+    </p>
+    <p>
+        {{template.suggestedSubjects}}
+    </p>
+    <p>
+        {{template.skillsDeveloped}}
     </p>
 </div>
 <div class="modal-footer justify-content-center">

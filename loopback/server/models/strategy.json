@@ -1,30 +1,37 @@
 {
-  "name": "Teacher",
+  "name": "Strategy",
+  "plural": "Strategies",
   "base": "Model",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "name": {
-      "type": "string",
-      "required": true
-    },
-    "email": {
-      "type": "string",
-      "required": true
-    },
-    "active": {
-      "type": "boolean",
-      "required": true,
-      "default": false
-    },
-    "activationToken": {
+    "title": {
       "type": "string"
+    },
+    "topic": {
+      "type": "string"
+    },
+    "generatingQuestion": {
+      "type": "string"
+    },
+    "subjects": {
+      "type": [
+        "object"
+      ]
     }
   },
   "validations": [],
   "relations": {
+    "template": {
+      "type": "belongsTo",
+      "model": "Template",
+      "foreignKey": "templateId",
+      "options": {
+        "nestRemoting": true
+      }
+    },
     "user": {
       "type": "belongsTo",
       "model": "Usuario",
@@ -33,38 +40,26 @@
         "nestRemoting": true
       }
     },
-    "subjects": {
-      "type": "hasAndBelongsToMany",
-      "model": "Subject",
-      "foreignKey": "teacherId",
-      "options": {
-        "nestRemoting": true
-      },
-      "throughTable": "TeacherSubject"
-    },
-    "schoolUser": {
-      "type": "belongsTo",
-      "model": "Usuario",
-      "foreignKey": "schoolUserId",
+    "parcialProducts": {
+      "type": "hasMany",
+      "model": "ParcialProduct",
+      "foreignKey": "strategyId",
       "options": {
         "nestRemoting": true
       }
     },
     "teacherGroups": {
       "type": "hasMany",
-      "model": "TeacherGroup",
-      "foreignKey": "teacherId",
+      "model": "StrategyGroup",
+      "foreignKey": "strategyId",
       "options": {
         "nestRemoting": true
       }
     },
-    "strategies": {
+    "events": {
       "type": "hasMany",
-      "model": "TeacherTemplate",
-      "foreignKey": "teacherId",
-      "options": {
-        "nestRemoting": true
-      }
+      "model": "Event",
+      "foreignKey": "strategyId"
     }
   },
   "acls": [
@@ -77,40 +72,23 @@
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "School",
-      "permission": "ALLOW",
-      "property": [
-        "AddTeachers",
-        "GetAllOfSchool",
-        "UpdateData",
-        "GetData"
-      ]
-    },
-    {
-      "accessType": "EXECUTE",
-      "principalType": "ROLE",
       "principalId": "Teacher",
       "permission": "ALLOW",
       "property": [
-        "GetData"
-      ]
-    },
-    {
-      "accessType": "EXECUTE",
-      "principalType": "ROLE",
-      "principalId": "$everyone",
-      "permission": "ALLOW",
-      "property": [
-        "Activate"
+        "CreateOne",
+        "Update",
+        "GetData",
+        "GetActivities",
+        "GetAllOfTeacher"
       ]
     }
   ],
   "methods": {
-    "AddTeachers": {
+    "CreateOne": {
       "accepts": [
         {
-          "arg": "teachers",
-          "type": "array",
+          "arg": "strategy",
+          "type": "object",
           "required": true,
           "description": ""
         }
@@ -126,40 +104,15 @@
       "description": "",
       "http": [
         {
-          "path": "/Array",
+          "path": "/",
           "verb": "post"
         }
       ]
     },
-    "GetAllOfSchool": {
+    "prototype.Update": {
       "accepts": [
         {
-          "arg": "schoolUserId",
-          "type": "number",
-          "required": true,
-          "description": ""
-        }
-      ],
-      "returns": [
-        {
-          "arg": "teachers",
-          "type": "array",
-          "root": true,
-          "description": ""
-        }
-      ],
-      "description": "",
-      "http": [
-        {
-          "path": "/OfSchool/:schoolUserId",
-          "verb": "get"
-        }
-      ]
-    },
-    "prototype.UpdateData": {
-      "accepts": [
-        {
-          "arg": "teacher",
+          "arg": "strategy",
           "type": "object",
           "required": true,
           "description": ""
@@ -167,7 +120,7 @@
       ],
       "returns": [
         {
-          "arg": "teacherSaved",
+          "arg": "strategyUpdated",
           "type": "object",
           "root": true,
           "description": ""
@@ -181,12 +134,12 @@
         }
       ]
     },
-    "prototype.Activate": {
+    "prototype.GetData": {
       "accepts": [],
       "returns": [
         {
-          "arg": "teacherSaved",
-          "type": "",
+          "arg": "strategy",
+          "type": "array",
           "root": true,
           "description": ""
         }
@@ -194,24 +147,42 @@
       "description": "",
       "http": [
         {
-          "path": "/Activate",
-          "verb": "patch"
+          "path": "/",
+          "verb": "get"
         }
       ]
     },
-    "GetData": {
+    "prototype.GetActivities": {
+      "accepts": [],
+      "returns": [
+        {
+          "arg": "strategy",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/Activities",
+          "verb": "get"
+        }
+      ]
+    },
+    "GetAllOfTeacher": {
       "accepts": [
         {
-          "arg": "userOrTeacherId",
+          "arg": "userId",
           "type": "number",
-          "required": true,
+          "root": true,
           "description": ""
         }
       ],
       "returns": [
         {
-          "arg": "teacher",
-          "type": "",
+          "arg": "strategies",
+          "type": "array",
           "root": true,
           "description": ""
         }
@@ -219,7 +190,7 @@
       "description": "",
       "http": [
         {
-          "path": "/:userOrTeacherId/Data",
+          "path": "/OfTeacher/:userId",
           "verb": "get"
         }
       ]

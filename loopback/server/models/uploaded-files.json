@@ -30,7 +30,14 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "events": {
+      "type": "hasAndBelongsToMany",
+      "model": "Event",
+      "foreignKey": "fileId",
+      "throughTable": "EventFile"
+    }
+  },
   "acls": [],
   "methods": {}
 }

@@ -30,10 +30,10 @@ module.exports = function(Upload) {
 
       UploadedFiles.create({
         id: newFileId,
-        name: 'no-name' || newFile.name,
-        resize: false || newFile.resize,
+        name: !!newFile.name ? newFile.name : 'no-name',
+        resize: !!newFile.resize ? newFile.resize : false,
         URL: '/Uploads/' + encodedFileContainer + '/download/' + fileName,
-        fileExtention: '.jpg' || newFile.fileExtention,
+        fileExtention: !!newFile.fileExtention ? newFile.fileExtention : '.jpg',
       }, function(err, res) {
         if (err) return callback(err);
 

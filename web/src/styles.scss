@@ -96,6 +96,7 @@
 
 $primary: #1081FB;
 $success: #2ED2A3;
+$danger: #DF4655;
 
 .clickeable {
     cursor: pointer;
@@ -135,6 +136,9 @@ $success: #2ED2A3;
     border-color: $primary;
     border-width: 3px;
 }
+.btn-outline-primary:disabled {
+    color: $primary;
+}
 .btn-outline-primary:hover {
     color: white;
     background-color: $primary;
@@ -145,6 +149,9 @@ $success: #2ED2A3;
     color: $success;
     border-color: $success;
     border-width: 3px;
+}
+.btn-outline-success:disabled {
+    color: $success;
 }
 .btn-outline-success:hover {
     color: white;
@@ -179,6 +186,7 @@ $success: #2ED2A3;
 // ng-select overrides
 .ng-select-container {
     border: none !important;
+    box-shadow: none !important;
     background-color: #F6F7F8 !important;
 }
 .with-icon > .ng-select-container {
@@ -322,6 +330,20 @@ ng-select.form-control {
     justify-content: space-between;
     align-items: center;
     height: 60px;
+}
+
+.modal-content {
+    padding: 1rem 2rem;
+}
+
+.delete-icon {
+    color: $danger;
+}
+
+.btn-bigger {
+    font-size: 1.25rem;
+    font-weight: 800;
+    padding: 1rem 5rem;
 }
 
 

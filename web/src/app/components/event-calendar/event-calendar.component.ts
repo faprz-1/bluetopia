@@ -13,7 +13,7 @@ export class EventCalendarComponent implements OnInit {
   @Input() grade: string | null = null;
   @Input() group: string | null = null;
   @Input() templateId: string | null = null;
-  @Input() projectId: string | null = null;
+  @Input() strategyId: string | null = null;
 
   weekDays: Array<any> = [
     {
@@ -47,7 +47,19 @@ export class EventCalendarComponent implements OnInit {
   ]
   year: number = moment().get('year');
   currentMonth: number = moment().get('month');
+  monthEvents: Array<any> = [];
   month: Array<any> = [];
+
+  public get previousMonth() {
+    return --this.currentMonth;
+  }
+  public get nextMonth() {
+    return ++this.currentMonth;
+  }
+
+  public get monthAndYear() {
+    return moment(`${this.year}-${this.currentMonth+1}-01`).format('MMMM YYYY');
+  }
 
   constructor(
     private api: ApiService,
@@ -63,6 +75,7 @@ export class EventCalendarComponent implements OnInit {
     let currentDay = 1;
     let yesterday = currentDay;
     let newWeek = this.weekDays.map(day => Object.assign({}, day));
+    this.month = [];
     while(currentDay <= days) {
       let currentDate = moment(`${this.year}-${month+1}-${currentDay}`);
       let yesterdayDate = moment(`${this.year}-${month+1}-${yesterday}`);
@@ -76,7 +89,14 @@ export class EventCalendarComponent implements OnInit {
       currentDay++;
     }
     if(!!newWeek[0].day) this.month.push(newWeek);
-    console.log(this.month);
+  }
+
+  GetMonthEvents() {
+    this.api.Get(`/Events/OfMonth/${this.currentMonth+1}`).subscribe(events => {
+      this.monthEvents = events;
+    }, err => {
+      console.error("Erro getting month events", err);
+    })
   }
   
   FormatDay(day: number | string) {
@@ -90,7 +110,7 @@ export class EventCalendarComponent implements OnInit {
   
   AddEvent(weekDay: any) {
     let date = `${this.year}-${this.currentMonth+1}-${weekDay.day}`;
-    this.nav.GoToUserRoute(`/grado/${this.grade}/grupo/${this.group}/plantillas/${this.templateId}/proyecto/${this.projectId}/calendario/nuevo-evento/${date}`);
+    this.nav.GoToUserRoute(`/grado/${this.grade}/grupo/${this.group}/plantillas/${this.templateId}/estrategias/${this.strategyId}/calendario/nuevo-evento/${date}`);
   }
 
 }

@@ -12,7 +12,7 @@ export class TemplateSliderComponent implements OnInit {
 
   @Output() onClick: EventEmitter<any> = new EventEmitter<any>();
 
-  posistionsToShow: Array<number> = [];
+  positionsToShow: Array<number> = [];
   templatesToShow: number = 3;
 
   constructor() { }
@@ -30,14 +30,39 @@ export class TemplateSliderComponent implements OnInit {
   
   AdjustView() {
     let totalWidth: any = document.getElementById('slider-container')?.clientWidth;
-    // Element width + min margin lateral
-    let templateWidth = 220 + 5;
-    // total width - (2 * arrows width)
-    let templatesAvailableWidth = totalWidth - (2*40);
+    let templateDivWidth = 220;
+    let templateDivLateralMargin = 5;
+    let arrowsWidth = 40;
+
+    let templateWidth = templateDivWidth + templateDivLateralMargin;
+    let templatesAvailableWidth = totalWidth - (2*arrowsWidth);
     this.templatesToShow = Math.floor(templatesAvailableWidth / templateWidth);
-    this.posistionsToShow = [];
-    for (let i = 0; i < (!!this.maxTemplatesToShow ? Math.min(this.templatesToShow, this.maxTemplatesToShow) : this.templatesToShow); i++) {
-      this.posistionsToShow.push(i);
+    this.templatesToShow = !!this.maxTemplatesToShow ? Math.min(this.templatesToShow, this.maxTemplatesToShow) : this.templatesToShow;
+    this.positionsToShow = [];
+    for (let i = 0; i < this.templatesToShow; i++) {
+      this.positionsToShow.push(i);
+    }
+  }
+
+  GoRight() {
+    const lastRightPos = this.positionsToShow[this.positionsToShow.length - 1];
+    let newLastPos = lastRightPos + this.templatesToShow;
+    newLastPos = Math.min(newLastPos, this.templates.length);
+    let newInitialPos = newLastPos - this.templatesToShow;
+    this.positionsToShow = [];
+    for (let i = newInitialPos; i < newLastPos; i++) {
+      this.positionsToShow.push(i);
+    }
+  }
+  
+  GoLeft() {
+    const lastLeftPos = this.positionsToShow[0];
+    let newInitialPos = lastLeftPos - this.templatesToShow;
+    newInitialPos = Math.max(newInitialPos, 0);
+    let newLastPos = newInitialPos + this.templatesToShow;
+    this.positionsToShow = [];
+    for (let i = newInitialPos; i < newLastPos; i++) {
+      this.positionsToShow.push(i);
     }
   }
 

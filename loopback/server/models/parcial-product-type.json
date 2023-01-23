@@ -1,11 +1,16 @@
 {
-  "name": "TemplateTopic",
+  "name": "ParcialProductType",
   "base": "Model",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
+    "id": {
+      "type": "number",
+      "id": true,
+      "required": true
+    },
     "name": {
       "type": "string",
       "required": true
@@ -35,7 +40,7 @@
       "accepts": [],
       "returns": [
         {
-          "arg": "templateTopics",
+          "arg": "parcialProductTypes",
           "type": "array",
           "root": true,
           "description": ""

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 
@@ -9,7 +9,11 @@ import { NavigationService } from 'src/app/services/navigation.service';
 })
 export class TeacherStudentsComponent implements OnInit {
 
+  onStudentSearch: EventEmitter<any> = new EventEmitter<any>();
+
   students: Array<any> = [];
+  teacherSubjects: Array<any> = [];
+  teacherGroups: Array<any> = [];
 
   constructor(
     public nav: NavigationService,
@@ -18,6 +22,7 @@ export class TeacherStudentsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.GetTeacherData();
     this.GetTeacherStudents();
   }
 
@@ -25,9 +30,20 @@ export class TeacherStudentsComponent implements OnInit {
     const user = this.api.GetUser();
     this.api.Get(`/Students/OfTeacher/${user ? user.id : 0}`).subscribe(students => {
       this.students = students;
+      console.log(students);
     }, err => {
       console.error("Error getting the students of the teacher", err);
-    })
+    });
+  }
+  
+  GetTeacherData() {
+    const user = this.api.GetUser();
+    this.api.Get(`/Teachers/${user ? user.id : 0}/Data`).subscribe(teacher => {
+      this.teacherSubjects = teacher.subjects;
+      this.teacherGroups = teacher.teacherGroups;
+    }, err => {
+      console.error(`Error getting teacher data`, err);
+    });
   }
 
   SearchStudent() {

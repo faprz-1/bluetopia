@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ApiService } from 'src/app/services/api.service';
 import { NavigationService } from 'src/app/services/navigation.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-teacher-template-form',
@@ -15,17 +16,31 @@ export class TeacherTemplateFormComponent implements OnInit {
   grade: any;
   group: any;
   templateId: any;
-  projectId: any;
+  strategyId: any;
 
   modalRef: BsModalRef | null = null;
   templateTopics: Array<any> = [];
-  projectForm: FormGroup = new FormGroup({
+  parcialProductTypes: Array<any> = [];
+  eventTypes: Array<any> = [];
+  strategy: any = null;
+  strategyForm: FormGroup = new FormGroup({
+    id: new FormControl(null, [Validators.required]),
     topic: new FormControl(null, [Validators.required]),
     title: new FormControl(null, [Validators.required]),
     generatingQuestion: new FormControl(null, [Validators.required]),
-    productType: new FormControl(null, [Validators.required]),
-    productName: new FormControl(null, [Validators.required]),
-    productInstructions: new FormControl(null, [Validators.required]),
+  });
+  parcialProductForm: FormGroup = new FormGroup({
+    parcialProductTypeId: new FormControl(null, [Validators.required]),
+    name: new FormControl(null, [Validators.required]),
+    instructions: new FormControl(null, [Validators.required]),
+    rubric: new FormControl(null, [Validators.required]),
+  });
+  eventForm: FormGroup = new FormGroup({
+    parcialProductTypeId: new FormControl(null, [Validators.required]),
+    name: new FormControl(null, [Validators.required]),
+    instructions: new FormControl(null, [Validators.required]),
+    date: new FormControl(null, [Validators.required]),
+    rubric: new FormControl(null, [Validators.required]),
   });
 
   step: number = 1;
@@ -34,7 +49,7 @@ export class TeacherTemplateFormComponent implements OnInit {
     switch (this.step) {
       case 1: return 'Crear productos parciales';
       case 2: return 'Crear productos finales';
-      case 3: return 'Crear evento cierra';
+      case 3: return 'Crear evento de cierre';
       case 4: return 'Finalizar';
       default: return 'Salir';
     }
@@ -44,10 +59,14 @@ export class TeacherTemplateFormComponent implements OnInit {
     private api: ApiService,
     private activatedRoute: ActivatedRoute,
     public nav: NavigationService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private toast: ToastService
   ) { }
 
   ngOnInit(): void {
+    this.GetTemplateTopics();
+    this.GetParcialProductTypes();
+    this.GetEventTypes();
     this.GetParams();
   }
 
@@ -65,10 +84,20 @@ export class TeacherTemplateFormComponent implements OnInit {
   }
 
   NextStep(template: any) {
-    if(this.step == 4) {
-      this.OpenModal(template);
-    }
+    this.Save();
+    if(this.step == 4) this.OpenModal(template);
     else this.step++;
+  }
+  
+  Save() {
+    switch (this.step) {
+      case 1: this.SaveStragey(); break;
+      case 2: this.SaveParcialProduct(); break;
+      case 3: this.SaveParcialProduct(true); break;
+      case 4: this.SaveEvent(); break;
+      default:
+        break;
+    }
   }
 
   GetParams() {
@@ -76,12 +105,118 @@ export class TeacherTemplateFormComponent implements OnInit {
       this.grade = params['grade'];
       this.group = params['group'];
       this.templateId = params['templateId'];
-      this.projectId = params['projectId'];
+      this.strategyId = params['strategyId'];
+
+      this.GetStrategy();
     });
   }
 
-  CatchRubrics(rubrics: any) {
-    console.log(rubrics);
+  GetTemplateTopics() {
+    this.api.Get(`/TemplateTopics`).subscribe(topics => {
+      this.templateTopics = topics;
+    }, err => {
+      console.error("Erro getting template topics", err);
+    });
+  }
+
+  GetParcialProductTypes() {
+    this.api.Get(`/ParcialProductTypes`).subscribe(types => {
+      this.parcialProductTypes = types;
+    }, err => {
+      console.error("Error getting parcial product types", err);
+    });
+  }
+
+  GetEventTypes() {
+    this.api.Get(`/EventTypes`).subscribe(types => {
+      this.eventTypes = types;
+    }, err => {
+      console.error("Error getting event types", err);
+    });
+  }
+
+  InitializeStrategyForm(strategy: any) {
+    this.strategyForm.get('id')?.setValue(strategy.id);
+    this.strategyForm.get('topic')?.setValue(strategy.topic);
+    this.strategyForm.get('title')?.setValue(strategy.title);
+    this.strategyForm.get('generatingQuestion')?.setValue(strategy.generatingQuestion);
+
+    this.strategyForm.updateValueAndValidity();
+  }
+
+  GetStrategy() {
+    this.api.Get(`/Strategies/${this.strategyId}`).subscribe(strategy => {
+      this.strategy = strategy;
+      this.InitializeStrategyForm(strategy);
+    }, err => {
+      console.error("Error getting strategy", err);
+    });
+  }
+
+  SaveStragey() {
+    if(!this.strategyForm.valid) {
+      this.toast.ShowWarning(`Favor de llenar todos los campos correctamente`);
+      this.strategyForm.markAllAsTouched();
+      return;
+    }
+
+    this.api.Patch(`/Strategies/${this.strategyId}`, {strategy: this.strategyForm.value}).subscribe(strategySaved => {
+      this.InitializeStrategyForm(strategySaved);
+    }, err => {
+      console.error("Error updating strategy", err);
+    });
+  }
+
+  SaveParcialProduct(isParcialProductFinal: boolean = false) {
+    if(!this.parcialProductForm.valid) {
+      this.toast.ShowWarning(`Favor de llenar todos los campos correctamente`);
+      this.parcialProductForm.markAllAsTouched();
+      return;
+    }
+    
+    let parcialProductInstance = {
+      ...this.parcialProductForm.value,
+      isFinal: isParcialProductFinal,
+      strategyId: this.strategyId,
+    }
+    
+    this.api.Post(`/ParcialProducts`, {parcialProduct: parcialProductInstance}).subscribe(newParcialProduct => {
+      this.strategy.parcialProducts.push(newParcialProduct);
+      this.parcialProductForm.reset();
+    }, err => {
+      console.error("Error posting new parcial product", err);
+    });
+  }
+  
+  SaveEvent() {
+    if(!this.eventForm.valid) {
+      this.toast.ShowWarning(`Favor de llenar todos los campos correctamente`);
+      this.eventForm.markAllAsTouched();
+      return;
+    }
+    
+    let parcialProduct = {
+      ...this.eventForm.value,
+      strategyId: this.strategyId,
+      isFinal: true
+    }
+    
+    // this.api.Post(`/Events`, {event}).subscribe(newEvent => {
+    this.api.Post(`/ParcialProducts`, {parcialProduct}).subscribe(newParcialProduct => {
+    }, err => {
+      console.error("Erro posting new event", err);
+    });
+  }
+
+  CatchRubrics(rubric: any) {
+    switch (this.step) {
+      case 2: case 3:
+        this.parcialProductForm.get('rubric')?.setValue(rubric);
+        break;
+      case 4:
+        this.eventForm.get('rubric')?.setValue(rubric);
+        break;
+    }
   }
 
   SaveProject(exit: boolean = false) {
@@ -91,7 +226,7 @@ export class TeacherTemplateFormComponent implements OnInit {
 
   GoToProjectCalendar() {
     this.CloseModal();
-    this.nav.GoToUserRoute(`grado/${this.grade}/grupo/${this.group}/plantillas/${this.templateId}/proyecto/${this.projectId}/calendario`);
+    this.nav.GoToUserRoute(`grado/${this.grade}/grupo/${this.group}/plantillas/${this.templateId}/estrategias/${this.strategyId}/calendario`);
   }
 
 }

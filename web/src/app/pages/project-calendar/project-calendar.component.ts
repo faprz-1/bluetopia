@@ -14,7 +14,7 @@ export class ProjectCalendarComponent implements OnInit {
   grade: any;
   group: any;
   templateId: any;
-  projectId: any;
+  strategyId: any;
 
   modalRef: BsModalRef | null = null;
   loading: any = {
@@ -45,7 +45,7 @@ export class ProjectCalendarComponent implements OnInit {
       this.grade = params['grade'];
       this.group = params['group'];
       this.templateId = params['templateId'];
-      this.projectId = params['projectId'];
+      this.strategyId = params['strategyId'];
       this.loading.params = false;
     });
   }

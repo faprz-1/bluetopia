@@ -8,6 +8,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class TeacherCardComponent implements OnInit {
 
   @Input() teacher: any = null;
+  @Input() showGroups: boolean = false;
 
   @Output() onDelete: EventEmitter<any> = new EventEmitter<any>();
 

@@ -17,13 +17,13 @@ registerLocaleData(localeMx,"es");
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
-// const config: SocketIoConfig = { 
+// const config: SocketIoConfig = {
 //   url: environment.socketURL,
 // };
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,5 @@
 'use strict';
+var uuidV4 = require('uuid/v4');
 
 module.exports = function(Teacher) {
 
@@ -24,6 +25,7 @@ module.exports = function(Teacher) {
             }, (err, subjects) => {
                 if(err) return callback(err);
                 
+                teacher.activationToken = uuidV4();
                 Teacher.create(teacher, (err, newTeacher) => {
                     if(err) return callback(err);
 
@@ -71,7 +73,7 @@ module.exports = function(Teacher) {
                             if(err) return callback(err);
 
                             if(++cont == limit) return callback(null, newTeachers);
-                        })
+                        });
                     });
                 });
             });
@@ -83,11 +85,27 @@ module.exports = function(Teacher) {
             where: {
                 schoolUserId
             },
-            include: 'subjects'
+            include: ['subjects', {'teacherGroups': ['grade', 'group']}]
         }, (err, schoolTeachers) => {
             if(err) return callback(err);
 
             return callback(null, schoolTeachers);
+        });
+    }
+
+    Teacher.prototype.UpdateData = function(teacher, callback) {
+        Teacher.app.models.TeacherGroup.UpdateTeacherGroups(this.id, teacher.teacherGroups, (err, teacherGroupsUpdated) => {
+            if(err) return callback(err);
+            
+            Teacher.app.models.TeacherSubject.UpdateTeacherSubjects(this.id, teacher.subjects, (err, subjects) => {
+                if(err) return callback(err);
+                
+                Teacher.upsert(teacher, (err, teacherUpdated) => {
+                    if(err) return callback(err);
+                    
+                    return callback(null, teacherUpdated);
+                });
+            });
         });
     }
 
@@ -120,7 +138,7 @@ module.exports = function(Teacher) {
         });
     }
 
-    Teacher.GetSubjects = function(userOrTeacherId, callback) {
+    Teacher.GetData = function(userOrTeacherId, callback) {
         Teacher.findOne({
             where: {
                 or: [
@@ -128,11 +146,11 @@ module.exports = function(Teacher) {
                     {id: userOrTeacherId}
                 ]
             },
-            include: 'subjects'
+            include: ['subjects', {'teacherGroups': ['grade', 'group']}]
         }, (err, teacher) => {
             if(err) return callback(err);
 
-            return callback(null, teacher.subjects());
+            return callback(null, teacher);
         });
     }
 

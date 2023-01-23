@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { NavigationService } from 'src/app/services/navigation.service';
@@ -16,6 +16,7 @@ export class TemplateFormComponent implements OnInit {
   user: any;
 
   selectedTab: any = null;
+  loading: boolean = false;
 
   teacherSubjects: Array<any> = [];
   selectedSubjects: Array<any> = [];
@@ -25,7 +26,8 @@ export class TemplateFormComponent implements OnInit {
   constructor(
     private api: ApiService,
     private activatedRoute: ActivatedRoute,
-    public nav: NavigationService
+    public nav: NavigationService,
+    private zone: NgZone
   ) { }
 
   ngOnInit(): void {
@@ -50,7 +52,6 @@ export class TemplateFormComponent implements OnInit {
   }
 
   GetTeacherSubjects() {
-    // this.api.Get(`/Teachers/${this.user ? this.user.id : 0}/Subjects`).subscribe(subjects => {
     this.api.Get(`/Subjects`).subscribe(subjects => {
       this.teacherSubjects = subjects;
     }, err => {
@@ -74,8 +75,11 @@ export class TemplateFormComponent implements OnInit {
     });
   }
 
-  OnSelectedSubjectsChange(subjects: any) {
-    this.selectedTab = subjects[subjects.length - 1];
+  OnSelectedSubjectsChange(subject: any) {
+    if(!!subject) {
+      this.selectedSubjects.push(subject);
+      this.selectedTab = subject;
+    }
   }
 
   OnObjectiveSelected(subject: any, objective: any) {
@@ -96,14 +100,35 @@ export class TemplateFormComponent implements OnInit {
     this.selectedTab = subject;
   }
 
+  AreFormsValid(): boolean {
+    let isValid = true;
+    this.selectedSubjects.forEach(subject => {
+      if(!subject.sepObjectives || subject.sepObjectives.length == 0) isValid = false;
+      if(!subject.skills || subject.skills.length == 0) isValid = false;
+    });
+    return isValid;
+  }
+
+  RemoveItemFromArray(array: Array<any>, idx: number) {
+    this.zone.run(() => {
+      array.splice(idx, 1);
+    });
+  }
+
   CreateNewProyect() {
-    this.nav.GoToUserRoute(`grado/${this.grade}/grupo/${this.group}/plantillas/${this.templateId}/proyecto/${1}`);
-    return;
-    this.api.Post(`TeacherTemplates`, {subjects: this.selectedSubjects}).subscribe(newProject => {
-      this.nav.GoToUserRoute(`grado/${this.grade}/grupo/${this.group}/plantillas/${this.templateId}/proyecto/${newProject.id}`);
+    this.loading = true;
+    let strategy = {
+      subjects: this.selectedSubjects,
+      templateId: this.templateId,
+      userId: this.user.id
+    }
+    this.api.Post(`/Strategies`, {strategy}).subscribe(newStrategy => {
+      this.nav.GoToUserRoute(`grado/${this.grade}/grupo/${this.group}/plantillas/${this.templateId}/estrategias/${newStrategy.id}`);
+      this.loading = false;
     }, err => {
       console.error("Error creating new project", err);
-    })
+      this.loading = false;
+    });
   }
 
 }

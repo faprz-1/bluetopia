@@ -134,8 +134,9 @@
           "*": false,
           "AddTeachers": true,
           "GetAllOfSchool": true,
+          "prototype.UpdateData": true,
           "prototype.Activate": true,
-          "GetSubjects": true
+          "GetData": true
         }
       }
     }
@@ -293,5 +294,84 @@
         }
       }
     }
+  },
+  "Strategy": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "CreateOne": true,
+          "prototype.Update": true,
+          "prototype.GetData": true,
+          "prototype.GetActivities": true,
+          "GetAllOfTeacher": true
+        }
+      }
+    }
+  },
+  "ParcialProduct": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "CreateOne": true
+        }
+      }
+    }
+  },
+  "ParcialProductType": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "GetAll": true
+        }
+      }
+    }
+  },
+  "StrategyGroup": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "Event": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "CreateOne": true
+        }
+      }
+    }
+  },
+  "EventType": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "GetAll": true
+        }
+      }
+    }
+  },
+  "EventFile": {
+    "dataSource": "mysqlDev",
+    "public": false
   }
 }

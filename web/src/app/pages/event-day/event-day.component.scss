@@ -23,8 +23,8 @@
     justify-content: space-between;
     margin-bottom: .75rem;
 
-    input::placeholder {
-        padding-left: 1.5rem;
+    input {
+        padding-left: 1.5rem !important;
     }
 }
 
@@ -46,6 +46,12 @@
     height: 100%;
     width: 100%;
     margin-bottom: 1.25rem;
+}
+
+.btn-bigger {
+    font-size: 1.25rem;
+    font-weight: 800;
+    padding: 1rem 8rem;
 }
 
 @media (min-width: 0px) and (max-width: 925px) {

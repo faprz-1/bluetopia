@@ -21,11 +21,8 @@
 
     <div class="row" *ngIf="teachers?.length; else noTeachers">
         <div class="col-12 col-sm-10 col-md-6 col-xl-4 mb-4" *ngFor="let teacher of teachers">
-            <app-teacher-card
-            class="clickeable"
-            [teacher]="teacher"
-            (click)="EditTeacher(teacher)"
-            ></app-teacher-card>
+            <app-teacher-card class="clickeable" [teacher]="teacher" [showGroups]="true"
+                (click)="EditTeacher(editTeacherModal, teacher)"></app-teacher-card>
         </div>
     </div>
 </div>
@@ -33,5 +30,106 @@
 <ng-template #noTeachers>
     <div class="col-12 text-center no-items-message">
         No hay maestros registrados, registre algunos con el botón de <b>Agregar</b>
+    </div>
+</ng-template>
+
+<ng-template #editTeacherModal>
+    <div class="modal-header">
+        <h2 class="modal-title">Editar maestro</h2>
+    </div>
+    <div class="modal-body">
+        <div class="teacher-form">
+            <form [formGroup]="teacherForm">
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="input-container">
+                            <div class="input-icon-container text-center">
+                                <img src="assets/icons/user.png">
+                            </div>
+                            <input class="form-control" type="text" placeholder="Nombre" formControlName="name">
+                            <app-control-messages [control]="teacherForm.get('name')"></app-control-messages>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="input-container">
+                            <div class="input-icon-container text-center">
+                                <img src="assets/icons/book.png">
+                            </div>
+                            <ng-select class="ng-select form-control with-icon" [items]="subjects" [multiple]="true"
+                                bindLabel="name" placeholder="Asignaturas" formControlName="subjects">
+                            </ng-select>
+                            <app-control-messages [control]="teacherForm.get('subjects')"></app-control-messages>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="input-container">
+                            <div class="input-icon-container text-center">
+                                <img src="assets/icons/mail.png">
+                            </div>
+                            <input class="form-control" type="text" placeholder="Correo electrónico de trabajo"
+                                formControlName="email">
+                            <app-control-messages [control]="teacherForm.get('email')"></app-control-messages>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="checkbox-container clickeable">
+                            <div class="mr-2" (click)="extracurricularsInput.click()">
+                                <img src="assets/icons/star.png">
+                            </div>
+                            <label class="mr-2 clickeable"
+                                (click)="extracurricularsInput.click()">Extracurriculares</label>
+                            <input type="checkbox" #extracurricularsInput formControlName="extracurricular">
+                            <span class="checkmark" (click)="extracurricularsInput.click()"></span>
+                            <app-control-messages [control]="teacherForm.get('extracurricular')"></app-control-messages>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-4">
+                        <div class="input-container">
+                            <div class="input-icon-container text-center">
+                                <img src="assets/icons/users.png">
+                            </div>
+                            <input class="form-control" type="text" placeholder="Grado" formControlName="grade">
+                            <app-control-messages [control]="teacherForm.get('grade')"></app-control-messages>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-4">
+                        <div class="input-container">
+                            <div class="input-icon-container text-center">
+                                <img src="assets/icons/users-group.png">
+                            </div>
+                            <input class="form-control" type="text" placeholder="Grupo" formControlName="group">
+                            <app-control-messages [control]="teacherForm.get('group')"></app-control-messages>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-4">
+                        <button class="btn btn-outline-success btn-block" (click)="AddGroup()"
+                            [disabled]="!teacherForm.get('group')?.value || !teacherForm.get('grade')?.value">
+                            Asignar grupo
+                        </button>
+                    </div>
+                    <div class="col-12">
+                        <div class="input-container">
+                            <label class="input-label">Grupos asignados</label>
+                            <span class="badge badge-primary mr-3" *ngFor="let teacherGoup of teacherForm.get('teacherGroups')?.value; let i = index">
+                                <div class="d-flex">
+                                    <span class="mr-2 text-uppercase">
+                                        {{(teacherGoup.grade?.name ? teacherGoup.grade.name : teacherGoup.grade) + (teacherGoup.group?.name ? teacherGoup.group.name : teacherGoup.group)}}
+                                    </span>
+                                    <i class="zmdi zmdi-close clickeable" (click)="DeleteGroup(i)"></i>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer d-flex align-items-center">
+        <button class="btn btn-outline-primary btn-big mr-4" (click)="CloseModal()">
+            Cancelar
+        </button>
+        <button class="btn btn-primary btn-big" (click)="SaveTeacher()">
+            Guardar
+        </button>
     </div>
 </ng-template>
