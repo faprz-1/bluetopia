@@ -32,4 +32,16 @@ module.exports = function(Strategy) {
         });
     }
 
+    Strategy.prototype.GetActivities = function(callback) {
+        Strategy.app.models.ParcialProduct.find({
+            where: {
+                strategyId: this.id
+            }
+        }, (err, parcialProjects) => {
+            if(err) return callback(err);
+
+            return callback(null, parcialProjects);
+        });
+    }
+
 };

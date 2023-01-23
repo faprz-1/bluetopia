@@ -36,7 +36,7 @@ export class TeacherTemplateFormComponent implements OnInit {
     rubric: new FormControl(null, [Validators.required]),
   });
   eventForm: FormGroup = new FormGroup({
-    eventTypeId: new FormControl(null, [Validators.required]),
+    parcialProductTypeId: new FormControl(null, [Validators.required]),
     name: new FormControl(null, [Validators.required]),
     instructions: new FormControl(null, [Validators.required]),
     date: new FormControl(null, [Validators.required]),
@@ -189,26 +189,26 @@ export class TeacherTemplateFormComponent implements OnInit {
   }
   
   SaveEvent() {
-    console.log(this.eventForm);
     if(!this.eventForm.valid) {
       this.toast.ShowWarning(`Favor de llenar todos los campos correctamente`);
       this.eventForm.markAllAsTouched();
       return;
     }
-
-    let event = {
+    
+    let parcialProduct = {
       ...this.eventForm.value,
-      strategyId: this.strategyId
+      strategyId: this.strategyId,
+      isFinal: true
     }
-
-    this.api.Post(`/Events`, {event}).subscribe(newEvent => {
+    
+    // this.api.Post(`/Events`, {event}).subscribe(newEvent => {
+    this.api.Post(`/ParcialProducts`, {parcialProduct}).subscribe(newParcialProduct => {
     }, err => {
       console.error("Erro posting new event", err);
-    })
+    });
   }
 
   CatchRubrics(rubric: any) {
-    console.log(this.step);
     switch (this.step) {
       case 2: case 3:
         this.parcialProductForm.get('rubric')?.setValue(rubric);
@@ -221,7 +221,7 @@ export class TeacherTemplateFormComponent implements OnInit {
 
   SaveProject(exit: boolean = false) {
     this.CloseModal();
-    // if(exit) this.nav.GoToUserRoute('mis-estudiantes');
+    if(exit) this.nav.GoToUserRoute('mis-estudiantes');
   }
 
   GoToProjectCalendar() {

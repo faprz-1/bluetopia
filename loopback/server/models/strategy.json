@@ -77,7 +77,8 @@
       "property": [
         "CreateOne",
         "Update",
-        "GetData"
+        "GetData",
+        "GetActivities"
       ]
     }
   ],
@@ -146,6 +147,24 @@
       "http": [
         {
           "path": "/",
+          "verb": "get"
+        }
+      ]
+    },
+    "prototype.GetActivities": {
+      "accepts": [],
+      "returns": [
+        {
+          "arg": "strategy",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/Activities",
           "verb": "get"
         }
       ]

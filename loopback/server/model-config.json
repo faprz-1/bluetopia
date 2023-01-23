@@ -304,7 +304,8 @@
           "*": false,
           "CreateOne": true,
           "prototype.Update": true,
-          "prototype.GetData": true
+          "prototype.GetData": true,
+          "prototype.GetActivities": true
         }
       }
     }

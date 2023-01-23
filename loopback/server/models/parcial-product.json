@@ -32,6 +32,11 @@
       "type": "belongsTo",
       "model": "ParcialProductType",
       "foreignKey": "parcialProductTypeId"
+    },
+    "event": {
+      "type": "belongsTo",
+      "model": "Event",
+      "foreignKey": "eventId"
     }
   },
   "acls": [

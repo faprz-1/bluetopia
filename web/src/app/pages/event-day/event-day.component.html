@@ -22,76 +22,85 @@
 
     <div class="row justify-content-center">
         <div class="col-12 col-md-10 col-lg-8">
-            <div class="subtitle">
-                Selecciona tu estrategia
-            </div>
-        
-            <div class="flex-row">
-                <div class="subtitle my-auto">
-                    Inicio
+            <form [formGroup]="eventForm">
+                <div class="subtitle">
+                    Selecciona tu estrategia
                 </div>
-                <div class="input-container w-75 my-auto">
-                    <input class="form-control no-icon" type="text" placeholder="Inicio">
-                </div>
-            </div>
-            <div class="flex-row">
-                <div class="subtitle my-auto">
-                    Desarrollo
-                </div>
-                <div class="input-container w-75 my-auto">
-                    <input class="form-control no-icon" type="text" placeholder="Desarrollo">
-                </div>
-            </div>
-            <div class="flex-row">
-                <div class="subtitle my-auto">
-                    Cierre
-                </div>
-                <div class="input-container w-75 my-auto">
-                    <input class="form-control no-icon" type="text" placeholder="Cierre">
-                </div>
-            </div>
-
-            <div class="subtitle">
-                Asigna una actividad para ese día
-            </div>
-
-            <div class="input-container">
-                <ng-select
-                    class="form-control with-border"
-                    [items]="activities"
-                    bindLabel="name"
-                    [multiple]="false"
-                    placeholder="Selecciona tu actividad">
-                </ng-select>
-            </div>
-
-            <div class="subtitle">
-                Asigna los recursos a utilizar
-            </div>
-
-            <div class="flex-files-container">
-                <div class="flex-files">
-                    <div class="flex-icons">
-                        <img src="assets/icons/video-recorder.png" alt="video">
-                        <img src="assets/icons/gallery.png" alt="video">
-                        <img src="assets/icons/book-closed-green.png" alt="video">
+            
+                <div class="flex-row">
+                    <div class="subtitle my-auto">
+                        Inicio
                     </div>
-                    <button class="btn btn-success btn-block">
-                        Adjuntar algún recurso
-                    </button>
-                </div>
-
-                <div class="flex-files mr-0">
-                    <div class="flex-icons">
-                        <img src="assets/icons/library.png" alt="video">
-                        <img src="assets/icons/movie.png" alt="video">
-                        <img src="assets/icons/microscope.png" alt="video">
+                    <div class="input-container w-75 my-auto">
+                        <input class="form-control no-icon" type="text" placeholder="Inicio" formControlName="start">
                     </div>
-                    <button class="btn btn-success btn-block">
-                        Adjuntar de la biblioteca
-                    </button>
                 </div>
-            </div>
+                <div class="flex-row">
+                    <div class="subtitle my-auto">
+                        Desarrollo
+                    </div>
+                    <div class="input-container w-75 my-auto">
+                        <input class="form-control no-icon" type="text" placeholder="Desarrollo" formControlName="body">
+                    </div>
+                </div>
+                <div class="flex-row">
+                    <div class="subtitle my-auto">
+                        Cierre
+                    </div>
+                    <div class="input-container w-75 my-auto">
+                        <input class="form-control no-icon" type="text" placeholder="Cierre" formControlName="closure">
+                    </div>
+                </div>
+    
+                <div class="subtitle">
+                    Asigna una actividad para ese día
+                </div>
+    
+                <div class="input-container">
+                    <ng-select
+                        class="form-control with-border"
+                        [items]="activities"
+                        bindLabel="name"
+                        [multiple]="false"
+                        placeholder="Selecciona tu actividad"
+                        formControlName="parcialProjectId">
+                    </ng-select>
+                </div>
+    
+                <div class="subtitle">
+                    Asigna los recursos a utilizar
+                </div>
+    
+                <div class="flex-files-container">
+                    <div class="flex-files">
+                        <div class="flex-icons">
+                            <img src="assets/icons/video-recorder.png" alt="video">
+                            <img src="assets/icons/gallery.png" alt="video">
+                            <img src="assets/icons/book-closed-green.png" alt="video">
+                        </div>
+                        <input class="d-none" type="file" #fileInput multiple (change)="OnFileSelected($event)">
+                        <button class="btn btn-success btn-block" (click)="fileInput.click()">
+                            Adjuntar algún recurso
+                        </button>
+                    </div>
+    
+                    <div class="flex-files mr-0">
+                        <div class="flex-icons">
+                            <img src="assets/icons/library.png" alt="video">
+                            <img src="assets/icons/movie.png" alt="video">
+                            <img src="assets/icons/microscope.png" alt="video">
+                        </div>
+                        <button class="btn btn-success btn-block">
+                            Adjuntar de la biblioteca
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-12 text-right mb-5">
+            <button class="btn btn-primary btn-bigger" (click)="SaveEvent()">
+                Continuar
+            </button>
         </div>
     </div>
 
