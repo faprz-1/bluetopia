@@ -1,0 +1,32 @@
+// strategy card styles
+.card {
+    border: 2px solid var(--primary);
+    border-radius: 6px;
+
+    .card-header {
+        border: none;
+        background-color: white;
+
+        .card-title {
+            color: var(--primary);
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+    }
+
+    .info {
+        margin-bottom: .5rem;
+
+        label {
+            color: var(--primary);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0;
+        }
+        .text {
+            color: black;
+            font-size: 1.1rem;
+        }
+    }
+}

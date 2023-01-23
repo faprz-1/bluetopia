@@ -44,4 +44,17 @@ module.exports = function(Strategy) {
         });
     }
 
+    Strategy.GetAllOfTeacher = function(userId, callback) {
+        Strategy.find({
+            where: {
+                userId
+            },
+            include: 'template'
+        }, (err, strategies) => {
+            if(err) return callback(err);
+
+            return callback(null, strategies);
+        });
+    }
+
 };

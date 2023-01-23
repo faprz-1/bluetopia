@@ -27,6 +27,7 @@ export class EventDayComponent implements OnInit {
     body: new FormControl(null, [Validators.required]),
     closure: new FormControl(null, [Validators.required]),
     date: new FormControl(null, [Validators.required]),
+    strategyId: new FormControl(null, [Validators.required]),
     parcialProjectId: new FormControl(null, [Validators.required]),
     resources: new FormControl([], []),
   });
@@ -56,6 +57,7 @@ export class EventDayComponent implements OnInit {
       this.eventDate = params['eventDate'];
       
       this.eventForm.get('date')?.setValue(moment(this.eventDate).toISOString());
+      this.eventForm.get('strategyId')?.setValue(this.strategyId);
       this.GetStrategyTeacherActivities();
     });
   }
@@ -66,7 +68,7 @@ export class EventDayComponent implements OnInit {
 
   GetStrategyTeacherActivities() {
     this.api.Get(`/Strategies/${this.strategyId}/Activities`).subscribe(activities => {
-      this.activities = activities;
+      this.activities = activities.filter((activity: any) => !activity.eventId);
     }, err => {
       console.error("Error getting activities", err);
     });
@@ -93,19 +95,22 @@ export class EventDayComponent implements OnInit {
   }
 
   SaveEvent() {
+    console.log(this.eventForm);
     if(this.eventForm.invalid) {
       this.toast.ShowWarning(`Favor de llenar todos los campos`);
+      this.eventForm.markAllAsTouched();
       return;
     }
 
     this.loading = true;
     this.api.Post(`/Events`, {event: this.eventForm.value}).subscribe(newEvent => {
       this.loading = false;
+      this.toast.ShowSuccess(`Evento creado correctamente`);
       this.GoBack();
     }, err => {
       console.error("Error creating event", err);
       this.loading = false;
-    })
+    });
   }
 
 }

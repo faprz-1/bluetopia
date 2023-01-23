@@ -61,6 +61,7 @@
                         class="form-control with-border"
                         [items]="activities"
                         bindLabel="name"
+                        bindValue="id"
                         [multiple]="false"
                         placeholder="Selecciona tu actividad"
                         formControlName="parcialProjectId">
@@ -99,7 +100,8 @@
         </div>
         <div class="col-12 text-right mb-5">
             <button class="btn btn-primary btn-bigger" (click)="SaveEvent()">
-                Continuar
+                <span *ngIf="!loading">Continuar</span>
+                <span *ngIf="loading"><i class="zmdi zmdi-spinner zmdi-hc-lg zmdi-hc-spin"></i></span>
             </button>
         </div>
     </div>

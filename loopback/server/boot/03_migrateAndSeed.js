@@ -380,7 +380,10 @@ module.exports = function(app) {
     var containers = [
       {
         name: "profileImages"
-      }
+      },
+      {
+        name: "resources"
+      },
     ]
 
     var sequentialConteinerSeed = function(containers, uploadAppModel){

@@ -1,3 +1,41 @@
 <div class="content">
-    <p>strategies works!</p>
+    <div class="row mb-5">
+        <div class="col-12 d-flex h-100 align-items-center header-col">
+            <div class="page-title">
+                Mis estrategias
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-6 col-lg-4" *ngFor="let strategy of strategies">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">{{strategy.topic}}</h2>
+                </div>
+                <div class="card-body">
+                    <div class="info">
+                        <label>Titulo</label>
+                        <div class="text">{{strategy.title}}</div>
+                    </div>
+                    <div class="info">
+                        <label>Pregunta generadora</label>
+                        <div class="text">{{strategy.title}}</div>
+                    </div>
+                    <div class="info">
+                        <label>Plantilla</label>
+                        <div class="text">{{strategy.template?.name}}</div>
+                    </div>
+                    <div class="info">
+                        <label>Materias</label>
+                        <div class="text">
+                            <span *ngFor="let subject of strategy.subjects; let last = last">
+                                {{ !!last ? subject.name : (subject.name + ', ')}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

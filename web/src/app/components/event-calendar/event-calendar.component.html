@@ -1,10 +1,10 @@
 <div class="calendar">
     <div class="d-flex justify-content-center align-items-center">
-        <img class="control-icon" src="assets/icons/left.png" alt="left">
+        <img class="control-icon clickeable" src="assets/icons/left.png" alt="left" (click)="PopulateMonth(previousMonth)">
         <div class="month-year">
-            Enero 2023
+            {{monthAndYear}}
         </div>
-        <img class="control-icon" src="assets/icons/right.png" alt="left">
+        <img class="control-icon clickeable" src="assets/icons/right.png" alt="left" (click)="PopulateMonth(nextMonth)">
     </div>
 
     <table class="calendar-table">

@@ -78,7 +78,8 @@
         "CreateOne",
         "Update",
         "GetData",
-        "GetActivities"
+        "GetActivities",
+        "GetAllOfTeacher"
       ]
     }
   ],
@@ -165,6 +166,31 @@
       "http": [
         {
           "path": "/Activities",
+          "verb": "get"
+        }
+      ]
+    },
+    "GetAllOfTeacher": {
+      "accepts": [
+        {
+          "arg": "userId",
+          "type": "number",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "strategies",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/OfTeacher/:userId",
           "verb": "get"
         }
       ]

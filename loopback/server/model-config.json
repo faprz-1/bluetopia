@@ -305,7 +305,8 @@
           "CreateOne": true,
           "prototype.Update": true,
           "prototype.GetData": true,
-          "prototype.GetActivities": true
+          "prototype.GetActivities": true,
+          "GetAllOfTeacher": true
         }
       }
     }

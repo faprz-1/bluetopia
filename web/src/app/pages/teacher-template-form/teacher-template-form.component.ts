@@ -43,7 +43,7 @@ export class TeacherTemplateFormComponent implements OnInit {
     rubric: new FormControl(null, [Validators.required]),
   });
 
-  step: number = 4;
+  step: number = 1;
 
   public get nextButtonText() {
     switch (this.step) {
