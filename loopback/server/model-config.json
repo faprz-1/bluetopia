@@ -368,5 +368,9 @@
         }
       }
     }
+  },
+  "EventFile": {
+    "dataSource": "mysqlDev",
+    "public": false
   }
 }
