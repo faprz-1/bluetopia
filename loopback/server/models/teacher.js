@@ -109,7 +109,21 @@ module.exports = function(Teacher) {
         });
     }
 
-    Teacher.prototype.Activate = function(callback) {
+    Teacher.GetByActivationToken = function(activationToken, callback) {
+        Teacher.findOne({
+            where: {
+                activationToken
+            }
+        }, (err, teacher) => {
+            if(err) return callback(err);
+
+            if(!teacher) return callback('invalid token');
+
+            return callback(null, teacher);
+        });
+    }
+
+    Teacher.prototype.Activate = function(password, callback) {
         Teacher.app.models.Usuario.findOne({
             where: {email: this.email}
         }, (err, userFound) => {
@@ -120,14 +134,14 @@ module.exports = function(Teacher) {
                 active: true,
                 username: this.name,
                 email: this.email,
-                // password: Math.random().toString(36).slice(-8),
-                password: '123',
+                password: !!password ? password : '123',
                 schoolUserId: this.schoolUserId
             }
             Teacher.app.models.Usuario.RegisterUser(user, null, 'Teacher', (err, newTeacherUser) => {
                 if(err) return callback(err);
                 
                 this.active = true;
+                this.activationToken = null;
                 this.userId = newTeacherUser.id;
                 this.save((err, teacherSaved) => {
                     if(err) return callback(err);

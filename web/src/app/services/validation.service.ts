@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, FormControl } from '@angular/forms';
+import { AbstractControl, FormControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -44,9 +44,22 @@ export class ValidationService {
         name: 'invalidIntegerNumber',
         label: `Solo números enteros`
       },
+      {
+        name: 'matchstring',
+        label: `${!!validatorValue.matchStringCustomLabel ? validatorValue.matchStringCustomLabel : 'El texto no coincide'}`
+      },
     ];
 
     return config.find(v => v.name == validatorName);
+  }
+
+  static matchString(stringToMatch: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      if(!value) return null;
+      if(stringToMatch == control.value) return null;
+      return {'matchstring': stringToMatch};
+    }
   }
 
   static CheckOnlyIntegerNumbers(control: AbstractControl | null) {

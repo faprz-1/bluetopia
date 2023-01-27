@@ -101,6 +101,7 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": [
+        "GetByActivationToken",
         "Activate"
       ]
     }
@@ -181,12 +182,44 @@
         }
       ]
     },
+    "GetByActivationToken": {
+      "accepts": [
+        {
+          "arg": "activationToken",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "teacher",
+          "type": "",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/ByActivationToken/:activationToken",
+          "verb": "get"
+        }
+      ]
+    },
     "prototype.Activate": {
-      "accepts": [],
+      "accepts": [
+        {
+          "arg": "password",
+          "type": "string",
+          "required": false,
+          "description": ""
+        }
+      ],
       "returns": [
         {
           "arg": "teacherSaved",
-          "type": "",
+          "type": "object",
           "root": true,
           "description": ""
         }

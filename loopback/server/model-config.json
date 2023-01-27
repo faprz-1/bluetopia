@@ -135,6 +135,7 @@
           "AddTeachers": true,
           "GetAllOfSchool": true,
           "prototype.UpdateData": true,
+          "GetByActivationToken": true,
           "prototype.Activate": true,
           "GetData": true
         }

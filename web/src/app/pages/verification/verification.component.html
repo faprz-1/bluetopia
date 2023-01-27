@@ -1,0 +1,59 @@
+<div class="full-page">
+    <div class="d-flex h-100">
+        <img class="side-img" src="assets/img/landing_page_side.png" alt="Side img">
+        <div class="w-100 vertical-content">
+            <div class="row m-0">
+                <div class="col-12 text-center">
+                    <div>
+                        <img class="title-img" src="assets/img/project_name.png" alt="Bluetopia">
+                    </div>
+                    
+                    <div class="header-container">
+                        <div class="title">
+                            ¡bienvenido!
+                        </div>
+                        <div>
+                            <img class="landing-image" src="assets/img/landing_page_img.png" alt="Image">
+                        </div>
+                        <div class="subtitle">
+                            Para temrinar la creación de su cuenta porfavor ingrese una contraseña
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <form class="form-container" *ngIf="!loading.checkingCode; else bigLoading" [formGroup]="passwordForm">
+                            <div class="input-container">
+                                <div class="input-icon-container text-center">
+                                    <img src="assets/icons/lock.png">
+                                </div>
+                                <input class="form-control" type="password" placeholder="Contraseña" formControlName="password"
+                                (input)="OnPasswordChange()">
+                                <app-control-messages [control]="passwordForm.get('password')"></app-control-messages>
+                            </div>
+                            <div class="input-container">
+                                <div class="input-icon-container text-center">
+                                    <img src="assets/icons/lock.png">
+                                </div>
+                                <input class="form-control" type="password" placeholder="Confirmar contraseña" formControlName="confirmPassword">
+                                <app-control-messages [control]="passwordForm.get('confirmPassword')"></app-control-messages>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="mt-5">
+                        <div class="d-flex justify-content-center">
+                            <button class="btn btn-outline-primary btn-bigger" [disabled]="loading.updatingPassword || loading.checkingCode" (click)="SetPasswordAndLogin()">
+                                <span *ngIf="!loading.updatingPassword">Continuar</span>
+                                <span *ngIf="loading.updatingPassword"><i class="zmdi zmdi-spinner zmdi-hc-2x zmdi-hc-spin"></i></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #bigLoading>
+    <div class="w-100 text-center">
+        <i class="zmdi zmdi-spinner zmdi-hc-5x zmdi-hc-spin"></i>
+    </div>
+</ng-template>
