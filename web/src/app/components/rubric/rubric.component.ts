@@ -33,7 +33,6 @@ export class RubricComponent implements OnInit {
     this.rubrics.push({
       description: '',
       concepts: this.rubrics[0].concepts.map((concept: any) => {
-        concept.description = '';
         return Object.assign({}, concept);
       })
     });

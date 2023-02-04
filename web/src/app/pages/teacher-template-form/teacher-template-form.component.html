@@ -41,8 +41,16 @@
                                         bindValue="name"
                                         [multiple]="false"
                                         placeholder="Temáticas"
+                                        (change)="OnTopicSelected($event)"
                                         formControlName="topic">
                                     </ng-select>
+                                </div>
+                            </div>
+                            <div class="text" *ngIf="strategyForm.get('topic')?.value == NEW_TOPIC_NAME">
+                                <label>Escribe tu temática</label>
+                                <div class="input-container">
+                                    <input class="form-control no-icon w-100" type="text" placeholder="Tematica del proyecto" formControlName="customTopic">
+                                    <app-control-messages [control]="strategyForm.get('customTopic')"></app-control-messages>
                                 </div>
                             </div>
 

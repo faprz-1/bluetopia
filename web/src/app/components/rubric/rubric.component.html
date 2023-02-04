@@ -5,7 +5,9 @@
             <textarea class="rubric-input" [(ngModel)]="rubric.description" placeholder="Descripción"></textarea>
         </div>
         <div class="rubric-item" *ngFor="let concept of rubric.concepts">
-            <div class="rubric-title">{{concept.value}}</div>
+            <div class="rubric-title">
+                <input type="text" [(ngModel)]="concept.value">
+            </div>
             <textarea class="rubric-input" [(ngModel)]="concept.description" placeholder="Descripción"></textarea>
         </div>
         <div class="controls vertical" *ngIf="last">

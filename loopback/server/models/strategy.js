@@ -3,23 +3,66 @@
 module.exports = function(Strategy) {
 
     Strategy.CreateOne = function(strategy, callback) {
-        Strategy.create(strategy, (err, newStrategy) => {
+        Strategy.app.models.Grade.findOne({
+            where: {
+                name: {like: `%${strategy.grade}%`}
+            }
+        }, (err, grade) => {
             if(err) return callback(err);
 
-            return callback(null, newStrategy);
+            Strategy.app.models.Group.findOne({
+                where: {
+                    name: {like: `%${strategy.group}%`}
+                }
+            }, (err, group) => {
+                if(err) return callback(err);
+
+                Strategy.create(strategy, (err, newStrategy) => {
+                    if(err) return callback(err);
+
+                    Strategy.app.models.StrategyGroup.create({
+                        strategyId: newStrategy.id,
+                        gradeId: grade.id,
+                        groupId: group.id,
+                    }, (err, newStrategyGroup) => {
+                        if(err) return callback(err);
+
+                        return callback(null, newStrategy);
+                    });
+                });
+            });
         });
     }
 
-    Strategy.prototype.Update = function(strategy, callback) {
-        Strategy.upsert(strategy, (err, strategyUpdated) => {
-            if(err) return callback(err);
-            
-            this.GetData((err, strategy) => {
+    Strategy.prototype.Update = function(ctx, strategy, callback) {
+        if(!!strategy.customTopic) {
+            const userId = ctx.accessToken.userId;
+            strategy.topic = strategy.customTopic;
+            Strategy.app.models.TemplateTopic.CreateOneOfTeacher(strategy.customTopic, userId, (err, newTemplateTopic) => {
                 if(err) return callback(err);
 
-                return callback(null, strategy);
+                Strategy.upsert(strategy, (err, strategyUpdated) => {
+                    if(err) return callback(err);
+                    
+                    this.GetData((err, strategy) => {
+                        if(err) return callback(err);
+
+                        return callback(null, strategy);
+                    });
+                });
             });
-        });
+        }
+        else {
+            Strategy.upsert(strategy, (err, strategyUpdated) => {
+                if(err) return callback(err);
+
+                this.GetData((err, strategy) => {
+                    if(err) return callback(err);
+
+                    return callback(null, strategy);
+                });
+            });
+        }
     }
     
     Strategy.prototype.GetData = function(callback) {
@@ -49,7 +92,7 @@ module.exports = function(Strategy) {
             where: {
                 userId
             },
-            include: 'template'
+            include: ['template', {'strategyGroups': ['grade', 'group']}]
         }, (err, strategies) => {
             if(err) return callback(err);
 

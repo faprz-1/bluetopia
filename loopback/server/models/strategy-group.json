@@ -20,7 +20,23 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "strategy": {
+      "type": "belongsTo",
+      "model": "Strategy",
+      "foreignKey": "strategyId"
+    },
+    "group": {
+      "type": "belongsTo",
+      "model": "Group",
+      "foreignKey": "groupId"
+    },
+    "grade": {
+      "type": "belongsTo",
+      "model": "Grade",
+      "foreignKey": "gradeId"
+    }
+  },
   "acls": [],
   "methods": {}
 }

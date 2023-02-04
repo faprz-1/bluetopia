@@ -13,6 +13,8 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class TeacherTemplateFormComponent implements OnInit {
 
+  NEW_TOPIC_NAME: string = 'Agregar uno nuevo';
+
   grade: any;
   group: any;
   templateId: any;
@@ -26,6 +28,7 @@ export class TeacherTemplateFormComponent implements OnInit {
   strategyForm: FormGroup = new FormGroup({
     id: new FormControl(null, [Validators.required]),
     topic: new FormControl(null, [Validators.required]),
+    customTopic: new FormControl(null, []),
     title: new FormControl(null, [Validators.required]),
     generatingQuestion: new FormControl(null, [Validators.required]),
   });
@@ -83,6 +86,20 @@ export class TeacherTemplateFormComponent implements OnInit {
     else this.step--;
   }
 
+  OnTopicSelected(topic: any) {
+    const customTopic = this.strategyForm.get('customTopic');
+    if(!!topic) {
+      if(typeof topic === 'string' && topic == this.NEW_TOPIC_NAME) customTopic?.setValidators([Validators.required]);
+      else if(typeof topic === 'object' && topic.name == this.NEW_TOPIC_NAME) customTopic?.setValidators([Validators.required]);
+      else {
+        customTopic?.setValue(null);
+        customTopic?.clearValidators();
+        customTopic?.markAsUntouched();
+      }
+    }
+    else customTopic?.clearValidators();
+  }
+
   NextStep(template: any) {
     this.Save();
     if(this.step == 4) this.OpenModal(template);
@@ -114,6 +131,10 @@ export class TeacherTemplateFormComponent implements OnInit {
   GetTemplateTopics() {
     this.api.Get(`/TemplateTopics`).subscribe(topics => {
       this.templateTopics = topics;
+      this.templateTopics.push({
+        id: 0,
+        name: this.NEW_TOPIC_NAME,
+      });
     }, err => {
       console.error("Erro getting template topics", err);
     });
