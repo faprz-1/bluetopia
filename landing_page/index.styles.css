@@ -427,6 +427,102 @@ ng-select.form-control {
     margin-bottom: 6.25rem;
 }
 
+.triangles-container .row {
+    position: absolute;
+    top: 100px;
+    width: 100%;
+}
+.triangles-container {
+    position: relative;
+    width: 100%;
+    min-height: 1000px;
+    margin-top: 150px;
+}
+.top-img {
+    position: absolute;
+    top: -125px;
+    width: 100%;
+}
+.blue-triangle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 975px;
+}
+.green-triangle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 775px;
+}
+.tools-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: end;
+}
+.target-icon {
+    position: absolute;
+    top: 80px;
+    right: 0;
+    display: flex;
+    justify-content: start;
+    width: 25%;
+}
+.box-tools-icon {
+    position: absolute;
+    top: 145px;
+    right: 5%;
+    display: flex;
+}
+.triangles-info-container {
+    position: absolute;
+}
+.triangles-text {
+    font-size: 1.75rem;
+    font-weight: 500;
+    line-height: 35px;
+    width: 730px;
+    max-width: 100%;
+    color: white;
+    margin-right: 4.625rem;
+}
+.hire-button {
+    font-size: 1.375rem;
+    font-weight: 700;
+    padding: .75rem 2.5rem;
+    border-radius: 2rem;
+    margin-top: 2rem;
+}
+.platform-img {
+    margin-right: 4rem;
+    z-index: 1;
+}
+.bluetopia-bg-legend {
+    position: absolute;
+    bottom: 32%;
+    left: 0;
+    width: 100%;
+    background-image: url("assets/img/bluetopia-bg-logo.png");
+    background-repeat: repeat-x;
+    height: 113px;
+}
+
+@media (max-width: 900px) {
+    .tools-icon {
+        display: none;
+    }
+    .target-icon {
+        display: none;
+    }
+    .box-tools-icon {
+        display: none;
+    }
+}
+
 .components-container {
     max-width: 100%;
     display: flex;
@@ -480,7 +576,7 @@ ng-select.form-control {
 
 .img-bottom {
     position: absolute;
-    bottom: -25px;
+    bottom: 0;
     left: auto;
     right: auto;
     width: min-content;
@@ -628,6 +724,33 @@ ng-select.form-control {
     height: 380px;
     background-color: #1081FB;
     color: white;
+    padding: 50px 50px 0 50px;
+}
+.footer-content {
+    width: 100%;
+    height: calc(100% - 54px - 28px);
+    display: flex;
+    justify-content: space-between;
+}
+.footer-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.footer-text {
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 23px;
+    color: white;
+}
+.footer-footer {
+    margin-top: 28px;
+    height: 54px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Responsivness */
