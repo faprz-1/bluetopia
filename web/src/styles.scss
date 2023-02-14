@@ -374,4 +374,15 @@ ng-select.form-control {
         flex-direction: column;
     }
 }
+@media (min-width: 0px) and (max-width: 930px) {
+    .side-img {
+        object-fit: cover;
+        object-position: center;
+        width: 30%;
+
+        @media (max-width: 575px) {
+            display: none;
+        }
+    }
+}
 

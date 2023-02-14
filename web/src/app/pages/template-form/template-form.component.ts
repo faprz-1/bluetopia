@@ -120,7 +120,9 @@ export class TemplateFormComponent implements OnInit {
     let strategy = {
       subjects: this.selectedSubjects,
       templateId: this.templateId,
-      userId: this.user.id
+      userId: this.user.id,
+      grade: this.grade,
+      group: this.group,
     }
     this.api.Post(`/Strategies`, {strategy}).subscribe(newStrategy => {
       this.nav.GoToUserRoute(`grado/${this.grade}/grupo/${this.group}/plantillas/${this.templateId}/estrategias/${newStrategy.id}`);

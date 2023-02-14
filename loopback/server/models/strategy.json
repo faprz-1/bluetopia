@@ -48,8 +48,8 @@
         "nestRemoting": true
       }
     },
-    "teacherGroups": {
-      "type": "hasMany",
+    "strategyGroups": {
+      "type": "hasOne",
       "model": "StrategyGroup",
       "foreignKey": "strategyId",
       "options": {
@@ -111,6 +111,15 @@
     },
     "prototype.Update": {
       "accepts": [
+        {
+          "arg": "ctx",
+          "type": "object",
+          "required": true,
+          "description": "",
+          "http": {
+            "source": "req"
+          }
+        },
         {
           "arg": "strategy",
           "type": "object",

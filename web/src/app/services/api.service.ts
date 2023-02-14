@@ -107,7 +107,7 @@ export class ApiService {
         () => this.loadingService.ReleaseLoadingLevel(),
         error => {
           this.loadingService.ReleaseLoadingLevel();
-          if(!environment.production) {
+          if(!environment.production && displayErrors) {
             this.toastService.ShowError(JSON.stringify(error));
           }
           if (error && error.status == 401) {

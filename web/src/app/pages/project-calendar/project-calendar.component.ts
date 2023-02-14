@@ -54,4 +54,8 @@ export class ProjectCalendarComponent implements OnInit {
     this.nav.GoToUserRoute('mis-estudiantes');
   }
 
+  GetStrategyEvents() {
+    
+  }
+
 }
