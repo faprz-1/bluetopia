@@ -744,6 +744,18 @@ ng-select.form-control {
     line-height: 23px;
     color: white;
 }
+.footer-text-2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 25px;
+    color: white;
+}
+.footer-contact-us-button {
+    font-size: 1.375rem;
+    font-weight: 700;
+    border-radius: 2rem;
+    margin-top: .75rem;
+}
 .footer-footer {
     margin-top: 28px;
     height: 54px;
