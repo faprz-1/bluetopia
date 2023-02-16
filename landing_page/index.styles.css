@@ -236,6 +236,29 @@ body {
     border-radius: 25px;
 }
 
+@media (min-width: 1120px) {
+    .menu-container-small {
+        display: none;
+    }
+}
+@media (max-width: 1120px) {
+    .menu-container {
+        display: none;
+    }
+}
+
+.grey-triangle-bottom-right {
+    z-index: -1;
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(to bottom right, #ffffff00 50%, rgba(236, 240, 240, 0.4) 50%);
+}
+.grey-triangle-top-right {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(to top right, white 50%, rgba(236, 240, 240, 0.4) 50%);
+}
+
 /* ng-select overrides */
 .ng-select-container {
     border: none !important;
@@ -594,6 +617,9 @@ ng-select.form-control {
     flex-wrap: wrap;
     margin-top: 2.625rem;
 }
+.feature:hover {
+    cursor: default;
+}
 .feature {
     width: 325px;
     padding: 1.5rem;
@@ -604,6 +630,7 @@ ng-select.form-control {
     margin-right: 1.5rem;
     margin-bottom: 2.625rem;
     flex-grow: 1;
+    border: 4px solid white;
 }
 .feature-active {
     border: 4px solid #1081FB;
@@ -642,6 +669,9 @@ ng-select.form-control {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+.template-active {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 .template-icon-container {
     display: flex;
@@ -775,14 +805,29 @@ ng-select.form-control {
 .animated {
     transition: all .2s ease-in-out;
 }
+.animated-short {
+    transition: all .1s ease-in-out;
+}
 
 /* Responsivness */
 /* XS */
 @media (max-width: 575px) {
+    .section-container {
+        justify-content: center;
+    }
+    .title-img-container {
+        display: none;
+    }
 }
 
 /* SM */
 @media (min-width: 576px) and (max-width: 767px) {
+    .section-container {
+        justify-content: center;
+    }
+    .title-img-container {
+        display: none;
+    }
 }
 
 /* MD */
