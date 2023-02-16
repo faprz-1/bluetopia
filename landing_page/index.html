@@ -24,7 +24,7 @@
 </head>
 <body>
     <div class="content">
-        <div class="header">
+        <div class="header animated" id="header">
             <img class="header-img" src="assets/img/project_name_small.png" alt="bluetopia">
 
             <div class="social-media-container">
@@ -41,12 +41,12 @@
                 <div class="menu-option">Prueba</div>
                 <div class="menu-option">Contacto</div>
                 <div class="menu-option">
-                    <button class="btn btn-success btn-header">
+                    <button class="btn btn-success btn-header" onclick="GoToRegister()">
                         Registrarme
                     </button>
                 </div>
                 <div class="menu-option">
-                    <button class="btn btn-outline-primary btn-header">
+                    <button class="btn btn-outline-primary btn-header" onclick="GoToRegister()">
                         Ingresar
                     </button>
                 </div>
@@ -67,7 +67,7 @@
                             Invita a la creatividad del docente y facilita el aprendizaje activo de cada alumno
                         </div>
                         <div>
-                            <button class="btn btn-success btn-title">
+                            <button class="btn btn-success btn-title" onclick="GoToRegister()">
                                 Conocer más
                             </button>
                         </div>
@@ -153,7 +153,7 @@
                     </div>
 
                     <div class="text-center">
-                        <button class="btn btn-outline-primary contact-us-button">
+                        <button class="btn btn-outline-primary contact-us-button" onclick="ScrollToContactUs()">
                             Contactános
                         </button>
                     </div>
@@ -186,7 +186,7 @@
                         <div class="triangles-text">
                             Podrás diseñar, gestionar, implementar, evaluar y retroalimentar una gran variedad de experiencias de aprendizaje enfocadas a temas de sostenibilidad 
                         </div>
-                        <button class="btn btn-success hire-button">
+                        <button class="btn btn-success hire-button" onclick="GoToRegister()">
                             Contratar
                         </button>
                     </div>
@@ -248,7 +248,7 @@
                         <div class="text" style="max-width: 865px;">
                             Promovemos la <b class="text-success">educación para la sostenibilidad</b> en las primarias a través de una <b>solución tecnológica</b> que facilita la implementación de distintas metodologías activas.
                         </div>
-                        <button name="register-btn" class="btn btn-primary btn-register">
+                        <button class="btn btn-success btn-register" onclick="GoToRegister()">
                             Registrarme
                         </button>
                     </div>
@@ -262,7 +262,7 @@
                         <div class="text" style="max-width: 865px;">
                             La plataforma permite diseñar, gestionar, implementar, evaluar y retroalimentar una gran <b>variedad de experiencias de aprendizaje</b> <b class="text-success">enfocadas a temas de sostenibilidad</b> con el <b class="text-primary">soporte y apoyo</b> de plantillas, recursos confiables y actuales, además de herramientas que permiten gestionar de forma rápida y sencilla la implementación de las experiencias de aprendizaje.
                         </div>
-                        <button name="register-btn" class="btn btn-outline-primary btn-register">
+                        <button class="btn btn-outline-success btn-register" onclick="GoToRegister()">
                             Registrarme
                         </button>
                     </div>
@@ -274,7 +274,7 @@
                         <div class="text" style="max-width: 865px;">
                             Para <b>transformar</b> la cultura de la comunidad escolar incidiendo en los padres de familia, el equipo docente y los alumnos, llevándolos a <b class="text-primary">comprender, valorar, proponer y aplicar</b> estrategias de <b class="text-success">cuidado responsable del planeta.</b>
                         </div>
-                        <button name="register-btn" class="btn btn-success btn-register">
+                        <button class="btn btn-success btn-register" onclick="GoToRegister()">
                             Registrarme
                         </button>
                     </div>
@@ -426,7 +426,7 @@
             </div>
         </div>
 
-        <div class="row justify-content-center" style="margin: 11rem 0;">
+        <div class="row justify-content-center" id="contact-us" style="margin: 11rem 0;">
             <div class="col-12 col-md-11 col-lg-10 px-4">
                 <div class="d-flex justify-content-around align-items-center">
                     <div>
@@ -492,7 +492,7 @@
                         <div class="contact-icon h-100 align-items-center">
                             <img src="assets/icons/cellphone_white.png" alt="Teléfono">
                         </div>
-                        <span class="footer-text">55 4393 4510</span>
+                        <span class="footer-text">+52 55 4393 4510</span>
                     </div>
                     <div class="contact-info" style="max-width: 287px;">
                         <div class="contact-icon h-100 align-items-center">
@@ -505,7 +505,7 @@
                     <div class="footer-text-2 text-center">
                         Compartenos tus inquietudes
                     </div>
-                    <button class="btn btn-success w-100 btn-block footer-contact-us-button">
+                    <button class="btn btn-success w-100 btn-block footer-contact-us-button" onclick="ScrollToContactUs()">
                         Contáctanos
                     </button>
                 </div>
