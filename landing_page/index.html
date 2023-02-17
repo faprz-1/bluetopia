@@ -25,7 +25,8 @@
 <body>
     <div class="content">
         <div class="header animated" id="header">
-            <img class="header-img" src="assets/img/project_name_small.png" alt="bluetopia">
+            <img class="header-img hide-xs" src="assets/img/project_name_small.png" alt="bluetopia">
+            <img class="header-img-small hide-sm hide-md hide-lg hide-xl" src="assets/icons/bluetopia-icon-alt.png" alt="bluetopia">
 
             <div class="social-media-container">
                 <img src="assets/icons/facebook.png" alt="Facebook">
@@ -35,12 +36,12 @@
             </div>
 
             <div class="menu-container">
-                <div class="menu-option menu-option-active">Inicio</div>
-                <div class="menu-option">Objetivos</div>
-                <div class="menu-option">Caracteristícas</div>
-                <div class="menu-option">Prueba</div>
-                <div class="menu-option">Contacto</div>
-                <div class="menu-option">
+                <div class="menu-option menu-option-hide clickeable menu-option-active">Inicio</div>
+                <div class="menu-option menu-option-hide clickeable">Objetivos</div>
+                <div class="menu-option menu-option-hide clickeable">Caracteristícas</div>
+                <div class="menu-option menu-option-hide clickeable">Funciones</div>
+                <div class="menu-option menu-option-hide clickeable" onclick="ScrollToContactUs()">Contacto</div>
+                <div class="menu-option clickeable">
                     <button class="btn btn-success btn-header" onclick="GoToRegister()">
                         Registrarme
                     </button>
@@ -50,10 +51,14 @@
                         Ingresar
                     </button>
                 </div>
+
+                <div class="menu-option-small text-primary clickeable" onclick="GoToRegister()">
+                    <i class="zmdi zmdi-sign-in zmdi-hc-2x"></i>
+                </div>
             </div>
         </div>
 
-        <div class="row justify-content-center mb-5">
+        <div class="row justify-content-center">
             <div class="col-12 col-md-11 col-lg-10 px-4">
                 <div class="section-container">
                     <div class="left-title">
@@ -90,7 +95,8 @@
 
             </div>
         </div>
-        <div class="row justify-content-center mb-5" style="background-color: rgba(236, 240, 240, 0.4); margin-top: 6rem;">
+        <div class="grey-triangle-bottom-right margin"></div>
+        <div class="row justify-content-center" style="background-color: rgba(236, 240, 240, 0.4);">
             <div class="col-12 col-md-11 col-lg-10 px-4">
                 <div class="section-container benefits-container justify-content-around">
                     <div class="images-collage">
@@ -115,6 +121,7 @@
                 </div>
             </div>
         </div>
+        <div class="grey-triangle-top-right margin"></div>
         
         <div class="row justify-content-center mb-5">
             <div class="col-12 col-md-11 col-lg-10 px-4 text-center">
@@ -190,19 +197,17 @@
                             Contratar
                         </button>
                     </div>
-                    <div class="d-flex align-items-start" style="margin-top: 3.5rem;">
+                    <div class="d-flex align-items-start hide-xs hide-sm" style="margin-top: 3.5rem;">
                         <img class="platform-img" src="assets/img/templates.png">
                         <img class="platform-img" src="assets/img/school-register.png">
                         <img class="platform-img" src="assets/img/event-creation.png">
                     </div>
                 </div>
             </div>
-            <div class="bluetopia-bg-legend">
-
-            </div>
+            <div class="bluetopia-bg-legend"></div>
         </div>
 
-        <div class="row justify-content-center mb-5" style="margin-top: 6rem;">
+        <div class="row justify-content-center" style="margin: 6rem 0 12rem 0;">
             <div class="col-12 col-md-11 col-lg-10 px-4 text-center">
                 <div class="title text-success">Componentes de la plataforma</div>
 
@@ -212,25 +217,25 @@
                         <div class="text" style="font-weight: 500;">nivel básico</div>
                     </div>
                     <div class="platform-component">
-                        <div class="component-icon">
+                        <div class="component-icon" id="component-1" onmouseover="OnComponentHover('component-1')">
                             <img src="assets/icons/steam.png" alt="Enfoque STEAM">
                         </div>
                         <div class="component-name">Enfoque STEAM</div>
                     </div>
                     <div class="platform-component">
-                        <div class="component-icon">
+                        <div class="component-icon" id="component-2" onmouseover="OnComponentHover('component-2')">
                             <img src="assets/icons/daily-life.png" alt="Vida diaria">
                         </div>
                         <div class="component-name">Vida diaria</div>
                     </div>
                     <div class="platform-component">
-                        <div class="component-icon">
+                        <div class="component-icon" id="component-3" onmouseover="OnComponentHover('component-3')">
                             <img src="assets/icons/learning.png" alt="Aprendizaje significativo">
                         </div>
                         <div class="component-name">Aprendizaje significativo</div>
                     </div>
                     <div class="platform-component">
-                        <div class="component-icon">
+                        <div class="component-icon" id="component-4" onmouseover="OnComponentHover('component-4')">
                             <img src="assets/icons/habit-change.png" alt="Cambio de hábitos">
                         </div>
                         <div class="component-name">Cambio de hábitos</div>
@@ -239,9 +244,14 @@
             </div>
         </div>
 
-        <div class="row justify-content-center mb-5">
-            <div class="title text-primary text-center" style="font-weight: 700;">Objetivos</div>
-            <div class="col-12 col-md-11 col-xl-10">
+        <div class="row justify-content-center position-relative">
+            <!-- <div class="grey-triangle-bottom-left objective-background-2"></div> -->
+            <!-- <div class="objective-background-3"></div> -->
+            <div class="objectives-background">
+                <img src="assets/img/objectives-background.png" style="width: 100%; height: 100%;">
+            </div>
+            <div class="title text-primary text-center" style="font-weight: 700; margin-bottom: 0;">Objetivos</div>
+            <div class="col-12 col-md-11 col-xl-10 px-4">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="text-start">
                         <div class="subtitle-3 text-primary" style="margin-bottom: 1.5rem;">¿Qué hacemos?</div>
@@ -252,11 +262,14 @@
                             Registrarme
                         </button>
                     </div>
-                    <img src="assets/img/target.png" alt="Objetivos">
+                    <img class="objective-img hide-xs hide-sm" src="assets/img/target.png" alt="Objetivos">
                 </div>
-                
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-11 col-xl-10 px-4">
                 <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 3rem;">
-                    <img src="assets/img/laptop.png" alt="Laptop">
+                    <img class="objective-img hide-xs hide-sm" src="assets/img/laptop.png" alt="Laptop">
                     <div class="text-end">
                         <div class="subtitle-3 text-primary" style="margin-bottom: 1.5rem;">¿Cómo?</div>
                         <div class="text" style="max-width: 865px;">
@@ -267,7 +280,10 @@
                         </button>
                     </div>
                 </div>
-                
+            </div>
+        </div>
+        <div class="row justify-content-center" style="margin-bottom: 3.375rem;">
+            <div class="col-12 col-md-11 col-xl-10 px-4">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="text-start">
                         <div class="subtitle-3 text-primary" style="margin-bottom: 1.5rem;">¿Para qué?</div>
@@ -278,12 +294,13 @@
                             Registrarme
                         </button>
                     </div>
-                    <img src="assets/img/ecofriendly.png" alt="Laptop">
+                    <img class="objective-img hide-xs hide-sm" src="assets/img/ecofriendly.png" alt="Laptop">
                 </div>
             </div>
         </div>
 
-        <div class="row justify-content-center mb-5 position-relative" style="background-color: #F8F9F9; padding: 6rem 0 7.75rem 0;">
+        <div class="row justify-content-center mb-5 position-relative" style="background-color: #F8F9F9; padding: 4rem 0 7.75rem 0;">
+            <div class="grey-triangle-bottom-right margin" style="height: 350px; position: absolute; bottom: 100%;"></div>
             <img class="img-bottom" src="assets/img/play-box.png">
             <div class="col-12 col-md-11 col-lg-10 px-4">
                 <div class="title text-success">Características pedagógicas</div>
@@ -292,64 +309,64 @@
                 </div>
                 
                 <div class="features-container">
-                    <div class="feature feature-active">
-                        <div class="feature-number">
+                    <div class="feature animated-short" id="feature-1" onmouseover="OnFeatureHover('feature-1')">
+                        <div class="feature-number animated-short">
                             1
                         </div>
                         <div class="feature-description">
                             <b>Favorece</b> la creatividad e innovación docente al guiar de una forma flexible y abierta la creación de experiencias de aprendizaje activo.
                         </div>
                     </div>
-                    <div class="feature">
-                        <div class="feature-number">
+                    <div class="feature animated-short" id="feature-2" onmouseover="OnFeatureHover('feature-2')">
+                        <div class="feature-number animated-short">
                             2
                         </div>
                         <div class="feature-description">
                             <b>Facilita</b> el diseño, planeación y gestión de las experiencias de aprendizaje activo a través de plantillas prediseñadas de fácil uso.
                         </div>
                     </div>
-                    <div class="feature">
-                        <div class="feature-number">
+                    <div class="feature animated-short" id="feature-3" onmouseover="OnFeatureHover('feature-3')">
+                        <div class="feature-number animated-short">
                             3
                         </div>
                         <div class="feature-description">
                             <b>Incorpora</b> metodologías innovadoras que facilitan el aprendizaje significativo en contenidos relevantes y actuales para fomentar una cultura de sostenibilidad.
                         </div>
                     </div>
-                    <div class="feature">
-                        <div class="feature-number">
+                    <div class="feature animated-short" id="feature-4" onmouseover="OnFeatureHover('feature-4')">
+                        <div class="feature-number animated-short">
                             4
                         </div>
                         <div class="feature-description">
                             <b>Desarrolla</b> competencias del siglo XXI como son la creatividad, la curiosidad, el pensamiento crítico, la comunicación, la colaboración, la ciudadanía digital y global, la formación del carácter, entre otras.
                         </div>
                     </div>
-                    <div class="feature">
-                        <div class="feature-number">
+                    <div class="feature animated-short" id="feature-5" onmouseover="OnFeatureHover('feature-5')">
+                        <div class="feature-number animated-short">
                             5
                         </div>
                         <div class="feature-description">
                             <b>Incluye</b> sugerencias que ayudan al docente a mejorar su práctica docente pues tiene al alcance estrategias concretas basadas en la cultura del pensamiento, la comprensión profunda y la posibilidad de hacer visible el pensamiento.
                         </div>
                     </div>
-                    <div class="feature">
-                        <div class="feature-number">
+                    <div class="feature animated-short" id="feature-6" onmouseover="OnFeatureHover('feature-6')">
+                        <div class="feature-number animated-short">
                             6
                         </div>
                         <div class="feature-description">
                             <b>Proporciona</b> instrumentos de evaluación formativa como rúbricas, diarios de aprendizaje, listas de cotejo entre otras, ayudando a enfocar los esfuerzos docentes para evaluar de forma integral y significativa a sus alumnos.
                         </div>
                     </div>
-                    <div class="feature">
-                        <div class="feature-number">
+                    <div class="feature animated-short" id="feature-7" onmouseover="OnFeatureHover('feature-7')">
+                        <div class="feature-number animated-short">
                             7
                         </div>
                         <div class="feature-description">
                             <b>Proporciona</b> instrumentos de evaluación formativa como rúbricas, diarios de aprendizaje, listas de cotejo entre otras, ayudando a enfocar los esfuerzos docentes para evaluar de forma integral y significativa a sus alumnos.
                         </div>
                     </div>
-                    <div class="feature">
-                        <div class="feature-number">
+                    <div class="feature animated-short" id="feature-8" onmouseover="OnFeatureHover('feature-8')">
+                        <div class="feature-number animated-short">
                             8
                         </div>
                         <div class="feature-description">
@@ -365,7 +382,7 @@
                 <div class="subtitle-3 text-primary text-center" style="margin-bottom: 1.5rem;">Basada en contenidos y procesos de aprendizaje</div>
                 <div class="templates-container">
                     <div class="template">
-                        <div class="template-icon-container">
+                        <div class="template-icon-container" id="template-1" onmouseover="OnTemplateHover('template-1')">
                             <img src="assets/icons/school.png" alt="Proyectos escolares">
                         </div>
                         <div class="template-name">
@@ -373,7 +390,7 @@
                         </div>
                     </div>
                     <div class="template">
-                        <div class="template-icon-container">
+                        <div class="template-icon-container" id="template-2" onmouseover="OnTemplateHover('template-2')">
                             <img src="assets/icons/science.png" alt="Basada en contenidos y procesos de aprendizaje">
                         </div>
                         <div class="template-name">
@@ -381,7 +398,7 @@
                         </div>
                     </div>
                     <div class="template">
-                        <div class="template-icon-container">
+                        <div class="template-icon-container" id="template-3" onmouseover="OnTemplateHover('template-3')">
                             <img src="assets/icons/students-chatting.png" alt="Colaboración entre grupos y escuelas">
                         </div>
                         <div class="template-name">
@@ -389,7 +406,7 @@
                         </div>
                     </div>
                     <div class="template">
-                        <div class="template-icon-container">
+                        <div class="template-icon-container" id="template-4" onmouseover="OnTemplateHover('template-4')">
                             <img src="assets/icons/book.png" alt="Contenidos transversales">
                         </div>
                         <div class="template-name">
@@ -457,9 +474,7 @@
                             </div>
                         </form>
                     </div>
-                    <div style="max-width: 415px;">
-                        <img src="assets/img/contact.png" alt="">
-                    </div>
+                    <img class="objective-img hide-xs hide-sm" src="assets/img/contact.png">
                 </div>
             </div>
         </div>
@@ -473,14 +488,14 @@
                     <img src="assets/icons/jarabesoft.png">
                     <div class="footer-text" style="font-size: 1.25rem;">Nayeli Becerra</div>
                 </div>
-                <div class="footer-col align-items-start" style="max-height: 214px;">
+                <div class="footer-col align-items-start hide-xs hide-sm" style="max-height: 214px;">
                     <div class="footer-text">Inicio</div>
                     <div class="footer-text">Objetivos</div>
                     <div class="footer-text">Características</div>
-                    <div class="footer-text">Prueba</div>
+                    <div class="footer-text">Funciones</div>
                     <div class="footer-text">Contacto</div>
                 </div>
-                <div class="footer-col align-items-start" style="max-height: 175px;">
+                <div class="footer-col align-items-start footer-contact-info" style="max-height: 175px;">
                     <div class="footer-text" style="margin: 0 0 .75rem 1rem;"><b>Contacto</b></div>
                     <div class="contact-info" style="max-width: 287px;">
                         <div class="contact-icon">
@@ -501,7 +516,7 @@
                         <span class="footer-text">info@bnzero.com</span>
                     </div>
                 </div>
-                <div class="footer-col justify-content-start" style="max-width: 180px;">
+                <div class="footer-col justify-content-start hide-xs hide-sm hide-md" style="max-width: 180px;">
                     <div class="footer-text-2 text-center">
                         Compartenos tus inquietudes
                     </div>
@@ -509,7 +524,7 @@
                         Contáctanos
                     </button>
                 </div>
-                <div class="footer-col" style="max-height: 172px;">
+                <div class="footer-col footer-social-media-icons" style="max-height: 172px;">
                     <img src="assets/icons/fb_green.png">
                     <img src="assets/icons/insta_green.png">
                     <img src="assets/icons/twitter_green.png">
