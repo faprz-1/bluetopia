@@ -232,6 +232,9 @@ body {
 .menu-option-active {
     color: #1081FB;
 }
+.menu-option-small {
+    display: none;
+}
 .btn-header {
     font-size: 1rem;
     font-weight: 700;
@@ -259,6 +262,15 @@ body {
 @media (max-width: 767px) {
     .menu-option {
         display: none;
+    }
+    .menu-option-small {
+        display: inline-block;
+    }
+    .header-img {
+        display: none;
+    }
+    .header-img-small {
+        display: block;
     }
 }
 
