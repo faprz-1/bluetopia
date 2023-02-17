@@ -202,6 +202,10 @@ body {
 .header-img {
     margin-left: 48px;
 }
+.header-img-small {
+    height: 42px;
+    margin-left: 48px;
+}
 
 .social-media-container {
     display: flex;
@@ -242,21 +246,38 @@ body {
     }
 }
 @media (max-width: 1120px) {
+    .menu-option-hide {
+        display: none;
+    }
     .menu-container {
+        width: max-content;
+    }
+    .menu-option {
+        padding: 0 .5rem;
+    }
+}
+@media (max-width: 767px) {
+    .menu-option {
         display: none;
     }
 }
 
+.grey-triangle-bottom-left {
+    z-index: -1;
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(to bottom left, #ffffff00 50%, #F7F9F9 50%);
+}
 .grey-triangle-bottom-right {
     z-index: -1;
     width: 100%;
     height: 200px;
-    background: linear-gradient(to bottom right, #ffffff00 50%, rgba(236, 240, 240, 0.4) 50%);
+    background: linear-gradient(to bottom right, #ffffff00 50%, #F7F9F9 50%);
 }
 .grey-triangle-top-right {
     width: 100%;
     height: 200px;
-    background: linear-gradient(to top right, white 50%, rgba(236, 240, 240, 0.4) 50%);
+    background: linear-gradient(to top right, white 50%, #F7F9F9 50%);
 }
 
 /* ng-select overrides */
@@ -472,6 +493,7 @@ ng-select.form-control {
     position: absolute;
     top: -125px;
     width: 100%;
+    z-index: -2;
 }
 .blue-triangle {
     position: absolute;
@@ -479,6 +501,7 @@ ng-select.form-control {
     left: 0;
     width: 100%;
     height: 975px;
+    z-index: -2;
 }
 .green-triangle {
     position: absolute;
@@ -486,6 +509,7 @@ ng-select.form-control {
     right: 0;
     width: 100%;
     height: 775px;
+    z-index: -2;
 }
 .tools-icon {
     position: absolute;
@@ -539,6 +563,7 @@ ng-select.form-control {
     background-image: url("assets/img/bluetopia-bg-logo.png");
     background-repeat: repeat-x;
     height: 113px;
+    z-index: -1;
 }
 
 @media (max-width: 900px) {
@@ -604,6 +629,36 @@ ng-select.form-control {
     margin-top: 1.5rem;
 }
 
+.objectives-background {
+    position: absolute;
+    width: 100%;
+    /* max-height: 635px; */
+    top: -4rem;
+    left: 0;
+    /* top: 6rem; */
+    z-index: -2;
+}
+.objective-background-2 {
+    position: absolute;
+    top: -8rem;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    z-index: -1;
+}
+.objective-background-3 {
+    position: absolute;
+    top: calc(-8rem + 200px);
+    left: 0;
+    width: 100%;
+    height: 100px;
+    z-index: -1;
+    background-color: #F7F9F9;
+}
+.objective-img {
+    max-width: 50%;
+}
+
 .img-bottom {
     position: absolute;
     bottom: 0;
@@ -611,7 +666,6 @@ ng-select.form-control {
     right: auto;
     width: min-content;
 }
-
 .features-container {
     display: flex;
     flex-wrap: wrap;
@@ -689,6 +743,11 @@ ng-select.form-control {
     font-weight: 500;
     text-align: center;
     max-width: 250px;
+}
+@media (max-width: 550px) {
+    .templates-container {
+        justify-content: center;
+    }
 }
 
 .functions {
@@ -818,10 +877,29 @@ ng-select.form-control {
     .title-img-container {
         display: none;
     }
+    .hide-xs {
+        display: none !important;
+    }
+    .footer-content {
+        flex-direction: column;
+    }
+    .footer {
+        height: max-content;
+    }
+    .footer-social-media-icons {
+        flex-direction: row;
+    }
+    .footer-contact-info {
+        max-height: min-content !important;
+        height: min-content !important;
+    }
 }
 
 /* SM */
-@media (min-width: 576px) and (max-width: 767px) {
+@media (min-width: 575px) and (max-width: 767px) {
+    .hide-sm {
+        display: none !important;
+    }
     .section-container {
         justify-content: center;
     }
@@ -832,14 +910,23 @@ ng-select.form-control {
 
 /* MD */
 @media (min-width: 768px) and (max-width: 991px) {
+    .hide-md {
+        display: none !important;
+    }
 }
 
 /* LG */
 @media (min-width: 992px) and (max-width: 1199px) {
+    .hide-lg {
+        display: none !important;
+    }
 }
 
 /* XL */
 @media (min-width: 1200px) {
+    .hide-xl {
+        display: none !important;
+    }
 }
 
 /* Custom */
