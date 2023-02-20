@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bluetopia</title>
+    <link rel="icon" type="image/x-icon" href="assets/icons/bluetopia-icon.png">
     <!-- Bootstrap -->
     <link rel='stylesheet' type='text/css' media='screen' href='./Bootstrap_5/bootstrap.min.css'>
     <script src='./Bootstrap_5/bootstrap.bundle.min.js'></script>
@@ -36,21 +37,21 @@
             </div>
 
             <div class="menu-container">
-                <div class="menu-option menu-option-hide clickeable menu-option-active">Inicio</div>
-                <div class="menu-option menu-option-hide clickeable">Objetivos</div>
-                <div class="menu-option menu-option-hide clickeable">Caracteristícas</div>
-                <div class="menu-option menu-option-hide clickeable">Funciones</div>
-                <div class="menu-option menu-option-hide clickeable" onclick="ScrollToContactUs()">Contacto</div>
+                <div class="menu-option menu-option-hide clickeable menu-option-active" id="header-home" onclick="ScrollToElement('home')">Inicio</div>
+                <div class="menu-option menu-option-hide clickeable" id="header-objectives" onclick="ScrollToElement('objectives')">Objetivos</div>
+                <div class="menu-option menu-option-hide clickeable" id="header-features" onclick="ScrollToElement('features')">Caracteristícas</div>
+                <div class="menu-option menu-option-hide clickeable" id="header-functions" onclick="ScrollToElement('functions')">Funciones</div>
+                <div class="menu-option menu-option-hide clickeable" id="header-contact-us" onclick="ScrollToContactUs()">Contacto</div>
                 <div class="menu-option clickeable">
                     <button class="btn btn-success btn-header" onclick="GoToRegister()">
                         Registrarme
                     </button>
                 </div>
-                <div class="menu-option">
+                <!-- <div class="menu-option">
                     <button class="btn btn-outline-primary btn-header" onclick="GoToRegister()">
                         Ingresar
                     </button>
-                </div>
+                </div> -->
 
                 <div class="menu-option-small text-primary clickeable" onclick="GoToRegister()">
                     <i class="zmdi zmdi-sign-in zmdi-hc-2x"></i>
@@ -58,7 +59,7 @@
             </div>
         </div>
 
-        <div class="row justify-content-center">
+        <div class="row justify-content-center" id="home">
             <div class="col-12 col-md-11 col-lg-10 px-4">
                 <div class="section-container">
                     <div class="left-title">
@@ -80,7 +81,7 @@
                     
                     <div class="title-img-container">
                         <img src="assets/img/register.png" alt="Registro">
-                        <img src="assets/img/templates-sliced.png" alt="Registro">
+                        <img src="assets/img/templates-home.png" alt="Registro">
                     </div>
                 </div>
 
@@ -244,7 +245,7 @@
             </div>
         </div>
 
-        <div class="row justify-content-center position-relative">
+        <div class="row justify-content-center position-relative" id="objectives">
             <!-- <div class="grey-triangle-bottom-left objective-background-2"></div> -->
             <!-- <div class="objective-background-3"></div> -->
             <div class="objectives-background">
@@ -275,7 +276,7 @@
                         <div class="text" style="max-width: 865px;">
                             La plataforma permite diseñar, gestionar, implementar, evaluar y retroalimentar una gran <b>variedad de experiencias de aprendizaje</b> <b class="text-success">enfocadas a temas de sostenibilidad</b> con el <b class="text-primary">soporte y apoyo</b> de plantillas, recursos confiables y actuales, además de herramientas que permiten gestionar de forma rápida y sencilla la implementación de las experiencias de aprendizaje.
                         </div>
-                        <button class="btn btn-outline-success btn-register" onclick="GoToRegister()">
+                        <button class="btn btn-success btn-register" onclick="GoToRegister()">
                             Registrarme
                         </button>
                     </div>
@@ -299,7 +300,7 @@
             </div>
         </div>
 
-        <div class="row justify-content-center mb-5 position-relative" style="background-color: #F8F9F9; padding: 4rem 0 7.75rem 0;">
+        <div class="row justify-content-center mb-5 position-relative" id="features" style="background-color: #F8F9F9; padding: 4rem 0 7.75rem 0;">
             <div class="grey-triangle-bottom-right margin" style="height: 350px; position: absolute; bottom: 100%;"></div>
             <img class="img-bottom" src="assets/img/play-box.png">
             <div class="col-12 col-md-11 col-lg-10 px-4">
@@ -417,7 +418,7 @@
             </div>
         </div>
 
-        <div class="row justify-content-center" style="padding: 2rem 0; background: #26D7A4;">
+        <div class="row justify-content-center" id="functions" style="padding: 2rem 0; background: #26D7A4;">
             <div class="col-12 col-md-11 col-lg-10 px-4">
                 <div class="functions">
                     <div class="functions-title">
@@ -448,27 +449,27 @@
                 <div class="d-flex justify-content-around align-items-center">
                     <div>
                         <div class="title text-center">Contacto</div>
-                        <form class="text-center">
+                        <form class="text-center" action="https://formspree.io/f/mpzedrpe" method="POST">
                             <div class="form-group">
                                 <div class="input-container">
                                     <div class="input-icon-container text-center">
                                         <img src="assets/icons/user.png">
                                     </div>
-                                    <input class="form-control" type="text" placeholder="Nombre">
+                                    <input class="form-control" type="text" name="name" placeholder="Nombre">
                                 </div>
                                 <div class="input-container">
                                     <div class="input-icon-container text-center">
                                         <img src="assets/icons/email.png">
                                     </div>
-                                    <input class="form-control" type="email" placeholder="Email">
+                                    <input class="form-control" type="email" name="email" placeholder="Email">
                                 </div>
                                 <div class="input-container">
                                     <div class="input-icon-container text-center">
                                         <img src="assets/icons/cellphone.png">
                                     </div>
-                                    <input class="form-control" type="text" placeholder="Teléfono">
+                                    <input class="form-control" type="text" name="cellphone" placeholder="Teléfono">
                                 </div>
-                                <button class="btn btn-success btn-contact">
+                                <button type="submit" class="btn btn-success btn-contact">
                                     Enviar
                                 </button>
                             </div>
@@ -489,11 +490,11 @@
                     <div class="footer-text" style="font-size: 1.25rem;">Nayeli Becerra</div>
                 </div>
                 <div class="footer-col align-items-start hide-xs hide-sm" style="max-height: 214px;">
-                    <div class="footer-text">Inicio</div>
-                    <div class="footer-text">Objetivos</div>
-                    <div class="footer-text">Características</div>
-                    <div class="footer-text">Funciones</div>
-                    <div class="footer-text">Contacto</div>
+                    <div class="footer-text clickeable" onclick="ScrollToElement('home')">Inicio</div>
+                    <div class="footer-text clickeable" onclick="ScrollToElement('objectives')">Objetivos</div>
+                    <div class="footer-text clickeable" onclick="ScrollToElement('features')">Características</div>
+                    <div class="footer-text clickeable" onclick="ScrollToElement('functions')">Funciones</div>
+                    <div class="footer-text clickeable" onclick="ScrollToContactUs()">Contacto</div>
                 </div>
                 <div class="footer-col align-items-start footer-contact-info" style="max-height: 175px;">
                     <div class="footer-text" style="margin: 0 0 .75rem 1rem;"><b>Contacto</b></div>

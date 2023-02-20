@@ -99,7 +99,8 @@ body {
     flex-direction: column;
     justify-content: space-between;
     align-items: start;
-    max-width: 550px;
+    width: 550px;
+    max-width: 100%;
 }
 .btn-title {
     width: 220px;
