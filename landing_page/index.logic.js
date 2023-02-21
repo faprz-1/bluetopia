@@ -97,4 +97,19 @@ function OnComponentHover(id) {
     }
 }
 
+function GoToSocialMedia(socialMedia) {
+    switch (socialMedia) {
+        case 'fb':
+            window.open('http://facebook.com/bluetopiapp', '_blank');
+            break;
+        case 'tt':
+            break;
+        case 'in':
+            window.open('https://instagram.com/bluetopiapp', '_blank');
+            break;
+        case 'yt':
+            break;
+    }
+}
+
 InitializeListeners();
