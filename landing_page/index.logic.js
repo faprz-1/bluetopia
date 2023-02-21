@@ -114,8 +114,8 @@ function GoToSocialMedia(socialMedia) {
 
 function MobileModifications() {
     let isMobileRegex = /android|iphone|phone|mobile/gi;
-    console.log(navigator.userAgent);
-    if(isMobileRegex.test(navigator.userAgent)) {
+    let isMobile = "ontouchstart" in document.documentElement;
+    if(isMobile) {
         let elements = document.getElementsByClassName('info-section');
         for (const element of elements) {
             element.classList.add('w-100');
