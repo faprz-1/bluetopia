@@ -918,6 +918,10 @@ ng-select.form-control {
         height: min-content !important;
     }
 
+    .info-section {
+        width: 100%;
+    }
+
     .title {
         font-size: calc(4rem - .6rem) !important;
         color: #1081FB;
@@ -980,6 +984,9 @@ ng-select.form-control {
     }
     .title-img-container {
         display: none;
+    }
+    .info-section {
+        width: 100%;
     }
 }
 
