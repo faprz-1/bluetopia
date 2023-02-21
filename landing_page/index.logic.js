@@ -121,14 +121,14 @@ function MobileModifications() {
             element.classList.add('w-100');
         }
 
-        elements = document.getElementsByClassName('mobile-hide');
-        for (const element of elements) {
-            element.classList.add('d-none');
-        }
+        // elements = document.getElementsByClassName('mobile-hide');
+        // for (const element of elements) {
+        //     element.classList.add('d-none');
+        // }
     }
 }
 
 InitializeListeners();
 setTimeout(() => {
-    // MobileModifications();
+    MobileModifications();
 }, 10);
