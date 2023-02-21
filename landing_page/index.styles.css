@@ -6,6 +6,11 @@ body {
     overflow-x: hidden;
 }
 
+.content {
+    width: 100vw;
+    overflow-x: hidden;
+}
+
 /* Scroll bar styles */
 
 ::-webkit-scrollbar-track {
@@ -642,34 +647,40 @@ ng-select.form-control {
     margin-top: 1.5rem;
 }
 
-.objectives-background {
+.objective-background {
     position: absolute;
-    width: 100%;
-    /* max-height: 635px; */
-    top: -4rem;
-    left: 0;
-    /* top: 6rem; */
-    z-index: -2;
-}
-.objective-background-2 {
-    position: absolute;
-    top: -8rem;
+    top: -200px;
     left: 0;
     width: 100%;
     height: 200px;
     z-index: -1;
 }
-.objective-background-3 {
-    position: absolute;
-    top: calc(-8rem + 200px);
-    left: 0;
-    width: 100%;
-    height: 100px;
-    z-index: -1;
-    background-color: #F7F9F9;
-}
 .objective-img {
     max-width: 50%;
+}
+.background-grey {
+    background-color: #F8F9F9;
+    position: absolute;
+    top: 0;
+    height: 150%;
+    width: 100%;
+    z-index: -1;
+}
+.objective-bush {
+    position: absolute;
+    left: 0;
+    bottom: -34%;
+    height: auto !important;
+    width: 670px !important;
+    max-width: 100% !important;
+    z-index: -1;
+}
+.objective-white-bg {
+    position: absolute;
+    left: 0;
+    bottom: -96%;
+    width: 100vw !important;
+    z-index: -1;
 }
 
 .img-bottom {
@@ -905,6 +916,57 @@ ng-select.form-control {
     .footer-contact-info {
         max-height: min-content !important;
         height: min-content !important;
+    }
+
+    .title {
+        font-size: calc(4rem - .6rem) !important;
+        color: #1081FB;
+        font-weight: 900;
+        line-height: 80px;
+        margin-bottom: 1rem;
+    }
+    .title-2 {
+        font-size: calc(4rem - .6rem) !important;
+        font-weight: 700;
+        line-height: 80px;
+    }
+    .subtitle {
+        color: #587594;
+        font-size: calc(2.125rem - .6rem) !important;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+    .subtitle-2 {
+        font-size: calc(2rem - .6rem) !important;
+        font-weight: 700;
+    }
+    .subtitle-3 {
+        font-size: calc(2.5rem - .6rem) !important;
+        font-weight: 700;
+        line-height: 50px;
+    }
+    .subtitle-3 {
+        font-size: calc(3rem - .6rem) !important;
+        font-weight: 700;
+        line-height: 60px;
+    }
+    .subtitle-4 {
+        font-size: calc(2.25rem - .6rem) !important;
+        font-weight: 700;
+        line-height: 45px;
+    }
+    .text {
+        color: #587594;
+        font-size: calc(1.75rem - .6rem) !important;
+        font-weight: 500;
+    }
+    .text-2 {
+        font-size: calc(1.5rem - .6rem) !important;
+        color: #587594;
+    }
+    .text-3 {
+        font-size: calc(1.25rem - .6rem) !important;
+        color: #587594;
     }
 }
 
