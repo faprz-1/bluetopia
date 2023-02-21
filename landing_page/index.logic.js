@@ -130,5 +130,5 @@ function MobileModifications() {
 
 InitializeListeners();
 setTimeout(() => {
-    MobileModifications();
+    // MobileModifications();
 }, 10);

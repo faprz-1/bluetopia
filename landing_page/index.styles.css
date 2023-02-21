@@ -679,7 +679,7 @@ ng-select.form-control {
     position: absolute;
     left: 0;
     bottom: -96%;
-    width: 100vw !important;
+    width: 100% !important;
     z-index: -1;
 }
 
