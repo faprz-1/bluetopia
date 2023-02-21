@@ -6,11 +6,6 @@ body {
     overflow-x: hidden;
 }
 
-.content {
-    width: 100vw;
-    overflow-x: hidden;
-}
-
 /* Scroll bar styles */
 
 ::-webkit-scrollbar-track {
@@ -198,7 +193,7 @@ body {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 6rem;
-    position: sticky;
+    position: sticky !important;
     top: 0;
     z-index: 3;
 }
