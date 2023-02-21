@@ -112,4 +112,23 @@ function GoToSocialMedia(socialMedia) {
     }
 }
 
+function MobileModifications() {
+    let isMobileRegex = /android|iphone|phone|mobile/gi;
+    console.log(navigator.userAgent);
+    if(isMobileRegex.test(navigator.userAgent)) {
+        let elements = document.getElementsByClassName('info-section');
+        for (const element of elements) {
+            element.classList.add('w-100');
+        }
+
+        elements = document.getElementsByClassName('mobile-hide');
+        for (const element of elements) {
+            element.classList.add('d-none');
+        }
+    }
+}
+
 InitializeListeners();
+setTimeout(() => {
+    MobileModifications();
+}, 10);
