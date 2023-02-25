@@ -6,6 +6,8 @@ body {
     overflow-x: hidden;
 }
 
+
+
 /* Scroll bar styles */
 
 ::-webkit-scrollbar-track {
@@ -181,6 +183,12 @@ body {
     flex-direction: column;
     align-items: center;
     margin-top: 6rem;
+}
+.no-decoration{
+    text-decoration: none !important;
+}
+.privacy-policy{
+    color: #ffffff !important;
 }
 
 /* Header */
@@ -550,7 +558,6 @@ ng-select.form-control {
 }
 .triangles-text {
     font-size: 1.75rem;
-    font-weight: 500;
     line-height: 35px;
     width: 730px;
     max-width: 100%;
@@ -677,7 +684,18 @@ ng-select.form-control {
     width: 100% !important;
     z-index: -1;
 }
-
+.objective-white-bg {
+    position: absolute;
+    left: 0;
+    bottom: -96%;
+    width: 100% !important;
+    z-index: -1;
+}
+.img-center{
+    left: auto;
+    right: auto;
+    width: min-content;
+}
 .img-bottom {
     position: absolute;
     bottom: 0;
@@ -941,7 +959,6 @@ ng-select.form-control {
     }
     .subtitle-3 {
         font-size: calc(2.5rem - .6rem) !important;
-        font-weight: 700;
         line-height: 50px;
     }
     .subtitle-3 {
