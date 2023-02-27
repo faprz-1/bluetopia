@@ -1,0 +1,78 @@
+<div class="content">
+    <div class="row mb-4">
+        <div class="col-12 d-flex h-100 align-items-center justify-content-between">
+            <div class="page-title">
+                Equipos
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="text">
+                Asigna a tus alumnos a los equipos que quieres que pertenezcan
+            </div>
+        </div>
+
+        <div class="col-12">
+            <label>Selecciona la cantidad de equipos que quieres formar</label>
+            <div class="input-container" style="width: 310px; max-width: 100%;">
+                <ng-select
+                    class="form-control with-border"
+                    [items]="teamsOptions"
+                    bindLabel="name"
+                    bindValue="value"
+                    placeholder="Equipos por crear"
+                    (change)="OnTeamOptionSelected($event)">
+                </ng-select>
+            </div>
+        </div>
+
+        <div class="col-12" *ngIf="!!teams.length">
+            <div class="d-flex align-items-start justify-content-between w-100" cdkDropListGroup>
+                <div class="example-container" style="width: 250px;">
+                  <h2 class="text-center">Alumnos</h2>
+
+                  <div
+                    cdkDropList
+                    [cdkDropListData]="students"
+                    class="example-list"
+                    (cdkDropListDropped)="drop($event)">
+                    <div class="example-box" *ngFor="let item of students" cdkDrag>{{item.name}}</div>
+                  </div>
+                </div>
+
+                <div class="teams">
+                    <div class="example-container mr-4" *ngFor="let team of teams">
+                      <h2 class="text-center">{{team.name}}</h2>
+                  
+                      <div
+                        cdkDropList
+                        [cdkDropListData]="team.students"
+                        class="example-list"
+                        (cdkDropListDropped)="drop($event)">
+                        <div class="example-box" *ngFor="let item of team.students" cdkDrag>{{item.name}}</div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12" *ngIf="!students.length || true">
+            <div>
+                <h3>Para este tipo de proyecto te recomendamos estos 4 roles</h3>
+                <div class="input-container-text">
+                    <div class="text">
+                        Lider/Creativo/Cronometro/Redactor
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h3>Asigna los roles correspondientes</h3>
+                <div class="team">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -29,4 +29,8 @@ export class StrategiesComponent implements OnInit {
     });
   }
 
+  GoToTeams(strategy: any) {
+    this.nav.GoToUserRoute(`mis-estrategias/${strategy.id}/equipos`);
+  }
+
 }

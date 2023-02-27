@@ -1,0 +1,37 @@
+.example-list {
+    min-width: 200px;
+    max-width: 100%;
+    min-height: 50px;
+    background-color: #1081FB22;
+    border-radius: 12px;
+}
+
+.example-box {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    font-size: 1rem;
+    background-color: #1081FB;
+    color: white;
+    padding: .5rem .8rem;
+    margin: .5rem 0;
+    border-radius: 5px;
+}
+
+.teams {
+    display: flex;
+    flex-direction: row;
+}
+
+.input-container-text {
+    height: 46px;
+    width: 440px;
+    max-width: 100%;
+    border: 2px solid #587594;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem;
+    background-color: #F6F7F8;
+}

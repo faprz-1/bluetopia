@@ -104,6 +104,14 @@
         "nestRemoting": true
       }
     },
+    "student": {
+      "type": "hasOne",
+      "model": "Student",
+      "foreignKey": "userId",
+      "options": {
+        "nestRemoting": true
+      }
+    },
     "students": {
       "type": "hasMany",
       "model": "Student",
