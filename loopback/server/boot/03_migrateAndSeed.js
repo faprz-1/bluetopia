@@ -63,7 +63,29 @@ module.exports = function(app) {
           active: true
         },
         Role: "Admin"
-      }
+      },
+      {
+        User: {
+          name: "Parent Jarabe",
+          username: "Parent Jarabe",
+          password: "j4r4b3s0",
+          email: "parent@jarabepruebas.com",
+          emailVerified: true,
+          active: true
+        },
+        Role: "Parent"
+      },
+      {
+        User: {
+          name: "Student Jarabe",
+          username: "Student Jarabe",
+          password: "j4r4b3s0",
+          email: "student@jarabepruebas.com",
+          emailVerified: true,
+          active: true
+        },
+        Role: "Student"
+      },
     ]
 
     users.forEach(u => {
@@ -92,6 +114,14 @@ module.exports = function(app) {
       {
         name:"Teacher",
         description: 'maestro'
+      },
+      {
+        name:"Parent",
+        description: 'padre'
+      },
+      {
+        name:"Student",
+        description: 'estudiante'
       },
     ]
 

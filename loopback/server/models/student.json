@@ -33,6 +33,14 @@
         "nestRemoting": true
       }
     },
+    "parentUser": {
+      "type": "belongsTo",
+      "model": "Usuario",
+      "foreignKey": "parentUserId",
+      "options": {
+        "nestRemoting": true
+      }
+    },
     "studentGroup": {
       "type": "hasOne",
       "model": "StudentGroup",

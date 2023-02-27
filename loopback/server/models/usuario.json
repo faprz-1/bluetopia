@@ -111,6 +111,14 @@
       "options": {
         "nestRemoting": true
       }
+    },
+    "children": {
+      "type": "hasMany",
+      "model": "Student",
+      "foreignKey": "parentUserId",
+      "options": {
+        "nestRemoting": true
+      }
     }
   },
   "acls": [

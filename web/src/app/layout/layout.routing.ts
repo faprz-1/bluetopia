@@ -24,7 +24,15 @@ export const ADMIN_MENU_PAGES: any = {
     { name: 'Mis Estudiantes', action: '/inicio/teacher/mis-estudiantes', icon: 'zmdi zmdi-accounts' },
     { name: 'Mis Estrategias', action: '/inicio/teacher/mis-estrategias', icon: 'zmdi zmdi-accounts' },
     // { name: 'Mis Grupos', action: '/inicio/teacher/mis-asignaturas', icon: 'zmdi zmdi-assignment' },
-  ]
+  ],
+  'Parent': [
+    // { name: 'Inicio', action: '/inicio/parent/home', icon: 'zmdi zmdi-home' },
+    { name: 'Estadisticas', action: '/inicio/parent/estadisticas', icon: 'zmdi zmdi-accounts' },
+  ],
+  'Student': [
+    // { name: 'Inicio', action: '/inicio/student/home', icon: 'zmdi zmdi-home' },
+    { name: 'Mis estadisticas', action: '/inicio/student/mis-estudiantes', icon: 'zmdi zmdi-accounts' },
+  ],
 };
 
 
@@ -75,12 +83,28 @@ const LAYOUT_ROUTES: Routes = [
           { path: 'mis-estudiantes', loadChildren: () => import('../pages/teacher-students/teacher-students.module').then(m => m.TeacherStudentsModule) },
           { path: 'mis-asignaturas', loadChildren: () => import('../pages/teacher-subjects/teacher-subjects.module').then(m => m.TeacherSubjectsModule) },
           { path: 'mis-estrategias', loadChildren: () => import('../pages/strategies/strategies.module').then(m => m.StrategiesModule) },
+          { path: 'mis-estrategias/:strategyId/equipos', loadChildren: () => import('../pages/students-teams/students-teams.module').then(m => m.StudentsTeamsModule) },
           { path: 'grado/:grade/grupo/:group/plantillas', loadChildren: () => import('../pages/templates/templates.module').then(m => m.TemplatesModule) },
           { path: 'grado/:grade/grupo/:group/tipo-plantillas/:templateTypeId', loadChildren: () => import('../pages/type-templates/type-templates.module').then(m => m.TypeTemplatesModule) },
           { path: 'grado/:grade/grupo/:group/plantillas/:templateId', loadChildren: () => import('../pages/template-form/template-form.module').then(m => m.TemplateFormModule) },
           { path: 'grado/:grade/grupo/:group/plantillas/:templateId/estrategias/:strategyId', loadChildren: () => import('../pages/teacher-template-form/teacher-template-form.module').then(m => m.TeacherTemplateFormModule) },
           { path: 'grado/:grade/grupo/:group/plantillas/:templateId/estrategias/:strategyId/calendario', loadChildren: () => import('../pages/project-calendar/project-calendar.module').then(m => m.ProjectCalendarModule) },
           { path: 'grado/:grade/grupo/:group/plantillas/:templateId/estrategias/:strategyId/calendario/nuevo-evento/:eventDate', loadChildren: () => import('../pages/event-day/event-day.module').then(m => m.EventDayModule) },
+        ]
+      },
+      {
+        path: 'parent', canActivate: [AuthGuard], data: { role: 'Parent' },
+        children: [
+          { path: '', redirectTo: 'home', pathMatch: 'full' },
+          { path: 'home', loadChildren: () => import('../pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
+          { path: 'estadisticas', loadChildren: () => import('../pages/student-stats/student-stats.module').then(m => m.StudentStatsModule) },
+        ]
+      },
+      {
+        path: 'student', canActivate: [AuthGuard], data: { role: 'Student' },
+        children: [
+          { path: '', redirectTo: 'home', pathMatch: 'full' },
+          { path: 'home', loadChildren: () => import('../pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
         ]
       },
     ]
