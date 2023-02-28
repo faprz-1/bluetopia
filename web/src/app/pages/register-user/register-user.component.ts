@@ -95,8 +95,8 @@ export class RegisterUserComponent implements OnInit {
           let user = this.api.GetUser();
           let role = user.role.name.toLowerCase();
 
-          this.Forward();
-          // this.navigation.GoTo(`/inicio/${role}/`);
+          if(user.role.name == 'School') this.Forward();
+          else this.navigation.GoTo(`/inicio/${role}/`);
         }, (err: any) => {
           this.toast.ShowError(err.error.error.message);
         });
