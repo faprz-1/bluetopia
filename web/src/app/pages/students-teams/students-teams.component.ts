@@ -41,6 +41,7 @@ export class StudentsTeamsComponent implements OnInit {
     },
   ];
   teams: Array<any> = [];
+  colors: Array<string> = [ '#1081FB', '#2ED2A3', '#DF4655' ];
   teamsOptions: Array<any> = [
     {
       name: '2 equipos',
@@ -58,7 +59,28 @@ export class StudentsTeamsComponent implements OnInit {
       name: '5 equipos',
       value: 5,
     },
-  ]
+  ];
+  teamRoles: Array<any> = [
+    {
+      id: 1,
+      name: 'Lider',
+    },
+    {
+      id: 2,
+      name: 'Creativo',
+    },
+    {
+      id: 3,
+      name: 'Cronómetro',
+    },
+    {
+      id: 4,
+      name: 'Redactor',
+    },
+  ];
+  loading: any = {
+    creating: false
+  }
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -67,7 +89,6 @@ export class StudentsTeamsComponent implements OnInit {
 
   ngOnInit(): void {
     this.GetParams();
-    this.OnTeamOptionSelected(this.teamsOptions[1]);
   }
 
   GetParams() {
@@ -86,7 +107,7 @@ export class StudentsTeamsComponent implements OnInit {
     for(let i = 0; i < teamOption.value; i++) {
       this.teams.push({
         name: `Equipo ${i+1}`,
-        students: []
+        members: []
       });
     }
     console.log(this.teams);

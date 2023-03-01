@@ -1,5 +1,5 @@
 <div class="content">
-    <div class="row mb-4">
+    <div class="row mb-5">
         <div class="col-12 d-flex h-100 align-items-center justify-content-between">
             <div class="page-title">
                 Equipos
@@ -8,14 +8,14 @@
     </div>
 
     <div class="row">
-        <div class="col-12">
-            <div class="text">
+        <div class="col-12 mb-3">
+            <div class="page-subtitle">
                 Asigna a tus alumnos a los equipos que quieres que pertenezcan
             </div>
         </div>
 
         <div class="col-12">
-            <label>Selecciona la cantidad de equipos que quieres formar</label>
+            <h2 class="text">Selecciona la cantidad de equipos que quieres formar</h2>
             <div class="input-container" style="width: 310px; max-width: 100%;">
                 <ng-select
                     class="form-control with-border"
@@ -28,39 +28,45 @@
             </div>
         </div>
 
-        <div class="col-12" *ngIf="!!teams.length">
-            <div class="d-flex align-items-start justify-content-between w-100" cdkDropListGroup>
-                <div class="example-container" style="width: 250px;">
-                  <h2 class="text-center">Alumnos</h2>
+        <div class="col-12 mb-5">
+            <div class="d-flex align-items-start w-100" cdkDropListGroup>
+                <div class="example-container" style="margin-right: 4rem;">
+                  <h2 class="text-center text">Alumnos</h2>
 
                   <div
                     cdkDropList
                     [cdkDropListData]="students"
                     class="example-list"
                     (cdkDropListDropped)="drop($event)">
-                    <div class="example-box" *ngFor="let item of students" cdkDrag>{{item.name}}</div>
+                    <div class="example-box" *ngFor="let item of students; let i = index"
+                    [style]="'background-color:' + colors[i%colors.length] + ';'" cdkDrag>
+                        {{item.name}}
+                    </div>
                   </div>
                 </div>
 
                 <div class="teams">
-                    <div class="example-container mr-4" *ngFor="let team of teams">
-                      <h2 class="text-center">{{team.name}}</h2>
+                    <div class="example-container mr-4" *ngFor="let team of teams; let i = index">
+                      <h2 class="text-center" [style]="'color:' + colors[i%colors.length] + ';'">{{team.name}}</h2>
                   
                       <div
                         cdkDropList
-                        [cdkDropListData]="team.students"
+                        [cdkDropListData]="team.members"
                         class="example-list"
                         (cdkDropListDropped)="drop($event)">
-                        <div class="example-box" *ngFor="let item of team.students" cdkDrag>{{item.name}}</div>
+                        <div class="example-box" *ngFor="let item of team.members"
+                        [style]="'background-color:' + colors[i%colors.length] + ';'" cdkDrag>
+                            {{item.name}}
+                        </div>
                       </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-12" *ngIf="!students.length || true">
-            <div>
-                <h3>Para este tipo de proyecto te recomendamos estos 4 roles</h3>
+        <div class="col-12 mb-5" *ngIf="!students.length">
+            <div class="mb-4">
+                <h2 class="text">Para este tipo de proyecto te recomendamos estos 4 roles</h2>
                 <div class="input-container-text">
                     <div class="text">
                         Lider/Creativo/Cronometro/Redactor
@@ -68,10 +74,44 @@
                 </div>
             </div>
             <div>
-                <h3>Asigna los roles correspondientes</h3>
-                <div class="team">
-                    
+                <h2 class="text">Asigna los roles correspondientes</h2>
+                <div class="teams-roles-container">
+                    <div *ngFor="let team of teams; let i = index">
+                        <h2 class="text-center" [style]="'color:' + colors[i%colors.length] + ';'">{{team.name}}</h2>
+                        <div class="team">
+                            <div class="member-container" *ngFor="let member of team.members">
+                                <div class="member-name-container">
+                                    <div class="member-name" [style]="'background-color:' + colors[i%colors.length] + ';'">
+                                        {{member.name}}
+                                    </div>
+                                </div>
+                                <div class="member-role">
+                                    <div class="input-container">
+                                        <ng-select
+                                            class="form-control with-border"
+                                            [items]="teamRoles"
+                                            bindLabel="name"
+                                            bindValue="id"
+                                            placeholder="Elige el rol"
+                                            [(ngModel)]="member.role">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="col-12 mb-5">
+            <div class="d-flex align-items-center justify-content-end">
+                <button class="btn btn-bigger btn-outline-primary mr-4" [disabled]="loading.creating">
+                    Cancelar
+                </button>
+                <button class="btn btn-bigger btn-primary" [disabled]="loading.creating">
+                    Continuar
+                </button>
             </div>
         </div>
     </div>
