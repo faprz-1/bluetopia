@@ -48,6 +48,7 @@ function GoToRegister() {
 }
 
 function ScrollToContactUs() {
+    console.log('sjgdjh');
     ScrollToElement('contact-us');
 }
 
@@ -110,6 +111,11 @@ function GoToSocialMedia(socialMedia) {
         case 'yt':
             break;
     }
+}
+
+function SendForm() {
+    document.contactForm.submit();
+    document.contactForm.reset();
 }
 
 function MobileModifications() {
