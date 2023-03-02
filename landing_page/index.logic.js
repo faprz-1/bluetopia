@@ -112,6 +112,11 @@ function GoToSocialMedia(socialMedia) {
     }
 }
 
+function SendForm() {
+    document.contactForm.submit();
+    document.contactForm.reset();
+}
+
 function MobileModifications() {
     let isMobileRegex = /android|iphone|phone|mobile/gi;
     let isMobile = "ontouchstart" in document.documentElement;
