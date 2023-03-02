@@ -48,6 +48,7 @@ function GoToRegister() {
 }
 
 function ScrollToContactUs() {
+    console.log('sjgdjh');
     ScrollToElement('contact-us');
 }
 

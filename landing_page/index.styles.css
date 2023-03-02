@@ -187,6 +187,14 @@ body {
 .no-decoration{
     text-decoration: none !important;
 }
+
+.no-bullet{
+    list-style-type:none;
+}
+.circle-bullet{
+    list-style-type:circle;
+}
+
 .white-text{
     color: #ffffff !important;
 }
