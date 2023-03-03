@@ -119,6 +119,7 @@ body {
     font-weight: 900;
     line-height: 80px;
     margin-bottom: 1rem;
+    word-wrap: break-word;
 }
 .title-2 {
     font-size: 4rem;
@@ -169,10 +170,9 @@ body {
     font-weight: 500;
     line-height: 40px;
 }
-.title-img-container {
-    display: flex;
+/* .title-img-container {
     align-items: center;
-}
+} */
 .title-img {
     box-shadow: 2px 2px 2px 2px #ccc;
 }
@@ -217,11 +217,11 @@ body {
     height: 70px;
 }
 .header-img {
-    margin-left: 48px;
+    margin-left: 0px;
 }
 .header-img-small {
     height: 42px;
-    margin-left: 48px;
+    margin-left: 0px;
 }
 
 .social-media-container {
