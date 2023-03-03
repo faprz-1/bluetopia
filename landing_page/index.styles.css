@@ -119,6 +119,7 @@ body {
     font-weight: 900;
     line-height: 80px;
     margin-bottom: 1rem;
+    word-wrap: break-word;
 }
 .title-2 {
     font-size: 4rem;
@@ -217,11 +218,11 @@ body {
     height: 70px;
 }
 .header-img {
-    margin-left: 48px;
+    margin-left: 0px;
 }
 .header-img-small {
     height: 42px;
-    margin-left: 48px;
+    margin-left: 0px;
 }
 
 .social-media-container {
