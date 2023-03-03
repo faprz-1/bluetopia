@@ -170,10 +170,9 @@ body {
     font-weight: 500;
     line-height: 40px;
 }
-.title-img-container {
-    display: flex;
+/* .title-img-container {
     align-items: center;
-}
+} */
 .title-img {
     box-shadow: 2px 2px 2px 2px #ccc;
 }

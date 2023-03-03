@@ -120,6 +120,18 @@ function SendForm() {
     document.contactForm.reset();
 }
 
+function Verify(){
+    let name = (document.getElementsByName('name')[0].value);
+    let email = document.getElementsByName('email')[0].value;
+    const button = document.querySelector('#submit');
+    console.log(name,email);
+    if (name.length  > 0 && email.length  > 0){
+        button.disabled = false;
+    }else{
+        button.disabled = true;
+    }
+}
+
 function MobileModifications() {
     let isMobileRegex = /android|iphone|phone|mobile/gi;
     let isMobile = "ontouchstart" in document.documentElement;
