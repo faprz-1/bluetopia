@@ -118,13 +118,14 @@ function GoToSocialMedia(socialMedia) {
 function SendForm() {
     document.contactForm.submit();
     document.contactForm.reset();
+    const button = document.querySelector('#submitBtn');
+    button.disabled = true;
 }
 
 function Verify(){
     let name = (document.getElementsByName('name')[0].value);
     let email = document.getElementsByName('email')[0].value;
-    const button = document.querySelector('#submit');
-    console.log(name,email);
+    const button = document.querySelector('#submitBtn');
     if (name.length  > 0 && email.length  > 0){
         button.disabled = false;
     }else{

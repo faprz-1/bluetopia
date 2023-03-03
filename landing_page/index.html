@@ -513,7 +513,7 @@
                 <div class="d-flex justify-content-around align-items-center">
                     <div>
                         <div class="title text-center">Contacto</div>
-                        <form class="text-center" name="contactForm" action="https://formspree.io/f/mpzedrpe"
+                        <form class="text-center" id="contactForm" name="contactForm" action="https://formspree.io/f/mpzedrpe"
                             method="POST" target="_blank">
                             <div class="form-group">
                                 <div class="input-container">
@@ -539,7 +539,7 @@
                                     <textarea id="subject" name="subject" placeholder="Compartenos tus inquietudes"
                                         style=" resize: none; height: 100px;" class="form-control"></textarea>
                                 </div>
-                                <button id="submit" disabled type="submit" class="btn btn-success btn-contact" onclick="SendForm()">
+                                <button id="submitBtn" disabled class="btn btn-success btn-contact" onclick="SendForm()">
                                     Enviar
                                 </button>
                             </div>
