@@ -104,11 +104,13 @@ function GoToSocialMedia(socialMedia) {
             window.open('http://facebook.com/bluetopiapp', '_blank');
             break;
         case 'tt':
+            window.open('http://twitter.com/Bluetopiaapp', '_blank');
             break;
         case 'in':
             window.open('https://instagram.com/bluetopiapp', '_blank');
             break;
         case 'yt':
+            window.open('http://www.youtube.com/@bluetopiaapp/about', '_blank');
             break;
     }
 }
