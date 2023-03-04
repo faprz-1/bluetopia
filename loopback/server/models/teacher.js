@@ -34,7 +34,13 @@ module.exports = function(Teacher) {
                     subjects.forEach(subject => {
                         newTeacher.subjects.add(subject.id, (err) => {
                             if(err) return callback(err);
-                            if(++cont == limit) return callback(null, newTeacher);
+                            if(++cont == limit) {
+                                newTeacher.Activate(null, (err, teacherActive) => {
+                                    if(err) return callback(err);
+
+                                    return callback(null, newTeacher);
+                                });
+                            }
                         });
                     });
                 });

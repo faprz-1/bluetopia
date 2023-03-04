@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="d-flex">
-            <div class="radio-button"></div>
+            <div class="radio-button" [ngClass]="{'checked': step >= 2}"></div>
             <div class="instructions">
                 <div class="step">2) Llena la plantilla, te explicamos cómo.</div>
                 <div class="link">
@@ -32,10 +32,10 @@
             </div>
         </div>
         <div class="d-flex">
-            <div class="radio-button"></div>
+            <div class="radio-button" [ngClass]="{'checked': step >= 3}"></div>
             <div class="instructions">
                 <div class="step">3) Sube la plantilla con los datos de tus maestros</div>
-                <input class="d-none" #teachersCsv type="file" (change)="OnFileChanged($event)">
+                <input class="d-none" #teachersCsv type="file" accept=".csv" (change)="OnFileChanged($event)">
                 <div class="upload-container clickeable" (click)="teachersCsv.click()">
                     <img src="assets/icons/upload.png" alt="CSV file">
                     Subir excel de maestros
@@ -48,7 +48,7 @@
         <button class="btn btn-outline-primary">
             Cancelar
         </button>
-        <button class="btn btn-primary" (click)="nav.GoTo('home');">
+        <button class="btn btn-primary" (click)="nav.GoToUserRoute('home');">
             Continuar
         </button>
     </div>

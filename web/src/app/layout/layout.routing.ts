@@ -59,7 +59,6 @@ const LAYOUT_ROUTES: Routes = [
         path: 'school', canActivate: [AuthGuard], data: { role: 'School' },
         children: [
           { path: '', redirectTo: 'mis-maestros', pathMatch: 'full' },
-          { path: 'home', loadChildren: () => import('../pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
           { path: 'registrar-maestros', loadChildren: () => import('../pages/school-teachers/school-teachers.module').then(m => m.SchoolTeachersModule) },
           { path: 'mis-estudiantes', loadChildren: () => import('../pages/students/students.module').then(m => m.StudentsModule) },
           { path: 'registrar-estudiantes/csv', loadChildren: () => import('../pages/students-csv/students-csv.module').then(m => m.StudentsCsvModule) },
@@ -71,7 +70,6 @@ const LAYOUT_ROUTES: Routes = [
         path: 'teacher', canActivate: [AuthGuard], data: { role: 'Teacher' },
         children: [
           { path: '', redirectTo: 'mis-estudiantes', pathMatch: 'full' },
-          { path: 'home', loadChildren: () => import('../pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
           { path: 'mis-estudiantes', loadChildren: () => import('../pages/teacher-students/teacher-students.module').then(m => m.TeacherStudentsModule) },
           { path: 'mis-asignaturas', loadChildren: () => import('../pages/teacher-subjects/teacher-subjects.module').then(m => m.TeacherSubjectsModule) },
           { path: 'mis-estrategias', loadChildren: () => import('../pages/strategies/strategies.module').then(m => m.StrategiesModule) },
