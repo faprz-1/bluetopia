@@ -13,7 +13,7 @@ module.exports = function(TeacherSubject) {
             if(err) return callback(err);
 
             let cont = 0, limit = teacherSubjects.length;
-            if(!!!limit) return callback(null, teacherSubjects);
+            if(!limit) return callback(null, teacherSubjects);
             teacherSubjects.forEach(subject => {
                 const teacherSubjectInstance = {
                     teacherId,

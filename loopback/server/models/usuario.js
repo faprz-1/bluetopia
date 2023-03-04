@@ -92,6 +92,7 @@ module.exports = function(Usuario) {
       if(err) return callback(err);
 
       if(!role) return callback('Role not specified');
+      if(!!userData && !!userData.username) user.username = userData.username;
       Usuario.create(user, (err, newU) => {
         if (err) return callback(err);
 
@@ -101,7 +102,7 @@ module.exports = function(Usuario) {
         }, function (err, principal) {
           if (err) callback(err);
 
-          if (userData) {
+          if(userData) {
             userData.userId = newU.id;
             Usuario.app.models.UserData.create(userData, (err, newUserData) => {
               if (err) {
@@ -111,7 +112,21 @@ module.exports = function(Usuario) {
                 });
               }
 
-              return callback(null, newU);
+              if(role.name == 'Teacher') {
+                let teacher = {
+                  name: userData.username,
+                  email: userData.email,
+                  active: true,
+                  userId: newU.id,
+                  subjects: []
+                }
+                Usuario.app.models.Teacher.AddTeacher(teacher, (err, newTeacher) => {
+                  if (err) callback(err);
+
+                  return callback(null, newU);
+                });
+              }
+              else return callback(null, newU);
             });
           }
           else callback(null, newU);

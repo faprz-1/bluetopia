@@ -16,7 +16,7 @@ import { ValidationService } from 'src/app/services/validation.service';
 })
 export class RegisterUserComponent implements OnInit {
 
-  registerStep: number = 3;
+  registerStep: number = 1;
   userType: string = '';
   userForm: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),

@@ -25,7 +25,7 @@ export class SchoolTeachersComponent implements OnInit {
   constructor(
     private api: ApiService,
     private toast: ToastService,
-    private nav: NavigationService
+    public nav: NavigationService
   ) { }
 
   ngOnInit(): void {
