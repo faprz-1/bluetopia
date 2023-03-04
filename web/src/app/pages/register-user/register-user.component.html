@@ -27,13 +27,6 @@
                                 <form class="form d-inline-block" [formGroup]="userForm">
                                     <div class="input-container">
                                         <div class="input-icon-container text-center">
-                                            <img src="assets/icons/user.png">
-                                        </div>
-                                        <input class="form-control" type="text" placeholder="Nombre" formControlName="username">
-                                        <app-control-messages [control]="userForm.get('username')"></app-control-messages>
-                                    </div>
-                                    <div class="input-container">
-                                        <div class="input-icon-container text-center">
                                             <img src="assets/icons/mail.png">
                                         </div>
                                         <input class="form-control" type="text" placeholder="Correo electronico" formControlName="email" (keyup.enter)="LoginUser()">
@@ -54,7 +47,7 @@
                                 </div>
                                 <div class="btns-container">
                                     <div class="d-flex justify-content-between">
-                                        <button class="btn btn-primary" (click)="Register()">
+                                        <button class="btn btn-primary" (click)="Forward()">
                                             Registrarme
                                         </button>
                                         <button class="btn btn-success" (click)="LoginUser()">
@@ -74,6 +67,28 @@
                                     </div>
                                 </div>
                                 <form class="form d-inline-block" [formGroup]="userRegisterForm">
+                                    <div class="input-container">
+                                        <div class="input-icon-container text-center">
+                                            <img src="assets/icons/user.png">
+                                        </div>
+                                        <input class="form-control" type="text" placeholder="Nombre" formControlName="username">
+                                        <app-control-messages [control]="userForm.get('username')"></app-control-messages>
+                                    </div>
+                                    <div class="input-container">
+                                        <div class="input-icon-container text-center">
+                                            <img src="assets/icons/user-phone.png">
+                                        </div>
+                                        <input class="form-control" type="text" maxlength="10" placeholder="Teléfono escolar" formControlName="schoolPhone">
+                                        <app-control-messages [control]="userRegisterForm.get('schoolPhone')"></app-control-messages>
+                                    </div>
+                                    <div class="input-container">
+                                        <div class="input-icon-container text-center">
+                                            <img src="assets/icons/phone.png">
+                                        </div>
+                                        <input class="form-control" type="text" maxlength="10" placeholder="Teléfono" formControlName="phone">
+                                        <app-control-messages [control]="userRegisterForm.get('phone')"></app-control-messages>
+                                        <span class="required-span">*</span>
+                                    </div>
                                     <div class="input-container">
                                         <div class="input-icon-container text-center">
                                             <img src="assets/icons/school.png">
@@ -108,18 +123,17 @@
                                     </div>
                                     <div class="input-container">
                                         <div class="input-icon-container text-center">
-                                            <img src="assets/icons/phone.png">
+                                            <img src="assets/icons/lock.png">
                                         </div>
-                                        <input class="form-control" type="text" placeholder="Teléfono" formControlName="phone">
-                                        <app-control-messages [control]="userRegisterForm.get('phone')"></app-control-messages>
-                                        <span class="required-span">*</span>
+                                        <input class="form-control" type="password" placeholder="Contraseña" formControlName="password" (keyup)="OnPasswordChange()" (keyup.enter)="RegisterUser()">
+                                        <app-control-messages [control]="userRegisterForm.get('password')"></app-control-messages>
                                     </div>
                                     <div class="input-container">
                                         <div class="input-icon-container text-center">
-                                            <img src="assets/icons/user-phone.png">
+                                            <img src="assets/icons/lock.png">
                                         </div>
-                                        <input class="form-control" type="text" placeholder="Teléfono escolar" formControlName="schoolPhone">
-                                        <app-control-messages [control]="userRegisterForm.get('schoolPhone')"></app-control-messages>
+                                        <input class="form-control" type="password" placeholder="Conformar contraseña" formControlName="confirmPassword" (keyup.enter)="RegisterUser()">
+                                        <app-control-messages [control]="userRegisterForm.get('confirmPassword')"></app-control-messages>
                                     </div>
                                 </form>
                                 <div class="btns-container">

@@ -21,7 +21,7 @@ export class LandingPageComponent implements OnInit {
     if(!!user && !!user.role.name) {
       let ttl = this.api.GetTTL();
       let today = moment();
-      if(ttl != null && today.isBefore(ttl)) this.navigation.GoToUserRoute('home');
+      if(ttl != null && today.isBefore(ttl)) this.navigation.GoToUserRoute('');
     }
   }
 

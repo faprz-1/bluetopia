@@ -46,6 +46,7 @@ export class StudentsCsvComponent implements OnInit {
     uploading: false
   }
   step: number = 1;
+  instructionsStep: number = 1;
 
   constructor(
     private downloadFile: DownloadFileService,
@@ -59,11 +60,13 @@ export class StudentsCsvComponent implements OnInit {
   }
 
   DownloadTemplate() {
+    if(this.instructionsStep < 2) this.instructionsStep = 2;
     this.downloadFile.DownloadWithoutApi("assets/docs/studentsTemplate.csv", 'studentsTemplate.csv');
   }
 
   Cancel() {
-    this.step--;
+    if(this.step > 1) this.step--;
+    else this.nav.GoToUserRoute('mis-estudiantes');
   }
 
   Continue() {
@@ -72,7 +75,7 @@ export class StudentsCsvComponent implements OnInit {
         this.UploadStudents();
         break;
     }
-    this.step++;
+    if(this.step != 2) this.step++;
   }
 
   OnFileChanged(event: any): void {
@@ -85,7 +88,10 @@ export class StudentsCsvComponent implements OnInit {
         this.step++;
       });
     };
-    if(file) FILE_READER.readAsText(file, 'ISO-8859-1');
+    if(file) {
+      if(this.instructionsStep < 3) this.instructionsStep = 3;
+      FILE_READER.readAsText(file, 'ISO-8859-1');
+    }
   }
   
   FormatData(students: Array<any>) {

@@ -49,7 +49,7 @@
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "Teacher",
+      "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": [
         "CreateOne"
