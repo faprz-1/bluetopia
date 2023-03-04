@@ -619,12 +619,12 @@ ng-select.form-control {
 }
 .fab-icon{
 	position:fixed;
-    width: 5%;
+    width: 4%;
     height: auto;
     bottom:40px;
 	right:40px;
 	border-radius:50px;
-	box-shadow: 2px 2px 3px #999;
+	box-shadow: 2px 2px 3px #565555;
 }
 .platform-img {
     margin-right: 4rem;
