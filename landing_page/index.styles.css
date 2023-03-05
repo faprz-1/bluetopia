@@ -1,9 +1,14 @@
+
+html,body{
+    overflow-x: hidden;
+    max-width: 100% !important;
+}
 body {
     --primary: #1081FB;
     --success: #2ED2A3;
     --danger: #DF4655;
+    overflow: hidden;
 
-    overflow-x: hidden;
 }
 
 
@@ -119,12 +124,18 @@ body {
     font-weight: 900;
     line-height: 80px;
     margin-bottom: 1rem;
-    word-wrap: break-word;
+
 }
 .title-2 {
     font-size: 4rem;
     font-weight: 700;
     line-height: 80px;
+}
+.title-3{
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 60px;
+    word-break: break-word;
 }
 .subtitle {
     color: #587594;
@@ -135,11 +146,6 @@ body {
 .subtitle-2 {
     font-size: 2rem;
     font-weight: 700;
-}
-.subtitle-3 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    line-height: 50px;
 }
 .subtitle-3 {
     font-size: 3rem;
@@ -608,12 +614,17 @@ ng-select.form-control {
 }
 .fab-icon{
 	position:fixed;
-    width: 20px;
-    height: auto;
-    bottom:40px;
-	right:0;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:40px;
+	background-color:#25d366;
+	color:#FFF;
 	border-radius:50px;
+	text-align:center;
+  font-size:30px;
 	box-shadow: 2px 2px 3px #999;
+  z-index:100;
 }
 .platform-img {
     margin-right: 4rem;
