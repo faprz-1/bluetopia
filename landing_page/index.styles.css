@@ -103,7 +103,6 @@ body {
     align-items: start;
     width: 550px;
     max-width: 100%;
-    word-wrap: break-word;
 }
 .btn-title {
     width: 220px;
@@ -126,67 +125,50 @@ body {
     font-size: 4rem;
     font-weight: 700;
     line-height: 80px;
-    word-wrap: break-word;
-}
-.title-3 {
-    color: #587594;
-    font-size: 2.125rem;
-    font-weight: 900;
-    margin-bottom: 1rem;
-    word-wrap: break-word;
 }
 .subtitle {
     color: #587594;
     font-size: 2.125rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    word-wrap: break-word;
 }
 .subtitle-2 {
     font-size: 2rem;
     font-weight: 700;
-    word-wrap: break-word;
 }
 .subtitle-3 {
     font-size: 2.5rem;
     font-weight: 700;
     line-height: 50px;
-    word-wrap: break-word;
 }
 .subtitle-3 {
     font-size: 3rem;
     font-weight: 700;
     line-height: 60px;
-    word-wrap: break-word;
 }
 .subtitle-4 {
     font-size: 2.25rem;
     font-weight: 700;
     line-height: 45px;
-    word-wrap: break-word;
 }
 .text {
     color: #587594;
     font-size: 1.75rem;
     font-weight: 500;
-    word-wrap: break-word;
 }
 .text-2 {
     font-size: 1.5rem;
     color: #587594;
-    word-wrap: break-word;
 }
 .text-3 {
     font-size: 1.25rem;
     color: #587594;
-    word-wrap: break-word;
 }
 .text-big {
     columns: #587594;
     font-size: 2rem;
     font-weight: 500;
     line-height: 40px;
-    word-wrap: break-word;
 }
 /* .title-img-container {
     align-items: center;
@@ -626,15 +608,13 @@ ng-select.form-control {
 }
 .fab-icon{
 	position:fixed;
-    width: 50px;
+    width: 20px;
     height: auto;
     bottom:40px;
+	right:0;
 	border-radius:50px;
-	box-shadow: 2px 2px 3px #565555;
-    right: 5%;
-    cursor: pointer;
+	box-shadow: 2px 2px 3px #999;
 }
-
 .platform-img {
     margin-right: 4rem;
     z-index: 1;
@@ -969,10 +949,7 @@ ng-select.form-control {
 .animated-short {
     transition: all .1s ease-in-out;
 }
-.text-start-wrapped{
-    text-align: left;
-    padding-right: 5%;
-}
+
 /* Responsivness */
 /* XS */
 @media (max-width: 575px) {
@@ -1009,13 +986,11 @@ ng-select.form-control {
         font-weight: 900;
         line-height: 80px;
         margin-bottom: 1rem;
-        word-wrap: break-word;
     }
     .title-2 {
         font-size: calc(4rem - .6rem) !important;
         font-weight: 700;
         line-height: 80px;
-        word-wrap: break-word;
     }
     .subtitle {
         color: #587594;
@@ -1026,43 +1001,34 @@ ng-select.form-control {
     .subtitle-2 {
         font-size: calc(2rem - .6rem) !important;
         font-weight: 700;
-        word-wrap: break-word;
     }
     .subtitle-3 {
         font-size: calc(2.5rem - .6rem) !important;
-        word-wrap: break-word;
         line-height: 50px;
     }
     .subtitle-3 {
         font-size: calc(3rem - .6rem) !important;
         font-weight: 700;
         line-height: 60px;
-        word-wrap: break-word;
-
     }
     .subtitle-4 {
         font-size: calc(2.25rem - .6rem) !important;
         font-weight: 700;
-        word-wrap: break-word;
         line-height: 45px;
     }
     .text {
         color: #587594;
-        word-wrap: break-word;
         font-size: calc(1.75rem - .6rem) !important;
         font-weight: 500;
     }
     .text-2 {
         font-size: calc(1.5rem - .6rem) !important;
         color: #587594;
-        word-wrap: break-word;
     }
     .text-3 {
         font-size: calc(1.25rem - .6rem) !important;
         color: #587594;
-        word-wrap: break-word;
     }
-    
 }
 
 /* SM */
