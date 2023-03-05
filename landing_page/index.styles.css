@@ -1,9 +1,13 @@
+
+html,body{
+    overflow-x: hidden;
+    max-width: 100% !important;
+}
 body {
     --primary: #1081FB;
     --success: #2ED2A3;
     --danger: #DF4655;
 
-    overflow-x: hidden;
 }
 
 
@@ -608,12 +612,17 @@ ng-select.form-control {
 }
 .fab-icon{
 	position:fixed;
-    width: 20px;
-    height: auto;
-    bottom:40px;
-	right:0;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:40px;
+	background-color:#25d366;
+	color:#FFF;
 	border-radius:50px;
+	text-align:center;
+  font-size:30px;
 	box-shadow: 2px 2px 3px #999;
+  z-index:100;
 }
 .platform-img {
     margin-right: 4rem;
