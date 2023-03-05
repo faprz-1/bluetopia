@@ -25,8 +25,8 @@
                                     <img src="assets/icons/user.png">
                                 </div>
                                 <input class="form-control" type="text" placeholder="Nombre" formControlName="name">
-                                <app-control-messages [control]="teacherForm.get('name')"></app-control-messages>
                             </div>
+                            <app-control-messages [control]="teacherForm.get('name')"></app-control-messages>
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="input-container">
@@ -41,8 +41,8 @@
                                     placeholder="Asignaturas"
                                     formControlName="subjects">
                                 </ng-select>
-                                <app-control-messages [control]="teacherForm.get('subjects')"></app-control-messages>
                             </div>
+                            <app-control-messages [control]="teacherForm.get('subjects')"></app-control-messages>
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="input-container">
@@ -50,8 +50,8 @@
                                     <img src="assets/icons/mail.png">
                                 </div>
                                 <input class="form-control" type="text" placeholder="Correo electrónico de trabajo" formControlName="email">
-                                <app-control-messages [control]="teacherForm.get('email')"></app-control-messages>
                             </div>
+                            <app-control-messages [control]="teacherForm.get('email')"></app-control-messages>
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="checkbox-container clickeable">
@@ -61,8 +61,8 @@
                                 <label class="mr-2 clickeable" (click)="extracurricularsInput.click()">Extracurriculares</label>
                                 <input type="checkbox" #extracurricularsInput formControlName="extracurricular">
                                 <span class="checkmark" (click)="extracurricularsInput.click()"></span>
-                                <app-control-messages [control]="teacherForm.get('extracurricular')"></app-control-messages>
                             </div>
+                            <app-control-messages [control]="teacherForm.get('extracurricular')"></app-control-messages>
                         </div>
                         <div class="col-12 col-md-6 col-xl-4">
                             <div class="input-container">
@@ -70,8 +70,8 @@
                                     <img src="assets/icons/users.png">
                                 </div>
                                 <input class="form-control" type="text" placeholder="Grado" formControlName="grade">
-                                <app-control-messages [control]="teacherForm.get('grade')"></app-control-messages>
                             </div>
+                            <app-control-messages [control]="teacherForm.get('grade')"></app-control-messages>
                         </div>
                         <div class="col-12 col-md-6 col-xl-4">
                             <div class="input-container">
@@ -79,8 +79,8 @@
                                     <img src="assets/icons/users-group.png">
                                 </div>
                                 <input class="form-control" type="text" placeholder="Grupo" formControlName="group">
-                                <app-control-messages [control]="teacherForm.get('group')"></app-control-messages>
                             </div>
+                            <app-control-messages [control]="teacherForm.get('group')"></app-control-messages>
                         </div>
                         <div class="col-12 col-xl-4 text-right">
                             <button class="btn btn-outline-success save-button" (click)="AddTeacher()">

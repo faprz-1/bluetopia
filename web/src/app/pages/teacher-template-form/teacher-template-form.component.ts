@@ -101,20 +101,26 @@ export class TeacherTemplateFormComponent implements OnInit {
   }
 
   NextStep(template: any) {
-    this.Save();
-    if(this.step == 4) this.OpenModal(template);
-    else this.step++;
+    this.Save().then(saved => {
+      if(this.step == 4) this.OpenModal(template);
+      else if(!!saved) this.step++;
+    });
   }
   
   Save() {
-    switch (this.step) {
-      case 1: this.SaveStragey(); break;
-      case 2: this.SaveParcialProduct(); break;
-      case 3: this.SaveParcialProduct(true); break;
-      case 4: this.SaveEvent(); break;
-      default:
-        break;
-    }
+    return new Promise<boolean>(async (res, rej) => {
+      try {
+        switch (this.step) {
+          case 1: res(await this.SaveStragey()); break;
+          case 2: res(await this.SaveParcialProduct()); break;
+          case 3: res(await this.SaveParcialProduct(true)); break;
+          case 4: res(await this.SaveEvent()); break;
+          default: res(false); break;
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    });
   }
 
   GetParams() {
@@ -175,57 +181,72 @@ export class TeacherTemplateFormComponent implements OnInit {
   }
 
   SaveStragey() {
-    if(!this.strategyForm.valid) {
-      this.toast.ShowWarning(`Favor de llenar todos los campos correctamente`);
-      this.strategyForm.markAllAsTouched();
-      return;
-    }
-
-    this.api.Patch(`/Strategies/${this.strategyId}`, {strategy: this.strategyForm.value}).subscribe(strategySaved => {
-      this.InitializeStrategyForm(strategySaved);
-    }, err => {
-      console.error("Error updating strategy", err);
+    return new Promise<boolean>((res, rej) => {
+      if(!this.strategyForm.valid) {
+        this.toast.ShowWarning(`Favor de llenar todos los campos correctamente`);
+        this.strategyForm.markAllAsTouched();
+        res(false);
+        return;
+      }
+      
+      this.api.Patch(`/Strategies/${this.strategyId}`, {strategy: this.strategyForm.value}).subscribe(strategySaved => {
+        this.InitializeStrategyForm(strategySaved);
+        res(true);
+      }, err => {
+        console.error("Error updating strategy", err);
+        res(false);
+      });
     });
   }
 
   SaveParcialProduct(isParcialProductFinal: boolean = false) {
-    if(!this.parcialProductForm.valid) {
-      this.toast.ShowWarning(`Favor de llenar todos los campos correctamente`);
-      this.parcialProductForm.markAllAsTouched();
-      return;
-    }
-    
-    let parcialProductInstance = {
-      ...this.parcialProductForm.value,
-      isFinal: isParcialProductFinal,
-      strategyId: this.strategyId,
-    }
-    
-    this.api.Post(`/ParcialProducts`, {parcialProduct: parcialProductInstance}).subscribe(newParcialProduct => {
-      this.strategy.parcialProducts.push(newParcialProduct);
-      this.parcialProductForm.reset();
-    }, err => {
-      console.error("Error posting new parcial product", err);
+    return new Promise<boolean>((res, rej) => {
+      if(!this.parcialProductForm.valid) {
+        this.toast.ShowWarning(`Favor de llenar todos los campos correctamente`);
+        this.parcialProductForm.markAllAsTouched();
+        res(false);
+        return;
+      }
+      
+      let parcialProductInstance = {
+        ...this.parcialProductForm.value,
+        isFinal: isParcialProductFinal,
+        strategyId: this.strategyId,
+      }
+      
+      this.api.Post(`/ParcialProducts`, {parcialProduct: parcialProductInstance}).subscribe(newParcialProduct => {
+        this.strategy.parcialProducts.push(newParcialProduct);
+        this.parcialProductForm.reset();
+        res(true);
+      }, err => {
+        console.error("Error posting new parcial product", err);
+        res(false);
+      });
     });
   }
   
   SaveEvent() {
-    if(!this.eventForm.valid) {
-      this.toast.ShowWarning(`Favor de llenar todos los campos correctamente`);
-      this.eventForm.markAllAsTouched();
-      return;
-    }
-    
-    let parcialProduct = {
-      ...this.eventForm.value,
-      strategyId: this.strategyId,
-      isFinal: true
-    }
-    
-    // this.api.Post(`/Events`, {event}).subscribe(newEvent => {
-    this.api.Post(`/ParcialProducts`, {parcialProduct}).subscribe(newParcialProduct => {
-    }, err => {
-      console.error("Erro posting new event", err);
+    return new Promise<boolean>((res, rej) => {
+      if(!this.eventForm.valid) {
+        this.toast.ShowWarning(`Favor de llenar todos los campos correctamente`);
+        this.eventForm.markAllAsTouched();
+        res(false);
+        return;
+      }
+      
+      let parcialProduct = {
+        ...this.eventForm.value,
+        strategyId: this.strategyId,
+        isFinal: true
+      }
+      
+      // this.api.Post(`/Events`, {event}).subscribe(newEvent => {
+      this.api.Post(`/ParcialProducts`, {parcialProduct}).subscribe(newParcialProduct => {
+        res(true);
+      }, err => {
+        console.error("Erro posting new event", err);
+        res(false);
+      });
     });
   }
 
