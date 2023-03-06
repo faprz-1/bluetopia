@@ -895,4 +895,47 @@ module.exports = function(Usuario) {
       });
     });
   };
+
+  Usuario.GetFileLibrary = function(userId, callback) {
+    Usuario.app.models.RoleMapping.findOne({
+      where: {
+        principalId: userId
+      },
+      include: 'role'
+    }, (err, roleMapping) => {
+      if(err) return callback(err);
+
+      if(roleMapping.role().name == 'School') {
+        Usuario.find({
+          where: {
+            schoolUserId: userId
+          }
+        }, (err, userTeachersOfSchool) => {
+          if(err) return callback(err);
+          
+          Usuario.app.models.UploadedFiles.find({
+            where: {
+              or: [
+                {userId: {inq: userTeachersOfSchool.map(user => user.id)}},
+                {userId}
+              ]
+            }
+          }, (err, files) => {
+            if(err) return callback(err);
+            return callback(null, files);
+          });
+        });
+      } else {
+        Usuario.app.models.UploadedFiles.find({
+          where: {
+            userId
+          }
+        }, (err, files) => {
+          if(err) return callback(err);
+          return callback(null, files);
+        });
+      }
+    });
+  }
+
 };

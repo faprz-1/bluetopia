@@ -6,16 +6,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlMessagesModule } from 'src/app/components/control-messages/control-messages.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
-import { EventDayComponent } from './event-day.component';
-import { LibraryFileSelectorModalModule } from 'src/app/components/library-file-selector-modal/library-file-selector-modal.module';
+import { LibraryFileSelectorModalComponent } from './library-file-selector-modal.component';
 
 const MODULE_ROUTES = [
-  { path: '', component: EventDayComponent }
+  { path: '', component: LibraryFileSelectorModalComponent }
 ];
 
 @NgModule({
   declarations: [
-    EventDayComponent
+    LibraryFileSelectorModalComponent
   ],
   imports: [
     FormsModule,
@@ -24,9 +23,8 @@ const MODULE_ROUTES = [
     ReactiveFormsModule,
     ControlMessagesModule,
     ModalModule.forRoot(),
-    LibraryFileSelectorModalModule,
-    RouterModule.forChild(MODULE_ROUTES),
+    // RouterModule.forChild(MODULE_ROUTES),
   ],
-  // exports: [EventDayComponent]
+  exports: [LibraryFileSelectorModalComponent]
 })
-export class EventDayModule { }
+export class LibraryFileSelectorModalModule { }

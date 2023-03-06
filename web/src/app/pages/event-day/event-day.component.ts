@@ -93,6 +93,12 @@ export class EventDayComponent implements OnInit {
       reader.readAsBinaryString(file);
     });
   }
+  
+  OnLibraryFilesSelected(files: Array<any>) {
+    this.eventForm.get('resources')?.setValue(
+      this.eventForm.get('resources')?.value.concat(files)
+    );
+  }
 
   SaveEvent() {
     if(this.eventForm.invalid) {
@@ -110,6 +116,14 @@ export class EventDayComponent implements OnInit {
       console.error("Error creating event", err);
       this.loading = false;
     });
+  }
+
+  GetFiles(type: string): Array<any> {
+    switch (type) {
+      case 'new': return this.eventForm.get('resources')?.value.filter((file: any) => !file.id);
+      case 'old': return this.eventForm.get('resources')?.value.filter((file: any) => !!file.id);
+      default: return []
+    }
   }
 
 }
