@@ -53,9 +53,6 @@
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-    {
-      "accessType": "EXECUTE",
-      "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": [
