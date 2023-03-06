@@ -3,25 +3,15 @@
 module.exports = function(Student) {
 
     Student.AddStudent = function(student, callback) {
-        Student.findOne({
-            where: {
-                email: student.email
-            }
-        }, (err, studentFound) => {
+        Student.create(student, (err, newStudent) => {
             if(err) return callback(err);
-            
-            if(!!studentFound) return callback(null, studentFound);
 
-            Student.create(student, (err, newStudent) => {
-                if(err) return callback(err);
-
-                return callback(null, newStudent);
-            });
+            return callback(null, newStudent);
         });
     }
 
     Student.AddStudents = function(students, callback) {
-        if(!students) return callback(null, []);
+        if(!students.length) return callback(null, []);
         let cont = 0, limit = students.length, newStudents = [];
         if(!limit) return callback(null, newStudents);
         Student.app.models.Group.CreateBasedOnCSV(students, (err, groups) => {
