@@ -1,10 +1,17 @@
+
+html,body{
+    overflow-x: hidden;
+    max-width: 100% !important;
+}
 body {
     --primary: #1081FB;
     --success: #2ED2A3;
     --danger: #DF4655;
+    overflow: hidden;
 
-    overflow-x: hidden;
 }
+
+
 
 /* Scroll bar styles */
 
@@ -117,11 +124,18 @@ body {
     font-weight: 900;
     line-height: 80px;
     margin-bottom: 1rem;
+
 }
 .title-2 {
     font-size: 4rem;
     font-weight: 700;
     line-height: 80px;
+}
+.title-3{
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 60px;
+    word-break: break-word;
 }
 .subtitle {
     color: #587594;
@@ -132,11 +146,6 @@ body {
 .subtitle-2 {
     font-size: 2rem;
     font-weight: 700;
-}
-.subtitle-3 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    line-height: 50px;
 }
 .subtitle-3 {
     font-size: 3rem;
@@ -167,10 +176,9 @@ body {
     font-weight: 500;
     line-height: 40px;
 }
-.title-img-container {
-    display: flex;
+/* .title-img-container {
     align-items: center;
-}
+} */
 .title-img {
     box-shadow: 2px 2px 2px 2px #ccc;
 }
@@ -181,6 +189,20 @@ body {
     flex-direction: column;
     align-items: center;
     margin-top: 6rem;
+}
+.no-decoration{
+    text-decoration: none !important;
+}
+
+.no-bullet{
+    list-style-type:none;
+}
+.circle-bullet{
+    list-style-type:circle;
+}
+
+.white-text{
+    color: #ffffff !important;
 }
 
 /* Header */
@@ -201,11 +223,11 @@ body {
     height: 70px;
 }
 .header-img {
-    margin-left: 48px;
+    margin-left: 0px;
 }
 .header-img-small {
     height: 42px;
-    margin-left: 48px;
+    margin-left: 0px;
 }
 
 .social-media-container {
@@ -491,6 +513,15 @@ ng-select.form-control {
     margin-bottom: 6.25rem;
 }
 
+.inverted-triangle {
+   -moz-transform: scaleX(-1);
+   -o-transform: scaleX(-1);
+   -webkit-transform: scaleX(-1);
+   transform: scaleX(-1);
+   filter: FlipH;
+   -ms-filter: "FlipH";
+}
+
 .triangles-container .row {
     position: absolute;
     top: 100px;
@@ -524,6 +555,24 @@ ng-select.form-control {
     height: 775px;
     z-index: -2;
 }
+.green-cropped-triangle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 975px;
+    z-index: -2;
+}
+
+.blue-cropped-triangle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 80%;
+    height: 827px;
+    margin-top: 4%;
+    z-index: -2;
+}
 .tools-icon {
     position: absolute;
     top: 0;
@@ -550,7 +599,6 @@ ng-select.form-control {
 }
 .triangles-text {
     font-size: 1.75rem;
-    font-weight: 500;
     line-height: 35px;
     width: 730px;
     max-width: 100%;
@@ -563,6 +611,20 @@ ng-select.form-control {
     padding: .75rem 2.5rem;
     border-radius: 2rem;
     margin-top: 2rem;
+}
+.fab-icon{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:40px;
+	background-color:#25d366;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+  font-size:30px;
+	box-shadow: 2px 2px 3px #999;
+  z-index:100;
 }
 .platform-img {
     margin-right: 4rem;
@@ -677,7 +739,18 @@ ng-select.form-control {
     width: 100% !important;
     z-index: -1;
 }
-
+.objective-white-bg {
+    position: absolute;
+    left: 0;
+    bottom: -96%;
+    width: 100% !important;
+    z-index: -1;
+}
+.img-center{
+    left: auto;
+    right: auto;
+    width: min-content;
+}
 .img-bottom {
     position: absolute;
     bottom: 0;
@@ -809,6 +882,7 @@ ng-select.form-control {
     max-width: 410px;
     display: inline-block;
 }
+
 .btn-contact {
     font-size: 1.375rem;
     font-weight: 700;
@@ -941,7 +1015,6 @@ ng-select.form-control {
     }
     .subtitle-3 {
         font-size: calc(2.5rem - .6rem) !important;
-        font-weight: 700;
         line-height: 50px;
     }
     .subtitle-3 {

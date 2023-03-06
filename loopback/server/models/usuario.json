@@ -171,7 +171,8 @@
         "changeProfileImage",
         "updatePushToken",
         "testPush",
-        "UpdateProfile"
+        "UpdateProfile",
+        "GetFileLibrary"
       ]
     },
     {
@@ -670,6 +671,31 @@
         {
           "path": "/",
           "verb": "patch"
+        }
+      ]
+    },
+    "GetFileLibrary": {
+      "accepts": [
+        {
+          "arg": "userId",
+          "type": "number",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "files",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/:userId/FileLibrary",
+          "verb": "get"
         }
       ]
     }

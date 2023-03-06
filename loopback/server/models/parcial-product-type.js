@@ -10,7 +10,7 @@ module.exports = function(ParcialProductType) {
 
             if(!!parcialProductTypeFound) return callback(null, parcialProductTypeFound);
             
-            ParcialProductType.create(parcialProductType, (err, newparcialProductType) => {
+            ParcialProductType.create(parcialProductType, (err, newParcialProductType) => {
                 if(err) return callback(err);
 
                 return callback(null, newParcialProductType);

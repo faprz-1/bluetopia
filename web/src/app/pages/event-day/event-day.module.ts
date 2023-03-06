@@ -7,6 +7,7 @@ import { ControlMessagesModule } from 'src/app/components/control-messages/contr
 import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { EventDayComponent } from './event-day.component';
+import { LibraryFileSelectorModalModule } from 'src/app/components/library-file-selector-modal/library-file-selector-modal.module';
 
 const MODULE_ROUTES = [
   { path: '', component: EventDayComponent }
@@ -23,6 +24,7 @@ const MODULE_ROUTES = [
     ReactiveFormsModule,
     ControlMessagesModule,
     ModalModule.forRoot(),
+    LibraryFileSelectorModalModule,
     RouterModule.forChild(MODULE_ROUTES),
   ],
   // exports: [EventDayComponent]

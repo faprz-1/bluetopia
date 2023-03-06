@@ -78,7 +78,8 @@ module.exports = function(Strategy) {
     Strategy.prototype.GetActivities = function(callback) {
         Strategy.app.models.ParcialProduct.find({
             where: {
-                strategyId: this.id
+                strategyId: this.id,
+                eventId: null
             }
         }, (err, parcialProjects) => {
             if(err) return callback(err);

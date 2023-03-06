@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { NavigationService } from 'src/app/services/navigation.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-teacher-students',
@@ -14,31 +15,34 @@ export class TeacherStudentsComponent implements OnInit {
   students: Array<any> = [];
   teacherSubjects: Array<any> = [];
   teacherGroups: Array<any> = [];
+  user: any = null;
+
+  public get schoolRegisterLink() {
+    return `${this.api.GetHost()}registro/escuela/recomendado/${this.user ? this.user.id : 0}`;
+  }
 
   constructor(
     public nav: NavigationService,
     private api: ApiService,
-
+    private toast: ToastService
   ) { }
 
   ngOnInit(): void {
+    this.user = this.api.GetUser();
     this.GetTeacherData();
     this.GetTeacherStudents();
   }
 
   GetTeacherStudents() {
-    const user = this.api.GetUser();
-    this.api.Get(`/Students/OfTeacher/${user ? user.id : 0}`).subscribe(students => {
+    this.api.Get(`/Students/OfTeacher/${this.user ? this.user.id : 0}`).subscribe(students => {
       this.students = students;
-      console.log(students);
     }, err => {
       console.error("Error getting the students of the teacher", err);
     });
   }
   
   GetTeacherData() {
-    const user = this.api.GetUser();
-    this.api.Get(`/Teachers/${user ? user.id : 0}/Data`).subscribe(teacher => {
+    this.api.Get(`/Teachers/${this.user ? this.user.id : 0}/Data`).subscribe(teacher => {
       this.teacherSubjects = teacher.subjects;
       this.teacherGroups = teacher.teacherGroups;
     }, err => {
@@ -54,6 +58,11 @@ export class TeacherStudentsComponent implements OnInit {
     const group = groupStudents[0].group;
     const grade = groupStudents[0].grade;
     this.nav.GoToUserRoute(`grado/${grade}/grupo/${group}/plantillas`);
+  }
+
+  CopyLinkToClipBoard() {
+    navigator.clipboard.writeText(this.schoolRegisterLink);
+    this.toast.ShowSuccess('Link copiado');
   }
 
 }

@@ -15,7 +15,10 @@
 
     <div class="row">
         <div class="col-12" *ngIf="students?.length; else noStudents">
-            <app-grades-groups-view [students]="students"></app-grades-groups-view>
+            <app-grades-groups-view
+            [students]="students"
+            [teacherControls]="true"
+            (onCreateNewStrategy)="CreateNewStrategy($event)"></app-grades-groups-view>
         </div>
     </div>
 </div>

@@ -15,6 +15,7 @@ export class TeachersCsvComponent implements OnInit {
 
   @ViewChild('verifyTeachersDataModal') verifyTeachersDataModal?: ModalDirective;
 
+  step: number = 1;
   dataConversions: Array<any> = [
     {
       oldKey: 'Asignaturas',
@@ -58,6 +59,7 @@ export class TeachersCsvComponent implements OnInit {
   }
 
   DownloadTemplate() {
+    this.step = 2;
     this.downloadFile.DownloadWithoutApi("assets/docs/teachersTemplate.csv", 'teachersTemplate.csv');
   }
 
@@ -71,7 +73,10 @@ export class TeachersCsvComponent implements OnInit {
         this.verifyTeachersDataModal?.show();
       });
     };
-    if(file) FILE_READER.readAsText(file, 'ISO-8859-1');
+    if(file) {
+      FILE_READER.readAsText(file, 'ISO-8859-1');
+      this.step = 3;
+    }
   }
 
   FormatData(teachers: Array<any>) {

@@ -24,8 +24,8 @@ module.exports = function(TeacherGroup) {
 
                     
                     groupsToAdd.forEach(teacherGroup => {
-                        const gradeId = grades.find(g => g.name == teacherGroup.grade) ? grades.find(g => g.name == teacherGroup.grade).id : null;
-                        const groupId = groups.find(g => g.name == teacherGroup.group) ? groups.find(g => g.name == teacherGroup.group).id : null;
+                        const gradeId = grades.find(g => g.name == teacherGroup.grade.toLowerCase()) ? grades.find(g => g.name == teacherGroup.grade.toLowerCase()).id : null;
+                        const groupId = groups.find(g => g.name == teacherGroup.group.toLowerCase()) ? groups.find(g => g.name == teacherGroup.group.toLowerCase()).id : null;
                         const teacherGroupInstance = {
                             teacherId,
                             gradeId,

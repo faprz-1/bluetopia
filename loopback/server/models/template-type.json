@@ -37,14 +37,7 @@
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "School",
-      "permission": "ALLOW",
-      "property": []
-    },
-    {
-      "accessType": "EXECUTE",
-      "principalType": "ROLE",
-      "principalId": "Teacher",
+      "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": [
         "GetAllWithTemplates",

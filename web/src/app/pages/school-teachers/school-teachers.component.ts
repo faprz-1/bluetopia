@@ -25,7 +25,7 @@ export class SchoolTeachersComponent implements OnInit {
   constructor(
     private api: ApiService,
     private toast: ToastService,
-    private nav: NavigationService
+    public nav: NavigationService
   ) { }
 
   ngOnInit(): void {
@@ -66,6 +66,7 @@ export class SchoolTeachersComponent implements OnInit {
   SaveTeachers() {
     this.api.Post(`/Teachers/Array`, {teachers: this.teachers}).subscribe(newTeachers => {
       this.toast.ShowSuccess(`Maestros creados correctamente`);
+      this.nav.GoToUserRoute('mis-maestros');
     }, err => {
       console.error("Error at post teachers array", err);
     });
