@@ -23,12 +23,20 @@
                         ¿Cómo te gustaría acceder?
                     </div>
                     <div class="btns-container">
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between mb-4">
                             <button class="btn btn-outline-primary" (click)="navigation.GoTo('registro/escuela')">
                                 Escuela
                             </button>
                             <button class="btn btn-outline-success" (click)="navigation.GoTo('registro/maestro')">
                                 Maestro
+                            </button>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-outline-success" (click)="navigation.GoTo('registro/estudiante')">
+                                Estudiante
+                            </button>
+                            <button class="btn btn-outline-primary" (click)="navigation.GoTo('registro/padre')">
+                                Padre
                             </button>
                         </div>
                     </div>

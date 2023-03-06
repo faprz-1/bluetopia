@@ -29,4 +29,15 @@ export class StrategiesComponent implements OnInit {
     });
   }
 
+  GoToTeams(strategy: any) {
+    this.nav.GoToUserRoute(`mis-estrategias/${strategy.id}/equipos`);
+  }
+  GoToTeamsProgress(strategy: any) {
+    this.nav.GoToUserRoute(`mis-estrategias/${strategy.id}/progreso-equipos`);
+  }
+
+  GoToCalendar(strategy: any) {
+    this.nav.GoToUserRoute(`grado/${strategy.strategyGroup.grade.name}/grupo/${strategy.strategyGroup.group.name}/plantillas/${strategy.templateId}/estrategias/${strategy.id}/calendario`)
+  }
+
 }

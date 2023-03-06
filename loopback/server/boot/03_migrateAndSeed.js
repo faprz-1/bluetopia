@@ -63,7 +63,29 @@ module.exports = function(app) {
           active: true
         },
         Role: "Admin"
-      }
+      },
+      {
+        User: {
+          name: "Parent Jarabe",
+          username: "Parent Jarabe",
+          password: "j4r4b3s0",
+          email: "parent@jarabepruebas.com",
+          emailVerified: true,
+          active: true
+        },
+        Role: "Parent"
+      },
+      {
+        User: {
+          name: "Student Jarabe",
+          username: "Student Jarabe",
+          password: "j4r4b3s0",
+          email: "student@jarabepruebas.com",
+          emailVerified: true,
+          active: true
+        },
+        Role: "Student"
+      },
     ]
 
     users.forEach(u => {
@@ -92,6 +114,14 @@ module.exports = function(app) {
       {
         name:"Teacher",
         description: 'maestro'
+      },
+      {
+        name:"Parent",
+        description: 'padre'
+      },
+      {
+        name:"Student",
+        description: 'estudiante'
       },
     ]
 
@@ -375,6 +405,31 @@ module.exports = function(app) {
     });
   }
 
+  var seedTeamRoles = function() {
+    const teamRoles = [
+      {
+        name: "Líder",
+      },
+      {
+        name: "Creativo",
+      },
+      {
+        name: "Cronómetro",
+      },
+      {
+        name: "Redactor",
+      },
+    ];
+
+    let cont = 0, limit = teamRoles.length;
+    teamRoles.forEach(teamRole => {
+      app.models.TeamRole.findOrCreate({where: {name: {like: `%${teamRole.name}%`}}}, teamRole, (err, newTeamRole) => {
+        if(err) throw err;
+        if(++cont == limit) console.log("event types seeded");
+      });
+    });
+  }
+
   var seedUploadContainers = function(){
     var Upload = app.models.Upload;
     var containers = [
@@ -466,6 +521,7 @@ module.exports = function(app) {
     seedParcialProductsTypes,
     seedTemplateTopics,
     seedEventTypes,
+    seedTeamRoles
   ]
 
   // Migrate

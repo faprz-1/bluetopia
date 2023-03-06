@@ -9,7 +9,7 @@
 
     <div class="row">
         <div class="col-12 col-md-6 col-lg-4" *ngFor="let strategy of strategies">
-            <div class="card">
+            <div class="card py-3 px-2">
                 <div class="card-header">
                     <h2 class="card-title">{{strategy.topic}}</h2>
                 </div>
@@ -37,8 +37,19 @@
                     <div class="info">
                         <label>Grupo</label>
                         <div class="text">
-                            <div class="text text-uppercase">{{strategy.strategyGroups?.grade?.name}}{{strategy.strategyGroups?.group?.name}}</div>
+                            <div class="text text-uppercase">{{strategy.strategyGroup?.grade?.name}}{{strategy.strategyGroup?.group?.name}}</div>
                         </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between mt-3">
+                        <button class="btn btn-outline-primary" (click)="GoToTeams(strategy)">
+                            Equipos
+                        </button>
+                        <button class="btn btn-primary" (click)="GoToTeamsProgress(strategy)">
+                            Progreso de equpos
+                        </button>
+                        <button class="btn btn-outline-primary" (click)="GoToCalendar(strategy)">
+                            Calendario
+                        </button>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,60 @@
+<div class="content">
+    <div class="row mb-5">
+        <div class="col-12 d-flex h-100 align-items-center justify-content-between">
+            <div class="page-title">
+                Progreso
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="topics">
+                <div class="topic">
+                    <span class="topic-label mr-2">Proyecto</span>
+                    <span class="topic-text">{{strategy?.title}}</span>
+                </div>
+                <div class="topic">
+                    <span class="topic-label mr-2">Grupo</span>
+                    <span class="topic-text text-uppercase">{{strategy?.strategyGroup?.grade?.name + strategy?.strategyGroup?.group?.name}}</span>
+                </div>
+                <div class="topic">
+                    <span class="topic-label mr-2">Equipos</span>
+                    <span class="topic-text">{{strategy?.teams?.length}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="teams">
+                <div class="team" *ngFor="let team of strategy.teams; let i = index">
+                    <div class="team-name" [style]="'color:' + colors[i%colors.length] + ';'">
+                        {{team.name}}
+                    </div>
+                    <div class="members">
+                        <div class="member" *ngFor="let member of team.teamStudents">
+                            <div class="name" [style]="'background-color:' + colors[i%colors.length] + ';'">
+                                {{member?.student?.name + ' ' + member?.student?.fatherLastname + ' ' + member?.student?.motherLastname}}
+                            </div>
+                            <div class="role">
+                                {{member?.role?.name}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="documents">
+                        <ng-container *ngIf="team.documents?.length; else noDocuments">
+                            <div class="document" *ngFor="let document of team.documents">
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #noDocuments>
+    <div class="no-items-message">
+        El equipo no ha subido documentos
+    </div>
+</ng-template>
