@@ -26,6 +26,11 @@
       "type": "belongsTo",
       "model": "Student",
       "foreignKey": "studentId"
+    },
+    "role": {
+      "type": "belongsTo",
+      "model": "TeamRole",
+      "foreignKey": "roleId"
     }
   },
   "acls": [],

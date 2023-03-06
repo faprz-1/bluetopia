@@ -393,5 +393,9 @@
   "TeamStudent": {
     "dataSource": "mysqlDev",
     "public": false
+  },
+  "TeamRole": {
+    "dataSource": "mysqlDev",
+    "public": true
   }
 }
