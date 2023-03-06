@@ -58,6 +58,12 @@
           "type": "array",
           "required": true,
           "description": ""
+        },
+        {
+          "arg": "strategyId",
+          "type": "number",
+          "required": true,
+          "description": ""
         }
       ],
       "returns": [

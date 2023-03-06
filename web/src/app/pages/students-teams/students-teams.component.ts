@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import { ToastService } from 'src/app/services/toast.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-students-teams',
@@ -32,34 +34,20 @@ export class StudentsTeamsComponent implements OnInit {
       value: 5,
     },
   ];
-  teamRoles: Array<any> = [
-    {
-      id: 1,
-      name: 'Lider',
-    },
-    {
-      id: 2,
-      name: 'Creativo',
-    },
-    {
-      id: 3,
-      name: 'Cronómetro',
-    },
-    {
-      id: 4,
-      name: 'Redactor',
-    },
-  ];
+  teamRoles: Array<any> = [];
   loading: any = {
     creating: false
   }
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private api: ApiService
+    private api: ApiService,
+    private toast: ToastService,
+    public nav: NavigationService
   ) { }
 
   ngOnInit(): void {
+    this.GetTeamRoles();
     this.GetParams();
   }
 
@@ -67,6 +55,14 @@ export class StudentsTeamsComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.strategyId = params['strategyId'];
       this.GetStrategyStudents();
+    });
+  }
+
+  GetTeamRoles() {
+    this.api.Get(`/TeamRoles`).subscribe(teamRoles => {
+      this.teamRoles = teamRoles;
+    }, err => {
+      console.error("Error getting team roles", err);
     });
   }
 
@@ -102,7 +98,20 @@ export class StudentsTeamsComponent implements OnInit {
   }
 
   CreateStrategyTeams() {
-    
+    let valid = true;
+    console.log(this.teams);
+    this.teams.forEach(team => {
+      if(team.members.some((member: any) => !member.roleId)) valid = false;
+    });
+    if(!valid) {
+      this.toast.ShowWarning('Favor de seleccionar rol para todos los integrantes de los equipos');
+      return;
+    }
+    this.api.Post(`/Teams/Array`, {teams: this.teams, strategyId: Number(this.strategyId)}).subscribe(newTeams => {
+      this.toast.ShowSuccess(`${newTeams.length} equipos creados`);
+    }, err => {
+      console.error("Error creating teams", err);
+    });
   }
 
 }

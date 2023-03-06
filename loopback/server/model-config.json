@@ -357,7 +357,8 @@
         "sharedMethods": {
           "*": false,
           "CreateOne": true,
-          "GetAllOfStrategy": true
+          "GetAllOfStrategy": true,
+          "Proof": true
         }
       }
     }
@@ -396,6 +397,14 @@
   },
   "TeamRole": {
     "dataSource": "mysqlDev",
-    "public": true
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "GetAll": true
+        }
+      }
+    }
   }
 }

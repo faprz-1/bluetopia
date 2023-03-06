@@ -85,7 +85,7 @@
                                         {{member.name + ' ' + member.fatherLastname + ' ' + member.motherLastname}}
                                     </div>
                                 </div>
-                                <div class="member-role">
+                                <div class="member-role ml-3">
                                     <div class="input-container">
                                         <ng-select
                                             class="form-control with-border"
@@ -93,7 +93,7 @@
                                             bindLabel="name"
                                             bindValue="id"
                                             placeholder="Elige el rol"
-                                            [(ngModel)]="member.role">
+                                            [(ngModel)]="member.roleId">
                                         </ng-select>
                                     </div>
                                 </div>
@@ -106,11 +106,12 @@
 
         <div class="col-12 mb-5">
             <div class="d-flex align-items-center justify-content-end">
-                <button class="btn btn-bigger btn-outline-primary mr-4" [disabled]="loading.creating">
+                <button class="btn btn-bigger btn-outline-primary mr-4" [disabled]="loading.creating" (click)="nav.GoToUserRoute('mis-estrategias')">
                     Cancelar
                 </button>
-                <button class="btn btn-bigger btn-primary" [disabled]="loading.creating">
-                    Continuar
+                <button class="btn btn-bigger btn-primary" [disabled]="loading.creating" (click)="CreateStrategyTeams()">
+                    <span *ngIf="!loading.creating">Continuar</span>
+                    <span *ngIf="loading.creating"><i class="zmdi zmdi-spinner zmdi-hc-lg zmdi-hc-spin"></i></span>
                 </button>
             </div>
         </div>

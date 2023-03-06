@@ -405,6 +405,31 @@ module.exports = function(app) {
     });
   }
 
+  var seedTeamRoles = function() {
+    const teamRoles = [
+      {
+        name: "Líder",
+      },
+      {
+        name: "Creativo",
+      },
+      {
+        name: "Cronómetro",
+      },
+      {
+        name: "Redactor",
+      },
+    ];
+
+    let cont = 0, limit = teamRoles.length;
+    teamRoles.forEach(teamRole => {
+      app.models.TeamRole.findOrCreate({where: {name: {like: `%${teamRole.name}%`}}}, teamRole, (err, newTeamRole) => {
+        if(err) throw err;
+        if(++cont == limit) console.log("event types seeded");
+      });
+    });
+  }
+
   var seedUploadContainers = function(){
     var Upload = app.models.Upload;
     var containers = [
@@ -496,6 +521,7 @@ module.exports = function(app) {
     seedParcialProductsTypes,
     seedTemplateTopics,
     seedEventTypes,
+    seedTeamRoles
   ]
 
   // Migrate

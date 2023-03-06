@@ -3,11 +3,15 @@
 module.exports = function(Team) {
 
     Team.CreateOne = function(team, callback) {
-        Team.create(team, (err, newTeam) => {
+        let teamInstance = {
+            name: team.name,
+            strategyId: team.strategyId
+        }
+        Team.create(teamInstance, (err, newTeam) => {
             if(err) return callback(err);
 
             let cont = 0, limit = team.members.length;
-            members.forEach(member => {
+            team.members.forEach(member => {
                 let teamStudent = {
                     teamId: newTeam.id,
                     studentId: member.id,
@@ -21,7 +25,7 @@ module.exports = function(Team) {
         });
     }
 
-    Team.CreateTeams = function(teams, strategyId, callback) {
+    Team.AddTeams = function(teams, strategyId, callback) {
         let cont = 0, limit = teams.length;
         if(!limit) return callback(null, []);
         teams.forEach(team => {
@@ -31,7 +35,11 @@ module.exports = function(Team) {
 
                 if(++cont == limit) return callback(null, teams);
             });
-        })
+        });
+    }
+
+    Team.GetAllOfStrategy = function(strategyId, callback) {
+
     }
 
 };
