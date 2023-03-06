@@ -93,9 +93,14 @@ export class EventDayComponent implements OnInit {
       reader.readAsBinaryString(file);
     });
   }
+  
+  OnLibraryFilesSelected(files: Array<any>) {
+    this.eventForm.get('resources')?.setValue(
+      this.eventForm.get('resources')?.value.concat(files)
+    );
+  }
 
   SaveEvent() {
-    console.log(this.eventForm);
     if(this.eventForm.invalid) {
       this.toast.ShowWarning(`Favor de llenar todos los campos`);
       this.eventForm.markAllAsTouched();
@@ -111,6 +116,14 @@ export class EventDayComponent implements OnInit {
       console.error("Error creating event", err);
       this.loading = false;
     });
+  }
+
+  GetFiles(type: string): Array<any> {
+    switch (type) {
+      case 'new': return this.eventForm.get('resources')?.value.filter((file: any) => !file.id);
+      case 'old': return this.eventForm.get('resources')?.value.filter((file: any) => !!file.id);
+      default: return []
+    }
   }
 
 }

@@ -24,19 +24,33 @@ module.exports = function(Teacher) {
                 }
             }, (err, subjects) => {
                 if(err) return callback(err);
-                
-                teacher.activationToken = uuidV4();
+
+                if(!teacher.active) teacher.activationToken = uuidV4();
                 Teacher.create(teacher, (err, newTeacher) => {
                     if(err) return callback(err);
 
                     let cont = 0, limit = subjects.length;
-                    if(!limit) return callback(null, newTeacher);
-                    subjects.forEach(subject => {
-                        newTeacher.subjects.add(subject.id, (err) => {
+                    if(!newTeacher.userId) {
+                        newTeacher.Activate(null, (err, teacherActive) => {
                             if(err) return callback(err);
-                            if(++cont == limit) return callback(null, newTeacher);
+
+                            if(!limit) return callback(null, newTeacher);
+                            subjects.forEach(subject => {
+                                newTeacher.subjects.add(subject.id, (err) => {
+                                    if(err) return callback(err);
+                                    if(++cont == limit) return callback(null, newTeacher);
+                                });
+                            });
                         });
-                    });
+                    } else {
+                        if(!limit) return callback(null, newTeacher);
+                        subjects.forEach(subject => {
+                            newTeacher.subjects.add(subject.id, (err) => {
+                                if(err) return callback(err);
+                                if(++cont == limit) return callback(null, newTeacher);
+                            });
+                        });
+                    }
                 });
             });
         });
@@ -56,8 +70,8 @@ module.exports = function(Teacher) {
                     Teacher.AddTeacher(teacher, (err, newTeacher) => {
                         if(err) return callback(err);
                         
-                        const gradeId = grades.find(g => g.name == teacher.grade) ? grades.find(g => g.name == teacher.grade).id : null;
-                        const groupId = groups.find(g => g.name == teacher.group) ? groups.find(g => g.name == teacher.group).id : null;
+                        const gradeId = grades.find(g => g.name == teacher.grade.toLowerCase()) ? grades.find(g => g.name == teacher.grade.toLowerCase()).id : null;
+                        const groupId = groups.find(g => g.name == teacher.group.toLowerCase()) ? groups.find(g => g.name == teacher.group.toLowerCase()).id : null;
                         const teacherGroupInstance = {
                             teacherId: newTeacher.id,
                             gradeId,
@@ -165,6 +179,37 @@ module.exports = function(Teacher) {
             if(err) return callback(err);
 
             return callback(null, teacher);
+        });
+    }
+
+    Teacher.ChangeSchoolUserId = function(teacherId, newSchoolUserId, callback) {
+        if(!newSchoolUserId || !teacherId) return callback(null, {});
+        Teacher.findOne({
+            where: {
+                userId: teacherId
+            },
+            include: 'user'
+        }, (err, teacher) => {
+            if(err) return callback(err);
+
+            if(!teacher) return callback('teacher not found!!');
+            if(!teacher.schoolUserId) {
+                teacher.schoolUserId = newSchoolUserId;
+                teacher.user().schoolUserId = newSchoolUserId;
+            }
+            teacher.save((err, saved) => {
+                if(err) return callback(err);
+                
+                Teacher.app.models.Usuario.upsert(teacher.user(), (err, userSaved) => {
+                    if(err) return callback(err);
+
+                    Teacher.app.models.UpdateSchoolUserId(teacherId, newSchoolUserId, (err, studentsUpdated) => {
+                        if(err) return callback(err);
+            
+                        return callback(null, saved);
+                    });
+                });
+            });
         });
     }
 

@@ -2,7 +2,7 @@
     <div class="rubric-row" *ngFor="let rubric of rubrics; let last = last">
         <div class="rubric-item">
             <div class="rubric-title">Valor</div>
-            <textarea class="rubric-input" [(ngModel)]="rubric.description" placeholder="Descripción"></textarea>
+            <textarea class="rubric-input" [(ngModel)]="rubric.description" placeholder="Rubro"></textarea>
         </div>
         <div class="rubric-item" *ngFor="let concept of rubric.concepts">
             <div class="rubric-title">

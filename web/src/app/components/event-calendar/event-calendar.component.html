@@ -1,7 +1,7 @@
 <div class="calendar">
     <div class="d-flex justify-content-center align-items-center">
         <img class="control-icon clickeable" src="assets/icons/left.png" alt="left" (click)="PopulateMonth(previousMonth)">
-        <div class="month-year">
+        <div class="month-year text-capitalize">
             {{monthAndYear}}
         </div>
         <img class="control-icon clickeable" src="assets/icons/right.png" alt="left" (click)="PopulateMonth(nextMonth)">
@@ -29,7 +29,9 @@
                         </div>
 
                         <div class="day-events">
-
+                            <div class="day-event" *ngFor="let event of GetEventsOfDate(year + '-' + (currentMonth+1) + '-' + weekDay.day)">
+                                {{ GetEventName(event) }}
+                            </div>
                         </div>
                     </div>
                 </td>

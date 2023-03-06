@@ -242,14 +242,17 @@ ng-select.form-control {
     background-color: #1081FBaa;
 }
 .input-container {
-    // display: flex;
     position: relative;
     width: 100%;
-    height: 46px;
+    min-height: 46px;
+    height: max-content;
     margin-bottom: 24px;
-    // align-items: center;
+}
+.input-container .ng-input input {
+    height: initial;
 }
 .input-container input {
+    height: 46px;
     padding-left: 60px;
 }
 .input-container input:focus {
