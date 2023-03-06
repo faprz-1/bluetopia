@@ -1,0 +1,31 @@
+.topics {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    min-height: 50px;
+    font-size: 1.2rem;
+
+    .topic {
+        width: max-content;
+        margin: 0 0 2rem 0;
+
+        .topic-label {
+            font-weight: 700;
+            margin-right: 2rem !important;
+        }
+
+        .topic-text {
+            background-color: #758CA6;
+            padding: .4rem .8rem;
+            border-radius: 8px;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .topics {
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: start;
+    }
+}

@@ -48,7 +48,7 @@
         "nestRemoting": true
       }
     },
-    "strategyGroups": {
+    "strategyGroup": {
       "type": "hasOne",
       "model": "StrategyGroup",
       "foreignKey": "strategyId",
