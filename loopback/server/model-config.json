@@ -306,7 +306,7 @@
           "*": false,
           "CreateOne": true,
           "prototype.Update": true,
-          "prototype.GetData": true,
+          "GetData": true,
           "prototype.GetActivities": true,
           "GetAllOfTeacher": true,
           "GetStudents": true

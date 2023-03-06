@@ -27,16 +27,34 @@
 
         <div class="col-12">
             <div class="teams">
-                <div class="team">
+                <div class="team" *ngFor="let team of strategy.teams; let i = index">
+                    <div class="team-name" [style]="'color:' + colors[i%colors.length] + ';'">
+                        {{team.name}}
+                    </div>
                     <div class="members">
+                        <div class="member" *ngFor="let member of team.teamStudents">
+                            <div class="name" [style]="'background-color:' + colors[i%colors.length] + ';'">
+                                {{member?.student?.name + ' ' + member?.student?.fatherLastname + ' ' + member?.student?.motherLastname}}
+                            </div>
+                            <div class="role">
+                                {{member?.role?.name}}
+                            </div>
+                        </div>
                     </div>
                     <div class="documents">
-                        <div class="codument">
-                            
-                        </div>
+                        <ng-container *ngIf="team.documents?.length; else noDocuments">
+                            <div class="document" *ngFor="let document of team.documents">
+                            </div>
+                        </ng-container>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<ng-template #noDocuments>
+    <div class="no-items-message">
+        El equipo no ha subido documentos
+    </div>
+</ng-template>

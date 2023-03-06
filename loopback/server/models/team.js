@@ -38,8 +38,4 @@ module.exports = function(Team) {
         });
     }
 
-    Team.GetAllOfStrategy = function(strategyId, callback) {
-
-    }
-
 };

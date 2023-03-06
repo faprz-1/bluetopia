@@ -67,7 +67,7 @@ module.exports = function(Strategy) {
     
     Strategy.GetData = function(strategyId, callback) {
         Strategy.findById(strategyId, {
-            include: ['parcialProducts', 'template', 'user', 'strategyGroup']
+            include: ['parcialProducts', 'template', 'user', {'strategyGroup': ['grade', 'group']}, {'teams': {'teamStudents': ['student', 'role']}}]
         }, (err, strategy) => {
             if(err) return callback(err);
 

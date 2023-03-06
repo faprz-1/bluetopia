@@ -29,3 +29,52 @@
         align-items: start;
     }
 }
+
+.teams {
+    display: flex;
+    justify-content: space-around;
+
+    .team {
+        margin: 0 .5rem;
+
+        .team-name {
+            width: 50%;
+            font-size: 1.5rem;
+            color: #1081FB;
+            margin-bottom: .8rem;
+            text-align: center;
+        }
+    }
+}
+
+.members {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .member {
+        display: flex;
+        align-items: center;
+        min-height: 40px;
+        width: 100%;
+        margin: .3rem 0;
+        
+        .name {
+            border-radius: 12px 0 0 12px;
+            color: white;
+            padding: .5rem 1rem;
+        }
+        .role {
+            border-radius: 0 12px 12px 0;
+            background-color: #758CA6;
+        }
+        
+        div {
+            padding: .5rem 0;
+            width: 50%;
+            height: 100%;
+            text-align: center;
+        }
+    }
+}
