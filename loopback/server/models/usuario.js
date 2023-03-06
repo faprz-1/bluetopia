@@ -111,22 +111,26 @@ module.exports = function(Usuario) {
                   return callback(err);
                 });
               }
-
-              if(role.name == 'Teacher') {
-                let teacher = {
-                  name: userData.username,
-                  email: userData.email,
-                  active: true,
-                  userId: newU.id,
-                  subjects: []
+              
+              Usuario.app.models.Teacher.ChangeSchoolUserId(userData.teacherIdToAbsorb, newU.id, (err, teacherUpdated) => {
+                if(err) callback(err);
+                
+                if(role.name == 'Teacher') {
+                  let teacher = {
+                    name: userData.username,
+                    email: userData.email,
+                    active: true,
+                    userId: newU.id,
+                    subjects: []
+                  }
+                  Usuario.app.models.Teacher.AddTeacher(teacher, (err, newTeacher) => {
+                    if (err) callback(err);
+  
+                    return callback(null, newU);
+                  });
                 }
-                Usuario.app.models.Teacher.AddTeacher(teacher, (err, newTeacher) => {
-                  if (err) callback(err);
-
-                  return callback(null, newU);
-                });
-              }
-              else return callback(null, newU);
+                else return callback(null, newU);
+              });
             });
           }
           else callback(null, newU);

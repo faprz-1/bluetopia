@@ -95,7 +95,6 @@ export class EventDayComponent implements OnInit {
   }
 
   SaveEvent() {
-    console.log(this.eventForm);
     if(this.eventForm.invalid) {
       this.toast.ShowWarning(`Favor de llenar todos los campos`);
       this.eventForm.markAllAsTouched();

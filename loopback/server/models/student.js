@@ -72,7 +72,6 @@ module.exports = function(Student) {
             if(err) return callback(err);
             
             if(!teacher) return callback('Teacher not found!!');
-            if(!teacher.teacherGroups().length) return callback(null, []);
             Student.app.models.StudentGroup.find({
                 where: {
                     groupId: {inq: teacher.teacherGroups().map(tg => tg.groupId)},
@@ -84,7 +83,10 @@ module.exports = function(Student) {
                 
                 Student.find({
                     where: {
-                        id: {inq: studentGroups.map(sg => sg.student().id)}
+                        or: [
+                            {id: {inq: studentGroups.map(sg => sg.student().id)}},
+                            {teacherUserId}
+                        ]
                     },
                     include: {'studentGroup': ['group', 'grade']},
                 }, (err, students) => {

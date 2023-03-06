@@ -244,7 +244,7 @@ export class TeacherTemplateFormComponent implements OnInit {
       this.api.Post(`/ParcialProducts`, {parcialProduct}).subscribe(newParcialProduct => {
         res(true);
       }, err => {
-        console.error("Erro posting new event", err);
+        console.error("Error posting new event", err);
         res(false);
       });
     });

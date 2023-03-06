@@ -182,4 +182,32 @@ module.exports = function(Teacher) {
         });
     }
 
+    Teacher.ChangeSchoolUserId = function(teacherId, newSchoolUserId, callback) {
+        if(!newSchoolUserId || !teacherId) return callback(null, {});
+        Teacher.findOne({
+            where: {
+                userId: teacherId
+            },
+            include: 'user'
+        }, (err, teacher) => {
+            if(err) return callback(err);
+
+            console.log(teacher.user());
+            if(!teacher) return callback('teacher not found!!');
+            if(!teacher.schoolUserId) {
+                teacher.schoolUserId = newSchoolUserId;
+                teacher.user().schoolUserId = newSchoolUserId;
+            }
+            teacher.save((err, saved) => {
+                if(err) return callback(err);
+                
+                Teacher.app.models.Usuario.upsert(teacher.user(), (err, userSaved) => {
+                    if(err) return callback(err);
+
+                    return callback(null, saved);
+                });
+            });
+        });
+    }
+
 };

@@ -17,7 +17,6 @@ export class LandingPageComponent implements OnInit {
 
   ngOnInit(): void {
     let user = this.api.GetUser();
-    console.log(user);
     if(!!user && !!user.role.name) {
       let ttl = this.api.GetTTL();
       let today = moment();
