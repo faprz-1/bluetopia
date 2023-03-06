@@ -80,6 +80,7 @@ const LAYOUT_ROUTES: Routes = [
           { path: 'mis-estudiantes', loadChildren: () => import('../pages/teacher-students/teacher-students.module').then(m => m.TeacherStudentsModule) },
           { path: 'mis-asignaturas', loadChildren: () => import('../pages/teacher-subjects/teacher-subjects.module').then(m => m.TeacherSubjectsModule) },
           { path: 'mis-estrategias', loadChildren: () => import('../pages/strategies/strategies.module').then(m => m.StrategiesModule) },
+          { path: 'registrar-estudiantes/csv', loadChildren: () => import('../pages/students-csv/students-csv.module').then(m => m.StudentsCsvModule) },
           { path: 'grado/:grade/grupo/:group/plantillas', loadChildren: () => import('../pages/templates/templates.module').then(m => m.TemplatesModule) },
           { path: 'grado/:grade/grupo/:group/tipo-plantillas/:templateTypeId', loadChildren: () => import('../pages/type-templates/type-templates.module').then(m => m.TypeTemplatesModule) },
           { path: 'grado/:grade/grupo/:group/plantillas/:templateId', loadChildren: () => import('../pages/template-form/template-form.module').then(m => m.TemplateFormModule) },

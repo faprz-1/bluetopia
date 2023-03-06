@@ -44,6 +44,10 @@ export class ApiService {
     return environment.baseURL;
   }
 
+  public GetHost() {
+    return environment.host;
+  }
+
   private GetHeaders(): HttpHeaders {
     let headers = {
       'Content-Type': 'application/json'

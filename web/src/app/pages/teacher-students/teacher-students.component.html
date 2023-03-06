@@ -18,6 +18,11 @@
     <div class="row">
         <div class="col-12 col-md-4 col-lg-3 col-xl-2 side-col">
             <img class="side-image" src="assets/img/landing_page_img.png">
+            <div class="nearby-container" *ngIf="!user?.schoolUserId">
+                <button class="btn btn-success btn-block" (click)="registerSchoolModal.show()">
+                    Registrar escuela
+                </button>
+            </div>
             <div class="nearby-container">
                 <div class="container-title">
                     Eventos próximos
@@ -79,6 +84,11 @@
             </div>
         </div>
         <div class="col-12 col-md-8 col-lg-9 col-xl-10">
+            <div class="d-flex align-items-center justify-content-end" *ngIf="!user?.schoolUserId">
+                <button class="btn btn-success" (click)="nav.GoToUserRoute('registrar-estudiantes/csv')">
+                    Agregar estudiantes
+                </button>
+            </div>
             <app-grades-groups-view *ngIf="students?.length; else noStudents" [students]="students"
             [teacherControls]="true"
             [onStudentSearch]="onStudentSearch"
@@ -89,7 +99,39 @@
 </div>
 
 <ng-template #noStudents>
-    <div class="text-center no-items-message">
+    <div class="text-center no-items-message" *ngIf="!!user.schoolUserId; else addStudents">
         No tiene estudiantes asignados, para más informacion contactar a su administrador
     </div>
 </ng-template>
+
+<ng-template #addStudents>
+    <div class="text-center no-items-message">
+        No tiene estudiantes registrados
+    </div>
+</ng-template>
+
+<div class="modal fade" bsModal #registerSchoolModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
+    tabindex="-1" role="dialog" aria-labelledby="registerSchoolModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text text-center">
+                    Envia este link al administrador de tu escuela para que pueda registrarse en nuestra plataforma
+                </div>
+                <div class="text-center my-3">
+                    <img src="assets/img/teacher-celebrating.png" alt="finished">
+                </div>
+                <div class="text d-flex align-items-center justify-content-center">
+                    <a class="mr-3" href="{{schoolRegisterLink}}">{{schoolRegisterLink}}</a>
+                    <i class="zmdi zmdi-copy zmdi-hc-lg clickeable text-success" (click)="CopyLinkToClipBoard()"></i>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button class="btn btn-primary modal-btn"
+                (click)="CopyLinkToClipBoard(); registerSchoolModal.hide();">
+                    Continuar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

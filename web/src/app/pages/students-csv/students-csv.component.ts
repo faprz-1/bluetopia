@@ -57,6 +57,8 @@ export class StudentsCsvComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    const user = this.api.GetUser();
+    if(!!user && user.role.name == 'Teacher' && !!user.schoolUserId) this.nav.GoToUserRoute('');
   }
 
   DownloadTemplate() {
@@ -101,7 +103,8 @@ export class StudentsCsvComponent implements OnInit {
       this.dataConversions.forEach(conversion => {
         studentFormatted[conversion.newKey] = student[conversion.oldKey];
       });
-      studentFormatted.schoolUserId = user.id;
+      if(user.role.name == 'School') studentFormatted.schoolUserId = user.id;
+      else if(user.role.name == 'Teacher') studentFormatted.teacherUserId = user.id;
       return studentFormatted;
     });
   }

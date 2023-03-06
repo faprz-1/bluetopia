@@ -18,6 +18,7 @@ export class RegisterUserComponent implements OnInit {
 
   registerStep: number = 1;
   userType: string = '';
+  teacherIdToAbsorb: string = '';
   userForm: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
     password: new FormControl(null, [Validators.required, Validators.minLength(3)]),
@@ -50,6 +51,8 @@ export class RegisterUserComponent implements OnInit {
   GetParams() {
     this.activeRoute.params.subscribe(params => {
       this.userType = params['userType'];
+      this.teacherIdToAbsorb = params['teacherId'];
+      if(!!this.teacherIdToAbsorb) this.registerStep = 2;
     });
   }
 
@@ -76,6 +79,7 @@ export class RegisterUserComponent implements OnInit {
       return;
     }
     let userData = {...this.userRegisterForm.value};
+    if(!!this.teacherIdToAbsorb) userData.teacherIdToAbsorb = this.teacherIdToAbsorb;
     let user = {
       email: userData.email,
       password: userData.password,

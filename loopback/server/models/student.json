@@ -33,6 +33,14 @@
         "nestRemoting": true
       }
     },
+    "teacherUser": {
+      "type": "belongsTo",
+      "model": "Usuario",
+      "foreignKey": "teacherUserId",
+      "options": {
+        "nestRemoting": true
+      }
+    },
     "studentGroup": {
       "type": "hasOne",
       "model": "StudentGroup",
@@ -59,9 +67,10 @@
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "$authenticated",
+      "principalId": "Teacher",
       "permission": "ALLOW",
       "property": [
+        "AddStudents",
         "GetAllOfTeacher"
       ]
     }

@@ -34,6 +34,7 @@ module.exports = function(Upload) {
         resize: !!newFile.resize ? newFile.resize : false,
         URL: '/Uploads/' + encodedFileContainer + '/download/' + fileName,
         fileExtention: !!newFile.fileExtention ? newFile.fileExtention : '.jpg',
+        userId: newFile.userId
       }, function(err, res) {
         if (err) return callback(err);
 
