@@ -26,8 +26,8 @@ module.exports = function(Student) {
                         
                         const studentGroup = {
                             studentId: newStudent.id,
-                            gradeId: grades.find(g => g.name == student.grade) ? grades.find(g => g.name == student.grade).id : null,
-                            groupId: groups.find(g => g.name == student.group) ? groups.find(g => g.name == student.group).id : null
+                            gradeId: grades.find(g => g.name == student.grade.toLowerCase()) ? grades.find(g => g.name == student.grade.toLowerCase()).id : null,
+                            groupId: groups.find(g => g.name == student.group.toLowerCase()) ? groups.find(g => g.name == student.group.toLowerCase()).id : null
                         }
                         Student.app.models.StudentGroup.create(studentGroup, (err, newStudentGroupInstance) => {
                             newStudents.push(newStudent);
