@@ -79,7 +79,8 @@
         "Update",
         "GetData",
         "GetActivities",
-        "GetAllOfTeacher"
+        "GetAllOfTeacher",
+        "GetStudents"
       ]
     }
   ],
@@ -143,8 +144,15 @@
         }
       ]
     },
-    "prototype.GetData": {
-      "accepts": [],
+    "GetData": {
+      "accepts": [
+        {
+          "arg": "strategyId",
+          "type": "number",
+          "required": true,
+          "description": ""
+        }
+      ],
       "returns": [
         {
           "arg": "strategy",
@@ -156,7 +164,7 @@
       "description": "",
       "http": [
         {
-          "path": "/",
+          "path": "/:strategyId",
           "verb": "get"
         }
       ]
@@ -200,6 +208,40 @@
       "http": [
         {
           "path": "/OfTeacher/:userId",
+          "verb": "get"
+        }
+      ]
+    },
+    "GetStudents": {
+      "accepts": [
+        {
+          "arg": "ctx",
+          "type": "object",
+          "required": true,
+          "description": "",
+          "http": {
+            "source": "req"
+          }
+        },
+        {
+          "arg": "strategyId",
+          "type": "number",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "students",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/:strategyId/Students",
           "verb": "get"
         }
       ]

@@ -308,7 +308,8 @@
           "prototype.Update": true,
           "prototype.GetData": true,
           "prototype.GetActivities": true,
-          "GetAllOfTeacher": true
+          "GetAllOfTeacher": true,
+          "GetStudents": true
         }
       }
     }

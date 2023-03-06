@@ -11,35 +11,7 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
 export class StudentsTeamsComponent implements OnInit {
 
   strategyId: string | number = 0;
-  students: Array<any> = [
-    {
-      name: 'Dante Carranza'
-    },
-    {
-      name: 'Diego Perez'
-    },
-    {
-      name: 'Joaquin Gutierrez'
-    },
-    {
-      name: 'Dante Carranza'
-    },
-    {
-      name: 'Diego Perez'
-    },
-    {
-      name: 'Joaquin Gutierrez'
-    },
-    {
-      name: 'Dante Carranza'
-    },
-    {
-      name: 'Diego Perez'
-    },
-    {
-      name: 'Joaquin Gutierrez'
-    },
-  ];
+  students: Array<any> = [];
   teams: Array<any> = [];
   colors: Array<string> = [ '#1081FB', '#2ED2A3', '#DF4655' ];
   teamsOptions: Array<any> = [
@@ -94,23 +66,26 @@ export class StudentsTeamsComponent implements OnInit {
   GetParams() {
     this.activatedRoute.params.subscribe(params => {
       this.strategyId = params['strategyId'];
+      this.GetStrategyStudents();
     });
   }
 
   GetStrategyStudents() {
-    this.api.Get(``);
+    this.api.Get(`/Strategies/${this.strategyId}/Students`).subscribe(students => {
+      this.students = students;
+    }, err => {
+      console.error("Error getting strategy students", err);
+    });
   }
 
   OnTeamOptionSelected(teamOption: any) {
     this.teams = [];
-    console.log(teamOption);
     for(let i = 0; i < teamOption.value; i++) {
       this.teams.push({
         name: `Equipo ${i+1}`,
         members: []
       });
     }
-    console.log(this.teams);
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -124,6 +99,10 @@ export class StudentsTeamsComponent implements OnInit {
         event.currentIndex,
       );
     }
+  }
+
+  CreateStrategyTeams() {
+    
   }
 
 }

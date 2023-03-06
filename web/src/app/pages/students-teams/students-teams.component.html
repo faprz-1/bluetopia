@@ -40,7 +40,7 @@
                     (cdkDropListDropped)="drop($event)">
                     <div class="example-box" *ngFor="let item of students; let i = index"
                     [style]="'background-color:' + colors[i%colors.length] + ';'" cdkDrag>
-                        {{item.name}}
+                        {{item.name + ' ' + item.fatherLastname + ' ' + item.motherLastname}}
                     </div>
                   </div>
                 </div>
@@ -56,7 +56,7 @@
                         (cdkDropListDropped)="drop($event)">
                         <div class="example-box" *ngFor="let item of team.members"
                         [style]="'background-color:' + colors[i%colors.length] + ';'" cdkDrag>
-                            {{item.name}}
+                            {{item.name + ' ' + item.fatherLastname + ' ' + item.motherLastname}}
                         </div>
                       </div>
                     </div>
@@ -82,7 +82,7 @@
                             <div class="member-container" *ngFor="let member of team.members">
                                 <div class="member-name-container">
                                     <div class="member-name" [style]="'background-color:' + colors[i%colors.length] + ';'">
-                                        {{member.name}}
+                                        {{member.name + ' ' + member.fatherLastname + ' ' + member.motherLastname}}
                                     </div>
                                 </div>
                                 <div class="member-role">

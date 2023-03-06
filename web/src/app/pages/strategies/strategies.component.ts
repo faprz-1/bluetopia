@@ -33,4 +33,8 @@ export class StrategiesComponent implements OnInit {
     this.nav.GoToUserRoute(`mis-estrategias/${strategy.id}/equipos`);
   }
 
+  GoToCalendar(strategy: any) {
+    this.nav.GoToUserRoute(`grado/${strategy.strategyGroups.grade.name}/grupo/${strategy.strategyGroups.group.name}/plantillas/${strategy.templateId}/estrategias/${strategy.id}/calendario`)
+  }
+
 }

@@ -65,9 +65,9 @@ module.exports = function(Strategy) {
         }
     }
     
-    Strategy.prototype.GetData = function(callback) {
-        Strategy.findById(this.id, {
-            include: ['parcialProducts', 'template', 'user']
+    Strategy.GetData = function(strategyId, callback) {
+        Strategy.findById(strategyId, {
+            include: ['parcialProducts', 'template', 'user', 'strategyGroups']
         }, (err, strategy) => {
             if(err) return callback(err);
 
@@ -98,6 +98,40 @@ module.exports = function(Strategy) {
             if(err) return callback(err);
 
             return callback(null, strategies);
+        });
+    }
+
+    Strategy.GetStudents = function (ctx, strategyId, callback) {
+        const userId = ctx.accessToken.userId;
+        Strategy.GetData(strategyId, (err, strategy) => {
+            if (err) return callback(err);
+
+            Strategy.app.models.RoleMapping.findOne({
+                where: {
+                    principalId: userId
+                },
+                include: 'role'
+            }, (err, roleMapping) => {
+                if (err) return callback(err);
+    
+                if (roleMapping.role().name == 'School') {
+                    Strategy.app.models.Student.GetAllOfSchool(userId, (err, schoolStudents) => {
+                        if(err) return callback(err);
+                        let strategyStudents = schoolStudents.filter(student => {
+                            return strategy.strategyGroups().gradeId == student.studentGroup().gradeId && strategy.strategyGroups().groupId == student.studentGroup().groupId;
+                        });
+                        return callback(null, strategyStudents);
+                    });
+                } else {
+                    Strategy.app.models.Student.GetAllOfTeacher(userId, (err, teacherStudents) => {
+                        if(err) return callback(err);
+                        let strategyStudents = teacherStudents.filter(student => {
+                            return strategy.strategyGroups().gradeId == student.studentGroup().gradeId && strategy.strategyGroups().groupId == student.studentGroup().groupId;
+                        });
+                        return callback(null, strategyStudents);
+                    });
+                }
+            });
         });
     }
 
