@@ -44,7 +44,7 @@ module.exports = function(Strategy) {
                 Strategy.upsert(strategy, (err, strategyUpdated) => {
                     if(err) return callback(err);
                     
-                    this.GetData((err, strategy) => {
+                    Strategy.GetData(this.id, (err, strategy) => {
                         if(err) return callback(err);
 
                         return callback(null, strategy);
@@ -56,7 +56,7 @@ module.exports = function(Strategy) {
             Strategy.upsert(strategy, (err, strategyUpdated) => {
                 if(err) return callback(err);
 
-                this.GetData((err, strategy) => {
+                Strategy.GetData(this.id, (err, strategy) => {
                     if(err) return callback(err);
 
                     return callback(null, strategy);
