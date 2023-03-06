@@ -98,4 +98,15 @@ module.exports = function(Student) {
         });
     }
 
+    Student.UpdateSchoolUserId = function(teacherId, schoolUserId, callback) {
+        if(!teacherId || !schoolUserId) return callback(null, {count: 0});
+        Student.updateAll({
+            teacherUserId: teacherId
+        }, {schoolUserId, teacherUserId: null}, (err, studentsUpdated) => {
+            if(err) return callback(err);
+
+            return callback(null, studentsUpdated);
+        });
+    }
+
 };

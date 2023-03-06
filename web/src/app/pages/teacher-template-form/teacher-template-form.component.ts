@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -20,6 +20,7 @@ export class TeacherTemplateFormComponent implements OnInit {
   templateId: any;
   strategyId: any;
 
+  onReset: EventEmitter<any> = new EventEmitter<any>();
   modalRef: BsModalRef | null = null;
   templateTopics: Array<any> = [];
   parcialProductTypes: Array<any> = [];
@@ -100,10 +101,11 @@ export class TeacherTemplateFormComponent implements OnInit {
     else customTopic?.clearValidators();
   }
 
-  NextStep(template: any) {
+  NextStep(template: any, advanceStep: boolean = true) {
     this.Save().then(saved => {
+      this.onReset.emit();
       if(this.step == 4) this.OpenModal(template);
-      else if(!!saved) this.step++;
+      else if(!!saved && advanceStep) this.step++;
     });
   }
   

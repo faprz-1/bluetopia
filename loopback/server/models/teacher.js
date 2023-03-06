@@ -192,7 +192,6 @@ module.exports = function(Teacher) {
         }, (err, teacher) => {
             if(err) return callback(err);
 
-            console.log(teacher.user());
             if(!teacher) return callback('teacher not found!!');
             if(!teacher.schoolUserId) {
                 teacher.schoolUserId = newSchoolUserId;
@@ -204,7 +203,11 @@ module.exports = function(Teacher) {
                 Teacher.app.models.Usuario.upsert(teacher.user(), (err, userSaved) => {
                     if(err) return callback(err);
 
-                    return callback(null, saved);
+                    Teacher.app.models.UpdateSchoolUserId(teacherId, newSchoolUserId, (err, studentsUpdated) => {
+                        if(err) return callback(err);
+            
+                        return callback(null, saved);
+                    });
                 });
             });
         });

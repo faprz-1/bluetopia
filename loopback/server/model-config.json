@@ -354,7 +354,8 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
-          "CreateOne": true
+          "CreateOne": true,
+          "GetAllOfStrategy": true,
         }
       }
     }

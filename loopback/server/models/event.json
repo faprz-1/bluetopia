@@ -36,6 +36,11 @@
       "type": "belongsTo",
       "model": "Strategy",
       "foreignKey": "strategyId"
+    },
+    "parcialProduct": {
+      "type": "hasOne",
+      "model": "ParcialProduct",
+      "foreignKey": "eventId"
     }
   },
   "acls": [
@@ -48,10 +53,14 @@
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": [
-        "CreateOne"
+        "CreateOne",
+        "GetAllOfStrategy"
       ]
     }
   ],
@@ -78,6 +87,31 @@
         {
           "path": "/",
           "verb": "post"
+        }
+      ]
+    },
+    "GetAllOfStrategy": {
+      "accepts": [
+        {
+          "arg": "strategyId",
+          "type": "number",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/OfStrategy/:strategyId",
+          "verb": "get"
         }
       ]
     }

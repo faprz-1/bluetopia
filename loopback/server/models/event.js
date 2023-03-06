@@ -42,4 +42,17 @@ module.exports = function(Event) {
         });
     }
 
+    Event.GetAllOfStrategy = function(strategyId, callback) {
+        Event.find({
+            where: {
+                strategyId
+            },
+            include: ['type', {'parcialProduct': 'type'}]
+        }, (err, events) => {
+            if(err) return callback(err);
+
+            return callback(null, events);
+        });
+    }
+
 };
