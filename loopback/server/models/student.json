@@ -53,6 +53,12 @@
       "type": "hasOne",
       "model": "StudentGroup",
       "foreignKey": "studentId"
+    },
+    "teams": {
+      "type": "hasAndBelongsToMany",
+      "model": "Team",
+      "foreignKey": "studentId",
+      "throughTable": "TeamStudent"
     }
   },
   "acls": [

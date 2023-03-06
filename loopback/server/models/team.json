@@ -1,0 +1,25 @@
+{
+  "name": "Team",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "members": {
+      "type": "hasAndBelongsToMany",
+      "model": "Student",
+      "foreignKey": "teamId",
+      "throughTable": "TeamStudent"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

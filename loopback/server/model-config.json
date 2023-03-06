@@ -377,5 +377,13 @@
   "EventFile": {
     "dataSource": "mysqlDev",
     "public": false
+  },
+  "Team": {
+    "dataSource": "mysqlDev",
+    "public": true
+  },
+  "TeamStudent": {
+    "dataSource": "mysqlDev",
+    "public": false
   }
 }
