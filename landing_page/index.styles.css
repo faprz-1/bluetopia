@@ -223,7 +223,7 @@ body {
     height: 70px;
 }
 .header-img {
-    margin-left: 0px;
+    margin-left: 21px;
 }
 .header-img-small {
     height: 42px;
@@ -300,18 +300,18 @@ body {
 .grey-triangle-bottom-left {
     z-index: -1;
     width: 100%;
-    height: 200px;
+    height: 100px !important;
     background: linear-gradient(to bottom left, #ffffff00 50%, #F7F9F9 50%);
 }
 .grey-triangle-bottom-right {
     z-index: -1;
     width: 100%;
-    height: 200px;
+    height: 100px !important;
     background: linear-gradient(to bottom right, #ffffff00 50%, #F7F9F9 50%);
 }
 .grey-triangle-top-right {
     width: 100%;
-    height: 200px;
+    height: 100px !important;
     background: linear-gradient(to top right, white 50%, #F7F9F9 50%);
 }
 
@@ -478,6 +478,7 @@ ng-select.form-control {
 .info-section {
     width: 60%;
     padding: 3.5rem 0;
+    word-break: break-word;
 }
 
 .challenges-container {
@@ -608,7 +609,6 @@ ng-select.form-control {
 .hire-button {
     font-size: 1.375rem;
     font-weight: 700;
-    padding: .75rem 2.5rem;
     border-radius: 2rem;
     margin-top: 2rem;
 }
@@ -718,7 +718,6 @@ ng-select.form-control {
 .background-grey {
     background-color: #F8F9F9;
     position: absolute;
-    top: 0;
     height: 150%;
     width: 100%;
     z-index: -1;
@@ -726,7 +725,7 @@ ng-select.form-control {
 .objective-bush {
     position: absolute;
     left: 0;
-    bottom: -34%;
+    bottom: -4%;
     height: auto !important;
     width: 670px !important;
     max-width: 100% !important;
@@ -735,14 +734,7 @@ ng-select.form-control {
 .objective-white-bg {
     position: absolute;
     left: 0;
-    bottom: -96%;
-    width: 100% !important;
-    z-index: -1;
-}
-.objective-white-bg {
-    position: absolute;
-    left: 0;
-    bottom: -96%;
+    bottom: -76%;
     width: 100% !important;
     z-index: -1;
 }
