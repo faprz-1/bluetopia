@@ -1,35 +1,37 @@
-<div class="w-100">
-    <div class="header-container">
-        <div class="title">
-            ¡bienvenida escuela!
+<div class="d-flex w-100 justify-content-center">
+    <div class="welcome-container">
+        <div class="header-container mt-3">
+            <div class="title mb-4">
+                ¡Bienvenida escuela!
+            </div>
+            <div class="text">
+                En esta plataforma tus docentes podrán crear sus estrategias rapida y ordenadamente.
+            </div>
         </div>
-        <div class="text">
-            En esta plataforma tus docentes podrán crear sus estrategias rapida y ordenadamente.
+        <div class="d-flex align-items-center" style="margin-bottom: 12px;">
+            <div class="text mr-3">
+                Tus alumnos se podrán conectar con el profesor y recibir y subir sus tareas.
+            </div>
+            <img src="assets/img/welcome_1.png" alt="welcome_1">
         </div>
-    </div>
-    <div class="d-flex align-items-center" style="margin-bottom: 12px;">
-        <div class="text mr-3">
-            Tus alumnos se podrán conectar con el profesor y recibir y subir sus tareas.
+    
+        <div class="d-flex align-items-center" style="margin-bottom: 12px;">
+            <img src="assets/img/welcome_2.png" alt="welcome_1">
+            <div class="text ml-3">
+                Tus padres de familia podrán estar al tanto de todo lo que su hijo esta realizando y ver sus trabajos así como compratirlos en redes sociales.
+            </div>
         </div>
-        <img src="assets/img/welcome_1.png" alt="welcome_1">
-    </div>
-
-    <div class="d-flex align-items-center" style="margin-bottom: 12px;">
-        <img src="assets/img/welcome_2.png" alt="welcome_1">
-        <div class="text ml-3">
-            Tus padres de familia podrán estar al tanto de todo lo que su hijo esta realizando y ver sus trabajos así como compratirlos en redes sociales.
+    
+        <div class="subtitle">
+            Comienza registrando a tu maestros
         </div>
-    </div>
-
-    <div class="subtitle">
-        Comienza registrando a tu maestros
-    </div>
-    <div class="d-flex w-100 justify-content-around">
-        <button class="btn btn-outline-primary" (click)="GoToAddTeachers()">
-            Agregar maestros
-        </button>
-        <button class="btn btn-primary" (click)="GoToAddTeachersByCsv()">
-            Agregar con CSV
-        </button>
+        <div class="d-md-flex w-100 justify-content-between flex-xs-column">
+            <button class="btn btn-outline-primary mb-4" (click)="GoToAddTeachers()">
+                Agregar maestros
+            </button>
+            <button class="btn btn-primary mb-4" (click)="GoToAddTeachersByCsv()">
+                Agregar con CSV
+            </button>
+        </div>
     </div>
 </div>
