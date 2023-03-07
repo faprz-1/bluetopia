@@ -29,9 +29,10 @@
 <body>
     <div class="content">
         <div class="header animated" id="header">
-            <img class="header-img" src="assets/img/project_name_small.png" alt="bluetopia">
-            <img class="header-img-small hide-md hide-lg hide-xl" src="assets/icons/bluetopia-icon-alt.png"
-                alt="bluetopia">
+            <img class="header-img clickable" src="assets/img/project_name_small.png" alt="bluetopia"
+                onclick="ScrollToElement('home')">
+            <img class="clickable header-img-small hide-md hide-lg hide-xl" src="assets/icons/bluetopia-icon-alt.png"
+                alt="bluetopia" onclick="ScrollToElement('home')">
 
             <div class="social-media-container">
                 <img class="clickeable" src="assets/icons/facebook.png" onclick="GoToSocialMedia('fb')" alt="Facebook">
@@ -47,7 +48,7 @@
                 <div class="menu-option menu-option-hide clickeable" id="header-objectives"
                     onclick="ScrollToElement('objectives')">Objetivos</div>
                 <div class="menu-option menu-option-hide clickeable" id="header-features"
-                    onclick="ScrollToElement('features')">Caracteristícas</div>
+                    onclick="ScrollToElement('features')">Características</div>
                 <!-- <div class="menu-option menu-option-hide clickeable" id="header-functions"
                     onclick="ScrollToElement('functions')">Funciones</div> -->
                 <div class="menu-option menu-option-hide clickeable" id="header-contact-us"
@@ -69,9 +70,9 @@
             </div>
         </div>
 
-            <a href="https://api.whatsapp.com/send?phone=523332015626&text=Hola, Necesito mas información!"
-            target="_blank" ><img class="fab-icon" src="assets/img/whatsapp.png" alt="Envíanos un mensaje"></a>
-        
+        <a href="https://api.whatsapp.com/send?phone=523332015625&text=Hola, Necesito más información!"
+            target="_blank"><img class="fab-icon" src="assets/img/whatsapp.png" alt="Envíanos un mensaje"></a>
+
         <div class="row justify-content-center" id="home">
             <div class="col-12 col-md-11 col-lg-10 px-4">
                 <div class="section-container">
@@ -101,9 +102,9 @@
             </div>
         </div>
 
-        <div class="triangles-container" style="margin-top: 20rem;">
+        <div class="triangles-container" style="margin-top: 15rem;">
             <div class="d-flex top-img justify-content-center hide-xs hide-sm">
-                <img class="img-fluid" src="assets/img/mountains.png">
+                <img class="img-fluid" src="assets/img/plant.png">
             </div>
             <img class="green-triangle" src="assets/img/green-bg.png">
             <img class="blue-triangle" src="assets/img/blue-bg.png">
@@ -138,37 +139,62 @@
             <div class="bluetopia-bg-legend"></div>
         </div>
 
-        <div class="row justify-content-center mb-5" style="margin-top: 20rem;">
+        <div class="row justify-content-center mb-5" style="margin-top: 5rem;">
             <img class="img-center mb-5" src="assets/img/world.png">
             <div class="col-12 col-md-11 col-lg-10 px-4 text-center">
                 <div class="text-2 text-center d-inline-block" style="max-width: 1020px;">
                     <div class="text-center d-inline-block" style="max-width: 1100px; margin: 2.5rem 0 2.25rem 0;">
-                            Promovemos la <b class="text-primary">educación para la sostenibilidad</b> en las primarias
-                            a través
-                            de
-                            una solución tecnológica que facilita la implementación de distintas <b
-                                class="text-success">metodologías activas.</b>
+                        Promovemos la <b class="text-primary">educación para la sostenibilidad</b> en las primarias
+                        a través
+                        de
+                        una solución tecnológica que facilita la implementación de distintas <b
+                            class="text-success">metodologías activas.</b>
                     </div>
                 </div>
                 <div class="text-2 text-center d-inline-block" style="max-width: 1020px;">
                     <div class="text-center d-inline-block" style="max-width: 1100px; margin: 2.5rem 0 2.25rem 0;">
-                            Facilitamos el diseño de experiencias de aprendizaje a través de <b>herramientas y
-                                contenidos digitales</b> atractivos para los alumnos de hoy.
+                        Facilitamos el diseño de experiencias de aprendizaje a través de <b>herramientas y
+                            contenidos digitales</b> atractivos para los alumnos de hoy.
                     </div>
                 </div>
 
             </div>
         </div>
+ <div class="row justify-content-center" id="functions" style="padding: 2rem 0; background: #26D7A4; margin-top: 10rem;">
+            <div class="col-12 col-md-11 col-lg-10 px-4">
+                <div class="functions">
+                    <div class="functions-title">
+                        <div class="title text-white m-0">Funciones</div>
+                        <div class="subtitle-2 text-white">De la plataforma</div>
+                    </div>
+                    <div class="functions-container">
+                        <div class="function text-white function-bold">Datos</div>
+                        <div class="function text-white">Gestión</div>
+                        <div class="function text-white function-bold">Procesos</div>
+                        <div class="function text-white">Resultados</div>
+                        <div class="function text-white function-bold">Vinculación</div>
+                        <div class="function text-white">Contenidos</div>
+                        <div class="function text-white function-bold">Expedientes</div>
+                        <div class="function text-white">Investigación</div>
+                        <div class="function text-white function-bold">Metodologías</div>
+                        <div class="function text-white">Gamificación</div>
+                        <div class="function text-white function-bold">Visualización</div>
+                        <div class="function text-white">Estadísticas</div>
+                        <div class="function text-white function-bold">Innovación</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <div class="row justify-content-center position-relative g-0" style="margin-top:40rem;">
+        <div class="row text-center justify-content-center position-relative" style="margin-top:10rem;">
             <div class="col-12 px-4 text-center">
                 <div class="title-2 text-success text-center text-uppercase" style="margin-bottom: .75rem;">Beneficios
                 </div>
             </div>
-           
-            <div class="col-12 text-center mt-5 row g-0 justify-content-center">;
-                <div class="col-md-8 col-lg-8   row g-0">
-                    <div class="col-12 col-md-6 text-2">
+
+            <div class="col-12 mt-5 row  justify-content-center">
+                <div class="col-md-8 col-lg-8 align-items-center row justify-content-center">
+                    <div class="col-12 col-md-6 text-start text-2">
                         <b class="text-primary ml-3">Diseña, gestiona y evalúa</b> a través de experiencias de
                         aprendizaje
                         sencillas de diseñar con plantillas y recursos.
@@ -177,31 +203,33 @@
                         <img class="img-fluid" style="height:8rem;" src="assets/icons/design.png" alt="Diseña">
                     </div>
                 </div>
-                <div class="col-md-8 col-lg-8   mt-4 row g-0">
-                    <div class="col-12 col-md-6 text-2">
-                        Responde de <b class="text-primary">forma innovadora</b> a las necesidades de tus alumnos con ayuda de la tecnología.
+                <div class="col-md-8 col-lg-8 mt-5 row align-items-center justify-content-center">
+                    <div class="col-12 col-md-6 text-start text-2">
+                        Responde de <b class="text-primary">forma innovadora</b> a las necesidades de tus alumnos con
+                        ayuda de la tecnología.
                     </div>
                     <div class="col-12 col-md-6">
                         <img class="img-fluid" style="height:8rem;" src="assets/icons/innovate.png" alt="Innova">
                     </div>
                 </div>
-                <div class="col-md-8 col-lg-8   mt-4 row g-0">
-                    <div class="col-12 col-md-6 text-2">
+                <div class="col-md-8 col-lg-8 mt-5 row align-items-center justify-content-center">
+                    <div class="col-12 col-md-6 text-start text-2">
                         Abre <b class="text-primary"> espacios de colaboración y comunicación</b> para compartir
                         los
                         procesos de aprendizaje en tu comunidad escolar.
                     </div>
                     <div class="col-12 col-md-6">
-                        <img class="img-fluid" style="height:8rem;" src="assets/icons/share.png" alt="Comparte">
+                        <img class="img-fluid" style="height:6rem;" src="assets/icons/sharing.png" alt="Comparte">
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row justify-content-center position-relative" style=" background-color: #F8F9F9; margin-top:40rem; padding-bottom: 15rem; z-index: -1;" id="challenges">
+        <div class="row justify-content-center position-relative"
+            style=" background-color: #F8F9F9; margin-top:25rem; padding-bottom: 10rem; z-index: -1;" id="challenges">
             <div class="grey-triangle-bottom-right margin"
                 style="height: 350px; position: absolute; bottom: 100%; z-index: -1;"></div>
-    
+
             <div class="col-12 px-4 text-center">
                 <div class="title-2 text-primary text-center text-uppercase" style="margin-bottom: .75rem;">Retos
                 </div>
@@ -224,12 +252,12 @@
                     <div class="col-12">
                         <img class="img-fluid" src="assets/icons/question.png" alt="Desconocimiento">
                     </div>
-                    <div class="col-12" style="color: #587594;">Quiero pero no sé cómo</div>
+                    <div class="col-12" style="color: #587594;">Quiero, pero no sé cómo</div>
                 </div>
                 <div class="col-md-12 col-lg-3 row">
                     <div class="col-12 mb-3"><b class="text-primary">Desactualización</b> </div>
                     <div class="col-12">
-                        <img class="img-fluid" src="assets/icons/help.png" alt="Desactualización">
+                        <img class="img-fluid" src="assets/icons/outdated.png" alt="Desactualización">
                     </div>
                     <div class="col-12" style="color: #587594;">Requiero ayuda constante</div>
                 </div>
@@ -243,7 +271,7 @@
             </div>
         </div>
 
-        <div class="row justify-content-center" style="margin: 6rem 0 12rem 0;margin-top: 20rem;">
+        <div class="row justify-content-center" style="margin: 6rem 0 12rem 0;margin-top: 10rem;">
             <div class="col-12 col-md-11 col-lg-10 px-4 text-center">
                 <div class="title text-success text-uppercase d-none d-lg-block d-xl-block">
                     Componentes de la plataforma
@@ -285,20 +313,20 @@
             </div>
         </div>
 
-        <div class="row d-flex justify-content-center mb-5 position-relative background-grey" id="objectives"
-        style="padding: 4rem 0 7.75rem 0; margin-top: 20rem;">
-            <div class="mobile-hide grey-triangle-bottom-left objective-background"></div>
-            <div class="mobile-hide background-grey"></div>
+        <div class="row justify-content-center position-relative"
+            style=" background-color: #F8F9F9; margin-top:25rem; padding-bottom: 15rem; z-index: -1; height: 100%; width: auto;" id="objectives">
+            <div class="grey-triangle-bottom-right margin"
+                style="height: 350px; position: absolute; bottom: 100%; z-index: -1;"></div>
             <img class="mobile-hide objective-bush" src="assets/img/bush.png" style="width: 100%; height: 100%;">
             <img class="mobile-hide objective-white-bg" src="assets/img/white-bg.png"
                 style="width: 100%; height: 100%;">
             <div class="title text-primary text-center text-uppercase" style="font-weight: 700; margin-bottom: 0;">
                 Objetivos
             </div>
-            <div class="col-12 col-md-11 col-xl-10 px-4">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="text-start">
-                        <div class="subtitle-3 text-primary" style="margin-bottom: 1.5rem;">¿Qué hacemos?</div>
+            <div class="col-12 col-md-11 col-xl-10 px-4 mt-5">
+                <div class="row d-flex justify-content-between align-items-center">
+                    <div class="text-start col-12 col-md-6">
+                        <div class="subtitle-3 text-primary" style="margin-bottom: 2rem;">¿Qué hacemos?</div>
                         <div class="text-2" style="max-width: 865px;">
                             Promovemos la <b class="text-success">educación para la sostenibilidad</b> en las primarias
                             a través de una <b>solución tecnológica</b> que facilita la implementación de distintas
@@ -308,12 +336,12 @@
                             Registrarme
                         </button>
                     </div>
-                    <img class="objective-img hide-xs hide-sm hide-md position-absolute" src="assets/img/circles-target.png"
-                        style="right: 0; z-index: -1;" alt="Objetivos">
+                    <img class="img-fluid objective-img position-absolute col-4 hide-xs hide-sm"
+                        src="assets/img/circles-target.png" style="right: 0; z-index: -1;" alt="Objetivos">
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center" style="margin-top: 20rem;">
+        <div class="row justify-content-center" style="margin-top: 1rem">
             <div class="col-12 col-md-11 col-xl-10 px-4">
                 <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 3rem;">
                     <img class="objective-img hide-xs hide-sm" src="assets/img/laptop.png" alt="Laptop">
@@ -348,7 +376,7 @@
         </div>
 
         <div class="row justify-content-center mb-5 position-relative background-grey" id="features"
-            style="padding: 4rem 0 7.75rem 0; margin-top: 20rem;">
+            style="padding: 4rem 0 7.75rem 0; margin-top: 10rem;">
             <div class="grey-triangle-bottom-right margin"
                 style="height: 350px; position: absolute; bottom: 100%; z-index: -1;"></div>
             <img class="img-bottom" src="assets/img/play-box.png">
@@ -427,11 +455,11 @@
             </div>
         </div>
 
-        <div class="row justify-content-center" style="margin: 11rem 0; margin-top: 20rem;">
+        <div class="row justify-content-center" style="margin: 11rem 0; margin-top: 10rem;">
             <div class="col-12 col-md-11 col-lg-10 px-4">
                 <div class="subtitle-3 text-primary text-center text-uppercase mb-5" style="margin-bottom: 1.5rem;">
                     Relación
-                    familiar e institucional</div>
+                    familia e institución</div>
                 <div class="templates-container">
                     <div class="template">
                         <div class="template-icon-container" id="template-1"
@@ -473,50 +501,30 @@
             </div>
         </div>
 
-        <!-- <div class="row justify-content-center" id="functions" style="padding: 2rem 0; background: #26D7A4;">
-            <div class="col-12 col-md-11 col-lg-10 px-4">
-                <div class="functions">
-                    <div class="functions-title">
-                        <div class="title text-white m-0">Funciones</div>
-                        <div class="subtitle-2 text-white">De la plataforma</div>
-                    </div>
-                    <div class="functions-container">
-                        <div class="function text-white function-bold">Datos</div>
-                        <div class="function text-white">Gestión</div>
-                        <div class="function text-white function-bold">Procesos</div>
-                        <div class="function text-white">Resultados</div>
-                        <div class="function text-white function-bold">Vinculación</div>
-                        <div class="function text-white">Contenidos</div>
-                        <div class="function text-white function-bold">Expedientes</div>
-                        <div class="function text-white">Investigación</div>
-                        <div class="function text-white function-bold">Metodologías</div>
-                        <div class="function text-white">Gamificación</div>
-                        <div class="function text-white function-bold">Visualización</div>
-                        <div class="function text-white">Estadísticas</div>
-                        <div class="function text-white function-bold">Innovación</div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-
+       
         <div class="triangles-container">
             <img class="img-fluid green-cropped-triangle mobile-hide" src="assets/img/inverted-green.png">
-            <img class="img-fluid blue-cropped-triangle mobile-hide  hide-xs hide-sm" src="assets/img/inverted-blue.png">
+            <img class="img-fluid blue-cropped-triangle mobile-hide  hide-xs hide-sm hide-md"
+                src="assets/img/inverted-blue.png">
             <div class="row justify-content-center g-0" style="margin-top: 10rem; margin-left: 8rem;">
-                <div class="col-md-12 col-lg-6  hide-xs hide-sm">
+                <div class="col-md-12 col-lg-6  hide-xs hide-sm hide-md">
                     <img class="platform-img img-fluid" src="assets/img/projects.png">
                 </div>
                 <div class="col-md-12 col-lg-6">
                     <div class="info-section" style="text-align: left;">
-                        <div class="text-2 white-text">Por solo</div>
-                        <div class="title-3 white-text"><b>$500 MXN</b></div>
-                        <div class="text-2 white-text">anuales</div>
-                        <div class="text-2 white-text">por estudiante</div>
-                        <button class="btn btn-success hire-button d-none d-sm-none d-md-block" onclick="GoToRegister()">
-                            Contratar
+                        <div class="text white-text">Por solo</div>
+                        <div class="title-2 white-text hide-xs hide-sm"><b>$500 MXN</b></div>
+                        <div class="title-2 white-text d-block d-sm-block d-md-none"><b>$500</b></div>
+                        <div class="title-2 white-text d-block d-sm-block d-md-none"><b>MXN</b></div>
+                        <div class="text white-text">anuales</div>
+                        <div class="text white-text">por estudiante</div>
+                        <button class="btn btn-success hire-button hide-xs hide-sm hide-md"
+                            onclick="GoToRegister()" style="padding: .75rem 2.5rem;">
+                            Más información
                         </button>
-                        <button class="btn btn-primary hire-button d-block d-sm-block d-md-none" onclick="GoToRegister()">
-                            Contratar
+                        <button class="btn btn-primary hire-button d-block d-sm-block d-md-block d-lg-none"
+                            onclick="GoToRegister()">
+                            Más información
                         </button>
                     </div>
 
@@ -524,25 +532,27 @@
             </div>
         </div>
 
-        <div class="row justify-content-center" id="contact-us" style="margin: 11rem 0; margin-top: 20rem;">
+        <div class="row justify-content-center" id="contact-us" style="margin: 11rem 0; margin-top: 10rem;">
             <div class="col-12 col-md-11 col-lg-10 px-4">
                 <div class="d-flex justify-content-around align-items-center">
                     <div>
                         <div class="title text-center">Contacto</div>
-                        <form class="text-center" id="contactForm" name="contactForm" action="https://formspree.io/f/mpzedrpe"
-                            method="POST" target="_blank">
+                        <form class="text-center" id="contactForm" name="contactForm"
+                            action="https://formspree.io/f/mpzedrpe" method="POST" target="_blank">
                             <div class="form-group">
                                 <div class="input-container">
                                     <div class="input-icon-container text-center">
                                         <img src="assets/icons/user.png">
                                     </div>
-                                    <input class="form-control" type="text" name="name" placeholder="Nombre" onkeyup="Verify()" required>
+                                    <input class="form-control" type="text" name="name" placeholder="Nombre"
+                                        onkeyup="Verify()" required>
                                 </div>
                                 <div class="input-container">
                                     <div class="input-icon-container text-center">
                                         <img src="assets/icons/email.png">
                                     </div>
-                                    <input class="form-control" type="email" name="email" placeholder="Email" onkeyup="Verify()" required>
+                                    <input class="form-control" type="email" name="email" placeholder="Email"
+                                        onkeyup="Verify()" required>
                                 </div>
                                 <div class="input-container">
                                     <div class="input-icon-container text-center">
@@ -552,10 +562,11 @@
                                         placeholder="Teléfono (opcional)">
                                 </div>
                                 <div class="input-container">
-                                    <textarea id="subject" name="subject" placeholder="Compartenos tus inquietudes"
+                                    <textarea id="subject" name="subject" placeholder="Compártenos tus inquietudes"
                                         style=" resize: none; height: 100px;" class="form-control"></textarea>
                                 </div>
-                                <button id="submitBtn" disabled class="btn btn-success btn-contact" onclick="SendForm()">
+                                <button id="submitBtn" disabled class="btn btn-success btn-contact"
+                                    onclick="SendForm()">
                                     Enviar
                                 </button>
                             </div>
