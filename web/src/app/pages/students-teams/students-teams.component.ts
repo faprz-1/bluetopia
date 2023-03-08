@@ -109,6 +109,7 @@ export class StudentsTeamsComponent implements OnInit {
     }
     this.api.Post(`/Teams/Array`, {teams: this.teams, strategyId: Number(this.strategyId)}).subscribe(newTeams => {
       this.toast.ShowSuccess(`${newTeams.length} equipos creados`);
+      this.nav.GoToUserRoute('mis-estrategias');
     }, err => {
       console.error("Error creating teams", err);
     });

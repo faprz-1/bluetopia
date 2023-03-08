@@ -7,7 +7,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" *ngIf="!!strategies.length; else noStrategies">
         <div class="col-12 col-md-6 col-lg-4" *ngFor="let strategy of strategies">
             <div class="card py-3 px-2">
                 <div class="card-header">
@@ -40,14 +40,14 @@
                             <div class="text text-uppercase">{{strategy.strategyGroup?.grade?.name}}{{strategy.strategyGroup?.group?.name}}</div>
                         </div>
                     </div>
-                    <div class="d-flex align-items-center justify-content-between mt-3">
-                        <button class="btn btn-outline-primary" (click)="GoToTeams(strategy)">
+                    <div class="flex-column align-items-center justify-content-between mt-3">
+                        <button class="btn btn-primary btn-block" *ngIf="!strategy.teams?.length" (click)="GoToTeams(strategy)">
                             Equipos
                         </button>
-                        <button class="btn btn-primary" (click)="GoToTeamsProgress(strategy)">
+                        <button class="btn btn-primary btn-block" *ngIf="!!strategy.teams?.length" (click)="GoToTeamsProgress(strategy)">
                             Progreso de equpos
                         </button>
-                        <button class="btn btn-outline-primary" (click)="GoToCalendar(strategy)">
+                        <button class="btn btn-outline-primary btn-block" (click)="GoToCalendar(strategy)">
                             Calendario
                         </button>
                     </div>
@@ -56,3 +56,9 @@
         </div>
     </div>
 </div>
+
+<ng-template #noStrategies>
+    <div class="text-center no-items-message">
+        No tiene estrategias creadas, diseñe una nueva estrategia para un grupo en la sección de "Mis estudiantes"
+    </div>
+</ng-template>

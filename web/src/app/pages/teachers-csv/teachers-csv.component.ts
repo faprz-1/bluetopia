@@ -84,7 +84,11 @@ export class TeachersCsvComponent implements OnInit {
     return teachers.map(teacher => {
       let teacherFormatted: any = {};
       this.dataConversions.forEach(conversion => {
-        teacherFormatted[conversion.newKey] = teacher[conversion.oldKey];
+        if(conversion.newKey == 'extracurricular') {
+          let yesCases = ['si', '1', 1];
+          teacherFormatted[conversion.newKey] = yesCases.includes(teacher[conversion.oldKey]?.toLowerCase());
+        }
+        else teacherFormatted[conversion.newKey] = teacher[conversion.oldKey];
       });
       teacherFormatted.subjects = teacherFormatted.subjects.split(',').map((s: string) => s.trim());
       teacherFormatted.schoolUserId = user.id;

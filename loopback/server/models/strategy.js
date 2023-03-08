@@ -93,7 +93,7 @@ module.exports = function(Strategy) {
             where: {
                 userId
             },
-            include: ['template', {'strategyGroup': ['grade', 'group']}]
+            include: ['template', 'teams', {'strategyGroup': ['grade', 'group']}]
         }, (err, strategies) => {
             if(err) return callback(err);
 
