@@ -34,11 +34,11 @@ module.exports = function(Teacher) {
                         newTeacher.Activate(null, (err, teacherActive) => {
                             if(err) return callback(err);
 
-                            if(!limit) return callback(null, newTeacher);
+                            if(!limit) return callback(null, teacherActive);
                             subjects.forEach(subject => {
                                 newTeacher.subjects.add(subject.id, (err) => {
                                     if(err) return callback(err);
-                                    if(++cont == limit) return callback(null, newTeacher);
+                                    if(++cont == limit) return callback(null, teacherActive);
                                 });
                             });
                         });
@@ -70,24 +70,27 @@ module.exports = function(Teacher) {
                     Teacher.AddTeacher(teacher, (err, newTeacher) => {
                         if(err) return callback(err);
                         
-                        const gradeId = grades.find(g => g.name == teacher.grade.toLowerCase()) ? grades.find(g => g.name == teacher.grade.toLowerCase()).id : null;
-                        const groupId = groups.find(g => g.name == teacher.group.toLowerCase()) ? groups.find(g => g.name == teacher.group.toLowerCase()).id : null;
-                        const teacherGroupInstance = {
-                            teacherId: newTeacher.id,
-                            gradeId,
-                            groupId,
-                        }
-                        Teacher.app.models.TeacherGroup.findOrCreate({
-                            where: {
-                                groupId,
+                        if(!!newTeacher) {
+                            const gradeId = grades.find(g => g.name == teacher.grade.toLowerCase()) ? grades.find(g => g.name == teacher.grade.toLowerCase()).id : null;
+                            const groupId = groups.find(g => g.name == teacher.group.toLowerCase()) ? groups.find(g => g.name == teacher.group.toLowerCase()).id : null;
+                            const teacherGroupInstance = {
+                                teacherId: newTeacher.id,
                                 gradeId,
-                                teacherId: newTeacher.id
+                                groupId,
                             }
-                        }, teacherGroupInstance, (err, newTeacherGroup) => {
-                            if(err) return callback(err);
-
-                            if(++cont == limit) return callback(null, newTeachers);
-                        });
+                            Teacher.app.models.TeacherGroup.findOrCreate({
+                                where: {
+                                    groupId,
+                                    gradeId,
+                                    teacherId: newTeacher.id
+                                }
+                            }, teacherGroupInstance, (err, newTeacherGroup) => {
+                                if(err) return callback(err);
+    
+                                newTeachers.push(newTeacher);
+                                if(++cont == limit) return callback(null, newTeachers);
+                            });
+                        } else limit--;
                     });
                 });
             });
@@ -152,11 +155,14 @@ module.exports = function(Teacher) {
                 schoolUserId: this.schoolUserId
             }
             Teacher.app.models.Usuario.RegisterUser(user, null, 'Teacher', (err, newTeacherUser) => {
-                if(err) return callback(err);
                 
                 this.active = true;
                 this.activationToken = null;
                 this.userId = newTeacherUser.id;
+                if(err) {
+                    this.active = false;
+                    return callback(null, false);
+                }
                 this.save((err, teacherSaved) => {
                     if(err) return callback(err);
 

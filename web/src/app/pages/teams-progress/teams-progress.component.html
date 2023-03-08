@@ -1,6 +1,9 @@
 <div class="content">
     <div class="row mb-5">
-        <div class="col-12 d-flex h-100 align-items-center justify-content-between">
+        <div class="col-12 d-flex h-100 align-items-center">
+            <div class="cirlce-arrow clickeable" (click)="nav.GoToUserRoute('mis-estrategias')">
+                <i class="zmdi zmdi-arrow-back zmdi-hc-2x"></i>
+            </div>
             <div class="page-title">
                 Progreso
             </div>
@@ -27,7 +30,7 @@
 
         <div class="col-12">
             <div class="teams">
-                <div class="team" *ngFor="let team of strategy.teams; let i = index">
+                <div class="team" *ngFor="let team of strategy?.teams; let i = index">
                     <div class="team-name" [style]="'color:' + colors[i%colors.length] + ';'">
                         {{team.name}}
                     </div>

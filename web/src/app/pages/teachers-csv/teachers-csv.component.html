@@ -81,7 +81,7 @@
                             <th>{{teacher.name}}</th>
                             <th>{{teacher.email}}</th>
                             <th>{{teacher.subjects}}</th>
-                            <th>{{teacher.extracurricular == 1 ? "SI" : "NO"}}</th>
+                            <th>{{!!teacher.extracurricular ? "SI" : "NO"}}</th>
                             <th>{{teacher.grade}}</th>
                             <th>{{teacher.group}}</th>
                         </tr>
