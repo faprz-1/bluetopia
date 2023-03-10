@@ -28,7 +28,7 @@
         justify-content: start;
         flex-grow: 1;
         flex-wrap: wrap;
-        text-overflow: ellipsis !important;
+        line-height: 30px;
 
         span {
             margin-right: .3rem;
@@ -36,6 +36,8 @@
     }
 
     .img-container {
+        display: flex;
+        align-items: center;
         height: min-content;
         padding-right: 12px;
         text-align: left;
@@ -50,8 +52,8 @@
 .delete {
     font-size: 2rem;
     position: absolute;
-    top: -10px;
-    right: 8px;
+    top: 10px;
+    right: 15px;
     color: var(--danger);
 }
 

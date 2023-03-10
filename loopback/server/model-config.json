@@ -306,9 +306,10 @@
           "*": false,
           "CreateOne": true,
           "prototype.Update": true,
-          "prototype.GetData": true,
+          "GetData": true,
           "prototype.GetActivities": true,
-          "GetAllOfTeacher": true
+          "GetAllOfTeacher": true,
+          "GetStudents": true
         }
       }
     }
@@ -356,7 +357,8 @@
         "sharedMethods": {
           "*": false,
           "CreateOne": true,
-          "GetAllOfStrategy": true
+          "GetAllOfStrategy": true,
+          "Proof": true
         }
       }
     }
@@ -376,5 +378,33 @@
   "EventFile": {
     "dataSource": "mysqlDev",
     "public": false
+  },
+  "Team": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "AddTeams": true
+        }
+      }
+    }
+  },
+  "TeamStudent": {
+    "dataSource": "mysqlDev",
+    "public": false
+  },
+  "TeamRole": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "GetAll": true
+        }
+      }
+    }
   }
 }

@@ -54,31 +54,31 @@
         <div class="col-12 col-md-6 data-col">
           <label>Mi número</label>
           <div class="text">
-            {{user.data.phone}}
+            {{user?.data?.phone ? user?.data?.phone : 'Sin registro'}}
           </div>
         </div>
         <div class="col-12 col-md-6 data-col">
           <label>Puesto</label>
           <div class="text">
-            {{user.data.workTitle}}
+            {{user?.data?.workTitle ? user?.data?.workTitle : 'Sin registro'}}
           </div>
         </div>
         <div class="col-12 col-md-6 data-col">
           <label>Escuela</label>
           <div class="text">
-            {{user.data.schoolName}}
+            {{user?.data?.schoolName ? user?.data?.schoolName : 'Sin registro'}}
           </div>
         </div>
         <div class="col-12 col-md-6 data-col">
           <label>Teléfono de la escuela</label>
           <div class="text">
-            {{user.data.schoolPhone}}
+            {{user?.data?.schoolPhone ? user?.data?.schoolPhone : 'Sin registro'}}
           </div>
         </div>
         <div class="col-12 col-md-6 data-col">
           <label>Dirección de la escuela</label>
           <div class="text">
-            {{user.data.address}}
+            {{user?.data?.address ? user?.data?.address : 'Sin registro'}}
           </div>
         </div>
       </div>

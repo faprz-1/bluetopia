@@ -74,7 +74,10 @@ module.exports = function(Student) {
                 Student.find({
                     where: {
                         or: [
-                            {id: {inq: studentGroups.map(sg => sg.student().id)}},
+                            {and: [
+                                {id: {inq: studentGroups.filter(sg => !!sg.student()).map(sg => sg.student().id)}},
+                                {schoolUserId: teacher.schoolUserId}
+                            ]},
                             {teacherUserId}
                         ]
                     },
