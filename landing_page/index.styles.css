@@ -133,7 +133,7 @@ body {
 .title {
     font-size: 4rem;
     color: #1081FB;
-    font-weight: 900;
+    font-weight: 700 !important;
     line-height: 80px;
     margin-bottom: 1rem;
 
@@ -143,12 +143,7 @@ body {
     font-weight: 700;
     line-height: 80px;
 }
-.title-3{
-    font-size: 2rem;
-    font-weight: 900;
-    line-height: 60px;
-    word-break: break-word;
-}
+
 .subtitle {
     color: #587594;
     font-size: 2.125rem;
