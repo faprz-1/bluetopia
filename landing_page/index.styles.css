@@ -1,5 +1,5 @@
 
-html,body{
+.content{
     overflow-x: hidden;
     max-width: 100% !important;
 }
@@ -7,7 +7,7 @@ body {
     --primary: #1081FB;
     --success: #2ED2A3;
     --danger: #DF4655;
-    overflow: hidden;
+    overflow-x: hidden;
 
 }
 
