@@ -1,0 +1,30 @@
+<div class="w-100 week-calendar-container">
+    <div class="flex-column align-items-center justify-content-center">
+        <div class="d-flex align-items-center justify-content-center mb-4">
+            <img class="mr-3" src="assets/icons/calendar.png" alt="calendar.png">
+            <div class="today-title">{{today}}</div>
+        </div>
+
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="week-day" *ngFor="let day of days">
+                <div class="day-label">
+                    {{day.label}}
+                </div>
+                <div class="day">
+                    {{day.number}}
+                </div>
+                <div class="events">
+                    <div class="event mb-2" *ngFor="let event of day.events">
+                        {{event.name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center justify-content-center mt-4">
+            <button class="btn btn-outline-success">
+                Ver calendario completo
+            </button>
+        </div>
+    </div>
+</div>
