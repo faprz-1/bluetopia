@@ -45,7 +45,22 @@
 .card-section {
     display: flex;
     flex-direction: column;
-    padding: 1rem;
+    padding: 1rem 2rem;
     border-radius: 6px;
     background-color: rgba(193, 204, 215, 0.2);
+}
+
+.strategy-text {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #587594;
+    margin: 2px 0;
+}
+
+.gallery-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #587594;
+    margin: .75rem 0;
+    text-align: center;
 }
