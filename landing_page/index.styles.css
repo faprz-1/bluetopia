@@ -1,5 +1,5 @@
 
-html,body{
+.content{
     overflow-x: hidden;
     max-width: 100% !important;
 }
@@ -7,7 +7,7 @@ body {
     --primary: #1081FB;
     --success: #2ED2A3;
     --danger: #DF4655;
-    overflow: hidden;
+    overflow-x: hidden;
 
 }
 
@@ -96,6 +96,18 @@ body {
     border-width: 3px;
 }
 
+.btn-tertiary {
+    background-color: #FFFFFF;
+    color: var(--primary);
+}
+
+.btn-tertiary:hover {
+    color: white;
+    background-color: var(--primary);
+    border-color: var(--primary);
+    border-width: 3px;
+}
+
 .section-container {
     display: flex;
     align-items: center;
@@ -121,7 +133,7 @@ body {
 .title {
     font-size: 4rem;
     color: #1081FB;
-    font-weight: 900;
+    font-weight: 700 !important;
     line-height: 80px;
     margin-bottom: 1rem;
 
@@ -131,12 +143,7 @@ body {
     font-weight: 700;
     line-height: 80px;
 }
-.title-3{
-    font-size: 2rem;
-    font-weight: 900;
-    line-height: 60px;
-    word-break: break-word;
-}
+
 .subtitle {
     color: #587594;
     font-size: 2.125rem;
@@ -536,7 +543,7 @@ ng-select.form-control {
 }
 .top-img {
     position: absolute;
-    top: -125px;
+    top: -50px;
     width: 100%;
     z-index: -2;
 }
@@ -591,7 +598,7 @@ ng-select.form-control {
 }
 .box-tools-icon {
     position: absolute;
-    top: 145px;
+    top: 120px;
     right: 5%;
     display: flex;
 }
@@ -639,6 +646,12 @@ ng-select.form-control {
     background-repeat: repeat-x;
     height: 113px;
     z-index: -1;
+}
+.price-section {
+    background-image: url(assets/img/Img-baner-price.png);
+    background-repeat: no-repeat;
+    max-height: 100%;
+    max-width: 100%;
 }
 
 @media (max-width: 900px) {

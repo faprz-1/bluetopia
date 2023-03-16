@@ -30,11 +30,11 @@ export class ValidationService {
       },
       {
         name: 'minlength',
-        label: `Mínimo de Caracteres ${validatorValue.requiredLength}`,
+        label: `Mínimo ${validatorValue.requiredLength} caracteres `,
       },
       {
         name: 'maxlength',
-        label: `Máximo de Caracteres ${validatorValue.requiredLength}`,
+        label: `Máximo ${validatorValue.requiredLength} caracteres `,
       },
       {
         name: 'invalidNumber',
