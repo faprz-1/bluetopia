@@ -647,6 +647,12 @@ ng-select.form-control {
     height: 113px;
     z-index: -1;
 }
+.price-section {
+    background-image: url(assets/img/Img-baner-price.png);
+    background-repeat: no-repeat;
+    max-height: 100%;
+    max-width: 100%;
+}
 
 @media (max-width: 900px) {
     .tools-icon {
