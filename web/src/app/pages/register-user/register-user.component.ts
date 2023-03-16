@@ -34,6 +34,16 @@ export class RegisterUserComponent implements OnInit {
     phone: new FormControl(null, [Validators.required, ValidationService.CheckOnlyIntegerNumbers]),
     schoolPhone: new FormControl(null, [ValidationService.CheckOnlyIntegerNumbers]),
   });
+  passwordForgotten: boolean = false;
+  public procesando: boolean = false;
+  procesandoEmail: boolean = false;
+  email = '';
+  pin: string = '';
+  newPassword: string = '';
+  changuePass: boolean = false;
+  tryPin: boolean = false;
+  successUpdate: boolean = false;
+
 
   constructor(
     private navigation: NavigationService,
@@ -144,4 +154,55 @@ export class RegisterUserComponent implements OnInit {
     });
   }
 
+  SendEmail(email:any){
+    this.email = email.emailtoRecover;
+    this.procesandoEmail = true;
+    this.api.Post('/PasswordResetPINs/createAndSend', { email: this.email }, false).subscribe(
+      (msg: any) => {
+        if (msg.msg == 'notRegistered') {
+          this.toast.ShowError('Usuario no registrado');
+          this.procesando = false;
+        } else {
+          this.toast.ShowSuccess('Se envio el correo correctamente');
+          this.tryPin = true;
+        }
+        this.procesandoEmail = false;
+      }, (err: any) => {
+        this.toast.ShowError(err.err);
+        this.procesando = false;
+        this.tryPin = false;
+        this.procesandoEmail = false;
+      });
+  }
+
+  TryPIN() {
+    this.api.Post('/PasswordResetPINs/consume', { pin: this.pin, email: this.email }, false).subscribe((msg: any) => {
+      if (msg.msg == 'Pin incorrecto') {
+        this.toast.ShowError('PIN incorrecto');
+        this.pin = '';
+      }
+      else {
+        this.toast.ShowSuccess('PIN correcto');
+        this.tryPin = false;
+        this.changuePass = true;
+      }
+    });
+  }
+
+  SetPassword() {
+    this.api.Post('/PasswordResetPINs/resetPassword', { password: this.newPassword, email: this.email }, false).subscribe(
+      (res: any) => {
+        if (res.msg == "usuario actualizado") {
+          this.toast.ShowSuccess('Contraseña asignada correctamente');
+          this.successUpdate = true;
+          this.passwordForgotten = false;
+          this.changuePass = false;
+          this.procesando = false;
+        }
+        else {
+          this.toast.ShowSuccess('Sucedio un Error');
+        }
+      }
+    )
+  }
 }
