@@ -26,11 +26,11 @@ export const ADMIN_MENU_PAGES: any = {
     // { name: 'Mis Grupos', action: '/inicio/teacher/mis-asignaturas', icon: 'zmdi zmdi-assignment' },
   ],
   'Parent': [
-    // { name: 'Inicio', action: '/inicio/parent/home', icon: 'zmdi zmdi-home' },
+    { name: 'Inicio', action: '/inicio/parent/home', icon: 'zmdi zmdi-home' },
     { name: 'Estadisticas', action: '/inicio/parent/estadisticas', icon: 'zmdi zmdi-accounts' },
   ],
   'Student': [
-    // { name: 'Inicio', action: '/inicio/student/home', icon: 'zmdi zmdi-home' },
+    { name: 'Inicio', action: '/inicio/student/home', icon: 'zmdi zmdi-home' },
     { name: 'Mis estadisticas', action: '/inicio/student/mis-estudiantes', icon: 'zmdi zmdi-accounts' },
   ],
 };
@@ -103,7 +103,7 @@ const LAYOUT_ROUTES: Routes = [
         path: 'parent', canActivate: [AuthGuard], data: { role: 'Parent' },
         children: [
           { path: '', redirectTo: 'home', pathMatch: 'full' },
-          { path: 'home', loadChildren: () => import('../pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
+          { path: 'home', loadChildren: () => import('../pages/parent-student-dashboard/parent-student-dashboard.module').then(m => m.ParentStudentDashboardModule) },
           { path: 'estadisticas', loadChildren: () => import('../pages/student-stats/student-stats.module').then(m => m.StudentStatsModule) },
         ]
       },
@@ -111,7 +111,8 @@ const LAYOUT_ROUTES: Routes = [
         path: 'student', canActivate: [AuthGuard], data: { role: 'Student' },
         children: [
           { path: '', redirectTo: 'home', pathMatch: 'full' },
-          { path: 'home', loadChildren: () => import('../pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
+          { path: 'home', loadChildren: () => import('../pages/parent-student-dashboard/parent-student-dashboard.module').then(m => m.ParentStudentDashboardModule) },
+          { path: 'mis-estadisticas', loadChildren: () => import('../pages/student-stats/student-stats.module').then(m => m.StudentStatsModule) },
         ]
       },
     ]

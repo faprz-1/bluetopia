@@ -1,5 +1,5 @@
 
-html,body{
+.content{
     overflow-x: hidden;
     max-width: 100% !important;
 }
@@ -7,7 +7,7 @@ body {
     --primary: #1081FB;
     --success: #2ED2A3;
     --danger: #DF4655;
-    overflow: hidden;
+    overflow-x: hidden;
 
 }
 
@@ -646,6 +646,12 @@ ng-select.form-control {
     background-repeat: repeat-x;
     height: 113px;
     z-index: -1;
+}
+.price-section {
+    background-image: url(assets/img/Img-baner-price.png);
+    background-repeat: no-repeat;
+    max-height: 100%;
+    max-width: 100%;
 }
 
 @media (max-width: 900px) {

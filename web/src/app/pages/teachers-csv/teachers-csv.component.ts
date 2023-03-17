@@ -74,7 +74,7 @@ export class TeachersCsvComponent implements OnInit {
       });
     };
     if(file) {
-      FILE_READER.readAsText(file, 'ISO-8859-1');
+      FILE_READER.readAsText(file, 'ISO-8859-3');
       this.step = 3;
     }
   }
