@@ -34,6 +34,14 @@ export class RegisterUserComponent implements OnInit {
     phone: new FormControl(null, [Validators.required, ValidationService.CheckOnlyIntegerNumbers]),
     schoolPhone: new FormControl(null, [ValidationService.CheckOnlyIntegerNumbers]),
   });
+  passwordForgotten: boolean = false;
+  email = '';
+  pin: string = '';
+  newPassword: string = '';
+  successUpdate: boolean = false;
+  loading: boolean = false;;
+  step: number = 0;
+  pattern = new RegExp ('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$');
 
   constructor(
     private navigation: NavigationService,
@@ -144,4 +152,70 @@ export class RegisterUserComponent implements OnInit {
     });
   }
 
+  SendEmail(){
+    this.loading = true;
+    this.step = 1;
+    this.api.Post('/PasswordResetPINs/createAndSend', { email: this.email }, false).subscribe(
+      (msg: any) => {
+        if (msg.msg == 'notRegistered') {
+          this.toast.ShowError('Usuario no registrado');
+          this.step = 0;
+        } else {
+          this.toast.ShowSuccess('Se envio el correo correctamente');
+          this.step = 2;
+        }
+        this.loading = false;
+      }, (err: any) => {
+        this.toast.ShowError(err.err);
+        this.loading = false;
+        this.step=0;
+      });
+  }
+
+  TryPIN() {
+    this.loading = true;
+    this.api.Post('/PasswordResetPINs/consume', { pin: this.pin, email: this.email }, false).subscribe((msg: any) => {
+      if (msg.msg == 'Pin incorrecto') {
+        this.toast.ShowError('PIN incorrecto');
+        this.pin = '';
+        this.step = 0;
+        this.loading = false;
+      }
+      else {
+        this.toast.ShowSuccess('PIN correcto');
+        this.step = 3;
+        this.loading = false;
+      }
+    }, (err: any) => {
+      this.toast.ShowError(err.err);
+      this.loading = false;
+      this.step=0;
+    });
+  }
+
+  SetPassword() {
+    this.api.Post('/PasswordResetPINs/resetPassword', { password: this.newPassword, email: this.email }, false).subscribe(
+      (res: any) => {
+        if (res.msg == "usuario actualizado") {
+          this.toast.ShowSuccess('Contraseña asignada correctamente');
+          this.successUpdate = true;
+         this.loading = false;
+         this.step=0;
+         this.passwordForgotten= false;
+         this.email= "";
+        }
+        else {
+          this.toast.ShowSuccess('Sucedio un Error');
+          this.loading = false;
+          this.step=0;
+        }
+      }
+    )
+  }
+
+  GoBack(){
+    this.passwordForgotten=false;
+    this.step=0;
+    this.loading=false;
+  }
 }
