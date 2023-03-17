@@ -88,6 +88,25 @@ module.exports = function(Strategy) {
         });
     }
 
+    Strategy.GetAllOfSchool = function(userId, callback) {
+        Strategy.app.models.Usuario.find({
+            where: {schoolUserId: userId}
+        }, (err, schoolTeachers) => {
+            if(err) return callback(err);
+
+            Strategy.find({
+                where: {
+                    userId: {inq: [userId, ...schoolTeachers.map(user => user.id)]}
+                },
+                include: ['template', 'teams', {'strategyGroup': ['grade', 'group']}]
+            }, (err, strategies) => {
+                if(err) return callback(err);
+    
+                return callback(null, strategies);
+            });
+        });
+    }
+
     Strategy.GetAllOfTeacher = function(userId, callback) {
         Strategy.find({
             where: {

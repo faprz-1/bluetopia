@@ -84,6 +84,7 @@
         "Update",
         "GetData",
         "GetActivities",
+        "GetAllOfSchool",
         "GetAllOfTeacher",
         "GetStudents"
       ]
@@ -188,6 +189,31 @@
       "http": [
         {
           "path": "/Activities",
+          "verb": "get"
+        }
+      ]
+    },
+    "GetAllOfSchool": {
+      "accepts": [
+        {
+          "arg": "userId",
+          "type": "number",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "strategies",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/OfSchool/:userId",
           "verb": "get"
         }
       ]

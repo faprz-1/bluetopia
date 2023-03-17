@@ -308,6 +308,7 @@
           "prototype.Update": true,
           "GetData": true,
           "prototype.GetActivities": true,
+          "GetAllOfSchool": true,
           "GetAllOfTeacher": true,
           "GetStudents": true
         }

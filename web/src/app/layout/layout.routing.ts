@@ -16,8 +16,9 @@ export const ADMIN_MENU_PAGES: any = {
   ],
   'School': [
     // { name: 'Inicio', action: '/inicio/school/home', icon: 'zmdi zmdi-home' },
-    { name: 'Mis Maestros', action: '/inicio/school/mis-maestros', icon: 'zmdi zmdi-accounts' },
-    { name: 'Mis Estudiantes', action: '/inicio/school/mis-estudiantes', icon: 'zmdi zmdi-accounts' },
+    { name: 'Mis maestros', action: '/inicio/school/mis-maestros', icon: 'zmdi zmdi-accounts' },
+    { name: 'Mis estudiantes', action: '/inicio/school/mis-estudiantes', icon: 'zmdi zmdi-accounts' },
+    { name: 'Mis estrategias', action: '/inicio/school/mis-estrategias', icon: 'zmdi zmdi-accounts' },
   ],
   'Teacher': [
     // { name: 'Inicio', action: '/inicio/teacher/home', icon: 'zmdi zmdi-home' },

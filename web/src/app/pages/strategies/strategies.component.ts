@@ -9,6 +9,7 @@ import { NavigationService } from 'src/app/services/navigation.service';
 })
 export class StrategiesComponent implements OnInit {
 
+  user: any = null;
   strategies: Array<any> = [];
 
   constructor(
@@ -17,12 +18,24 @@ export class StrategiesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.user = this.api.GetUser();
     this.GetStrategies();
   }
 
   GetStrategies() {
-    const user = this.api.GetUser();
-    this.api.Get(`/Strategies/OfTeacher/${user ? user.id: 0}`).subscribe(strategies => {
+    let endpoint: string;
+    switch (this.user.role.name) {
+      case 'School':
+        endpoint = `/Strategies/OfSchool/${this.user ? this.user.id: 0}`;
+        break;
+      case 'Teacher':
+        endpoint = `/Strategies/OfTeacher/${this.user ? this.user.id: 0}`;
+        break;
+      default:
+        endpoint = '';
+        break;
+    }
+    this.api.Get(endpoint).subscribe(strategies => {
       this.strategies = strategies;
     }, err => {
       console.error("Erro getting teacher strategies", err);
