@@ -31,7 +31,7 @@ export const ADMIN_MENU_PAGES: any = {
   ],
   'Student': [
     { name: 'Inicio', action: '/inicio/student/home', icon: 'zmdi zmdi-home' },
-    { name: 'Mis estadisticas', action: '/inicio/student/mis-estudiantes', icon: 'zmdi zmdi-accounts' },
+    { name: 'Mis estadisticas', action: '/inicio/student/mis-estadisticas', icon: 'zmdi zmdi-accounts' },
   ],
 };
 

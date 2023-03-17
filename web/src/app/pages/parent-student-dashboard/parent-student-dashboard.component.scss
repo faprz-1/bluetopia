@@ -64,3 +64,46 @@
     margin: .75rem 0;
     text-align: center;
 }
+
+.reminders-section {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    border-radius: 6px;
+    border: 2px solid #EEC264;
+    background-color: white;
+    padding: 1rem;
+
+    .reminders {
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+
+        .reminder {
+            margin: .75rem 0;
+            display: flex;
+            align-items: center;
+
+            .checkbox {
+                margin-right: .75rem;
+                width: 24px;
+                height: 24px;
+                border: 2px solid #EEC264;
+                border-radius: 6px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .checked {
+                border-color: #26D7A4;
+            }
+
+            .reminder-text {
+                font-size: .875rem;
+                font-weight: 700;
+                color: #587594;
+            }
+        }
+    }
+}
