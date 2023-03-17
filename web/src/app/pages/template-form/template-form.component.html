@@ -82,7 +82,7 @@
             </div>
         </div>
         <div class="controls mb-5">
-            <button class="btn btn-primary" *ngIf="selectedSubjects?.length" [disabled]="!AreFormsValid() || loading" (click)="CreateNewProyect()">
+            <button class="btn btn-primary" *ngIf="selectedSubjects?.length" [disabled]="loading" (click)="CreateNewProyect()">
                 <span *ngIf="loading"><i class="zmdi zmdi-spinner zmdi-hc-lg zmdi-hc-spin"></i></span>
                 <span *ngIf="!loading">Continuar</span>
             </button>
