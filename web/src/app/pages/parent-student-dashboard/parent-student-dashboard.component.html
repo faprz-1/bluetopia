@@ -1,8 +1,8 @@
 <div class="content">
     <div class="d-flex flex-column align-items-center justify-content-center">
-        <div class="notification" *ngFor="let not of notifications">
+        <div class="notification" *ngFor="let not of notifications; let i = index">
             {{not.name}}
-            <img class="clickeable ml-3" src="assets/icons/close.png" alt="close.png">
+            <img class="clickeable ml-3" src="assets/icons/close.png" (click)="DeleteNotifications(i)" alt="close.png">
         </div>
     </div>
 
@@ -64,9 +64,12 @@
                         </div>
                         <app-files-slider class="flex-grow-1 ml-2"></app-files-slider>
                     </div>
+                    <div class="d-flex">
+                        <img src="assets/img/dashboard.png">
+                    </div>
                 </div>
                 <div class="dashboard-section right ml-2">
-                    <div class="card-section flex-grow-1 mr-2 mb-0">
+                    <div class="card-section flex-grow-1 mr-2 mb-0" *ngIf="user?.role?.name == 'Parent'">
                         <div class="d-flex align-items-center justify-content-center">
                             <img class="mr-2" src="assets/icons/cube.png" alt="cube.png">
                             <div class="section-title ml-2">Productos</div>
@@ -77,6 +80,26 @@
                             </button>
                         </div>
                         <app-products-slider class="flex-grow-1"></app-products-slider>
+                    </div>
+                    <div class="reminders-section mr-2 mb-0" *ngIf="user?.role?.name == 'Student'">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <div class="section-title ml-2">Recordatorios</div>
+                        </div>
+                        <div class="reminders">
+                            <div class="reminder" *ngFor="let reminder of reminders">
+                                <div class="checkbox clickeable" (click)="ToggleReminder(reminder)" [ngClass]="{'checked': reminder.checked}">
+                                    <img src="assets/icons/check.png" *ngIf="reminder.checked" alt="check">
+                                </div>
+                                <div class="reminder-text">
+                                    {{reminder.name}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center mt-3">
+                            <button class="btn btn-outline-primary px-5 mb-3">
+                                Ver mis recordatorios
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

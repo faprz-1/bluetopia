@@ -373,6 +373,7 @@ module.exports = function(app) {
 
     let cont = 0, limit = skills.length;
     skills.forEach(skill => {
+      skill.name = `${skill.name.charAt(0).toUpperCase()}${skill.name.slice(1).toLowerCase()}`;
       app.models.Skill.CreateOne(skill, (err, newSkill) => {
         if(err) throw err;
         if(++cont == limit) console.log("Skills seeded");
