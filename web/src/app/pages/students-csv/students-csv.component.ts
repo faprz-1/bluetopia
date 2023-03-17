@@ -152,7 +152,7 @@ export class StudentsCsvComponent implements OnInit {
         valid = false;
         logsMap.set(logsIds[3], {
           required: true,
-          message: 'Algunos estudiantes no tienen número registro'
+          message: 'Algunos estudiantes no tienen número de registro'
         });
       }
     });
