@@ -74,6 +74,8 @@ const LAYOUT_ROUTES: Routes = [
           { path: 'mis-maestros', loadChildren: () => import('../pages/teachers/teachers.module').then(m => m.TeachersModule) },
           { path: 'registrar-maestros/csv', loadChildren: () => import('../pages/teachers-csv/teachers-csv.module').then(m => m.TeachersCsvModule) },
           { path: 'mis-estrategias', loadChildren: () => import('../pages/strategies/strategies.module').then(m => m.StrategiesModule) },
+          { path: 'mis-estrategias/:strategyId/equipos', loadChildren: () => import('../pages/students-teams/students-teams.module').then(m => m.StudentsTeamsModule) },
+          { path: 'mis-estrategias/:strategyId/progreso-equipos', loadChildren: () => import('../pages/teams-progress/teams-progress.module').then(m => m.TeamsProgressModule) },
           { path: 'grado/:grade/grupo/:group/plantillas', loadChildren: () => import('../pages/templates/templates.module').then(m => m.TemplatesModule) },
           { path: 'grado/:grade/grupo/:group/tipo-plantillas/:templateTypeId', loadChildren: () => import('../pages/type-templates/type-templates.module').then(m => m.TypeTemplatesModule) },
           { path: 'grado/:grade/grupo/:group/plantillas/:templateId', loadChildren: () => import('../pages/template-form/template-form.module').then(m => m.TemplateFormModule) },

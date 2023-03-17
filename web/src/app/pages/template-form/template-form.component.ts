@@ -2,6 +2,7 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { NavigationService } from 'src/app/services/navigation.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-template-form',
@@ -27,7 +28,8 @@ export class TemplateFormComponent implements OnInit {
     private api: ApiService,
     private activatedRoute: ActivatedRoute,
     public nav: NavigationService,
-    private zone: NgZone
+    private zone: NgZone,
+    private toast: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -116,6 +118,10 @@ export class TemplateFormComponent implements OnInit {
   }
 
   CreateNewProyect() {
+    if(!this.AreFormsValid()) {
+      this.toast.ShowWarning(`Favor de seleccionar objetivos y competencias para todas las materias`);
+      return;
+    }
     this.loading = true;
     let strategy = {
       subjects: this.selectedSubjects,
