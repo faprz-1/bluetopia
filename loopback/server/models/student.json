@@ -11,12 +11,10 @@
       "required": true
     },
     "fatherLastname": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "motherLastname": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "registerNumber": {
       "type": "string",
