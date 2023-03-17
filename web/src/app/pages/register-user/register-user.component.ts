@@ -35,15 +35,13 @@ export class RegisterUserComponent implements OnInit {
     schoolPhone: new FormControl(null, [ValidationService.CheckOnlyIntegerNumbers]),
   });
   passwordForgotten: boolean = false;
-  public procesando: boolean = false;
-  procesandoEmail: boolean = false;
   email = '';
   pin: string = '';
   newPassword: string = '';
-  changuePass: boolean = false;
-  tryPin: boolean = false;
   successUpdate: boolean = false;
-
+  loading: boolean = false;;
+  step: number = 0;
+  pattern = new RegExp ('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$');
 
   constructor(
     private navigation: NavigationService,
@@ -154,38 +152,44 @@ export class RegisterUserComponent implements OnInit {
     });
   }
 
-  SendEmail(email:any){
-    this.email = email.emailtoRecover;
-    this.procesandoEmail = true;
+  SendEmail(){
+    this.loading = true;
+    this.step = 1;
     this.api.Post('/PasswordResetPINs/createAndSend', { email: this.email }, false).subscribe(
       (msg: any) => {
         if (msg.msg == 'notRegistered') {
           this.toast.ShowError('Usuario no registrado');
-          this.procesando = false;
+          this.step = 0;
         } else {
           this.toast.ShowSuccess('Se envio el correo correctamente');
-          this.tryPin = true;
+          this.step = 2;
         }
-        this.procesandoEmail = false;
+        this.loading = false;
       }, (err: any) => {
         this.toast.ShowError(err.err);
-        this.procesando = false;
-        this.tryPin = false;
-        this.procesandoEmail = false;
+        this.loading = false;
+        this.step=0;
       });
   }
 
   TryPIN() {
+    this.loading = true;
     this.api.Post('/PasswordResetPINs/consume', { pin: this.pin, email: this.email }, false).subscribe((msg: any) => {
       if (msg.msg == 'Pin incorrecto') {
         this.toast.ShowError('PIN incorrecto');
         this.pin = '';
+        this.step = 0;
+        this.loading = false;
       }
       else {
         this.toast.ShowSuccess('PIN correcto');
-        this.tryPin = false;
-        this.changuePass = true;
+        this.step = 3;
+        this.loading = false;
       }
+    }, (err: any) => {
+      this.toast.ShowError(err.err);
+      this.loading = false;
+      this.step=0;
     });
   }
 
@@ -195,14 +199,23 @@ export class RegisterUserComponent implements OnInit {
         if (res.msg == "usuario actualizado") {
           this.toast.ShowSuccess('Contraseña asignada correctamente');
           this.successUpdate = true;
-          this.passwordForgotten = false;
-          this.changuePass = false;
-          this.procesando = false;
+         this.loading = false;
+         this.step=0;
+         this.passwordForgotten= false;
+         this.email= "";
         }
         else {
           this.toast.ShowSuccess('Sucedio un Error');
+          this.loading = false;
+          this.step=0;
         }
       }
     )
+  }
+
+  GoBack(){
+    this.passwordForgotten=false;
+    this.step=0;
+    this.loading=false;
   }
 }
