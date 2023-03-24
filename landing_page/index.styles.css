@@ -231,10 +231,12 @@ body {
 }
 .header-img {
     margin-left: 21px;
+    cursor: pointer !important;
 }
 .header-img-small {
     height: 42px;
     margin-left: 10px;
+    cursor: pointer !important;
 }
 
 .social-media-container {
@@ -964,6 +966,10 @@ ng-select.form-control {
 }
 .animated-short {
     transition: all .1s ease-in-out;
+}
+.bottom-text{
+    position : absolute;
+bottom   : 0;
 }
 
 /* Responsivness */
