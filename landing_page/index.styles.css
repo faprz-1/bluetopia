@@ -231,10 +231,12 @@ body {
 }
 .header-img {
     margin-left: 21px;
+    cursor: pointer !important;
 }
 .header-img-small {
     height: 42px;
     margin-left: 10px;
+    cursor: pointer !important;
 }
 
 .social-media-container {
@@ -250,7 +252,7 @@ body {
 .menu-container {
     display: flex;
     align-items: center;
-    margin-right: 48px;
+    margin-right: 21px;
     max-width: 820px;
     width: 100%;
     justify-content: space-around;
@@ -918,7 +920,7 @@ ng-select.form-control {
     height: 380px;
     background-color: #1081FB;
     color: white;
-    padding: 50px 50px 0 21px;
+    padding: 50px 21px 0 21px;
 }
 .footer-content {
     width: 100%;
@@ -964,6 +966,10 @@ ng-select.form-control {
 }
 .animated-short {
     transition: all .1s ease-in-out;
+}
+.bottom-text{
+    position : absolute;
+bottom   : 0;
 }
 
 /* Responsivness */

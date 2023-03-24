@@ -10,7 +10,6 @@ const headerIds = [
 let fetureActive = null;
 let templateActive = null;
 let componentActive = null;
-
 function InitializeListeners() {
     window.addEventListener('scroll', () => {
         const currentScroll = window.pageYOffset;
@@ -18,20 +17,18 @@ function InitializeListeners() {
         const home = document.getElementById('home');
         const objectives = document.getElementById('objectives');
         const features = document.getElementById('features');
-        const functions = document.getElementById('functions');
         const contactUs = document.getElementById('contact-us');
         if(currentScroll > 0) {
             header.classList.add('header-small');
         }
         else header.classList.remove('header-small');
-        
+
         headerIds.forEach(id => {
             const element = document.getElementById(id);
             if(!!element) element.classList.remove('menu-option-active');
         });
 
         if(currentScroll >= (contactUs.offsetTop - 100)) document.getElementById('header-contact-us').classList.add('menu-option-active');
-        else if(currentScroll >= (functions.offsetTop - 100)) document.getElementById('header-functions').classList.add('menu-option-active');
         else if(currentScroll >= (features.offsetTop - 100)) document.getElementById('header-features').classList.add('menu-option-active');
         else if(currentScroll >= (objectives.offsetTop - 100)) document.getElementById('header-objectives').classList.add('menu-option-active');
         else if(currentScroll >= 0) document.getElementById('header-home').classList.add('menu-option-active');
@@ -55,9 +52,13 @@ function ScrollToElement(elementId) {
     const header = document.getElementById('header');
     const offset = 30;
     const element = document.getElementById(elementId);
+    let current = document.getElementsByClassName("menu-option-active");
+    let elementToActivate = document.getElementById(`header-${elementId}`);
+    current[0].classList.remove('menu-option-active');
+    elementToActivate.classList.add('menu-option-active');
     if(!element) return;
     let y = element.getBoundingClientRect().top + window.pageYOffset - (header.clientHeight + offset);
-    
+
     window.scrollTo({
         top: y,
         behavior: 'smooth'
