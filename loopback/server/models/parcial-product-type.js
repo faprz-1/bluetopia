@@ -19,7 +19,9 @@ module.exports = function(ParcialProductType) {
     }
     
     ParcialProductType.GetAll = function(callback) {
-        ParcialProductType.find({}, (err, parcialProductTypes) => {
+        ParcialProductType.find({
+            order: 'name ASC'
+        }, (err, parcialProductTypes) => {
             if(err) return callback(err);
 
             return callback(null, parcialProductTypes);

@@ -6,14 +6,12 @@
     "validateUpsert": true
   },
   "properties": {
-    "id": {
-      "type": "number",
-      "id": true,
-      "required": true
-    },
     "name": {
       "type": "string",
       "required": true
+    },
+    "type": {
+      "type": "string"
     }
   },
   "validations": [],
