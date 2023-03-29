@@ -226,28 +226,7 @@ module.exports = function(app) {
   }
 
   var seedParcialProductsTypes = function() {
-    const parcialProductTypes = [
-      {
-        id: 1,
-        name: "Reporte",
-      },
-      {
-        id: 2,
-        name: "Ensayo",
-      },
-      {
-        id: 3,
-        name: "Prototipo",
-      },
-      {
-        id: 4,
-        name: "Resumen",
-      },
-      {
-        id: 5,
-        name: "Presentación",
-      },
-    ];
+    let parcialProductTypes = require('./../helpers/parcialProducts.json');
 
     let cont = 0, limit = parcialProductTypes.length;
     parcialProductTypes.forEach(parcialProductType => {
@@ -409,16 +388,48 @@ module.exports = function(app) {
   var seedTeamRoles = function() {
     const teamRoles = [
       {
-        name: "Líder",
+        name: 'Director / Líder',
+        description: 'Es quien dirige el trabajo del equipo.',
       },
       {
-        name: "Creativo",
+        name: 'Secretario',
+        description: 'Es quien lleva el registro del avance, toma acuerdos y ayuda al buen funcionamiento.',
       },
       {
-        name: "Cronómetro",
+        name: 'Editor',
+        description: 'Es quien asegura la calidad del trabajo ayudando a cuidar los detalles y mejorar los productos.',
       },
       {
-        name: "Redactor",
+        name: 'Investigador / Detective',
+        description: 'Es quien busca información y consigue los datos necesarios para el trabajo.',
+      },
+      {
+        name: 'Creativo ',
+        description: 'Es quien busca nuevas soluciones, ideas alternativas y posibilidades insospechadas.',
+      },
+      {
+        name: 'Cronómetro / Reloj',
+        description: 'Es quien cuida el tiempo para terminar cuando es debido.',
+      },
+      {
+        name: 'Recursos / Almacén',
+        description: 'Es quien se asegura de tener el material y recursos necesarios para el trabajo.',
+      },
+      {
+        name: 'Revisor / Lupa',
+        description: 'Es quien busca errores, omisiones y detalles a mejorar antes de entregar el trabajo.',
+      },
+      {
+        name: 'Impulsor ',
+        description: 'Es quien anima al equipo y ayuda a que el equipo avance con buen ritmo.',
+      },
+      {
+        name: 'Especialista en',
+        description: 'Es quien cuidará una parte específica del trabajo, se nombra especialista en algo concreto.',
+      },
+      {
+        name: 'Redactor',
+        description: 'Es quien escribe cuidando especialmente la redacción y ortografía en los trabajos.',
       },
     ];
 

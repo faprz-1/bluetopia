@@ -18,8 +18,29 @@ module.exports = function(ParcialProductType) {
         });
     }
     
-    ParcialProductType.GetAll = function(callback) {
-        ParcialProductType.find({}, (err, parcialProductTypes) => {
+    ParcialProductType.CreateOneCustom = function(parcialProductType, callback) {
+        if(!parcialProductType.userId) return callback('custom product typehas to be of one user: userId not found');
+        parcialProductType.type = 'Mis tipos de producto';
+        ParcialProductType.findOrCreate({
+            where: {
+                name: {like: `%${parcialProductType.name}%`},
+                userId: parcialProductType.userId
+            }
+        }, parcialProductType, (err, parcialProductType) => {
+            if(err) return callback(err);
+            
+            return callback(null, parcialProductType);
+        });
+    }
+    
+    ParcialProductType.GetAll = function(ctx, callback) {
+        const userId = ctx.accessToken.userId;
+        ParcialProductType.find({
+            where: {
+                or: [{userId: null}, {userId}]
+            },
+            order: 'name ASC'
+        }, (err, parcialProductTypes) => {
             if(err) return callback(err);
 
             return callback(null, parcialProductTypes);
