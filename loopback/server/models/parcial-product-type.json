@@ -15,7 +15,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "user": {
+      "type": "belongsTo",
+      "model": "Usuario",
+      "foreignKey": "userId"
+    }
+  },
   "acls": [
     {
       "accessType": "EXECUTE",
@@ -35,7 +41,17 @@
   ],
   "methods": {
     "GetAll": {
-      "accepts": [],
+      "accepts": [
+        {
+          "arg": "ctx",
+          "type": "object",
+          "required": true,
+          "description": "",
+          "http": {
+            "source": "req"
+          }
+        }
+      ],
       "returns": [
         {
           "arg": "parcialProductTypes",

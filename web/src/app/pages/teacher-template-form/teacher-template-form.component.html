@@ -1,6 +1,5 @@
 <div class="content">
     <div class="row-header">
-
     </div>
 
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -91,6 +90,13 @@
                                         placeholder="Tipos de productos"
                                         formControlName="parcialProductTypeId">
                                     </ng-select>
+                                </div>
+                            </div>
+                            <div class="text" *ngIf="parcialProductForm.get('parcialProductTypeId')?.value == 0">
+                                <label>Escribe tu tipo de producto</label>
+                                <div class="input-container">
+                                    <input class="form-control no-icon w-100" type="text" placeholder="Tipo de prducto" formControlName="customName">
+                                    <app-control-messages [control]="parcialProductForm.get('customName')"></app-control-messages>
                                 </div>
                             </div>
 
