@@ -36,7 +36,7 @@ export class TeacherTemplateFormComponent implements OnInit {
   parcialProductForm: FormGroup = new FormGroup({
     parcialProductTypeId: new FormControl(null, [Validators.required]),
     name: new FormControl(null, [Validators.required]),
-    customName: new FormControl(null, []),
+    customParcialProductTypeName: new FormControl(null, []),
     instructions: new FormControl(null, [Validators.required]),
     rubric: new FormControl(null, [Validators.required]),
   });
@@ -103,17 +103,17 @@ export class TeacherTemplateFormComponent implements OnInit {
   }
 
   OnParcialProdutcTypeSelected(parcialProductType: any) {
-    const custonName = this.parcialProductForm.get('custonName');
+    const customParcialProductTypeName = this.parcialProductForm.get('customParcialProductTypeName');
     if(!!parcialProductType) {
-      if(typeof parcialProductType === 'string' && parcialProductType == this.NEW_TOPIC_NAME) custonName?.setValidators([Validators.required]);
-      else if(typeof parcialProductType === 'object' && parcialProductType.name == this.NEW_TOPIC_NAME) custonName?.setValidators([Validators.required]);
+      if(typeof parcialProductType === 'string' && parcialProductType == this.NEW_TOPIC_NAME) customParcialProductTypeName?.setValidators([Validators.required]);
+      else if(typeof parcialProductType === 'object' && parcialProductType.name == this.NEW_TOPIC_NAME) customParcialProductTypeName?.setValidators([Validators.required]);
       else {
-        custonName?.setValue(null);
-        custonName?.clearValidators();
-        custonName?.markAsUntouched();
+        customParcialProductTypeName?.setValue(null);
+        customParcialProductTypeName?.clearValidators();
+        customParcialProductTypeName?.markAsUntouched();
       }
     }
-    else custonName?.clearValidators();
+    else customParcialProductTypeName?.clearValidators();
   }
 
   NextStep(template: any, advanceStep: boolean = true) {
@@ -165,11 +165,11 @@ export class TeacherTemplateFormComponent implements OnInit {
 
   GetParcialProductTypes() {
     this.api.Get(`/ParcialProductTypes`).subscribe(types => {
-      // types.unshift({
-      //   id: 0,
-      //   name: this.NEW_TOPIC_NAME,
-      //   // type: 'Agregar'
-      // });
+      types.unshift({
+        id: 0,
+        name: this.NEW_TOPIC_NAME,
+        // type: 'Agregar'
+      });
       this.parcialProductTypes = types;
     }, err => {
       console.error("Error getting parcial product types", err);

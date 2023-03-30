@@ -60,6 +60,14 @@
     "CreateOne": {
       "accepts": [
         {
+          "arg": "ctx",
+          "type": "object",
+          "required": true,
+          "http": {
+            "source": "req"
+          }
+        },
+        {
           "arg": "parcialProduct",
           "type": "object",
           "required": true,
