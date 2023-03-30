@@ -17,18 +17,13 @@ module.exports = function(ParcialProductType) {
             });
         });
     }
-    
-    ParcialProductType.CreateOneCustom = function(parcialProductType, callback) {
-        if(!parcialProductType.userId) return callback('custom product typehas to be of one user: userId not found');
-        parcialProductType.type = 'Mis tipos de producto';
+
+    ParcialProductType.GetOrCreateOne = function(parcialProductTypeId, parcialProductType, callback) {
         ParcialProductType.findOrCreate({
-            where: {
-                name: {like: `%${parcialProductType.name}%`},
-                userId: parcialProductType.userId
-            }
+            where: {id: parcialProductTypeId}
         }, parcialProductType, (err, parcialProductType) => {
             if(err) return callback(err);
-            
+
             return callback(null, parcialProductType);
         });
     }
@@ -37,7 +32,7 @@ module.exports = function(ParcialProductType) {
         const userId = ctx.accessToken.userId;
         ParcialProductType.find({
             where: {
-                or: [{userId: null}, {userId}]
+                or: [{userId: null}, {userId: userId}]
             },
             order: 'name ASC'
         }, (err, parcialProductTypes) => {
