@@ -36,6 +36,7 @@ export class TeacherTemplateFormComponent implements OnInit {
   parcialProductForm: FormGroup = new FormGroup({
     parcialProductTypeId: new FormControl(null, [Validators.required]),
     name: new FormControl(null, [Validators.required]),
+    customParcialProductTypeName: new FormControl(null, []),
     instructions: new FormControl(null, [Validators.required]),
     rubric: new FormControl(null, [Validators.required]),
   });
@@ -101,6 +102,20 @@ export class TeacherTemplateFormComponent implements OnInit {
     else customTopic?.clearValidators();
   }
 
+  OnParcialProdutcTypeSelected(parcialProductType: any) {
+    const customParcialProductTypeName = this.parcialProductForm.get('customParcialProductTypeName');
+    if(!!parcialProductType) {
+      if(typeof parcialProductType === 'string' && parcialProductType == this.NEW_TOPIC_NAME) customParcialProductTypeName?.setValidators([Validators.required]);
+      else if(typeof parcialProductType === 'object' && parcialProductType.name == this.NEW_TOPIC_NAME) customParcialProductTypeName?.setValidators([Validators.required]);
+      else {
+        customParcialProductTypeName?.setValue(null);
+        customParcialProductTypeName?.clearValidators();
+        customParcialProductTypeName?.markAsUntouched();
+      }
+    }
+    else customParcialProductTypeName?.clearValidators();
+  }
+
   NextStep(template: any, advanceStep: boolean = true) {
     this.Save().then(saved => {
       this.onReset.emit();
@@ -139,7 +154,7 @@ export class TeacherTemplateFormComponent implements OnInit {
   GetTemplateTopics() {
     this.api.Get(`/TemplateTopics`).subscribe(topics => {
       this.templateTopics = topics;
-      this.templateTopics.push({
+      this.templateTopics.unshift({
         id: 0,
         name: this.NEW_TOPIC_NAME,
       });
@@ -150,6 +165,11 @@ export class TeacherTemplateFormComponent implements OnInit {
 
   GetParcialProductTypes() {
     this.api.Get(`/ParcialProductTypes`).subscribe(types => {
+      types.unshift({
+        id: 0,
+        name: this.NEW_TOPIC_NAME,
+        // type: 'Agregar'
+      });
       this.parcialProductTypes = types;
     }, err => {
       console.error("Error getting parcial product types", err);

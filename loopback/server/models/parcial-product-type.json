@@ -6,18 +6,22 @@
     "validateUpsert": true
   },
   "properties": {
-    "id": {
-      "type": "number",
-      "id": true,
-      "required": true
-    },
     "name": {
       "type": "string",
       "required": true
+    },
+    "type": {
+      "type": "string"
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "user": {
+      "type": "belongsTo",
+      "model": "Usuario",
+      "foreignKey": "userId"
+    }
+  },
   "acls": [
     {
       "accessType": "EXECUTE",
@@ -37,7 +41,17 @@
   ],
   "methods": {
     "GetAll": {
-      "accepts": [],
+      "accepts": [
+        {
+          "arg": "ctx",
+          "type": "object",
+          "required": true,
+          "description": "",
+          "http": {
+            "source": "req"
+          }
+        }
+      ],
       "returns": [
         {
           "arg": "parcialProductTypes",

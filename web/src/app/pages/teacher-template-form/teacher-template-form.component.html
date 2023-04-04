@@ -1,6 +1,5 @@
 <div class="content">
     <div class="row-header">
-
     </div>
 
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -84,12 +83,20 @@
                                     <ng-select
                                         class="form-control with-border"
                                         [items]="parcialProductTypes"
+                                        groupBy="type"
                                         bindLabel="name"
                                         bindValue="id"
                                         [multiple]="false"
                                         placeholder="Tipos de productos"
                                         formControlName="parcialProductTypeId">
                                     </ng-select>
+                                </div>
+                            </div>
+                            <div class="text" *ngIf="parcialProductForm.get('parcialProductTypeId')?.value == 0">
+                                <label>Escribe tu tipo de producto</label>
+                                <div class="input-container">
+                                    <input class="form-control no-icon w-100" type="text" placeholder="Tipo de prducto" formControlName="customParcialProductTypeName">
+                                    <app-control-messages [control]="parcialProductForm.get('customParcialProductTypeName')"></app-control-messages>
                                 </div>
                             </div>
 
@@ -130,6 +137,7 @@
                                     <ng-select
                                         class="form-control with-border"
                                         [items]="parcialProductTypes"
+                                        groupBy="type"
                                         bindLabel="name"
                                         bindValue="id"
                                         [multiple]="false"
