@@ -19,7 +19,7 @@
 
         <ul class="navigation">
           <li routerLinkActive="navigation__active" *ngFor="let link of activeUserPages">
-          <a [routerLink]="['/'+link.action]"><i [class]="link.icon"></i> {{link.name}}</a></li>
+          <a [routerLink]="['/'+link.action]" (click)="toggleSidebarVisibility()"><i [class]="link.icon"></i> {{link.name}}</a></li>
         </ul>
 
     </perfect-scrollbar>

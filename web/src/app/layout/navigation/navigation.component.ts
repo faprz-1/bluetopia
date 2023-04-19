@@ -92,4 +92,8 @@ export class NavigationComponent implements OnInit {
     this.router.navigate([link]);
     this.sharedService.toggleSidebarVisibilty();
   }
+
+  toggleSidebarVisibility() {
+    this.sharedService.toggleSidebarVisibilty()
+  }
 }

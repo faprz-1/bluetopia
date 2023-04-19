@@ -14,7 +14,7 @@ export class StrategiesComponent implements OnInit {
 
   constructor(
     private api: ApiService,
-    private nav: NavigationService
+    public nav: NavigationService
   ) { }
 
   ngOnInit(): void {

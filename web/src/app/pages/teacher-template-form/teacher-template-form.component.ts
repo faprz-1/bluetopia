@@ -17,6 +17,8 @@ export class TeacherTemplateFormComponent implements OnInit {
   group: any;
   templateId: any;
   strategyId: any;
+  strategy: any = null;
+  loading: boolean = false;
 
   constructor(
     private api: ApiService,
@@ -32,10 +34,20 @@ export class TeacherTemplateFormComponent implements OnInit {
 
   GetParams() {
     this.activatedRoute.params.subscribe(params => {
-      this.grade = params['grade'];
-      this.group = params['group'];
-      this.templateId = params['templateId'];
       this.strategyId = params['strategyId'];
+      this.GetStrategy();
+    });
+  }
+
+  GetStrategy() {
+    this.loading = true;
+    this.api.Get(`/Strategies/${this.strategyId}`).subscribe(strategy => {
+      this.strategy = strategy;
+      this.templateId = strategy.templateId;
+      this.loading = false;
+    }, err => {
+      console.error("Error getting strategy", err);
+      this.loading = false;
     });
   }
 

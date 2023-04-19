@@ -49,7 +49,7 @@ export class TemplateProyectBasedOnFormComponent implements OnInit {
     rubric: new FormControl(null, [Validators.required]),
   });
 
-  step: number = 2;
+  step: number = 1;
 
   public get nextButtonText() {
     switch (this.step) {
@@ -86,7 +86,7 @@ export class TemplateProyectBasedOnFormComponent implements OnInit {
   }
 
   GoBack() {
-    if(this.step == 1) this.nav.GoToUserRoute(`grado/${this.grade}/grupo/${this.group}/plantillas/${this.templateId}`);
+    if(this.step == 1) this.nav.GoToUserRoute(`estrategias/${this.strategyId}/materias`);
     else this.step--;
   }
 
