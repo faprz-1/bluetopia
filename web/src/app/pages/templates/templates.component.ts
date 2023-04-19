@@ -64,7 +64,9 @@ export class TemplatesComponent implements OnInit {
     this.CloseModal();
     let strategy = {
       templateId: template.id,
-      userId: this.api.GetUser()?.id
+      userId: this.api.GetUser()?.id,
+      grade: !!this.grade ? this.grade : null,
+      group: !!this.group ? this.group : null,
     }
     this.api.Post(`/Strategies`, {strategy}).subscribe(newStrategy => {
       let route = `estrategias/${newStrategy.id}/materias`;
