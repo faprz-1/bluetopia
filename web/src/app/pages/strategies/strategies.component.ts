@@ -50,7 +50,7 @@ export class StrategiesComponent implements OnInit {
   }
 
   GoToCalendar(strategy: any) {
-    this.nav.GoToUserRoute(`grado/${strategy.strategyGroup.grade.name}/grupo/${strategy.strategyGroup.group.name}/plantillas/${strategy.templateId}/estrategias/${strategy.id}/calendario`)
+    this.nav.GoToUserRoute(`estrategias/${strategy.id}/calendario`)
   }
 
 }
