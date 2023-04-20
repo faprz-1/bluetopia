@@ -299,7 +299,7 @@ export class TemplateProyectBasedOnFormComponent implements OnInit {
 
   GoToProjectCalendar() {
     this.CloseModal();
-    this.nav.GoToUserRoute(`grado/${this.grade}/grupo/${this.group}/plantillas/${this.templateId}/estrategias/${this.strategyId}/calendario`);
+    this.nav.GoToUserRoute(`estrategias/${this.strategyId}/calendario`);
   }
 
 }
