@@ -20,15 +20,18 @@ module.exports = function(Strategy) {
                 Strategy.create(strategy, (err, newStrategy) => {
                     if(err) return callback(err);
 
-                    Strategy.app.models.StrategyGroup.create({
-                        strategyId: newStrategy.id,
-                        gradeId: grade.id,
-                        groupId: group.id,
-                    }, (err, newStrategyGroup) => {
-                        if(err) return callback(err);
-
-                        return callback(null, newStrategy);
-                    });
+                    if(!!strategy.grade && !!grade) {
+                        Strategy.app.models.StrategyGroup.create({
+                            strategyId: newStrategy.id,
+                            gradeId: grade.id,
+                            groupId: group.id,
+                        }, (err, newStrategyGroup) => {
+                            if(err) return callback(err);
+    
+                            return callback(null, newStrategy);
+                        });
+                    }
+                    else return callback(null, newStrategy);
                 });
             });
         });

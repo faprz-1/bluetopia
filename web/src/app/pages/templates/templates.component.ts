@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ApiService } from 'src/app/services/api.service';
 import { NavigationService } from 'src/app/services/navigation.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-templates',
@@ -22,6 +23,7 @@ export class TemplatesComponent implements OnInit {
     private nav: NavigationService,
     private modalService: BsModalService,
     private activatedRoute: ActivatedRoute,
+    private toast: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -53,12 +55,26 @@ export class TemplatesComponent implements OnInit {
   }
 
   SeeAllTemplatesOfType(templateType: any) {
-    this.nav.GoToUserRoute(`grado/${this.grade}/grupo/${this.group}/tipo-plantillas/${templateType.id}`);
+    let route = `tipo-plantillas/${templateType.id}`;
+    if(!!this.grade && !!this.group) route = `grado/${this.grade}/grupo/${this.group}/${route}`;
+    this.nav.GoToUserRoute(route);
   }
   
   CreateStrategyBasedOnTemplate(template: any) {
     this.CloseModal();
-    this.nav.GoToUserRoute(`grado/${this.grade}/grupo/${this.group}/plantillas/${template.id}`);
+    let strategy = {
+      templateId: template.id,
+      userId: this.api.GetUser()?.id,
+      grade: !!this.grade ? this.grade : null,
+      group: !!this.group ? this.group : null,
+    }
+    this.api.Post(`/Strategies`, {strategy}).subscribe(newStrategy => {
+      let route = `estrategias/${newStrategy.id}/materias`;
+      this.nav.GoToUserRoute(route);
+    }, err => {
+      console.error("Error creating strategy", err);
+      this.toast.ShowError(`Error al crear la estrategia`);
+    });
   }
 
 }

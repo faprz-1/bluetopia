@@ -13,9 +13,6 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class EventDayComponent implements OnInit {
 
-  grade: any;
-  group: any;
-  templateId: any;
   strategyId: any;
   eventDate: any;
 
@@ -50,9 +47,6 @@ export class EventDayComponent implements OnInit {
 
   GetParams() {
     this.activatedRoute.params.subscribe(params => {
-      this.grade = params['grade'];
-      this.group = params['group'];
-      this.templateId = params['templateId'];
       this.strategyId = params['strategyId'];
       this.eventDate = params['eventDate'];
       
@@ -63,7 +57,7 @@ export class EventDayComponent implements OnInit {
   }
 
   GoBack() {
-    this.nav.GoToUserRoute(`grado/${this.grade}/grupo/${this.group}/plantillas/${this.templateId}/estrategias/${this.strategyId}/calendario`);
+    this.nav.GoToUserRoute(`estrategias/${this.strategyId}/calendario`);
   }
 
   GetStrategyTeacherActivities() {
