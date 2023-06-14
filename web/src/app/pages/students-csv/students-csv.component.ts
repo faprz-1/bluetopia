@@ -13,7 +13,7 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class StudentsCsvComponent implements OnInit {
 
-  @ViewChild('studentsAlertModal') studentsAlertModal?: ModalDirective;
+  @ViewChild('confirmationModal') confirmationModal?: ModalDirective;
   areStudentsValid: boolean = true;
 
   dataConversions: Array<any> = [
@@ -116,7 +116,7 @@ export class StudentsCsvComponent implements OnInit {
     this.api.Post(`/Students/Array`, {students: this.students}).subscribe((newStudents: any) => {
       this.toast.ShowSuccess(`${newStudents.length} Estudiantes agregados correctamente`);
       this.loading.uploading = false;
-      this.studentsAlertModal?.show();
+      this.confirmationModal?.show();
     }, err => {
       this.toast.ShowError(`Error al subir a los estudiantes`);
       console.error("Error at uploading students", err);

@@ -14,6 +14,7 @@ import { ToastService } from 'src/app/services/toast.service';
 export class TeachersCsvComponent implements OnInit {
 
   @ViewChild('verifyTeachersDataModal') verifyTeachersDataModal?: ModalDirective;
+  @ViewChild('confirmationModal') confirmationModal?: ModalDirective;
 
   step: number = 1;
   dataConversions: Array<any> = [
@@ -102,6 +103,7 @@ export class TeachersCsvComponent implements OnInit {
       this.toast.ShowSuccess(`Maestros agregados correctamente: ${newTeachers.length}`);
       this.loading.uploading = false;
       this.verifyTeachersDataModal?.hide();
+      this.confirmationModal?.show();
     }, err => {
       console.error("Error at uploading teachers", err);
       this.loading.uploading = false;

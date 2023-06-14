@@ -71,21 +71,20 @@
     </div>
 </div>
 
-<div class="modal fade" bsModal #studentsAlertModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
-    tabindex="-1" role="dialog" aria-labelledby="studentsAlertModal">
+<div class="modal fade" bsModal #confirmationModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
+    tabindex="-1" role="dialog" aria-labelledby="first-time-configuration">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-body">
-                <div class="text text-center">
-                    Ha finalizado por ahora tu registro de grupos, podrás agregar grupos más tarde
+            <div class="modal-body confirmation-modal">
+                <img class="my-5" src="assets/icons/check-circle-md.png" alt="check.png">
+
+                <div class="modal-text mb-4">
+                    Ha finalizado por ahora tu registro de grupos, podrás agregar grupos más tarde.
                 </div>
-                <div class="text-center">
-                    <img src="assets/img/teacher-celebrating.png" alt="finished">
-                </div>
-            </div>
-            <div class="modal-footer justify-content-center">
-                <button class="btn btn-primary modal-btn"
-                (click)="studentsAlertModal.hide(); nav.GoToUserRoute('mis-estudiantes')">
+
+
+                <button class="btn btn-primary" [disabled]="loading.uploading"
+                (click)="confirmationModal.hide(); nav.GoToUserRoute('mis-estudiantes')">
                     Continuar
                 </button>
             </div>

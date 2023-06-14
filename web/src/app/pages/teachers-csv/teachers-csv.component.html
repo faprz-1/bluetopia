@@ -54,6 +54,25 @@
     </div>
 </div>
 
+<div class="modal fade" bsModal #confirmationModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
+    tabindex="-1" role="dialog" aria-labelledby="first-time-configuration">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body confirmation-modal">
+                <div class="modal-text">
+                    Han quedado registrados tus docentes, si te hizo falta alguno, no te preocupes más tarde podrás agregarle.
+                </div>
+
+                <img class="my-5" src="assets/icons/check-circle-md.png" alt="check.png">
+
+                <button class="btn btn-primary" [disabled]="loading.uploading"
+                (click)="confirmationModal.hide(); teachersCsv.value = ''">
+                    Continuar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" bsModal #verifyTeachersDataModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
     tabindex="-1" role="dialog" aria-labelledby="first-time-configuration">
     <div class="modal-dialog modal-lg">
