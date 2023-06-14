@@ -74,10 +74,16 @@
     
                 <div class="flex-files-container">
                     <div class="flex-files">
-                        <div class="flex-icons">
+                        <div class="flex-icons" *ngIf="!GetFiles('new').length">
                             <img src="assets/icons/video-recorder.png" alt="video">
                             <img src="assets/icons/gallery.png" alt="video">
                             <img src="assets/icons/book-closed-green.png" alt="video">
+                        </div>
+                        <div class="flex-resources" *ngIf="!!GetFiles('new').length">
+                            <div class="resource" *ngFor="let file of GetFiles('new')">
+                                <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
+                                {{file.name}}
+                            </div>
                         </div>
                         <input class="d-none" type="file" #fileInput multiple (change)="OnFileSelected($event)">
                         <button class="btn btn-success btn-block" (click)="fileInput.click()">
@@ -86,12 +92,18 @@
                     </div>
     
                     <div class="flex-files mr-0">
-                        <div class="flex-icons">
+                        <div class="flex-icons" *ngIf="!GetFiles('old').length">
                             <img src="assets/icons/library.png" alt="video">
                             <img src="assets/icons/movie.png" alt="video">
                             <img src="assets/icons/microscope.png" alt="video">
                         </div>
-                        <button class="btn btn-success btn-block">
+                        <div class="flex-resources" *ngIf="!!GetFiles('old').length">
+                            <div class="resource" *ngFor="let file of GetFiles('old')">
+                                <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
+                                {{file.name}}
+                            </div>
+                        </div>
+                        <button class="btn btn-success btn-block" (click)="libraryModal.OpenModal()">
                             Adjuntar de la biblioteca
                         </button>
                     </div>
@@ -105,5 +117,9 @@
             </button>
         </div>
     </div>
-
 </div>
+
+<app-library-file-selector-modal
+    #libraryModal
+    (onFilesSelectd)="OnLibraryFilesSelected($event)"
+></app-library-file-selector-modal>

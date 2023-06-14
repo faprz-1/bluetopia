@@ -1,26 +1,31 @@
 <div class="content">
     <div class="row mb-5">
-        <div class="col-12 d-flex h-100 align-items-center header-col">
+        <div class="col-12 d-flex h-100 align-items-center justify-content-between header-col">
             <div class="page-title">
                 Mis estrategias
             </div>
+
+            <button class="btn btn-success" (click)="nav.GoToUserRoute('plantillas')">
+                <i class="zmdi zmdi-plus-circle-o zmdi-hc-lg mr-2"></i>
+                Agregar
+            </button>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-12 col-md-6 col-lg-4" *ngFor="let strategy of strategies">
-            <div class="card">
+    <div class="row" *ngIf="!!strategies.length; else noStrategies">
+        <div class="col-12 col-md-6 col-lg-4 mb-1" *ngFor="let strategy of strategies">
+            <div class="card py-3 px-2">
                 <div class="card-header">
                     <h2 class="card-title">{{strategy.topic}}</h2>
                 </div>
                 <div class="card-body">
                     <div class="info">
-                        <label>Titulo</label>
+                        <label>Título</label>
                         <div class="text">{{strategy.title}}</div>
                     </div>
                     <div class="info">
                         <label>Pregunta generadora</label>
-                        <div class="text">{{strategy.title}}</div>
+                        <div class="text">{{strategy.generatingQuestion}}</div>
                     </div>
                     <div class="info">
                         <label>Plantilla</label>
@@ -37,11 +42,31 @@
                     <div class="info">
                         <label>Grupo</label>
                         <div class="text">
-                            <div class="text text-uppercase">{{strategy.strategyGroups?.grade?.name}}{{strategy.strategyGroups?.group?.name}}</div>
+                            <div class="text text-uppercase">{{strategy.strategyGroup?.grade?.name}}{{strategy.strategyGroup?.group?.name}}</div>
                         </div>
+                    </div>
+                    <div class="flex-column align-items-center justify-content-between mt-3">
+                        <button class="btn btn-outline-success btn-block" *ngIf="!strategy.teams?.length" (click)="GoToTeams(strategy)">
+                            Editar
+                        </button>
+                        <button class="btn btn-primary btn-block" *ngIf="!strategy.teams?.length" (click)="GoToTeams(strategy)">
+                            Equipos
+                        </button>
+                        <button class="btn btn-primary btn-block" *ngIf="!!strategy.teams?.length" (click)="GoToTeamsProgress(strategy)">
+                            Progreso de equpos
+                        </button>
+                        <button class="btn btn-outline-primary btn-block" (click)="GoToCalendar(strategy)">
+                            Calendario
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<ng-template #noStrategies>
+    <div class="text-center no-items-message">
+        No tiene estrategias creadas, diseñe una nueva estrategia para un grupo en la sección de "Mis estudiantes"
+    </div>
+</ng-template>

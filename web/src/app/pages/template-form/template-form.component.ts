@@ -2,6 +2,7 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { NavigationService } from 'src/app/services/navigation.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-template-form',
@@ -12,11 +13,15 @@ export class TemplateFormComponent implements OnInit {
 
   grade: any;
   group: any;
-  templateId: any;
+  strategyId: any;
+  strategy: any = null;
   user: any;
 
   selectedTab: any = null;
-  loading: boolean = false;
+  loading: any = {
+    getting: false,
+    saving: false
+  };
 
   teacherSubjects: Array<any> = [];
   selectedSubjects: Array<any> = [];
@@ -27,27 +32,29 @@ export class TemplateFormComponent implements OnInit {
     private api: ApiService,
     private activatedRoute: ActivatedRoute,
     public nav: NavigationService,
-    private zone: NgZone
+    private zone: NgZone,
+    private toast: ToastService
   ) { }
 
   ngOnInit(): void {
     this.user = this.api.GetUser();
     this.GetParams();
+    this.GetTeacherSubjects();
+    this.GetSepObjectives();
+    this.GetSkills();
   }
 
   GoBack() {
-    this.nav.GoToUserRoute(`grado/${this.grade}/grupo/${this.group}/plantillas`);
+    let route = `plantillas`;
+    if(!!this.grade && !!this.group) route = `grado/${this.grade}/grupo/${this.group}/${route}`;
+    this.nav.GoToUserRoute(route);
   }
 
   GetParams() {
     this.activatedRoute.params.subscribe(params => {
-      this.grade = params['grade'];
-      this.group = params['group'];
-      this.templateId = params['templateId'];
+      this.strategyId = params['strategyId'];
 
-      this.GetTeacherSubjects();
-      this.GetSepObjectives();
-      this.GetSkills();
+      this.GetStrategy();
     });
   }
 
@@ -75,6 +82,42 @@ export class TemplateFormComponent implements OnInit {
     });
   }
 
+  GetStrategy() {
+    this.loading.getting = true;
+    this.api.Get(`/Strategies/${this.strategyId}`).subscribe(strategy => {
+      this.strategy = strategy;
+      if(strategy && strategy.subjects) {
+        this.selectedSubjects = strategy.subjects;
+        this.selectedTab = this.selectedSubjects[0];
+      }
+      this.loading.getting = false;
+      console.log(strategy);
+    }, err => {
+      console.error("Error getting strategy", err);
+      this.loading.getting = false;
+    });
+  }
+
+  SaveStragey() {
+    if(!this.AreFormsValid()) {
+      this.toast.ShowWarning(`Favor de seleccionar objetivos y competencias para todas las materias`);
+      return;
+    }
+
+    this.loading.saving = true;
+    let strategy = {
+      id: this.strategyId,
+      subjects: this.selectedSubjects,
+    }
+    this.api.Patch(`/Strategies/${this.strategyId}`, {strategy}).subscribe(strategySaved => {
+      this.nav.GoToUserRoute(`estrategias/${this.strategyId}`);
+      this.loading.saving = false;
+    }, err => {
+      console.error("Error updating strategy", err);
+      this.loading.saving = false;
+    });
+  }
+
   OnSelectedSubjectsChange(subject: any) {
     if(!!subject) {
       this.selectedSubjects.push(subject);
@@ -91,8 +134,10 @@ export class TemplateFormComponent implements OnInit {
 
   OnSkillSelected(subject: any, skill: any) {
     if(!!skill) {
-      if(!!subject.skills && Array.isArray(subject.skills)) subject.skills.push(skill);
-      else subject.skills = [skill];
+      this.selectedSubjects.forEach(subject => {
+        if(!!subject.skills && Array.isArray(subject.skills)) subject.skills.push(skill);
+        else subject.skills = [skill];
+      });
     }
   }
 
@@ -112,24 +157,6 @@ export class TemplateFormComponent implements OnInit {
   RemoveItemFromArray(array: Array<any>, idx: number) {
     this.zone.run(() => {
       array.splice(idx, 1);
-    });
-  }
-
-  CreateNewProyect() {
-    this.loading = true;
-    let strategy = {
-      subjects: this.selectedSubjects,
-      templateId: this.templateId,
-      userId: this.user.id,
-      grade: this.grade,
-      group: this.group,
-    }
-    this.api.Post(`/Strategies`, {strategy}).subscribe(newStrategy => {
-      this.nav.GoToUserRoute(`grado/${this.grade}/grupo/${this.group}/plantillas/${this.templateId}/estrategias/${newStrategy.id}`);
-      this.loading = false;
-    }, err => {
-      console.error("Error creating new project", err);
-      this.loading = false;
     });
   }
 

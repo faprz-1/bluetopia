@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment-timezone';
 import { ApiService } from 'src/app/services/api.service';
 import { NavigationService } from 'src/app/services/navigation.service';
@@ -47,7 +48,7 @@ export class EventCalendarComponent implements OnInit {
   ]
   year: number = moment().get('year');
   currentMonth: number = moment().get('month');
-  monthEvents: Array<any> = [];
+  events: Array<any> = [];
   month: Array<any> = [];
 
   public get previousMonth() {
@@ -63,14 +64,32 @@ export class EventCalendarComponent implements OnInit {
 
   constructor(
     private api: ApiService,
-    private nav: NavigationService
+    private nav: NavigationService,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    this.GetParams();
+    moment.locale('es');
     this.PopulateMonth(this.currentMonth);
   }
 
+  GetParams() {
+    this.activatedRoute.params.subscribe(params => {
+      this.strategyId = params['strategyId'];
+      this.GetStrategyEvents();
+    })
+  }
+
   PopulateMonth(month: number) {
+    if(month == -1) {
+      month = this.currentMonth = 11;
+      this.year--;
+    }
+    else if(month == 12) {
+      month = this.currentMonth = 0;
+      this.year++;
+    }
     const days = moment().month(month).daysInMonth();
     let currentDay = 1;
     let yesterday = currentDay;
@@ -91,12 +110,13 @@ export class EventCalendarComponent implements OnInit {
     if(!!newWeek[0].day) this.month.push(newWeek);
   }
 
-  GetMonthEvents() {
-    this.api.Get(`/Events/OfMonth/${this.currentMonth+1}`).subscribe(events => {
-      this.monthEvents = events;
+  GetStrategyEvents() {
+    this.api.Get(`/Events/OfStrategy/${this.strategyId}`).subscribe(events => {
+      console.log(events);
+      this.events = events;
     }, err => {
       console.error("Erro getting month events", err);
-    })
+    });
   }
   
   FormatDay(day: number | string) {
@@ -110,7 +130,22 @@ export class EventCalendarComponent implements OnInit {
   
   AddEvent(weekDay: any) {
     let date = `${this.year}-${this.currentMonth+1}-${weekDay.day}`;
-    this.nav.GoToUserRoute(`/grado/${this.grade}/grupo/${this.group}/plantillas/${this.templateId}/estrategias/${this.strategyId}/calendario/nuevo-evento/${date}`);
+    this.nav.GoToUserRoute(`estrategias/${this.strategyId}/calendario/nuevo-evento/${date}`);
+  }
+
+  GetEventsOfDate(date: string = ''): Array<any> {
+    let dateParts = date.split('-');
+    dateParts[1].length == 1 ? dateParts[1] = `0${dateParts[1]}` : null;
+    dateParts[2].length == 1 ? dateParts[2] = `0${dateParts[2]}` : null;
+    date = dateParts.join('-');
+    if(!date) return [];
+    return this.events.filter(event => event.date.includes(date));
+  }
+
+  GetEventName(event: any) {
+    if(!!event.start) return event.start;
+    else if(!!event.parcialProduct) return `${event.parcialProduct.name}`;
+    else return `Sin nombre`;
   }
 
 }

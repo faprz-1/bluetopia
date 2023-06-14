@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en" style="font-size: 16px; font-family: 'Mulish',sans-serif;">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bluetopia</title>
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.png">
+    <!-- Bootstrap -->
+    <link rel='stylesheet' type='text/css' media='screen' href='../Bootstrap_5/bootstrap.min.css'>
+    <script src='../Bootstrap_5/bootstrap.bundle.min.js'></script>
+    <script src='../Bootstrap_5/bootstrap.min.js'></script>
+    <!-- Popper.js -->
+    <script src='../Bootstrap_5/popper.min.js'></script>
+    <!-- Icons -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <!-- Global styles -->
+    <link rel='stylesheet' type='text/css' media='screen' href='../index.styles.css'>
+    <!-- Global Logic JS -->
+    <script src="../index.logic.js"></script>
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="content">
+        <div class="header animated" id="header">
+            <img class="header-img" src="../assets/img/project_name_small.png" alt="bluetopia">
+            <a href="../index.html#home"><img class="header-img-small hide-md hide-lg hide-xl" src="../assets/icons/bluetopia-icon-alt.png"
+                alt="bluetopia"></a>
+
+            <div class="social-media-container">
+                <img class="clickeable" src="../assets/icons/facebook.png" onclick="GoToSocialMedia('fb')"
+                    alt="Facebook">
+                <img class="clickeable" src="../assets/icons/instagram.png" onclick="GoToSocialMedia('in')"
+                    alt="Instagram">
+                <img class="clickeable" src="../assets/icons/twitter.png" onclick="GoToSocialMedia('tt')" alt="Twitter">
+                <img class="clickeable" src="../assets/icons/youtube.png" onclick="GoToSocialMedia('yt')" alt="YouTube">
+            </div>
+
+            <div class="menu-container">
+                <div class="menu-option menu-option-hide clickeable" id="header-home"><a href="../index.html#home" class="no-decoration menu-option ">Inicio</a></div>
+                <div class="menu-option menu-option-hide clickeable" id="header-objectives"><a href="../index.html#objectives" class="no-decoration menu-option ">Objetivos</a></div>
+                <div class="menu-option menu-option-hide clickeable" id="header-features"><a href="../index.html#features" class="no-decoration menu-option ">Caracteristícas</a></div>
+                <div class="menu-option menu-option-hide clickeable" id="header-functions"><a href="../index.html#contact-us" class="no-decoration menu-option">Contacto</a></div>
+                <div class="menu-option clickeable">
+                    <button class="btn btn-success btn-header" onclick="GoToRegister()">
+                        Registrarme
+                    </button>
+                </div>
+                <div class="menu-option clickeable">
+                    <button class="btn btn-outline-primary btn-header" onclick="GoToRegister()">
+                        Ingresar
+                    </button>
+                </div>
+                <div class="menu-option-small text-primary clickeable" onclick="GoToRegister()">
+                    <i class="zmdi zmdi-sign-in zmdi-hc-2x"></i>
+                </div>
+            </div>
+        </div>
+        <div class="container mb-5">
+            <div class="row justify-content-center">
+                <div class="col-12 text-center">
+                    <div class="title">
+                        Políticas de Privacidad
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center ">
+                <div class="col-12 text-2 text-left">
+                    De conformidad con lo establecido en la Ley Federal de Protección de Datos Personales en Posesión de
+                    los Particulares, bnzero pone a su disposición el siguiente aviso de privacidad.
+                </div>
+                <div class="col-12 text-2 text-left mt-5">
+                    bnzero, es responsable del uso y protección de sus datos personales, en este sentido y atendiendo
+                    las obligaciones legales establecidas en la Ley Federal de Protección de Datos Personales en
+                    Posesión de los Particulares, a través de este instrumento se informa a los titulares de los datos,
+                    la información que de ellos se recaba y los fines que se le darán a dicha información.
+                </div>
+                <div class="col-12 text-2 text-left mt-5">
+                    Además de lo anterior, informamos que bnzero, tiene su domicilio ubicado en:
+                    <ul class="no-bullet">
+                        <li>Calle La ley 3048</li>
+                        <li>Col. Residencial Juan Manuel</li>
+                        <li>C.P. 44680</li>
+                        <li>Guadalajara,Jalisco México</li>
+                    </ul>
+                </div>
+                <div class="col-12 text-2 text-left mt-5">
+                    Los datos personales que recabamos de usted serán utilizados para las siguientes finalidades, las
+                    cuales son necesarias para concretar nuestra relación con usted, así como atender los servicios y/o
+                    pedidos que solicite:
+                    <ul class="circle-bullet">
+                        <li>Brindar atención personalizada para los diversos servicios que ofrecemos y entrega de
+                            documentos.</li>
+                        <li>Registrarlo como cliente en nuestro sistema de CRM, con el objetivo de identificarlo y poder
+                            contactarlo.</li>
+                        <li>Para integrar expedientes, bases de datos y sistemas necesarios para llevar a cabo las
+                            operaciones y servicios correspondientes.</li>
+                        <li>Para reclamar promociones.</li>
+                        <li>Para llevar a cabo análisis internos.</li>
+                        <li>De manera adicional, se podrán utilizar sus datos personales para finalidades secundarias
+                            de: mercadotecnia, publicidad y prospección comercial, ofrecerle, en su caso otros productos
+                            y servicios propios de nuestra empresa o de cualquiera de sus afiliadas, subsidiarias,
+                            sociedades controladoras, asociadas, comisionistas o sociedades.</li>
+                        <li>Remitirle promociones de otros bienes, servicios y/o productos; para realizar análisis
+                            estadísticos de generación de modelos de información y/o perfiles de comportamiento actual y
+                            predictivo, para participar en encuestas</li>
+                    </ul>
+                </div>
+                <div class="col-12 text-2 text-left mt-5">
+                    Para llevar a cabo las finalidades descritas en el presente aviso de privacidad, utilizaremos los
+                    siguientes datos personales:
+                    <ul class="circle-bullet">
+                        <li>Nombre, usuario, contraseña, domicilio, dirección de correo electrónico, teléfono.</li>
+                        <li>Podremos o no utilizar cookies, tecnologías de seguimiento, como web beacons, similares a
+                            las cookies, para recabar datos sobre sus visitas en nuestro sitio web, redes sociales, con
+                            la finalidad de generar contenido personalizado para ofrecerle una mejor experiencia cuando
+                            utilice nuestros recursos, productos y/o servicios.</li>
+                    </ul>
+                </div>
+                <div class="col-12 text-2 text-left mt-5">
+                    Por otra parte, informamos a usted, que sus datos personales serán compartidos con las siguientes
+                    autoridades, empresas, organizaciones o personas distintas a nosotros:
+                    <ul class="circle-bullet">
+                        <li>Empresas de marketing y/o publicidad.</li>
+                        <li>Empresas de análisis de riesgos. </li>
+                        <li>Autoridades fiscales y/o competentes en términos de la legislación aplicable y se realizarán
+                            de acuerdo con el artículo 37 de la Ley Federal de Protección de Datos Personales en
+                            Posesión de Particulares.
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-12 text-2 text-left mt-5">
+                    Su información será compartida exclusivamente para los fines que a continuación se mencionan:
+                    <ul class="circle-bullet">
+                        <li>Para evaluar la calidad y mejorar cualquier producto o servicio que ofrezcan.
+                        </li>
+                        <li>Usted tiene en todo momento el derecho a conocer qué datos personales tenemos de usted, para
+                            qué los utilizamos y las condiciones del uso que les damos (acceso). Asimismo, es su derecho
+                            solicitar la corrección de su información personal en caso de que esté desactualizada, sea
+                            inexacta o incompleta (rectificación); de igual manera, tiene derecho a que su información
+                            se elimine de nuestros registros o bases de datos cuando considere que la misma no está
+                            siendo utilizada adecuadamente (cancelación); así como también a oponerse al uso de sus
+                            datos personales para fines específicos (oposición). Estos derechos se conocen como derechos
+                            ARCO.</li>
+                    </ul>
+                </div>
+                <div class="col-12 text-2 text-left mt-5">
+                    Para el ejercicio de cualquiera de los derechos ARCO, se deberá presentar la solicitud respectiva a
+                    través del siguiente correo electrónico <a href="mailto:info@bnzero.com">info@bnzero.com</a>
+                </div>
+                <div class="col-12 text-2 text-left mt-5">
+                    Lo anterior también servirá para conocer el procedimiento y requisitos para el ejercicio de los
+                    derechos ARCO, no obstante, la solicitud de ejercicio de estos derechos debe contener la siguiente
+                    información:
+                    <ul class="circle-bullet">
+                        <li>Nombre, domicilio, correo electrónico.
+                        </li>
+                        <li>Documentos que acrediten su identidad, copia de IFE/INE, pasaporte o cualquier otra
+                            identificación oficial.
+                        </li>
+                        <li>Una descripción de la información, los datos sobre los que está tratando de ejercer sus
+                            derechos ARCO y los derechos que le gustaría ejercer.</li>
+                        <li>Cualquier documento o información que facilite la localización de sus datos personales.
+                        </li>
+                        <li>En caso de solicitar una rectificación de datos, deberá indicar también, las modificaciones
+                            a realizarse y aportar la documentación que sustente su petición.</li>
+                        <li>La respuesta a la solicitud se dará en 20 días hábiles y se comunicará a través de la
+                            dirección de correo electrónica que se haya indicado.
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-12 text-2 text-left mt-5">
+                    Los datos de contacto de la persona o departamento de datos personales, que está a cargo de dar
+                    trámite a las solicitudes de derechos ARCO, son los siguientes:
+                    <ul class="circle-bullet">
+                        <li>Nombre del responsable: Departamento de Información y/o atención a clientes.
+                        </li>
+                        <li>Domicilio: el enunciado en la primera parte de este documento.
+                        </li>
+                        <li>Teléfono: +52 33 1204 2988</li>
+                        <li>Correo electrónico: <a href="mailto:info@bnzero.com">info@bnzero.com</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-12 text-2 text-left mt-5">
+                    Cabe mencionar, que en cualquier momento usted puede revocar su consentimiento para el uso de sus
+                    datos personales. Del mismo modo, usted puede revocar el consentimiento que, en su caso, nos haya
+                    otorgado para el tratamiento de sus datos personales. Sin embargo, es importante que tenga en cuenta
+                    que no en todos los casos podremos atender su solicitud o concluir el uso de forma inmediata, ya que
+                    es posible que por alguna obligación legal se requiera seguir tratando sus datos personales.
+                    Asimismo, usted deberá considerar que, para ciertos fines, la revocación de su consentimiento
+                    implicará que no podamos seguir prestando el servicio que nos solicitó, o la conclusión de su
+                    relación con nosotros.
+
+                </div>
+                <div class="col-12 text-2 text-left mt-5">
+                    Para revocar el consentimiento que usted otorga en este acto o para limitar su divulgación, se
+                    deberá presentar la solicitud respectiva a través del siguiente correo electrónico info@bnzero.com
+
+                </div>
+                <div class="col-12 text-2 text-left mt-5">
+                    Del mismo modo, podrá solicitar la información para conocer el procedimiento y requisitos para la
+                    revocación del consentimiento, así como limitar el uso y divulgación de su información personal, sin
+                    embargo, estas solicitudes deberán contener la siguiente información:
+
+                    <ul class="circle-bullet">
+                        <li>Nombre completo </li>
+                        <li>Dato que desea que no sea divulgado
+                        </li>
+                        <li>Motivo de la solicitud</li>
+                    </ul>
+                </div>
+                <div class="col-12 text-2 text-left mt-5">
+                    La respuesta a la solicitud de revocación o limitación de divulgación de sus datos se realizará a
+                    más tardar en 20 días hábiles y se comunicará a través del correo electrónico indicado.
+
+                </div>
+                <div class="col-12 text-2 text-left mt-5">
+                    El presente aviso de privacidad puede sufrir modificaciones, cambios o actualizaciones derivadas de
+                    nuevos requerimientos legales; de nuestras propias necesidades por los productos o servicios que
+                    ofrecemos; de nuestras prácticas de privacidad; de cambios en nuestro modelo de negocio, o por otras
+                    causas, por lo cual, nos comprometemos a mantenerlo informado sobre los cambios que pueda sufrir el
+                    presente aviso de privacidad, sin embargo, usted puede solicitar información sobre si el mismo ha
+                    sufrido algún cambio a través de la siguiente dirección electrónica <a
+                        href="https://bnzero.com/">https://bnzero.com/</a>
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="footer">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <a href="../index.html#home"><img src="../assets/icons/bluetopia.png"></a>
+                    <div class="footer-text" style="margin: 2rem 0;">By</div>
+                    <a href="http://bnzero.com/" target="_blank">
+                        <img src="../assets/icons/bnzero.png">
+                    </a>
+                    <a href="http://jarabesoft.com/" target="_blank">
+                        <img src="../assets/icons/jarabesoft.png">
+                    </a>
+                    <a class="no-decoration" href="http://linkedin.com/in/nayelibecerraperez" target="_blank">
+                        <div class="footer-text" style="font-size: 1.25rem;">Nayeli Becerra</div>
+                    </a>
+                </div>
+                <div class="footer-col align-items-start hide-xs hide-sm" style="max-height: 214px;">
+                    <div class="clicke"><a href="../index.html#home" class="no-decoration footer-text">Inicio</a></div>
+                    <div class="clickeable"><a href="../index.html#objectives" class="no-decoration footer-text">Objetivos</a></div>
+                    <div class="clickeable"><a href="../index.html#features" class="no-decoration footer-text">Caracteristícas</a></div>
+                    <div class="clickeable"><a href="../index.html#contact-us" class="no-decoration footer-text">Contacto</a></div>
+                </div>
+                <div class="footer-col align-items-start footer-contact-info" style="max-height: 175px;">
+                    <div class="footer-text" style="margin: 0 0 .75rem 1rem;"><b>Contacto</b></div>
+                    <div class="contact-info" style="max-width: 287px;">
+                        <div class="contact-icon">
+                            <img src="../assets/icons/location_white.png" alt="Ubicación">
+                        </div>
+                        <span class="footer-text">Calle la Ley 3048, Col. Residencial Juan Manuel, CP 44680,
+                            Guadalajara, Jalisco, México.</span>
+                    </div>
+                    <div class="contact-info" style="max-width: 287px;">
+                        <div class="contact-icon h-100 align-items-center">
+                            <img src="../assets/icons/cellphone_white.png" alt="Teléfono">
+                        </div>
+                        <span class="footer-text">+52 55 4393 4510</span>
+                    </div>
+                    <div class="contact-info" style="max-width: 287px;">
+                        <div class="contact-icon h-100 align-items-center">
+                            <img src="../assets/icons/mail_white.png" alt="Correo">
+                        </div>
+                        <span class="footer-text">info@bnzero.com</span>
+                    </div>
+                </div>
+
+                <div class="footer-col footer-social-media-icons" style="max-height: 172px;">
+                    <img class="clickeable" src="../assets/icons/fb_green.png" onclick="GoToSocialMedia('fb')">
+                    <img class="clickeable" src="../assets/icons/insta_green.png" onclick="GoToSocialMedia('in')">
+                    <img class="clickeable" src="../assets/icons/twitter_green.png" onclick="GoToSocialMedia('tt')">
+                    <img class="clickeable" src="../assets/icons/YT_green.png" onclick="GoToSocialMedia('yt')">
+                </div>
+            </div>
+            <div class="footer-footer">
+                <div style="margin: 0 5px;">
+                    BLUETOPIA Todos los derechos reservados
+                </div>
+                <div style="margin: 0 5px;">
+                    Powered by Jarabesoft
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

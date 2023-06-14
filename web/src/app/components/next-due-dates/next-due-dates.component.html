@@ -1,0 +1,15 @@
+<div class="next-due-dates-container">
+    <div class="next-due-dates-title">Próximas entregas</div>
+
+    <div class="d-flex flex-column align-items-center flex-grow-1 overflow-hidden">
+        <div class="due-date" *ngFor="let dueDate of dueDates">
+            {{dueDate.date}}
+        </div>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-center" style="margin-top: 12px;">
+        <button class="btn btn-outline-primary">
+            Ver detalles
+        </button>
+    </div>
+</div>

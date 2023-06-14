@@ -31,4 +31,10 @@ export class StudentsComponent implements OnInit {
     });
   }
 
+  CreateNewStrategy(groupStudents: any) {
+    const group = groupStudents[0].group;
+    const grade = groupStudents[0].grade;
+    this.nav.GoToUserRoute(`grado/${grade}/grupo/${group}/plantillas`);
+  }
+
 }

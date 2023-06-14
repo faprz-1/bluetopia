@@ -63,7 +63,29 @@ module.exports = function(app) {
           active: true
         },
         Role: "Admin"
-      }
+      },
+      {
+        User: {
+          name: "Parent Jarabe",
+          username: "Parent Jarabe",
+          password: "j4r4b3s0",
+          email: "parent@jarabepruebas.com",
+          emailVerified: true,
+          active: true
+        },
+        Role: "Parent"
+      },
+      {
+        User: {
+          name: "Student Jarabe",
+          username: "Student Jarabe",
+          password: "j4r4b3s0",
+          email: "student@jarabepruebas.com",
+          emailVerified: true,
+          active: true
+        },
+        Role: "Student"
+      },
     ]
 
     users.forEach(u => {
@@ -92,6 +114,14 @@ module.exports = function(app) {
       {
         name:"Teacher",
         description: 'maestro'
+      },
+      {
+        name:"Parent",
+        description: 'padre'
+      },
+      {
+        name:"Student",
+        description: 'estudiante'
       },
     ]
 
@@ -196,28 +226,7 @@ module.exports = function(app) {
   }
 
   var seedParcialProductsTypes = function() {
-    const parcialProductTypes = [
-      {
-        id: 1,
-        name: "Reporte",
-      },
-      {
-        id: 2,
-        name: "Ensayo",
-      },
-      {
-        id: 3,
-        name: "Prototipo",
-      },
-      {
-        id: 4,
-        name: "Resumen",
-      },
-      {
-        id: 5,
-        name: "Presentación",
-      },
-    ];
+    let parcialProductTypes = require('./../helpers/parcialProducts.json');
 
     let cont = 0, limit = parcialProductTypes.length;
     parcialProductTypes.forEach(parcialProductType => {
@@ -343,6 +352,7 @@ module.exports = function(app) {
 
     let cont = 0, limit = skills.length;
     skills.forEach(skill => {
+      skill.name = `${skill.name.charAt(0).toUpperCase()}${skill.name.slice(1).toLowerCase()}`;
       app.models.Skill.CreateOne(skill, (err, newSkill) => {
         if(err) throw err;
         if(++cont == limit) console.log("Skills seeded");
@@ -369,6 +379,63 @@ module.exports = function(app) {
     let cont = 0, limit = eventTypes.length;
     eventTypes.forEach(eventType => {
       app.models.EventType.CreateOne(eventType, (err, newEventType) => {
+        if(err) throw err;
+        if(++cont == limit) console.log("event types seeded");
+      });
+    });
+  }
+
+  var seedTeamRoles = function() {
+    const teamRoles = [
+      {
+        name: 'Director / Líder',
+        description: 'Es quien dirige el trabajo del equipo.',
+      },
+      {
+        name: 'Secretario',
+        description: 'Es quien lleva el registro del avance, toma acuerdos y ayuda al buen funcionamiento.',
+      },
+      {
+        name: 'Editor',
+        description: 'Es quien asegura la calidad del trabajo ayudando a cuidar los detalles y mejorar los productos.',
+      },
+      {
+        name: 'Investigador / Detective',
+        description: 'Es quien busca información y consigue los datos necesarios para el trabajo.',
+      },
+      {
+        name: 'Creativo ',
+        description: 'Es quien busca nuevas soluciones, ideas alternativas y posibilidades insospechadas.',
+      },
+      {
+        name: 'Cronómetro / Reloj',
+        description: 'Es quien cuida el tiempo para terminar cuando es debido.',
+      },
+      {
+        name: 'Recursos / Almacén',
+        description: 'Es quien se asegura de tener el material y recursos necesarios para el trabajo.',
+      },
+      {
+        name: 'Revisor / Lupa',
+        description: 'Es quien busca errores, omisiones y detalles a mejorar antes de entregar el trabajo.',
+      },
+      {
+        name: 'Impulsor ',
+        description: 'Es quien anima al equipo y ayuda a que el equipo avance con buen ritmo.',
+      },
+      {
+        name: 'Especialista en',
+        description: 'Es quien cuidará una parte específica del trabajo, se nombra especialista en algo concreto.',
+      },
+      {
+        name: 'Redactor',
+        description: 'Es quien escribe cuidando especialmente la redacción y ortografía en los trabajos.',
+      },
+    ];
+
+    let cont = 0, limit = teamRoles.length;
+    teamRoles.forEach(teamRole => {
+      app.models.TeamRole.findOrCreate({where: {name: {like: `%${teamRole.name}%`}}}, teamRole, (err, newTeamRole) => {
         if(err) throw err;
         if(++cont == limit) console.log("event types seeded");
       });
@@ -466,6 +533,7 @@ module.exports = function(app) {
     seedParcialProductsTypes,
     seedTemplateTopics,
     seedEventTypes,
+    seedTeamRoles
   ]
 
   // Migrate

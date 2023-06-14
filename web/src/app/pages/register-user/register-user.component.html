@@ -5,7 +5,7 @@
                 {{userType}}
             </div>
         </div>
-        <div class="w-100 vertical-content">
+        <div *ngIf="!passwordForgotten" class="w-100 vertical-content">
             <div class="row m-0">
                 <div class="col-12 text-center">
                     <div>
@@ -21,40 +21,33 @@
                                         ¡bienvenido!
                                     </div>
                                     <div class="text">
-                                        Comienza grátis tu registro hoy
+                                        Comienza gratis tu registro hoy
                                     </div>
                                 </div>
                                 <form class="form d-inline-block" [formGroup]="userForm">
                                     <div class="input-container">
                                         <div class="input-icon-container text-center">
-                                            <img src="assets/icons/user.png">
-                                        </div>
-                                        <input class="form-control" type="text" placeholder="Nombre" formControlName="username">
-                                        <app-control-messages [control]="userForm.get('username')"></app-control-messages>
-                                    </div>
-                                    <div class="input-container">
-                                        <div class="input-icon-container text-center">
                                             <img src="assets/icons/mail.png">
                                         </div>
                                         <input class="form-control" type="text" placeholder="Correo electronico" formControlName="email" (keyup.enter)="LoginUser()">
-                                        <app-control-messages [control]="userForm.get('email')"></app-control-messages>
                                     </div>
+                                    <app-control-messages [control]="userForm.get('email')"></app-control-messages>
                                     <div class="input-container">
                                         <div class="input-icon-container text-center">
                                             <img src="assets/icons/lock.png">
                                         </div>
                                         <input class="form-control" type="password" placeholder="Contraseña" formControlName="password" (keyup.enter)="LoginUser()">
-                                        <app-control-messages [control]="userForm.get('password')"></app-control-messages>
                                     </div>
+                                    <app-control-messages [control]="userForm.get('password')"></app-control-messages>
                                 </form>
-                                <div class="link">
+                                <div class="link" (click)="passwordForgotten=true">
                                     <a>
                                         ¿Olvidaste tu contraseña?
                                     </a>
                                 </div>
                                 <div class="btns-container">
                                     <div class="d-flex justify-content-between">
-                                        <button class="btn btn-primary" (click)="Register()">
+                                        <button class="btn btn-primary" (click)="Forward()">
                                             Registrarme
                                         </button>
                                         <button class="btn btn-success" (click)="LoginUser()">
@@ -67,7 +60,7 @@
                             <div class="header-container mb-0" *ngSwitchCase="2">
                                 <div class="header-container">
                                     <div class="title">
-                                        Cuentanos más sobre tí
+                                        Cuéntanos más sobre tí
                                     </div>
                                     <div class="text">
                                         Y más sobre la institución que representas
@@ -76,51 +69,72 @@
                                 <form class="form d-inline-block" [formGroup]="userRegisterForm">
                                     <div class="input-container">
                                         <div class="input-icon-container text-center">
+                                            <img src="assets/icons/user.png">
+                                        </div>
+                                        <input class="form-control" type="text" placeholder="Nombre" formControlName="username">
+                                    </div>
+                                    <app-control-messages [control]="userForm.get('username')"></app-control-messages>
+                                    <div class="input-container">
+                                        <div class="input-icon-container text-center">
+                                            <img src="assets/icons/user-phone.png">
+                                        </div>
+                                        <input class="form-control" type="text" maxlength="10" placeholder="Teléfono escolar" formControlName="schoolPhone">
+                                    </div>
+                                    <app-control-messages [control]="userRegisterForm.get('schoolPhone')"></app-control-messages>
+                                    <div class="input-container">
+                                        <div class="input-icon-container text-center">
+                                            <img src="assets/icons/phone.png">
+                                        </div>
+                                        <input class="form-control" type="text" maxlength="10" placeholder="Teléfono" formControlName="phone">
+                                        <span class="required-span">*</span>
+                                    </div>
+                                    <app-control-messages [control]="userRegisterForm.get('phone')"></app-control-messages>
+                                    <div class="input-container">
+                                        <div class="input-icon-container text-center">
                                             <img src="assets/icons/school.png">
                                         </div>
                                         <input class="form-control" type="text" placeholder="Nombre de la institución" formControlName="schoolName">
-                                        <app-control-messages [control]="userRegisterForm.get('schoolName')"></app-control-messages>
                                         <span class="required-span">*</span>
                                     </div>
+                                    <app-control-messages [control]="userRegisterForm.get('schoolName')"></app-control-messages>
                                     <div class="input-container">
                                         <div class="input-icon-container text-center">
                                             <img src="assets/icons/users-group.png">
                                         </div>
                                         <input class="form-control" type="text" placeholder="Puesto" formControlName="workTitle">
-                                        <app-control-messages [control]="userRegisterForm.get('workTitle')"></app-control-messages>
                                         <span class="required-span">*</span>
                                     </div>
+                                    <app-control-messages [control]="userRegisterForm.get('workTitle')"></app-control-messages>
                                     <div class="input-container">
                                         <div class="input-icon-container text-center">
                                             <img src="assets/icons/location.png">
                                         </div>
                                         <input class="form-control" type="text" placeholder="Dirección" formControlName="address">
-                                        <app-control-messages [control]="userRegisterForm.get('address')"></app-control-messages>
                                         <span class="required-span">*</span>
                                     </div>
+                                    <app-control-messages [control]="userRegisterForm.get('address')"></app-control-messages>
                                     <div class="input-container">
                                         <div class="input-icon-container text-center">
                                             <img src="assets/icons/mail.png">
                                         </div>
                                         <input class="form-control" type="text" placeholder="Correo" formControlName="email">
-                                        <app-control-messages [control]="userRegisterForm.get('email')"></app-control-messages>
                                         <span class="required-span">*</span>
                                     </div>
+                                    <app-control-messages [control]="userRegisterForm.get('email')"></app-control-messages>
                                     <div class="input-container">
                                         <div class="input-icon-container text-center">
-                                            <img src="assets/icons/phone.png">
+                                            <img src="assets/icons/lock.png">
                                         </div>
-                                        <input class="form-control" type="text" placeholder="Teléfono" formControlName="phone">
-                                        <app-control-messages [control]="userRegisterForm.get('phone')"></app-control-messages>
-                                        <span class="required-span">*</span>
+                                        <input class="form-control" type="password" placeholder="Contraseña" formControlName="password" (keyup)="OnPasswordChange()" (keyup.enter)="RegisterUser()">
                                     </div>
+                                    <app-control-messages [control]="userRegisterForm.get('password')"></app-control-messages>
                                     <div class="input-container">
                                         <div class="input-icon-container text-center">
-                                            <img src="assets/icons/user-phone.png">
+                                            <img src="assets/icons/lock.png">
                                         </div>
-                                        <input class="form-control" type="text" placeholder="Teléfono escolar" formControlName="schoolPhone">
-                                        <app-control-messages [control]="userRegisterForm.get('schoolPhone')"></app-control-messages>
+                                        <input class="form-control" type="password" placeholder="Conformar contraseña" formControlName="confirmPassword" (keyup.enter)="RegisterUser()">
                                     </div>
+                                    <app-control-messages [control]="userRegisterForm.get('confirmPassword')"></app-control-messages>
                                 </form>
                                 <div class="btns-container">
                                     <div class="d-flex justify-content-between">
@@ -143,5 +157,76 @@
                 </div>
             </div>
         </div>
+
+        <div  class="w-100 vertical-content container" *ngIf="passwordForgotten">
+            <div class="row">
+                <div class="col-12 text-center">
+                        <img class="title-img" src="assets/img/project_name_medium.png" alt="Bluetopia">
+                        <div class="title">Recupera tu cuenta</div>
+                    </div>
+                    <div class="col-12 text-center"  *ngIf="step == 0">
+                        <h2 class="m-4 text">Ingresa tu correo</h2>
+
+                  <div  class="form d-inline-block">
+                    <div class="form-group">
+                      <!-- Validaciones del campo del correo -->
+                      <input class="form-control text-center" type="email" id="email" name="email" [(ngModel)]="email" required
+                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"  placeholder="ejemplo@correo.com">
+                      <!-- Mensajes de las validaciones -->
+                     
+                        <div *ngIf="!email" class="form-control-feedback color-red text-center">
+                          Campo obligatorio </div>
+                        <div *ngIf="email && !pattern.test(email)" class="form-control-feedback color-red text-center">
+                          Correo electrónico no valido</div>
+                    </div>
+                    <div class="btns-container">
+                        <div class="d-flex justify-content-between row">
+                            <button [disabled]="loading" class="btn btn-success col-4"
+                      type="submit" (click)="SendEmail()">Continuar</button>
+                      <button [disabled]="loading" class="btn btn-secondary col-4" (click)="GoBack()">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="col-12 text-center" *ngIf="loading">
+                    <i class="zmdi zmdi-spinner zmdi-hc-4x zmdi-hc-spin"></i>
+
+                </div>
+                  <!--FORMULARIO INGRESAR PIN-->
+                  <div *ngIf="step==2" class="col-12 text-center">
+                    <div class="form d-inline-block">
+                        <div class="form-group">
+                            <h4 class="text">Ingrese el PIN</h4>
+                            <input class="form-control" type="number" [(ngModel)]="pin" name="pin">
+                        </div>
+                        <div class="btns-container">
+                            <div class="d-flex justify-content-between row">
+                                <button [disabled]="loading" class="btn btn-success col-4"
+                          type="submit" (click)="TryPIN()">Continuar</button>
+                          <button [disabled]="loading" class="btn btn-secondary col-4" (click)="GoBack()">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+        
+                  <!--FORMULARIO PARA INGRESAR LA NUEVA CONTRASEÑA-->
+                  <div *ngIf="step==3" class="col-12 text-center">
+                    <div class="form d-inline-block">
+                        <div class="form-group">
+                            <h2 class="m-4 text">Ingresa tu nueva contraseña</h2>
+                            <input type="password" class="form-control text-center" [(ngModel)]="newPassword"
+                              name="newPassword">
+                        </div>
+                        <div class="btns-container">
+                            <div class="d-flex justify-content-between row">
+                                <button [disabled]="loading" class="btn btn-success col-4"
+                          type="submit" (click)="SetPassword()">Continuar</button>
+                          <button [disabled]="loading" class="btn btn-secondary col-4" (click)="GoBack()">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+          </div>
     </div>
 </div>

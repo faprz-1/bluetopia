@@ -3,25 +3,15 @@
 module.exports = function(Student) {
 
     Student.AddStudent = function(student, callback) {
-        Student.findOne({
-            where: {
-                email: student.email
-            }
-        }, (err, studentFound) => {
+        Student.create(student, (err, newStudent) => {
             if(err) return callback(err);
-            
-            if(!!studentFound) return callback(null, studentFound);
 
-            Student.create(student, (err, newStudent) => {
-                if(err) return callback(err);
-
-                return callback(null, newStudent);
-            });
+            return callback(null, newStudent);
         });
     }
 
     Student.AddStudents = function(students, callback) {
-        if(!students) return callback(null, []);
+        if(!students.length) return callback(null, []);
         let cont = 0, limit = students.length, newStudents = [];
         if(!limit) return callback(null, newStudents);
         Student.app.models.Group.CreateBasedOnCSV(students, (err, groups) => {
@@ -36,8 +26,8 @@ module.exports = function(Student) {
                         
                         const studentGroup = {
                             studentId: newStudent.id,
-                            gradeId: grades.find(g => g.name == student.grade) ? grades.find(g => g.name == student.grade).id : null,
-                            groupId: groups.find(g => g.name == student.group) ? groups.find(g => g.name == student.group).id : null
+                            gradeId: grades.find(g => g.name == student.grade.toLowerCase()) ? grades.find(g => g.name == student.grade.toLowerCase()).id : null,
+                            groupId: groups.find(g => g.name == student.group.toLowerCase()) ? groups.find(g => g.name == student.group.toLowerCase()).id : null
                         }
                         Student.app.models.StudentGroup.create(studentGroup, (err, newStudentGroupInstance) => {
                             newStudents.push(newStudent);
@@ -72,7 +62,6 @@ module.exports = function(Student) {
             if(err) return callback(err);
             
             if(!teacher) return callback('Teacher not found!!');
-            if(!teacher.teacherGroups().length) return callback(null, []);
             Student.app.models.StudentGroup.find({
                 where: {
                     groupId: {inq: teacher.teacherGroups().map(tg => tg.groupId)},
@@ -84,7 +73,13 @@ module.exports = function(Student) {
                 
                 Student.find({
                     where: {
-                        id: {inq: studentGroups.map(sg => sg.student().id)}
+                        or: [
+                            {and: [
+                                {id: {inq: studentGroups.filter(sg => !!sg.student()).map(sg => sg.student().id)}},
+                                {schoolUserId: teacher.schoolUserId}
+                            ]},
+                            {teacherUserId}
+                        ]
                     },
                     include: {'studentGroup': ['group', 'grade']},
                 }, (err, students) => {
@@ -93,6 +88,17 @@ module.exports = function(Student) {
                     return callback(null, students);
                 });
             });
+        });
+    }
+
+    Student.UpdateSchoolUserId = function(teacherId, schoolUserId, callback) {
+        if(!teacherId || !schoolUserId) return callback(null, {count: 0});
+        Student.updateAll({
+            teacherUserId: teacherId
+        }, {schoolUserId, teacherUserId: null}, (err, studentsUpdated) => {
+            if(err) return callback(err);
+
+            return callback(null, studentsUpdated);
         });
     }
 

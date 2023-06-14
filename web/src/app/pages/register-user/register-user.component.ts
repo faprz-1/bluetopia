@@ -18,19 +18,30 @@ export class RegisterUserComponent implements OnInit {
 
   registerStep: number = 1;
   userType: string = '';
+  teacherIdToAbsorb: string = '';
   userForm: FormGroup = new FormGroup({
-    username: new FormControl(null, [Validators.required]),
     email: new FormControl(null, [Validators.required, Validators.email]),
     password: new FormControl(null, [Validators.required, Validators.minLength(3)]),
   });
   userRegisterForm: FormGroup = new FormGroup({
+    username: new FormControl(null, [Validators.required]),
     schoolName: new FormControl(null, [Validators.required]),
     workTitle: new FormControl(null, [Validators.required]),
     address: new FormControl(null, [Validators.required, Validators.minLength(3)]),
     email: new FormControl(null, [Validators.required, Validators.email]),
+    password: new FormControl(null, [Validators.required]),
+    confirmPassword: new FormControl(null, [Validators.required]),
     phone: new FormControl(null, [Validators.required, ValidationService.CheckOnlyIntegerNumbers]),
     schoolPhone: new FormControl(null, [ValidationService.CheckOnlyIntegerNumbers]),
   });
+  passwordForgotten: boolean = false;
+  email = '';
+  pin: string = '';
+  newPassword: string = '';
+  successUpdate: boolean = false;
+  loading: boolean = false;;
+  step: number = 0;
+  pattern = new RegExp ('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$');
 
   constructor(
     private navigation: NavigationService,
@@ -48,18 +59,9 @@ export class RegisterUserComponent implements OnInit {
   GetParams() {
     this.activeRoute.params.subscribe(params => {
       this.userType = params['userType'];
+      this.teacherIdToAbsorb = params['teacherId'];
+      if(!!this.teacherIdToAbsorb) this.registerStep = 2;
     });
-  }
-
-  Register() {
-    console.log(this.userForm);
-    if(!this.userForm.valid) {
-      this.toast.ShowWarning('Favor de llenar todos los campos para registrarse');
-      return;
-    }
-    this.userRegisterForm.controls['email'].setValue(this.userForm.controls['email'].value);
-    this.userRegisterForm.updateValueAndValidity();
-    this.Forward();
   }
 
   Back() {
@@ -70,13 +72,27 @@ export class RegisterUserComponent implements OnInit {
     this.registerStep++;
   }
 
+  OnPasswordChange() {
+    const password = this.userRegisterForm.controls['password'].value;
+    this.userRegisterForm.controls['confirmPassword'].setValidators([
+      Validators.required,
+      ValidationService.matchString(password, 'Las contraseñas no coinciden')
+    ]);
+    this.userRegisterForm.updateValueAndValidity();
+  }
+
   RegisterUser() {
-    if (this.userForm.invalid || this.userRegisterForm.invalid) {
+    if (this.userRegisterForm.invalid) {
       this.toast.ShowWarning('Favor de llenar todos los campos');
       return;
     }
-    let user = {...this.userForm.value, ...this.userRegisterForm.value};
-    let userData = {...this.userRegisterForm.value, name: user.username};
+    let userData = {...this.userRegisterForm.value};
+    if(!!this.teacherIdToAbsorb) userData.teacherIdToAbsorb = this.teacherIdToAbsorb;
+    let user = {
+      email: userData.email,
+      password: userData.password,
+      active: true
+    };
     user.active = true;
     this.api.Post(`/Usuarios`, { user, userData, role: this.userType.toLowerCase() }).subscribe(newUser => {
       let credentials = {
@@ -95,8 +111,8 @@ export class RegisterUserComponent implements OnInit {
           let user = this.api.GetUser();
           let role = user.role.name.toLowerCase();
 
-          this.Forward();
-          // this.navigation.GoTo(`/inicio/${role}/`);
+          if(user.role.name == 'School') this.Forward();
+          else this.navigation.GoTo(`/inicio/${role}/`);
         }, (err: any) => {
           this.toast.ShowError(err.error.error.message);
         });
@@ -136,4 +152,70 @@ export class RegisterUserComponent implements OnInit {
     });
   }
 
+  SendEmail(){
+    this.loading = true;
+    this.step = 1;
+    this.api.Post('/PasswordResetPINs/createAndSend', { email: this.email }, false).subscribe(
+      (msg: any) => {
+        if (msg.msg == 'notRegistered') {
+          this.toast.ShowError('Usuario no registrado');
+          this.step = 0;
+        } else {
+          this.toast.ShowSuccess('Se envio el correo correctamente');
+          this.step = 2;
+        }
+        this.loading = false;
+      }, (err: any) => {
+        this.toast.ShowError(err.err);
+        this.loading = false;
+        this.step=0;
+      });
+  }
+
+  TryPIN() {
+    this.loading = true;
+    this.api.Post('/PasswordResetPINs/consume', { pin: this.pin, email: this.email }, false).subscribe((msg: any) => {
+      if (msg.msg == 'Pin incorrecto') {
+        this.toast.ShowError('PIN incorrecto');
+        this.pin = '';
+        this.step = 0;
+        this.loading = false;
+      }
+      else {
+        this.toast.ShowSuccess('PIN correcto');
+        this.step = 3;
+        this.loading = false;
+      }
+    }, (err: any) => {
+      this.toast.ShowError(err.err);
+      this.loading = false;
+      this.step=0;
+    });
+  }
+
+  SetPassword() {
+    this.api.Post('/PasswordResetPINs/resetPassword', { password: this.newPassword, email: this.email }, false).subscribe(
+      (res: any) => {
+        if (res.msg == "usuario actualizado") {
+          this.toast.ShowSuccess('Contraseña asignada correctamente');
+          this.successUpdate = true;
+         this.loading = false;
+         this.step=0;
+         this.passwordForgotten= false;
+         this.email= "";
+        }
+        else {
+          this.toast.ShowSuccess('Sucedio un Error');
+          this.loading = false;
+          this.step=0;
+        }
+      }
+    )
+  }
+
+  GoBack(){
+    this.passwordForgotten=false;
+    this.step=0;
+    this.loading=false;
+  }
 }

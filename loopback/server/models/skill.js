@@ -10,7 +10,16 @@ module.exports = function(Skill) {
         }, (err, skillFound) => {
             if(err) return callback(err);
 
-            if(!!skillFound) return callback(null, skillFound);
+            if(!!skillFound) {
+                if(skillFound.name === skill.name) return callback(null, skillFound);
+                else {
+                    skillFound.name = skill.name;
+                    skillFound.save((err, skillSaved) => {
+                        if(err) return callback(err);
+                        return callback(null, skillSaved);
+                    });
+                }
+            }
             
             Skill.create(skill, (err, newSkill) => {
                 if(err) return callback(err);

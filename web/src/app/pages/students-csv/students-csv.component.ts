@@ -14,6 +14,7 @@ import { ToastService } from 'src/app/services/toast.service';
 export class StudentsCsvComponent implements OnInit {
 
   @ViewChild('studentsAlertModal') studentsAlertModal?: ModalDirective;
+  areStudentsValid: boolean = true;
 
   dataConversions: Array<any> = [
     {
@@ -46,6 +47,7 @@ export class StudentsCsvComponent implements OnInit {
     uploading: false
   }
   step: number = 1;
+  instructionsStep: number = 1;
 
   constructor(
     private downloadFile: DownloadFileService,
@@ -56,14 +58,18 @@ export class StudentsCsvComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    const user = this.api.GetUser();
+    if(!!user && user.role.name == 'Teacher' && !!user.schoolUserId) this.nav.GoToUserRoute('');
   }
 
   DownloadTemplate() {
+    if(this.instructionsStep < 2) this.instructionsStep = 2;
     this.downloadFile.DownloadWithoutApi("assets/docs/studentsTemplate.csv", 'studentsTemplate.csv');
   }
 
   Cancel() {
-    this.step--;
+    if(this.step > 1) this.step--;
+    else this.nav.GoToUserRoute('mis-estudiantes');
   }
 
   Continue() {
@@ -72,7 +78,7 @@ export class StudentsCsvComponent implements OnInit {
         this.UploadStudents();
         break;
     }
-    this.step++;
+    if(this.step != 2) this.step++;
   }
 
   OnFileChanged(event: any): void {
@@ -82,10 +88,14 @@ export class StudentsCsvComponent implements OnInit {
     FILE_READER.onload = (reader) => {
       this.csvService.ReadCSV(FILE_READER.result).then(res => {
         this.students = this.FormatData(res.data);
+        this.areStudentsValid = this.ValidateStudents(this.students);
         this.step++;
       });
     };
-    if(file) FILE_READER.readAsText(file, 'ISO-8859-1');
+    if(file) {
+      if(this.instructionsStep < 3) this.instructionsStep = 3;
+      FILE_READER.readAsText(file, 'ISO-8859-3');
+    }
   }
   
   FormatData(students: Array<any>) {
@@ -95,7 +105,8 @@ export class StudentsCsvComponent implements OnInit {
       this.dataConversions.forEach(conversion => {
         studentFormatted[conversion.newKey] = student[conversion.oldKey];
       });
-      studentFormatted.schoolUserId = user.id;
+      if(user.role.name == 'School') studentFormatted.schoolUserId = user.id;
+      else if(user.role.name == 'Teacher') studentFormatted.teacherUserId = user.id;
       return studentFormatted;
     });
   }
@@ -107,9 +118,49 @@ export class StudentsCsvComponent implements OnInit {
       this.loading.uploading = false;
       this.studentsAlertModal?.show();
     }, err => {
+      this.toast.ShowError(`Error al subir a los estudiantes`);
       console.error("Error at uploading students", err);
       this.loading.uploading = false;
     });
+  }
+
+  ValidateStudents(students: Array<any>): boolean {
+    let valid = true;
+    let logsIds: Array<string> = ['name', 'fatherLastname', 'motherLastname', 'registerNumber']
+    let logsMap: Map<string, any> = new Map();
+    students.forEach(student => {
+      if(!student.name) {
+        valid = false;
+        logsMap.set(logsIds[0], {
+          required: true,
+          message: 'Algunos estudiantes no tienen nombre'
+        });
+      }
+      if(!student.fatherLastname) {
+        logsMap.set(logsIds[0], {
+          required: false,
+          message: 'Algunos estudiantes no tienen apellido paterno'
+        });
+      }
+      if(!student.motherLastname) {
+        logsMap.set(logsIds[2], {
+          required: false,
+          message: 'Algunos estudiantes no tienen apellido materno'
+        });
+      }
+      if(!student.registerNumber) {
+        valid = false;
+        logsMap.set(logsIds[3], {
+          required: true,
+          message: 'Algunos estudiantes no tienen número de registro'
+        });
+      }
+    });
+    logsMap.forEach(value => {
+      if(value.required) this.toast.ShowError(value.message);
+      else this.toast.ShowWarning(value.message);
+    });
+    return valid;
   }
 
 }

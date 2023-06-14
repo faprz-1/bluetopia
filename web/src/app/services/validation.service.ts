@@ -30,11 +30,11 @@ export class ValidationService {
       },
       {
         name: 'minlength',
-        label: `Mínimo de Caracteres ${validatorValue.requiredLength}`,
+        label: `Mínimo ${validatorValue.requiredLength} caracteres `,
       },
       {
         name: 'maxlength',
-        label: `Máximo de Caracteres ${validatorValue.requiredLength}`,
+        label: `Máximo ${validatorValue.requiredLength} caracteres `,
       },
       {
         name: 'invalidNumber',
@@ -53,11 +53,17 @@ export class ValidationService {
     return config.find(v => v.name == validatorName);
   }
 
-  static matchString(stringToMatch: string): ValidatorFn {
+  static matchString(stringToMatch: string, customErrorMessage: string | null = null): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value;
       if(!value) return null;
       if(stringToMatch == control.value) return null;
+      if(!!customErrorMessage) return {
+        'matchstring': {
+          'requiredString': stringToMatch,
+          'matchStringCustomLabel': customErrorMessage
+        },
+      }
       return {'matchstring': stringToMatch};
     }
   }

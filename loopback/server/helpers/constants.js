@@ -1,3 +1,3 @@
 'use strict';
 
-module.exports.hostURL = "http://localhost:4200/#/";
+module.exports.hostURL = "https://bluetopia.app/#/";

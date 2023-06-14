@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-rubric',
@@ -7,8 +8,10 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class RubricComponent implements OnInit {
 
+  @Input() onReset: EventEmitter<any> | null = null;
   @Output() exportRubrics: EventEmitter<any> = new EventEmitter<any>();
 
+  subscriptions: Array<Subscription> = [];
   rubrics: Array<any> = [
     {
       description: '',
@@ -24,6 +27,11 @@ export class RubricComponent implements OnInit {
   constructor() { }
   
   ngOnInit(): void {
+    if(!!this.onReset) {
+      this.subscriptions.push(this.onReset.subscribe(() => {
+        this.ExportRubrics();
+      }));
+    }
     setTimeout(() => {
       this.ExportRubrics();
     }, 500);

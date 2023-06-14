@@ -1,0 +1,91 @@
+@import "./../../../assets/scss/variables";
+
+.cirlce-arrow {
+    border: 3px solid $primary;
+    border-radius: 4rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    color: $primary;
+}
+
+.topics {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    min-height: 50px;
+    font-size: 1.2rem;
+
+    .topic {
+        width: max-content;
+        margin: 0 0 2rem 0;
+
+        .topic-label {
+            font-weight: 700;
+            margin-right: 2rem !important;
+        }
+
+        .topic-text {
+            background-color: #758CA6;
+            padding: .4rem .8rem;
+            border-radius: 8px;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .topics {
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: start;
+    }
+}
+
+.teams {
+    display: flex;
+    justify-content: space-around;
+
+    .team {
+        margin: 0 .5rem;
+
+        .team-name {
+            font-size: 1.5rem;
+            color: $primary;
+            margin-bottom: .8rem;
+            text-align: center;
+        }
+    }
+}
+
+.members {
+    display: flex;
+    flex-flow: column wrap;
+
+    .member {
+        display: flex;
+        width: 100%;
+        margin: .5rem 0;
+        flex-grow: 1;
+        
+        .name {
+            border-radius: 12px 0 0 12px;
+            color: white;
+        }
+        .role {
+            border-radius: 0 12px 12px 0;
+            background-color: #758CA6;
+        }
+        
+        div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-basis: 50%;
+            text-align: center;
+            padding: .5rem .8rem;
+        }
+    }
+}

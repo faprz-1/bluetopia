@@ -15,6 +15,7 @@ export class TeachersCsvComponent implements OnInit {
 
   @ViewChild('verifyTeachersDataModal') verifyTeachersDataModal?: ModalDirective;
 
+  step: number = 1;
   dataConversions: Array<any> = [
     {
       oldKey: 'Asignaturas',
@@ -58,6 +59,7 @@ export class TeachersCsvComponent implements OnInit {
   }
 
   DownloadTemplate() {
+    this.step = 2;
     this.downloadFile.DownloadWithoutApi("assets/docs/teachersTemplate.csv", 'teachersTemplate.csv');
   }
 
@@ -71,7 +73,10 @@ export class TeachersCsvComponent implements OnInit {
         this.verifyTeachersDataModal?.show();
       });
     };
-    if(file) FILE_READER.readAsText(file, 'ISO-8859-1');
+    if(file) {
+      FILE_READER.readAsText(file, 'ISO-8859-3');
+      this.step = 3;
+    }
   }
 
   FormatData(teachers: Array<any>) {
@@ -79,7 +84,11 @@ export class TeachersCsvComponent implements OnInit {
     return teachers.map(teacher => {
       let teacherFormatted: any = {};
       this.dataConversions.forEach(conversion => {
-        teacherFormatted[conversion.newKey] = teacher[conversion.oldKey];
+        if(conversion.newKey == 'extracurricular') {
+          let yesCases = ['si', '1', 1];
+          teacherFormatted[conversion.newKey] = yesCases.includes(teacher[conversion.oldKey]?.toLowerCase());
+        }
+        else teacherFormatted[conversion.newKey] = teacher[conversion.oldKey];
       });
       teacherFormatted.subjects = teacherFormatted.subjects.split(',').map((s: string) => s.trim());
       teacherFormatted.schoolUserId = user.id;

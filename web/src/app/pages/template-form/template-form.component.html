@@ -3,7 +3,7 @@
 
     </div>
 
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between" *ngIf="!loading.getting; else bigLoading">
         <div class="back-section">
             <img class="back-icon clickeable" src="assets/icons/back-arrow.png" alt="back-arrow" (click)="GoBack()">
         </div>
@@ -11,7 +11,7 @@
             <div class="title">
                 Proyectos
             </div>
-            <div class="subtitle text-uppercase">
+            <div class="subtitle text-uppercase" *ngIf="grade && group">
                 {{grade + "°" + group}}
             </div>
             <div class="text">
@@ -22,7 +22,7 @@
                         class="form-control with-border"
                         [items]="teacherSubjects"
                         bindLabel="name"
-                        placeholder="Asignaturas"
+                        placeholder="Campos formativos"
                         (change)="OnSelectedSubjectsChange($event); subjectsSelect.handleClearClick()">
                     </ng-select>
                 </div>
@@ -82,10 +82,16 @@
             </div>
         </div>
         <div class="controls mb-5">
-            <button class="btn btn-primary" *ngIf="selectedSubjects?.length" [disabled]="!AreFormsValid() || loading" (click)="CreateNewProyect()">
-                <span *ngIf="loading"><i class="zmdi zmdi-spinner zmdi-hc-lg zmdi-hc-spin"></i></span>
-                <span *ngIf="!loading">Continuar</span>
+            <button class="btn btn-primary" *ngIf="selectedSubjects?.length" [disabled]="loading.saving" (click)="SaveStragey()">
+                <span *ngIf="loading.saving"><i class="zmdi zmdi-spinner zmdi-hc-lg zmdi-hc-spin"></i></span>
+                <span *ngIf="!loading.saving">Continuar</span>
             </button>
         </div>
     </div>
 </div>
+
+<ng-template #bigLoading>
+    <div class="d-flex align-items-center justify-content-center">
+        <i class="zmdi zmdi-spinner zmdi-hc-5x zmdi-hc-spin"></i>
+    </div>
+</ng-template>

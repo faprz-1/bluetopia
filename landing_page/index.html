@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="font-size: 16px; font-family: 'Mulish',sans-serif;">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bluetopia</title>
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.png">
     <!-- Bootstrap -->
     <link rel='stylesheet' type='text/css' media='screen' href='./Bootstrap_5/bootstrap.min.css'>
     <script src='./Bootstrap_5/bootstrap.bundle.min.js'></script>
@@ -12,7 +14,8 @@
     <!-- Popper.js -->
     <script src='./Bootstrap_5/popper.min.js'></script>
     <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
     <!-- Global styles -->
     <link rel='stylesheet' type='text/css' media='screen' href='./index.styles.css'>
     <!-- Global Logic JS -->
@@ -22,43 +25,59 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mulish&display=swap" rel="stylesheet">
 </head>
-<body style="font-size: 16px; font-family: 'Mulish',sans-serif;">
-    <div class="content">
-        <div class="header">
-            <img class="header-img" src="assets/img/project_name_small.png" alt="bluetopia">
 
-            <div class="social-media-container">
-                <img src="assets/icons/facebook.png" alt="Facebook">
-                <img src="assets/icons/instagram.png" alt="Instagram">
-                <img src="assets/icons/twitter.png" alt="Twitter">
-                <img src="assets/icons/youtube.png" alt="YouTube">
+<body>
+    <div class="header animated" id="header">
+        <img class="header-img clickable hide-xs hide-sm" src="assets/img/project_name_small.png" alt="bluetopia"
+        onclick="ScrollToElement('home')">
+        <img class="clickable header-img-small hide-md hide-lg hide-xl" src="assets/icons/bluetopia-icon-alt.png"
+        alt="bluetopia" onclick="ScrollToElement('home')">
+        
+        <div class="social-media-container">
+            <img class="clickeable" src="assets/icons/facebook.png" onclick="GoToSocialMedia('fb')" alt="Facebook">
+            <img class="clickeable" src="assets/icons/instagram.png" onclick="GoToSocialMedia('in')"
+            alt="Instagram">
+            <img class="clickeable" src="assets/icons/twitter.png" onclick="GoToSocialMedia('tt')" alt="Twitter">
+            <img class="clickeable" src="assets/icons/youtube.png" onclick="GoToSocialMedia('yt')" alt="YouTube">
+        </div>
+        <div class="menu-container">
+            <div class="menu-option menu-option-hide clickeable menu-option-active" id="header-home"
+                onclick="ScrollToElement('home')">Inicio</div>
+            <div class="menu-option menu-option-hide clickeable" id="header-functions" onclick="ScrollToElement('functions')"> 
+                Funciones</div>
+            <div class="menu-option menu-option-hide clickeable" id="header-objectives" onclick="ScrollToElement('objectives')">
+                Objetivos</div>
+            <div class="menu-option menu-option-hide clickeable" id="header-features" onclick="ScrollToElement('features')">
+                Características</div>
+            <div class="menu-option menu-option-hide clickeable" id="header-contact-us" onclick="ScrollToContactUs()">Contacto
             </div>
-
-            <div class="menu-container">
-                <div class="menu-option menu-option-active">Inicio</div>
-                <div class="menu-option">Objetivos</div>
-                <div class="menu-option">Caracteristícas</div>
-                <div class="menu-option">Prueba</div>
-                <div class="menu-option">Contacto</div>
-                <div class="menu-option">
-                    <button class="btn btn-success btn-header">
-                        Registrarme
-                    </button>
-                </div>
-                <div class="menu-option">
-                    <button class="btn btn-outline-primary btn-header">
-                        Ingresar
-                    </button>
-                </div>
+            <div class="menu-option clickeable">
+                <button class="btn btn-success btn-header" onclick="GoToRegister()">
+                    Registrarme
+                </button>
+            </div>
+            <div class="menu-option clickeable">
+                <button class="btn btn-outline-primary btn-header" onclick="GoToRegister()">
+                    Ingresar
+                </button>
+            </div>
+        
+            <div class="menu-option-small text-primary clickeable" onclick="GoToRegister()">
+                <i class="zmdi zmdi-sign-in zmdi-hc-2x"></i>
             </div>
         </div>
+        </div>
+        <div class="content">
 
-        <div class="row justify-content-center mb-5">
+        <a href="https://api.whatsapp.com/send?phone=523332015625&text=Hola, Necesito más información!"
+            target="_blank"><img class="fab-icon" src="assets/img/whatsapp.png" alt="Envíanos un mensaje"></a>
+
+        <div class="row justify-content-center" id="home">
             <div class="col-12 col-md-11 col-lg-10 px-4">
                 <div class="section-container">
                     <div class="left-title">
                         <div class="title text-uppercase">
-                            Innovacion Digital
+                            Innovación Digital
                         </div>
                         <div class="subtitle text-lowercase">
                             Para una educación por nuestro planeta
@@ -67,103 +86,199 @@
                             Invita a la creatividad del docente y facilita el aprendizaje activo de cada alumno
                         </div>
                         <div>
-                            <button class="btn btn-success btn-title">
-                                Conocer más
+                            <button class="btn btn-success btn-title" onclick="ScrollToContactUs()">
+                                Contáctanos
                             </button>
                         </div>
                     </div>
-                    
-                    <div class="title-img-container">
-                        <img src="assets/img/register.png" alt="Registro">
-                        <img src="assets/img/templates.png" alt="Registro">
-                    </div>
-                </div>
 
-                <div class="texts-container">
-                    <div class="text text-center d-inline-block" style="max-width: 808px; margin-bottom: 2.5rem;">
-                        Facilitamos el diseño de experiencias de aprendizaje a través de herramientas y contenidos digitales atractivos para los alumnos de hoy.
-                    </div>
-                    <div class="text text-center d-inline-block" style="max-width: 1000px;">
-                        Promovemos la educación para la sostenibilidad en los niveles de educación básica a través de una solución tecnológica que facilita la implementación de distintas metodologías activas.
+                    <div class="d-flex align-items-center">
+                        <img class="img-fluid hide-xs hide-sm" src="assets/img/graphic.png" alt="Registro">
+                        <img class="img-fluid hide-xs hide-sm" src="assets/img/templates-home.png" alt="Registro">
                     </div>
                 </div>
 
             </div>
         </div>
-        <div class="row justify-content-center mb-5" style="background-color: rgba(236, 240, 240, 0.4); margin-top: 6rem;">
-            <div class="col-12 col-md-11 col-lg-10 px-4">
-                <div class="section-container benefits-container justify-content-around">
-                    <div class="images-collage">
-                        <div class="position-relative w-100" style="height: 100px; margin-bottom: 2rem;">
-                            <img style="position: absolute; left: -20%;" src="assets/icons/classroom.png" alt="Clases">
-                        </div>
-                        <img src="assets/img/program_window.png" alt="Programas">
-                        <div class="position-relative w-100" style="margin-bottom: 1.375rem;">
-                            <img style="position: absolute; right: -45%; top: -50px;" src="assets/icons/father-student.png" alt="Clases">
-                        </div>
-                        <img src="assets/icons/reading.png" alt="Leyendo">
-                    </div>
-                    <div class="info-section">
-                        <div class="title-2 text-success" style="margin-bottom: 1.5rem;">Beneficios</div>
-                        <div class="text-2" style="margin-bottom: 3rem;">
-                            La plataforma permite <b>diseñar, gestionar, implementar, evaluar y retroalimentar</b> una gran variedad de experiencias de aprendizaje enfocadas a temas de sostenibilidad con el soporte y apoyo de plantillas, recursos confiables y actuales, además de herramientas que permiten gestionar de forma rápida y sencilla la implementación de las experiencias de aprendizaje.
-                        </div>
-                        <div class="text-2">
-                            La plataforma permite la <b>colaboración</b> entre el equipo docente, así mismo, acerca al padre de familia a descubrir el avance en desarrollo de competencias que su hijo va logrando y al alumno le brinda la posibilidad de participar en su propio proceso de desarrollo. Respondemos de forma innovadora a las necesidades educativas para impactar favorablemente en el planeta.
-                        </div>
-                    </div>
-                </div>
+
+        <div class="triangles-container" style="margin-top: 15rem;">
+            <div class="d-flex top-img justify-content-center hide-xs hide-sm">
+                <img class="img-fluid" src="assets/img/plant.png">
             </div>
-        </div>
-        
-        <div class="row justify-content-center mb-5">
-            <div class="col-12 col-md-11 col-lg-10 px-4 text-center">
-                <div class="title-2 text-primary text-center" style="margin-bottom: .75rem;">Retos</div>
-                <div class="text-2 text-center d-inline-block" style="max-width: 1020px;">
-                    <div>
-                        Identificamos los siguientes retos cuando se desarrollan proyectos y acciones de sostenibilidad.
-                    </div>
-
-                    <div class="challenges-container">
-                        <div class="challenge">
-                            <div class="subtitle-2 text-success">Desfinformación</div>
-                            <div class="text-center">
-                                <img style="width: min-content;" src="assets/icons/money-window.png" alt="Desiinformación">
-                            </div>
-                            <div class="text-big">
-                                Caros, difíciles y poco rentables
-                            </div>
+            <img class="green-triangle" src="assets/img/green-bg.png">
+            <img class="blue-triangle" src="assets/img/blue-bg.png">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-11 col-lg-10 px-4" style="overflow-x: hidden;">
+                    <div class="position-relative">
+                        <img src="assets/icons/bluetopia-icon.png">
+                        <div class="tools-icon">
+                            <img src="assets/icons/tools.png">
                         </div>
-                        <div class="challenge">
-                            <div class="subtitle-2 text-success">Desconocimiento</div>
-                            <div class="text-center">
-                                <img style="width: min-content;" src="assets/icons/user-question.png" alt="Desiinformación">
-                            </div>
-                            <div class="text-big">
-                                Quiero pero no sé cómo
-                            </div>
+                        <div class="box-tools-icon">
+                            <img src="assets/icons/box-tools.png">
                         </div>
                     </div>
-
-                    <div class="text-center d-inline-block" style="max-width: 1100px; margin: 2.5rem 0 2.25rem 0;">
-                        En la docencia <b>no hay suficientes capacitaciones, ni suficiente acompañamiento</b> para las nuevas metodologías, por lo tanto hay una baja calidad por parte de los profesores hacia la forma de impartir clases a los alumnos.
-                    </div>
-                    <div class="text-center d-inline-block" style="max-width: 1100px;">
-                        De igual manera el actual sistema educativo hace que los estudiantes <b>trabajen de manera aislada</b> y <b>no promueven la cooperación</b>. También hay luchas aisladas en el tema de la sostenibilidad y no genera un cambio de fondo en la cultura.
-                    </div>
-
-                    <div class="text-center">
-                        <button class="btn btn-outline-primary contact-us-button">
-                            Contactános
+                    <div class="title text-white" style="margin: 1.75rem 0 1.5rem 0;">Bluetopia</div>
+                    <div class="d-flex align-items-end" style="flex-wrap: wrap;">
+                        <div class="triangles-text">
+                            Podrás diseñar, gestionar, implementar, evaluar y retroalimentar una gran variedad de
+                            experiencias de aprendizaje enfocadas a temas de sostenibilidad
+                        </div>
+                        <button class="btn btn-success hire-button" onclick="GoToRegister()">
+                            Registrarme
                         </button>
                     </div>
+                    <div class="d-flex align-items-start hide-xs hide-sm" style="margin-top: 3.5rem; z-index: -1;">
+                        <img class="platform-img" style="width: 400px !important;" src="assets/img/parent-dashboard.jpg">
+                        <img class="platform-img" style="width: 370px !important;" src="assets/img/teachers.jpg">
+                        <img class="platform-img" style="width: 310px !important;" src="assets/img/create-event.jpg">
+                    </div>
+                </div>
+            </div>
+            <div class="bluetopia-bg-legend"></div>
+        </div>
+
+        <div class="row justify-content-center mb-5" style="margin-top: 5rem;">
+            <img class="img-center mb-5" src="assets/img/world.png">
+            <div class="col-12 col-md-11 col-lg-10 px-4 text-center">
+                <div class="text-2 text-center d-inline-block" style="max-width: 1020px;">
+                    <div class="text-center d-inline-block" style="max-width: 1100px; margin: 2.5rem 0 2.25rem 0;">
+                        Promovemos la <b class="text-primary">educación para la sostenibilidad</b> en las primarias
+                        a través
+                        de
+                        una solución tecnológica que facilita la implementación de distintas <b
+                            class="text-success">metodologías activas.</b>
+                    </div>
+                </div>
+                <div class="text-2 text-center d-inline-block" style="max-width: 1020px;">
+                    <div class="text-center d-inline-block" style="max-width: 1100px; margin: 2.5rem 0 2.25rem 0;">
+                        Facilitamos el diseño de experiencias de aprendizaje a través de <b>herramientas y
+                            contenidos digitales</b> atractivos para los alumnos de hoy.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row justify-content-center" id="functions"
+            style="padding: 2rem 0; background: #26D7A4; margin-top: 10rem;">
+            <div class="col-12 col-md-11 col-lg-10 px-4">
+                <div class="functions">
+                    <div class="functions-title">
+                        <div class="title text-white m-0">Funciones</div>
+                        <div class="subtitle-2 text-white">De la plataforma</div>
+                    </div>
+                    <div class="functions-container">
+                        <div class="function text-white function-bold">Datos</div>
+                        <div class="function text-white">Gestión</div>
+                        <div class="function text-white function-bold">Procesos</div>
+                        <div class="function text-white">Resultados</div>
+                        <div class="function text-white function-bold">Vinculación</div>
+                        <div class="function text-white">Contenidos</div>
+                        <div class="function text-white function-bold">Expedientes</div>
+                        <div class="function text-white">Investigación</div>
+                        <div class="function text-white function-bold">Metodologías</div>
+                        <div class="function text-white">Gamificación</div>
+                        <div class="function text-white function-bold">Visualización</div>
+                        <div class="function text-white">Estadísticas</div>
+                        <div class="function text-white function-bold">Innovación</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="row justify-content-center mb-5" style="margin-top: 6rem;">
+        <div class="row text-center justify-content-center position-relative" style="margin-top:10rem;">
+            <div class="col-12 px-4 text-center">
+                <div class="title-2 text-success text-center text-uppercase" style="margin-bottom: .75rem;">Beneficios
+                </div>
+            </div>
+
+            <div class="col-12 mt-5 row  justify-content-center">
+                <div class="col-md-8 col-lg-8 align-items-center row justify-content-center">
+                    <div class="col-12 col-md-6 text-start text-2">
+                        <b class="text-primary ml-3">Diseña, gestiona y evalúa</b> a través de experiencias de
+                        aprendizaje
+                        sencillas de diseñar con plantillas y recursos.
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <img class="img-fluid" style="height:8rem;" src="assets/icons/design.png" alt="Diseña">
+                    </div>
+                </div>
+                <div class="col-md-8 col-lg-8 mt-5 row align-items-center justify-content-center">
+                    <div class="col-12 col-md-6 text-start text-2">
+                        Responde de <b class="text-primary">forma innovadora</b> a las necesidades de tus alumnos con
+                        ayuda de la tecnología.
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <img class="img-fluid" style="height:8rem;" src="assets/icons/innovate.png" alt="Innova">
+                    </div>
+                </div>
+                <div class="col-md-8 col-lg-8 mt-5 row align-items-center justify-content-center">
+                    <div class="col-12 col-md-6 text-start text-2">
+                        Abre <b class="text-primary"> espacios de colaboración y comunicación</b> para compartir
+                        los
+                        procesos de aprendizaje en tu comunidad escolar.
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <img class="img-fluid" style="height:6rem;" src="assets/icons/sharing.png" alt="Comparte">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center position-relative"
+            style=" background-color: #F8F9F9; margin-top:15rem; padding-bottom: 10rem; z-index: -1;" id="challenges">
+            <div class="grey-triangle-bottom-right margin"
+                style="height: 350px; position: absolute; bottom: 100%; z-index: -1;"></div>
+
+            <div class="col-12 px-4 text-center">
+                <div class="title-2 text-primary text-center text-uppercase" style="margin-bottom: .75rem;">Retos
+                </div>
+            </div>
+            <div class="col-12 px-4 text-center">
+                <div class="text-2 text-center" style="margin-bottom: .75rem;">Al desarrollar proyectos y acciones
+                    de
+                    sostenibilidad</div>
+            </div>
+            <div class="col-12 text-center row justify-content-center">
+                <div class="col-md-12 col-lg-3 row align-items-end">
+                    <div class="col-12 mb-3"><b class="text-primary">Desinformación</b> </div>
+                    <div class="col-12">
+                        <img class="img-fluid" src="assets/icons/expensive.png" alt="Desinformación">
+                    </div>
+                    <div class="col-12" style="color: #587594;">Caros, difíciles y poco rentables</div>
+                </div>
+                <div class="col-md-12 col-lg-3 row align-items-end">
+                    <div class="col-12 mb-3"><b class="text-primary">Desconocimiento</b> </div>
+                    <div class="col-12">
+                        <img class="img-fluid" src="assets/icons/question.png" alt="Desconocimiento">
+                    </div>
+                    <div class="col-12" style="color: #587594;">Quiero, pero no sé cómo</div>
+                </div>
+                <div class="col-md-12 col-lg-3 row align-items-end">
+                    <div class="col-12 mb-3"><b class="text-primary">Desactualización</b> </div>
+                    <div class="col-12">
+                        <img class="img-fluid" src="assets/icons/outdated.png" alt="Desactualización">
+                    </div>
+                    <div class="col-12" style="color: #587594;">Requiero ayuda constante</div>
+                </div>
+                <div class="col-md-12 col-lg-3 row align-items-end">
+                    <div class="col-12 mb-3"><b class="text-primary">Desconexión</b> </div>
+                    <div class="col-12">
+                        <img class="img-fluid" src="assets/icons/fishes.png" alt="Desconexión">
+                    </div>
+                    <div class="col-12" style="color: #587594;">Escasez de espacios de cooperación</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center" style="margin: 6rem 0 12rem 0;margin-top: 10rem;">
             <div class="col-12 col-md-11 col-lg-10 px-4 text-center">
-                <div class="title text-success">Componentes de la plataforma</div>
+                <div class="title text-success text-uppercase d-none d-lg-block d-xl-block">
+                    Componentes de la plataforma
+                </div>
+                <div class="subtitle-3 text-success text-uppercase hide-lg hide-xl d-block d-sm-block d-md-block">
+                    Componentes de la plataforma
+                </div>
 
                 <div class="components-container">
                     <div class="components-title">
@@ -171,25 +286,25 @@
                         <div class="text" style="font-weight: 500;">nivel básico</div>
                     </div>
                     <div class="platform-component">
-                        <div class="component-icon">
+                        <div class="component-icon" id="component-1" onmouseover="OnComponentHover('component-1')">
                             <img src="assets/icons/steam.png" alt="Enfoque STEAM">
                         </div>
                         <div class="component-name">Enfoque STEAM</div>
                     </div>
                     <div class="platform-component">
-                        <div class="component-icon">
+                        <div class="component-icon" id="component-2" onmouseover="OnComponentHover('component-2')">
                             <img src="assets/icons/daily-life.png" alt="Vida diaria">
                         </div>
                         <div class="component-name">Vida diaria</div>
                     </div>
                     <div class="platform-component">
-                        <div class="component-icon">
+                        <div class="component-icon" id="component-3" onmouseover="OnComponentHover('component-3')">
                             <img src="assets/icons/learning.png" alt="Aprendizaje significativo">
                         </div>
                         <div class="component-name">Aprendizaje significativo</div>
                     </div>
                     <div class="platform-component">
-                        <div class="component-icon">
+                        <div class="component-icon" id="component-4" onmouseover="OnComponentHover('component-4')">
                             <img src="assets/icons/habit-change.png" alt="Cambio de hábitos">
                         </div>
                         <div class="component-name">Cambio de hábitos</div>
@@ -198,133 +313,159 @@
             </div>
         </div>
 
-        <div class="row justify-content-center mb-5">
-            <div class="title text-primary text-center" style="font-weight: 700;">Objetivos</div>
-            <div class="col-12 col-md-11 col-xl-10">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="text-start">
-                        <div class="subtitle-3 text-primary" style="margin-bottom: 1.5rem;">¿Qué hacemos?</div>
-                        <div class="text" style="max-width: 865px;">
-                            Promovemos la <b class="text-success">educación para la sostenibilidad</b> en las primarias a través de una <b>solución tecnológica</b> que facilita la implementación de distintas metodologías activas.
+        <div class="row justify-content-center position-relative"
+            style=" background-color: #F8F9F9; margin-top:15rem; padding-bottom: 15rem; z-index: -1; height: 100%; width: auto;"
+            id="objectives">
+            <div class="grey-triangle-bottom-left margin"
+                style="height: 350px; position: absolute; bottom: 100%; z-index: -1;"></div>
+            <img class="mobile-hide objective-bush" src="assets/img/bush.png" style="width: 100%; height: 100%;">
+            <img class="mobile-hide objective-white-bg" src="assets/img/white-bg.png"
+                style="width: 100%; height: 100%;">
+            <div class="title text-primary text-center text-uppercase" style="margin-bottom: 0;">
+                Objetivos
+            </div>
+            <div class="col-12 col-md-11 col-xl-10 px-4 mt-5">
+                <div class="row d-flex justify-content-between align-items-center">
+                    <div class="text-start col-12 col-md-6">
+                        <div class="subtitle-3 text-primary" style="margin-bottom: 2rem;">¿Qué hacemos?</div>
+                        <div class="text-2" style="max-width: 865px;">
+                            En nuestra organización, nos enfocamos en <b class="text-primary">promover la educación</b> para la sostenibilidad en niveles de educación básica. Para ello, ofrecemos una 
+                            <b class="text-success">solución tecnológica</b> de vanguardia que facilita la implementación de diversas
+                            metodologías activas. Únete a nosotros y sé parte del cambio hacia un futuro
+                            más sostenible.
                         </div>
-                        <button name="register-btn" class="btn btn-primary btn-register">
+                        <button class="btn btn-success btn-register mt-5" onclick="GoToRegister()">
                             Registrarme
                         </button>
                     </div>
-                    <img src="assets/img/target.png" alt="Objetivos">
+                    <img class="img-fluid objective-img position-absolute col-4 hide-xs hide-sm"
+                        src="assets/img/circles-target.png" style="right: 0; z-index: -1;" alt="Objetivos">
                 </div>
-                
+            </div>
+        </div>
+        <div class="row justify-content-center" style="margin-top: 1rem">
+            <div class="col-12 col-md-11 col-xl-10 px-4">
                 <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 3rem;">
-                    <img src="assets/img/laptop.png" alt="Laptop">
+                    <img class="objective-img hide-xs hide-sm" src="assets/img/laptop.png" alt="Laptop">
                     <div class="text-end">
                         <div class="subtitle-3 text-primary" style="margin-bottom: 1.5rem;">¿Cómo?</div>
-                        <div class="text" style="max-width: 865px;">
-                            La plataforma permite diseñar, gestionar, implementar, evaluar y retroalimentar una gran <b>variedad de experiencias de aprendizaje</b> <b class="text-success">enfocadas a temas de sostenibilidad</b> con el <b class="text-primary">soporte y apoyo</b> de plantillas, recursos confiables y actuales, además de herramientas que permiten gestionar de forma rápida y sencilla la implementación de las experiencias de aprendizaje.
+                        <div class="text-2" style="max-width: 865px;">
+                            La plataforma permite diseñar, gestionar, implementar, evaluar y retroalimentar una gran
+                            <b>variedad de experiencias de aprendizaje</b> <b class="text-success">enfocadas a temas de
+                                sostenibilidad</b> con el <b class="text-primary">soporte y apoyo</b> de plantillas,
+                            recursos confiables y actuales, además de herramientas que permiten gestionar de forma
+                            rápida y sencilla la implementación de las experiencias de aprendizaje.
                         </div>
-                        <button name="register-btn" class="btn btn-outline-primary btn-register">
-                            Registrarme
-                        </button>
                     </div>
                 </div>
-                
+            </div>
+        </div>
+        <div class="row justify-content-center" style="margin-bottom: 15%;">
+            <div class="col-12 col-md-11 col-xl-10 px-4">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="text-start">
                         <div class="subtitle-3 text-primary" style="margin-bottom: 1.5rem;">¿Para qué?</div>
-                        <div class="text" style="max-width: 865px;">
-                            Para <b>transformar</b> la cultura de la comunidad escolar incidiendo en los padres de familia, el equipo docente y los alumnos, llevándolos a <b class="text-primary">comprender, valorar, proponer y aplicar</b> estrategias de <b class="text-success">cuidado responsable del planeta.</b>
+                        <div class="text-2" style="max-width: 865px;">
+                            Para <b>transformar</b> la cultura de la comunidad escolar incidiendo en los padres de
+                            familia, el equipo docente y los alumnos, llevándolos a <b class="text-primary">comprender,
+                                valorar, proponer y aplicar</b> estrategias de <b class="text-success">cuidado
+                                responsable del planeta.</b>
                         </div>
-                        <button name="register-btn" class="btn btn-success btn-register">
-                            Registrarme
-                        </button>
                     </div>
-                    <img src="assets/img/ecofriendly.png" alt="Laptop">
+                    <img class="objective-img hide-xs hide-sm" src="assets/img/ecofriendly.png" alt="Laptop">
                 </div>
             </div>
         </div>
 
-        <div class="row justify-content-center mb-5 position-relative" style="background-color: #F8F9F9; padding: 6rem 0 7.75rem 0;">
+        <div class="row justify-content-center mb-5 position-relative" id="features"
+            style="background-color: #F8F9F9; padding: 4rem 0 7.75rem 0;">
+            <div class="grey-triangle-bottom-right margin"
+                style="height: 350px; position: absolute; bottom: 100%; z-index: -1;"></div>
             <img class="img-bottom" src="assets/img/play-box.png">
             <div class="col-12 col-md-11 col-lg-10 px-4">
-                <div class="title text-success">Características pedagógicas</div>
+                <div class="title text-success text-uppercase d-none d-lg-block d-xl-block">Características</div>
+                <div class="title text-success text-uppercase mb-5 d-none d-lg-block d-xl-block">pedagógicas</div>
+                <div class="subtitle-3 text-success text-uppercase hide-lg hide-xl d-block d-sm-block d-md-block">
+                    Características
+                </div>
+                <div class="subtitle-3 text-success text-uppercase hide-lg hide-xl d-block d-sm-block d-md-block">
+                    pedagógicas
+                </div>
                 <div class="text" style="max-width: 850px;">
                     La plataforma integra una serie de propuestas metodológicas alineadas al aprendizaje activo.
                 </div>
-                
+
                 <div class="features-container">
-                    <div class="feature feature-active">
-                        <div class="feature-number">
+                    <div class="feature animated-short" id="feature-1" onmouseover="OnFeatureHover('feature-1')">
+                        <div class="feature-number animated-short">
                             1
                         </div>
                         <div class="feature-description">
-                            <b>Favorece</b> la creatividad e innovación docente al guiar de una forma flexible y abierta la creación de experiencias de aprendizaje activo.
+                            <b>Favorece</b> la creatividad e innovación docente al guiar de una forma flexible y abierta
+                            la creación de experiencias de aprendizaje activo.
                         </div>
                     </div>
-                    <div class="feature">
-                        <div class="feature-number">
+                    <div class="feature animated-short" id="feature-2" onmouseover="OnFeatureHover('feature-2')">
+                        <div class="feature-number animated-short">
                             2
                         </div>
                         <div class="feature-description">
-                            <b>Facilita</b> el diseño, planeación y gestión de las experiencias de aprendizaje activo a través de plantillas prediseñadas de fácil uso.
+                            <b>Facilita</b> el diseño, planeación y gestión de las experiencias de aprendizaje activo a
+                            través de plantillas prediseñadas de fácil uso.
                         </div>
                     </div>
-                    <div class="feature">
-                        <div class="feature-number">
+                    <div class="feature animated-short" id="feature-3" onmouseover="OnFeatureHover('feature-3')">
+                        <div class="feature-number animated-short">
                             3
                         </div>
                         <div class="feature-description">
-                            <b>Incorpora</b> metodologías innovadoras que facilitan el aprendizaje significativo en contenidos relevantes y actuales para fomentar una cultura de sostenibilidad.
+                            <b>Incorpora</b> metodologías innovadoras que facilitan el aprendizaje significativo en
+                            contenidos relevantes y actuales para fomentar una cultura de sostenibilidad.
                         </div>
                     </div>
-                    <div class="feature">
-                        <div class="feature-number">
+                    <div class="feature animated-short" id="feature-4" onmouseover="OnFeatureHover('feature-4')">
+                        <div class="feature-number animated-short">
                             4
                         </div>
                         <div class="feature-description">
-                            <b>Desarrolla</b> competencias del siglo XXI como son la creatividad, la curiosidad, el pensamiento crítico, la comunicación, la colaboración, la ciudadanía digital y global, la formación del carácter, entre otras.
+                            <b>Desarrolla</b> competencias del siglo XXI como son la creatividad, la curiosidad, el
+                            pensamiento crítico, la comunicación, la colaboración, la ciudadanía digital y global, la
+                            formación del carácter, entre otras.
                         </div>
                     </div>
-                    <div class="feature">
-                        <div class="feature-number">
+                    <div class="feature animated-short" id="feature-5" onmouseover="OnFeatureHover('feature-5')">
+                        <div class="feature-number animated-short">
                             5
                         </div>
                         <div class="feature-description">
-                            <b>Incluye</b> sugerencias que ayudan al docente a mejorar su práctica docente pues tiene al alcance estrategias concretas basadas en la cultura del pensamiento, la comprensión profunda y la posibilidad de hacer visible el pensamiento.
+                            <b>Incluye</b> sugerencias que ayudan al docente a mejorar su práctica docente pues tiene al
+                            alcance estrategias concretas basadas en la cultura del pensamiento, la comprensión profunda
+                            y la posibilidad de hacer visible el pensamiento.
                         </div>
                     </div>
-                    <div class="feature">
-                        <div class="feature-number">
+                    <div class="feature animated-short" id="feature-6" onmouseover="OnFeatureHover('feature-6')">
+                        <div class="feature-number animated-short">
                             6
                         </div>
                         <div class="feature-description">
-                            <b>Proporciona</b> instrumentos de evaluación formativa como rúbricas, diarios de aprendizaje, listas de cotejo entre otras, ayudando a enfocar los esfuerzos docentes para evaluar de forma integral y significativa a sus alumnos.
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-number">
-                            7
-                        </div>
-                        <div class="feature-description">
-                            <b>Proporciona</b> instrumentos de evaluación formativa como rúbricas, diarios de aprendizaje, listas de cotejo entre otras, ayudando a enfocar los esfuerzos docentes para evaluar de forma integral y significativa a sus alumnos.
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-number">
-                            8
-                        </div>
-                        <div class="feature-description">
-                            Facilita el diseño, planeación y gestión de las experiencias de aprendizaje activo a través de plantillas prediseñadas de fácil uso.
+                            <b>Proporciona</b> instrumentos de evaluación formativa como rúbricas, diarios de
+                            aprendizaje, listas de cotejo entre otras, ayudando a enfocar los esfuerzos docentes para
+                            evaluar de forma integral y significativa a sus alumnos.
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row justify-content-center" style="margin: 11rem 0;">
+        <div class="row justify-content-center" style="margin: 11rem 0; margin-top: 10rem;">
             <div class="col-12 col-md-11 col-lg-10 px-4">
-                <div class="subtitle-3 text-primary text-center" style="margin-bottom: 1.5rem;">Basada en contenidos y procesos de aprendizaje</div>
+                <div class="subtitle-3 text-primary text-center text-uppercase mb-5" style="margin-bottom: 1.5rem;">
+                    Relación
+                    familia e institución</div>
                 <div class="templates-container">
                     <div class="template">
-                        <div class="template-icon-container">
+                        <div class="template-icon-container" id="template-1"
+                            onmouseover="OnTemplateHover('template-1')">
                             <img src="assets/icons/school.png" alt="Proyectos escolares">
                         </div>
                         <div class="template-name">
@@ -332,15 +473,17 @@
                         </div>
                     </div>
                     <div class="template">
-                        <div class="template-icon-container">
-                            <img src="assets/icons/science.png" alt="Basada en contenidos y procesos de aprendizaje">
+                        <div class="template-icon-container" id="template-2"
+                            onmouseover="OnTemplateHover('template-2')">
+                            <img src="assets/icons/science.png" alt="Relación familiar e institucional">
                         </div>
                         <div class="template-name">
                             Basada en contenidos y procesos de aprendizaje
                         </div>
                     </div>
                     <div class="template">
-                        <div class="template-icon-container">
+                        <div class="template-icon-container" id="template-3"
+                            onmouseover="OnTemplateHover('template-3')">
                             <img src="assets/icons/students-chatting.png" alt="Colaboración entre grupos y escuelas">
                         </div>
                         <div class="template-name">
@@ -348,7 +491,8 @@
                         </div>
                     </div>
                     <div class="template">
-                        <div class="template-icon-container">
+                        <div class="template-icon-container" id="template-4"
+                            onmouseover="OnTemplateHover('template-4')">
                             <img src="assets/icons/book.png" alt="Contenidos transversales">
                         </div>
                         <div class="template-name">
@@ -359,92 +503,163 @@
             </div>
         </div>
 
-        <div class="row justify-content-center" style="padding: 4rem 0;background: rgba(236, 240, 240, 0.4);">
-            <div class="col-12 col-md-11 col-lg-10 px-4">
-                <div class="functions">
-                    <div class="functions-title">
-                        <div class="title text-success m-0">Funciones</div>
-                        <div class="subtitle-2 text-success">De la plataforma</div>
+
+        <div class="row justify-content-center price-section hide-xs hide-sm" style="margin-top: 10rem;">
+            <div class="col-2 mt-5 mb-5">
+                <img class="img-fluid" src="assets/img/drops-left.png" alt="">
+            </div>
+            <div class="col mt-5 mb-5">
+                <div class="section-container">
+                    <div class="left-title">
+                        <img class="mb-3" src="assets/img/Img-logo.png" alt="Bluetopia" style="margin-top: 20%;">
+                        <div class="text white-text">La mejor plataforma
+                            educativa, especializada en 
+                        temas de sostenibilidad</div>
+                            <button class="btn btn-success btn-title m-5" onclick="ScrollToContactUs()">
+                                Más información
+                            </button>
+
                     </div>
-                    <div class="functions-container">
-                        <div class="function text-success function-bold">Datos</div>
-                        <div class="function text-success">Gestión</div>
-                        <div class="function text-success function-bold">Procesos</div>
-                        <div class="function text-success">Resultados</div>
-                        <div class="function text-success function-bold">Vincuñación</div>
-                        <div class="function text-success">contenidos</div>
-                        <div class="function text-success function-bold">Expedientes</div>
-                        <div class="function text-success">Investigación</div>
-                        <div class="function text-success function-bold">Metodologías</div>
-                        <div class="function text-success">Gamificación</div>
-                        <div class="function text-success function-bold">Visualización</div>
-                        <div class="function text-success">Estadísticas</div>
-                        <div class="function text-success function-bold">Innovación</div>
+                </div>
+            </div>
+            <div class="col mt-5 mb-5 row align-items-end">
+                <b class="title white-text" style="margin-top: 60%; margin-bottom: 0;">$500 MXN</b>
+                <div class="text white-text" style="margin-bottom: 20%;">anuales por estudiante</div>
+            </div>
+            <div class="col-2 row align-items-end">
+                <img class="img-fluid" src="assets/img/drops-right.png" alt="">
+            </div>
+        </div>
+        <div class="row justify-content-center price-section hide-md hide-lg hide-xl" style="margin-top: 10rem;">
+            <div class="col-12">
+                <div class="section-container">
+                    <div class="text-center">
+                        <img class="img-fluid mt-5 ms-2 me-3" src="assets/img/Img-logo.png" alt="Bluetopia">
+                        <div class="text white-text mt-2">La mejor plataforma
+                        educativa especializada en 
+                    temas de  sostenibilidad</div>
+                    <b class="title white-text">$500 MXN</b>
+                    <div class="text white-text">anuales por estudiante</div>
+                            <button class="btn btn-success btn-title m-5" onclick="ScrollToContactUs()">
+                                Más información
+                            </button>
+
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row justify-content-center" style="margin: 5rem 0 3.125rem 0;">
+        <div class="row justify-content-center" id="contact-us" style="margin: 11rem 0; margin-top: 10rem;">
             <div class="col-12 col-md-11 col-lg-10 px-4">
                 <div class="d-flex justify-content-around align-items-center">
                     <div>
                         <div class="title text-center">Contacto</div>
-                        <form class="text-center">
+                        <form class="text-center" id="contactForm" name="contactForm"
+                            action="https://formspree.io/f/mnqyzjrb" method="POST" target="_blank">
                             <div class="form-group">
                                 <div class="input-container">
                                     <div class="input-icon-container text-center">
                                         <img src="assets/icons/user.png">
                                     </div>
-                                    <input class="form-control" type="text" placeholder="Nombre">
+                                    <input class="form-control" type="text" name="name" placeholder="Nombre"
+                                        onkeyup="Verify()" required>
                                 </div>
                                 <div class="input-container">
                                     <div class="input-icon-container text-center">
                                         <img src="assets/icons/email.png">
                                     </div>
-                                    <input class="form-control" type="email" placeholder="Email">
+                                    <input class="form-control" type="email" name="email" placeholder="Email"
+                                        onkeyup="Verify()" required>
                                 </div>
                                 <div class="input-container">
                                     <div class="input-icon-container text-center">
                                         <img src="assets/icons/cellphone.png">
                                     </div>
-                                    <input class="form-control" type="text" placeholder="Teléfono">
+                                    <input class="form-control" type="text" name="cellphone"
+                                        placeholder="Teléfono (opcional)">
                                 </div>
-                                <button class="btn btn-success btn-contact">
+                                <div class="input-container">
+                                    <textarea id="subject" name="subject" placeholder="Compártenos tus inquietudes"
+                                        style=" resize: none; height: 100px;" class="form-control"></textarea>
+                                </div>
+                                <button id="submitBtn" disabled class="btn btn-success btn-contact"
+                                    onclick="SendForm()">
                                     Enviar
                                 </button>
                             </div>
                         </form>
                     </div>
-                    <div style="max-width: 415px;">
-                        <div class="subtitle-4 text-primary text-center" style="margin-bottom: .75rem;">Datos del contacto</div>
-                        <div class="contact-info">
-                            <div class="contact-icon">
-                                <img src="assets/icons/location.png" alt="Ubicación">
-                            </div>
-                            <span class="text-3 text-primary">Calle la Ley 3048, Col. Residencial Juan Manuel, CP 44680, Guadalajara, Jalisco, México.</span>
-                        </div>
-                        <div class="contact-info">
-                            <div class="contact-icon h-100 align-items-center">
-                                <img src="assets/icons/cellphone_green.png" alt="Teléfono">
-                            </div>
-                            <span class="text-3 text-primary">55 4393 4510</span>
-                        </div>
-                        <div class="contact-info">
-                            <div class="contact-icon h-100 align-items-center">
-                                <img src="assets/icons/mail_green.png" alt="Correo">
-                            </div>
-                            <span class="text-3 text-primary">info@bnzero.com</span>
-                        </div>
-                    </div>
+                    <img class="objective-img hide-xs hide-sm" src="assets/img/contact.png">
                 </div>
             </div>
         </div>
 
         <div class="footer">
-            
+            <div class="footer-content">
+                <div class="footer-col">
+                    <img class="clickable" style="cursor: pointer;" src="assets/icons/bluetopia.png" onclick="ScrollToElement('home')">
+                    <div class="footer-text" style="margin: 2rem 0;">By</div>
+                    <a href="http://bnzero.com/" target="_blank">
+                        <img src="assets/icons/bnzero.png">
+                    </a>
+                    <a href="http://jarabesoft.com/" target="_blank">
+                        <img src="assets/icons/jarabesoft.png">
+                    </a>
+                    <a class="no-decoration" href="http://linkedin.com/in/nayelibecerraperez" target="_blank">
+                        <div class="footer-text" style="font-size: 1.25rem;">Nayeli Becerra</div>
+                    </a>
+                </div>
+                <div class="footer-col align-items-start hide-xs hide-sm" style="max-height: 214px;">
+                    <div class="footer-text clickeable" onclick="ScrollToElement('home')">Inicio</div>
+                    <div class="footer-text clickeable" onclick="ScrollToElement('functions')">Funciones</div>
+                    <div class="footer-text clickeable" onclick="ScrollToElement('objectives')">Objetivos</div>
+                    <div class="footer-text clickeable" onclick="ScrollToElement('features')">Características</div>
+                    <div class="footer-text clickeable" onclick="ScrollToContactUs()">Contacto</div>
+                </div>
+                <div class="footer-col align-items-start footer-contact-info" style="max-height: 175px;">
+                    <div class="footer-text" style="margin: 0 0 .75rem 1rem;"><b>Contacto</b></div>
+                    <div class="contact-info" style="max-width: 287px;">
+                        <div class="contact-icon">
+                            <img src="assets/icons/location_white.png" alt="Ubicación">
+                        </div>
+                        <span class="footer-text">Calle la Ley 3048, Col. Residencial Juan Manuel, CP 44680,
+                            Guadalajara, Jalisco, México.</span>
+                    </div>
+                    <div class="contact-info" style="max-width: 287px;">
+                        <div class="contact-icon h-100 align-items-center">
+                            <img src="assets/icons/cellphone_white.png" alt="Teléfono">
+                        </div>
+                        <span class="footer-text">+52 55 4393 4510</span>
+                    </div>
+                    <div class="contact-info" style="max-width: 287px;">
+                        <div class="contact-icon h-100 align-items-center">
+                            <img src="assets/icons/mail_white.png" alt="Correo">
+                        </div>
+                        <a href="mailto:info@bnzero.com" class="footer-text white-text">info@bnzero.com</a>
+                    </div>
+                </div>
+                <div class="footer-col footer-social-media-icons" style="max-height: 172px;">
+                    <img class="clickeable" src="assets/icons/fb_green.png" onclick="GoToSocialMedia('fb')">
+                    <img class="clickeable" src="assets/icons/insta_green.png" onclick="GoToSocialMedia('in')">
+                    <img class="clickeable" src="assets/icons/twitter_green.png" onclick="GoToSocialMedia('tt')">
+                    <img class="clickeable" src="assets/icons/YT_green.png" onclick="GoToSocialMedia('yt')">
+                </div>
+            </div>
+            <div class="footer-footer">
+                <div style="margin: 0 5px;">
+                    BLUETOPIA Todos los derechos reservados
+                </div>
+                <div style="margin: 0 5px;">
+                    Powered by Jarabesoft
+                </div>
+                <div style="margin: 0 5px;">
+                    <a class="white-text" href="terms/privacy-notice.html">Consulta
+                        nuestro Aviso de privacidad</a>
+                </div>
+            </div>
         </div>
 
     </div>
 </body>
+
 </html>

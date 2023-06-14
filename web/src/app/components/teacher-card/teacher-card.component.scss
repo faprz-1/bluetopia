@@ -1,11 +1,12 @@
 .card {
-    padding: 1rem 4rem;
+    padding: 1.2rem 4rem;
     border: 2px solid #2ED2A3;
     border-radius: 12px;
     color: #758CA6;
     font-size: 1.5rem;
     font-weight: 500;
-    max-width: 508px;
+    width: max-content;
+    max-width: 100%;
     margin-bottom: 0;
 }
 .card-body {
@@ -19,10 +20,24 @@
     display: flex;
     align-items: center;
     min-height: 30px;
-    width: 100%;
     margin-bottom: 10px;
 
+    .text-row-data {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        flex-grow: 1;
+        flex-wrap: wrap;
+        line-height: 30px;
+
+        span {
+            margin-right: .3rem;
+        }
+    }
+
     .img-container {
+        display: flex;
+        align-items: center;
         height: min-content;
         padding-right: 12px;
         text-align: left;
@@ -32,17 +47,13 @@
             height: max-content;
         }
     }
-
-    span {
-        max-width: 100%;
-    }
 }
 
 .delete {
     font-size: 2rem;
     position: absolute;
-    top: -10px;
-    right: 8px;
+    top: 10px;
+    right: 15px;
     color: var(--danger);
 }
 
