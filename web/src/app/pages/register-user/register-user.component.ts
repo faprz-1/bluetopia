@@ -32,7 +32,7 @@ export class RegisterUserComponent implements OnInit {
     password: new FormControl(null, [Validators.required]),
     confirmPassword: new FormControl(null, [Validators.required]),
     phone: new FormControl(null, [Validators.required, ValidationService.CheckOnlyIntegerNumbers]),
-    schoolPhone: new FormControl(null, [ValidationService.CheckOnlyIntegerNumbers]),
+    schoolPhone: new FormControl(null, [Validators.required, ValidationService.CheckOnlyIntegerNumbers]),
   });
   passwordForgotten: boolean = false;
   email = '';
@@ -61,6 +61,12 @@ export class RegisterUserComponent implements OnInit {
       this.userType = params['userType'];
       this.teacherIdToAbsorb = params['teacherId'];
       if(!!this.teacherIdToAbsorb) this.registerStep = 2;
+      if(this.userType == 'maestro') {
+        this.userRegisterForm.get('phone')?.clearValidators();
+        this.userRegisterForm.get('phone')?.setValidators([ValidationService.CheckOnlyIntegerNumbers]);
+        this.userRegisterForm.get('schoolPhone')?.clearValidators();
+        this.userRegisterForm.get('schoolPhone')?.setValidators([ValidationService.CheckOnlyIntegerNumbers]);
+      }
     });
   }
 
