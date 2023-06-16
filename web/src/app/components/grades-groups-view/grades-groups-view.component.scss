@@ -1,12 +1,13 @@
-.content {
+.component-content {
     width: 100%;
     max-height: 100%;
+    font-family: Mulish !important;
 }
 
 .tab {
     font-size: .75rem;
     color: #758CA6;
-    padding: 7px 5px;
+    padding: 8px 16px;
     border: 2px solid #758CA6;
     border-radius: 6px 6px 0 0;
     margin-right: 12px;
@@ -15,6 +16,13 @@
 .active {
     border-color: #1081FB !important;
     color: #1081FB !important;
+}
+.active-2 {
+    font-weight: 700;
+    font-size: 1rem;
+    border-color: #1081FB !important;
+    color: #1081FB !important;
+    background-color: #F2F8FF;
 }
 
 .group-title {
@@ -26,6 +34,16 @@
     margin-bottom: 12px;
 }
 
+.group-title-2 {
+    text-transform: capitalize;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1081FB;
+    text-align: left;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
 .group-card {
     border: 3px solid #758CA6;
     margin-bottom: 1rem;
@@ -34,13 +52,29 @@
     padding: 12px 24px;
     display: flex;
 }
+.group-card-2 {
+    border: 3px solid #758CA6;
+    margin: 1.5rem 0;
+    border-radius: 12px;
+    height: 380px;
+    width: 320px;
+    padding: 12px 24px;
+    display: flex;
+}
 
 .students-list {
     width: 50%;
     padding-right: 1rem;
 }
+.students-list-2 {
+    width: 100%;
+}
 .students {
     max-height: calc(100% - 40px);
+    overflow-y: auto;
+}
+.students-2 {
+    height: 230px;
     overflow-y: auto;
 }
 .student {
@@ -77,4 +111,31 @@
     display: flex;
     height: 36px;
     align-items: center;
+}
+
+.btn {
+    font-size: 1rem;
+    min-height: min-content !important;
+    font-weight: 800;
+}
+
+.teacher-dashboard-row {
+    border: 2px solid #1081FB;
+    background-color: #F2F8FF;
+    border-radius: 12px;
+}
+.students-scroll {
+    width: 100%;
+    height: 230px;
+    overflow-y: auto;
+}
+
+._link {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1081FB;
+    text-align: center;
+    width: 100%;
+    margin: 12px 0;
+    text-decoration: underline;
 }

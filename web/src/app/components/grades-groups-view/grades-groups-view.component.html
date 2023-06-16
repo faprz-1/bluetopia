@@ -1,4 +1,4 @@
-<div class="component-content">
+<div class="component-content" *ngIf="!teacherDasboard">
 
     <div class="d-flex">
         <ng-container *ngFor="let grade of grades">
@@ -51,6 +51,52 @@
                         <button class="btn btn-outline-primary btn-block" (click)="onApplyExistentStrategy.emit(group)">
                             Aplicar estrategia existente
                         </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6 add-group-col" *ngIf="adminControls">
+            <button class="btn btn-success btn-add-group">
+                Agregar grupo
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<div class="component-content" *ngIf="teacherDasboard">
+
+    <div class="d-flex">
+        <ng-container *ngFor="let grade of grades">
+            <div class="tab border-bottom-0 clickeable"
+            [ngClass]="{'active-2': grade.key == selectedGrade?.key}"
+            (click)="SelectGrade(grade)">
+                {{grade.key}}°Grado
+            </div>
+        </ng-container>
+        <div *ngIf="adminControls" class="btn-add-grade clickeable text-success"
+        (click)="AddGrade()">
+            <i class="zmdi zmdi-plus-circle-o zmdi-hc-2x"></i>
+        </div>
+    </div>
+
+    <div class="row teacher-dashboard-row">
+        <div class="col-12 col-lg-6" *ngFor="let group of selectedGrade?.groups">
+            <div class="group-card-2 flex-column justify-content-between">
+                <div class="group-title-2">
+                    Grupo {{group[0].group}}
+                </div>
+                <div class="students-2 flex-grow-1">
+                    <div class="student" *ngFor="let student of group; let i = index">
+                        <span class="mr-2">{{i+1}}</span> {{student.name}} {{student.fatherLastname}} {{student.motherLastname}}
+                    </div>
+                </div>
+                <div class="controls mt-3" *ngIf="teacherControls">
+                    <button class="btn btn-outline-success btn-block" (click)="onCreateNewStrategy.emit(group)">
+                        Calificar alumnos
+                    </button>
+                    <div class="_link clickeable">
+                        Agregar alumno
                     </div>
                 </div>
             </div>

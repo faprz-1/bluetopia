@@ -11,6 +11,7 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
   @Input() students: Array<any> = [];
   @Input() adminControls: boolean = false;
   @Input() teacherControls: boolean = false;
+  @Input() teacherDasboard: boolean = false;
   @Input() onStudentSearch: EventEmitter<any> | null = null;
 
   @Output() onAddGroup: EventEmitter<any> = new EventEmitter<any>();
