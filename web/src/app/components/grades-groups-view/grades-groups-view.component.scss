@@ -45,6 +45,7 @@
 }
 
 .group-card {
+    max-width: 100%;
     border: 3px solid #758CA6;
     margin-bottom: 1rem;
     border-radius: 12px;
@@ -54,10 +55,10 @@
 }
 .group-card-2 {
     border: 3px solid #758CA6;
-    margin: 1.5rem 0;
     border-radius: 12px;
     height: 380px;
     width: 320px;
+    max-width: calc(100% - 3rem);
     padding: 12px 24px;
     display: flex;
 }
@@ -120,6 +121,10 @@
 }
 
 .teacher-dashboard-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
     border: 2px solid #1081FB;
     background-color: #F2F8FF;
     border-radius: 12px;

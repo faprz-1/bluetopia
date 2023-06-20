@@ -91,7 +91,7 @@
             </div>
             <app-grades-groups-view *ngIf="students?.length; else noStudents" [students]="students"
             [teacherControls]="true"
-            [teacherDasboard]="true"
+            [newDashboard]="true"
             [onStudentSearch]="onStudentSearch"
             [onChange]="onChange"
             (onCreateNewStrategy)="CreateNewStrategy($event)"

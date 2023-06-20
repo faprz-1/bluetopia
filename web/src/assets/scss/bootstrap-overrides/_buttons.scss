@@ -7,8 +7,9 @@
   font-size: 1.25rem;
   font-weight: 800;
   font-family: Mulish;
-  min-width: 250px;
-  min-height: 57px;
+  width: 250px;
+  height: 57px;
+  max-width: 100%;
   
   &:not(.btn-light):not([class*="btn-outline-"]):not(.btn-link):not(.btn-default) {
     color: $white;
