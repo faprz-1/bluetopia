@@ -1,5 +1,9 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
+import { ApiService } from 'src/app/services/api.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-grades-groups-view',
@@ -13,11 +17,15 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
   @Input() teacherControls: boolean = false;
   @Input() teacherDasboard: boolean = false;
   @Input() onStudentSearch: EventEmitter<any> | null = null;
+  @Input() onChange: EventEmitter<any> | null = null;
 
   @Output() onAddGroup: EventEmitter<any> = new EventEmitter<any>();
   @Output() onAddGrade: EventEmitter<any> = new EventEmitter<any>();
   @Output() onApplyExistentStrategy: EventEmitter<any> = new EventEmitter<any>();
   @Output() onCreateNewStrategy: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onReload: EventEmitter<any> = new EventEmitter<any>();
+
+  @ViewChild('addStudentModal') addStudentModal?: ModalDirective;
 
   grades: Array<any> = [];
   selectedGrade: any = null;
@@ -25,9 +33,37 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
 
   subscriptions: Array<Subscription | undefined> = [];
 
-  constructor() { }
+  studentForm: FormGroup = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    fatherLastname: new FormControl('', [Validators.required]),
+    motherLastname: new FormControl('', []),
+    registerNumber: new FormControl('', [Validators.required]),
+    grade: new FormControl('', [Validators.required]),
+    group: new FormControl('', [Validators.required]),
+    schoolUserId: new FormControl('', []),
+    teacherUserId: new FormControl('', []),
+  })
+
+  constructor(
+    private api: ApiService,
+    private toast: ToastService
+  ) { }
 
   ngOnInit(): void {
+    this.FormatStudents();
+    this.subscriptions.push(this.onStudentSearch?.subscribe(student => {
+    }));
+    this.subscriptions.push(this.onChange?.subscribe(students => {
+      this.students = students;
+      this.FormatStudents();
+    }));
+  }
+
+  ngOnDestroy() {
+    while(this.subscriptions.length) this.subscriptions.pop()?.unsubscribe();
+  }
+
+  FormatStudents() {
     this.students = this.students.map(student => {
       if(student.hasOwnProperty('studentGroup')) {
         student.group = !!student.studentGroup.group ? student.studentGroup.group.name : 'sin grupo';
@@ -36,19 +72,11 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
       return student;
     });
     this.GroupStudents();
-
-    const sub = this.onStudentSearch?.subscribe(student => {
-      
-    });
-    this.subscriptions.push(sub);
-  }
-
-  ngOnDestroy() {
-    while(this.subscriptions.length) this.subscriptions.pop()?.unsubscribe();
   }
 
   GroupStudents() {
     let grades: any = {};
+    this.grades = [];
     this.students.forEach(student => {
       if(grades[student.grade]) grades[student.grade].push(student);
       else grades[student.grade] = [student];
@@ -93,7 +121,30 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
   }
 
   AddGrade() {
+  }
 
+  SetStudentFormRelations(student: any) {
+    this.studentForm.get('grade')?.setValue(student.grade);
+    this.studentForm.get('group')?.setValue(student.group);
+    this.studentForm.get('schoolUserId')?.setValue(student.schoolUserId);
+    this.studentForm.get('teacherUserId')?.setValue(student.teacherUserId);
+  }
+
+  AddStudent() {
+    if(this.studentForm.invalid) {
+      this.toast.ShowWarning(`Favor de llenar los campos obligatorios`);
+      this.studentForm.markAllAsTouched();
+      return;
+    }
+
+    this.api.Post(`/Students`, {student: this.studentForm.value}).subscribe(newStudent => {
+      this.toast.ShowSuccess(`Estudiante agregado con exito`);
+      this.addStudentModal?.hide();
+      this.onReload.emit();
+    }, err => {
+      console.error("Error creating a student", err);
+      this.toast.ShowError(`Error al crear estudiante`);
+    });
   }
 
 }

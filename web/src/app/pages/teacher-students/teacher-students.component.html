@@ -93,7 +93,9 @@
             [teacherControls]="true"
             [teacherDasboard]="true"
             [onStudentSearch]="onStudentSearch"
+            [onChange]="onChange"
             (onCreateNewStrategy)="CreateNewStrategy($event)"
+            (onReload)="GetTeacherStudents()"
             ></app-grades-groups-view>
         </div>
     </div>

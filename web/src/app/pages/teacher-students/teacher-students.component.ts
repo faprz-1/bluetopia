@@ -11,6 +11,7 @@ import { ToastService } from 'src/app/services/toast.service';
 export class TeacherStudentsComponent implements OnInit {
 
   onStudentSearch: EventEmitter<any> = new EventEmitter<any>();
+  onChange: EventEmitter<any> = new EventEmitter<any>();
 
   students: Array<any> = [];
   teacherSubjects: Array<any> = [];
@@ -36,6 +37,7 @@ export class TeacherStudentsComponent implements OnInit {
   GetTeacherStudents() {
     this.api.Get(`/Students/OfTeacher/${this.user ? this.user.id : 0}`).subscribe(students => {
       this.students = students;
+      this.onChange.emit(this.students);
     }, err => {
       console.error("Error getting the students of the teacher", err);
     });

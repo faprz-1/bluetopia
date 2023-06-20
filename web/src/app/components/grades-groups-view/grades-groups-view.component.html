@@ -95,7 +95,7 @@
                     <button class="btn btn-outline-success btn-block" (click)="onCreateNewStrategy.emit(group)">
                         Calificar alumnos
                     </button>
-                    <div class="_link clickeable">
+                    <div class="_link clickeable" (click)="SetStudentFormRelations(group[0]); addStudentModal.show()">
                         Agregar alumno
                     </div>
                 </div>
@@ -105,6 +105,60 @@
             <button class="btn btn-success btn-add-group">
                 Agregar grupo
             </button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" bsModal #addStudentModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
+    tabindex="-1" role="dialog" aria-labelledby="addStudentModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Agregar alumno</h2>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="studentForm">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-container">
+                                <input class="form-control no-icon" type="text" placeholder="Nombre" formControlName="name" (keyup.enter)="AddStudent()">
+                                <span class="required-span">*</span>
+                            </div>
+                            <app-control-messages [control]="studentForm.get('name')"></app-control-messages>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="input-container">
+                                <input class="form-control no-icon" type="text" placeholder="Apellido paterno" formControlName="fatherLastname" (keyup.enter)="AddStudent()">
+                                <span class="required-span">*</span>
+                            </div>
+                            <app-control-messages [control]="studentForm.get('fatherLastname')"></app-control-messages>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="input-container">
+                                <input class="form-control no-icon" type="text" placeholder="Apellido materno" formControlName="motherLastname" (keyup.enter)="AddStudent()">
+                            </div>
+                            <app-control-messages [control]="studentForm.get('motherLastname')"></app-control-messages>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="input-container">
+                                <input class="form-control no-icon" type="text" placeholder="Número de registro" formControlName="registerNumber" (keyup.enter)="AddStudent()">
+                                <span class="required-span">*</span>
+                            </div>
+                            <app-control-messages [control]="studentForm.get('registerNumber')"></app-control-messages>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button class="btn btn-outline-primary modal-btn"
+                (click)="addStudentModal.hide();">
+                    Cancelar
+                </button>
+                <button class="btn btn-primary modal-btn"
+                (click)="AddStudent()">
+                    Agregar
+                </button>
+            </div>
         </div>
     </div>
 </div>

@@ -71,6 +71,7 @@
       "principalId": "School",
       "permission": "ALLOW",
       "property": [
+        "AddStudent",
         "AddStudents",
         "GetAllOfSchool"
       ]
@@ -81,12 +82,38 @@
       "principalId": "Teacher",
       "permission": "ALLOW",
       "property": [
+        "AddStudent",
         "AddStudents",
         "GetAllOfTeacher"
       ]
     }
   ],
   "methods": {
+    "AddStudent": {
+      "accepts": [
+        {
+          "arg": "student",
+          "type": "object",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "newStudent",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/",
+          "verb": "post"
+        }
+      ]
+    },
     "AddStudents": {
       "accepts": [
         {

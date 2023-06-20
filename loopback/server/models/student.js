@@ -3,10 +3,26 @@
 module.exports = function(Student) {
 
     Student.AddStudent = function(student, callback) {
-        Student.create(student, (err, newStudent) => {
+        Student.app.models.Group.CreateBasedOnCSV([student], (err, groups) => {
             if(err) return callback(err);
 
-            return callback(null, newStudent);
+            Student.app.models.Grade.CreateBasedOnCSV([student], (err, grades) => {
+                if(err) return callback(err);
+                
+                Student.create(student, (err, newStudent) => {
+                    if(err) return callback(err);
+                    
+                    const studentGroup = {
+                        studentId: newStudent.id,
+                        gradeId: grades.find(g => g.name == student.grade.toLowerCase()) ? grades.find(g => g.name == student.grade.toLowerCase()).id : null,
+                        groupId: groups.find(g => g.name == student.group.toLowerCase()) ? groups.find(g => g.name == student.group.toLowerCase()).id : null
+                    }
+                    Student.app.models.StudentGroup.create(studentGroup, (err, newStudentGroupInstance) => {
+                        if(err) return callback(err);
+                        return callback(null, newStudent);
+                    });
+                });
+            });
         });
     }
 
