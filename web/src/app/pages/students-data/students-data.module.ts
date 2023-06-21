@@ -7,15 +7,15 @@ import { ControlMessagesModule } from 'src/app/components/control-messages/contr
 import { TeacherCardModule } from 'src/app/components/teacher-card/teacher-card.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
-import { GradesGroupsViewComponent } from './grades-groups-view.component';
+import { StudentsDataComponent } from './students-data.component';
 
 const MODULE_ROUTES = [
-  { path: '', component: GradesGroupsViewComponent }
+  { path: '', component: StudentsDataComponent }
 ];
 
 @NgModule({
   declarations: [
-    GradesGroupsViewComponent
+    StudentsDataComponent
   ],
   imports: [
     FormsModule,
@@ -25,8 +25,8 @@ const MODULE_ROUTES = [
     ReactiveFormsModule,
     ControlMessagesModule,
     ModalModule.forRoot(),
-    // RouterModule.forChild(MODULE_ROUTES),
+    RouterModule.forChild(MODULE_ROUTES),
   ],
-  exports: [GradesGroupsViewComponent]
+  exports: [StudentsDataComponent]
 })
-export class GradesGroupsViewModule { }
+export class StudentsDataModule { }

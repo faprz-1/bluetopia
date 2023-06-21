@@ -1,4 +1,4 @@
-<div class="component-content">
+<div class="component-content" *ngIf="!newDashboard">
 
     <div class="d-flex">
         <ng-container *ngFor="let grade of grades">
@@ -59,6 +59,104 @@
             <button class="btn btn-success btn-add-group">
                 Agregar grupo
             </button>
+        </div>
+    </div>
+</div>
+
+
+<div class="component-content" *ngIf="newDashboard">
+
+    <div class="px-4 d-flex">
+        <ng-container *ngFor="let grade of grades">
+            <div class="tab border-bottom-0 clickeable"
+            [ngClass]="{'active-2': grade.key == selectedGrade?.key}"
+            (click)="SelectGrade(grade)">
+                {{grade.key}}°Grado
+            </div>
+        </ng-container>
+        <div *ngIf="adminControls" class="btn-add-grade clickeable text-success"
+        (click)="AddGrade()">
+            <i class="zmdi zmdi-plus-circle-o zmdi-hc-2x"></i>
+        </div>
+    </div>
+
+    <div class="teacher-dashboard-row">
+        <div class="group-card-2 m-4 flex-column justify-content-between" *ngFor="let group of selectedGrade?.groups">
+            <div class="group-title-2">
+                Grupo {{group[0].group}}
+            </div>
+            <div class="students-2 flex-grow-1">
+                <div class="student" *ngFor="let student of group; let i = index">
+                    <span class="mr-2">{{i+1}}</span> {{student.name}} {{student.fatherLastname}} {{student.motherLastname}}
+                </div>
+            </div>
+            <div class="controls mt-3" *ngIf="teacherControls">
+                <button class="btn btn-outline-success btn-block" (click)="onCreateNewStrategy.emit(group)">
+                    Calificar alumnos
+                </button>
+                <div class="_link clickeable" (click)="SetStudentFormRelations(group[0]); addStudentModal.show()">
+                    Agregar alumno
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6 add-group-col" *ngIf="adminControls">
+            <button class="btn btn-success btn-add-group">
+                Agregar grupo
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" bsModal #addStudentModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
+    tabindex="-1" role="dialog" aria-labelledby="addStudentModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Agregar alumno</h2>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="studentForm">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-container">
+                                <input class="form-control no-icon" type="text" placeholder="Nombre" formControlName="name" (keyup.enter)="AddStudent()">
+                                <span class="required-span">*</span>
+                            </div>
+                            <app-control-messages [control]="studentForm.get('name')"></app-control-messages>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="input-container">
+                                <input class="form-control no-icon" type="text" placeholder="Apellido paterno" formControlName="fatherLastname" (keyup.enter)="AddStudent()">
+                                <span class="required-span">*</span>
+                            </div>
+                            <app-control-messages [control]="studentForm.get('fatherLastname')"></app-control-messages>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="input-container">
+                                <input class="form-control no-icon" type="text" placeholder="Apellido materno" formControlName="motherLastname" (keyup.enter)="AddStudent()">
+                            </div>
+                            <app-control-messages [control]="studentForm.get('motherLastname')"></app-control-messages>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="input-container">
+                                <input class="form-control no-icon" type="text" placeholder="Número de registro" formControlName="registerNumber" (keyup.enter)="AddStudent()">
+                                <span class="required-span">*</span>
+                            </div>
+                            <app-control-messages [control]="studentForm.get('registerNumber')"></app-control-messages>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button class="btn btn-outline-primary modal-btn"
+                (click)="addStudentModal.hide();">
+                    Cancelar
+                </button>
+                <button class="btn btn-primary modal-btn"
+                (click)="AddStudent()">
+                    Agregar
+                </button>
+            </div>
         </div>
     </div>
 </div>

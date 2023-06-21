@@ -150,6 +150,7 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
+          "AddStudent": true,
           "AddStudents": true,
           "GetAllOfSchool": true,
           "GetAllOfTeacher": true
@@ -186,7 +187,8 @@
     "options": {
       "remoting": {
         "sharedMethods": {
-          "*": false
+          "*": false,
+          "GetAll": true
         }
       }
     }
@@ -219,7 +221,9 @@
     "options": {
       "remoting": {
         "sharedMethods": {
-          "*": false
+          "*": false,
+          "CreateGradeOrGroup": true,
+          "GetAll": true
         }
       }
     }

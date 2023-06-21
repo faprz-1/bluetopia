@@ -71,6 +71,7 @@
       "principalId": "School",
       "permission": "ALLOW",
       "property": [
+        "AddStudent",
         "AddStudents",
         "GetAllOfSchool"
       ]
@@ -81,12 +82,38 @@
       "principalId": "Teacher",
       "permission": "ALLOW",
       "property": [
+        "AddStudent",
         "AddStudents",
         "GetAllOfTeacher"
       ]
     }
   ],
   "methods": {
+    "AddStudent": {
+      "accepts": [
+        {
+          "arg": "student",
+          "type": "object",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "newStudent",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/",
+          "verb": "post"
+        }
+      ]
+    },
     "AddStudents": {
       "accepts": [
         {
@@ -119,6 +146,18 @@
           "type": "number",
           "required": true,
           "description": ""
+        },
+        {
+          "arg": "gradeId",
+          "type": "number",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "groupId",
+          "type": "number",
+          "required": false,
+          "description": ""
         }
       ],
       "returns": [
@@ -134,6 +173,10 @@
         {
           "path": "/OfSchool/:schoolUserId",
           "verb": "get"
+        },
+        {
+          "path": "/OfSchool/:schoolUserId/FilteredBy/Grade/:gradeId/Group/:groupId",
+          "verb": "get"
         }
       ]
     },
@@ -143,6 +186,18 @@
           "arg": "teacherUserId",
           "type": "number",
           "required": true,
+          "description": ""
+        },
+        {
+          "arg": "gradeId",
+          "type": "number",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "groupId",
+          "type": "number",
+          "required": false,
           "description": ""
         }
       ],
@@ -158,6 +213,10 @@
       "http": [
         {
           "path": "/OfTeacher/:teacherUserId",
+          "verb": "get"
+        },
+        {
+          "path": "/OfTeacher/:teacherUserId/FilteredBy/Grade/gradeId/Group/groupId",
           "verb": "get"
         }
       ]

@@ -16,7 +16,7 @@
     </div>
 
     <div class="row">
-        <div class="col-12 col-md-4 col-lg-3 col-xl-2 side-col">
+        <!-- <div class="col-12 col-md-4 col-lg-3 col-xl-2 side-col">
             <img class="side-image" src="assets/img/landing_page_img.png">
             <div class="nearby-container" *ngIf="!user?.schoolUserId">
                 <button class="btn btn-success btn-block" (click)="registerSchoolModal.show()">
@@ -82,8 +82,8 @@
                     {{teacherGroup.grade.name + teacherGroup.group.name}}
                 </div>
             </div>
-        </div>
-        <div class="col-12 col-md-8 col-lg-9 col-xl-10">
+        </div> -->
+        <div class="col-12">
             <div class="d-flex align-items-center justify-content-end" *ngIf="!user?.schoolUserId">
                 <button class="btn btn-success" (click)="nav.GoToUserRoute('registrar-estudiantes/csv')">
                     Agregar estudiantes
@@ -91,8 +91,11 @@
             </div>
             <app-grades-groups-view *ngIf="students?.length; else noStudents" [students]="students"
             [teacherControls]="true"
+            [newDashboard]="true"
             [onStudentSearch]="onStudentSearch"
+            [onChange]="onChange"
             (onCreateNewStrategy)="CreateNewStrategy($event)"
+            (onReload)="GetTeacherStudents()"
             ></app-grades-groups-view>
         </div>
     </div>

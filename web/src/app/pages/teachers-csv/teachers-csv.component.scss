@@ -1,3 +1,5 @@
+// @import "./../../../assets/scss/fonts";
+
 .content {
     padding-left: 275px !important;
 }
@@ -95,4 +97,20 @@
         margin-left: 50px;
         padding: 16px 0;
     }
+}
+
+.confirmation-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-text {
+    color: #3D5E81;
+    line-height: 30px;
+    font-family: Mulish;
+    font-weight: 400;
+    font-size: 1.5rem;
+    text-align: center;
+    max-width: 505px;
 }

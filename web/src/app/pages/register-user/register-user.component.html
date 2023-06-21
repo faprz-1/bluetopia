@@ -18,7 +18,7 @@
                             <div class="header-container mb-0" *ngSwitchCase="1">
                                 <div class="header-container">
                                     <div class="title">
-                                        ¡bienvenido!
+                                        ¡Bienvenido!
                                     </div>
                                     <div class="text">
                                         Comienza gratis tu registro hoy
@@ -46,11 +46,11 @@
                                     </a>
                                 </div>
                                 <div class="btns-container">
-                                    <div class="d-flex justify-content-between">
-                                        <button class="btn btn-primary" (click)="Forward()">
+                                    <div class="d-flex justify-content-center justify-content-md-between flex-wrap">
+                                        <button class="mb-5 btn btn-primary" (click)="Forward()">
                                             Registrarme
                                         </button>
-                                        <button class="btn btn-success" (click)="LoginUser()">
+                                        <button class="mb-5 btn btn-success" (click)="LoginUser()">
                                             Iniciar sesión
                                         </button>
                                     </div>
@@ -59,7 +59,7 @@
                             <!-- Register 2nd part -->
                             <div class="header-container mb-0" *ngSwitchCase="2">
                                 <div class="header-container">
-                                    <div class="title">
+                                    <div class="title text-success">
                                         Cuéntanos más sobre tí
                                     </div>
                                     <div class="text">
@@ -72,21 +72,14 @@
                                             <img src="assets/icons/user.png">
                                         </div>
                                         <input class="form-control" type="text" placeholder="Nombre" formControlName="username">
+                                        <span class="required-span">*</span>
                                     </div>
                                     <app-control-messages [control]="userForm.get('username')"></app-control-messages>
-                                    <div class="input-container">
-                                        <div class="input-icon-container text-center">
-                                            <img src="assets/icons/user-phone.png">
-                                        </div>
-                                        <input class="form-control" type="text" maxlength="10" placeholder="Teléfono escolar" formControlName="schoolPhone">
-                                    </div>
-                                    <app-control-messages [control]="userRegisterForm.get('schoolPhone')"></app-control-messages>
                                     <div class="input-container">
                                         <div class="input-icon-container text-center">
                                             <img src="assets/icons/phone.png">
                                         </div>
                                         <input class="form-control" type="text" maxlength="10" placeholder="Teléfono" formControlName="phone">
-                                        <span class="required-span">*</span>
                                     </div>
                                     <app-control-messages [control]="userRegisterForm.get('phone')"></app-control-messages>
                                     <div class="input-container">
@@ -97,6 +90,13 @@
                                         <span class="required-span">*</span>
                                     </div>
                                     <app-control-messages [control]="userRegisterForm.get('schoolName')"></app-control-messages>
+                                    <div class="input-container">
+                                        <div class="input-icon-container text-center">
+                                            <img src="assets/icons/user-phone.png">
+                                        </div>
+                                        <input class="form-control" type="text" maxlength="10" placeholder="Teléfono escolar" formControlName="schoolPhone">
+                                    </div>
+                                    <app-control-messages [control]="userRegisterForm.get('schoolPhone')"></app-control-messages>
                                     <div class="input-container">
                                         <div class="input-icon-container text-center">
                                             <img src="assets/icons/users-group.png">
@@ -126,22 +126,24 @@
                                             <img src="assets/icons/lock.png">
                                         </div>
                                         <input class="form-control" type="password" placeholder="Contraseña" formControlName="password" (keyup)="OnPasswordChange()" (keyup.enter)="RegisterUser()">
+                                        <span class="required-span">*</span>
                                     </div>
                                     <app-control-messages [control]="userRegisterForm.get('password')"></app-control-messages>
                                     <div class="input-container">
                                         <div class="input-icon-container text-center">
                                             <img src="assets/icons/lock.png">
                                         </div>
-                                        <input class="form-control" type="password" placeholder="Conformar contraseña" formControlName="confirmPassword" (keyup.enter)="RegisterUser()">
+                                        <input class="form-control" type="password" placeholder="Confirmar contraseña" formControlName="confirmPassword" (keyup.enter)="RegisterUser()">
+                                        <span class="required-span">*</span>
                                     </div>
                                     <app-control-messages [control]="userRegisterForm.get('confirmPassword')"></app-control-messages>
                                 </form>
                                 <div class="btns-container">
-                                    <div class="d-flex justify-content-between">
-                                        <button class="btn btn-outline-primary" (click)="Back()">
+                                    <div class="d-flex justify-content-center justify-content-md-between flex-wrap">
+                                        <button class="mb-5 btn btn-outline-primary" (click)="Back()">
                                             Volver
                                         </button>
-                                        <button class="btn btn-primary" (click)="RegisterUser()">
+                                        <button class="mb-5 btn btn-primary" (click)="RegisterUser()">
                                             Registrar
                                         </button>
                                     </div>
@@ -149,7 +151,7 @@
                             </div>
                             <!-- Welcome page -->
                             <div class="mb-0" *ngSwitchCase="3">
-                                <app-welcome-view></app-welcome-view>
+                                <app-welcome-view [userType]="userType"></app-welcome-view>
                             </div>
                         </div>
 
