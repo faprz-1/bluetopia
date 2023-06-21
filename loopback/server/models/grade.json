@@ -15,6 +15,34 @@
   "relations": {},
   "acls": [],
   "methods": {
+    "CreateGradeOrGroup": {
+      "accepts": [
+        {
+          "arg": "body",
+          "type": "any",
+          "required": false,
+          "description": "",
+          "http": {
+            "source": "body"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "grades",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/GradeOrGroup",
+          "verb": "post"
+        }
+      ]
+    },
     "GetAll": {
       "accepts": [],
       "returns": [

@@ -6,7 +6,7 @@
                 Datos de alumnos
             </div>
 
-            <button class="btn btn-outline-success">
+            <button class="btn btn-outline-success" (click)="addGradeOrGroupModal.show()">
                 Agregar grado o grupo
             </button>
         </div>
@@ -73,7 +73,7 @@
                     </tr>
                 </thead>
                 
-                <tbody>
+                <tbody *ngIf="!loading.getting; else bigLoading">
                     <tr *ngFor="let student of students">
                         <td>
                             <div *ngIf="isEditing">
@@ -119,6 +119,57 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+
+<ng-template #bigLoading>
+    <tbody>
+        <tr>
+            <td class="text-center" colspan="6">
+                <i class="zmdi zmdi-spinner zmdi-hc-5x zmdi-hc-spin"></i>
+            </td>
+        </tr>
+    </tbody>
+</ng-template>
+
+<div class="modal fade" bsModal #addGradeOrGroupModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
+    tabindex="-1" role="dialog" aria-labelledby="addGradeOrGroupModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Agregar grado o grupo</h2>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="gradeOrGroupForm">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-container">
+                                <input class="form-control no-icon" type="text" placeholder="Grado" formControlName="grade" (keyup.enter)="AddGradeOrGroup()">
+                            </div>
+                            <app-control-messages [control]="gradeOrGroupForm.get('grade')"></app-control-messages>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-container">
+                                <input class="form-control no-icon" type="text" placeholder="Grupo" formControlName="group" (keyup.enter)="AddGradeOrGroup()">
+                            </div>
+                            <app-control-messages [control]="gradeOrGroupForm.get('group')"></app-control-messages>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button class="btn btn-outline-primary modal-btn"
+                [disabled]="loading.creating"
+                (click)="addGradeOrGroupModal.hide();">
+                    Cancelar
+                </button>
+                <button class="btn btn-primary modal-btn"
+                [disabled]="loading.creating"
+                (click)="AddGradeOrGroup()">
+                    Agregar
+                </button>
+            </div>
         </div>
     </div>
 </div>

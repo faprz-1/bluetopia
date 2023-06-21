@@ -222,6 +222,7 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
+          "CreateGradeOrGroup": true,
           "GetAll": true
         }
       }

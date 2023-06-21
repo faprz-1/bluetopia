@@ -3,10 +3,11 @@
 module.exports = function(Group) {
 
     Group.CreateOne = function(group, callback) {
+        if(!group || !group.name || !group.name.length) return callback(null, null);
         group.name = group.name.toLowerCase();
         Group.findOrCreate({
             where: {
-                name: {like: `%${group.name}%`}
+                name: group.name
             }
         }, group, (err, newGroup) => {
             return callback(err, newGroup);
