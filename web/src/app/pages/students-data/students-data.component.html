@@ -1,0 +1,124 @@
+<div class="content">
+
+    <div class="row mb-5">
+        <div class="col-12 d-flex h-100 align-items-center justify-content-between">
+            <div class="page-title text-success">
+                Datos de alumnos
+            </div>
+
+            <button class="btn btn-outline-success">
+                Agregar grado o grupo
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 d-flex align-items-center filters">
+            <div class="flex-grow-1 filter">
+                <div class="input-container">
+                    <div class="input-icon-container icon-container-right text-center">
+                        <img src="assets/icons/search-small.png">
+                    </div>
+                    <input class="form-control icon-right" type="text" placeholder="Buscar">
+                </div>
+            </div>
+            <div class="select-container filter">
+                <ng-select
+                    class="ng-select form-control"
+                    [items]="grades"
+                    bindLabel="name"
+                    (change)="GetStudents()"
+                    [(ngModel)]="gradeSelected"
+                    placeholder="Grado">
+                </ng-select>
+            </div>
+            <div class="select-container filter">
+                <ng-select
+                    class="ng-select form-control"
+                    [items]="groups"
+                    bindLabel="name"
+                    (change)="GetStudents()"
+                    [(ngModel)]="groupSelected"
+                    placeholder="Grupo">
+                </ng-select>
+            </div>
+            <!-- <div class="select-container big filter">
+                <ng-select
+                    class="ng-select form-control placeholder-primary"
+                    [items]="groups"
+                    bindLabel="name"
+                    placeholder="Estado de estrategias">
+                </ng-select>
+            </div>
+            <div class="select-container big filter">
+                <ng-select
+                    class="ng-select form-control placeholder-primary"
+                    [items]="groups"
+                    bindLabel="name"
+                    placeholder="Tipo de estrategias">
+                </ng-select>
+            </div> -->
+        </div>
+
+        <div class="col-12 mt-5">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Materias</th>
+                        <th>Promedio</th>
+                        <th>Acciónes</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <tr *ngFor="let student of students">
+                        <td>
+                            <div *ngIf="isEditing">
+                            </div>
+                            <div *ngIf="!isEditing">
+                                {{student.registerNumber}}
+                            </div>
+                        </td>
+                        <td>
+                            <div *ngIf="isEditing">
+                            </div>
+                            <div *ngIf="!isEditing">
+                                {{student.name}}
+                            </div>
+                        </td>
+                        <td>
+                            <div *ngIf="isEditing">
+                            </div>
+                            <div *ngIf="!isEditing">
+                                {{student.fatherLastname + " " + student.motherLastname}}
+                            </div>
+                        </td>
+                        <td>
+                            <div *ngIf="isEditing">
+                            </div>
+                            <div *ngIf="!isEditing">
+                                4.5
+                            </div>
+                        </td>
+                        <td>
+                            <div *ngIf="isEditing">
+                            </div>
+                            <div *ngIf="!isEditing">
+                                4.5
+                            </div>
+                        </td>
+                        <td>
+                            <div *ngIf="isEditing">
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center" *ngIf="!isEditing">
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

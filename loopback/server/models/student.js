@@ -55,7 +55,7 @@ module.exports = function(Student) {
         });
     }
 
-    Student.GetAllOfSchool = function(schoolUserId, callback) {
+    Student.GetAllOfSchool = function(schoolUserId, gradeId, groupId, callback) {
         Student.find({
             where: {
                 schoolUserId
@@ -64,11 +64,13 @@ module.exports = function(Student) {
         }, (err, schoolStudents) => {
             if(err) return callback(err);
             
+            if(!!gradeId && gradeId != 0) schoolStudents = schoolStudents.filter(student => student.studentGroup().gradeId == gradeId);
+            if(!!groupId && groupId != 0) schoolStudents = schoolStudents.filter(student => student.studentGroup().groupId == groupId);
             return callback(null, schoolStudents);
         });
     }
     
-    Student.GetAllOfTeacher = function(teacherUserId, callback) {
+    Student.GetAllOfTeacher = function(teacherUserId, gradeId, groupId, callback) {
         Student.app.models.Teacher.findOne({
             where: {
                 userId: teacherUserId
@@ -101,6 +103,8 @@ module.exports = function(Student) {
                 }, (err, students) => {
                     if(err) return callback(err);
 
+                    if(!!gradeId && gradeId != 0) students = students.filter(student => student.studentGroup().gradeId == gradeId);
+                    if(!!groupId && groupId != 0) students = students.filter(student => student.studentGroup().groupId == groupId);
                     return callback(null, students);
                 });
             });

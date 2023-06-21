@@ -187,7 +187,8 @@
     "options": {
       "remoting": {
         "sharedMethods": {
-          "*": false
+          "*": false,
+          "GetAll": true
         }
       }
     }
@@ -220,7 +221,8 @@
     "options": {
       "remoting": {
         "sharedMethods": {
-          "*": false
+          "*": false,
+          "GetAll": true
         }
       }
     }

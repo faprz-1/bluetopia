@@ -36,8 +36,8 @@ module.exports = function(Grade) {
     }
 
     Grade.GetAll = function(callback) {
-        Grade.find({}, (err, Grades) => {
-            return callback(err, Grades);
+        Grade.find({}, (err, grades) => {
+            return callback(err, grades);
         });
     }
 

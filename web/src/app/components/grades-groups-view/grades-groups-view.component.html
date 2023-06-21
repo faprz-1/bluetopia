@@ -91,7 +91,7 @@
                 </div>
             </div>
             <div class="controls mt-3" *ngIf="teacherControls">
-                <button class="btn btn-outline-success" (click)="onCreateNewStrategy.emit(group)">
+                <button class="btn btn-outline-success btn-block" (click)="onCreateNewStrategy.emit(group)">
                     Calificar alumnos
                 </button>
                 <div class="_link clickeable" (click)="SetStudentFormRelations(group[0]); addStudentModal.show()">

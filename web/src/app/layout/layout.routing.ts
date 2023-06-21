@@ -18,6 +18,7 @@ export const ADMIN_MENU_PAGES: any = {
     // { name: 'Inicio', action: '/inicio/school/home', icon: 'zmdi zmdi-home' },
     { name: 'Mis maestros', action: '/inicio/school/mis-maestros', icon: 'zmdi zmdi-accounts' },
     { name: 'Mis estudiantes', action: '/inicio/school/mis-estudiantes', icon: 'zmdi zmdi-accounts' },
+    { name: 'Datos de los alumnos', action: '/inicio/school/datos-estudiantes', icon: 'zmdi zmdi-accounts' },
     { name: 'Mis estrategias', action: '/inicio/school/mis-estrategias', icon: 'zmdi zmdi-accounts' },
   ],
   'Teacher': [
@@ -70,6 +71,7 @@ const LAYOUT_ROUTES: Routes = [
           { path: '', redirectTo: 'mis-maestros', pathMatch: 'full' },
           { path: 'registrar-maestros', loadChildren: () => import('../pages/school-teachers/school-teachers.module').then(m => m.SchoolTeachersModule) },
           { path: 'mis-estudiantes', loadChildren: () => import('../pages/students/students.module').then(m => m.StudentsModule) },
+          { path: 'datos-estudiantes', loadChildren: () => import('../pages/students-data/students-data.module').then(m => m.StudentsDataModule) },
           { path: 'registrar-estudiantes/csv', loadChildren: () => import('../pages/students-csv/students-csv.module').then(m => m.StudentsCsvModule) },
           { path: 'mis-maestros', loadChildren: () => import('../pages/teachers/teachers.module').then(m => m.TeachersModule) },
           { path: 'registrar-maestros/csv', loadChildren: () => import('../pages/teachers-csv/teachers-csv.module').then(m => m.TeachersCsvModule) },
@@ -92,6 +94,7 @@ const LAYOUT_ROUTES: Routes = [
         children: [
           { path: '', redirectTo: 'mis-estudiantes', pathMatch: 'full' },
           { path: 'mis-estudiantes', loadChildren: () => import('../pages/teacher-students/teacher-students.module').then(m => m.TeacherStudentsModule) },
+          { path: 'datos-estudiantes', loadChildren: () => import('../pages/students-data/students-data.module').then(m => m.StudentsDataModule) },
           { path: 'mis-asignaturas', loadChildren: () => import('../pages/teacher-subjects/teacher-subjects.module').then(m => m.TeacherSubjectsModule) },
           { path: 'mis-estrategias', loadChildren: () => import('../pages/strategies/strategies.module').then(m => m.StrategiesModule) },
           { path: 'mis-estrategias/:strategyId', loadChildren: () => import('../pages/strategies/strategies.module').then(m => m.StrategiesModule) },
