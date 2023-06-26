@@ -1,5 +1,13 @@
+@import "./../fonts";
+
 .btn {
   cursor: pointer;
+
+  border-radius: 500px !important;
+  font-size: 1.25rem;
+  font-weight: 800;
+  font-family: Mulish;
+  padding: 6px 24px;
   
   &:not(.btn-light):not([class*="btn-outline-"]):not(.btn-link):not(.btn-default) {
     color: $white;

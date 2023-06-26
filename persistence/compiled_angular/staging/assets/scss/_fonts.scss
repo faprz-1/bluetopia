@@ -62,3 +62,70 @@
   font-weight: bolder;
   font-style: italic;
 }
+
+// Mulish
+
+@font-face{
+  font-family: Mulish;
+  src: url('../fonts/Mulish/static/Mulish-Light.ttf');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face{
+  font-family: Mulish;
+  src: url('../fonts/Mulish/static/Mulish-LightItalic.ttf');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face{
+  font-family: Mulish;
+  src: url('../fonts/Mulish/static/Mulish-Regular.ttf');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face{
+  font-family: Mulish;
+  src: url('../fonts/Mulish/static/Mulish-Italic.ttf');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face{
+  font-family: Mulish;
+  src: url('../fonts/Mulish/static/Mulish-SemiBold.ttf');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face{
+  font-family: Mulish;
+  src: url('../fonts/Mulish/static/Mulish-SemiBoldItalic.ttf');
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face{
+  font-family: Mulish;
+  src: url('../fonts/Mulish/static/Mulish-Bold.ttf');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face{
+  font-family: Mulish;
+  src: url('../fonts/Mulish/static/Mulish-BoldItalic.ttf');
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face{
+  font-family: Mulish;
+  src: url('../fonts/Mulish/static/Mulish-ExtraBold.ttf');
+  font-weight: bolder;
+  font-style: normal;
+}
+@font-face{
+  font-family: Mulish;
+  src: url('../fonts/Mulish/static/Mulish-ExtraBoldItalic.ttf');
+  font-weight: bolder;
+  font-style: italic;
+}
