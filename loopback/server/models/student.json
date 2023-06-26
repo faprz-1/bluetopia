@@ -216,7 +216,7 @@
           "verb": "get"
         },
         {
-          "path": "/OfTeacher/:teacherUserId/FilteredBy/Grade/gradeId/Group/groupId",
+          "path": "/OfTeacher/:teacherUserId/FilteredBy/Grade/:gradeId/Group/:groupId",
           "verb": "get"
         }
       ]
