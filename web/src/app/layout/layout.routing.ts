@@ -23,7 +23,9 @@ export const ADMIN_MENU_PAGES: any = {
   ],
   'Teacher': [
     // { name: 'Inicio', action: '/inicio/teacher/home', icon: 'zmdi zmdi-home' },
+    { name: 'Mis datos', action: '/inicio/teacher/perfil', icon: 'zmdi zmdi-accounts' },
     { name: 'Mis Estudiantes', action: '/inicio/teacher/mis-estudiantes', icon: 'zmdi zmdi-accounts' },
+    { name: 'Datos de los alumnos', action: '/inicio/teacher/datos-estudiantes', icon: 'zmdi zmdi-accounts' },
     { name: 'Mis Estrategias', action: '/inicio/teacher/mis-estrategias', icon: 'zmdi zmdi-accounts' },
     // { name: 'Mis Grupos', action: '/inicio/teacher/mis-asignaturas', icon: 'zmdi zmdi-assignment' },
   ],
