@@ -3,6 +3,7 @@
 module.exports = function(TeacherGroup) {
 
     TeacherGroup.UpdateTeacherGroups = function(teacherId, teacherGroups, callback) {
+        if(!teacherId || !teacherGroups) return callback(null, []);
         let where = {
             teacherId,
             id: {

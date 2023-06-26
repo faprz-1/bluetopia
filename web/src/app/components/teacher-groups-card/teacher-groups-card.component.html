@@ -1,0 +1,37 @@
+<div class="teacher-groups-card">
+
+    <div class="section">
+        <div class="d-flex align-items-center">
+            <img class="mr-3" src="assets/icons/users-group-success.svg" width="36">
+            <div class="section-title">Mis grados/grupos</div>
+        </div>
+
+        <div class="groups">
+            <div class="grade">
+                <img src="assets/icons/school-hat.svg">
+                <div>{{grade + "°"}}</div>
+            </div>
+            <div *ngFor="let group of groups" class="group">
+                {{group.name}}
+            </div>
+        </div>
+    </div>
+
+    <div class="section flex-grow-1 overflow-auto">
+        <div class="d-flex align-items-center">
+            <img class="mr-3" src="assets/icons/bookmarks-success.svg" width="36">
+            <div class="section-title">Mis materias</div>
+        </div>
+
+        <div class="subjects w-100">
+            <div class="subject" *ngFor="let subject of subjects">
+                <img src="assets/icons/bookmark.svg" width="24">
+                {{subject.name}}
+            </div>
+        </div>
+    </div>
+
+    <div class="link clickeable">
+        Ver alumnos
+    </div>
+</div>

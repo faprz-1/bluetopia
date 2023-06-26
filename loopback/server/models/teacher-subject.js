@@ -3,6 +3,7 @@
 module.exports = function(TeacherSubject) {
 
     TeacherSubject.UpdateTeacherSubjects = function(teacherId, teacherSubjects, callback) {
+        if(!teacherId || !teacherSubjects) return callback(null, []);
         let where = {
             teacherId,
             subjectId: {

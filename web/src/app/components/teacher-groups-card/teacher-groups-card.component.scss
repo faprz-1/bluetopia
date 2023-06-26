@@ -1,0 +1,86 @@
+.teacher-groups-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 465px;
+    height: 460px;
+    max-width: 100%;
+    padding: 10px;
+    gap: 10px;
+    background: var(--blue-light, #F2F8FF);
+}
+
+.section {
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid var(--gray-2, #758CA6);
+}
+.section-title {
+    color: var(--gray-1, #3D5E81);
+    font-size: 24px;
+    font-family: Mulish;
+}
+
+.groups {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.grade {
+    display: flex;
+    width: 75px;
+    padding: 6px 12px;
+    align-items: center;
+    gap: 10px;
+    color: #8A939B;
+    font-size: 16px;
+    font-family: Mulish;
+    font-weight: 500;
+    border-radius: 6px;
+    background: #FFF;
+}
+.group {
+    display: flex;
+    width: 50px;
+    padding: 6px 12px;
+    align-items: center;
+    gap: 10px;
+    border-radius: 6px;
+    background: #FFF;
+    color: #8A939B;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-family: Mulish;
+    font-weight: 500;
+}
+
+.subjects {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    overflow-y: auto;
+}
+.subject {
+    display: flex;
+    padding: 6px 12px;
+    align-items: center;
+    gap: 10px;
+    border-radius: 6px;
+    background: #FFF;
+}
+
+.link {
+    color: var(--blue-1, #1081FB);
+    text-align: center;
+    font-size: 16px;
+    font-family: Mulish;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    text-decoration-line: underline;
+}
