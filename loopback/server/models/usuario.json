@@ -12,7 +12,7 @@
     "AppleToken"
   ],
   "scope": {
-    "include": "profileImage"
+    "include": ["profileImage", "teacher", "data"]
   },
   "properties": {
     "FBToken": {

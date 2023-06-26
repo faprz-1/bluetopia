@@ -1,0 +1,107 @@
+<div class="content">
+    
+    <div class="d-flex flex-wrap align-items-center gap-48">
+
+        <div class="profile-tab clickeable" (click)="activeTab = 'profile'" [ngClass]="{'active': activeTab == 'profile'}">
+            <img class="mr-3" src="assets/icons/badge-success.png">
+            <span class="mr-4">Mis datos</span>
+            <img src="assets/icons/edit-success.png">
+        </div>
+
+        <div class="profile-tab clickeable" (click)="activeTab = 'subjects'" [ngClass]="{'active': activeTab == 'subjects'}">
+            <img class="mr-3" src="assets/icons/bookmarks-success.png">
+            <span class="mr-4">Mis cursos impartidos</span>
+        </div>
+
+    </div>
+
+    <div class="mt-5" [ngSwitch]="activeTab">
+        <div *ngSwitchCase="'profile'">
+            <div [formGroup]="teacherUserForm" class="profile-form">
+                <div class="w-100">
+                    <div class="input-container">
+                        <div class="input-icon-container text-center">
+                            <img src="assets/icons/user.png">
+                        </div>
+                        <input class="form-control" type="text" placeholder="Nombre" formControlName="name" (keyup.enter)="SaveUserData()">
+                    </div>
+                    <app-control-messages [control]="teacherUserForm.get('name')"></app-control-messages>
+                </div>
+                <div class="w-100">
+                    <div class="input-container">
+                        <div class="input-icon-container text-center">
+                            <img src="assets/icons/mail.png">
+                        </div>
+                        <input class="form-control" type="text" placeholder="Correo" formControlName="email" (keyup.enter)="SaveUserData()">
+                    </div>
+                    <app-control-messages [control]="teacherUserForm.get('email')"></app-control-messages>
+                </div>
+                <ng-container [formGroup]="userDataForm">
+                    <div class="w-100">
+                        <div class="input-container">
+                            <div class="input-icon-container text-center">
+                                <img src="assets/icons/users-group.png">
+                            </div>
+                            <input class="form-control" type="text" placeholder="Puesto de trabajo" formControlName="workTitle" (keyup.enter)="SaveUserData()">
+                        </div>
+                        <app-control-messages [control]="userDataForm.get('workTitle')"></app-control-messages>
+                    </div>
+                    <div class="w-100">
+                        <div class="input-container">
+                            <div class="input-icon-container text-center">
+                                <img src="assets/icons/phone.png">
+                            </div>
+                            <input class="form-control" type="text" placeholder="Teléfono" formControlName="phone" (keyup.enter)="SaveUserData()">
+                        </div>
+                        <app-control-messages [control]="userDataForm.get('phone')"></app-control-messages>
+                    </div>
+                    <div class="w-100">
+                        <div class="input-container">
+                            <div class="input-icon-container text-center">
+                                <img src="assets/icons/school.png">
+                            </div>
+                            <input class="form-control" type="text" placeholder="Nombre de la escuela" formControlName="schoolName" (keyup.enter)="SaveUserData()">
+                        </div>
+                        <app-control-messages [control]="userDataForm.get('schoolName')"></app-control-messages>
+                    </div>
+                    <div class="w-100">
+                        <div class="input-container">
+                            <div class="input-icon-container text-center">
+                                <img src="assets/icons/location.png">
+                            </div>
+                            <input class="form-control" type="text" placeholder="Direccion de la escuela" formControlName="address" (keyup.enter)="SaveUserData()">
+                        </div>
+                        <app-control-messages [control]="userDataForm.get('address')"></app-control-messages>
+                    </div>
+                    <div class="w-100">
+                        <div class="input-container">
+                            <div class="input-icon-container text-center">
+                                <img src="assets/icons/user-phone.png">
+                            </div>
+                            <input class="form-control" type="text" placeholder="Teléfono de la escuela" formControlName="schoolPhone" (keyup.enter)="SaveUserData()">
+                        </div>
+                        <app-control-messages [control]="userDataForm.get('schoolPhone')"></app-control-messages>
+                    </div>
+                </ng-container>
+                <div class="d-flex justify-content-between w-100 mt-3">
+                    <button class="btn btn-outline-primary" [disabled]="loading.updating" (click)="SetForm()">
+                        Descartar
+                    </button>
+                    <button class="btn btn-primary" [disabled]="loading.updating" (click)="SaveUserData()">
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div *ngSwitchCase="'subjects'">
+            <div class="subjects mb-5">
+                <app-teacher-groups-card *ngFor="let grade of grades" [data]="grade" [subjects]="subjects"></app-teacher-groups-card>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex flex-column">
+
+    </div>
+
+</div>

@@ -93,6 +93,7 @@ const LAYOUT_ROUTES: Routes = [
         path: 'teacher', canActivate: [AuthGuard], data: { role: 'Teacher' },
         children: [
           { path: '', redirectTo: 'mis-estudiantes', pathMatch: 'full' },
+          { path: 'perfil', loadChildren: () => import('../pages/teacher-profile/teacher-profile.module').then(m => m.TeacherProfileModule) },
           { path: 'mis-estudiantes', loadChildren: () => import('../pages/teacher-students/teacher-students.module').then(m => m.TeacherStudentsModule) },
           { path: 'datos-estudiantes', loadChildren: () => import('../pages/students-data/students-data.module').then(m => m.StudentsDataModule) },
           { path: 'mis-asignaturas', loadChildren: () => import('../pages/teacher-subjects/teacher-subjects.module').then(m => m.TeacherSubjectsModule) },

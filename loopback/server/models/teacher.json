@@ -97,7 +97,8 @@
       "principalId": "Teacher",
       "permission": "ALLOW",
       "property": [
-        "GetData"
+        "GetData",
+        "UpdateData"
       ]
     },
     {

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 
 import { ADMIN_MENU_PAGES } from '../layout.routing';
 import { of } from 'rxjs';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 class UserPage {
   public name!: string;
@@ -34,6 +35,7 @@ class UserPage {
     ]
 })
 export class NavigationComponent implements OnInit {
+  
   sidebarVisible: boolean = false;
 
   // Sub menu visibilities
@@ -61,6 +63,7 @@ export class NavigationComponent implements OnInit {
   constructor(
     private sharedService: SharedService,
     public api: ApiService,
+    private nav: NavigationService,
     private router: Router
   )
   {
@@ -71,7 +74,7 @@ export class NavigationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user = this.user = this.api.GetUser();
+    this.user = this.api.GetUser();
     const role = this.user.role.name;
     this.activeUserPages = ADMIN_MENU_PAGES[role] ? ADMIN_MENU_PAGES[role] : [];
   }
@@ -96,4 +99,13 @@ export class NavigationComponent implements OnInit {
   toggleSidebarVisibility() {
     this.sharedService.toggleSidebarVisibilty()
   }
+
+  GoToProfile() {
+    console.log(this.user);
+    switch (this.user.role.name) {
+      case 'Teacher': this.nav.GoToUserRoute('perfil'); break;
+      default: this.GoTo('/inicio/perfil'); break;
+    }
+  }
+
 }
