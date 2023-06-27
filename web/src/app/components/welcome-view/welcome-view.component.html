@@ -1,16 +1,16 @@
 <div class="d-flex w-100 justify-content-center">
     <div class="welcome-container">
         <div class="header-container mt-3">
-            <div class="title mb-4">
-                ¡Bienvenido {{userType}}!
+            <div class="title mb-4" [ngClass]="{'text-success': userType == 'maestro'}">
+                ¡Bienvenido {{userType != 'escuela' ? userType : ''}}!
             </div>
             <div class="text">
-                En esta plataforma tus docentes podrán crear sus estrategias rápida y ordenadamente.
+                {{text1}}
             </div>
         </div>
         <div class="d-flex align-items-center" style="margin-bottom: 12px;">
             <div class="text mr-3">
-                Tus alumnos se podrán conectar con el profesor y recibir y subir sus tareas.
+                {{text2}}
             </div>
             <img src="assets/img/welcome_1.png" alt="welcome_1">
         </div>
@@ -18,19 +18,19 @@
         <div class="d-flex align-items-center" style="margin-bottom: 12px;">
             <img src="assets/img/welcome_2.png" alt="welcome_1">
             <div class="text ml-3">
-                Tus padres de familia podrán estar al tanto de todo lo que su hijo esta realizando y ver sus trabajos así como compratirlos en redes sociales.
+                {{text3}}
             </div>
         </div>
     
-        <div class="subtitle">
-            Comienza registrando a tu maestros
+        <div class="subtitle mt-5 mb-4">
+            {{text4}}
         </div>
-        <div class="d-md-flex w-100 justify-content-between flex-xs-column">
-            <button class="btn btn-outline-primary mb-4" (click)="GoToAddTeachers()">
-                Agregar maestros
+        <div class="d-md-flex w-100 justify-content-center gap-45 flex-xs-column">
+            <button class="w-50 btn btn-outline-primary mb-4" (click)="nav.GoToUserRoute('')">
+                Continuar sin registrar
             </button>
-            <button class="btn btn-primary mb-4" (click)="GoToAddTeachersByCsv()">
-                Agregar con CSV
+            <button class="w-50 btn btn-primary mb-4" (click)="GoToAddByCsv()">
+                Registrar
             </button>
         </div>
     </div>
