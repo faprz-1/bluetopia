@@ -10,7 +10,13 @@ import { NavigationService } from 'src/app/services/navigation.service';
 export class StrategiesComponent implements OnInit {
 
   user: any = null;
+  startegyStatuses: Array<any> = [];
+  grades: Array<any> = [];
+  groups: Array<any> = [];
+  gradeSelected: any = null;
+  groupSelected: any = null;
   strategies: Array<any> = [];
+  loading: any = {};
 
   constructor(
     private api: ApiService,
@@ -19,7 +25,39 @@ export class StrategiesComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.api.GetUser();
-    this.GetStrategies();
+    this.GetStrategyStatuses();
+    this.GetGrades();
+  }
+
+  GetStrategyStatuses() {
+    this.api.Get(`/StrategyStatuses`).subscribe(startegyStatuses => {
+      this.startegyStatuses = startegyStatuses;
+    }, err => {
+      console.error("Error statuses", err);
+    });
+  }
+
+  GetGrades() {
+    this.loading.getting = true;
+    this.api.Get(`/Grades`).subscribe(grades => {
+      this.grades = grades;
+      this.gradeSelected = !!this.grades.length ? this.grades[0] : null;
+      this.GetGroups();
+    }, err => {
+      console.error("Error getting grades", err);
+      this.loading.getting = false;
+    });
+  }
+  
+  GetGroups() {
+    this.api.Get(`/Groups`).subscribe(groups => {
+      this.groups = groups;
+      this.groupSelected = !!this.groups.length ? this.groups[0] : null;
+      this.GetStrategies();
+    }, err => {
+      console.error("Error getting groups", err);
+      this.loading.getting = false;
+    });
   }
 
   GetStrategies() {
