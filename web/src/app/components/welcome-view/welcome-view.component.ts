@@ -11,8 +11,33 @@ export class WelcomeViewComponent implements OnInit {
 
   @Input() userType: string = '';
 
+  public get text1() {
+    switch (this.userType) {
+      case 'maestro': return 'En esta plataforma podrás conocer estrategias de otros profesores y aplicarlas, así mismo tú crearás tus estrategias.';
+      default: return 'En esta plataforma tus docentes podrán crear sus estrategias rápida y ordenadamente.';
+    }
+  }
+  public get text2() {
+    switch (this.userType) {
+      case 'maestro': return 'A continuación te explicaremos todo lo que podrás hacer  aquí';
+      default: return 'Tus alumnos se podrán conectar con el profesor y recibir y subir sus tareas.';
+    }
+  }
+  public get text3() {
+    switch (this.userType) {
+      case 'maestro': return 'Todo esto para que sea más sencillo hacer tus planeaciones';
+      default: return 'Tus padres de familia podrán estar al tanto de todo lo que su hijo esta realizando y ver sus trabajos así como compratirlos en redes sociales.';
+    }
+  }
+  public get text4() {
+    switch (this.userType) {
+      case 'maestro': return 'Comienza registrando a tus alumnos';
+      default: return 'Comienza registrando a tus maestros';
+    }
+  }
+
   constructor(
-    private nav: NavigationService,
+    public nav: NavigationService,
     private api: ApiService
   ) { }
 
@@ -24,9 +49,15 @@ export class WelcomeViewComponent implements OnInit {
     this.nav.GoTo(`inicio/${user.role.name.toLowerCase()}/registrar-maestros`);
   }
 
-  GoToAddTeachersByCsv() {
+  GoToAddByCsv() {
     const user = this.api.GetUser();
-    this.nav.GoTo(`inicio/${user.role.name.toLowerCase()}/registrar-maestros/csv`);
+    let route = `inicio/${user.role.name.toLowerCase()}`;
+    switch (user.role.name) {
+      case 'Teacher': route += `/registrar-estudiantes`; break;
+      default: route += `/registrar-maestros`; break;
+    }
+    console.log(route);
+    this.nav.GoTo(`${route}/csv`);
   }
 
 }

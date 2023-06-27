@@ -360,6 +360,28 @@ module.exports = function(app) {
     });
   }
 
+  var seedStrategyStatuses = function() {
+    const statuses = [
+      {
+        name: 'Activa',
+      },
+      {
+        name: 'Finalizada',
+      },
+      {
+        name: 'En planeación',
+      },
+    ];
+
+    let cont = 0, limit = statuses.length;
+    statuses.forEach(status => {
+      app.models.StrategyStatus.CreateOne(status, (err, newStatus) => {
+        if(err) throw err;
+        if(++cont == limit) console.log("Strategy statuses seeded");
+      });
+    });
+  }
+
   var seedEventTypes = function() {
     const eventTypes = [
       {
@@ -533,7 +555,8 @@ module.exports = function(app) {
     seedParcialProductsTypes,
     seedTemplateTopics,
     seedEventTypes,
-    seedTeamRoles
+    seedTeamRoles,
+    seedStrategyStatuses,
   ]
 
   // Migrate

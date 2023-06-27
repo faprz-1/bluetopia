@@ -58,8 +58,6 @@ export class StudentsCsvComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const user = this.api.GetUser();
-    if(!!user && user.role.name == 'Teacher' && !!user.schoolUserId) this.nav.GoToUserRoute('');
   }
 
   DownloadTemplate() {

@@ -137,37 +137,42 @@
     tabindex="-1" role="dialog" aria-labelledby="addGradeOrGroupModal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Agregar grado o grupo</h2>
+            <div class="modal-header p-0">
+                <img class="close" src="assets/icons/close.svg" (click)="addGradeOrGroupModal.hide()" alt="close">
             </div>
-            <div class="modal-body">
-                <form [formGroup]="gradeOrGroupForm">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="input-container">
-                                <input class="form-control no-icon" type="text" placeholder="Grado" formControlName="grade" (keyup.enter)="AddGradeOrGroup()">
-                            </div>
-                            <app-control-messages [control]="gradeOrGroupForm.get('grade')"></app-control-messages>
+            <div class="modal-body text-center">
+                <div class="inner-content">
+                    <div class="modal-title-2">Agrega un grupo</div>
+                    <div class="modal-text">
+                        1) Descarga la plantilla
+                    </div>
+                    <div>
+                        <img class="mr-3" src="assets/icons/excel.png" alt="CSV file">
+                        <a class="link" (click)="DownloadTemplate()">Descargar</a>
+                    </div>
+                    <div class="modal-text">
+                        2) Llena la plantilla
+                    </div>
+                    <div class="modal-text">
+                        3) Sube la plantilla con los datos de tus alumnos
+                    </div>
+                    <input class="d-none" #studentsCsv type="file" accept=".csv" (change)="OnFileChanged($event)">
+                    <div class="w-100 d-flex flex-column align-items-center">
+                        <div class="upload-container clickeable" (click)="studentsCsv.click()">
+                            <img src="assets/icons/upload.png" alt="CSV file">
+                            Subir excel de alumnos
                         </div>
-                        <div class="col-12">
-                            <div class="input-container">
-                                <input class="form-control no-icon" type="text" placeholder="Grupo" formControlName="group" (keyup.enter)="AddGradeOrGroup()">
-                            </div>
-                            <app-control-messages [control]="gradeOrGroupForm.get('group')"></app-control-messages>
+                        <div class="modal-text mt-3">
+                            {{ studentsCsv.files?.item(0)?.name }}
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
-            <div class="modal-footer justify-content-between">
-                <button class="btn btn-outline-primary modal-btn"
-                [disabled]="loading.creating"
-                (click)="addGradeOrGroupModal.hide();">
-                    Cancelar
-                </button>
+            <div class="modal-footer justify-content-center">
                 <button class="btn btn-primary modal-btn"
                 [disabled]="loading.creating"
-                (click)="AddGradeOrGroup()">
-                    Agregar
+                (click)="UploadStudents()">
+                    Guardar
                 </button>
             </div>
         </div>

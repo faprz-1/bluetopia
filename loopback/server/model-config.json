@@ -411,5 +411,17 @@
         }
       }
     }
+  },
+  "StrategyStatus": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "GetAll": true
+        }
+      }
+    }
   }
 }

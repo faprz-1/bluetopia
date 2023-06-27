@@ -26,9 +26,9 @@ export class TeacherProfileComponent implements OnInit {
       id: new FormControl('', []),
       schoolName: new FormControl('', [Validators.required]),
       address: new FormControl('', [Validators.required]),
-      schoolPhone: new FormControl('', [Validators.required, ValidationService.CheckOnlyIntegerNumbers]),
+      schoolPhone: new FormControl('', [ValidationService.CheckOnlyIntegerNumbers]),
       workTitle: new FormControl('', [Validators.required]),
-      phone: new FormControl('', [Validators.required, ValidationService.CheckOnlyIntegerNumbers]),
+      phone: new FormControl('', [ValidationService.CheckOnlyIntegerNumbers]),
       userId: new FormControl('', [Validators.required]),
     }),
   });

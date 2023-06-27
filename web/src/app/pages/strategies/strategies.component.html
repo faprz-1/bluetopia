@@ -5,13 +5,60 @@
                 Mis estrategias
             </div>
 
-            <button class="btn btn-success" (click)="nav.GoToUserRoute('plantillas')">
-                <i class="zmdi zmdi-plus-circle-o zmdi-hc-lg mr-2"></i>
-                Agregar
+            <button class="btn btn-primary" (click)="nav.GoToUserRoute('plantillas')">
+                Crear nuev estrategia
             </button>
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-12 d-flex align-items-center filters mb-4">
+            <div class="flex-grow-1 filter">
+                <div class="input-container">
+                    <div class="input-icon-container icon-container-right text-center">
+                        <img src="assets/icons/search-small.png">
+                    </div>
+                    <input class="form-control icon-right" type="text" placeholder="Buscar">
+                </div>
+            </div>
+            <div class="select-container filter">
+                <ng-select
+                    class="ng-select form-control"
+                    [items]="grades"
+                    bindLabel="name"
+                    (change)="GetStrategies()"
+                    [(ngModel)]="gradeSelected"
+                    placeholder="Grado">
+                </ng-select>
+            </div>
+            <div class="select-container filter">
+                <ng-select
+                    class="ng-select form-control"
+                    [items]="groups"
+                    bindLabel="name"
+                    (change)="GetStrategies()"
+                    [(ngModel)]="groupSelected"
+                    placeholder="Grupo">
+                </ng-select>
+            </div>
+            <div class="select-container big filter">
+                <ng-select
+                    class="ng-select form-control placeholder-primary"
+                    [items]="startegyStatuses"
+                    bindLabel="name"
+                    placeholder="Tipo de estrategia">
+                </ng-select>
+            </div>
+            <div class="select-container big filter">
+                <ng-select
+                    class="ng-select form-control placeholder-primary"
+                    [items]="startegyStatuses"
+                    bindLabel="name"
+                    placeholder="Estado de estrategia">
+                </ng-select>
+            </div>
+        </div>
+    </div>
     <div class="row" *ngIf="!!strategies.length; else noStrategies">
         <div class="col-12 col-md-6 col-lg-4 mb-1" *ngFor="let strategy of strategies">
             <div class="card py-3 px-2">
