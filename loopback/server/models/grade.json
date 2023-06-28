@@ -40,6 +40,10 @@
         {
           "path": "/GradeOrGroup",
           "verb": "post"
+        },
+        {
+          "path": "/GradeAndGroup",
+          "verb": "post"
         }
       ]
     },
@@ -58,6 +62,37 @@
         {
           "path": "/",
           "verb": "get"
+        }
+      ]
+    },
+    "prototype.UpdateGroups": {
+      "accepts": [
+        {
+          "arg": "teacherId",
+          "type": "number",
+          "required": true,
+          "description": ""
+        },
+        {
+          "arg": "teacherGroups",
+          "type": "array",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "updated",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/UpdateGroups",
+          "verb": "patch"
         }
       ]
     }

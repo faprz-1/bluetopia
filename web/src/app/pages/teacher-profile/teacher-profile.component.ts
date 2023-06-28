@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ApiService } from 'src/app/services/api.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -85,9 +86,15 @@ export class TeacherProfileComponent implements OnInit {
     });
   }
 
-  // Teacher subjects
+  // ----------------------- Teacher subjects ----------------------- //
+  @ViewChild('addGradeAndGroupModal') addGradeAndGroupModal?: ModalDirective;
+
   grades: Array<any> = [];
   subjects: Array<any> = [];
+  gradeOrGroupForm: FormGroup = new FormGroup({
+    grade: new FormControl('', [Validators.required]),
+    group: new FormControl('', [Validators.required]),
+  });
 
   GetTeacherGradesAndGroups() {
     this.api.Get(`/Teachers/${this.user.id}/Data`).subscribe(teacher => {
@@ -101,11 +108,25 @@ export class TeacherProfileComponent implements OnInit {
   GroupByGrades(teacherGroups: any): Array<any> {
     let grades: Map<string, Array<any>> = new Map<string, Array<any>>();
     teacherGroups.forEach((teacherGroup: any) => {
-      if(grades.has(teacherGroup.grade.name)) {
-        grades.get(teacherGroup.grade.name)?.push(teacherGroup.group);
-      } else grades.set(teacherGroup.grade.name, [teacherGroup.group]);
+      if(grades.has(`${teacherGroup.grade.id}~${teacherGroup.grade.name}`)) {
+        grades.get(`${teacherGroup.grade.id}~${teacherGroup.grade.name}`)?.push(teacherGroup);
+      } else grades.set(`${teacherGroup.grade.id}~${teacherGroup.grade.name}`, [teacherGroup]);
     });
     return Array.from(grades);
+  }
+
+  AddGradeAndGroup() {
+    this.loading.creating = true;
+    this.api.Post(`/Grades/GradeAndGroup`, {...this.gradeOrGroupForm.value, teacherId: this.user.teacher.id}).subscribe(newGrade => {
+      this.toast.ShowSuccess(`Se ha agregado el grupo`);
+      this.addGradeAndGroupModal?.hide();
+      this.GetTeacherGradesAndGroups();
+      this.loading.creating = false;
+    }, err => {
+      console.error("Error creating grade and group", err);
+      this.toast.ShowError(`Error al agregar grupo`);
+      this.loading.creating = false;
+    })
   }
 
 }

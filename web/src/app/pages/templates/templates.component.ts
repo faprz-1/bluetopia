@@ -20,7 +20,7 @@ export class TemplatesComponent implements OnInit {
 
   constructor(
     private api: ApiService,
-    private nav: NavigationService,
+    public nav: NavigationService,
     private modalService: BsModalService,
     private activatedRoute: ActivatedRoute,
     private toast: ToastService
@@ -58,6 +58,11 @@ export class TemplatesComponent implements OnInit {
     let route = `tipo-plantillas/${templateType.id}`;
     if(!!this.grade && !!this.group) route = `grado/${this.grade}/grupo/${this.group}/${route}`;
     this.nav.GoToUserRoute(route);
+  }
+
+  OnTemplateSelected(template: any) {
+    this.selectedTemplate = template;
+    this.nav.GoToUserRoute(`plantillas/crear/${template.id}`);
   }
   
   CreateStrategyBasedOnTemplate(template: any) {

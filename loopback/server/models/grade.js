@@ -14,8 +14,15 @@ module.exports = function(Grade) {
             
             Grade.app.models.Group.CreateOne(group, (err, newGroup) => {
                 if(err) return callback(err);
+                
+                if(body.teacherId) {
+                    Grade.app.models.TeacherGroup.AddGroupToTeacher(newGrade.id, newGroup.id, body.teacherId, (err, newTeacherGroup) => {
+                        if(err) return callback(err);
 
-                return callback(null, {grade:newGrade, group:newGroup});
+                        return callback(null, {grade:newGrade, group:newGroup});
+                    })
+                }
+                else return callback(null, {grade:newGrade, group:newGroup});
             });
         });
     }
@@ -57,6 +64,56 @@ module.exports = function(Grade) {
     Grade.GetAll = function(callback) {
         Grade.find({}, (err, grades) => {
             return callback(err, grades);
+        });
+    }
+
+    Grade.prototype.UpdateGroups = function(teacherId, teacherGroups, callback) {
+        if(!teacherId || !teacherGroups) return callback(null, []);
+        let where = {
+            teacherId,
+            gradeId: this.id,
+            id: {
+                nin: teacherGroups.map(teacherGroup => teacherGroup.id).filter(id => !!id)
+            }
+        };
+        let TeacherGroup = Grade.app.models.TeacherGroup;
+        TeacherGroup.destroyAll(where, (err, destroyed) => {
+            if(err) return callback(null, err);
+
+            let groupsToAdd = teacherGroups.filter(teacherGroup => !teacherGroup.id);
+            let cont = 0, limit = groupsToAdd.length;
+
+            if(!limit) return callback(null, teacherGroups);
+            TeacherGroup.app.models.Grade.CreateBasedOnCSV(groupsToAdd, (err, grades) => {
+                if(err) return callback(null, err);
+
+                TeacherGroup.app.models.Group.CreateBasedOnCSV(groupsToAdd, (err, groups) => {
+                    if(err) return callback(null, err);
+
+                    
+                    groupsToAdd.forEach(teacherGroup => {
+                        const gradeId = grades.find(g => g.name == teacherGroup.grade.toLowerCase()) ? grades.find(g => g.name == teacherGroup.grade.toLowerCase()).id : null;
+                        const groupId = groups.find(g => g.name == teacherGroup.group.toLowerCase()) ? groups.find(g => g.name == teacherGroup.group.toLowerCase()).id : null;
+                        const teacherGroupInstance = {
+                            teacherId,
+                            gradeId,
+                            groupId,
+                        }
+
+                        TeacherGroup.findOrCreate({
+                            where: {
+                                groupId,
+                                gradeId,
+                                teacherId
+                            }
+                        }, teacherGroupInstance, (err, newTeacherGroup) => {
+                            if(err) return callback(err);
+
+                            if(++cont == limit) return callback(null, teacherGroups);
+                        });
+                    });
+                });
+            });
         });
     }
 

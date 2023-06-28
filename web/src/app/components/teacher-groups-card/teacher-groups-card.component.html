@@ -6,13 +6,20 @@
             <div class="section-title">Mis grados/grupos</div>
         </div>
 
-        <div class="groups">
+        <div class="groups overflow-auto">
             <div class="grade">
                 <img src="assets/icons/school-hat.svg">
-                <div>{{grade + "°"}}</div>
+                <div>{{grade.name + "°"}}</div>
             </div>
-            <div *ngFor="let group of groups" class="group">
-                {{group.name}}
+            <div class="d-flex overflow-auto gap-12 flex-grow-1">
+                <div *ngFor="let group of groups" class="group">
+                    {{group.name}}
+                </div>
+            </div>
+            <div class="options">
+                <img class="clickeable" src="assets/icons/edit.svg" (click)="editGroupsModal.show()" width="24">
+                <img class="clickeable" src="assets/icons/delete-danger.svg" (click)="editGroupsModal.show()" width="24">
+                <img class="clickeable" src="assets/icons/add-circle-success.svg" (click)="editGroupsModal.show()" width="24">
             </div>
         </div>
     </div>
@@ -29,9 +36,70 @@
                 {{subject.name}}
             </div>
         </div>
+
+        <div class="options">
+            <img class="clickeable" src="assets/icons/edit.svg" (click)="editGroupsModal.show()" width="24">
+            <img class="clickeable" src="assets/icons/delete-danger.svg" (click)="editGroupsModal.show()" width="24">
+            <img class="clickeable" src="assets/icons/add-circle-success.svg" (click)="editGroupsModal.show()" width="24">
+        </div>
     </div>
 
     <div class="link clickeable">
         Ver alumnos
+    </div>
+</div>
+
+<div class="modal fade" bsModal #editGroupsModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
+    tabindex="-1" role="dialog" aria-labelledby="first-time-configuration">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Editar grupos</h2>
+            </div>
+            <div class="modal-body">
+                <div class="teacher-form">
+                    <form [formGroup]="teacherGroupForm">
+                        <div class="row">
+                            <div class="col-12 col-md-6 col-xl-8">
+                                <div class="input-container">
+                                    <div class="input-icon-container text-center">
+                                        <img src="assets/icons/users-group.png">
+                                    </div>
+                                    <input class="form-control" type="text" placeholder="Grupo" formControlName="group">
+                                </div>
+                                <app-control-messages [control]="teacherGroupForm.get('group')"></app-control-messages>
+                            </div>
+                            <div class="col-12 col-md-6 col-xl-4">
+                                <button class="btn btn-outline-success btn-block" (click)="AddGroup()"
+                                    [disabled]="!teacherGroupForm.get('group')?.value">
+                                    Agregar grupo
+                                </button>
+                            </div>
+                            <div class="col-12">
+                                <div class="input-container">
+                                    <label class="input-label">Grupos asignados</label>
+                                    <span class="badge badge-primary mr-3" *ngFor="let teacherGoup of teacherGroupForm.get('teacherGroups')?.value; let i = index">
+                                        <div class="d-flex">
+                                            <span class="mr-2 text-uppercase">
+                                                {{(teacherGoup.grade?.name ? teacherGoup.grade.name : teacherGoup.grade) + (teacherGoup.group?.name ? teacherGoup.group.name : teacherGoup.group)}}
+                                            </span>
+                                            <i class="zmdi zmdi-close clickeable" (click)="DeleteGroup(i)"></i>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer d-flex align-items-center">
+                <button class="btn btn-outline-primary btn-big mr-4" (click)="editGroupsModal.hide(); ResetForm()">
+                    Cancelar
+                </button>
+                <button class="btn btn-primary btn-big" (click)="SaveGroups()">
+                    Guardar
+                </button>
+            </div>
+        </div>
     </div>
 </div>
