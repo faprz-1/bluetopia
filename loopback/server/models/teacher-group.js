@@ -50,4 +50,16 @@ module.exports = function(TeacherGroup) {
         });
     }
 
+    TeacherGroup.AddGroupToTeacher = function(gradeId, groupId, teacherId, callback) {
+        TeacherGroup.create({
+            gradeId,
+            groupId,
+            teacherId
+        }, (err, newTeacherGroup) => {
+            if(err) return callback(err);
+
+            return callback(null, newTeacherGroup);
+        });
+    }
+
 };

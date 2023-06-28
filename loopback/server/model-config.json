@@ -223,7 +223,8 @@
         "sharedMethods": {
           "*": false,
           "CreateGradeOrGroup": true,
-          "GetAll": true
+          "GetAll": true,
+          "prototype.UpdateGroups": true
         }
       }
     }
@@ -235,7 +236,8 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
-          "GetAll": true
+          "GetAll": true,
+          "GetOne": true
         }
       }
     }
@@ -420,6 +422,18 @@
         "sharedMethods": {
           "*": false,
           "GetAll": true
+        }
+      }
+    }
+  },
+  "GradeSubject": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "UpdateGradeTeacherSubjects": true
         }
       }
     }

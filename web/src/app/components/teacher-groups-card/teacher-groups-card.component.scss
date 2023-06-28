@@ -30,6 +30,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    max-width: 100%;
 }
 .grade {
     display: flex;
@@ -43,6 +44,9 @@
     font-weight: 500;
     border-radius: 6px;
     background: #FFF;
+}
+.gap-12 {
+    gap: 12px;
 }
 .group {
     display: flex;
@@ -83,4 +87,21 @@
     font-weight: 800;
     letter-spacing: 0.8px;
     text-decoration-line: underline;
+}
+
+.options {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.badge {
+    font-size: 1rem;
+    padding: .25rem 1rem;
+}
+
+.input-label {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 600;
 }

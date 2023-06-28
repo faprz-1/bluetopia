@@ -69,7 +69,8 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": [
-        "GetAll"
+        "GetAll",
+        "GetOne"
       ]
     }
   ],
@@ -88,6 +89,31 @@
       "http": [
         {
           "path": "/",
+          "verb": "get"
+        }
+      ]
+    },
+    "GetOne": {
+      "accepts": [
+        {
+          "arg": "id",
+          "type": "number",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "templates",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/:id",
           "verb": "get"
         }
       ]

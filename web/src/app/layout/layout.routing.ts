@@ -109,6 +109,7 @@ const LAYOUT_ROUTES: Routes = [
           { path: 'grado/:grade/grupo/:group/tipo-plantillas/:templateTypeId', loadChildren: () => import('../pages/type-templates/type-templates.module').then(m => m.TypeTemplatesModule) },
           { path: 'plantillas', loadChildren: () => import('../pages/templates/templates.module').then(m => m.TemplatesModule) },
           { path: 'tipo-plantillas/:templateTypeId', loadChildren: () => import('../pages/type-templates/type-templates.module').then(m => m.TypeTemplatesModule) },
+          { path: 'plantillas/crear/:templateId', loadChildren: () => import('../pages/create-strategy/create-strategy.module').then(m => m.CreateStrategyModule) },
           { path: 'estrategias/:strategyId/materias', loadChildren: () => import('../pages/template-form/template-form.module').then(m => m.TemplateFormModule) },
           { path: 'estrategias/:strategyId', loadChildren: () => import('../pages/teacher-template-form/teacher-template-form.module').then(m => m.TeacherTemplateFormModule) },
           { path: 'estrategias/:strategyId/calendario', loadChildren: () => import('../pages/project-calendar/project-calendar.module').then(m => m.ProjectCalendarModule) },

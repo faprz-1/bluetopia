@@ -184,7 +184,7 @@ module.exports = function(Teacher) {
                     {id: userOrTeacherId}
                 ]
             },
-            include: ['subjects', {'teacherGroups': ['grade', 'group']}]
+            include: ['subjects', {'teacherGroups': [{'grade': {'gradeSubjects': 'subject'}}, 'group']}]
         }, (err, teacher) => {
             if(err) return callback(err);
 

@@ -95,13 +95,77 @@
         </div>
         <div *ngSwitchCase="'subjects'">
             <div class="subjects mb-5">
-                <app-teacher-groups-card *ngFor="let grade of grades" [data]="grade" [subjects]="subjects"></app-teacher-groups-card>
+                <app-teacher-groups-card
+                    *ngFor="let grade of grades"
+                    [data]="grade"
+                    [subjects]="subjects"
+                    (onChange)="GetTeacherGradesAndGroups()"
+                ></app-teacher-groups-card>
+                <button class="btn btn-outline-success btn-card" (click)="addGradeAndGroupModal.show()">
+                    <i class="zmdi zmdi-plus-box zmdi-hc-5x"></i>
+                </button>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="d-flex flex-column">
-
+<div class="modal fade" bsModal #addGradeAndGroupModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
+    tabindex="-1" role="dialog" aria-labelledby="addGradeAndGroupModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Agregar grupo</h2>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="gradeOrGroupForm">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="input-container">
+                                <input class="form-control no-icon" type="text" placeholder="Grado" formControlName="grade" (keyup.enter)="AddGradeAndGroup()">
+                            </div>
+                            <app-control-messages [control]="gradeOrGroupForm.get('grade')"></app-control-messages>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="input-container">
+                                <input class="form-control no-icon" type="text" placeholder="Grupo" formControlName="group" (keyup.enter)="AddGradeAndGroup()">
+                            </div>
+                            <app-control-messages [control]="gradeOrGroupForm.get('group')"></app-control-messages>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button class="btn btn-outline-primary modal-btn"
+                [disabled]="loading.creating"
+                (click)="addGradeAndGroupModal.hide();">
+                    Cancelar
+                </button>
+                <button class="btn btn-primary modal-btn"
+                [disabled]="loading.creating"
+                (click)="AddGradeAndGroup()">
+                    Agregar
+                </button>
+            </div>
+        </div>
     </div>
+</div>
 
+<div class="modal fade" bsModal #addGradeModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
+    tabindex="-1" role="dialog" aria-labelledby="first-time-configuration">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Agregar grupo</h2>
+            </div>
+            <div class="modal-body">
+                
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" [disabled]="loading.uploading"
+                (click)="addGradeModal.hide(); nav.GoToUserRoute('mis-estudiantes')">
+                    Continuar
+                </button>
+            </div>
+        </div>
+    </div>
 </div>

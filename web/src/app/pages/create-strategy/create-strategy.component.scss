@@ -1,0 +1,16 @@
+.title-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.title {
+    color: var(--gray-1, #3D5E81);
+    font-size: 24px;
+    font-family: Mulish;
+    font-weight: 700;
+
+    display: flex;
+    gap: 14px;
+    align-items: center;
+}

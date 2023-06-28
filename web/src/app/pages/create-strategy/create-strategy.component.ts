@@ -6,18 +6,16 @@ import { NavigationService } from 'src/app/services/navigation.service';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
-  selector: 'app-type-templates',
-  templateUrl: './type-templates.component.html',
-  styleUrls: ['./type-templates.component.scss']
+  selector: 'app-create-strategy',
+  templateUrl: './create-strategy.component.html',
+  styleUrls: ['./create-strategy.component.scss']
 })
-export class TypeTemplatesComponent implements OnInit {
+export class CreateStrategyComponent implements OnInit {
 
   modalRef: BsModalRef | null = null;
-  templateType: any = null;
+  template: any = null;
   selectedTemplate: any = null;
-  grade: string | null = null;
-  group: string | null = null;
-  templateTypeId: number = 0;
+  templateId: number = 0;
 
   constructor(
     private api: ApiService,
@@ -33,10 +31,8 @@ export class TypeTemplatesComponent implements OnInit {
 
   GetParams() {
     this.activatedRoute.params.subscribe(params => {
-      this.grade = params['grade'];
-      this.group = params['group'];
-      this.templateTypeId = params['templateTypeId'];
-      this.GetTemplatesByType();
+      this.templateId = params['templateId'];
+      this.GetTemplate();
     });
   }
 
@@ -48,9 +44,9 @@ export class TypeTemplatesComponent implements OnInit {
     if(this.modalRef) this.modalRef.hide();
   }
   
-  GetTemplatesByType() {
-    this.api.Get(`/TemplateTypes/${this.templateTypeId}/WithTemplates`).subscribe(templateTypes => {
-      this.templateType = templateTypes;
+  GetTemplate() {
+    this.api.Get(`/Templates/${this.templateId}`).subscribe(template => {
+      this.template = template;
     }, err => {
       console.error("Erro getting templates", err);
     });
@@ -58,13 +54,7 @@ export class TypeTemplatesComponent implements OnInit {
 
   GoBack() {
     let route = `plantillas`;
-    if(!!this.grade && !!this.group) route = `grado/${this.grade}/grupo/${this.group}/${route}`;
     this.nav.GoToUserRoute(route);
-  }
-
-  OnTemplateSelected(template: any) {
-    this.selectedTemplate = template;
-    this.nav.GoToUserRoute(`plantillas/crear/${template.id}`);
   }
 
   CreateStrategyBasedOnTemplate(template: any) {
@@ -72,8 +62,8 @@ export class TypeTemplatesComponent implements OnInit {
     let strategy = {
       templateId: template.id,
       userId: this.api.GetUser()?.id,
-      grade: !!this.grade ? this.grade : null,
-      group: !!this.group ? this.group : null,
+      grade: null,
+      group: null,
     }
     this.api.Post(`/Strategies`, {strategy}).subscribe(newStrategy => {
       let route = `estrategias/${newStrategy.id}/materias`;

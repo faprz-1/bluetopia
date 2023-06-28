@@ -22,4 +22,12 @@ module.exports = function(Template) {
         });
     }
 
+    Template.GetOne = function(id, callback) {
+        Template.findById(id, {include: 'type'}, (err, template) => {
+            if(err) return callback(err);
+
+            return callback(null, template);
+        });
+    }
+
 };

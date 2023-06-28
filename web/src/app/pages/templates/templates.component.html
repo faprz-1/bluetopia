@@ -13,7 +13,7 @@
             <app-template-slider
             [templates]="templateType.templates"
             [maxTemplatesToShow]="3"
-            (onClick)="selectedTemplate = $event; OpenModal(templatePreviewModal)"
+            (onClick)="OnTemplateSelected($event)"
             ></app-template-slider>
             <div class="bottom-right">
                 <button class="btn btn-outline-primary btn-widder" (click)="SeeAllTemplatesOfType(templateType)">
