@@ -1,0 +1,22 @@
+{
+  "name": "GradeSubject",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "gradeId": {
+      "type": "number",
+      "required": true
+    },
+    "subjectId": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

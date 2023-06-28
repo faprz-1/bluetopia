@@ -425,5 +425,9 @@
         }
       }
     }
+  },
+  "GradeSubject": {
+    "dataSource": "mysqlDev",
+    "public": true
   }
 }

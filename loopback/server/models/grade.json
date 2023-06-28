@@ -12,7 +12,17 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "subjects": {
+      "type": "hasMany",
+      "model": "Subject",
+      "foreignKey": "gradeId",
+      "options": {
+        "nestRemoting": true
+      },
+      "through": "GradeSubject"
+    }
+  },
   "acls": [],
   "methods": {
     "CreateGradeOrGroup": {
