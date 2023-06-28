@@ -12,7 +12,7 @@ import { ToastService } from 'src/app/services/toast.service';
 export class TeacherGroupsCardComponent implements OnInit {
 
   @Input() data: any = null;
-  @Input() subjects: any = [];
+  @Input() subjects: Array<any> = [];
 
   @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
 
@@ -22,6 +22,7 @@ export class TeacherGroupsCardComponent implements OnInit {
   user: any = null;
   grade: any = {};
   groups: Array<any> = [];
+  groupSubjects: Array<any> = [];
   teacherGroupForm: FormGroup = new FormGroup({
     teacherGroups: new FormControl([], [Validators.required]),
     group: new FormControl('', []),
@@ -46,12 +47,16 @@ export class TeacherGroupsCardComponent implements OnInit {
         return 0;
       });
 
-      if(!!this.data[1][0].grade.gradeSubjects && this.data[1][0].grade.gradeSubjects.length) this.subjects = this.data[1][0].grade.gradeSubjects;
+      if(!!this.data[1][0].grade.gradeSubjects && !!this.data[1][0].grade.gradeSubjects.length) this.groupSubjects = this.data[1][0].grade.gradeSubjects;
+      else this.groupSubjects = Array.from(this.subjects);
+      this.groupSubjects.forEach(subject => {
+        if(!!subject.subject) subject.name = subject.subject.name;
+      });
     }
 
     this.teacherGroupForm.get('teacherGroups')?.setValue(Array.from(this.data[1]));
 
-    this.gradeSubjectsForm.get('subjects')?.setValue(Array.from(this.subjects));
+    this.gradeSubjectsForm.get('subjects')?.setValue(Array.from(this.groupSubjects));
   }
 
   SaveGroups() {

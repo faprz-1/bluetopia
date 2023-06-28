@@ -30,17 +30,17 @@
             <div class="section-title">Mis materias</div>
         </div>
 
-        <div class="subjects w-100">
-            <div class="subject" *ngFor="let subject of subjects">
+        <div class="subjects w-100 flex-grow-1">
+            <div class="subject" *ngFor="let subject of groupSubjects">
                 <img src="assets/icons/bookmark.svg" width="24">
-                {{ !!subject.subject ? subject.subject.name : subject.name }}
+                {{ subject.name }}
             </div>
         </div>
 
         <div class="options">
-            <img class="clickeable" src="assets/icons/edit.svg" width="24">
-            <img class="clickeable" src="assets/icons/delete-danger.svg" width="24">
-            <img class="clickeable" src="assets/icons/add-circle-success.svg" width="24">
+            <img class="clickeable" src="assets/icons/edit.svg" (click)="editGradeSubjectsModal.show()" width="24">
+            <img class="clickeable" src="assets/icons/delete-danger.svg" (click)="editGradeSubjectsModal.show()" width="24">
+            <img class="clickeable" src="assets/icons/add-circle-success.svg" (click)="editGradeSubjectsModal.show()" width="24">
         </div>
     </div>
 
