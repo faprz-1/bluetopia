@@ -17,6 +17,7 @@ export class TeacherGroupsCardComponent implements OnInit {
   @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('editGroupsModal') editGroupsModal?: ModalDirective;
+  @ViewChild('editGradeSubjectsModal') editGradeSubjectsModal?: ModalDirective;
 
   user: any = null;
   grade: any = {};
@@ -24,6 +25,9 @@ export class TeacherGroupsCardComponent implements OnInit {
   teacherGroupForm: FormGroup = new FormGroup({
     teacherGroups: new FormControl([], [Validators.required]),
     group: new FormControl('', []),
+  });
+  gradeSubjectsForm: FormGroup = new FormGroup({
+    subjects: new FormControl([], [Validators.required]),
   });
 
   constructor(
@@ -34,16 +38,20 @@ export class TeacherGroupsCardComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.api.GetUser();
     if(!!this.data && Array.isArray(this.data)) {
-      this.grade.id = this.data[0].split('~')[0];
+      this.grade.id = Number(this.data[0].split('~')[0]);
       this.grade.name = this.data[0].split('~')[1];
       this.groups = this.data[1].map((teacherGroup: any) => teacherGroup.group).sort((a: any, b: any) => {
         if(a.name > b.name) return 1;
         if(a.name < b.name) return -1;
         return 0;
       });
+
+      if(!!this.data[1][0].grade.gradeSubjects && this.data[1][0].grade.gradeSubjects.length) this.subjects = this.data[1][0].grade.gradeSubjects;
     }
 
     this.teacherGroupForm.get('teacherGroups')?.setValue(Array.from(this.data[1]));
+
+    this.gradeSubjectsForm.get('subjects')?.setValue(Array.from(this.subjects));
   }
 
   SaveGroups() {
@@ -81,6 +89,25 @@ export class TeacherGroupsCardComponent implements OnInit {
   ResetForm() {
     this.teacherGroupForm.reset();
     this.teacherGroupForm.get('teacherGroups')?.setValue(Array.from(this.data[1]));
+
+    this.gradeSubjectsForm.reset();
+    this.gradeSubjectsForm.get('subjects')?.setValue(Array.from(this.subjects));
+  }
+
+  UpdateSubjects() {
+    let params = {
+      teacherId: this.user.teacher.id,
+      gradeId: this.grade.id,
+      gradeSubjects: this.gradeSubjectsForm.value.subjects
+    }
+    this.api.Patch(`/GradeSubjects/UpdateGradeTeacherSubjects`, params).subscribe(updated => {
+      this.editGradeSubjectsModal?.hide();
+      this.toast.ShowSuccess(`Materias actualizadas`);
+      this.onChange.emit();
+    }, err => {
+      console.error("Error updating grade subjects", err);
+      this.toast.ShowError(`Error al actualizar materias`);
+    });
   }
 
 }

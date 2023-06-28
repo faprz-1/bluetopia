@@ -428,6 +428,14 @@
   },
   "GradeSubject": {
     "dataSource": "mysqlDev",
-    "public": true
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "UpdateGradeTeacherSubjects": true
+        }
+      }
+    }
   }
 }

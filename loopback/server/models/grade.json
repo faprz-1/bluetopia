@@ -13,14 +13,10 @@
   },
   "validations": [],
   "relations": {
-    "subjects": {
+    "gradeSubjects": {
       "type": "hasMany",
-      "model": "Subject",
-      "foreignKey": "gradeId",
-      "options": {
-        "nestRemoting": true
-      },
-      "through": "GradeSubject"
+      "model": "GradeSubject",
+      "foreignKey": "gradeId"
     }
   },
   "acls": [],

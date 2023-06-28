@@ -33,14 +33,14 @@
         <div class="subjects w-100">
             <div class="subject" *ngFor="let subject of subjects">
                 <img src="assets/icons/bookmark.svg" width="24">
-                {{subject.name}}
+                {{ !!subject.subject ? subject.subject.name : subject.name }}
             </div>
         </div>
 
         <div class="options">
-            <img class="clickeable" src="assets/icons/edit.svg" (click)="editGroupsModal.show()" width="24">
-            <img class="clickeable" src="assets/icons/delete-danger.svg" (click)="editGroupsModal.show()" width="24">
-            <img class="clickeable" src="assets/icons/add-circle-success.svg" (click)="editGroupsModal.show()" width="24">
+            <img class="clickeable" src="assets/icons/edit.svg" width="24">
+            <img class="clickeable" src="assets/icons/delete-danger.svg" width="24">
+            <img class="clickeable" src="assets/icons/add-circle-success.svg" width="24">
         </div>
     </div>
 
@@ -97,6 +97,44 @@
                     Cancelar
                 </button>
                 <button class="btn btn-primary btn-big" (click)="SaveGroups()">
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" bsModal #editGradeSubjectsModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
+    tabindex="-1" role="dialog" aria-labelledby="first-time-configuration">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Editar materias</h2>
+            </div>
+            <div class="modal-body">
+                <div class="teacher-form">
+                    <form [formGroup]="gradeSubjectsForm">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="input-container">
+                                    <div class="input-icon-container text-center">
+                                        <img src="assets/icons/book.png">
+                                    </div>
+                                    <ng-select class="ng-select form-control with-icon" [items]="subjects" [multiple]="true"
+                                        bindLabel="name" placeholder="Asignaturas" formControlName="subjects">
+                                    </ng-select>
+                                </div>
+                                <app-control-messages [control]="gradeSubjectsForm.get('subjects')"></app-control-messages>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer d-flex align-items-center">
+                <button class="btn btn-outline-primary btn-big mr-4" (click)="editGradeSubjectsModal.hide(); ResetForm()">
+                    Cancelar
+                </button>
+                <button class="btn btn-primary btn-big" (click)="UpdateSubjects()">
                     Guardar
                 </button>
             </div>
