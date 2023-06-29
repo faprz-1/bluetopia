@@ -5,20 +5,7 @@
   "options": {
     "validateUpsert": true
   },
-  "properties": {
-    "gradeId": {
-      "type": "number",
-      "required": true
-    },
-    "subjectId": {
-      "type": "number",
-      "required": true
-    },
-    "teacherId": {
-      "type": "number",
-      "required": true
-    }
-  },
+  "properties": {},
   "validations": [],
   "relations": {
     "subject": {
