@@ -1,16 +1,19 @@
 <div class="content">
 
-    <div class="row mb-5">
-        <div class="col-12 d-flex h-100 align-items-center justify-content-between header-col">
-            <div class="page-title">
-                Mis estudiantes
-            </div>
+    <div class="d-flex align-items-center justify-content-between flex-wrap mb-5">
+        <div class="text">
+            Tus grados y grupos registrados
+        </div>
 
-            <div class="input-container">
-                <div class="input-icon-container text-center">
-                    <img src="assets/icons/search.png">
-                </div>
-                <input class="form-control" type="text" placeholder="Buscar" (keyup.enter)="SearchStudent()">
+        <div class="d-flex flex-column align-items-end" style="gap: 25px;">
+            <div class="link">Ver biblioteca de estrategias</div>
+            <div class="strategy-buttons">
+                <button class="btn btn-primary">
+                    Crear nueva estrategia
+                </button>
+                <button class="btn btn-success">
+                    Ver mis estrategias
+                </button>
             </div>
         </div>
     </div>
