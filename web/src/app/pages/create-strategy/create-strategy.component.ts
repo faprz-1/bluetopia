@@ -16,6 +16,9 @@ export class CreateStrategyComponent implements OnInit {
   template: any = null;
   selectedTemplate: any = null;
   templateId: number = 0;
+  loading: any = {
+    getting: true
+  }
 
   constructor(
     private api: ApiService,
@@ -47,8 +50,10 @@ export class CreateStrategyComponent implements OnInit {
   GetTemplate() {
     this.api.Get(`/Templates/${this.templateId}`).subscribe(template => {
       this.template = template;
+      this.loading.getting = false;
     }, err => {
       console.error("Erro getting templates", err);
+      this.loading.getting = false;
     });
   }
 
@@ -72,6 +77,10 @@ export class CreateStrategyComponent implements OnInit {
       console.error("Error creating strategy", err);
       this.toast.ShowError(`Error al crear la estrategia`);
     });
+  }
+
+  GetArray(length: number): any[] {
+    return Array(length).fill(0);
   }
 
 }

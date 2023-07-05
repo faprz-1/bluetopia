@@ -25,7 +25,7 @@
       "required": true
     },
     "difficulty": {
-      "type": "text",
+      "type": "number",
       "required": true
     },
     "estimatedClasses": {

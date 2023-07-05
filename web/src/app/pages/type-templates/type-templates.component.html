@@ -12,7 +12,7 @@
 
     <div class="d-flex justify-content-center">
         <div class="templates">
-            <div class="template clickeable" *ngFor="let template of templateType?.templates" (click)="OnTemplateSelected($event)">
+            <div class="template clickeable" *ngFor="let template of templateType?.templates" (click)="OnTemplateSelected(template)">
                 <img class="template-icon" src="{{'assets/icons/' + template.icon}}" alt="template-icon">
                 <div class="template-name">
                     {{template.nickname ? template.nickname : template.name}}

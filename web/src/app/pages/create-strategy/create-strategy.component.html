@@ -11,6 +11,102 @@
         <div>
         </div>
     </div>
+    
+    <div class="template-info mt-5" *ngIf="!loading.getting">
+        <div class="description">
+            <div class="template">
+                <img class="template-icon" src="{{'assets/icons/' + template.icon}}" alt="template-icon">
+                <div class="template-name">
+                    {{template.nickname ? template.nickname : template.name}}
+                </div>
+            </div>
+            <div class="description-text">
+                {{template.description}}
+            </div>
+        </div>
+        <div class="info-row">
+            <div class="info-topic">
+                Grado de dificultad para planear:
+            </div>
+            <div class="stars">
+                <img *ngFor="let star of GetArray(template.difficulty)" src="assets/icons/star_rate.svg">
+                <img class="star-disabled" *ngFor="let star of GetArray(5-template.difficulty)" src="assets/icons/star_rate.svg">
+            </div>
+        </div>
+        <div class="info-row">
+            <div class="icon-container">
+                <img src="assets/icons/class.svg" alt="">
+            </div>
+            <div class="info-topic">
+                Tiempo de clases estimado:
+            </div>
+            <div>
+                {{template.estimatedClasses}}
+            </div>
+        </div>
+        <div class="info-row">
+            <div class="icon-container">
+                <img src="assets/icons/student-metric.svg" alt="">
+            </div>
+            <div class="info-topic">
+                Edades sugeridas:
+            </div>
+            <div>
+                {{template.suggestedAges}}
+            </div>
+        </div>
+        <div class="info-row">
+            <div class="icon-container">
+                <img src="assets/icons/books-collection.svg" alt="">
+            </div>
+            <div class="info-topic">
+                Asignaturas sugeridas:
+            </div>
+            <div>
+                {{template.suggestedSubjects}}
+            </div>
+        </div>
+        <div class="info-row">
+            <div class="icon-container">
+                <img src="assets/icons/brain.svg" alt="">
+            </div>
+            <div class="info-topic">
+                Competencias que desarrolla especialmente:
+            </div>
+            <div>
+                {{template.skillsDeveloped}}
+            </div>
+        </div>
 
+        <div class="d-flex justify-content-end w-100 mt-4">
+            <button class="btn btn-primary">
+                Crear nueva
+            </button>
+        </div>
+    </div>
+
+    <div class="tamplates-suggestions mt-5">
+        <div class="info">
+            <div class="instructions">
+                <div class="title">Plantillas</div>
+                <div class="text">
+                    Otros profesores han creado estrategias que podrás utilizar y modificar para tu clase
+                </div>
+                <div class="text">
+                    A continuación puede buscar plantillas por temáticas
+                </div>
+            </div>
+
+            <div class="input-container">
+                <ng-select class="ng-select form-control" [items]="[]"
+                    bindLabel="name" placeholder="Tematica">
+                </ng-select>
+            </div>
+        </div>
+
+        <div class="w-100">
+            <app-suggested-strategies-slider></app-suggested-strategies-slider>
+        </div>
+    </div>
     
 </div>
