@@ -1,0 +1,94 @@
+.modal-dialog {
+    width: 60%;
+}
+@media (max-width: 576px) {
+    .modal-dialog {
+        width: 96%;
+    }
+}
+@media (max-width: 1300px) {
+    .modal-dialog {
+        width: 75%;
+    }
+}
+.modal-content {
+    position: relative;
+    border-radius: 12px;
+}
+
+.close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+}
+
+.modal-title {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 16px;
+
+    color: var(--gray-1, #3D5E81);
+    font-family: Mulish;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.card {
+    display: inline-flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    background: var(--blue-light, #F2F8FF);
+    margin-bottom: 16px;
+    overflow: auto;
+    width: 100%;
+
+    color: var(--gray-1, #3D5E81);
+    font-family: Mulish;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    .title {
+        color: var(--gray-1, #3D5E81);
+        font-family: Mulish;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+}
+
+.rubric-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-right: 1.5rem;
+    margin-bottom: 1.5rem;
+    width: 150px;
+    min-width: 150px;
+}
+.rubric-title {
+    width: 100%;
+    text-align: center;
+    color: #587594;
+    background-color: #D3E8FF;
+    padding: .75rem;
+}
+.rubric-input {
+    color: #587594;
+    background-color: #E8F3FF;
+    border: none;
+    resize: none;
+    width: 100%;
+    height: 6rem;
+    padding: .5rem .5rem;
+    font-size: 1rem;
+    text-align: center;
+}

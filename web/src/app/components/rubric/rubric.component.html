@@ -2,13 +2,13 @@
     <div class="rubric-row" *ngFor="let rubric of rubrics; let last = last">
         <div class="rubric-item">
             <div class="rubric-title">Valor</div>
-            <textarea class="rubric-input" [(ngModel)]="rubric.description" placeholder="Rubro"></textarea>
+            <textarea class="rubric-input" [disabled]="!canEdit" [(ngModel)]="rubric.description" placeholder="Rubro"></textarea>
         </div>
         <div class="rubric-item" *ngFor="let concept of rubric.concepts">
             <div class="rubric-title">
-                <input type="text" [(ngModel)]="concept.value">
+                <input type="text" [disabled]="!canEdit" [(ngModel)]="concept.value">
             </div>
-            <textarea class="rubric-input" [(ngModel)]="concept.description" placeholder="Descripción"></textarea>
+            <textarea class="rubric-input" [disabled]="!canEdit" [(ngModel)]="concept.description" placeholder="Descripción"></textarea>
         </div>
         <div class="controls vertical" *ngIf="last">
             <img class="clickeable" (click)="AddCol()" src="assets/icons/add-circle.png" alt="add">
@@ -16,10 +16,10 @@
         </div>
     </div>
     <div class="rubric-row">
-        <div class="rubric-item" style="opacity: 0;">
+        <div class="rubric-item" *ngFor="let rubric of rubrics[0]?.concepts" style="opacity: 0;">
         </div>
         <div class="rubric-col">
-            <div class="controls">
+            <div class="controls horizontal">
                 <img class="clickeable" (click)="AddRow()" src="assets/icons/add-circle.png" alt="add">
                 <img class="clickeable" (click)="RemoveRow()" src="assets/icons/remove-circle.png" alt="add">
             </div>

@@ -1,6 +1,8 @@
 .rubric-row {
     display: flex;
     align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .rubric-item {
@@ -9,8 +11,6 @@
     align-items: center;
     border-radius: 6px;
     overflow: hidden;
-    margin-right: 1.5rem;
-    margin-bottom: 1.5rem;
     width: 150px;
     min-width: 150px;
 }
@@ -36,11 +36,14 @@
 .controls {
     display: flex;
     justify-content: center;
-    width: 150px;
 
     img {
         margin: .25rem;
     }
+}
+
+.horizontal {
+    width: 150px;
 }
 
 .vertical {

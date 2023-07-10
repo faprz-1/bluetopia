@@ -5,17 +5,17 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlMessagesModule } from 'src/app/components/control-messages/control-messages.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { RubricModule } from 'src/app/components/rubric/rubric.module';
 
-import { TemplateProyectBasedOnFormComponent } from './template-proyect-based-on-form.component';
+import { RubricTutorialModalComponent } from './rubric-tutorial-modal.component';
+import { RubricModule } from '../rubric/rubric.module';
 
 const MODULE_ROUTES = [
-  { path: '', component: TemplateProyectBasedOnFormComponent }
+  { path: '', component: RubricTutorialModalComponent }
 ];
 
 @NgModule({
   declarations: [
-    TemplateProyectBasedOnFormComponent
+    RubricTutorialModalComponent
   ],
   imports: [
     FormsModule,
@@ -27,6 +27,6 @@ const MODULE_ROUTES = [
     ModalModule.forRoot(),
     // RouterModule.forChild(MODULE_ROUTES),
   ],
-  exports: [TemplateProyectBasedOnFormComponent]
+  exports: [RubricTutorialModalComponent]
 })
-export class TemplateProyectBasedOnFormModule { }
+export class RubricTutorialModalModule { }
