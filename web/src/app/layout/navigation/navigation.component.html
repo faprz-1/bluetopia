@@ -1,50 +1,30 @@
 <aside class="sidebar" [class.toggled]="sidebarVisible">
-    <perfect-scrollbar>
-
-        <div class="sidebar-content">
-            <div class="user-data">
-                <img src="assets/icons/account_circle.svg" width="24">
-                
-                <div class="d-flex flex-column align-items-start">
-                    <div class="username">{{user.username}}</div>
-                    <div class="text">{{user.data.workTitle}}</div>
-                    <div class="text">{{user.data.schoolName}}</div>
-                </div>
-                
-                <div class="my-data clickeable" (click)="GoToProfile()">
-                    <img src="assets/icons/badge.svg" width="24">
-                    <div class="text-2">Mis datos</div>
-                </div>
+    <div class="sidebar-content h-100" style="overflow-y: auto;">
+        <div class="user-data">
+            <img src="assets/icons/account_circle.svg" width="24">
+            
+            <div class="d-flex flex-column align-items-start">
+                <div class="username">{{user.username}}</div>
+                <div class="text">{{user.data.workTitle}}</div>
+                <div class="text">{{user.data.schoolName}}</div>
             </div>
-            <!-- <div class="user m-0" dropdown>
-                <div class="user__info" dropdownToggle>
-                    <img  class="user__img" style="object-fit: cover" *ngIf="user.profileImage!=null" src="{{user.profileImage | jarabeImage:'avatar'}}" alt="Profile image">
-                    <img *ngIf="user.profileImage==null" class="user__img" style="object-fit: cover" src="assets/fondo/user.png" alt="">
-                    <div class="user_data_container">
-                        <div class="user__name">{{user.username}}</div>
-                        <div class="user__email">{{user.email}}</div>
-                    </div>
-                </div>
-    
-                <div *dropdownMenu class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" (click)="GoToProfile()">Ver perfil</a>
-                    <a class="dropdown-item" (click)="LogOut()" href="">Cerrar sesión</a>
-                </div>
-            </div> -->
-    
-            <!-- <ul class="navigation">
-              <li routerLinkActive="navigation__active" *ngFor="let link of activeUserPages">
-              <a [routerLink]="['/'+link.action]" (click)="toggleSidebarVisibility()"><i [class]="link.icon"></i> {{link.name}}</a></li>
-            </ul> -->
-
-            <div class="nav-items w-100">
-                <div class="item clickeable w-100" *ngFor="let link of activeUserPages" (click)="GoToRoute(link.action)">
-                    <img *ngIf="!!link.iconImg" width="24" height="24" src="{{'assets/icons/' + link.iconImg}}">
-                    <i *ngIf="!link.iconImg" [class]="link.icon"></i>
-                    {{link.name}}
-                </div>
+            
+            <div class="my-data clickeable" (click)="GoToProfile()">
+                <img src="assets/icons/badge.svg" width="24">
+                <div class="text-2">Mis datos</div>
             </div>
         </div>
 
-    </perfect-scrollbar>
+        <div class="nav-items flex-grow-1 w-100">
+            <div class="item clickeable w-100" *ngFor="let link of activeUserPages" (click)="GoToRoute(link.action)">
+                <img *ngIf="!!link.iconImg" width="24" height="24" src="{{'assets/icons/' + link.iconImg}}">
+                <i *ngIf="!link.iconImg" [class]="link.icon"></i>
+                {{link.name}}
+            </div>
+            <div class="item clickeable w-100 mt-auto" (click)="LogOut()">
+                <img width="24" height="24" src="assets/icons/close-circle.svg">
+                Cerrar sesión
+            </div>
+        </div>
+    </div>
 </aside>
