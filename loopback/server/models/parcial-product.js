@@ -42,11 +42,22 @@ module.exports = function(ParcialProduct) {
         });
     }
 
-    ParcialProduct.Update = function(parcialProduct, callback) {
-        ParcialProduct.upsert(parcialProduct, (err, updated) => {
+    ParcialProduct.prototype.Update = function(ctx, parcialProduct, callback) {
+        let eventInstance = {
+            name: `Entrega: "${parcialProduct.name}"`,
+            date: parcialProduct.date,
+            strategyId: parcialProduct.strategyId,
+        };
+        if(!!this.eventId) eventInstance.id = this.eventId;
+        ParcialProduct.app.models.Event.Update(eventInstance, (err, updated) => {
             if(err) return callback(err);
 
-            return callback(null, updated);
+            parcialProduct.eventId = updated.id;
+            ParcialProduct.upsert(parcialProduct, (err, updated) => {
+                if(err) return callback(err);
+    
+                return callback(null, updated);
+            });
         });
     }
 

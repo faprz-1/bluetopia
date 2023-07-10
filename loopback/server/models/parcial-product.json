@@ -60,7 +60,8 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": [
-        "CreateOne"
+        "CreateOne",
+        "Update"
       ]
     }
   ],
@@ -95,6 +96,39 @@
         {
           "path": "/",
           "verb": "post"
+        }
+      ]
+    },
+    "prototype.Update": {
+      "accepts": [
+        {
+          "arg": "ctx",
+          "type": "object",
+          "required": true,
+          "http": {
+            "source": "req"
+          }
+        },
+        {
+          "arg": "parcialProduct",
+          "type": "object",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "parcialProductSaved",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/",
+          "verb": "patch"
         }
       ]
     }

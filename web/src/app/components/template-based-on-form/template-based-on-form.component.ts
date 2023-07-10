@@ -475,7 +475,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
       }
       
       if(!!parcialProductInstance.id) {
-        this.api.Patch(`/ParcialProducts`, {parcialProduct: parcialProductInstance}).subscribe(newParcialProduct => {
+        this.api.Patch(`/ParcialProducts/${parcialProductInstance.id}`, {parcialProduct: parcialProductInstance}).subscribe(newParcialProduct => {
           this.CancelParcialProduct();
           this.GetStrategy();
           res(true);

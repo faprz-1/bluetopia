@@ -331,7 +331,8 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
-          "CreateOne": true
+          "CreateOne": true,
+          "prototype.Update": true
         }
       }
     }
