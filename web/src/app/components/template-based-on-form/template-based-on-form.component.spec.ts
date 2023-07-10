@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TemplateProyectBasedOnFormComponent } from './template-proyect-based-on-form.component';
+import { TemplateProyectBasedOnFormComponent } from './template-based-on-form.component';
 
 describe('TemplateProyectBasedOnFormComponent', () => {
   let component: TemplateProyectBasedOnFormComponent;
