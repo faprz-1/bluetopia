@@ -377,21 +377,20 @@
                                                 class="form-control with-border"
                                                 [items]="evaluationTypes"
                                                 bindLabel="name"
-                                                bindValue="type"
                                                 formControlName="evaluationType"
                                                 placeholder="Tipo de evaluación">
                                             </ng-select>
                                         </div>
                                         <app-rubric
-                                            *ngIf="parcialProductForm.get('evaluationType')?.value == 'rubric'"
+                                            *ngIf="parcialProductForm.get('evaluationType')?.value?.type == 'rubric'"
                                             [onReset]="onReset"
                                             (exportRubrics)="CatchRubrics($event)"></app-rubric>
-                                        <div class="d-flex flex-column w-100" style="gap: 16px;" *ngIf="parcialProductForm.get('evaluationType')?.value =='numeric'">
+                                        <div class="d-flex flex-column w-100" style="gap: 16px;" *ngIf="parcialProductForm.get('evaluationType')?.value?.type =='numeric'">
                                             <div class="instruction-2">
                                                 Escribe el máximo a aspirar
                                             </div>
                                             <div class="input-container with-border-thin">
-                                                <input class="form-control no-icon" type="text" formControlName="name" placeholder="Calificación máxima">
+                                                <input class="form-control no-icon" type="text" formControlName="maxCalification" placeholder="Calificación máxima">
                                             </div>
                                         </div>
                                     </div>
@@ -444,14 +443,54 @@
                                     <button class="btn btn-outline-success" (click)="CancelParcialProduct()">
                                         Cancelar
                                     </button>
-                                    <button class="btn btn-success" (click)="CancelParcialProduct()">
+                                    <button class="btn btn-success" (click)="Save()">
                                         Guardar producto
                                     </button>
                                 </div>
                             </div>
                         </div>
                         <div *ngSwitchCase="'saved'">
-                            <div class="parcial-product-card" *ngFor="let parcialProduct of strategy.parcialProducts">
+                            <div class="parcial-product-show-card" *ngFor="let parcialProduct of strategy.parcialProducts">
+                                <div class="d-flex justify-content-end w-100" style="gap: 16px;">
+                                    <img class="clickeable" src="assets/icons/delete.svg" alt="">
+                                    <img class="clickeable" src="assets/icons/edit.svg" alt="">
+                                </div>
+                                <div class="name">
+                                    {{parcialProduct.name}}
+                                </div>
+                                <div class="type">
+                                    {{parcialProduct.type?.name}}
+                                </div>
+                                <div class="">
+                                    {{parcialProduct.instructions}}
+                                </div>
+                                <div class="date">
+                                    Entrega para {{parcialProduct.event.date | date:"dd/MM/yyyy" }}
+                                </div>
+                                <div class="">
+                                    {{strategy.generatingQuestion}}
+                                </div>
+                                <div class="">
+                                    {{parcialProduct.evaluationType?.name}}
+                                </div>
+                                <div class="dropdwon-content" [ngClass]="{'show-bigger': parcialProduct.showMore}">
+                                    <app-rubric [rubrics]="parcialProduct.rubric" [showControls]="false"></app-rubric>
+                                </div>
+                                <div class="dropdown-text clickeable" *ngIf="parcialProduct.evaluationType?.type == 'rubric'" (click)="parcialProduct.showMore = !!!parcialProduct.showMore">
+                                    <span *ngIf="!parcialProduct.showMore">
+                                        Ver rubrica
+                                    </span>
+                                    <img *ngIf="!parcialProduct.showMore" src="assets/icons/chevron-down.svg">
+                                    <span *ngIf="parcialProduct.showMore">
+                                        Dejar de ver rúbrica
+                                    </span>
+                                    <img *ngIf="parcialProduct.showMore" src="assets/icons/chevron-up.svg">
+                                </div>
+                                <div class="d-flex">
+                                    <button class="btn btn-secondary">
+                                        Ver recursos
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -58,16 +58,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     templateTopic: {},
     parcialProductType: {},
   };
-  evaluationTypes: Array<any> = [
-    {
-      name: 'Por rúbrica',
-      type: 'rubric',
-    },
-    {
-      name: 'Valor númerico',
-      type: 'numeric',
-    },
-  ];
+  evaluationTypes: Array<any> = [];
   strategyForm: FormGroup = new FormGroup({
     id: new FormControl(null, [Validators.required]),
     topic: new FormControl(null, [Validators.required]),
@@ -77,12 +68,14 @@ export class TemplateBasedOnFormComponent implements OnInit {
     dates: new FormControl(null, Validators.required),
   });
   parcialProductForm: FormGroup = new FormGroup({
+    id: new FormControl(null, [Validators.required]),
     parcialProductTypeId: new FormControl(null, [Validators.required]),
     name: new FormControl(null, [Validators.required]),
     instructions: new FormControl(null, [Validators.required]),
     date: new FormControl(null, [Validators.required]),
     evaluationType: new FormControl(null, [Validators.required]),
     rubric: new FormControl(null, []),
+    maxCalification: new FormControl(null, []),
     resources: new FormControl([], []),
   });
   eventForm: FormGroup = new FormGroup({
@@ -94,16 +87,6 @@ export class TemplateBasedOnFormComponent implements OnInit {
   });
 
   step: number = 1;
-
-  public get nextButtonText() {
-    switch (this.step) {
-      case 1: return 'Crear productos parciales';
-      case 2: return 'Crear productos finales';
-      case 3: return 'Crear evento de cierre';
-      case 4: return 'Finalizar';
-      default: return 'Salir';
-    }
-  }
 
   constructor(
     private api: ApiService,
@@ -122,6 +105,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     this.GetSkills();
     this.GetTemplateTopics();
     this.GetParcialProductTypes();
+    this.GetEvaluationTypes();
     this.GetEventTypes();
     this.GetParams();
   }
@@ -363,6 +347,14 @@ export class TemplateBasedOnFormComponent implements OnInit {
     });
   }
 
+  GetEvaluationTypes() {
+    this.api.Get(`/EvaluationTypes`).subscribe(types => {
+      this.evaluationTypes = types;
+    }, err => {
+      console.error("Error getting parcial product types", err);
+    });
+  }
+
   GetEventTypes() {
     this.api.Get(`/EventTypes`).subscribe(types => {
       this.eventTypes = types;
@@ -440,13 +432,6 @@ export class TemplateBasedOnFormComponent implements OnInit {
 
   SaveParcialProduct(isParcialProductFinal: boolean = false) {
     return new Promise<boolean>((res, rej) => {
-      if(!this.parcialProductForm.valid) {
-        this.toast.ShowWarning(`Favor de llenar todos los campos correctamente`);
-        this.parcialProductForm.markAllAsTouched();
-        res(false);
-        return;
-      }
-      
       let parcialProductInstance = {
         ...this.parcialProductForm.value,
         isFinal: isParcialProductFinal,
@@ -454,14 +439,20 @@ export class TemplateBasedOnFormComponent implements OnInit {
       }
       
       this.api.Post(`/ParcialProducts`, {parcialProduct: parcialProductInstance}).subscribe(newParcialProduct => {
-        this.strategy.parcialProducts.push(newParcialProduct);
-        this.parcialProductForm.reset();
+        this.CancelParcialProduct();
+        this.GetStrategy();
         res(true);
       }, err => {
         console.error("Error posting new parcial product", err);
         res(false);
       });
     });
+  }
+
+  EditParcialProduct(parcialProduct: any) {
+  }
+
+  DeleteParcialProduct(parcialProduct: any, idx: number) {
   }
   
   SaveEvent() {

@@ -449,7 +449,7 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
-          "UpdateGradeTeacherSubjects": true
+          "GetAll": true
         }
       }
     }

@@ -10,6 +10,7 @@ export class RubricComponent implements OnInit {
 
   @Input() onReset: EventEmitter<any> | null = null;
   @Input() canEdit: boolean = true;
+  @Input() showControls: boolean = true;
   @Input() rubrics: Array<any> = [
     {
       description: '',

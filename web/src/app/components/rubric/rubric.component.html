@@ -10,12 +10,12 @@
             </div>
             <textarea class="rubric-input" [disabled]="!canEdit" [(ngModel)]="concept.description" placeholder="Descripción"></textarea>
         </div>
-        <div class="controls vertical" *ngIf="last">
+        <div class="controls vertical" *ngIf="last && showControls">
             <img class="clickeable" (click)="AddCol()" src="assets/icons/add-circle.png" alt="add">
             <img class="clickeable" (click)="RemoveCol()" src="assets/icons/remove-circle.png" alt="add">
         </div>
     </div>
-    <div class="rubric-row">
+    <div class="rubric-row" *ngIf="showControls">
         <div class="rubric-item" *ngFor="let rubric of rubrics[0]?.concepts" style="opacity: 0;">
         </div>
         <div class="rubric-col">

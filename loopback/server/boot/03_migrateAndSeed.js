@@ -237,6 +237,27 @@ module.exports = function(app) {
     });
   }
 
+  var seedEvaluationTypes = function() {
+    const evaluationTypes = [
+      {
+        name: 'Por rúbrica',
+        type: 'rubric',
+      },
+      {
+        name: 'Valor númerico',
+        type: 'numeric',
+      },
+    ];
+
+    let cont = 0, limit = evaluationTypes.length;
+    evaluationTypes.forEach(evaluationType => {
+      app.models.EvaluationType.CreateOne(evaluationType, (err, newInstance) => {
+        if(err) throw err;
+        if(++cont == limit) console.log("Evaluation types seeded");
+      });
+    });
+  }
+
   var seedSepObjectives = function() {
     const sepObjectives = [
       {
@@ -557,6 +578,7 @@ module.exports = function(app) {
     seedEventTypes,
     seedTeamRoles,
     seedStrategyStatuses,
+    seedEvaluationTypes,
   ]
 
   // Migrate

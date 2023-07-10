@@ -19,6 +19,14 @@ module.exports = function(Event) {
         });
     }
 
+    Event.Update = function(event, callback) {
+        Event.upsert(event, (err, updated) => {
+            if(err) return callback(err);
+
+            return callback(null, updated);
+        });
+    }
+
     Event.prototype.UpsertResources = function(ctx, resources, callback) {
         let files = [];
         const userId = ctx.accessToken.userId;
