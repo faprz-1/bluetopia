@@ -38,7 +38,7 @@ module.exports = function(Strategy) {
     }
 
     Strategy.prototype.Update = function(ctx, strategy, callback) {
-        Strategy.app.models.StrategyGroup.UpdateStrategyGroup(strategy.id, strategy.grade, strategy.group, (err, saved) => {
+        Strategy.app.models.StrategyGroup.UpdateStrategyGroup(strategy.id, typeof strategy.grade == 'object' ? strategy.grade.id : strategy.grade, typeof strategy.group == 'object' ? strategy.group.id : strategy.group, (err, saved) => {
             if(err) return callback(err);
 
             Strategy.upsert(strategy, (err, strategyUpdated) => {

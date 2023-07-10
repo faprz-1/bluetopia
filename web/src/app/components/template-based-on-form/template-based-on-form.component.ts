@@ -384,7 +384,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     }
   }
 
-  InitializeStrategyForm(strategy: any) {
+  InitializeForms(strategy: any) {
     this.strategyForm.setValue({
       id: !!strategy.id ? strategy.id : null,
       topic: !!strategy.topic ? strategy.topic : null,
@@ -394,19 +394,16 @@ export class TemplateBasedOnFormComponent implements OnInit {
       startDate: !!strategy.startDate ? strategy.startDate : null,
       endDate: !!strategy.endDate ? strategy.endDate : null,
     });
-
-    this.grade = !!strategy.strategyGroup ? strategy.strategyGroup.gradeId : null;
-    this.group = !!strategy.strategyGroup ? strategy.strategyGroup.groupId : null;
-
+    this.grade = !!strategy.strategyGroup ? strategy.strategyGroup.grade : null;
+    this.group = !!strategy.strategyGroup ? strategy.strategyGroup.group : null;
     this.selectedSubjects = strategy.subjects;
-
     this.strategyForm.updateValueAndValidity();
   }
 
   GetStrategy() {
     this.api.Get(`/Strategies/${this.strategyId}`).subscribe(strategy => {
       this.strategy = strategy;
-      this.InitializeStrategyForm(strategy);
+      this.InitializeForms(strategy);
     }, err => {
       console.error("Error getting strategy", err);
     });
@@ -419,7 +416,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
       strategy.group = this.group;
       strategy.subjects = this.selectedSubjects;
       this.api.Patch(`/Strategies/${this.strategyId}`, {strategy}).subscribe(strategySaved => {
-        this.InitializeStrategyForm(strategySaved);
+        this.InitializeForms(strategySaved);
         res(true);
       }, err => {
         console.error("Error updating strategy", err);

@@ -62,7 +62,6 @@
                                             class="ng-select form-control with-border"
                                             [items]="grades"
                                             bindLabel="name"
-                                            bindValue="id"
                                             placeholder="Grado"
                                             addTagText="Agregar"
                                             [addTag]="AddGrade"
@@ -77,7 +76,6 @@
                                             class="ng-select form-control with-border"
                                             [items]="groups"
                                             bindLabel="name"
-                                            bindValue="id"
                                             placeholder="Grado"
                                             addTagText="Agregar"
                                             [addTag]="AddGroup"
@@ -204,8 +202,8 @@
                 <div *ngSwitchCase="2">
                     <div class="form-flexbox" [formGroup]="strategyForm">
                         <div class="d-flex flex-column" style="gap: 12px;">
-                            <div class="section-group">
-                                {{!!grade && !!group ? (grade + " " + group) : 'No seleccionado'}}
+                            <div class="section-group" style="text-transform: uppercase;">
+                                {{!!grade && !!group ? (grade.name + "° " + group.name) : 'No seleccionado'}}
                             </div>
                             <div class="instruction">
                                 Puedes avanzar sin completar todos los campos, después  podrás completar tu estrategia.
