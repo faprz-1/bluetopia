@@ -43,7 +43,7 @@ module.exports = function(Strategy) {
             strategy.startDate = strategy.dates.pop();
             delete strategy.dates;
         }
-        Strategy.app.models.StrategyGroup.UpdateStrategyGroup(strategy.id, typeof strategy.grade == 'object' ? strategy.grade.id : strategy.grade, typeof strategy.group == 'object' ? strategy.group.id : strategy.group, (err, saved) => {
+        Strategy.app.models.StrategyGroup.UpdateStrategyGroup(strategy.id, typeof strategy.grade == 'object' && !!strategy.grade ? strategy.grade.id : strategy.grade, typeof strategy.group == 'object' && !!strategy.group ? strategy.group.id : strategy.group, (err, saved) => {
             if(err) return callback(err);
 
             Strategy.upsert(strategy, (err, strategyUpdated) => {

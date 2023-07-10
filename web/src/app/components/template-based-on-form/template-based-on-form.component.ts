@@ -437,7 +437,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     });
     this.grade = !!strategy.strategyGroup ? strategy.strategyGroup.grade : null;
     this.group = !!strategy.strategyGroup ? strategy.strategyGroup.group : null;
-    this.selectedSubjects = strategy.subjects;
+    this.selectedSubjects = !!strategy.subjects ? strategy.subjects : [];
     this.strategyForm.updateValueAndValidity();
   }
 
