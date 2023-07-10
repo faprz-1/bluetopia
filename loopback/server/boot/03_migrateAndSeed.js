@@ -404,7 +404,7 @@ module.exports = function(app) {
   }
 
   var seedEventTypes = function() {
-    let eventTypes = require('./../helpers/templates.json');
+    let eventTypes = require('./../helpers/eventType.json');
 
     let cont = 0, limit = eventTypes.length;
     eventTypes.forEach(eventType => {
