@@ -37,7 +37,9 @@ module.exports = function(Group) {
     }
 
     Group.GetAll = function(callback) {
-        Group.find({}, (err, groups) => {
+        Group.find({
+            order: 'name ASC'
+        }, (err, groups) => {
             return callback(err, groups);
         });
     }

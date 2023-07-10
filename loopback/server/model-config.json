@@ -188,6 +188,7 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
+          "CreateOne": true,
           "GetAll": true
         }
       }
@@ -223,6 +224,7 @@
         "sharedMethods": {
           "*": false,
           "CreateGradeOrGroup": true,
+          "CreateOne": true,
           "GetAll": true,
           "prototype.UpdateGroups": true
         }
@@ -287,6 +289,7 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
+          "CreateOne": true,
           "GetAll": true
         }
       }
@@ -340,6 +343,7 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
+          "CreateOne": true,
           "GetAll": true
         }
       }

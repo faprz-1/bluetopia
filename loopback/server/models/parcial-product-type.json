@@ -35,11 +35,37 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": [
+        "CreateOne",
         "GetAll"
       ]
     }
   ],
   "methods": {
+    "CreateOne": {
+      "accepts": [
+        {
+          "arg": "parcialProductType",
+          "type": "object",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "parcialProductType",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/",
+          "verb": "post"
+        }
+      ]
+    },
     "GetAll": {
       "accepts": [
         {

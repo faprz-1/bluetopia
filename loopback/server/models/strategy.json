@@ -20,6 +20,11 @@
       "type": [
         "object"
       ]
+    },
+    "skills": {
+      "type": [
+        "object"
+      ]
     }
   },
   "validations": [],

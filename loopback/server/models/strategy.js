@@ -38,34 +38,19 @@ module.exports = function(Strategy) {
     }
 
     Strategy.prototype.Update = function(ctx, strategy, callback) {
-        if(!!strategy.customTopic) {
-            const userId = ctx.accessToken.userId;
-            strategy.topic = strategy.customTopic;
-            Strategy.app.models.TemplateTopic.CreateOneOfTeacher(strategy.customTopic, userId, (err, newTemplateTopic) => {
-                if(err) return callback(err);
+        Strategy.app.models.StrategyGroup.UpdateStrategyGroup(strategy.id, strategy.grade, strategy.group, (err, saved) => {
+            if(err) return callback(err);
 
-                Strategy.upsert(strategy, (err, strategyUpdated) => {
-                    if(err) return callback(err);
-                    
-                    Strategy.GetData(this.id, (err, strategy) => {
-                        if(err) return callback(err);
-
-                        return callback(null, strategy);
-                    });
-                });
-            });
-        }
-        else {
             Strategy.upsert(strategy, (err, strategyUpdated) => {
                 if(err) return callback(err);
-
+    
                 Strategy.GetData(this.id, (err, strategy) => {
                     if(err) return callback(err);
-
+    
                     return callback(null, strategy);
                 });
             });
-        }
+        });
     }
     
     Strategy.GetData = function(strategyId, callback) {
