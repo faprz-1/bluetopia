@@ -3,6 +3,7 @@
 module.exports = function(ParcialProduct) {
 
     ParcialProduct.CreateOne = function(ctx, parcialProduct, callback) {
+        if(!!parcialProduct.evaluationType) parcialProduct.evaluationTypeId = parcialProduct.evaluationType.id;
         if(parcialProduct.date) {
             const eventInstance = {
                 name: `Entrega: "${parcialProduct.name}"`,

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, NgZone, OnInit, Output, ViewChild } fro
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
 import { ApiService } from 'src/app/services/api.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -19,6 +19,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
 
   @Output() goBackEvent: EventEmitter<any> = new EventEmitter<any>();
 
+  @ViewChild('finishModal') finishModal?: any;
   @ViewChild('rubricTutorialModal') rubricTutorialModal?: RubricTutorialModalComponent;
   @ViewChild('gradeSelect') gradeSelect?: NgSelectComponent;
   @ViewChild('groupSelect') groupSelect?: NgSelectComponent;
@@ -27,6 +28,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
   @ViewChild('skillsSelect') skillsSelect?: NgSelectComponent;
   @ViewChild('templateTopicSelect') templateTopicSelect?: NgSelectComponent;
   @ViewChild('parcialProductTypeSelect') parcialProductTypeSelect?: NgSelectComponent;
+  @ViewChild('eventTypeSelect') eventTypeSelect?: NgSelectComponent;
 
   templateId: any;
   strategyId: any;
@@ -57,6 +59,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     skill: {},
     templateTopic: {},
     parcialProductType: {},
+    eventType: {},
   };
   evaluationTypes: Array<any> = [];
   strategyForm: FormGroup = new FormGroup({
@@ -79,11 +82,10 @@ export class TemplateBasedOnFormComponent implements OnInit {
     resources: new FormControl([], []),
   });
   eventForm: FormGroup = new FormGroup({
-    parcialProductTypeId: new FormControl(null, [Validators.required]),
+    eventTypeId: new FormControl(null, [Validators.required]),
     name: new FormControl(null, [Validators.required]),
     instructions: new FormControl(null, [Validators.required]),
     date: new FormControl(null, [Validators.required]),
-    rubric: new FormControl(null, [Validators.required]),
   });
 
   step: number = 1;
@@ -130,10 +132,10 @@ export class TemplateBasedOnFormComponent implements OnInit {
     });
   }
 
-  NextStep(template: any, advanceStep: boolean = true) {
+  NextStep(advanceStep: boolean = true) {
     this.Save().then(saved => {
       this.onReset.emit();
-      if(this.step == 5) this.OpenModal(template);
+      if(this.step == 5) this.finishModal?.show();
       else if(saved && advanceStep) this.step++;
       this.ScrollToTop();
     });
@@ -150,8 +152,8 @@ export class TemplateBasedOnFormComponent implements OnInit {
         switch (this.step) {
           case 1: res(await this.SaveStragey()); break;
           case 2: res(await this.SaveStragey()); break;
-          case 3: res(await this.SaveParcialProduct()); break;
-          case 4: res(await this.SaveParcialProduct(true)); break;
+          // case 3: res(await this.SaveParcialProduct()); break;
+          // case 4: res(await this.SaveParcialProduct(true)); break;
           case 5: res(await this.SaveEvent()); break;
           default: res(false); break;
         }
@@ -363,6 +365,27 @@ export class TemplateBasedOnFormComponent implements OnInit {
     });
   }
 
+  AddEventType = (eventType: string) => {
+    let eventTypeObj = {
+      name: eventType,
+      userId: this.api.GetUser()?.id
+    }
+    let control = this.eventForm.get('eventTypeId');
+    this.loading.eventType.creating = true;
+    control?.disable();
+    this.api.Post(`/EventTypes`, {eventType: eventTypeObj}).subscribe(newEventType => {
+      this.eventTypes = this.eventTypes.concat([newEventType]);
+      control?.setValue(newEventType.id);
+      this.loading.eventType.creating = false;
+      control?.enable();
+      this.eventTypeSelect?.close();
+    }, err => {
+      console.error("Error creatong eventType", err);
+      this.loading.eventType.creating = false;
+      control?.enable();
+    });
+  }
+
   OnSelectedSubjectsChange(subject: any) {
     if(!!subject) {
       this.selectedSubjects.push(subject);
@@ -457,21 +480,8 @@ export class TemplateBasedOnFormComponent implements OnInit {
   
   SaveEvent() {
     return new Promise<boolean>((res, rej) => {
-      if(!this.eventForm.valid) {
-        this.toast.ShowWarning(`Favor de llenar todos los campos correctamente`);
-        this.eventForm.markAllAsTouched();
-        res(false);
-        return;
-      }
-      
-      let parcialProduct = {
-        ...this.eventForm.value,
-        strategyId: this.strategyId,
-        isFinal: true
-      }
-      
-      // this.api.Post(`/Events`, {event}).subscribe(newEvent => {
-      this.api.Post(`/ParcialProducts`, {parcialProduct}).subscribe(newParcialProduct => {
+      this.api.Post(`/Events`, {event: this.eventForm.value}).subscribe(newEvent => {
+      // this.api.Post(`/ParcialProducts`, {parcialProduct}).subscribe(newParcialProduct => {
         res(true);
       }, err => {
         console.error("Error posting new event", err);
@@ -493,7 +503,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
 
   SaveProject(exit: boolean = false) {
     this.CloseModal();
-    if(exit) this.nav.GoToUserRoute('mis-estudiantes');
+    if(exit) this.nav.GoToUserRoute('mis-estrategias');
   }
 
   GoToProjectCalendar() {

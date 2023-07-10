@@ -381,6 +381,7 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
+          "CreateOne": true,
           "GetAll": true
         }
       }

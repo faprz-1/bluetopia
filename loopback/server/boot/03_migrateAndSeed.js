@@ -406,15 +406,12 @@ module.exports = function(app) {
   var seedEventTypes = function() {
     const eventTypes = [
       {
-        id: 1,
         name: "Exposición",
       },
       {
-        id: 2,
         name: "Prototipo",
       },
       {
-        id: 3,
         name: "Exámen",
       },
     ];
