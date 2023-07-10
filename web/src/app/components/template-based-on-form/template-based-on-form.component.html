@@ -202,7 +202,7 @@
                 <div *ngSwitchCase="2">
                     <div class="form-flexbox" [formGroup]="strategyForm">
                         <div class="d-flex flex-column" style="gap: 12px;">
-                            <div class="section-group" style="text-transform: uppercase;">
+                            <div class="section-group">
                                 {{!!grade && !!group ? (grade.name + "° " + group.name) : 'No seleccionado'}}
                             </div>
                             <div class="instruction">
@@ -282,7 +282,7 @@
                 <div *ngSwitchCase="3">
                     <div class="d-flex flex-column mb-5" style="gap: 12px;">
                         <div class="section-group">
-                            {{!!grade && !!group ? (grade + " " + group) : 'No seleccionado'}}
+                            {{!!grade && !!group ? (grade.name + "° " + group.name) : 'No seleccionado'}}
                         </div>
                         <div class="instruction">
                             Agrega un nuevo producto

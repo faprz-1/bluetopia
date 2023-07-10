@@ -79,12 +79,11 @@ export class TemplateBasedOnFormComponent implements OnInit {
   parcialProductForm: FormGroup = new FormGroup({
     parcialProductTypeId: new FormControl(null, [Validators.required]),
     name: new FormControl(null, [Validators.required]),
-    customParcialProductTypeName: new FormControl(null, []),
     instructions: new FormControl(null, [Validators.required]),
     date: new FormControl(null, [Validators.required]),
-    rubric: new FormControl(null, [Validators.required]),
     evaluationType: new FormControl(null, [Validators.required]),
-    resources: new FormControl([], Validators.required),
+    rubric: new FormControl(null, []),
+    resources: new FormControl([], []),
   });
   eventForm: FormGroup = new FormGroup({
     parcialProductTypeId: new FormControl(null, [Validators.required]),
@@ -138,6 +137,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
   GoBack() {
     if(this.step == 1) this.goBackEvent.emit();
     else this.step--;
+    this.ScrollToTop();
   }
 
   RemoveItemFromArray(array: Array<any>, idx: number) {
@@ -151,7 +151,13 @@ export class TemplateBasedOnFormComponent implements OnInit {
       this.onReset.emit();
       if(this.step == 5) this.OpenModal(template);
       else if(saved && advanceStep) this.step++;
+      this.ScrollToTop();
     });
+  }
+
+  ScrollToTop() {
+    const elements = document.getElementsByClassName('content');
+    elements[0].scrollTop = 0;
   }
   
   Save() {
