@@ -28,9 +28,9 @@
             <div class="info-topic">
                 Grado de dificultad para planear:
             </div>
-            <div class="stars">
-                <img *ngFor="let star of GetArray(template.difficulty)" src="assets/icons/star_rate.svg">
-                <img class="star-disabled" *ngFor="let star of GetArray(5-template.difficulty)" src="assets/icons/star_rate.svg">
+            <div class="difficulty-container">
+                <div class="difficulty-bar" *ngFor="let star of GetArray(template.difficulty)"></div>
+                <div class="difficulty-bar disabled" *ngFor="let star of GetArray(5-template.difficulty)"></div>
             </div>
         </div>
         <div class="info-row">
