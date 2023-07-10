@@ -38,6 +38,11 @@ module.exports = function(Strategy) {
     }
 
     Strategy.prototype.Update = function(ctx, strategy, callback) {
+        if(!!strategy.dates && strategy.dates.length == 2) {
+            strategy.endDate = strategy.dates.pop();
+            strategy.startDate = strategy.dates.pop();
+            delete strategy.dates;
+        }
         Strategy.app.models.StrategyGroup.UpdateStrategyGroup(strategy.id, typeof strategy.grade == 'object' ? strategy.grade.id : strategy.grade, typeof strategy.group == 'object' ? strategy.group.id : strategy.group, (err, saved) => {
             if(err) return callback(err);
 

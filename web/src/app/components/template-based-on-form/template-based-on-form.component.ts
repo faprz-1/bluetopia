@@ -48,6 +48,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
   selectedSubjects: Array<any> = [];
   selectedTab: string = 'create';
   selectedEvaluationType: any = null;
+  dateRangePickerInitialValue: Array<any> = [];
   loading: any = {
     grade: {},
     group: {},
@@ -73,8 +74,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     title: new FormControl(null, [Validators.required]),
     generatingQuestion: new FormControl(null, [Validators.required]),
     skills: new FormControl([], Validators.required),
-    startDate: new FormControl([], Validators.required),
-    endDate: new FormControl([], Validators.required),
+    dates: new FormControl(null, Validators.required),
   });
   parcialProductForm: FormGroup = new FormGroup({
     parcialProductTypeId: new FormControl(null, [Validators.required]),
@@ -384,6 +384,13 @@ export class TemplateBasedOnFormComponent implements OnInit {
     }
   }
 
+  GetDateRangePickerValue(dates: Array<string>) {
+    if(dates.some(date => !date)) return [];
+    let start = new Date(dates[0]);
+    let end = new Date(dates[1]);
+    return [start, end];
+  }
+
   InitializeForms(strategy: any) {
     this.strategyForm.setValue({
       id: !!strategy.id ? strategy.id : null,
@@ -391,12 +398,12 @@ export class TemplateBasedOnFormComponent implements OnInit {
       title: !!strategy.title ? strategy.title : null,
       generatingQuestion: !!strategy.generatingQuestion ? strategy.generatingQuestion : null,
       skills: !!strategy.skills ? strategy.skills : [],
-      startDate: !!strategy.startDate ? strategy.startDate : null,
-      endDate: !!strategy.endDate ? strategy.endDate : null,
+      dates: !!strategy.startDate && !!strategy.endDate ? [strategy.startDate, strategy.endDate] : null,
     });
     this.grade = !!strategy.strategyGroup ? strategy.strategyGroup.grade : null;
     this.group = !!strategy.strategyGroup ? strategy.strategyGroup.group : null;
     this.selectedSubjects = strategy.subjects;
+    this.dateRangePickerInitialValue = this.GetDateRangePickerValue([strategy.startDate, strategy.endDate]);
     this.strategyForm.updateValueAndValidity();
   }
 

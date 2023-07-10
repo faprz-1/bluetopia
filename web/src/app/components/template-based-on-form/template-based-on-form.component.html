@@ -269,8 +269,9 @@
                                     <input
                                         class="form-control no-icon"
                                         type="text"
-                                        formControlName="generatingQuestion"
+                                        formControlName="dates"
                                         placeholder="Título de tu proyecto"
+                                        [bsValue]="dateRangePickerInitialValue"
                                         [bsConfig]="{ adaptivePosition: true, containerClass: 'theme-dark-blue' }"
                                         bsDaterangepicker>
                                 </div>
