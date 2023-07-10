@@ -25,8 +25,11 @@
             </div>
         </div>
         <div class="info-row">
-            <div class="info-topic">
+            <div class="info-topic no-icon">
                 Grado de dificultad para planear:
+            </div>
+            <div class="">
+                {{template.difficulty + " de 5"}}
             </div>
             <div class="difficulty-container">
                 <div class="difficulty-bar" *ngFor="let star of GetArray(template.difficulty)"></div>
@@ -85,7 +88,7 @@
         </div>
     </div>
 
-    <div class="tamplates-suggestions mt-5">
+    <div class="tamplates-suggestions my-5">
         <div class="info">
             <div class="instructions">
                 <div class="title">Plantillas</div>
