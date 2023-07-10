@@ -479,13 +479,27 @@ ng-select.form-control {
 }
 
 // Template
-.stars {
+.difficulty-container {
     display: flex;
     align-items: center;
-    gap: 0;
-}
-.star-disabled {
-    opacity: .35;
+    gap: 6px;
+    
+    .difficulty-bar {
+        width: 50px;
+        height: 16px;
+        background: var(--blue-1, #1081FB);
+    }
+    .difficulty-bar:first-child {
+        border-radius: 50px 0px 0px 50px;
+    }
+    .difficulty-bar:last-child {
+        border-radius: 0px 50px 50px 0px;
+    }
+    .disabled {
+        width: 50px;
+        height: 16px;
+        background: var(--gray-3, #C1CCD7);
+    }
 }
 .template {
     display: flex;

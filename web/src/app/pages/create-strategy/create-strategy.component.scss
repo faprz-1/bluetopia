@@ -71,6 +71,12 @@
         .info-topic {
             width: 240px;
             max-width: 100%;
+            padding: 0;
+        }
+        
+        .no-icon {
+            width: calc(240px + 28px + 12px);
+            padding: 0 !important;
         }
 
         .icon-container {

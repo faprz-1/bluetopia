@@ -21,7 +21,7 @@
   width: $sidebar-width;
   position: fixed;
   left: 0;
-  padding: ($header-height + 45px) 16px 45px 16px;
+  padding: ($header-height + 45px) $sidebar-padding-x 45px $sidebar-padding-x;
   height: 100%;
   overflow: hidden;
   z-index: $sidebar-z-index;

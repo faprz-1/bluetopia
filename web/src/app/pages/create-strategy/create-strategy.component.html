@@ -25,12 +25,15 @@
             </div>
         </div>
         <div class="info-row">
-            <div class="info-topic">
+            <div class="info-topic no-icon">
                 Grado de dificultad para planear:
             </div>
-            <div class="stars">
-                <img *ngFor="let star of GetArray(template.difficulty)" src="assets/icons/star_rate.svg">
-                <img class="star-disabled" *ngFor="let star of GetArray(5-template.difficulty)" src="assets/icons/star_rate.svg">
+            <div class="">
+                {{template.difficulty + " de 5"}}
+            </div>
+            <div class="difficulty-container">
+                <div class="difficulty-bar" *ngFor="let star of GetArray(template.difficulty)"></div>
+                <div class="difficulty-bar disabled" *ngFor="let star of GetArray(5-template.difficulty)"></div>
             </div>
         </div>
         <div class="info-row">
@@ -85,7 +88,7 @@
         </div>
     </div>
 
-    <div class="tamplates-suggestions mt-5">
+    <div class="tamplates-suggestions my-5">
         <div class="info">
             <div class="instructions">
                 <div class="title">Plantillas</div>
