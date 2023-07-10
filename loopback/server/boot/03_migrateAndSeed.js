@@ -404,17 +404,7 @@ module.exports = function(app) {
   }
 
   var seedEventTypes = function() {
-    const eventTypes = [
-      {
-        name: "Exposición",
-      },
-      {
-        name: "Prototipo",
-      },
-      {
-        name: "Exámen",
-      },
-    ];
+    let eventTypes = require('./../helpers/templates.json');
 
     let cont = 0, limit = eventTypes.length;
     eventTypes.forEach(eventType => {
