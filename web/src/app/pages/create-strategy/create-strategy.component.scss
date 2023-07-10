@@ -14,3 +14,118 @@
     gap: 14px;
     align-items: center;
 }
+
+.template-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+
+    .description {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        width: 100%;
+
+        .template {
+            padding: 0;
+            min-width: 160px;
+            height: 125px;
+            margin: 0;
+
+            .template-name {
+                color: var(--blue-1, #1081FB);
+                text-align: center;
+                font-size: 18px;
+                font-family: Mulish;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+                margin: 0;
+            }
+        }
+
+        .description-text {
+            color: var(--gray-1, #3D5E81);
+            font-size: 16px;
+            font-family: Mulish;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+    }
+
+    .info-row {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 12px;
+
+        color: var(--gray-1, #3D5E81);
+        font-size: 16px;
+        font-family: Mulish;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+
+        .info-topic {
+            width: 240px;
+            max-width: 100%;
+        }
+
+        .icon-container {
+            display: flex;
+            justify-content: flex-end;
+            width: 28px;
+        }
+    }
+}
+
+.tamplates-suggestions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 24px;
+    border-radius: 12px;
+    background: var(--blue-light, #F2F8FF);
+    
+    .info {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        
+        .instructions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            color: var(--gray-1, #3D5E81);
+            font-family: Mulish;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            .title {
+                font-size: 24px;
+            }
+
+            .text {
+                font-size: 16px;
+            }
+        }
+    }
+    .ng-select {
+        border-radius: 6px;
+        border: 1px solid var(--gray-1, #3D5E81);
+        // background: #F6F7F8;
+        background: white;
+    }
+}
+
+.template-preview-modal {
+    display: inline-flex;
+    padding: 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+}

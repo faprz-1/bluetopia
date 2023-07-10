@@ -62,7 +62,9 @@ module.exports = function(Grade) {
     }
 
     Grade.GetAll = function(callback) {
-        Grade.find({}, (err, grades) => {
+        Grade.find({
+            order: 'name ASC'
+        }, (err, grades) => {
             return callback(err, grades);
         });
     }

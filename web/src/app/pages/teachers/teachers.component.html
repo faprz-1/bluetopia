@@ -56,7 +56,7 @@
                                 <img src="assets/icons/book.png">
                             </div>
                             <ng-select class="ng-select form-control with-icon" [items]="subjects" [multiple]="true"
-                                bindLabel="name" placeholder="Asignaturas" formControlName="subjects">
+                                [closeOnSelect]="false" bindLabel="name" placeholder="Asignaturas" formControlName="subjects">
                             </ng-select>
                         </div>
                         <app-control-messages [control]="teacherForm.get('subjects')"></app-control-messages>

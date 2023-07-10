@@ -16,6 +16,10 @@ export class CreateStrategyComponent implements OnInit {
   template: any = null;
   selectedTemplate: any = null;
   templateId: number = 0;
+  loading: any = {
+    creating: false,
+    getting: true
+  }
 
   constructor(
     private api: ApiService,
@@ -47,8 +51,10 @@ export class CreateStrategyComponent implements OnInit {
   GetTemplate() {
     this.api.Get(`/Templates/${this.templateId}`).subscribe(template => {
       this.template = template;
+      this.loading.getting = false;
     }, err => {
       console.error("Erro getting templates", err);
+      this.loading.getting = false;
     });
   }
 
@@ -57,21 +63,31 @@ export class CreateStrategyComponent implements OnInit {
     this.nav.GoToUserRoute(route);
   }
 
-  CreateStrategyBasedOnTemplate(template: any) {
-    this.CloseModal();
+  CreateStrategyBasedOnTemplate() {
     let strategy = {
-      templateId: template.id,
+      templateId: this.template.id,
       userId: this.api.GetUser()?.id,
       grade: null,
       group: null,
     }
+    this.loading.creating = true;
     this.api.Post(`/Strategies`, {strategy}).subscribe(newStrategy => {
-      let route = `estrategias/${newStrategy.id}/materias`;
+      let route = `plantillas/${this.templateId}/crear/${newStrategy.id}`;
+      this.loading.creating = false;
       this.nav.GoToUserRoute(route);
     }, err => {
       console.error("Error creating strategy", err);
       this.toast.ShowError(`Error al crear la estrategia`);
+      this.loading.creating = false;
     });
+  }
+
+  GetArray(length: number): any[] {
+    return Array(length).fill(0);
+  }
+
+  GoToNewStrategyForm() {
+    this.nav.GoToUserRoute(`plantillas/${this.templateId}/crear`);
   }
 
 }

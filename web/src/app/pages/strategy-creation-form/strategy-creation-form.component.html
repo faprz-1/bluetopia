@@ -1,0 +1,5 @@
+<div class="content">
+    <div *ngIf="!loading.getting">
+        <app-template-based-on-form [template]="template" (goBackEvent)="GoBack()"></app-template-based-on-form>
+    </div>
+</div>

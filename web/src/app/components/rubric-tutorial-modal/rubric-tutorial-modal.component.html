@@ -1,0 +1,68 @@
+<div class="modal fade" bsModal #rubricTutorialModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
+    tabindex="-1" role="dialog" aria-labelledby="rubricTutorialModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img class="close" (click)="rubricTutorialModal.hide()" src="assets/icons/close.svg" alt="close">
+            </div>
+            <div class="modal-body">
+                <div class="modal-title">
+                    Explicación de rúbrica
+                </div>
+
+                <div class="card">
+                    <div class="title">Configura la rúbrica</div>
+                    <div class="text">
+                        Para evaluar a tus alumnos podrás crear tus propios elementos a evaluar, podrá ser la ortografía, creatividad, claridad de presentación, etc.. Eso lo puedes definir tú, para después evaluar su desempeño y tener claro con que si se cumplió o no para la calificación asignada.
+                    </div>
+                    <div class="text">
+                        Cada uno en horizontal es su nivel de cumplimiento a este elemento.
+                    </div>
+                    <div class="text">
+                        Cada uno en vertical es un elemento.
+                    </div>
+
+                    <div class="rubric-item">
+                        <div class="rubric-title">El valor númerico</div>
+                        <textarea class="rubric-input" disabled [value]="'Las características que serán para definir su valor.'"></textarea>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="title">Al iniciar se viualiza así</div>
+                    <app-rubric [canEdit]="false"></app-rubric>
+                </div>
+                <div class="card">
+                    <div class="text d-flex align-items-center" style="gap: 12px;">
+                        <span>Al seleccionar de la derecha</span>
+                        <img class="clickeable" src="assets/icons/add-circle.png" alt="add">
+                        <span>podrás agregar un número y escribir la descripción para este número</span>
+                    </div>
+                    <div class="text d-flex align-items-end" style="gap: 12px;">
+                        <span>Al seleccionar de la derecha</span>
+                        <img class="clickeable" src="assets/icons/remove-circle.png" alt="remove">
+                        <span>podrás eliminar un número y su descripción</span>
+                    </div>
+                    <app-rubric [canEdit]="false" [rubrics]="rubrics1"></app-rubric>
+                </div>
+                <div class="card">
+                    <div class="text d-flex align-items-center" style="gap: 12px;">
+                        <span>Al seleccionar de abajo</span>
+                        <img class="clickeable" src="assets/icons/add-circle.png" alt="add">
+                        <span>podrás agregar otro valor</span>
+                    </div>
+                    <div class="text d-flex align-items-end" style="gap: 12px;">
+                        <span>Al seleccionar de abajo</span>
+                        <img class="clickeable" src="assets/icons/remove-circle.png" alt="remove">
+                        <span>podrás eliminar otro valor</span>
+                    </div>
+                    <app-rubric [canEdit]="false" [rubrics]="rubrics2"></app-rubric>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-primary" (click)="rubricTutorialModal.hide()">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

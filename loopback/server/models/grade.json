@@ -53,6 +53,31 @@
         }
       ]
     },
+    "CreateOne": {
+      "accepts": [
+        {
+          "arg": "grade",
+          "type": "object",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "newGrade",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/",
+          "verb": "post"
+        }
+      ]
+    },
     "GetAll": {
       "accepts": [],
       "returns": [

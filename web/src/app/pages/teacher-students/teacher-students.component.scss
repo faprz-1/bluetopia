@@ -47,3 +47,19 @@
 .highlight {
     color: #FBCB63;
 }
+
+.strategy-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
+.text {
+    color: var(--gray-1, #3D5E81);
+    font-size: 16px;
+    font-family: Mulish;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}

@@ -38,39 +38,29 @@ module.exports = function(Strategy) {
     }
 
     Strategy.prototype.Update = function(ctx, strategy, callback) {
-        if(!!strategy.customTopic) {
-            const userId = ctx.accessToken.userId;
-            strategy.topic = strategy.customTopic;
-            Strategy.app.models.TemplateTopic.CreateOneOfTeacher(strategy.customTopic, userId, (err, newTemplateTopic) => {
-                if(err) return callback(err);
-
-                Strategy.upsert(strategy, (err, strategyUpdated) => {
-                    if(err) return callback(err);
-                    
-                    Strategy.GetData(this.id, (err, strategy) => {
-                        if(err) return callback(err);
-
-                        return callback(null, strategy);
-                    });
-                });
-            });
+        if(!!strategy.dates && strategy.dates.length == 2) {
+            strategy.endDate = strategy.dates.pop();
+            strategy.startDate = strategy.dates.pop();
+            delete strategy.dates;
         }
-        else {
+        Strategy.app.models.StrategyGroup.UpdateStrategyGroup(strategy.id, typeof strategy.grade == 'object' ? strategy.grade.id : strategy.grade, typeof strategy.group == 'object' ? strategy.group.id : strategy.group, (err, saved) => {
+            if(err) return callback(err);
+
             Strategy.upsert(strategy, (err, strategyUpdated) => {
                 if(err) return callback(err);
-
+    
                 Strategy.GetData(this.id, (err, strategy) => {
                     if(err) return callback(err);
-
+    
                     return callback(null, strategy);
                 });
             });
-        }
+        });
     }
     
     Strategy.GetData = function(strategyId, callback) {
         Strategy.findById(strategyId, {
-            include: ['parcialProducts', 'template', 'user', {'strategyGroup': ['grade', 'group']}, {'teams': {'teamStudents': ['student', 'role']}}]
+            include: [{'parcialProducts': ['type', 'event', 'evaluationType']}, 'template', 'user', {'strategyGroup': ['grade', 'group']}, {'teams': {'teamStudents': ['student', 'role']}}]
         }, (err, strategy) => {
             if(err) return callback(err);
 

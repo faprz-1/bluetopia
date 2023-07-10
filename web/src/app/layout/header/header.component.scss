@@ -26,10 +26,10 @@
   position: fixed;
   width: 100%;
   height: $header-height;
-  // box-shadow: $header-shadow;
+  box-shadow: $header-shadow;
   color: #1081FB;
   background-color: white !important;
-  padding: 0 2rem;
+  padding: 0 48px;
   z-index: $header-z-index;
   display: flex;
   justify-content: space-between;

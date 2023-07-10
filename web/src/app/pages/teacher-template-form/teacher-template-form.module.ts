@@ -5,11 +5,12 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlMessagesModule } from 'src/app/components/control-messages/control-messages.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { TemplateProyectBasedOnFormModule } from 'src/app/components/template-proyect-based-on-form/template-proyect-based-on-form.module';
 
-import { TeacherTemplateFormComponent } from './teacher-template-form.component';
+import { TemplateBasedOnFormModule } from 'src/app/components/template-based-on-form/template-based-on-form.module';
 import { TemplateGamificationFormModule } from 'src/app/components/template-gamification-form/template-gamification-form.module';
 import { TemplateExperienceFormModule } from 'src/app/components/template-experience-form/template-experience-form.module';
+
+import { TeacherTemplateFormComponent } from './teacher-template-form.component';
 
 const MODULE_ROUTES = [
   { path: '', component: TeacherTemplateFormComponent }
@@ -28,7 +29,7 @@ const MODULE_ROUTES = [
     ModalModule.forRoot(),
     TemplateExperienceFormModule,
     TemplateGamificationFormModule,
-    TemplateProyectBasedOnFormModule,
+    TemplateBasedOnFormModule,
     RouterModule.forChild(MODULE_ROUTES),
   ],
   // exports: [TeacherTemplateFormComponent]

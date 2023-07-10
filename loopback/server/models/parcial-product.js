@@ -3,39 +3,31 @@
 module.exports = function(ParcialProduct) {
 
     ParcialProduct.CreateOne = function(ctx, parcialProduct, callback) {
-        ParcialProduct.app.models.ParcialProductType.GetOrCreateOne(parcialProduct.parcialProductTypeId, {
-            name: parcialProduct.customParcialProductTypeName,
-            type: 'Mis tipos de producto',
-            userId: ctx.accessToken.userId
-        }, (err, parcialProductType) => {
-            if(err) return callback(err);
-            
-            if(!parcialProduct.parcialProductTypeId) parcialProduct.parcialProductTypeId = parcialProductType.id;
-            if(parcialProduct.date) {
-                const eventInstance = {
-                    name: `Evento: ${parcialProduct.name}`,
-                    date: parcialProduct.date,
-                    strategyId: parcialProduct.strategyId,
-                }
-                ParcialProduct.app.models.Event.create(eventInstance, (err, newEvent) => {
-                    if(err) return callback(err);
-    
-                    parcialProduct.eventId = newEvent.id;
-                    ParcialProduct.create(parcialProduct, (err, newParcialProduct) => {
-                        if(err) return callback(err);
-            
-                        return callback(null, newParcialProduct);
-                    });
-                });
+        if(!!parcialProduct.evaluationType) parcialProduct.evaluationTypeId = parcialProduct.evaluationType.id;
+        if(parcialProduct.date) {
+            const eventInstance = {
+                name: `Entrega: "${parcialProduct.name}"`,
+                date: parcialProduct.date,
+                strategyId: parcialProduct.strategyId,
             }
-            else {
+            ParcialProduct.app.models.Event.create(eventInstance, (err, newEvent) => {
+                if(err) return callback(err);
+
+                parcialProduct.eventId = newEvent.id;
                 ParcialProduct.create(parcialProduct, (err, newParcialProduct) => {
                     if(err) return callback(err);
-    
+        
                     return callback(null, newParcialProduct);
                 });
-            }
-        });
+            });
+        }
+        else {
+            ParcialProduct.create(parcialProduct, (err, newParcialProduct) => {
+                if(err) return callback(err);
+
+                return callback(null, newParcialProduct);
+            });
+        }
     }
 
     ParcialProduct.UpdateEvent = function(parcialProductId, eventId, callback) {
@@ -47,6 +39,21 @@ module.exports = function(ParcialProduct) {
 
                 return callback(null, saved);
             });
+        });
+    }
+
+    ParcialProduct.Update = function(parcialProduct, callback) {
+        ParcialProduct.upsert(parcialProduct, (err, updated) => {
+            if(err) return callback(err);
+
+            return callback(null, updated);
+        });
+    }
+
+    ParcialProduct.prototype.Delete = function(callback) {
+        this.destroy((err, destroyed) => {
+            if(err) return callback(err);
+            return callback(null, destroyed);
         });
     }
 

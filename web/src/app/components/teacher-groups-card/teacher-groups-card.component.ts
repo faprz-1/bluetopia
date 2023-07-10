@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, ViewChild, EventEmitter } from '@angu
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ApiService } from 'src/app/services/api.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
@@ -33,7 +34,8 @@ export class TeacherGroupsCardComponent implements OnInit {
 
   constructor(
     private api: ApiService,
-    private toast: ToastService
+    private toast: ToastService,
+    private nav: NavigationService
   ) { }
 
   ngOnInit(): void {
@@ -113,6 +115,11 @@ export class TeacherGroupsCardComponent implements OnInit {
       console.error("Error updating grade subjects", err);
       this.toast.ShowError(`Error al actualizar materias`);
     });
+  }
+
+  GoToStudentsDataOfGrade() {
+    localStorage.setItem('preselectedGrade', `${this.grade.id}`);
+    this.nav.GoToUserRoute(`datos-estudiantes`);
   }
 
 }

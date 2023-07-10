@@ -2,18 +2,19 @@
   <navigation-trigger></navigation-trigger>
 
   <div class="header__logo">
-      <h1><a [routerLink]="['']"><img class="header__logo logo-img" src="assets/img/project_name_small.png" alt=""></a></h1>
-    </div>
+    <h1><a [routerLink]="['']"><img class="header__logo logo-img" src="assets/img/project_name_small.png" alt=""></a></h1>
+  </div>
 
-  <nav aria-label="breadcrumb" *ngIf="sharedService.breadcrumbs.length!=0">
+  <img src="assets/icons/person.svg" width="21">
+
+  <!-- <nav aria-label="breadcrumb" *ngIf="sharedService.breadcrumbs.length!=0">
     <ol class="breadcrumb">
       <li class="breadcrumb-item" *ngFor="let i of sharedService.breadcrumbs">
         <a *ngIf="i.link!=''" [routerLink]="[i.link]">{{i.title}}</a>
         <a *ngIf="i.link==''">{{i.title}}</a>
-
       </li>
     </ol>
-  </nav>
+  </nav> -->
 
   <!-- <ul class="top-nav">
     <li dropdown>

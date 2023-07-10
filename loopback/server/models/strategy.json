@@ -16,7 +16,18 @@
     "generatingQuestion": {
       "type": "string"
     },
+    "startDate": {
+      "type": "string"
+    },
+    "endDate": {
+      "type": "string"
+    },
     "subjects": {
+      "type": [
+        "object"
+      ]
+    },
+    "skills": {
       "type": [
         "object"
       ]

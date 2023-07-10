@@ -9,20 +9,18 @@ import { Subscription } from 'rxjs';
 export class RubricComponent implements OnInit {
 
   @Input() onReset: EventEmitter<any> | null = null;
+  @Input() canEdit: boolean = true;
+  @Input() showControls: boolean = true;
+  @Input() rubrics: Array<any> = [
+    {
+      description: '',
+      concepts: []
+    }
+  ];
+
   @Output() exportRubrics: EventEmitter<any> = new EventEmitter<any>();
 
   subscriptions: Array<Subscription> = [];
-  rubrics: Array<any> = [
-    {
-      description: '',
-      concepts: [
-        {
-          value: 1,
-          description: ''
-        },
-      ]
-    }
-  ];
   
   constructor() { }
   
@@ -38,6 +36,7 @@ export class RubricComponent implements OnInit {
   }
   
   AddRow() {
+    if(!this.canEdit) return;
     this.rubrics.push({
       description: '',
       concepts: this.rubrics[0].concepts.map((concept: any) => {
@@ -51,6 +50,7 @@ export class RubricComponent implements OnInit {
   }
   
   AddCol() {
+    if(!this.canEdit) return;
     const value = this.rubrics[0].concepts.length + 1;
     this.rubrics.forEach(r => {
       r.concepts.unshift({

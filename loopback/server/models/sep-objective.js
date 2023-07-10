@@ -3,6 +3,7 @@
 module.exports = function(SepObjective) {
 
     SepObjective.CreateOne = function(sepObjective, callback) {
+        sepObjective.name = `${sepObjective.name.split('')[0].toUpperCase()}${sepObjective.name.substring(1).toLowerCase()}`;
         SepObjective.findOne({
             where: {
                 name: {like: `%${sepObjective.name}%`}

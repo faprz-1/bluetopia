@@ -17,6 +17,9 @@
       "required": true,
       "default": false
     },
+    "maxCalification": {
+      "type": "number"
+    },
     "rubric": {
       "type": "object"
     }
@@ -37,6 +40,11 @@
       "type": "belongsTo",
       "model": "Event",
       "foreignKey": "eventId"
+    },
+    "evaluationType": {
+      "type": "belongsTo",
+      "model": "EvaluationType",
+      "foreignKey": "evaluationTypeId"
     }
   },
   "acls": [

@@ -5,28 +5,26 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlMessagesModule } from 'src/app/components/control-messages/control-messages.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { RubricModule } from 'src/app/components/rubric/rubric.module';
 
-import { TemplateProyectBasedOnFormComponent } from './template-proyect-based-on-form.component';
+import { SuggestedStrategiesSliderComponent } from './suggested-strategies-slider.component';
 
 const MODULE_ROUTES = [
-  { path: '', component: TemplateProyectBasedOnFormComponent }
+  { path: '', component: SuggestedStrategiesSliderComponent }
 ];
 
 @NgModule({
   declarations: [
-    TemplateProyectBasedOnFormComponent
+    SuggestedStrategiesSliderComponent
   ],
   imports: [
     FormsModule,
     CommonModule,
-    RubricModule,
     NgSelectModule,
     ReactiveFormsModule,
     ControlMessagesModule,
     ModalModule.forRoot(),
     // RouterModule.forChild(MODULE_ROUTES),
   ],
-  exports: [TemplateProyectBasedOnFormComponent]
+  exports: [SuggestedStrategiesSliderComponent]
 })
-export class TemplateProyectBasedOnFormModule { }
+export class SuggestedStrategiesSliderModule { }

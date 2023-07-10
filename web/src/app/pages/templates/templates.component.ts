@@ -62,7 +62,7 @@ export class TemplatesComponent implements OnInit {
 
   OnTemplateSelected(template: any) {
     this.selectedTemplate = template;
-    this.nav.GoToUserRoute(`plantillas/crear/${template.id}`);
+    this.nav.GoToUserRoute(`plantillas/${template.id}`);
   }
   
   CreateStrategyBasedOnTemplate(template: any) {

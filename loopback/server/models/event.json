@@ -6,23 +6,14 @@
     "validateUpsert": true
   },
   "properties": {
-    "start": {
+    "name": {
       "type": "string"
     },
-    "body": {
-      "type": "string"
-    },
-    "closure": {
+    "instructions": {
       "type": "string"
     },
     "date": {
-      "type": "string",
-      "required": true
-    },
-    "isFinal": {
-      "type": "boolean",
-      "required": true,
-      "default": false
+      "type": "string"
     }
   },
   "validations": [],

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class LibraryFileSelectorModalComponent implements OnInit {
 
-  @ViewChild('libraryFileSelectorModal') modal: any;
+  @ViewChild('libraryFileSelectorModal') modal?: ModalDirective;
   @Output() onFilesSelectd: EventEmitter<any> = new EventEmitter<any>();
 
   user: any = null;

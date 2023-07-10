@@ -13,6 +13,7 @@ class UserPage {
   public name!: string;
   public action!: string;
   public icon!: string;
+  public iconImg!: string;
 }
 
 @Component({
@@ -106,6 +107,10 @@ export class NavigationComponent implements OnInit {
       case 'Teacher': this.nav.GoToUserRoute('perfil'); break;
       default: this.GoTo('/inicio/perfil'); break;
     }
+  }
+
+  GoToRoute(route: string) {
+    this.nav.GoTo(route);
   }
 
 }

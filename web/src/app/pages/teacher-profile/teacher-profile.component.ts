@@ -14,7 +14,7 @@ import { ValidationService } from 'src/app/services/validation.service';
 export class TeacherProfileComponent implements OnInit {
 
   user: any = null;
-  activeTab: string = 'subjects';
+  activeTab: string = 'profile';
   loading: any = {
     getting: false,
     updating: false
