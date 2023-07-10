@@ -16,16 +16,24 @@ module.exports = function(ParcialProduct) {
                 parcialProduct.eventId = newEvent.id;
                 ParcialProduct.create(parcialProduct, (err, newParcialProduct) => {
                     if(err) return callback(err);
-        
-                    return callback(null, newParcialProduct);
+                    
+                    newParcialProduct.UpsertResources(ctx, parcialProduct.resources, (err, updated) => {
+                        if(err) return callback(err);
+
+                        return callback(null, newParcialProduct);
+                    });
                 });
             });
         }
         else {
             ParcialProduct.create(parcialProduct, (err, newParcialProduct) => {
                 if(err) return callback(err);
+                
+                newParcialProduct.UpsertResources(ctx, parcialProduct.resources, (err, updated) => {
+                    if(err) return callback(err);
 
-                return callback(null, newParcialProduct);
+                    return callback(null, newParcialProduct);
+                });
             });
         }
     }
@@ -55,8 +63,12 @@ module.exports = function(ParcialProduct) {
             parcialProduct.eventId = updated.id;
             ParcialProduct.upsert(parcialProduct, (err, updated) => {
                 if(err) return callback(err);
-    
-                return callback(null, updated);
+                
+                updated.UpsertResources(ctx, parcialProduct.resources, (err, updated) => {
+                    if(err) return callback(err);
+
+                    return callback(null, updated);
+                });
             });
         });
     }
@@ -65,6 +77,45 @@ module.exports = function(ParcialProduct) {
         this.destroy((err, destroyed) => {
             if(err) return callback(err);
             return callback(null, destroyed);
+        });
+    }
+
+    ParcialProduct.prototype.UpsertResources = function(ctx, resources, callback) {
+        let files = [];
+        const userId = ctx.accessToken.userId;
+        if(!resources) return callback(null, files);
+        let cont = 0, limit = resources.length;
+        if(!limit) return callback(null, files);
+        resources.forEach(resource => {
+            if(!!resource.id) {
+                const parcialProductFile = {
+                    parcialProductId: this.id,
+                    fileId: resource.id
+                }
+                ParcialProduct.app.models.ParcialProductFile.create(parcialProductFile, (err, newParcialProductFile) => {
+                    if(err) return callback(err);
+
+                    files.push(resource);
+                    if(++cont == limit) return callback(null, files);
+                });
+            }
+            else {
+                resource.userId = userId;
+                ParcialProduct.app.models.Upload.newBase64File(resource, (err, newFile) => {
+                    if(err) return callback(err);
+
+                    const parcialProductFile = {
+                        parcialProductId: this.id,
+                        fileId: newFile.id
+                    }
+                    ParcialProduct.app.models.ParcialProductFile.create(parcialProductFile, (err, newParcialProductFile) => {
+                        if(err) return callback(err);
+    
+                        files.push(newFile);
+                        if(++cont == limit) return callback(null, files);
+                    });
+                });
+            }
         });
     }
 

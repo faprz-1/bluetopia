@@ -52,6 +52,10 @@
     max-width: 100%;
 }
 
+.input-container {
+    margin: 0;
+}
+
 .form-flexbox {
     display: flex;
     align-items: flex-start;
@@ -124,7 +128,6 @@
 }
 
 .select-card {
-    .input-container {margin: 0;}
     display: flex;
     padding: 12px 24px;
     flex-direction: column;

@@ -53,6 +53,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
   selectedSubjects: Array<any> = [];
   selectedTab: string = 'create';
   selectedEvaluationType: any = null;
+  finalParicalProduct: any = null;
   loading: any = {
     grade: {},
     group: {},
@@ -121,24 +122,21 @@ export class TemplateBasedOnFormComponent implements OnInit {
   CloseModal() {
     if(this.modalRef) this.modalRef.hide();
   }
-
-  GoBack() {
-    if(this.step == 1) this.goBackEvent.emit();
-    else this.step--;
-    this.ScrollToTop();
-  }
-
+  
   RemoveItemFromArray(array: Array<any>, idx: number) {
     this.zone.run(() => {
       array.splice(idx, 1);
     });
   }
-
-  NextStep(advanceStep: boolean = true) {
+  
+  ChangeStep(advanceStep: number = 1) {
     this.Save().then(saved => {
       this.onReset.emit();
-      if(this.step == 5) this.finishModal?.show();
-      else if(saved && advanceStep) this.step++;
+      if(this.step == 1 && advanceStep < 0) {
+        this.goBackEvent.emit();
+        return;
+      } else if(this.step == 5) this.OpenModal(this.finishModal);
+      else if(saved && advanceStep) this.step += advanceStep;
       this.InitializeDatePickers();
       this.ScrollToTop();
     });
@@ -444,6 +442,8 @@ export class TemplateBasedOnFormComponent implements OnInit {
   GetStrategy() {
     this.api.Get(`/Strategies/${this.strategyId}`).subscribe(strategy => {
       this.strategy = strategy;
+      if(!!strategy.parcialProducts && !!strategy.parcialProducts.length)
+      this.finalParicalProduct = strategy.parcialProducts.find((parcialProduct: any) => parcialProduct.isFinal);
       this.InitializeForms(strategy);
     }, err => {
       console.error("Error getting strategy", err);

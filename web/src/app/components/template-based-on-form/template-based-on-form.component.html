@@ -2,7 +2,7 @@
     <div class="d-flex align-items-center flex-wrap mb-3" style="gap: 24px;">
         <div class="title-row">
             <div>
-                <img class="clickeable" src="assets/icons/back-arrow.png" alt="back" (click)="GoBack()">
+                <img class="clickeable" src="assets/icons/back-arrow.png" alt="back" (click)="ChangeStep(-1)">
             </div>
             <div class="title mb-0 flex-wrap">
                 <span class="title-text">{{template?.nickname ? template?.nickname : template?.name }}</span>
@@ -382,6 +382,9 @@
                                                 placeholder="Tipo de evaluación">
                                             </ng-select>
                                         </div>
+                                        <div *ngIf="parcialProductForm.get('evaluationType')?.value?.type == 'rubric'" class="d-flex justify-content-end w-100">
+                                            <div class="link clickeable" (click)="rubricTutorialModal.OpenModal()">Ver ejemplo de rubrica</div>
+                                        </div>
                                         <app-rubric
                                             *ngIf="parcialProductForm.get('evaluationType')?.value?.type == 'rubric'"
                                             [onReset]="onReset"
@@ -594,6 +597,9 @@
                                         placeholder="Tipo de evaluación">
                                     </ng-select>
                                 </div>
+                                <div *ngIf="parcialProductForm.get('evaluationType')?.value?.type == 'rubric'" class="d-flex justify-content-end w-100">
+                                    <div class="link clickeable" (click)="rubricTutorialModal.OpenModal()">Ver ejemplo de rubrica</div>
+                                </div>
                                 <app-rubric
                                     *ngIf="parcialProductForm.get('evaluationType')?.value?.type == 'rubric'"
                                     [onReset]="onReset"
@@ -732,7 +738,7 @@
     </div>
 
     <div class="d-flex justify-content-end w-100 my-5">
-        <button class="btn btn-primary continue-button" (click)="NextStep()">
+        <button class="btn btn-primary continue-button" (click)="ChangeStep()">
             Continuar
         </button>
     </div>

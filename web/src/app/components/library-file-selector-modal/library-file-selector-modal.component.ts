@@ -34,7 +34,6 @@ export class LibraryFileSelectorModalComponent implements OnInit {
 
   GetLibraryFiles() {
     this.api.Get(`/Usuarios/${this.user.id}/FileLibrary`).subscribe(files => {
-      console.log(files);
       this.files = files;
     }, err => {
       console.error("Error getting the files", err);
