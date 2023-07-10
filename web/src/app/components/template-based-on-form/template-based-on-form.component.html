@@ -267,11 +267,11 @@
                                 </div>
                                 <div class="input-container">
                                     <input
+                                        #strategyDateRangePicker="bsDaterangepicker"
                                         class="form-control no-icon"
                                         type="text"
                                         formControlName="dates"
-                                        placeholder="Título de tu proyecto"
-                                        [bsValue]="dateRangePickerInitialValue"
+                                        placeholder="Fechas del proyecto"
                                         [bsConfig]="{ adaptivePosition: true, containerClass: 'theme-dark-blue' }"
                                         bsDaterangepicker>
                                 </div>
@@ -356,6 +356,7 @@
                                         </div>
                                         <div class="input-container">
                                             <input
+                                                #parcialProductDatePicker="bsDatepicker"
                                                 class="form-control no-icon with-border-thin"
                                                 type="text"
                                                 formControlName="date"
@@ -384,6 +385,7 @@
                                         <app-rubric
                                             *ngIf="parcialProductForm.get('evaluationType')?.value?.type == 'rubric'"
                                             [onReset]="onReset"
+                                            [rubrics]="!!parcialProductForm.get('rubric') ? parcialProductForm.get('rubric')?.value : []"
                                             (exportRubrics)="CatchRubrics($event)"></app-rubric>
                                         <div class="d-flex flex-column w-100" style="gap: 16px;" *ngIf="parcialProductForm.get('evaluationType')?.value?.type =='numeric'">
                                             <div class="instruction-2">
@@ -450,28 +452,33 @@
                             </div>
                         </div>
                         <div *ngSwitchCase="'saved'">
-                            <div class="parcial-product-show-card" *ngFor="let parcialProduct of strategy.parcialProducts">
+                            <div class="parcial-product-show-card" *ngFor="let parcialProduct of strategy?.parcialProducts; let i = index">
                                 <div class="d-flex justify-content-end w-100" style="gap: 16px;">
-                                    <img class="clickeable" src="assets/icons/delete.svg" alt="">
-                                    <img class="clickeable" src="assets/icons/edit.svg" alt="">
+                                    <img class="clickeable" (click)="DeleteParcialProduct(parcialProduct, i)" src="assets/icons/delete.svg" alt="">
+                                    <img class="clickeable" (click)="EditParcialProduct(parcialProduct)" src="assets/icons/edit.svg" alt="">
                                 </div>
                                 <div class="name">
-                                    {{parcialProduct.name}}
+                                    {{!!parcialProduct.name ? parcialProduct.name : 'Sin nombre' }}
                                 </div>
                                 <div class="type">
-                                    {{parcialProduct.type?.name}}
+                                    {{!!parcialProduct.type?.name ? parcialProduct.type?.name : 'Sin tipo' }}
                                 </div>
                                 <div class="">
-                                    {{parcialProduct.instructions}}
+                                    {{!!parcialProduct.instructions ? parcialProduct.instructions : 'Sin instrucciones' }}
                                 </div>
                                 <div class="date">
-                                    Entrega para {{parcialProduct.event.date | date:"dd/MM/yyyy" }}
+                                    <span *ngIf="!!parcialProduct.event?.date">
+                                        Entrega para {{parcialProduct.event?.date | date:"dd/MM/yyyy" }}
+                                    </span>
+                                    <span *ngIf="!parcialProduct.event?.date">
+                                        Sin fecha de entrega
+                                    </span>
                                 </div>
                                 <div class="">
-                                    {{strategy.generatingQuestion}}
+                                    {{ !!strategy.generatingQuestion ? strategy.generatingQuestion : 'Sin pregunta generadora' }}
                                 </div>
                                 <div class="">
-                                    {{parcialProduct.evaluationType?.name}}
+                                    {{ !!parcialProduct.evaluationType?.name ? parcialProduct.evaluationType?.name : 'Sin tipo de evaluación' }}
                                 </div>
                                 <div class="dropdwon-content" [ngClass]="{'show-bigger': parcialProduct.showMore}">
                                     <app-rubric [rubrics]="parcialProduct.rubric" [showControls]="false"></app-rubric>

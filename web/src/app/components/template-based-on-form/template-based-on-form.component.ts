@@ -7,6 +7,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { RubricTutorialModalComponent } from '../rubric-tutorial-modal/rubric-tutorial-modal.component';
+import { BsDatepickerDirective, BsDaterangepickerDirective } from 'ngx-bootstrap/datepicker';
 
 @Component({
   selector: 'app-template-based-on-form',
@@ -29,6 +30,8 @@ export class TemplateBasedOnFormComponent implements OnInit {
   @ViewChild('templateTopicSelect') templateTopicSelect?: NgSelectComponent;
   @ViewChild('parcialProductTypeSelect') parcialProductTypeSelect?: NgSelectComponent;
   @ViewChild('eventTypeSelect') eventTypeSelect?: NgSelectComponent;
+  @ViewChild('strategyDateRangePicker') strategyDateRangePicker?: BsDaterangepickerDirective;
+  @ViewChild('parcialProductDatePicker') parcialProductDatePicker?: BsDatepickerDirective;
 
   templateId: any;
   strategyId: any;
@@ -50,7 +53,6 @@ export class TemplateBasedOnFormComponent implements OnInit {
   selectedSubjects: Array<any> = [];
   selectedTab: string = 'create';
   selectedEvaluationType: any = null;
-  dateRangePickerInitialValue: Array<any> = [];
   loading: any = {
     grade: {},
     group: {},
@@ -137,8 +139,20 @@ export class TemplateBasedOnFormComponent implements OnInit {
       this.onReset.emit();
       if(this.step == 5) this.finishModal?.show();
       else if(saved && advanceStep) this.step++;
+      this.InitializeDatePickers();
       this.ScrollToTop();
     });
+  }
+
+  InitializeDatePickers() {
+    setTimeout(() => {
+      if(this.step == 2) {
+        if(!!this.strategyDateRangePicker) this.strategyDateRangePicker.bsValue = this.GetDateRangePickerValue([this.strategy.startDate, this.strategy.endDate]);
+      } else if(this.step == 3) {
+        if(!!this.parcialProductDatePicker && !!this.parcialProductForm.get('date')?.value) this.parcialProductDatePicker.bsValue = new Date(this.parcialProductForm.get('date')?.value);
+      } else if(this.step == 4) {
+      }
+    }, 10);
   }
 
   ScrollToTop() {
@@ -152,8 +166,8 @@ export class TemplateBasedOnFormComponent implements OnInit {
         switch (this.step) {
           case 1: res(await this.SaveStragey()); break;
           case 2: res(await this.SaveStragey()); break;
-          // case 3: res(await this.SaveParcialProduct()); break;
-          // case 4: res(await this.SaveParcialProduct(true)); break;
+          case 3: res(true); break;
+          case 4: res(true); break;
           case 5: res(await this.SaveEvent()); break;
           default: res(false); break;
         }
@@ -423,8 +437,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     });
     this.grade = !!strategy.strategyGroup ? strategy.strategyGroup.grade : null;
     this.group = !!strategy.strategyGroup ? strategy.strategyGroup.group : null;
-    this.selectedSubjects = strategy.subjects;
-    this.dateRangePickerInitialValue = this.GetDateRangePickerValue([strategy.startDate, strategy.endDate]);
+    this.selectedSubjects = !!strategy.subjects ? strategy.subjects : [];
     this.strategyForm.updateValueAndValidity();
   }
 
@@ -461,21 +474,49 @@ export class TemplateBasedOnFormComponent implements OnInit {
         strategyId: this.strategyId,
       }
       
-      this.api.Post(`/ParcialProducts`, {parcialProduct: parcialProductInstance}).subscribe(newParcialProduct => {
-        this.CancelParcialProduct();
-        this.GetStrategy();
-        res(true);
-      }, err => {
-        console.error("Error posting new parcial product", err);
-        res(false);
-      });
+      if(!!parcialProductInstance.id) {
+        this.api.Patch(`/ParcialProducts/${parcialProductInstance.id}`, {parcialProduct: parcialProductInstance}).subscribe(newParcialProduct => {
+          this.CancelParcialProduct();
+          this.GetStrategy();
+          res(true);
+        }, err => {
+          console.error("Error posting new parcial product", err);
+          res(false);
+        });
+      } else {
+        this.api.Post(`/ParcialProducts`, {parcialProduct: parcialProductInstance}).subscribe(newParcialProduct => {
+          this.CancelParcialProduct();
+          this.GetStrategy();
+          res(true);
+        }, err => {
+          console.error("Error posting new parcial product", err);
+          res(false);
+        });
+      }
     });
   }
 
   EditParcialProduct(parcialProduct: any) {
+    this.parcialProductForm.setValue({
+      id: !!parcialProduct.id ? parcialProduct.id : null,
+      parcialProductTypeId: !!parcialProduct.parcialProductTypeId ? parcialProduct.parcialProductTypeId : null,
+      name: !!parcialProduct.name ? parcialProduct.name : null,
+      instructions: !!parcialProduct.instructions ? parcialProduct.instructions : null,
+      date: !!parcialProduct.event ? parcialProduct.event.date : null,
+      evaluationType: !!parcialProduct.evaluationType ? parcialProduct.evaluationType : null,
+      rubric: !!parcialProduct.rubric ? parcialProduct.rubric : null,
+      maxCalification: !!parcialProduct.maxCalification ? parcialProduct.maxCalification : null,
+      resources: !!parcialProduct.resources ? parcialProduct.resources : [],
+    });
+
+    console.log(parcialProduct);
+
+    this.selectedTab = 'create';
+    this.InitializeDatePickers();
   }
 
   DeleteParcialProduct(parcialProduct: any, idx: number) {
+    this.RemoveItemFromArray(this.strategy.parcialProducts, idx);
   }
   
   SaveEvent() {

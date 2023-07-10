@@ -30,6 +30,19 @@ export class RubricComponent implements OnInit {
         this.ExportRubrics();
       }));
     }
+    if(!this.rubrics) {
+      this.rubrics = [
+        {
+          description: '',
+          concepts: []
+        }
+      ];
+    } else if(!this.rubrics.length) {
+      this.rubrics.push({
+        description: '',
+        concepts: []
+      });
+    }
     setTimeout(() => {
       this.ExportRubrics();
     }, 500);

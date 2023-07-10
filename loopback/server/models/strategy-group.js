@@ -3,6 +3,7 @@
 module.exports = function(StrategyGroup) {
 
     StrategyGroup.UpdateStrategyGroup = function(strategyId, gradeId, groupId, callback) {
+        if(!strategyId || !gradeId || !groupId) return callback(null, {});
         let instance = {
             strategyId,
             gradeId,
