@@ -133,25 +133,16 @@ module.exports = function(app) {
   var seedSubjects = function() {
     const subjects = [
       {
-        name: "Español"
+        name: "Lenguajes"
       },
       {
-        name: "Matemáticas"
+        name: "Saberes y Pensamiento Científico"
       },
       {
-        name: "Biología"
+        name: "Ética, naturaleza y sociedades"
       },
       {
-        name: "Historia"
-      },
-      {
-        name: "Geografía"
-      },
-      {
-        name: "Educacion física"
-      },
-      {
-        name: "Formación civica y ética"
+        name: "De lo humano y lo comunitario"
       },
     ];
 
