@@ -455,5 +455,9 @@
         }
       }
     }
+  },
+  "ParcialProductFile": {
+    "dataSource": "mysqlDev",
+    "public": false
   }
 }
