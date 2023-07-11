@@ -45,6 +45,11 @@
       "type": "belongsTo",
       "model": "EvaluationType",
       "foreignKey": "evaluationTypeId"
+    },
+    "resources": {
+      "type": "hasMany",
+      "model": "ParcialProductFile",
+      "foreignKey": "parcialProductId"
     }
   },
   "acls": [

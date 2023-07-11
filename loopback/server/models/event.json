@@ -48,12 +48,47 @@
       "permission": "ALLOW",
       "property": [
         "CreateOne",
+        "Update",
         "GetAllOfStrategy"
       ]
     }
   ],
   "methods": {
     "CreateOne": {
+      "accepts": [
+        {
+          "arg": "ctx",
+          "type": "object",
+          "required": true,
+          "description": "",
+          "http": {
+            "source": "req"
+          }
+        },
+        {
+          "arg": "event",
+          "type": "object",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "newEvent",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/",
+          "verb": "post"
+        }
+      ]
+    },
+    "Update": {
       "accepts": [
         {
           "arg": "ctx",

@@ -369,6 +369,7 @@
         "sharedMethods": {
           "*": false,
           "CreateOne": true,
+          "Update": true,
           "GetAllOfStrategy": true,
           "Proof": true
         }
@@ -455,5 +456,9 @@
         }
       }
     }
+  },
+  "ParcialProductFile": {
+    "dataSource": "mysqlDev",
+    "public": false
   }
 }

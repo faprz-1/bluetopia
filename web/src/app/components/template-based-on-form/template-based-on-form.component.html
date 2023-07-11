@@ -2,7 +2,7 @@
     <div class="d-flex align-items-center flex-wrap mb-3" style="gap: 24px;">
         <div class="title-row">
             <div>
-                <img class="clickeable" src="assets/icons/back-arrow.png" alt="back" (click)="GoBack()">
+                <img class="clickeable" src="assets/icons/back-arrow.png" alt="back" (click)="ChangeStep(-1)">
             </div>
             <div class="title mb-0 flex-wrap">
                 <span class="title-text">{{template?.nickname ? template?.nickname : template?.name }}</span>
@@ -382,6 +382,9 @@
                                                 placeholder="Tipo de evaluación">
                                             </ng-select>
                                         </div>
+                                        <div *ngIf="parcialProductForm.get('evaluationType')?.value?.type == 'rubric'" class="d-flex justify-content-end w-100">
+                                            <div class="link clickeable" (click)="rubricTutorialModal.OpenModal()">Ver ejemplo de rubrica</div>
+                                        </div>
                                         <app-rubric
                                             *ngIf="parcialProductForm.get('evaluationType')?.value?.type == 'rubric'"
                                             [onReset]="onReset"
@@ -404,38 +407,48 @@
                                             Asignar los recursos a utilizar
                                         </div>
                                         <div class="flex-files-container">
-                                            <div class="flex-files">
-                                                <div class="flex-icons" *ngIf="!GetFiles('new').length">
+                                            <div class="flex-files" [ngClass]="{'active': !!GetFiles('new').length}">
+                                                <div class="flex-icons">
                                                     <img src="assets/icons/video-recorder.png" alt="video">
                                                     <img src="assets/icons/gallery.png" alt="video">
                                                     <img src="assets/icons/book-closed-green.png" alt="video">
-                                                </div>
-                                                <div class="flex-resources" *ngIf="!!GetFiles('new').length">
-                                                    <div class="resource" *ngFor="let file of GetFiles('new')">
-                                                        <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
-                                                        {{file.name}}
-                                                    </div>
                                                 </div>
                                                 <input class="d-none" type="file" #fileInput multiple (change)="OnFileSelected($event)">
                                                 <div class="add-resource clickeable" (click)="fileInput.click()">
                                                     Adjuntar algún recurso
                                                 </div>
+                                                <div class="flex-resources" *ngIf="!!this.parcialProductForm.get('resources')?.value.length">
+                                                    <ng-container *ngFor="let file of this.parcialProductForm.get('resources')?.value; let i = index">
+                                                        <div class="resource" *ngIf="!file.id">
+                                                            <div class="d-flex align-items-center" style="gap: 20px;">
+                                                                <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
+                                                                {{file.name}}
+                                                            </div>
+                                                            <img class="clickeable" (click)="RemoveItemFromArray(this.parcialProductForm.get('resources')?.value, i)" src="assets/icons/close-circle.svg" alt="Borrar">
+                                                        </div>
+                                                    </ng-container>
+                                                </div>
                                             </div>
                             
-                                            <div class="flex-files mr-0">
-                                                <div class="flex-icons" *ngIf="!GetFiles('old').length">
+                                            <div class="flex-files" [ngClass]="{'active': !!GetFiles('old').length}">
+                                                <div class="flex-icons">
                                                     <img src="assets/icons/library.png" alt="video">
                                                     <img src="assets/icons/movie.png" alt="video">
                                                     <img src="assets/icons/microscope.png" alt="video">
                                                 </div>
-                                                <div class="flex-resources" *ngIf="!!GetFiles('old').length">
-                                                    <div class="resource" *ngFor="let file of GetFiles('old')">
-                                                        <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
-                                                        {{file.name}}
-                                                    </div>
-                                                </div>
                                                 <div class="add-resource clickeable" (click)="libraryModal.OpenModal()">
                                                     Adjuntar de la biblioteca
+                                                </div>
+                                                <div class="flex-resources" *ngIf="!!this.parcialProductForm.get('resources')?.value.length">
+                                                    <ng-container *ngFor="let file of this.parcialProductForm.get('resources')?.value; let i = index">
+                                                        <div class="resource" *ngIf="!!file.id">
+                                                            <div class="d-flex align-items-center" style="gap: 20px;">
+                                                                <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
+                                                                {{file.name}}
+                                                            </div>
+                                                            <img class="clickeable" (click)="RemoveItemFromArray(this.parcialProductForm.get('resources')?.value, i)" src="assets/icons/close-circle.svg" alt="Borrar">
+                                                        </div>
+                                                    </ng-container>
                                                 </div>
                                             </div>
                                         </div>
@@ -452,53 +465,55 @@
                             </div>
                         </div>
                         <div *ngSwitchCase="'saved'">
-                            <div class="parcial-product-show-card" *ngFor="let parcialProduct of strategy?.parcialProducts; let i = index">
-                                <div class="d-flex justify-content-end w-100" style="gap: 16px;">
-                                    <img class="clickeable" (click)="DeleteParcialProduct(parcialProduct, i)" src="assets/icons/delete.svg" alt="">
-                                    <img class="clickeable" (click)="EditParcialProduct(parcialProduct)" src="assets/icons/edit.svg" alt="">
+                            <ng-container *ngFor="let parcialProduct of strategy?.parcialProducts; let i = index">
+                                <div class="parcial-product-show-card" *ngIf="!parcialProduct.isFinal">
+                                    <div class="d-flex justify-content-end w-100" style="gap: 16px;">
+                                        <img class="clickeable" (click)="DeleteParcialProduct(parcialProduct, i)" src="assets/icons/delete.svg" alt="">
+                                        <img class="clickeable" (click)="EditParcialProduct(parcialProduct)" src="assets/icons/edit.svg" alt="">
+                                    </div>
+                                    <div class="name">
+                                        {{!!parcialProduct.name ? parcialProduct.name : 'Sin nombre' }}
+                                    </div>
+                                    <div class="type">
+                                        {{!!parcialProduct.type?.name ? parcialProduct.type?.name : 'Sin tipo' }}
+                                    </div>
+                                    <div class="">
+                                        {{!!parcialProduct.instructions ? parcialProduct.instructions : 'Sin instrucciones' }}
+                                    </div>
+                                    <div class="date">
+                                        <span *ngIf="!!parcialProduct.event?.date">
+                                            Entrega para {{parcialProduct.event?.date | date:"dd/MM/yyyy" }}
+                                        </span>
+                                        <span *ngIf="!parcialProduct.event?.date">
+                                            Sin fecha de entrega
+                                        </span>
+                                    </div>
+                                    <div class="">
+                                        {{ !!strategy.generatingQuestion ? strategy.generatingQuestion : 'Sin pregunta generadora' }}
+                                    </div>
+                                    <div class="">
+                                        {{ !!parcialProduct.evaluationType?.name ? parcialProduct.evaluationType?.name : 'Sin tipo de evaluación' }}
+                                    </div>
+                                    <div class="dropdwon-content" [ngClass]="{'show-bigger': parcialProduct.showMore}">
+                                        <app-rubric [rubrics]="parcialProduct.rubric" [showControls]="false"></app-rubric>
+                                    </div>
+                                    <div class="dropdown-text clickeable" *ngIf="parcialProduct.evaluationType?.type == 'rubric'" (click)="parcialProduct.showMore = !!!parcialProduct.showMore">
+                                        <span *ngIf="!parcialProduct.showMore">
+                                            Ver rubrica
+                                        </span>
+                                        <img *ngIf="!parcialProduct.showMore" src="assets/icons/chevron-down.svg">
+                                        <span *ngIf="parcialProduct.showMore">
+                                            Dejar de ver rúbrica
+                                        </span>
+                                        <img *ngIf="parcialProduct.showMore" src="assets/icons/chevron-up.svg">
+                                    </div>
+                                    <div class="d-flex">
+                                        <button class="btn btn-secondary">
+                                            Ver recursos
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="name">
-                                    {{!!parcialProduct.name ? parcialProduct.name : 'Sin nombre' }}
-                                </div>
-                                <div class="type">
-                                    {{!!parcialProduct.type?.name ? parcialProduct.type?.name : 'Sin tipo' }}
-                                </div>
-                                <div class="">
-                                    {{!!parcialProduct.instructions ? parcialProduct.instructions : 'Sin instrucciones' }}
-                                </div>
-                                <div class="date">
-                                    <span *ngIf="!!parcialProduct.event?.date">
-                                        Entrega para {{parcialProduct.event?.date | date:"dd/MM/yyyy" }}
-                                    </span>
-                                    <span *ngIf="!parcialProduct.event?.date">
-                                        Sin fecha de entrega
-                                    </span>
-                                </div>
-                                <div class="">
-                                    {{ !!strategy.generatingQuestion ? strategy.generatingQuestion : 'Sin pregunta generadora' }}
-                                </div>
-                                <div class="">
-                                    {{ !!parcialProduct.evaluationType?.name ? parcialProduct.evaluationType?.name : 'Sin tipo de evaluación' }}
-                                </div>
-                                <div class="dropdwon-content" [ngClass]="{'show-bigger': parcialProduct.showMore}">
-                                    <app-rubric [rubrics]="parcialProduct.rubric" [showControls]="false"></app-rubric>
-                                </div>
-                                <div class="dropdown-text clickeable" *ngIf="parcialProduct.evaluationType?.type == 'rubric'" (click)="parcialProduct.showMore = !!!parcialProduct.showMore">
-                                    <span *ngIf="!parcialProduct.showMore">
-                                        Ver rubrica
-                                    </span>
-                                    <img *ngIf="!parcialProduct.showMore" src="assets/icons/chevron-down.svg">
-                                    <span *ngIf="parcialProduct.showMore">
-                                        Dejar de ver rúbrica
-                                    </span>
-                                    <img *ngIf="parcialProduct.showMore" src="assets/icons/chevron-up.svg">
-                                </div>
-                                <div class="d-flex">
-                                    <button class="btn btn-secondary">
-                                        Ver recursos
-                                    </button>
-                                </div>
-                            </div>
+                            </ng-container>
                         </div>
                     </div>
                 </div>
@@ -569,6 +584,7 @@
                                 </div>
                                 <div class="input-container">
                                     <input
+                                        #finalParcialProductDatePicker="bsDatepicker"
                                         class="form-control no-icon with-border-thin"
                                         type="text"
                                         formControlName="date"
@@ -594,6 +610,9 @@
                                         placeholder="Tipo de evaluación">
                                     </ng-select>
                                 </div>
+                                <div *ngIf="parcialProductForm.get('evaluationType')?.value?.type == 'rubric'" class="d-flex justify-content-end w-100">
+                                    <div class="link clickeable" (click)="rubricTutorialModal.OpenModal()">Ver ejemplo de rubrica</div>
+                                </div>
                                 <app-rubric
                                     *ngIf="parcialProductForm.get('evaluationType')?.value?.type == 'rubric'"
                                     [onReset]="onReset"
@@ -615,38 +634,48 @@
                                     Asignar los recursos a utilizar
                                 </div>
                                 <div class="flex-files-container">
-                                    <div class="flex-files">
-                                        <div class="flex-icons" *ngIf="!GetFiles('new').length">
+                                    <div class="flex-files" [ngClass]="{'active': !!GetFiles('new').length}">
+                                        <div class="flex-icons">
                                             <img src="assets/icons/video-recorder.png" alt="video">
                                             <img src="assets/icons/gallery.png" alt="video">
                                             <img src="assets/icons/book-closed-green.png" alt="video">
-                                        </div>
-                                        <div class="flex-resources" *ngIf="!!GetFiles('new').length">
-                                            <div class="resource" *ngFor="let file of GetFiles('new')">
-                                                <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
-                                                {{file.name}}
-                                            </div>
                                         </div>
                                         <input class="d-none" type="file" #fileInput multiple (change)="OnFileSelected($event)">
                                         <div class="add-resource clickeable" (click)="fileInput.click()">
                                             Adjuntar algún recurso
                                         </div>
+                                        <div class="flex-resources" *ngIf="!!this.parcialProductForm.get('resources')?.value.length">
+                                            <ng-container *ngFor="let file of this.parcialProductForm.get('resources')?.value; let i = index">
+                                                <div class="resource" *ngIf="!file.id">
+                                                    <div class="d-flex align-items-center" style="gap: 20px;">
+                                                        <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
+                                                        {{file.name}}
+                                                    </div>
+                                                    <img class="clickeable" (click)="RemoveItemFromArray(this.parcialProductForm.get('resources')?.value, i)" src="assets/icons/close-circle.svg" alt="Borrar">
+                                                </div>
+                                            </ng-container>
+                                        </div>
                                     </div>
                     
-                                    <div class="flex-files mr-0">
-                                        <div class="flex-icons" *ngIf="!GetFiles('old').length">
+                                    <div class="flex-files" [ngClass]="{'active': !!GetFiles('old').length}">
+                                        <div class="flex-icons">
                                             <img src="assets/icons/library.png" alt="video">
                                             <img src="assets/icons/movie.png" alt="video">
                                             <img src="assets/icons/microscope.png" alt="video">
                                         </div>
-                                        <div class="flex-resources" *ngIf="!!GetFiles('old').length">
-                                            <div class="resource" *ngFor="let file of GetFiles('old')">
-                                                <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
-                                                {{file.name}}
-                                            </div>
-                                        </div>
                                         <div class="add-resource clickeable" (click)="libraryModal.OpenModal()">
                                             Adjuntar de la biblioteca
+                                        </div>
+                                        <div class="flex-resources" *ngIf="!!this.parcialProductForm.get('resources')?.value.length">
+                                            <ng-container *ngFor="let file of this.parcialProductForm.get('resources')?.value; let i = index">
+                                                <div class="resource" *ngIf="!!file.id">
+                                                    <div class="d-flex align-items-center" style="gap: 20px;">
+                                                        <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
+                                                        {{file.name}}
+                                                    </div>
+                                                    <img class="clickeable" (click)="RemoveItemFromArray(this.parcialProductForm.get('resources')?.value, i)" src="assets/icons/close-circle.svg" alt="Borrar">
+                                                </div>
+                                            </ng-container>
                                         </div>
                                     </div>
                                 </div>
@@ -732,7 +761,7 @@
     </div>
 
     <div class="d-flex justify-content-end w-100 my-5">
-        <button class="btn btn-primary continue-button" (click)="NextStep()">
+        <button class="btn btn-primary continue-button" (click)="ChangeStep()">
             Continuar
         </button>
     </div>
