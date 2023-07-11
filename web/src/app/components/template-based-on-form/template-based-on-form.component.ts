@@ -32,6 +32,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
   @ViewChild('eventTypeSelect') eventTypeSelect?: NgSelectComponent;
   @ViewChild('strategyDateRangePicker') strategyDateRangePicker?: BsDaterangepickerDirective;
   @ViewChild('parcialProductDatePicker') parcialProductDatePicker?: BsDatepickerDirective;
+  @ViewChild('finalParcialProductDatePicker') finalParcialProductDatePicker?: BsDatepickerDirective;
 
   templateId: any;
   strategyId: any;
@@ -137,9 +138,33 @@ export class TemplateBasedOnFormComponent implements OnInit {
         return;
       } else if(this.step == 5) this.OpenModal(this.finishModal);
       else if(saved && advanceStep) this.step += advanceStep;
-      this.InitializeDatePickers();
+
+      switch (this.step) {
+        case 2: this.InitializeDatePickers(); break;
+        case 3: this.CancelParcialProduct(); break;
+        case 4: this.InitializeFinalProductForm(); break;
+      }
       this.ScrollToTop();
     });
+  }
+
+  InitializeFinalProductForm() {
+    this.parcialProductForm.setValue({
+      id: !!this.finalParicalProduct && !!this.finalParicalProduct.id ? this.finalParicalProduct.id : null,
+      parcialProductTypeId: !!this.finalParicalProduct && !!this.finalParicalProduct.parcialProductTypeId ? this.finalParicalProduct.parcialProductTypeId : null,
+      name: !!this.finalParicalProduct && !!this.finalParicalProduct.name ? this.finalParicalProduct.name : null,
+      instructions: !!this.finalParicalProduct && !!this.finalParicalProduct.instructions ? this.finalParicalProduct.instructions : null,
+      date: !!this.finalParicalProduct && !!this.finalParicalProduct.event ? this.finalParicalProduct.event.date : null,
+      evaluationType: !!this.finalParicalProduct && !!this.finalParicalProduct.evaluationType ? this.finalParicalProduct.evaluationType : null,
+      rubric: !!this.finalParicalProduct && !!this.finalParicalProduct.rubric ? this.finalParicalProduct.rubric : null,
+      maxCalification: !!this.finalParicalProduct && !!this.finalParicalProduct.maxCalification ? this.finalParicalProduct.maxCalification : null,
+      resources: !!this.finalParicalProduct && !!this.finalParicalProduct.resources ? this.finalParicalProduct.resources.map((parcialProduct: any) => parcialProduct.file) : [],
+    });
+
+    this.InitializeDatePickers();
+  }
+
+  InitializeCloseEvntForm() {
   }
 
   InitializeDatePickers() {
@@ -149,6 +174,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
       } else if(this.step == 3) {
         if(!!this.parcialProductDatePicker && !!this.parcialProductForm.get('date')?.value) this.parcialProductDatePicker.bsValue = new Date(this.parcialProductForm.get('date')?.value);
       } else if(this.step == 4) {
+        if(!!this.finalParcialProductDatePicker && !!this.parcialProductForm.get('date')?.value) this.finalParcialProductDatePicker.bsValue = new Date(this.parcialProductForm.get('date')?.value);
       }
     }, 10);
   }
@@ -476,7 +502,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
       
       if(!!parcialProductInstance.id) {
         this.api.Patch(`/ParcialProducts/${parcialProductInstance.id}`, {parcialProduct: parcialProductInstance}).subscribe(newParcialProduct => {
-          this.CancelParcialProduct();
+          if(!isParcialProductFinal) this.CancelParcialProduct();
           this.GetStrategy();
           res(true);
         }, err => {

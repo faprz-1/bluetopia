@@ -369,6 +369,7 @@
         "sharedMethods": {
           "*": false,
           "CreateOne": true,
+          "Update": true,
           "GetAllOfStrategy": true,
           "Proof": true
         }
