@@ -48,12 +48,8 @@
     },
     "resources": {
       "type": "hasMany",
-      "model": "UploadedFiles",
-      "foreignKey": "parcialProductId",
-      "options": {
-        "nestRemoting": true
-      },
-      "through": "ParcialProductFile"
+      "model": "ParcialProductFile",
+      "foreignKey": "parcialProductId"
     }
   },
   "acls": [

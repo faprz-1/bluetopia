@@ -60,7 +60,7 @@ module.exports = function(Strategy) {
     
     Strategy.GetData = function(strategyId, callback) {
         Strategy.findById(strategyId, {
-            include: [{'parcialProducts': ['type', 'event', 'evaluationType', 'resources']}, 'template', 'user', {'strategyGroup': ['grade', 'group']}, {'teams': {'teamStudents': ['student', 'role']}}]
+            include: [{'parcialProducts': ['type', 'event', 'evaluationType', {'resources': 'file'}]}, 'template', 'user', {'strategyGroup': ['grade', 'group']}, {'teams': {'teamStudents': ['student', 'role']}}]
         }, (err, strategy) => {
             if(err) return callback(err);
 

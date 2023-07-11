@@ -506,10 +506,8 @@ export class TemplateBasedOnFormComponent implements OnInit {
       evaluationType: !!parcialProduct.evaluationType ? parcialProduct.evaluationType : null,
       rubric: !!parcialProduct.rubric ? parcialProduct.rubric : null,
       maxCalification: !!parcialProduct.maxCalification ? parcialProduct.maxCalification : null,
-      resources: !!parcialProduct.resources ? parcialProduct.resources : [],
+      resources: !!parcialProduct.resources ? parcialProduct.resources.map((parcialProduct: any) => parcialProduct.file) : [],
     });
-
-    console.log(parcialProduct);
 
     this.selectedTab = 'create';
     this.InitializeDatePickers();

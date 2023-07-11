@@ -14,7 +14,18 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "parcialProduct": {
+      "type": "belongsTo",
+      "model": "ParcialProduct",
+      "foreignKey": "parcialProductId"
+    },
+    "file": {
+      "type": "belongsTo",
+      "model": "UploadedFiles",
+      "foreignKey": "fileId"
+    }
+  },
   "acls": [],
   "methods": {}
 }

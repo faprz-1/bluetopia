@@ -407,38 +407,48 @@
                                             Asignar los recursos a utilizar
                                         </div>
                                         <div class="flex-files-container">
-                                            <div class="flex-files">
-                                                <div class="flex-icons" *ngIf="!GetFiles('new').length">
+                                            <div class="flex-files" [ngClass]="{'active': !!this.parcialProductForm.get('resources')?.value.length}">
+                                                <div class="flex-icons">
                                                     <img src="assets/icons/video-recorder.png" alt="video">
                                                     <img src="assets/icons/gallery.png" alt="video">
                                                     <img src="assets/icons/book-closed-green.png" alt="video">
-                                                </div>
-                                                <div class="flex-resources" *ngIf="!!GetFiles('new').length">
-                                                    <div class="resource" *ngFor="let file of GetFiles('new')">
-                                                        <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
-                                                        {{file.name}}
-                                                    </div>
                                                 </div>
                                                 <input class="d-none" type="file" #fileInput multiple (change)="OnFileSelected($event)">
                                                 <div class="add-resource clickeable" (click)="fileInput.click()">
                                                     Adjuntar algún recurso
                                                 </div>
+                                                <div class="flex-resources" *ngIf="!!this.parcialProductForm.get('resources')?.value.length">
+                                                    <ng-container *ngFor="let file of this.parcialProductForm.get('resources')?.value; let i = index">
+                                                        <div class="resource" *ngIf="!file.id">
+                                                            <div class="d-flex align-items-center" style="gap: 20px;">
+                                                                <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
+                                                                {{file.name}}
+                                                            </div>
+                                                            <img class="clickeable" (click)="RemoveItemFromArray(this.parcialProductForm.get('resources')?.value, i)" src="assets/icons/close-circle.svg" alt="Borrar">
+                                                        </div>
+                                                    </ng-container>
+                                                </div>
                                             </div>
                             
-                                            <div class="flex-files mr-0">
-                                                <div class="flex-icons" *ngIf="!GetFiles('old').length">
+                                            <div class="flex-files" [ngClass]="{'active': !!this.parcialProductForm.get('resources')?.value.length}">
+                                                <div class="flex-icons">
                                                     <img src="assets/icons/library.png" alt="video">
                                                     <img src="assets/icons/movie.png" alt="video">
                                                     <img src="assets/icons/microscope.png" alt="video">
                                                 </div>
-                                                <div class="flex-resources" *ngIf="!!GetFiles('old').length">
-                                                    <div class="resource" *ngFor="let file of GetFiles('old')">
-                                                        <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
-                                                        {{file.name}}
-                                                    </div>
-                                                </div>
                                                 <div class="add-resource clickeable" (click)="libraryModal.OpenModal()">
                                                     Adjuntar de la biblioteca
+                                                </div>
+                                                <div class="flex-resources" *ngIf="!!this.parcialProductForm.get('resources')?.value.length">
+                                                    <ng-container *ngFor="let file of this.parcialProductForm.get('resources')?.value; let i = index">
+                                                        <div class="resource" *ngIf="!!file.id">
+                                                            <div class="d-flex align-items-center" style="gap: 20px;">
+                                                                <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
+                                                                {{file.name}}
+                                                            </div>
+                                                            <img class="clickeable" (click)="RemoveItemFromArray(this.parcialProductForm.get('resources')?.value, i)" src="assets/icons/close-circle.svg" alt="Borrar">
+                                                        </div>
+                                                    </ng-container>
                                                 </div>
                                             </div>
                                         </div>
@@ -621,38 +631,48 @@
                                     Asignar los recursos a utilizar
                                 </div>
                                 <div class="flex-files-container">
-                                    <div class="flex-files">
-                                        <div class="flex-icons" *ngIf="!GetFiles('new').length">
+                                    <div class="flex-files" [ngClass]="{'active': !!this.parcialProductForm.get('resources')?.value.length}">
+                                        <div class="flex-icons">
                                             <img src="assets/icons/video-recorder.png" alt="video">
                                             <img src="assets/icons/gallery.png" alt="video">
                                             <img src="assets/icons/book-closed-green.png" alt="video">
-                                        </div>
-                                        <div class="flex-resources" *ngIf="!!GetFiles('new').length">
-                                            <div class="resource" *ngFor="let file of GetFiles('new')">
-                                                <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
-                                                {{file.name}}
-                                            </div>
                                         </div>
                                         <input class="d-none" type="file" #fileInput multiple (change)="OnFileSelected($event)">
                                         <div class="add-resource clickeable" (click)="fileInput.click()">
                                             Adjuntar algún recurso
                                         </div>
+                                        <div class="flex-resources" *ngIf="!!this.parcialProductForm.get('resources')?.value.length">
+                                            <ng-container *ngFor="let file of this.parcialProductForm.get('resources')?.value; let i = index">
+                                                <div class="resource" *ngIf="!file.id">
+                                                    <div class="d-flex align-items-center" style="gap: 20px;">
+                                                        <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
+                                                        {{file.name}}
+                                                    </div>
+                                                    <img class="clickeable" (click)="RemoveItemFromArray(this.parcialProductForm.get('resources')?.value, i)" src="assets/icons/close-circle.svg" alt="Borrar">
+                                                </div>
+                                            </ng-container>
+                                        </div>
                                     </div>
                     
-                                    <div class="flex-files mr-0">
-                                        <div class="flex-icons" *ngIf="!GetFiles('old').length">
+                                    <div class="flex-files" [ngClass]="{'active': !!this.parcialProductForm.get('resources')?.value.length}">
+                                        <div class="flex-icons">
                                             <img src="assets/icons/library.png" alt="video">
                                             <img src="assets/icons/movie.png" alt="video">
                                             <img src="assets/icons/microscope.png" alt="video">
                                         </div>
-                                        <div class="flex-resources" *ngIf="!!GetFiles('old').length">
-                                            <div class="resource" *ngFor="let file of GetFiles('old')">
-                                                <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
-                                                {{file.name}}
-                                            </div>
-                                        </div>
                                         <div class="add-resource clickeable" (click)="libraryModal.OpenModal()">
                                             Adjuntar de la biblioteca
+                                        </div>
+                                        <div class="flex-resources" *ngIf="!!this.parcialProductForm.get('resources')?.value.length">
+                                            <ng-container *ngFor="let file of this.parcialProductForm.get('resources')?.value; let i = index">
+                                                <div class="resource" *ngIf="!!file.id">
+                                                    <div class="d-flex align-items-center" style="gap: 20px;">
+                                                        <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
+                                                        {{file.name}}
+                                                    </div>
+                                                    <img class="clickeable" (click)="RemoveItemFromArray(this.parcialProductForm.get('resources')?.value, i)" src="assets/icons/close-circle.svg" alt="Borrar">
+                                                </div>
+                                            </ng-container>
                                         </div>
                                     </div>
                                 </div>
