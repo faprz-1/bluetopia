@@ -7,12 +7,10 @@
   },
   "properties": {
     "parcialProductId": {
-      "type": "number",
-      "required": true
+      "type": "number"
     },
     "fileId": {
-      "type": "string",
-      "required": true
+      "type": "string"
     }
   },
   "validations": [],
