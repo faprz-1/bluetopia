@@ -45,6 +45,15 @@
       "type": "belongsTo",
       "model": "EvaluationType",
       "foreignKey": "evaluationTypeId"
+    },
+    "resources": {
+      "type": "hasMany",
+      "model": "UploadedFiles",
+      "foreignKey": "parcialProductId",
+      "options": {
+        "nestRemoting": true
+      },
+      "through": "ParcialProductFile"
     }
   },
   "acls": [
