@@ -8,6 +8,7 @@ import { NavigationService } from 'src/app/services/navigation.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { RubricTutorialModalComponent } from '../rubric-tutorial-modal/rubric-tutorial-modal.component';
 import { BsDatepickerDirective, BsDaterangepickerDirective } from 'ngx-bootstrap/datepicker';
+import * as moment from 'moment-timezone';
 
 @Component({
   selector: 'app-template-based-on-form',
@@ -33,6 +34,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
   @ViewChild('strategyDateRangePicker') strategyDateRangePicker?: BsDaterangepickerDirective;
   @ViewChild('parcialProductDatePicker') parcialProductDatePicker?: BsDatepickerDirective;
   @ViewChild('finalParcialProductDatePicker') finalParcialProductDatePicker?: BsDatepickerDirective;
+  @ViewChild('finalEventDatePicker') finalEventDatePicker?: BsDatepickerDirective;
 
   templateId: any;
   strategyId: any;
@@ -46,6 +48,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
   skills: Array<any> = [];
   templateTopics: Array<any> = [];
   parcialProducts: Array<any> = [];
+  selectedParcialProduct: any = null;
   parcialProductTypes: Array<any> = [];
   eventTypes: Array<any> = [];
   strategy: any = null;
@@ -54,20 +57,24 @@ export class TemplateBasedOnFormComponent implements OnInit {
   selectedSubjects: Array<any> = [];
   selectedTab: string = 'create';
   selectedEvaluationType: any = null;
-  finalParicalProduct: any = null;
+  finalParcialProduct: any = null;
+  finalEvent: any = null;
   loading: any = {
-    grade: {},
-    group: {},
-    subject: {},
-    sepObjective: {},
-    skill: {},
-    templateTopic: {},
-    parcialProductType: {},
-    eventType: {},
+    grade: false,
+    group: false,
+    subject: false,
+    sepObjective: false,
+    skill: false,
+    templateTopic: false,
+    parcialProduct: false,
+    parcialProductType: false,
+    eventType: false,
+    event: false,
   };
+  lastSave: moment.Moment | null = null;
   evaluationTypes: Array<any> = [];
   strategyForm: FormGroup = new FormGroup({
-    id: new FormControl(null, [Validators.required]),
+    id: new FormControl(null, []),
     topic: new FormControl(null, [Validators.required]),
     title: new FormControl(null, [Validators.required]),
     generatingQuestion: new FormControl(null, [Validators.required]),
@@ -75,7 +82,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     dates: new FormControl(null, Validators.required),
   });
   parcialProductForm: FormGroup = new FormGroup({
-    id: new FormControl(null, [Validators.required]),
+    id: new FormControl(null, []),
     parcialProductTypeId: new FormControl(null, [Validators.required]),
     name: new FormControl(null, [Validators.required]),
     instructions: new FormControl(null, [Validators.required]),
@@ -86,13 +93,25 @@ export class TemplateBasedOnFormComponent implements OnInit {
     resources: new FormControl([], []),
   });
   eventForm: FormGroup = new FormGroup({
+    id: new FormControl(null, []),
     eventTypeId: new FormControl(null, [Validators.required]),
     name: new FormControl(null, [Validators.required]),
+    description: new FormControl(null, [Validators.required]),
     instructions: new FormControl(null, [Validators.required]),
     date: new FormControl(null, [Validators.required]),
   });
 
   step: number = 1;
+
+  public get isLoading() {
+    for (const key in this.loading) {
+      if (Object.prototype.hasOwnProperty.call(this.loading, key)) {
+        const element = this.loading[key];
+        if(element) return true;
+      }
+    }
+    return false;
+  }
 
   constructor(
     private api: ApiService,
@@ -136,13 +155,14 @@ export class TemplateBasedOnFormComponent implements OnInit {
       if(this.step == 1 && advanceStep < 0) {
         this.goBackEvent.emit();
         return;
-      } else if(this.step == 5) this.OpenModal(this.finishModal);
+      } else if(this.step == 5 && advanceStep > 0) this.OpenModal(this.finishModal);
       else if(saved && advanceStep) this.step += advanceStep;
 
       switch (this.step) {
         case 2: this.InitializeDatePickers(); break;
         case 3: this.CancelParcialProduct(); break;
         case 4: this.InitializeFinalProductForm(); break;
+        case 5: this.InitializeCloseEventForm(); break;
       }
       this.ScrollToTop();
     });
@@ -150,31 +170,49 @@ export class TemplateBasedOnFormComponent implements OnInit {
 
   InitializeFinalProductForm() {
     this.parcialProductForm.setValue({
-      id: !!this.finalParicalProduct && !!this.finalParicalProduct.id ? this.finalParicalProduct.id : null,
-      parcialProductTypeId: !!this.finalParicalProduct && !!this.finalParicalProduct.parcialProductTypeId ? this.finalParicalProduct.parcialProductTypeId : null,
-      name: !!this.finalParicalProduct && !!this.finalParicalProduct.name ? this.finalParicalProduct.name : null,
-      instructions: !!this.finalParicalProduct && !!this.finalParicalProduct.instructions ? this.finalParicalProduct.instructions : null,
-      date: !!this.finalParicalProduct && !!this.finalParicalProduct.event ? this.finalParicalProduct.event.date : null,
-      evaluationType: !!this.finalParicalProduct && !!this.finalParicalProduct.evaluationType ? this.finalParicalProduct.evaluationType : null,
-      rubric: !!this.finalParicalProduct && !!this.finalParicalProduct.rubric ? this.finalParicalProduct.rubric : null,
-      maxCalification: !!this.finalParicalProduct && !!this.finalParicalProduct.maxCalification ? this.finalParicalProduct.maxCalification : null,
-      resources: !!this.finalParicalProduct && !!this.finalParicalProduct.resources ? this.finalParicalProduct.resources.map((parcialProduct: any) => parcialProduct.file) : [],
+      id: !!this.finalParcialProduct && !!this.finalParcialProduct.id ? this.finalParcialProduct.id : null,
+      parcialProductTypeId: !!this.finalParcialProduct && !!this.finalParcialProduct.parcialProductTypeId ? this.finalParcialProduct.parcialProductTypeId : null,
+      name: !!this.finalParcialProduct && !!this.finalParcialProduct.name ? this.finalParcialProduct.name : null,
+      instructions: !!this.finalParcialProduct && !!this.finalParcialProduct.instructions ? this.finalParcialProduct.instructions : null,
+      date: !!this.finalParcialProduct && !!this.finalParcialProduct.event ? this.finalParcialProduct.event.date : null,
+      evaluationType: !!this.finalParcialProduct && !!this.finalParcialProduct.evaluationType ? this.finalParcialProduct.evaluationType : null,
+      rubric: !!this.finalParcialProduct && !!this.finalParcialProduct.rubric ? this.finalParcialProduct.rubric : null,
+      maxCalification: !!this.finalParcialProduct && !!this.finalParcialProduct.maxCalification ? this.finalParcialProduct.maxCalification : null,
+      resources: !!this.finalParcialProduct && !!this.finalParcialProduct.resources ? this.finalParcialProduct.resources.map((parcialProduct: any) => parcialProduct.file) : [],
     });
 
     this.InitializeDatePickers();
   }
-
-  InitializeCloseEvntForm() {
+  
+  InitializeCloseEventForm() {
+    console.log(this.finalEvent);
+    this.eventForm.setValue({
+      id: !!this.finalEvent ? this.finalEvent.id : null,
+      eventTypeId: !!this.finalEvent ? this.finalEvent.eventTypeId : null,
+      name: !!this.finalEvent ? this.finalEvent.name : null,
+      description: !!this.finalEvent ? this.finalEvent.description : null,
+      instructions: !!this.finalEvent ? this.finalEvent.instructions : null,
+      date: !!this.finalEvent ? this.finalEvent.date : null,
+    });
+  
+    this.InitializeDatePickers();
   }
 
   InitializeDatePickers() {
     setTimeout(() => {
-      if(this.step == 2) {
-        if(!!this.strategyDateRangePicker) this.strategyDateRangePicker.bsValue = this.GetDateRangePickerValue([this.strategy.startDate, this.strategy.endDate]);
-      } else if(this.step == 3) {
-        if(!!this.parcialProductDatePicker && !!this.parcialProductForm.get('date')?.value) this.parcialProductDatePicker.bsValue = new Date(this.parcialProductForm.get('date')?.value);
-      } else if(this.step == 4) {
-        if(!!this.finalParcialProductDatePicker && !!this.parcialProductForm.get('date')?.value) this.finalParcialProductDatePicker.bsValue = new Date(this.parcialProductForm.get('date')?.value);
+      switch (this.step) {
+        case 2:
+          if(!!this.strategyDateRangePicker) this.strategyDateRangePicker.bsValue = this.GetDateRangePickerValue([this.strategy.startDate, this.strategy.endDate]);
+          break;
+        case 3:
+          if(!!this.parcialProductDatePicker && !!this.parcialProductForm.get('date')?.value) this.parcialProductDatePicker.bsValue = new Date(this.parcialProductForm.get('date')?.value);
+          break;
+        case 4:
+          if(!!this.finalParcialProductDatePicker && !!this.parcialProductForm.get('date')?.value) this.finalParcialProductDatePicker.bsValue = new Date(this.parcialProductForm.get('date')?.value);
+          break;
+        case 5:
+          if(!!this.finalEventDatePicker && !!this.eventForm.get('date')?.value) this.finalEventDatePicker.bsValue = new Date(this.eventForm.get('date')?.value);
+          break;
       }
     }, 10);
   }
@@ -182,6 +220,18 @@ export class TemplateBasedOnFormComponent implements OnInit {
   ScrollToTop() {
     const elements = document.getElementsByClassName('content');
     elements[0].scrollTop = 0;
+  }
+
+  Autosave() {
+    return new Promise<boolean>(async (res, rej) => {
+      try {
+        let saved = await this.Save();
+        if(saved) this.lastSave = moment().tz('America/Mexico_City');
+      } catch (err) {
+        this.toast.ShowError(`Error al guardar la información`);
+        console.error(err);
+      }
+    });
   }
   
   Save() {
@@ -198,6 +248,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
       } catch (err) {
         this.toast.ShowError(`Error al guardar la información`);
         console.error(err);
+        rej(err);
       }
     });
   }
@@ -223,15 +274,15 @@ export class TemplateBasedOnFormComponent implements OnInit {
     let gradeObj = {
       name: grade
     }
-    this.loading.grade.creating = true;
+    this.loading.grade = true;
     this.api.Post(`/Grades`, {grade: gradeObj}).subscribe(newGrade => {
       this.grades = this.grades.concat([newGrade]);
       this.grade = newGrade.name;
-      this.loading.grade.creating = false;
+      this.loading.grade = false;
       this.gradeSelect?.close();
     }, err => {
       console.error("Error creatong grade", err);
-      this.loading.grade.creating = false;
+      this.loading.grade = false;
     });
   }
   
@@ -247,15 +298,15 @@ export class TemplateBasedOnFormComponent implements OnInit {
     let groupObj = {
       name: group
     }
-    this.loading.group.creating = true;
+    this.loading.group = true;
     this.api.Post(`/Groups`, {group: groupObj}).subscribe(newGroup => {
       this.groups = this.groups.concat([newGroup]);
       this.group = newGroup.name;
-      this.loading.group.creating = false;
+      this.loading.group = false;
       this.groupSelect?.close();
     }, err => {
       console.error("Error creatong group", err);
-      this.loading.group.creating = false;
+      this.loading.group = false;
     });
   }
 
@@ -271,14 +322,14 @@ export class TemplateBasedOnFormComponent implements OnInit {
     let subjectObj = {
       name: subject
     }
-    this.loading.subject.creating = true;
+    this.loading.subject = true;
     this.api.Post(`/Subjects`, {subject: subjectObj}).subscribe(newSubject => {
       this.subjects = this.subjects.concat([newSubject]);
-      this.loading.subject.creating = false;
+      this.loading.subject = false;
       this.subjectsSelect?.close();
     }, err => {
       console.error("Error creatong subject", err);
-      this.loading.subject.creating = false;
+      this.loading.subject = false;
     });
   }
 
@@ -294,14 +345,14 @@ export class TemplateBasedOnFormComponent implements OnInit {
     let sepObjectiveObj = {
       name: sepObjective
     }
-    this.loading.sepObjective.creating = true;
+    this.loading.sepObjective = true;
     this.api.Post(`/SepObjectives`, {sepObjective: sepObjectiveObj}).subscribe(newSepObjective => {
       this.sepObjectives = this.sepObjectives.concat([newSepObjective]);
-      this.loading.sepObjective.creating = false;
+      this.loading.sepObjective = false;
       this.sepObjectivesSelect?.close();
     }, err => {
       console.error("Error creatong SepObjective", err);
-      this.loading.sepObjective.creating = false;
+      this.loading.sepObjective = false;
     });
   }
 
@@ -317,14 +368,14 @@ export class TemplateBasedOnFormComponent implements OnInit {
     let skillObj = {
       name: skill
     }
-    this.loading.skill.creating = true;
+    this.loading.skill = true;
     this.api.Post(`/Skills`, {skill: skillObj}).subscribe(newSkill => {
       this.skills = this.skills.concat([newSkill]);
-      this.loading.skill.creating = false;
+      this.loading.skill = false;
       this.skillsSelect?.close();
     }, err => {
       console.error("Error creatong skill", err);
-      this.loading.skill.creating = false;
+      this.loading.skill = false;
     });
   }
 
@@ -342,17 +393,17 @@ export class TemplateBasedOnFormComponent implements OnInit {
       userId: this.api.GetUser()?.id
     }
     let control = this.strategyForm.get('topic');
-    this.loading.templateTopic.creating = true;
+    this.loading.templateTopic = true;
     control?.disable();
     this.api.Post(`/TemplateTopics`, {templateTopic: templateTopicObj}).subscribe(newTemplateTopic => {
       this.templateTopics = this.templateTopics.concat([newTemplateTopic]);
       control?.setValue(newTemplateTopic.name);
-      this.loading.templateTopic.creating = false;
+      this.loading.templateTopic = false;
       control?.enable();
       this.templateTopicSelect?.close();
     }, err => {
       console.error("Error creatong templateTopic", err);
-      this.loading.templateTopic.creating = false;
+      this.loading.templateTopic = false;
       control?.enable();
     });
   }
@@ -372,17 +423,17 @@ export class TemplateBasedOnFormComponent implements OnInit {
       userId: this.api.GetUser()?.id
     }
     let control = this.parcialProductForm.get('parcialProductTypeId');
-    this.loading.parcialProductType.creating = true;
+    this.loading.parcialProductType = true;
     control?.disable();
     this.api.Post(`/ParcialProductTypes`, {parcialProductType: parcialProductTypeObj}).subscribe(newParcialProductType => {
       this.parcialProductTypes = this.parcialProductTypes.concat([newParcialProductType]);
       this.parcialProductForm.get('parcialProductTypeId')?.setValue(newParcialProductType.id);
-      this.loading.parcialProductType.creating = false;
+      this.loading.parcialProductType = false;
       control?.enable();
       this.parcialProductTypeSelect?.close();
     }, err => {
       console.error("Error creatong parcialProductType", err);
-      this.loading.parcialProductType.creating = false;
+      this.loading.parcialProductType = false;
       control?.enable();
     });
   }
@@ -409,17 +460,17 @@ export class TemplateBasedOnFormComponent implements OnInit {
       userId: this.api.GetUser()?.id
     }
     let control = this.eventForm.get('eventTypeId');
-    this.loading.eventType.creating = true;
+    this.loading.eventType = true;
     control?.disable();
     this.api.Post(`/EventTypes`, {eventType: eventTypeObj}).subscribe(newEventType => {
       this.eventTypes = this.eventTypes.concat([newEventType]);
       control?.setValue(newEventType.id);
-      this.loading.eventType.creating = false;
+      this.loading.eventType = false;
       control?.enable();
       this.eventTypeSelect?.close();
     }, err => {
       console.error("Error creatong eventType", err);
-      this.loading.eventType.creating = false;
+      this.loading.eventType = false;
       control?.enable();
     });
   }
@@ -469,7 +520,8 @@ export class TemplateBasedOnFormComponent implements OnInit {
     this.api.Get(`/Strategies/${this.strategyId}`).subscribe(strategy => {
       this.strategy = strategy;
       if(!!strategy.parcialProducts && !!strategy.parcialProducts.length)
-      this.finalParicalProduct = strategy.parcialProducts.find((parcialProduct: any) => parcialProduct.isFinal);
+      this.finalParcialProduct = strategy.parcialProducts.find((parcialProduct: any) => parcialProduct.isFinal);
+      this.finalEvent = strategy.events.find((event: any) => event.isFinal);
       this.InitializeForms(strategy);
     }, err => {
       console.error("Error getting strategy", err);
@@ -539,19 +591,62 @@ export class TemplateBasedOnFormComponent implements OnInit {
     this.InitializeDatePickers();
   }
 
-  DeleteParcialProduct(parcialProduct: any, idx: number) {
-    this.RemoveItemFromArray(this.strategy.parcialProducts, idx);
+
+  DeleteParcialProduct(parcialProduct: any) {
+    const idx = this.strategy.parcialProducts.findIndex((product: any) => product.id == parcialProduct.id);
+    if(idx != -1) {
+      this.loading.parcialProduct = true;
+      this.api.Delete(`/ParcialProducts/${parcialProduct.id}`).subscribe(deleted => {
+        this.loading.parcialProduct = true;
+        this.RemoveItemFromArray(this.strategy.parcialProducts, idx);
+        this.toast.ShowSuccess('Producto parcial eliminado correctamente');
+        this.CloseModal();
+        this.loading.parcialProduct = false;
+      }, err => {
+        console.error("Error deleting parcial product", err);
+        this.toast.ShowError(`Error al eliminar producto parcial`);
+        this.loading.parcialProduct = false;
+      });
+    }
+  }
+
+  OnEventTypeSelected(eventType: any) {
+    let description = '';
+    if(!!eventType) {
+      description = eventType.description;
+    }
+    this.eventForm.get('description')?.setValue(description);
   }
   
   SaveEvent() {
     return new Promise<boolean>((res, rej) => {
-      this.api.Post(`/Events`, {event: this.eventForm.value}).subscribe(newEvent => {
-      // this.api.Post(`/ParcialProducts`, {parcialProduct}).subscribe(newParcialProduct => {
-        res(true);
-      }, err => {
-        console.error("Error posting new event", err);
-        res(false);
-      });
+      let eventInstance = {
+        ...this.eventForm.value,
+        name: `${!!this.strategy?.title ? this.strategy.title : 'Sin titulo' }: Evento de cierre`,
+        strategyId: this.strategyId,
+        isFinal: true
+      }
+      this.loading.event = true;
+      if(!!eventInstance.id) {
+        this.api.Patch(`/Events`, {event: eventInstance}).subscribe(saved => {
+          this.loading.event = false;
+          res(true);
+        }, err => {
+          console.error("Error posting new event", err);
+          this.loading.event = false;
+          res(false);
+        });
+      }
+      else {
+        this.api.Post(`/Events`, {event: eventInstance}).subscribe(newEvent => {
+          this.loading.event = false;
+          res(true);
+        }, err => {
+          console.error("Error posting new event", err);
+          this.loading.event = false;
+          res(false);
+        });
+      }
     });
   }
 
@@ -611,7 +706,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     switch (type) {
       case 'new': return this.parcialProductForm.get('resources')?.value.filter((file: any) => !file.id);
       case 'old': return this.parcialProductForm.get('resources')?.value.filter((file: any) => !!file.id);
-      default: return []
+      default: return [];
     }
   }
 

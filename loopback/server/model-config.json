@@ -332,7 +332,8 @@
         "sharedMethods": {
           "*": false,
           "CreateOne": true,
-          "prototype.Update": true
+          "prototype.Update": true,
+          "prototype.Delete": true
         }
       }
     }

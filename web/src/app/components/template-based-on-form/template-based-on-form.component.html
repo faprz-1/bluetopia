@@ -29,14 +29,23 @@
 
         <div class="d-flex flex-column ml-auto" style="gap: 8px;">
             <div class="steps-icons">
-                <div class="d-flex align-items-center active"><img src="assets/icons/strategy-creation/add_circle-active.svg"></div>
-                <div class="d-flex align-items-center"><img src="assets/icons/strategy-creation/title-disabled.svg"></div>
-                <div class="d-flex align-items-center"><img src="assets/icons/strategy-creation/category-disabled.svg"></div>
-                <div class="d-flex align-items-center"><img src="assets/icons/strategy-creation/inventory-disabled.svg"></div>
-                <div class="d-flex align-items-center"><img src="assets/icons/strategy-creation/celebration-disabled.svg"></div>
+                <div class="d-flex align-items-center" *ngIf="step == 1"><img src="assets/icons/strategy-creation/add-circle-current.svg"></div>
+                <div class="d-flex align-items-center" *ngIf="step > 1"><img src="assets/icons/strategy-creation/add-circle-active.svg"></div>
+                <div class="d-flex align-items-center" *ngIf="step == 2"><img src="assets/icons/strategy-creation/title-current.svg"></div>
+                <div class="d-flex align-items-center" *ngIf="step > 2"><img src="assets/icons/strategy-creation/title-active.svg"></div>
+                <div class="d-flex align-items-center" *ngIf="step < 2"><img src="assets/icons/strategy-creation/title-disabled.svg"></div>
+                <div class="d-flex align-items-center" *ngIf="step == 3"><img src="assets/icons/strategy-creation/category-current.svg"></div>
+                <div class="d-flex align-items-center" *ngIf="step > 3"><img src="assets/icons/strategy-creation/category-active.svg"></div>
+                <div class="d-flex align-items-center" *ngIf="step < 3"><img src="assets/icons/strategy-creation/category-disabled.svg"></div>
+                <div class="d-flex align-items-center" *ngIf="step == 4"><img src="assets/icons/strategy-creation/inventory-current.svg"></div>
+                <div class="d-flex align-items-center" *ngIf="step > 4"><img src="assets/icons/strategy-creation/inventory-active.svg"></div>
+                <div class="d-flex align-items-center" *ngIf="step < 4"><img src="assets/icons/strategy-creation/inventory-disabled.svg"></div>
+                <div class="d-flex align-items-center" *ngIf="step == 5"><img src="assets/icons/strategy-creation/celebration-current.svg"></div>
+                <div class="d-flex align-items-center" *ngIf="step > 5"><img src="assets/icons/strategy-creation/celebration-active.svg"></div>
+                <div class="d-flex align-items-center" *ngIf="step < 5"><img src="assets/icons/strategy-creation/celebration-disabled.svg"></div>
             </div>
-            <div class="d-flex align-items-center justify-content-end">
-                <span class="save-text">Guardado 8:15 am</span>
+            <div class="d-flex align-items-center justify-content-end" style="gap: 10px;">
+                <span class="save-text">{{ isLoading ? 'Guardando...' : 'Guardado ' + lastSave?.format('hh:mm a')}}</span>
                 <img src="assets/icons/strategy-creation/save.svg">
             </div>
         </div>
@@ -65,8 +74,8 @@
                                             placeholder="Grado"
                                             addTagText="Agregar"
                                             [addTag]="AddGrade"
-                                            [disabled]="loading.grade?.creating"
-                                            [loading]="loading.grade?.creating"
+                                            [disabled]="loading.grade"
+                                            [loading]="loading.grade"
                                             [(ngModel)]="grade">
                                         </ng-select>
                                     </div>
@@ -79,8 +88,8 @@
                                             placeholder="Grado"
                                             addTagText="Agregar"
                                             [addTag]="AddGroup"
-                                            [disabled]="loading.group?.creating"
-                                            [loading]="loading.group?.creating"
+                                            [disabled]="loading.group"
+                                            [loading]="loading.group"
                                             [(ngModel)]="group">
                                         </ng-select>
                                     </div>
@@ -103,7 +112,7 @@
                                             placeholder="Campo formativo"
                                             addTagText="Agregar"
                                             [addTag]="AddSubject"
-                                            [loading]="loading.subject?.creating"
+                                            [loading]="loading.subject"
                                             (change)="OnSelectedSubjectsChange($event); subjectsSelect.handleClearClick()">
                                         </ng-select>
                                     </div>
@@ -137,7 +146,7 @@
                                                     placeholder="Campo formativo"
                                                     addTagText="Agregar"
                                                     [addTag]="AddSepObjective"
-                                                    [loading]="loading.sepObjective?.creating"
+                                                    [loading]="loading.sepObjective"
                                                     (change)="OnObjectiveSelected(subject, $event); sepObjectivesSelect.handleClearClick()">
                                                 </ng-select>
                                             </div>
@@ -179,7 +188,7 @@
                                             placeholder="Decisión"
                                             addTagText="Agregar"
                                             [addTag]="AddSkill"
-                                            [loading]="loading.skill?.creating"
+                                            [loading]="loading.skill"
                                             (change)="OnSkillSelected($event); skillsSelect.handleClearClick()">
                                         </ng-select>
                                     </div>
@@ -225,7 +234,7 @@
                                         placeholder="Temática"
                                         addTagText="Agregar"
                                         [addTag]="AddTemplateTopic"
-                                        [loading]="loading.templateTopic?.creating"
+                                        [loading]="loading.templateTopic"
                                         formControlName="topic">
                                     </ng-select>
                                 </div>
@@ -316,7 +325,7 @@
                                                 placeholder="Temática"
                                                 addTagText="Agregar"
                                                 [addTag]="AddParcialProductType"
-                                                [loading]="loading.parcialProductType?.creating"
+                                                [loading]="loading.parcialProductType"
                                                 formControlName="parcialProductTypeId">
                                             </ng-select>
                                         </div>
@@ -468,7 +477,7 @@
                             <ng-container *ngFor="let parcialProduct of strategy?.parcialProducts; let i = index">
                                 <div class="parcial-product-show-card" *ngIf="!parcialProduct.isFinal">
                                     <div class="d-flex justify-content-end w-100" style="gap: 16px;">
-                                        <img class="clickeable" (click)="DeleteParcialProduct(parcialProduct, i)" src="assets/icons/delete.svg" alt="">
+                                        <img class="clickeable" (click)="selectedParcialProduct = parcialProduct; OpenModal(deleteConfirmationModal)" src="assets/icons/delete.svg" alt="">
                                         <img class="clickeable" (click)="EditParcialProduct(parcialProduct)" src="assets/icons/edit.svg" alt="">
                                     </div>
                                     <div class="name">
@@ -544,7 +553,7 @@
                                         placeholder="Temática"
                                         addTagText="Agregar"
                                         [addTag]="AddParcialProductType"
-                                        [loading]="loading.parcialProductType?.creating"
+                                        [loading]="loading.parcialProductType"
                                         formControlName="parcialProductTypeId">
                                     </ng-select>
                                 </div>
@@ -709,16 +718,17 @@
                                         placeholder="Tipo de evento"
                                         addTagText="Agregar"
                                         [addTag]="AddEventType"
-                                        [loading]="loading.eventType?.creating"
+                                        [loading]="loading.eventType"
+                                        (change)="OnEventTypeSelected($event)"
                                         formControlName="eventTypeId">
                                     </ng-select>
                                 </div>
                                 <div class="input-container">
-                                    <input
-                                        class="form-control with-border-thin no-icon"
-                                        type="text"
-                                        placeholder="Nombre del evento"
-                                        formControlName="name">
+                                    <textarea
+                                        class="form-control with-border-thin"
+                                        formControlName="description"
+                                        placeholder="Descripción del evento"
+                                        rows="5"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -730,6 +740,7 @@
                                 </div>
                                 <div class="input-container">
                                     <input
+                                        #finalEventDatePicker="bsDatepicker"
                                         class="form-control no-icon with-border-thin"
                                         type="text"
                                         formControlName="date"
@@ -798,6 +809,25 @@
             </button>
             <button class="btn btn-success w-50" (click)="SaveProject(true)">
                 Publicar estrategia
+            </button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #deleteConfirmationModal>
+    <div class="modal-body finish-modal-content">
+        <div class="">
+            ¿Está seguro/a de que desea eliminar el producto parcial "{{selectedParcialProduct.name}}"?
+        </div>
+        <div class="title text-danger">
+            Al eliminarlo ya no podrá recuperarlo
+        </div>
+        <div class="d-flex align-items-center w-100" style="gap: 48px;">
+            <button class="btn btn-secondary w-50" [disabled]="loading.parcialProduct" (click)="CloseModal()">
+                No, cancelar
+            </button>
+            <button class="btn btn-primary w-50" [disabled]="loading.parcialProduct" (click)="DeleteParcialProduct(selectedParcialProduct)">
+                Si, eliminar
             </button>
         </div>
     </div>

@@ -113,7 +113,7 @@ export class RegisterUserComponent implements OnInit {
           localStorage.setItem("ttl", moment().add(1209600, 's').toISOString());
           this.notiServ.LoadNotifications();
           this.pushService.GetUserID();
-          this.toast.ShowSuccess('Cuenta regstrada correctamente');
+          this.toast.ShowSuccess('Cuenta registrada correctamente');
           let user = this.api.GetUser();
           let role = user.role.name.toLowerCase();
 
