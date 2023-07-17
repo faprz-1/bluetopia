@@ -2,6 +2,19 @@
 
 module.exports = function(ParcialProduct) {
 
+    ParcialProduct.observe('after save', (ctx, next) => {
+        let instanceThatTriggered = !!ctx.instance ? ctx.instance : ctx.data;
+        if(!!instanceThatTriggered) {
+            ParcialProduct.app.models.Strategy.findById(instanceThatTriggered.strategyId, {}, (err, strategy) => {
+                if(err) console.error(err);
+                strategy.save((err, saved) => {
+                    if(err) console.error(err);
+                    next();
+                });
+            });
+        }
+    });
+
     ParcialProduct.CreateOne = function(ctx, parcialProduct, callback) {
         if(!!parcialProduct.evaluationType) parcialProduct.evaluationTypeId = parcialProduct.evaluationType.id;
         if(parcialProduct.date) {

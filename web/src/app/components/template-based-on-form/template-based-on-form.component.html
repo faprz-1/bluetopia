@@ -44,8 +44,8 @@
                 <div class="d-flex align-items-center" *ngIf="step > 5"><img src="assets/icons/strategy-creation/celebration-active.svg"></div>
                 <div class="d-flex align-items-center" *ngIf="step < 5"><img src="assets/icons/strategy-creation/celebration-disabled.svg"></div>
             </div>
-            <div class="d-flex align-items-center justify-content-end">
-                <span class="save-text">Guardado 8:15 am</span>
+            <div class="d-flex align-items-center justify-content-end" style="gap: 10px;">
+                <span class="save-text">{{ isLoading ? 'Guardando...' : 'Guardado ' + lastSave?.format('hh:mm a')}}</span>
                 <img src="assets/icons/strategy-creation/save.svg">
             </div>
         </div>
@@ -74,8 +74,8 @@
                                             placeholder="Grado"
                                             addTagText="Agregar"
                                             [addTag]="AddGrade"
-                                            [disabled]="loading.grade?.creating"
-                                            [loading]="loading.grade?.creating"
+                                            [disabled]="loading.grade"
+                                            [loading]="loading.grade"
                                             [(ngModel)]="grade">
                                         </ng-select>
                                     </div>
@@ -88,8 +88,8 @@
                                             placeholder="Grado"
                                             addTagText="Agregar"
                                             [addTag]="AddGroup"
-                                            [disabled]="loading.group?.creating"
-                                            [loading]="loading.group?.creating"
+                                            [disabled]="loading.group"
+                                            [loading]="loading.group"
                                             [(ngModel)]="group">
                                         </ng-select>
                                     </div>
@@ -112,7 +112,7 @@
                                             placeholder="Campo formativo"
                                             addTagText="Agregar"
                                             [addTag]="AddSubject"
-                                            [loading]="loading.subject?.creating"
+                                            [loading]="loading.subject"
                                             (change)="OnSelectedSubjectsChange($event); subjectsSelect.handleClearClick()">
                                         </ng-select>
                                     </div>
@@ -146,7 +146,7 @@
                                                     placeholder="Campo formativo"
                                                     addTagText="Agregar"
                                                     [addTag]="AddSepObjective"
-                                                    [loading]="loading.sepObjective?.creating"
+                                                    [loading]="loading.sepObjective"
                                                     (change)="OnObjectiveSelected(subject, $event); sepObjectivesSelect.handleClearClick()">
                                                 </ng-select>
                                             </div>
@@ -188,7 +188,7 @@
                                             placeholder="Decisión"
                                             addTagText="Agregar"
                                             [addTag]="AddSkill"
-                                            [loading]="loading.skill?.creating"
+                                            [loading]="loading.skill"
                                             (change)="OnSkillSelected($event); skillsSelect.handleClearClick()">
                                         </ng-select>
                                     </div>
@@ -234,7 +234,7 @@
                                         placeholder="Temática"
                                         addTagText="Agregar"
                                         [addTag]="AddTemplateTopic"
-                                        [loading]="loading.templateTopic?.creating"
+                                        [loading]="loading.templateTopic"
                                         formControlName="topic">
                                     </ng-select>
                                 </div>
@@ -325,7 +325,7 @@
                                                 placeholder="Temática"
                                                 addTagText="Agregar"
                                                 [addTag]="AddParcialProductType"
-                                                [loading]="loading.parcialProductType?.creating"
+                                                [loading]="loading.parcialProductType"
                                                 formControlName="parcialProductTypeId">
                                             </ng-select>
                                         </div>
@@ -553,7 +553,7 @@
                                         placeholder="Temática"
                                         addTagText="Agregar"
                                         [addTag]="AddParcialProductType"
-                                        [loading]="loading.parcialProductType?.creating"
+                                        [loading]="loading.parcialProductType"
                                         formControlName="parcialProductTypeId">
                                     </ng-select>
                                 </div>
@@ -718,7 +718,7 @@
                                         placeholder="Tipo de evento"
                                         addTagText="Agregar"
                                         [addTag]="AddEventType"
-                                        [loading]="loading.eventType?.creating"
+                                        [loading]="loading.eventType"
                                         formControlName="eventTypeId">
                                     </ng-select>
                                 </div>
@@ -726,7 +726,7 @@
                                     <input
                                         class="form-control with-border-thin no-icon"
                                         type="text"
-                                        placeholder="Nombre del evento"
+                                        placeholder="Descripción del evento"
                                         formControlName="name">
                                 </div>
                             </div>
@@ -757,7 +757,7 @@
                                 <div class="input-container">
                                     <textarea
                                         class="form-control with-border-thin"
-                                        formControlName="instructions"
+                                        formControlName="description"
                                         placeholder="Instrucciones del evento"
                                         rows="6"></textarea>
                                 </div>
@@ -821,10 +821,10 @@
             Al eliminarlo ya no podrá recuperarlo
         </div>
         <div class="d-flex align-items-center w-100" style="gap: 48px;">
-            <button class="btn btn-secondary w-50" [disabled]="loading.parcialProduct.deleting" (click)="CloseModal()">
+            <button class="btn btn-secondary w-50" [disabled]="loading.parcialProduct" (click)="CloseModal()">
                 No, cancelar
             </button>
-            <button class="btn btn-primary w-50" [disabled]="loading.parcialProduct.deleting" (click)="DeleteParcialProduct(selectedParcialProduct)">
+            <button class="btn btn-primary w-50" [disabled]="loading.parcialProduct" (click)="DeleteParcialProduct(selectedParcialProduct)">
                 Si, eliminar
             </button>
         </div>

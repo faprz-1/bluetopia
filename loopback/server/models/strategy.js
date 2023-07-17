@@ -1,6 +1,15 @@
 'use strict';
 
+var moment = require('moment-timezone');
+var constants = require('./../helpers/constants');
+
 module.exports = function(Strategy) {
+
+    Strategy.observe('before save', (ctx, next) => {
+        let instanceThatTriggered = !!ctx.instance ? ctx.instance : ctx.data;
+        if(!!instanceThatTriggered) instanceThatTriggered.lastModified = moment().tz(constants.momentTimeZone).toISOString();
+        next();
+    });
 
     Strategy.CreateOne = function(strategy, callback) {
         Strategy.app.models.Grade.findOne({
@@ -20,7 +29,7 @@ module.exports = function(Strategy) {
                 Strategy.create(strategy, (err, newStrategy) => {
                     if(err) return callback(err);
 
-                    if(!!strategy.grade && !!grade) {
+                    if(!!grade && !!group) {
                         Strategy.app.models.StrategyGroup.create({
                             strategyId: newStrategy.id,
                             gradeId: grade.id,
@@ -48,10 +57,10 @@ module.exports = function(Strategy) {
 
             Strategy.upsert(strategy, (err, strategyUpdated) => {
                 if(err) return callback(err);
-    
+
                 Strategy.GetData(this.id, (err, strategy) => {
                     if(err) return callback(err);
-    
+
                     return callback(null, strategy);
                 });
             });
@@ -147,6 +156,18 @@ module.exports = function(Strategy) {
                         return callback(null, strategyStudents);
                     });
                 }
+            });
+        });
+    }
+
+    Strategy.UpdateLastModified = function(strategyId, callback) {
+        Strategy.findById(strategyId, {}, (err, strategy) => {
+            if(err) return callback(err);
+            
+            strategy.lastModified = moment().tz(constants.momentTimeZone).toISOString();
+            strategy.save((err, saved) => {
+                if(err) return callback(err);
+                return callback(null, saved);
             });
         });
     }
