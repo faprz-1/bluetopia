@@ -719,15 +719,16 @@
                                         addTagText="Agregar"
                                         [addTag]="AddEventType"
                                         [loading]="loading.eventType"
+                                        (change)="OnEventTypeSelected($event)"
                                         formControlName="eventTypeId">
                                     </ng-select>
                                 </div>
                                 <div class="input-container">
-                                    <input
-                                        class="form-control with-border-thin no-icon"
-                                        type="text"
+                                    <textarea
+                                        class="form-control with-border-thin"
+                                        formControlName="description"
                                         placeholder="Descripción del evento"
-                                        formControlName="name">
+                                        rows="5"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -739,6 +740,7 @@
                                 </div>
                                 <div class="input-container">
                                     <input
+                                        #finalEventDatePicker="bsDatepicker"
                                         class="form-control no-icon with-border-thin"
                                         type="text"
                                         formControlName="date"
@@ -757,7 +759,7 @@
                                 <div class="input-container">
                                     <textarea
                                         class="form-control with-border-thin"
-                                        formControlName="description"
+                                        formControlName="instructions"
                                         placeholder="Instrucciones del evento"
                                         rows="6"></textarea>
                                 </div>

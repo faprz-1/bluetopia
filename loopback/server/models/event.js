@@ -20,7 +20,7 @@ module.exports = function(Event) {
         });
     }
 
-    Event.Update = function(event, callback) {
+    Event.Update = function(ctx, event, callback) {
         Event.upsert(event, (err, updated) => {
             if(err) return callback(err);
 

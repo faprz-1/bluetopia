@@ -34,6 +34,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
   @ViewChild('strategyDateRangePicker') strategyDateRangePicker?: BsDaterangepickerDirective;
   @ViewChild('parcialProductDatePicker') parcialProductDatePicker?: BsDatepickerDirective;
   @ViewChild('finalParcialProductDatePicker') finalParcialProductDatePicker?: BsDatepickerDirective;
+  @ViewChild('finalEventDatePicker') finalEventDatePicker?: BsDatepickerDirective;
 
   templateId: any;
   strategyId: any;
@@ -57,6 +58,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
   selectedTab: string = 'create';
   selectedEvaluationType: any = null;
   finalParcialProduct: any = null;
+  finalEvent: any = null;
   loading: any = {
     grade: false,
     group: false,
@@ -72,7 +74,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
   lastSave: moment.Moment | null = null;
   evaluationTypes: Array<any> = [];
   strategyForm: FormGroup = new FormGroup({
-    id: new FormControl(null, [Validators.required]),
+    id: new FormControl(null, []),
     topic: new FormControl(null, [Validators.required]),
     title: new FormControl(null, [Validators.required]),
     generatingQuestion: new FormControl(null, [Validators.required]),
@@ -80,7 +82,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     dates: new FormControl(null, Validators.required),
   });
   parcialProductForm: FormGroup = new FormGroup({
-    id: new FormControl(null, [Validators.required]),
+    id: new FormControl(null, []),
     parcialProductTypeId: new FormControl(null, [Validators.required]),
     name: new FormControl(null, [Validators.required]),
     instructions: new FormControl(null, [Validators.required]),
@@ -91,9 +93,11 @@ export class TemplateBasedOnFormComponent implements OnInit {
     resources: new FormControl([], []),
   });
   eventForm: FormGroup = new FormGroup({
+    id: new FormControl(null, []),
     eventTypeId: new FormControl(null, [Validators.required]),
     name: new FormControl(null, [Validators.required]),
     description: new FormControl(null, [Validators.required]),
+    instructions: new FormControl(null, [Validators.required]),
     date: new FormControl(null, [Validators.required]),
   });
 
@@ -158,7 +162,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
         case 2: this.InitializeDatePickers(); break;
         case 3: this.CancelParcialProduct(); break;
         case 4: this.InitializeFinalProductForm(); break;
-        case 5: this.InitializeCloseEvntForm(); break;
+        case 5: this.InitializeCloseEventForm(); break;
       }
       this.ScrollToTop();
     });
@@ -179,18 +183,36 @@ export class TemplateBasedOnFormComponent implements OnInit {
 
     this.InitializeDatePickers();
   }
-
-  InitializeCloseEvntForm() {
+  
+  InitializeCloseEventForm() {
+    console.log(this.finalEvent);
+    this.eventForm.setValue({
+      id: !!this.finalEvent ? this.finalEvent.id : null,
+      eventTypeId: !!this.finalEvent ? this.finalEvent.eventTypeId : null,
+      name: !!this.finalEvent ? this.finalEvent.name : null,
+      description: !!this.finalEvent ? this.finalEvent.description : null,
+      instructions: !!this.finalEvent ? this.finalEvent.instructions : null,
+      date: !!this.finalEvent ? this.finalEvent.date : null,
+    });
+  
+    this.InitializeDatePickers();
   }
 
   InitializeDatePickers() {
     setTimeout(() => {
-      if(this.step == 2) {
-        if(!!this.strategyDateRangePicker) this.strategyDateRangePicker.bsValue = this.GetDateRangePickerValue([this.strategy.startDate, this.strategy.endDate]);
-      } else if(this.step == 3) {
-        if(!!this.parcialProductDatePicker && !!this.parcialProductForm.get('date')?.value) this.parcialProductDatePicker.bsValue = new Date(this.parcialProductForm.get('date')?.value);
-      } else if(this.step == 4) {
-        if(!!this.finalParcialProductDatePicker && !!this.parcialProductForm.get('date')?.value) this.finalParcialProductDatePicker.bsValue = new Date(this.parcialProductForm.get('date')?.value);
+      switch (this.step) {
+        case 2:
+          if(!!this.strategyDateRangePicker) this.strategyDateRangePicker.bsValue = this.GetDateRangePickerValue([this.strategy.startDate, this.strategy.endDate]);
+          break;
+        case 3:
+          if(!!this.parcialProductDatePicker && !!this.parcialProductForm.get('date')?.value) this.parcialProductDatePicker.bsValue = new Date(this.parcialProductForm.get('date')?.value);
+          break;
+        case 4:
+          if(!!this.finalParcialProductDatePicker && !!this.parcialProductForm.get('date')?.value) this.finalParcialProductDatePicker.bsValue = new Date(this.parcialProductForm.get('date')?.value);
+          break;
+        case 5:
+          if(!!this.finalEventDatePicker && !!this.eventForm.get('date')?.value) this.finalEventDatePicker.bsValue = new Date(this.eventForm.get('date')?.value);
+          break;
       }
     }, 10);
   }
@@ -499,6 +521,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
       this.strategy = strategy;
       if(!!strategy.parcialProducts && !!strategy.parcialProducts.length)
       this.finalParcialProduct = strategy.parcialProducts.find((parcialProduct: any) => parcialProduct.isFinal);
+      this.finalEvent = strategy.events.find((event: any) => event.isFinal);
       this.InitializeForms(strategy);
     }, err => {
       console.error("Error getting strategy", err);
@@ -586,15 +609,26 @@ export class TemplateBasedOnFormComponent implements OnInit {
       });
     }
   }
+
+  OnEventTypeSelected(eventType: any) {
+    let description = '';
+    if(!!eventType) {
+      description = eventType.description;
+    }
+    this.eventForm.get('description')?.setValue(description);
+  }
   
   SaveEvent() {
     return new Promise<boolean>((res, rej) => {
       let eventInstance = {
         ...this.eventForm.value,
+        name: `${!!this.strategy?.title ? this.strategy.title : 'Sin titulo' }: Evento de cierre`,
+        strategyId: this.strategyId,
+        isFinal: true
       }
       this.loading.event = true;
       if(!!eventInstance.id) {
-        this.api.Post(`/Events`, {event: this.eventForm.value}).subscribe(newEvent => {
+        this.api.Patch(`/Events`, {event: eventInstance}).subscribe(saved => {
           this.loading.event = false;
           res(true);
         }, err => {
@@ -604,7 +638,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
         });
       }
       else {
-        this.api.Patch(`/Events`, {event: this.eventForm.value}).subscribe(saved => {
+        this.api.Post(`/Events`, {event: eventInstance}).subscribe(newEvent => {
           this.loading.event = false;
           res(true);
         }, err => {
