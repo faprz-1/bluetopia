@@ -46,6 +46,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
   skills: Array<any> = [];
   templateTopics: Array<any> = [];
   parcialProducts: Array<any> = [];
+  selectedParcialProduct: any = null;
   parcialProductTypes: Array<any> = [];
   eventTypes: Array<any> = [];
   strategy: any = null;
@@ -62,6 +63,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     sepObjective: {},
     skill: {},
     templateTopic: {},
+    parcialProduct: {},
     parcialProductType: {},
     eventType: {},
   };
@@ -136,7 +138,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
       if(this.step == 1 && advanceStep < 0) {
         this.goBackEvent.emit();
         return;
-      } else if(this.step == 5) this.OpenModal(this.finishModal);
+      } else if(this.step == 5 && advanceStep > 0) this.OpenModal(this.finishModal);
       else if(saved && advanceStep) this.step += advanceStep;
 
       switch (this.step) {
@@ -539,8 +541,23 @@ export class TemplateBasedOnFormComponent implements OnInit {
     this.InitializeDatePickers();
   }
 
-  DeleteParcialProduct(parcialProduct: any, idx: number) {
-    this.RemoveItemFromArray(this.strategy.parcialProducts, idx);
+
+  DeleteParcialProduct(parcialProduct: any) {
+    const idx = this.strategy.parcialProducts.findIndex((product: any) => product.id == parcialProduct.id);
+    if(idx != -1) {
+      this.loading.parcialProduct.deleting = true;
+      this.api.Delete(`/ParcialProducts/${parcialProduct.id}`).subscribe(deleted => {
+        this.loading.parcialProduct.deleting = true;
+        this.RemoveItemFromArray(this.strategy.parcialProducts, idx);
+        this.toast.ShowSuccess('Producto parcial eliminado correctamente');
+        this.CloseModal();
+        this.loading.parcialProduct.deleting = false;
+      }, err => {
+        console.error("Error deleting parcial product", err);
+        this.toast.ShowError(`Error al eliminar producto parcial`);
+        this.loading.parcialProduct.deleting = false;
+      });
+    }
   }
   
   SaveEvent() {

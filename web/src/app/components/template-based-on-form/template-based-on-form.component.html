@@ -468,7 +468,7 @@
                             <ng-container *ngFor="let parcialProduct of strategy?.parcialProducts; let i = index">
                                 <div class="parcial-product-show-card" *ngIf="!parcialProduct.isFinal">
                                     <div class="d-flex justify-content-end w-100" style="gap: 16px;">
-                                        <img class="clickeable" (click)="DeleteParcialProduct(parcialProduct, i)" src="assets/icons/delete.svg" alt="">
+                                        <img class="clickeable" (click)="selectedParcialProduct = parcialProduct; OpenModal(deleteConfirmationModal)" src="assets/icons/delete.svg" alt="">
                                         <img class="clickeable" (click)="EditParcialProduct(parcialProduct)" src="assets/icons/edit.svg" alt="">
                                     </div>
                                     <div class="name">
@@ -798,6 +798,25 @@
             </button>
             <button class="btn btn-success w-50" (click)="SaveProject(true)">
                 Publicar estrategia
+            </button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #deleteConfirmationModal>
+    <div class="modal-body finish-modal-content">
+        <div class="">
+            ¿Está seguro/a de que desea eliminar el producto parcial "{{selectedParcialProduct.name}}"?
+        </div>
+        <div class="title text-danger">
+            Al eliminarlo ya no podrá recuperarlo
+        </div>
+        <div class="d-flex align-items-center w-100" style="gap: 48px;">
+            <button class="btn btn-secondary w-50" [disabled]="loading.parcialProduct.deleting" (click)="CloseModal()">
+                No, cancelar
+            </button>
+            <button class="btn btn-primary w-50" [disabled]="loading.parcialProduct.deleting" (click)="DeleteParcialProduct(selectedParcialProduct)">
+                Si, eliminar
             </button>
         </div>
     </div>
