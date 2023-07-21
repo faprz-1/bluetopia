@@ -68,16 +68,16 @@ module.exports = function(ParcialProduct) {
             name: `Entrega: "${parcialProduct.name}"`,
             date: parcialProduct.date,
             strategyId: parcialProduct.strategyId,
+            id: parcialProduct.eventId
         };
-        if(!!this.eventId) eventInstance.id = this.eventId;
-        ParcialProduct.app.models.Event.Update(eventInstance, (err, updated) => {
+        ParcialProduct.app.models.Event.Update(ctx,eventInstance, (err, updatedEvent) => {
             if(err) return callback(err);
 
-            parcialProduct.eventId = updated.id;
+            parcialProduct.eventId = updatedEvent.id;
             ParcialProduct.upsert(parcialProduct, (err, updated) => {
                 if(err) return callback(err);
                 
-                updated.UpdateResources(ctx, parcialProduct.resources, (err, updated) => {
+                updated.UpdateResources(ctx, parcialProduct.resources, (err, updatedResources) => {
                     if(err) return callback(err);
 
                     return callback(null, updated);
@@ -96,7 +96,7 @@ module.exports = function(ParcialProduct) {
     ParcialProduct.prototype.UpdateResources = function(ctx, resources, callback) {
         let files = [];
         const userId = ctx.accessToken.userId;
-        if(!resources) return callback(null, files);
+        if(!resources || resources.length == 0) return callback(null, files);
         let cont = 0, limit = resources.length;
         if(!limit) return callback(null, files);
         let where = {

@@ -737,22 +737,24 @@ export class TemplateBasedOnFormComponent implements OnInit {
   }
 
   SaveParcialProduct(isParcialProductFinal: boolean = false) {
+    
     return new Promise<boolean>((res, rej) => {
       let parcialProductInstance = {
         ...this.parcialProductForm.value,
         isFinal: isParcialProductFinal,
         strategyId: this.strategyId,
       };
-
+      parcialProductInstance.evaluationTypeId= parcialProductInstance.evaluationType.id;
       if (!!parcialProductInstance.id) {
         this.api
-          .Patch(`/ParcialProducts/${parcialProductInstance.id}`, {
-            parcialProduct: parcialProductInstance,
-          })
+          .Patch(`/ParcialProducts/${parcialProductInstance.id}`, 
+            parcialProductInstance,true
+          )
           .subscribe(
             (newParcialProduct) => {
               if (!isParcialProductFinal) this.CancelParcialProduct();
               this.GetStrategy();
+              this.toast.ShowSuccess("Cambios guardados correctamente");
               res(true);
             },
             (err) => {
@@ -775,6 +777,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
             }
           );
       }
+      this.Autosave();
     });
   }
 

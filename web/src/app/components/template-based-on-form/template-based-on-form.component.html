@@ -275,7 +275,7 @@
                             <span class="instruction-number">4</span>
                             <div class="form-col">
                                 <div class="form-section-title">
-                                    Selecciona las fechas de duración !
+                                    Selecciona las fechas de duración
                                 </div>
                                 <div class="input-container">
                                     <input
@@ -395,8 +395,7 @@
                                                 [items]="evaluationTypes"
                                                 bindLabel="name"
                                                 formControlName="evaluationType"
-                                                placeholder="Tipo de evaluación"
-                                                (change)="saver.next()">
+                                                placeholder="Tipo de evaluación">
                                             </ng-select>
                                         </div>
                                         <div *ngIf="parcialProductForm.get('evaluationType')?.value?.type == 'rubric'" class="d-flex justify-content-end w-100">
@@ -406,13 +405,13 @@
                                             *ngIf="parcialProductForm.get('evaluationType')?.value?.type == 'rubric'"
                                             [onReset]="onReset"
                                             [rubrics]="!!parcialProductForm.get('rubric') ? parcialProductForm.get('rubric')?.value : []"
-                                            (exportRubrics)="CatchRubrics($event)" (change)="saver.next()"></app-rubric>
+                                            (exportRubrics)="CatchRubrics($event)"></app-rubric>
                                         <div class="d-flex flex-column w-100" style="gap: 16px;" *ngIf="parcialProductForm.get('evaluationType')?.value?.type =='numeric'">
                                             <div class="instruction-2">
                                                 Escribe el máximo a aspirar
                                             </div>
                                             <div class="input-container with-border-thin">
-                                                <input class="form-control no-icon" type="text" formControlName="maxCalification" placeholder="Calificación máxima" (change)="saver.next()">
+                                                <input class="form-control no-icon" type="text" formControlName="maxCalification" placeholder="Calificación máxima">
                                             </div>
                                         </div>
                                     </div>
@@ -627,8 +626,7 @@
                                         [items]="evaluationTypes"
                                         bindLabel="name"
                                         formControlName="evaluationType"
-                                        placeholder="Tipo de evaluación"
-                                        (change)="saver.next()">
+                                        placeholder="Tipo de evaluación">
                                     </ng-select>
                                 </div>
                                 <div *ngIf="parcialProductForm.get('evaluationType')?.value?.type == 'rubric'" class="d-flex justify-content-end w-100">
