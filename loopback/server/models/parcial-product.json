@@ -119,6 +119,9 @@
           "arg": "parcialProduct",
           "type": "object",
           "required": true,
+          "http": {
+            "source": "body"
+          },
           "description": ""
         }
       ],

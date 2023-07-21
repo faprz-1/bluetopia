@@ -45,7 +45,7 @@
                 <div class="d-flex align-items-center" *ngIf="step < 5"><img src="assets/icons/strategy-creation/celebration-disabled.svg"></div>
             </div>
             <div class="d-flex align-items-center justify-content-end" style="gap: 10px;">
-                <span class="save-text">{{ isLoading ? 'Guardando...' : 'Guardado ' + lastSave?.format('hh:mm a')}}</span>
+                <span class="save-text">{{ isLoading ? 'Guardando...' : 'Guardado ' + (lastSave ? lastSave.format('hh:mm:ss a'): '')}}</span>
                 <img src="assets/icons/strategy-creation/save.svg">
             </div>
         </div>
@@ -76,7 +76,8 @@
                                             [addTag]="AddGrade"
                                             [disabled]="loading.grade"
                                             [loading]="loading.grade"
-                                            [(ngModel)]="grade">
+                                            [(ngModel)]="grade"
+                                            (change)="saver.next()">
                                         </ng-select>
                                     </div>
                                     <div class="input-container input-small">
@@ -90,7 +91,8 @@
                                             [addTag]="AddGroup"
                                             [disabled]="loading.group"
                                             [loading]="loading.group"
-                                            [(ngModel)]="group">
+                                            [(ngModel)]="group"
+                                            (change)="saver.next()">
                                         </ng-select>
                                     </div>
                                 </div>
@@ -193,10 +195,10 @@
                                         </ng-select>
                                     </div>
 
-                                    <div class="select-card" [formGroup]="strategyForm">
+                                    <div class="select-card mt-4" [formGroup]="strategyForm">
                                         <div class="title">Competencias</div>
                                         <div class="subtitle">
-                                            {{'Usted seleccionó ' + (!!strategyForm.get('skills') ? strategyForm.get('skills')?.value?.length : 0) + ' objetivos'}}
+                                            {{'Usted seleccionó ' + (!!strategyForm.get('skills') ? strategyForm.get('skills')?.value?.length : 0) + ' competencias'}}
                                         </div>
                                         <div class="element-container" *ngFor="let skill of strategyForm.get('skills')?.value; let i = index">
                                             <div>{{skill.name}}</div>
@@ -235,7 +237,8 @@
                                         addTagText="Agregar"
                                         [addTag]="AddTemplateTopic"
                                         [loading]="loading.templateTopic"
-                                        formControlName="topic">
+                                        formControlName="topic"
+                                        (change)="saver.next()">
                                     </ng-select>
                                 </div>
                             </div>
@@ -250,7 +253,7 @@
                                     Recuerda que tu título debe ser creativo y atractivo para tus alumnos, puedes incluir un poco de información del tema y alguna palabra que sea familiar para tus alumnos
                                 </div>
                                 <div class="input-container">
-                                    <input class="form-control no-icon" type="text" formControlName="title" placeholder="Título de tu proyecto">
+                                    <input class="form-control no-icon" type="text" formControlName="title" placeholder="Título de tu proyecto" (change)="saver.next()">
                                 </div>
                             </div>
                         </div>
@@ -264,7 +267,7 @@
                                     Recuerda que esta pregunta será la que deberán responder al final del proyecto, lo que indicará que sí obtuvieron los aprendizajes esperados.
                                 </div>
                                 <div class="input-container">
-                                    <input class="form-control no-icon" type="text" formControlName="generatingQuestion" placeholder="Pregunta generadora">
+                                    <input class="form-control no-icon" type="text" formControlName="generatingQuestion" placeholder="Pregunta generadora" (change)="saver.next()">
                                 </div>
                             </div>
                         </div>
@@ -326,7 +329,8 @@
                                                 addTagText="Agregar"
                                                 [addTag]="AddParcialProductType"
                                                 [loading]="loading.parcialProductType"
-                                                formControlName="parcialProductTypeId">
+                                                formControlName="parcialProductTypeId"
+                                                (change)="saver.next()">
                                             </ng-select>
                                         </div>
                                     </div>
@@ -338,7 +342,7 @@
                                             Escribe un nombre de producto
                                         </div>
                                         <div class="input-container with-border-thin">
-                                            <input class="form-control no-icon" type="text" formControlName="name" placeholder="Nombre del producto">
+                                            <input class="form-control no-icon" type="text" formControlName="name" placeholder="Nombre del producto" (change)="saver.next()">
                                         </div>
                                     </div>
                                 </div>
@@ -353,7 +357,8 @@
                                                 class="form-control with-border-thin"
                                                 formControlName="instructions"
                                                 placeholder="Instrucciones del producto"
-                                                rows="6"></textarea>
+                                                rows="6"
+                                                (change)="saver.next()"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -371,7 +376,8 @@
                                                 formControlName="date"
                                                 placeholder="Fecha de entrega"
                                                 [bsConfig]="{ adaptivePosition: true, containerClass: 'theme-dark-blue' }"
-                                                bsDatepicker>
+                                                bsDatepicker
+                                               >
                                         </div>
                                     </div>
                                 </div>
@@ -554,7 +560,8 @@
                                         addTagText="Agregar"
                                         [addTag]="AddParcialProductType"
                                         [loading]="loading.parcialProductType"
-                                        formControlName="parcialProductTypeId">
+                                        formControlName="parcialProductTypeId"
+                                        (change)="saver.next()">
                                     </ng-select>
                                 </div>
                             </div>
@@ -566,7 +573,7 @@
                                     Escribe un nombre de producto
                                 </div>
                                 <div class="input-container with-border-thin">
-                                    <input class="form-control no-icon" type="text" formControlName="name" placeholder="Nombre del producto">
+                                    <input class="form-control no-icon" type="text" formControlName="name" placeholder="Nombre del producto" (change)="saver.next()">
                                 </div>
                             </div>
                         </div>
@@ -581,7 +588,8 @@
                                         class="form-control with-border-thin"
                                         formControlName="instructions"
                                         placeholder="Instrucciones del producto"
-                                        rows="6"></textarea>
+                                        rows="6"
+                                        (change)="saver.next()"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -599,7 +607,8 @@
                                         formControlName="date"
                                         placeholder="Fecha de entrega"
                                         [bsConfig]="{ adaptivePosition: true, containerClass: 'theme-dark-blue' }"
-                                        bsDatepicker>
+                                        bsDatepicker
+                                       >
                                 </div>
                             </div>
                         </div>
@@ -631,7 +640,7 @@
                                         Escribe el máximo a aspirar
                                     </div>
                                     <div class="input-container with-border-thin">
-                                        <input class="form-control no-icon" type="text" formControlName="maxCalification" placeholder="Calificación máxima">
+                                        <input class="form-control no-icon" type="text" formControlName="maxCalification" placeholder="Calificación máxima" (change)="saver.next()">
                                     </div>
                                 </div>
                             </div>
@@ -720,7 +729,8 @@
                                         [addTag]="AddEventType"
                                         [loading]="loading.eventType"
                                         (change)="OnEventTypeSelected($event)"
-                                        formControlName="eventTypeId">
+                                        formControlName="eventTypeId"
+                                        (change)="saver.next()">
                                     </ng-select>
                                 </div>
                                 <div class="input-container">
@@ -728,7 +738,8 @@
                                         class="form-control with-border-thin"
                                         formControlName="description"
                                         placeholder="Descripción del evento"
-                                        rows="5"></textarea>
+                                        rows="5"
+                                        (change)="saver.next()"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -746,7 +757,8 @@
                                         formControlName="date"
                                         placeholder="Fecha de entrega"
                                         [bsConfig]="{ adaptivePosition: true, containerClass: 'theme-dark-blue' }"
-                                        bsDatepicker>
+                                        bsDatepicker
+                                       >
                                 </div>
                             </div>
                         </div>
@@ -761,7 +773,8 @@
                                         class="form-control with-border-thin"
                                         formControlName="instructions"
                                         placeholder="Instrucciones del evento"
-                                        rows="6"></textarea>
+                                        rows="6"
+                                        (change)="saver.next()"></textarea>
                                 </div>
                             </div>
                         </div>

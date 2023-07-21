@@ -13,19 +13,19 @@ export class WelcomeViewComponent implements OnInit {
 
   public get text1() {
     switch (this.userType) {
-      case 'maestro': return 'En esta plataforma podrás conocer estrategias de otros profesores y aplicarlas, así mismo tú crearás tus estrategias.';
+      case 'maestro': return 'Aquí podrás diseñar estrategias de aprendizaje paso a paso, también podrás consultar y usar estrategias ya creadas.';
       default: return 'En esta plataforma tus docentes podrán crear sus estrategias rápida y ordenadamente.';
     }
   }
   public get text2() {
     switch (this.userType) {
-      case 'maestro': return 'A continuación te explicaremos todo lo que podrás hacer  aquí';
+      case 'maestro': return 'De forma acompañada lograrás reinventar tus clases.';
       default: return 'Tus alumnos se podrán conectar con el profesor y recibir y subir sus tareas.';
     }
   }
   public get text3() {
     switch (this.userType) {
-      case 'maestro': return 'Todo esto para que sea más sencillo hacer tus planeaciones';
+      case 'maestro': return 'Y será sencillo planear';
       default: return 'Tus padres de familia podrán estar al tanto de todo lo que su hijo esta realizando y ver sus trabajos así como compratirlos en redes sociales.';
     }
   }
