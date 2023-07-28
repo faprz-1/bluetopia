@@ -212,7 +212,6 @@ module.exports = function(app) {
     let templates = require('./../helpers/templates.json');
     let cont = 0, limit = templates.length;
     templates.forEach(template => {
-      console.log(template.name);
       app.models.Template.CreateOne(template, (err, newTemplate) => {
         if(err) throw err;
         if(++cont == limit) console.log("Templates seeded succesfully");

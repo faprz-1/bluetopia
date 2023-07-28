@@ -119,7 +119,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     return false;
   }
 	saver = new Subject();
-
+  subSelected:any = null;
   constructor(
     private api: ApiService,
     private activatedRoute: ActivatedRoute,
@@ -476,14 +476,16 @@ export class TemplateBasedOnFormComponent implements OnInit {
   AddSepObjective = (sepObjective: string) => {
     let sepObjectiveObj = {
       name: sepObjective,
+      subjectId: this.subSelected.id
     };
     this.loading.sepObjective = true;
     this.api
-      .Post(`/SepObjectives`, { sepObjective: sepObjectiveObj })
+      .Post(`/SepObjectives`, sepObjectiveObj)
       .subscribe(
         (newSepObjective) => {
-          this.sepObjectives = this.sepObjectives.concat([newSepObjective]);
+         this.GetSepObjectives();
           this.loading.sepObjective = false;
+          this.OnObjectiveSelected(this.subSelected,newSepObjective);
           this.sepObjectivesSelect?.close();
         },
         (err) => {

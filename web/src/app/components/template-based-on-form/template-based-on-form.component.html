@@ -145,6 +145,7 @@
                                                     class="form-control with-border"
                                                     [items]="GetMySelectableGoals(subject.id)"
                                                     bindLabel="name"
+                                                    (focus)="subSelected=subject"
                                                     placeholder="Objetivo"
                                                     addTagText="Agregar"
                                                     [addTag]="AddSepObjective"
