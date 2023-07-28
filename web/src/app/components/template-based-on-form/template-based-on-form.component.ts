@@ -511,10 +511,11 @@ export class TemplateBasedOnFormComponent implements OnInit {
       name: skill,
     };
     this.loading.skill = true;
-    this.api.Post(`/Skills`, { skill: skillObj }).subscribe(
+    this.api.Post(`/Skills`,skillObj).subscribe(
       (newSkill) => {
         this.skills = this.skills.concat([newSkill]);
         this.loading.skill = false;
+        this.OnSkillSelected(newSkill);
         this.skillsSelect?.close();
       },
       (err) => {
@@ -640,6 +641,8 @@ export class TemplateBasedOnFormComponent implements OnInit {
         this.eventTypes = this.eventTypes.concat([newEventType]);
         control?.setValue(newEventType.id);
         this.loading.eventType = false;
+        this.OnEventTypeSelected(newEventType);
+        this.SaveEvent();
         control?.enable();
         this.eventTypeSelect?.close();
       },
@@ -742,6 +745,8 @@ export class TemplateBasedOnFormComponent implements OnInit {
       strategy.grade = this.grade;
       strategy.group = this.group;
       strategy.subjects = this.selectedSubjects;
+      console.log(strategy);
+      
       this.api.Patch(`/Strategies/${this.strategyId}`, { strategy }).pipe(takeUntil(this.saver)).subscribe(
         (strategySaved) => {
           this.InitializeForms(strategySaved);
@@ -871,10 +876,12 @@ export class TemplateBasedOnFormComponent implements OnInit {
         isFinal: true,
       };
       this.loading.event = true;
+      
       if (!!eventInstance.id) {
         this.api.Patch(`/Events`, { event: eventInstance }).subscribe(
           (saved) => {
             this.loading.event = false;
+            this.finalEvent = saved;
             res(true);
           },
           (err) => {
@@ -887,6 +894,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
         this.api.Post(`/Events`, { event: eventInstance }).subscribe(
           (newEvent) => {
             this.loading.event = false;
+            this.finalEvent = newEvent;
             res(true);
           },
           (err) => {
