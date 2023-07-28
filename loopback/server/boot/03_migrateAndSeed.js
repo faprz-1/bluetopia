@@ -1,5 +1,5 @@
 'use strict';
-
+const sepObjectives = require('../helpers/sepGoals.json');
 module.exports = function(app) {
   /*
    * The `app` object provides access to a variety of LoopBack resources such as
@@ -133,16 +133,20 @@ module.exports = function(app) {
   var seedSubjects = function() {
     const subjects = [
       {
-        name: "Lenguajes"
+        name: "Lenguajes",
+        id:1
       },
       {
-        name: "Saberes y Pensamiento Científico"
+        name: "Saberes y Pensamiento Científico",
+        id:2
       },
       {
-        name: "Ética, naturaleza y sociedades"
+        name: "Ética, naturaleza y sociedades",
+        id:3
       },
       {
-        name: "De lo humano y lo comunitario"
+        name: "De lo humano y lo comunitario",
+        id:4
       },
     ];
 
@@ -250,17 +254,7 @@ module.exports = function(app) {
   }
 
   var seedSepObjectives = function() {
-    const sepObjectives = [
-      {
-        name: "Que los alumnos puedan establecer prioridades"
-      },
-      {
-        name: "Que los alumnos puedan autoevaluerase"
-      },
-      {
-        name: "Que los alumnos puedan establecer metas"
-      },
-    ];
+    
 
     let cont = 0, limit = sepObjectives.length;
     sepObjectives.forEach(sepObjective => {
