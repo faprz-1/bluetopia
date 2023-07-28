@@ -36,7 +36,8 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": [
-        "GetAll"
+        "GetAll",
+        "CreateOneWithoutRepeat"
       ]
     }
   ],
@@ -56,6 +57,31 @@
         {
           "path": "/",
           "verb": "get"
+        }
+      ]
+    },
+    "CreateOneWithoutRepeat": {
+      "accepts": [
+        {
+          "arg": "subject",
+          "type": "object",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "subjects",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/",
+          "verb": "post"
         }
       ]
     }

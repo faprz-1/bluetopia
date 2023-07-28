@@ -436,6 +436,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
       (newSubject) => {
         this.subjects = this.subjects.concat([newSubject]);
         this.loading.subject = false;
+        this.OnSelectedSubjectsChange(newSubject);
         this.subjectsSelect?.close();
       },
       (err) => {
