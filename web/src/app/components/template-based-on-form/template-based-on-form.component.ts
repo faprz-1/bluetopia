@@ -449,12 +449,28 @@ export class TemplateBasedOnFormComponent implements OnInit {
   GetSepObjectives() {
     this.api.Get(`/SepObjectives`).subscribe(
       (sepObjectives) => {
-        this.sepObjectives = sepObjectives;
+        this.sepObjectives = this.GroupSepGoalsBy(sepObjectives,'subjectId');
       },
       (err) => {
         console.error('Error getting sep objectives', err);
       }
     );
+  }
+
+  GetMySelectableGoals(subject:any){
+    let goalsToSelect = this.sepObjectives.filter((group:any) => group.subjectId === subject);
+    return goalsToSelect.length > 0 ? goalsToSelect[0].items: [];    
+  }
+
+  GroupSepGoalsBy(array:any,key:any){
+    return Object.values(array.reduce((result:any, item:any) => {
+      const keyValue = item[key];
+      if (!result[keyValue]) {
+        result[keyValue] = { [key]: keyValue, items: [] };
+      }
+      result[keyValue].items.push(item);
+      return result;
+    }, {}));
   }
 
   AddSepObjective = (sepObjective: string) => {

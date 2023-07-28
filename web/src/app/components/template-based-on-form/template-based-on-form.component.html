@@ -143,7 +143,7 @@
                                                 <ng-select
                                                     #sepObjectivesSelect
                                                     class="form-control with-border"
-                                                    [items]="sepObjectives"
+                                                    [items]="GetMySelectableGoals(subject.id)"
                                                     bindLabel="name"
                                                     placeholder="Objetivo"
                                                     addTagText="Agregar"
