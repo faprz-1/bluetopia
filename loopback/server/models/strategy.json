@@ -34,6 +34,11 @@
     },
     "lastModified": {
       "type": "string"
+    },
+    "isDeleted": {
+      "type": "boolean",
+      "required": true,
+      "default": false
     }
   },
   "validations": [],
@@ -100,7 +105,8 @@
         "GetActivities",
         "GetAllOfSchool",
         "GetAllOfTeacher",
-        "GetStudents"
+        "GetStudents",
+        "Delete"
       ]
     }
   ],
@@ -288,6 +294,24 @@
         {
           "path": "/:strategyId/Students",
           "verb": "get"
+        }
+      ]
+    },
+    "prototype.Delete": {
+      "accepts": [],
+      "returns": [
+        {
+          "arg": "deleted",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/",
+          "verb": "delete"
         }
       ]
     }

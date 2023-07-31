@@ -5,28 +5,28 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlMessagesModule } from 'src/app/components/control-messages/control-messages.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
-import { StrategiesComponent } from './strategies.component';
-import { StrategyCardModule } from 'src/app/components/strategy-card/strategy-card.module';
+import { StrategyCardComponent } from './strategy-card.component';
 
 const MODULE_ROUTES = [
-  { path: '', component: StrategiesComponent }
+  { path: '', component: StrategyCardComponent }
 ];
 
 @NgModule({
   declarations: [
-    StrategiesComponent
+    StrategyCardComponent
   ],
   imports: [
     FormsModule,
     CommonModule,
     NgSelectModule,
-    StrategyCardModule,
     ReactiveFormsModule,
     ControlMessagesModule,
     ModalModule.forRoot(),
-    RouterModule.forChild(MODULE_ROUTES),
+    BsDatepickerModule.forRoot(),
+    // RouterModule.forChild(MODULE_ROUTES),
   ],
-  // exports: [StrategiesComponent]
+  exports: [StrategyCardComponent]
 })
-export class StrategiesModule { }
+export class StrategyCardModule { }

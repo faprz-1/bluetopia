@@ -319,7 +319,8 @@
           "prototype.GetActivities": true,
           "GetAllOfSchool": true,
           "GetAllOfTeacher": true,
-          "GetStudents": true
+          "GetStudents": true,
+          "prototype.Delete": true
         }
       }
     }

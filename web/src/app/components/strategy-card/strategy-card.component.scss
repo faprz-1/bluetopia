@@ -1,0 +1,52 @@
+.card {
+    display: flex;
+    width: 100%;
+    padding: 12px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 12px;
+    border-radius: 6px;
+    border: 1px solid var(--gray-2, #758CA6);
+    background: #F5F8FA;
+
+    color: var(--gray-1, #3D5E81);
+    font-family: Mulish;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+
+    .group {
+        color: var(--blue-1, #1081FB);
+        font-size: 20px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+    .category {
+        color: var(--green-1, #26D7A4);
+        font-size: 20px;
+        font-weight: 700;
+    }
+    label {
+        color: var(--blue-1, #1081FB);
+        font-size: 20px;
+        font-weight: 700;
+        margin: 0;
+    }
+}
+
+.modal-content {
+    color: var(--gray-1, #3D5E81);
+    font-family: Mulish;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    .modal-title {
+        color: var(--blue-dark, #2369B5);
+        text-align: center;
+        font-size: 32px;
+        font-weight: 700;
+    }
+}

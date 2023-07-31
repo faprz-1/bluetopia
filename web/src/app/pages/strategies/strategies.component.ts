@@ -80,6 +80,15 @@ export class StrategiesComponent implements OnInit {
     });
   }
 
+  OnStrategyChange(event: {type: string, data: any}) {
+    switch (event.type) {
+      case 'delete':
+        let idx = this.strategies.findIndex(strategy => strategy.id == event.data.strategyId);
+        if(idx != -1) this.strategies.splice(idx, 1);
+        break;
+    }
+  }
+
   GoToTeams(strategy: any) {
     this.nav.GoToUserRoute(`mis-estrategias/${strategy.id}/equipos`);
   }

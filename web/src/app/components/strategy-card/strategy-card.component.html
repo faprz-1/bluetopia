@@ -1,0 +1,77 @@
+<div class="card">
+    <div class="d-flex align-items-center justify-content-between align-self-stretch">
+        <div class="group">
+            1°A
+        </div>
+        <div class="d-flex align-items-center" style="gap: 16px;">
+            <img class="clickeable" (click)="deleteStrategyModal.show()" src="assets/icons/delete.svg" alt="delete">
+            <img class="clickeable" src="assets/icons/edit.svg" alt="edit">
+            <img class="clickeable" src="assets/icons/find-in-page-success.svg" alt="find">
+        </div>
+    </div>
+    <div class="category">
+        Category
+    </div>
+    <div class="d-flex flex-column align-items-start justify-content-start align-self-stretch">
+        <label>Titulo</label>
+        {{strategy?.title ? strategy?.title : 'Sin título'}}
+    </div>
+    <div class="d-flex flex-column align-items-start justify-content-start align-self-stretch">
+        <label>Pregunta generadora</label>
+        {{strategy?.generatingQuestion ? strategy?.generatingQuestion : 'Sin pregunta generadora'}}
+    </div>
+    <div class="d-flex flex-column align-items-start justify-content-start align-self-stretch">
+        <label>Plantilla</label>
+        {{strategy?.template?.name ? strategy?.template?.name : 'Sin plantilla'}}
+    </div>
+    <div class="d-flex flex-column align-items-start justify-content-start align-self-stretch">
+        <label>Campos formativos</label>
+        <div class="d-flex flex-column" *ngIf="!!strategy">
+            <span *ngFor="let subject of strategy.subjects">{{subject.name}}</span>
+        </div>
+    </div>
+    <div class="d-flex flex-wrap align-self-stretch" style="gap: 12px;">
+        <ng-container *ngIf="false">
+            <button class="btn btn-outline-primary btn-block">
+                Modalidad de participación
+            </button>
+            <button class="btn btn-outline-success btn-block">
+                Terminar de editar
+            </button>
+        </ng-container>
+        <ng-container *ngIf="true">
+            <button class="btn btn-outline-primary flex-grow-1">
+                Ver progreso
+            </button>
+            <button class="btn btn-outline-success flex-grow-1">
+                Calendario
+            </button>
+        </ng-container>
+    </div>
+</div>
+
+<div class="modal fade" bsModal #deleteStrategyModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
+    tabindex="-1" role="dialog" aria-labelledby="deleteStrategyModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-center">
+                <div class="modal-title">Eliminar estrategía</div>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro/a de que desea eliminar la estrategía <b>"{{strategy?.title}}"</b>?
+            </div>
+            <div class="modal-footer justify-content-around">
+                <button [disabled]="loading.deleting" class="btn btn-outline-primary"
+                (click)="deleteStrategyModal.hide()">
+                    No, cancelar
+                </button>
+                <button [disabled]="loading.deleting" class="btn btn-danger" style="min-width: 155px;"
+                (click)="DeleteStrategy()">
+                    <span *ngIf="!loading.deleting">Si, eliminar</span>
+                    <span *ngIf="loading.deleting"><i class="zmdi zmdi-spinner zmdi-hc-lg zmdi-hc-spin"></i></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

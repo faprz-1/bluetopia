@@ -83,7 +83,6 @@ export class RubricTutorialModalComponent implements OnInit {
   }
 
   public OpenModal() {
-    console.log("showing");
     this.modal?.show();
   }
 

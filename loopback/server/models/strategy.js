@@ -98,7 +98,8 @@ module.exports = function(Strategy) {
 
             Strategy.find({
                 where: {
-                    userId: {inq: [userId, ...schoolTeachers.map(user => user.id)]}
+                    userId: {inq: [userId, ...schoolTeachers.map(user => user.id)]},
+                    isDeleted: false
                 },
                 include: ['template', 'teams', {'strategyGroup': ['grade', 'group']}]
             }, (err, strategies) => {
@@ -115,7 +116,8 @@ module.exports = function(Strategy) {
 
             Strategy.find({
                 where: {
-                    userId: {inq: [userId, teacherUser.schoolUserId]}
+                    userId: {inq: [userId, teacherUser.schoolUserId]},
+                    isDeleted: false
                 },
                 include: ['template', 'teams', {'strategyGroup': ['grade', 'group']}]
             }, (err, strategies) => {
@@ -160,15 +162,10 @@ module.exports = function(Strategy) {
         });
     }
 
-    Strategy.UpdateLastModified = function(strategyId, callback) {
-        Strategy.findById(strategyId, {}, (err, strategy) => {
-            if(err) return callback(err);
-            
-            strategy.lastModified = moment().tz(constants.momentTimeZone).toISOString();
-            strategy.save((err, saved) => {
-                if(err) return callback(err);
-                return callback(null, saved);
-            });
+    Strategy.prototype.Delete = function(callback) {
+        this.isDeleted = true;
+        this.save((err, deleted) => {
+            return callback(err, deleted);
         });
     }
 
