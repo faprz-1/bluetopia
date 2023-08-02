@@ -780,7 +780,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
         isFinal: isParcialProductFinal,
         strategyId: this.strategyId,
       };
-      parcialProductInstance.evaluationTypeId= parcialProductInstance.evaluationType.id;
+      parcialProductInstance.evaluationTypeId= parcialProductInstance.evaluationType ? parcialProductInstance.evaluationType.id : null;
       if (!!parcialProductInstance.id) {
         this.api
           .Patch(`/ParcialProducts/${parcialProductInstance.id}`, 
