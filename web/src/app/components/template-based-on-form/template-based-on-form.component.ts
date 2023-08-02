@@ -109,6 +109,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
 
   step: number = 1;
 
+  noGroupMessage = "";
   public get isLoading() {
     for (const key in this.loading) {
       if (Object.prototype.hasOwnProperty.call(this.loading, key)) {
@@ -723,13 +724,21 @@ export class TemplateBasedOnFormComponent implements OnInit {
       });
     }
     this.strategyForm.updateValueAndValidity();
+    this.SetGradeGroupMessage();
+  }
+
+  SetGradeGroupMessage(){
+    if(!this.grade && !this.group) this.noGroupMessage = "No se ha seleccionado un grado y grupo";
+    else if(!this.grade) this.noGroupMessage = "No se ha seleccionado un grado";
+    else if(!this.group) this.noGroupMessage = "No se ha seleccionado un grupo";
   }
 
   GetStrategy() {
     this.api.Get(`/Strategies/${this.strategyId}`).subscribe(
       (strategy) => {
         this.strategy = strategy;
-        this.grade = strategy.gradeId;
+        this.grade = strategy.strategygroup ? strategy.strategygroup.gradeId:null;        
+        this.group = strategy.strategygroup ? strategy.strategygroup.groupId:null;        
         if (!!strategy.parcialProducts && !!strategy.parcialProducts.length)
           this.finalParcialProduct = strategy.parcialProducts.find(
             (parcialProduct: any) => parcialProduct.isFinal

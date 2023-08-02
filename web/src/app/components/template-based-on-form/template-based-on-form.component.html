@@ -55,6 +55,9 @@
         <div class="d-sm-none d-md-block col-lg-2 col-xl-1">
         </div>
         <div class="col">
+            <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="noGroupMessage.length > 0 && (!grade || !group)">
+                {{noGroupMessage}}
+              </div>
             <div [ngSwitch]="step">
                 <div *ngSwitchCase="1">
                     <div class="form-flexbox">
