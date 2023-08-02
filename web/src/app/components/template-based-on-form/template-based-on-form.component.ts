@@ -696,6 +696,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
   }
 
   InitializeForms(strategy: any) {
+    this.gradeSelect?.close();
     this.strategyForm.setValue({
       id: !!strategy.id ? strategy.id : null,
       topic: !!strategy.topic ? strategy.topic : null,
@@ -716,9 +717,11 @@ export class TemplateBasedOnFormComponent implements OnInit {
       this.RemoveSelectedSubject(subject);
     });
 
-    strategy.skills.forEach((skill: any) => {
-      this.RemoveSelectedSkill(skill);
-    });
+    if(strategy.skills){
+      strategy.skills.forEach((skill: any) => {
+        this.RemoveSelectedSkill(skill);
+      });
+    }
     this.strategyForm.updateValueAndValidity();
   }
 
@@ -726,6 +729,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     this.api.Get(`/Strategies/${this.strategyId}`).subscribe(
       (strategy) => {
         this.strategy = strategy;
+        this.grade = strategy.gradeId;
         if (!!strategy.parcialProducts && !!strategy.parcialProducts.length)
           this.finalParcialProduct = strategy.parcialProducts.find(
             (parcialProduct: any) => parcialProduct.isFinal
@@ -745,8 +749,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
       strategy.grade = this.grade;
       strategy.group = this.group;
       strategy.subjects = this.selectedSubjects;
-      console.log(strategy);
-      
+      this.gradeSelect?.close();
       this.api.Patch(`/Strategies/${this.strategyId}`, { strategy }).pipe(takeUntil(this.saver)).subscribe(
         (strategySaved) => {
           this.InitializeForms(strategySaved);
