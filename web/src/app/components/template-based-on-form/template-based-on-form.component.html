@@ -29,34 +29,8 @@
 
         <div class="d-flex flex-column ml-auto" style="gap: 8px;">
             <div class="steps-icons">
-                <div class="d-flex align-items-center" *ngIf="step == 1"><img
-                        src="assets/icons/strategy-creation/add-circle-current.svg"></div>
-                <div class="d-flex align-items-center" *ngIf="step > 1"><img
-                        src="assets/icons/strategy-creation/add-circle-active.svg"></div>
-                <div class="d-flex align-items-center" *ngIf="step == 2"><img
-                        src="assets/icons/strategy-creation/title-current.svg"></div>
-                <div class="d-flex align-items-center" *ngIf="step > 2"><img
-                        src="assets/icons/strategy-creation/title-active.svg"></div>
-                <div class="d-flex align-items-center" *ngIf="step < 2"><img
-                        src="assets/icons/strategy-creation/title-disabled.svg"></div>
-                <div class="d-flex align-items-center" *ngIf="step == 3"><img
-                        src="assets/icons/strategy-creation/category-current.svg"></div>
-                <div class="d-flex align-items-center" *ngIf="step > 3"><img
-                        src="assets/icons/strategy-creation/category-active.svg"></div>
-                <div class="d-flex align-items-center" *ngIf="step < 3"><img
-                        src="assets/icons/strategy-creation/category-disabled.svg"></div>
-                <div class="d-flex align-items-center" *ngIf="step == 4"><img
-                        src="assets/icons/strategy-creation/inventory-current.svg"></div>
-                <div class="d-flex align-items-center" *ngIf="step > 4"><img
-                        src="assets/icons/strategy-creation/inventory-active.svg"></div>
-                <div class="d-flex align-items-center" *ngIf="step < 4"><img
-                        src="assets/icons/strategy-creation/inventory-disabled.svg"></div>
-                <div class="d-flex align-items-center" *ngIf="step == 5"><img
-                        src="assets/icons/strategy-creation/celebration-current.svg"></div>
-                <div class="d-flex align-items-center" *ngIf="step > 5"><img
-                        src="assets/icons/strategy-creation/celebration-active.svg"></div>
-                <div class="d-flex align-items-center" *ngIf="step < 5"><img
-                        src="assets/icons/strategy-creation/celebration-disabled.svg"></div>
+                <mat-progress-bar color="primary" mode="determinate" [value]="CalculateProgress()">
+                </mat-progress-bar>
             </div>
             <div class="d-flex align-items-center justify-content-end" style="gap: 10px;">
                 <span class="save-text">{{ isLoading ? 'Guardando...' : 'Guardado ' + (lastSave ?

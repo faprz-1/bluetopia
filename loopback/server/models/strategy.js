@@ -52,8 +52,8 @@ module.exports = function(Strategy) {
             strategy.startDate = strategy.dates.pop();
             delete strategy.dates;
         }
-        let grade = strategy.grade ? strategy.grade.id : null;
-        let group = strategy.group ? strategy.group.id : null;
+        let grade = strategy.grade ? strategy.grade.id : 0;
+        let group = strategy.group ? strategy.group.id : 0;
         Strategy.app.models.StrategyGroup.UpdateStrategyGroup(strategy.id, grade,group, (err, saved) => {
             if(err) return callback(err);
 

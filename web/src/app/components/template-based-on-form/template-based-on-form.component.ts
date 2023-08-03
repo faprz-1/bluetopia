@@ -108,7 +108,6 @@ export class TemplateBasedOnFormComponent implements OnInit {
   });
 
   step: number = 1;
-
   noGroupMessage = "";
   public get isLoading() {
     for (const key in this.loading) {
@@ -755,8 +754,8 @@ export class TemplateBasedOnFormComponent implements OnInit {
   SaveStragey() {
     return new Promise<boolean>((res, rej) => {
       let strategy = this.strategyForm.value;
-      strategy.grade = this.grade;
-      strategy.group = this.group;
+      strategy.grade = this.grade ? this.grade:0;
+      strategy.group = this.group ? this.group:0;
       strategy.subjects = this.selectedSubjects;
       this.gradeSelect?.close();
       this.api.Patch(`/Strategies/${this.strategyId}`, { strategy }).pipe(takeUntil(this.saver)).subscribe(
@@ -985,6 +984,23 @@ export class TemplateBasedOnFormComponent implements OnInit {
           ?.value.filter((file: any) => !!file.id);
       default:
         return [];
+    }
+  }
+
+  CalculateProgress(){
+    switch(this.step){
+      case 1:
+        return 20;
+      case 2:
+        return 40;
+      case 3:
+        return 60;
+      case 4:
+        return 80;
+      case 5:
+        return 100;
+      default:
+        return 0;
     }
   }
 }
