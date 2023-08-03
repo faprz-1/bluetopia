@@ -1003,4 +1003,9 @@ export class TemplateBasedOnFormComponent implements OnInit {
         return 0;
     }
   }
+
+  GoToStep(step:any){
+    this.step = step;
+    this.GoToStep(step);
+  }
 }

@@ -7,22 +7,22 @@
             <div class="title mb-0 flex-wrap">
                 <span class="title-text">{{template?.nickname ? template?.nickname : template?.name }}</span>
                 <img src="assets/icons/right-chevron.svg">
-                <span [ngClass]="{'active': step == 1}">Objetivos</span>
+                <span [ngClass]="{'active': step == 1}" (click)="GoToStep(1)">Objetivos</span>
                 <ng-container *ngIf="step >= 2">
                     <img src="assets/icons/right-chevron.svg">
-                    <span [ngClass]="{'active': step == 2}">Descripción</span>
+                    <span [ngClass]="{'active': step == 2}" (click)="GoToStep(2)">Descripción</span>
                 </ng-container>
                 <ng-container *ngIf="step >= 3">
                     <img src="assets/icons/right-chevron.svg">
-                    <span [ngClass]="{'active': step == 3}">{{ step == 3 ? 'Productos parciales' : 'Parciales'}}</span>
+                    <span [ngClass]="{'active': step == 3}" (click)="GoToStep(3)">{{ step == 3 ? 'Productos parciales' : 'Parciales'}}</span>
                 </ng-container>
                 <ng-container *ngIf="step >= 4">
                     <img src="assets/icons/right-chevron.svg">
-                    <span [ngClass]="{'active': step == 4}">Producto final</span>
+                    <span [ngClass]="{'active': step == 4}" (click)="GoToStep(4)">Producto final</span>
                 </ng-container>
                 <ng-container *ngIf="step >= 5">
                     <img src="assets/icons/right-chevron.svg">
-                    <span [ngClass]="{'active': step == 5}">Evento de cierre</span>
+                    <span [ngClass]="{'active': step == 5}" (click)="GoToStep(5)">Evento de cierre</span>
                 </ng-container>
             </div>
         </div>
