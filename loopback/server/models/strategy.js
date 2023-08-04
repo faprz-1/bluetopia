@@ -169,4 +169,12 @@ module.exports = function(Strategy) {
         });
     }
 
+    Strategy.GetSuggested = function(strategySubject, callback) {
+        Strategy.find({}, (err, strategies) => {
+            if(err) return callback(err);
+
+            return callback(null, strategies);
+        });
+    }
+
 };

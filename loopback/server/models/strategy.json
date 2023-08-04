@@ -106,7 +106,8 @@
         "GetAllOfSchool",
         "GetAllOfTeacher",
         "GetStudents",
-        "Delete"
+        "Delete",
+        "GetSuggested"
       ]
     }
   ],
@@ -312,6 +313,35 @@
         {
           "path": "/",
           "verb": "delete"
+        }
+      ]
+    },
+    "GetSuggested": {
+      "accepts": [
+        {
+          "arg": "strategySubject",
+          "type": "object",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "deleted",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/Suggested",
+          "verb": "get"
+        },
+        {
+          "path": "/Suggested/:strategySubject",
+          "verb": "get"
         }
       ]
     }

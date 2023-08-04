@@ -1,3 +1,77 @@
-<div class="w-100 text-center">
-    Por el momento no hay estrategias sugeridas
+<div class="slider-container">
+    <img class="clickeable" (click)="SlideTo(currentIndex - 1)" src="assets/icons/arrow-circle-left.svg">
+    <div id="slides" class="slides">
+        <div class="slide" [style]="'transform: translateX(-'+ transform +'%);'" *ngFor="let strategy of strategies">
+            <div class="strategy-card">
+                <div class="d-flex align-items-start w-100 flex-grow-1" style="gap: 24px;">
+                    <div class="info">
+                        <div class="title text-uppercase">
+                            1°A
+                        </div>
+                        <div class="d-flex flex-column align-self-stretch">
+                            <label>Título</label>
+                            {{strategy.title}}
+                        </div>
+                        <div class="d-flex flex-column align-self-stretch">
+                            <label>Pregunta genradora</label>
+                            {{strategy.generatingQuestion}}
+                        </div>
+                        <div class="d-flex flex-column align-self-stretch">
+                            <label>Duración aproximada</label>
+                            2 semanas
+                        </div>
+                        <div class="d-flex flex-column align-self-stretch">
+                            <label>Campos formativos</label>
+                            <div class="d-flex" style="gap: 4px;">
+                                <span *ngFor="let subject of strategy.subjects; let lst = last">{{subject.name + (!!lst ? '' : ',')}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-grow-1" style="gap: 24px;">
+                        <div class="title">
+                            Proyectos
+                        </div>
+                        <div class="d-flex flex-column">
+                            <label>Diseñado por</label>
+                            Fritzia Hernandez
+                        </div>
+                        <div class="comment-card">
+                            <div class="d-flex flex-column" style="gap: 12px;">
+                                <div class="d-flex align-items-center" style="gap: 8px;">
+                                    <img src="assets/icons/bluetopia-icon.svg">
+                                    <span class="comment-title">
+                                        Los profesores hablan
+                                    </span>
+                                </div>
+                                <div>
+                                    Utilizada por 53 profesores
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column" style="gap: 8px;">
+                                <div class="stars">
+                                    <img *ngFor="let star of GetArray(4)" src="assets/icons/star-success.svg">
+                                    <img *ngFor="let star of GetArray(1)" class="star-disabled" src="assets/icons/star-success.svg">
+                                </div>
+
+                                <span>“Este proyecto me ayudó mucho con mis alumnos de 3°, para temáticas medio ambientales es muy creativo y práctico, para alumnos y padres de familia”</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end w-100" style="gap: 10px;">
+                    <button class="btn btn-outline-primary">
+                        Ver más detalles
+                    </button>
+                    <button class="btn btn-primary">
+                        Utilizar plantilla
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <img class="clickeable" (click)="SlideTo(currentIndex + 1)" src="assets/icons/arrow-circle-right.svg">
 </div>
+
+<app-strategy-details-modal></app-strategy-details-modal>

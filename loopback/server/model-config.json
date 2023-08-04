@@ -320,7 +320,8 @@
           "GetAllOfSchool": true,
           "GetAllOfTeacher": true,
           "GetStudents": true,
-          "prototype.Delete": true
+          "prototype.Delete": true,
+          "GetSuggested": true
         }
       }
     }

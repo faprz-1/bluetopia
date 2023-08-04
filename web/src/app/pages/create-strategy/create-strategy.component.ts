@@ -16,6 +16,7 @@ export class CreateStrategyComponent implements OnInit {
   template: any = null;
   selectedTemplate: any = null;
   templateId: number = 0;
+  suggestedStrategies: Array<any> = [];
   loading: any = {
     creating: false,
     getting: true
@@ -30,6 +31,7 @@ export class CreateStrategyComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.GetSuggestedStrategies();
     this.GetParams();
   }
 
@@ -79,6 +81,14 @@ export class CreateStrategyComponent implements OnInit {
       console.error("Error creating strategy", err);
       this.toast.ShowError(`Error al crear la estrategia`);
       this.loading.creating = false;
+    });
+  }
+
+  GetSuggestedStrategies() {
+    this.api.Get(`/Strategies/Suggested`).subscribe(strategies => {
+      this.suggestedStrategies = strategies;
+    }, err => {
+      console.error("Error getting suggested strategies", err);
     });
   }
 

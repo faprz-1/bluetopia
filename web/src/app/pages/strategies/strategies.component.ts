@@ -99,8 +99,4 @@ export class StrategiesComponent implements OnInit {
   GoToCalendar(strategy: any) {
     this.nav.GoToUserRoute(`estrategias/${strategy.id}/calendario`)
   }
-  
-  GoToEdit(strategy:any){
-    this.nav.GoToUserRoute(`plantillas/${strategy.templateId}/crear/${strategy.id}`)
-  }
 }

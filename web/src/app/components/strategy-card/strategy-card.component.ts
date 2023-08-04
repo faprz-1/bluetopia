@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ApiService } from 'src/app/services/api.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
@@ -22,10 +23,19 @@ export class StrategyCardComponent implements OnInit {
 
   constructor(
     private api: ApiService,
-    private toast: ToastService
+    private toast: ToastService,
+    private nav: NavigationService
   ) { }
 
   ngOnInit(): void {
+  }
+
+  GoToEditStrategy(){
+    this.nav.GoToUserRoute(`plantillas/${this.strategy.templateId}/crear/${this.strategy.id}`);
+  }
+
+  GoToStrategyDetails() {
+    this.nav.GoToUserRoute(`mis-estrategias/${this.strategy.id}`);
   }
 
   DeleteStrategy() {
