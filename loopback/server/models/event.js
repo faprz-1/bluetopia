@@ -10,16 +10,16 @@ module.exports = function(Event) {
         Event.create(event, (err, newEvent) => {
             if(err) return callback(err);
             
-            Event.app.models.ParcialProduct.UpdateEvent(event.parcialProduct.id, newEvent.id, (err, saved) => {
+            newEvent.UpsertResources(resources, (err, resources) => {
                 if(err) return callback(err);
-
-                return callback(null, newEvent);
-            });
-            // newEvent.UpsertResources(resources, (err, resources) => {
-            //     if(err) return callback(err);
                 
-            //     newEvent.resources = resources;
-            // });
+                newEvent.resources = resources;
+                Event.app.models.ParcialProduct.UpdateEvent(!!event.parcialProduct ? event.parcialProduct.id : null, newEvent.id, (err, saved) => {
+                    if(err) return callback(err);
+
+                    return callback(null, newEvent);
+                });
+            });
         });
     }
 
