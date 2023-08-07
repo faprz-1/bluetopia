@@ -3,16 +3,18 @@
 module.exports = function(Event) {
 
     Event.CreateOne = function(event, callback) {
+        let resources = event.resources;
         if(!event) return callback(null, null);
         if(event.hasOwnProperty('id')) delete event.id;
+        if(event.hasOwnProperty('resources')) delete event.resources;
         Event.create(event, (err, newEvent) => {
             if(err) return callback(err);
             
-            newEvent.UpsertResources(event.resources, (err, resources) => {
+            newEvent.UpsertResources(resources, (err, resources) => {
                 if(err) return callback(err);
                 
                 newEvent.resources = resources;
-                Event.app.models.ParcialProduct.UpdateEvent(event.parcialProjectId, newEvent.id, (err, saved) => {
+                Event.app.models.ParcialProduct.UpdateEvent(event.parcialProduct.id, newEvent.id, (err, saved) => {
                     if(err) return callback(err);
 
                     return callback(null, newEvent);

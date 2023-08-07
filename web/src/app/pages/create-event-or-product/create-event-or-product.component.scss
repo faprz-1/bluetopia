@@ -107,6 +107,14 @@
     gap: 24px;
     background: #F6F7F8;
 
+    .instruction-number {
+        margin-top: 3px;
+        color: var(--green-1, #26D7A4);
+        font-size: 24px;
+        font-family: Mulish;
+        font-weight: 900;
+    }
+
     .form-row {
         display: flex;
         align-items: flex-start;
