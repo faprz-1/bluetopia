@@ -50,8 +50,8 @@ module.exports = function(Strategy) {
     Strategy.prototype.CreateBasedOnAnother = function(ctx, callback) {
         let finalEvent = null;
         const userId = ctx.accessToken.userId;
-        this.userId = userId;
         let strategy = this.toJSON();
+        strategy.userId = userId;
         Strategy.CreateOne(strategy, (err, newStrategy) => {
             if(err) return callback(err);
             
