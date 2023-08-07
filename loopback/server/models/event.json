@@ -40,12 +40,6 @@
       "type": "hasOne",
       "model": "ParcialProduct",
       "foreignKey": "eventId"
-    },
-    "resources": {
-      "type": "hasMany",
-      "model": "UploadedFiles",
-      "through": "EventFile",
-      "foreignKey": "eventId"
     }
   },
   "acls": [

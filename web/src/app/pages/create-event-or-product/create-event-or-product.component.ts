@@ -5,6 +5,7 @@ import * as moment from 'moment-timezone';
 import { ApiService } from 'src/app/services/api.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-create-event-or-product',
@@ -17,15 +18,25 @@ export class CreateEventOrProductComponent implements OnInit {
   date: any;
 
   activities: Array<any> = [];
+  formTypes: Array<any> = [
+    {
+      name: 'Evento de cierre',
+      type: 'event'
+    },
+    {
+      name: 'Product parcial',
+      type: 'parcialProduct'
+    },
+  ];
   loading: boolean = false;
 
   eventForm: FormGroup = new FormGroup({
-    start: new FormControl(null, [Validators.required]),
-    body: new FormControl(null, [Validators.required]),
-    closure: new FormControl(null, [Validators.required]),
+    name: new FormControl(null, []),
+    instructions: new FormControl(null, []),
+    type: new FormControl(null, [Validators.required]),
     date: new FormControl(null, [Validators.required]),
+    parcialProduct: new FormControl(null, [Validators.required]),
     strategyId: new FormControl(null, [Validators.required]),
-    parcialProjectId: new FormControl(null, [Validators.required]),
     resources: new FormControl([], []),
   });
 
@@ -50,7 +61,7 @@ export class CreateEventOrProductComponent implements OnInit {
       this.strategyId = params['strategyId'];
       this.date = params['date'];
       
-      this.eventForm.get('date')?.setValue(moment(this.date).toISOString());
+      this.eventForm.get('date')?.setValue(new Date(moment(this.date).toISOString()));
       this.eventForm.get('strategyId')?.setValue(this.strategyId);
       this.GetStrategyTeacherActivities();
     });
@@ -102,7 +113,11 @@ export class CreateEventOrProductComponent implements OnInit {
     }
 
     this.loading = true;
-    this.api.Post(`/Events`, {event: this.eventForm.value}).subscribe(newEvent => {
+    let event = {
+      ...this.eventForm.value,
+      date: moment(this.eventForm.value.date).tz(environment.timeZone).toISOString()
+    }
+    this.api.Post(`/Events`, {event}).subscribe(newEvent => {
       this.loading = false;
       this.toast.ShowSuccess(`Evento creado correctamente`);
       this.GoBack();
