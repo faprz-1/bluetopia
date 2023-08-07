@@ -314,6 +314,7 @@
         "sharedMethods": {
           "*": false,
           "CreateOne": true,
+          "prototype.CreateBasedOnAnother": true,
           "prototype.Update": true,
           "GetData": true,
           "prototype.GetActivities": true,

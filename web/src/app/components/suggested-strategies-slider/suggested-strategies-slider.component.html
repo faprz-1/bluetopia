@@ -1,5 +1,5 @@
 <div class="slider-container">
-    <img class="clickeable" *ngIf="currentIndex > 0" (click)="SlideTo(currentIndex - 1)" src="assets/icons/arrow-circle-left.svg">
+    <img class="clickeable" [ngClass]="{'disabled': currentIndex == 0}" (click)="SlideTo(currentIndex - 1)" src="assets/icons/arrow-circle-left.svg">
     <div id="slides" class="slides">
         <div class="slide" [style]="'transform: translateX(-'+ transform +'%);'" *ngFor="let strategy of strategies">
             <div class="strategy-card">
@@ -71,7 +71,7 @@
             </div>
         </div>
     </div>
-    <img class="clickeable" [ngClass]="{'disabled': currentIndex < strategies.length - 1}" (click)="SlideTo(currentIndex + 1)" src="assets/icons/arrow-circle-right.svg">
+    <img class="clickeable" [ngClass]="{'disabled': currentIndex == strategies.length - 1}" (click)="SlideTo(currentIndex + 1)" src="assets/icons/arrow-circle-right.svg">
 </div>
 
 <app-strategy-details-modal #strategyDetailsModal [setStrategy]="setStrategy"></app-strategy-details-modal>

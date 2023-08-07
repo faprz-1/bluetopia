@@ -152,7 +152,7 @@
                                                     (change)="OnObjectiveSelected(subject, $event); sepObjectivesSelect.handleClearClick()">
                                                 </ng-select>
                                             </div>
-                                            <div class="dropdwon-content" [ngClass]="{'show': subject.showMore}">
+                                            <div class="dropdown-content" [ngClass]="{'show': subject.showMore}">
                                                 <div class="element-container" *ngFor="let objective of subject.sepObjectives; let i = index">
                                                     <div>{{objective.name}}</div>
                                                     <img class="clickeable" (click)="RemoveItemFromArray(subject.sepObjectives, i)" src="assets/icons/close-circle.svg" alt="delete">
@@ -509,7 +509,7 @@
                                     <div class="">
                                         {{ !!parcialProduct.evaluationType?.name ? parcialProduct.evaluationType?.name : 'Sin tipo de evaluación' }}
                                     </div>
-                                    <div class="dropdwon-content" [ngClass]="{'show-bigger': parcialProduct.showMore}">
+                                    <div class="dropdown-content" [ngClass]="{'show-bigger': parcialProduct.showMore}">
                                         <app-rubric [rubrics]="parcialProduct.rubric" [showControls]="false"></app-rubric>
                                     </div>
                                     <div class="dropdown-text clickeable" *ngIf="parcialProduct.evaluationType?.type == 'rubric'" (click)="parcialProduct.showMore = !!!parcialProduct.showMore">

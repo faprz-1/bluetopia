@@ -33,11 +33,6 @@
       "model": "Event",
       "foreignKey": "fileId",
       "throughTable": "EventFile"
-    },
-    "user": {
-      "type": "belongsTo",
-      "model": "Usuario",
-      "foreignKey": "userId"
     }
   },
   "acls": [],

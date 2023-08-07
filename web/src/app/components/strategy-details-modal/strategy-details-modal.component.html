@@ -67,38 +67,174 @@
                     </div>
 
                     <div class="info w-100">
-                        <div class="d-flex justify-content-between w-100">
-                            <label>Objetivos</label>
-                            <div class="details clickeable">
-                                <span>Ver detalles</span>
-                                <img src="assets/icons/chevron-down-fill.svg" alt="">
+                        <div class="d-flex flex-column w-100" style="gap: 12px;">
+                            <div class="d-flex align-items-center justify-content-between w-100">
+                                <label class="m-0">Objetivos</label>
+                                <div class="details clickeable" (click)="dropdowns.objectives = !dropdowns.objectives">
+                                    <ng-container *ngIf="!dropdowns.objectives">
+                                        <span>Ver detalles</span>
+                                        <img src="assets/icons/chevron-down-fill.svg">
+                                    </ng-container>
+                                    <ng-container *ngIf="dropdowns.objectives">
+                                        <span>Dejar de ver</span>
+                                        <img src="assets/icons/chevron-up-fill.svg">
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="dropdown-container" [ngClass]="{'dropdown-active': dropdowns.objectives}">
+                                <div class="d-flex flex-column" style="gap: 6px;">
+                                    <div class="subject" *ngFor="let subject of strategy?.subjects">
+                                        <div class="subject-title">
+                                            {{subject.name}}
+                                        </div>
+                                        <div class="d-flex align-items-start justify-content-between flex-wrap" style="gap: 12px;">
+                                            <span class="flex-33" *ngFor="let objective of subject.sepObjectives">
+                                                {{objective.name}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-between w-100">
-                            <label>Competencias</label>
-                            <div class="details clickeable">
-                                <span>Ver detalles</span>
-                                <img src="assets/icons/chevron-down-fill.svg" alt="">
+                        <div class="d-flex flex-column w-100" style="gap: 12px;">
+                            <div class="d-flex align-items-center justify-content-between w-100">
+                                <label class="m-0">Competencias</label>
+                                <div class="details clickeable" (click)="dropdowns.skills = !dropdowns.skills">
+                                    <ng-container *ngIf="!dropdowns.skills">
+                                        <span>Ver detalles</span>
+                                        <img src="assets/icons/chevron-down-fill.svg">
+                                    </ng-container>
+                                    <ng-container *ngIf="dropdowns.skills">
+                                        <span>Dejar de ver</span>
+                                        <img src="assets/icons/chevron-up-fill.svg">
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="dropdown-container" [ngClass]="{'dropdown-active': dropdowns.skills}">
+                                <div class="d-flex flex-column" style="gap: 6px;">
+                                    <div class="d-flex align-items-start justify-content-between flex-wrap" style="gap: 12px;">
+                                        <span class="flex-33" *ngFor="let skill of strategy?.skills">
+                                            {{skill.name}}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="d-flex align-items-start">
-                        <div class="info">
-                            <label>Productos parciales</label>
+                    <div class="d-flex align-items-start flex-wrap w-100" style="gap: 24px;">
+                        <div class="info info-medium flex-grow-1 align-self-start">
+                            <div class="d-flex align-items-center justify-content-between w-100">
+                                <label class="m-0">Productos parciales</label>
+                            </div>
+                            <ng-container *ngIf="!!strategy?.parcialProducts">
+                                <div class="d-flex flex-column w-100" *ngFor="let parcialProduct of strategy.parcialProducts" style="gap: 6px;">
+                                    <ng-container *ngIf="!parcialProduct.isFinal">
+                                        <div class="">{{parcialProduct.name ? parcialProduct.name : 'Producto sin nombre'}}</div>
+                                        <div class="d-flex align-items-center justify-content-between w-100">
+                                            <div class="">
+                                                <b>{{!!parcialProduct.type?.type ? parcialProduct.type?.type : 'Sin tipo de producto'}}</b>
+                                            </div>
+                                            <div class="details clickeable" (click)="parcialProduct.dropdown = !!!parcialProduct.dropdown">
+                                                <ng-container *ngIf="!parcialProduct.dropdown">
+                                                    <span>Ver detalles</span>
+                                                    <img src="assets/icons/chevron-down-fill.svg">
+                                                </ng-container>
+                                                <ng-container *ngIf="parcialProduct.dropdown">
+                                                    <span>Dejar de ver</span>
+                                                    <img src="assets/icons/chevron-up-fill.svg">
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-container dropdown-big" [ngClass]="{'dropdown-active': parcialProduct.dropdown}">
+                                            <div class="d-flex flex-column" style="gap: 12px;">
+                                                <div class="d-flex flex-column" style="gap: 6px;">
+                                                    <b>Título</b>
+                                                    <div class="">{{parcialProduct.name}}</div>
+                                                </div>
+                                                <div class="d-flex flex-column" style="gap: 6px;">
+                                                    <b>Instrucciones</b>
+                                                    <div class="">{{parcialProduct.instructions}}</div>
+                                                </div>
+                                                <div class="d-flex flex-column" style="gap: 6px;">
+                                                    <b>Tipo de evaluación</b>
+                                                    <div class="">{{parcialProduct.evaluationType?.name ? parcialProduct.evaluationType?.name : 'Sin tipo de evaluación'}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
                         </div>
-                        <div class="d-flex flex-column justify-content-between h-100">
+                        <div class="d-flex flex-column info-medium justify-content-between align-self-stretch flex-grow-1" style="gap: 12px;">
                             <div class="info">
-                                <label>Productos final</label>
+                                <label class="m-0">Producto final</label>
+                                <div class="d-flex flex-column w-100" style="gap: 6px;">
+                                    <div class="">{{parcialProductFinal?.name ? parcialProductFinal?.name : 'Producto sin nombre'}}</div>
+                                    <div class="d-flex align-items-center justify-content-between w-100">
+                                        <div class="">
+                                            <b>{{!!parcialProductFinal?.type?.type ? parcialProductFinal?.type?.type : 'Sin tipo de producto'}}</b>
+                                        </div>
+                                        <div class="details clickeable" (click)="dropdowns.finalProduct = !dropdowns.finalProduct">
+                                            <ng-container *ngIf="!dropdowns.finalProduct">
+                                                <span>Ver detalles</span>
+                                                <img src="assets/icons/chevron-down-fill.svg">
+                                            </ng-container>
+                                            <ng-container *ngIf="dropdowns.finalProduct">
+                                                <span>Dejar de ver</span>
+                                                <img src="assets/icons/chevron-up-fill.svg">
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dropdown-container dropdown-big" [ngClass]="{'dropdown-active': dropdowns.finalProduct}">
+                                    <div class="d-flex flex-column" style="gap: 12px;">
+                                        <div class="d-flex flex-column" style="gap: 6px;">
+                                            <b>Título</b>
+                                            <div class="">{{parcialProductFinal?.name}}</div>
+                                        </div>
+                                        <div class="d-flex flex-column" style="gap: 6px;">
+                                            <b>Instrucciones</b>
+                                            <div class="">{{parcialProductFinal?.instructions}}</div>
+                                        </div>
+                                        <div class="d-flex flex-column" style="gap: 6px;">
+                                            <b>Tipo de evaluación</b>
+                                            <div class="">{{parcialProductFinal?.evaluationType?.name ? parcialProductFinal?.evaluationType?.name : 'Sin tipo de evaluación'}}</div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="info">
-                                <label>Evento de cierre</label>
+                                <label class="m-0">Evento de cierre</label>
+                                <div class="d-flex align-items-center justify-content-between w-100">
+                                    <div class="">
+                                        <b>{{!!finalEvent?.type?.name ? finalEvent?.type?.name : 'Sin tipo de evento'}}</b>
+                                    </div>
+                                    <div class="details clickeable" (click)="dropdowns.finalEvent = !dropdowns.finalEvent">
+                                        <ng-container *ngIf="!dropdowns.finalEvent">
+                                            <span>Ver detalles</span>
+                                            <img src="assets/icons/chevron-down-fill.svg">
+                                        </ng-container>
+                                        <ng-container *ngIf="dropdowns.finalEvent">
+                                            <span>Dejar de ver</span>
+                                            <img src="assets/icons/chevron-up-fill.svg">
+                                        </ng-container>
+                                    </div>
+                                </div>
+                                <div class="dropdown-container" [ngClass]="{'dropdown-active': dropdowns.finalEvent}">
+                                    <div class="d-flex flex-column" style="gap: 12px;">
+                                        <div class="d-flex flex-column" style="gap: 6px;">
+                                            <b>Detalles</b>
+                                            <div class="">{{finalEvent?.description}}</div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
     
                     <div class="d-flex justify-content-end w-100" style="gap: 10px;">
-                        <button class="btn btn-outline-primary">
+                        <button class="btn btn-outline-primary" (click)="ShowDropdowns()">
                             Ver plantilla completa
                         </button>
                         <button class="btn btn-primary">

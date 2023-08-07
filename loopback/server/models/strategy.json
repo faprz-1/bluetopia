@@ -6,6 +6,19 @@
   "options": {
     "validateUpsert": true
   },
+  "scope": {
+    "include": [
+      {"events": "type"},
+      {
+        "parcialProducts": [
+        "type",
+        "event",
+        "evaluationType",
+        {"resources": "file"}
+        ]
+      }
+    ]
+  },
   "properties": {
     "title": {
       "type": "string"
@@ -100,6 +113,7 @@
       "permission": "ALLOW",
       "property": [
         "CreateOne",
+        "CreateBasedOnAnother",
         "Update",
         "GetData",
         "GetActivities",
@@ -133,6 +147,34 @@
       "http": [
         {
           "path": "/",
+          "verb": "post"
+        }
+      ]
+    },
+    "prototype.CreateBasedOnAnother": {
+      "accepts": [
+        {
+          "arg": "ctx",
+          "type": "object",
+          "required": true,
+          "description": "",
+          "http": {
+            "source": "req"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "newTeachers",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/Clone",
           "verb": "post"
         }
       ]

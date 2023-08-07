@@ -183,7 +183,7 @@
     line-height: normal;
 }
 
-.dropdwon-content {
+.dropdown-content {
     display: flex;
     flex-direction: column;
     gap: 7px;
@@ -191,7 +191,6 @@
     max-height: 0px;
     transition: max-height .3s ease-in-out;
     overflow: hidden;
-    
 }
 .show {
     max-height: calc((40px + 7px) * 3);

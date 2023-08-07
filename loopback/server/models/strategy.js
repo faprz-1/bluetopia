@@ -12,6 +12,7 @@ module.exports = function(Strategy) {
     });
 
     Strategy.CreateOne = function(strategy, callback) {
+        if(strategy.hasOwnProperty('id')) delete strategy.id;
         Strategy.app.models.Grade.findOne({
             where: {
                 name: {like: `%${strategy.grade}%`}
@@ -42,6 +43,32 @@ module.exports = function(Strategy) {
                     }
                     else return callback(null, newStrategy);
                 });
+            });
+        });
+    }
+
+    Strategy.prototype.CreateBasedOnAnother = function(ctx, callback) {
+        let finalEvent = null;
+        const userId = ctx.accessToken.userId;
+        this.userId = userId;
+        Strategy.CreateOne(this, (err, newStrategy) => {
+            if(err) return callback(err);
+            
+            if(!!this.events() && !!this.events().length) finaleEvent = this.events().find(event => event.isFinal);
+            if(!!finalEvent) delete finalEvent.date;
+            Strategy.app.models.Event.CreateOne(finalEvent, (err, newFinalEvent) => {
+                if(err) return callback(err);
+
+                if(!!this.parcialProducts && this.parcialProducts().length) {
+                    let cont = 0, limit = this.parcialProducts().length;
+                    this.parcialProducts().forEach(parcialProduct => {
+                        parcialProduct.CloneAndAssignToStrategy(newStrategy, (err, newParcialProduct) => {
+                            if(err) return callback(err);
+    
+                            if(++cont == limit) return callback(null, newStrategy);
+                        });
+                    });
+                } else return callback(null, newStrategy);
             });
         });
     }

@@ -15,7 +15,8 @@ module.exports = function(ParcialProduct) {
         }
     });
 
-    ParcialProduct.CreateOne = function(ctx, parcialProduct, callback) {
+    ParcialProduct.CreateOne = function(parcialProduct, callback) {
+        if(parcialProduct.hasOwnProperty('id')) delete parcialProduct.id;
         if(!!parcialProduct.evaluationType) parcialProduct.evaluationTypeId = parcialProduct.evaluationType.id;
         if(parcialProduct.date) {
             const eventInstance = {
@@ -30,7 +31,7 @@ module.exports = function(ParcialProduct) {
                 ParcialProduct.create(parcialProduct, (err, newParcialProduct) => {
                     if(err) return callback(err);
                     
-                    newParcialProduct.UpdateResources(ctx, parcialProduct.resources, (err, updated) => {
+                    newParcialProduct.UpdateResources(parcialProduct.resources, (err, updated) => {
                         if(err) return callback(err);
 
                         return callback(null, newParcialProduct);
@@ -42,7 +43,7 @@ module.exports = function(ParcialProduct) {
             ParcialProduct.create(parcialProduct, (err, newParcialProduct) => {
                 if(err) return callback(err);
                 
-                newParcialProduct.UpdateResources(ctx, parcialProduct.resources, (err, updated) => {
+                newParcialProduct.UpdateResources(parcialProduct.resources, (err, updated) => {
                     if(err) return callback(err);
 
                     return callback(null, newParcialProduct);
@@ -77,7 +78,7 @@ module.exports = function(ParcialProduct) {
             ParcialProduct.upsert(parcialProduct, (err, updated) => {
                 if(err) return callback(err);
                 
-                updated.UpdateResources(ctx, parcialProduct.resources, (err, updatedResources) => {
+                updated.UpdateResources(parcialProduct.resources, (err, updatedResources) => {
                     if(err) return callback(err);
 
                     return callback(null, updated);
@@ -93,9 +94,8 @@ module.exports = function(ParcialProduct) {
         });
     }
 
-    ParcialProduct.prototype.UpdateResources = function(ctx, resources, callback) {
+    ParcialProduct.prototype.UpdateResources = function(resources, callback) {
         let files = [];
-        const userId = ctx.accessToken.userId;
         if(!resources || resources.length == 0) return callback(null, files);
         let cont = 0, limit = resources.length;
         if(!limit) return callback(null, files);
@@ -122,7 +122,6 @@ module.exports = function(ParcialProduct) {
                     });
                 }
                 else {
-                    resource.userId = userId;
                     ParcialProduct.app.models.Upload.newBase64File(resource, (err, newFile) => {
                         if(err) return callback(err);
     
@@ -139,6 +138,15 @@ module.exports = function(ParcialProduct) {
                     });
                 }
             });
+        });
+    }
+
+    ParcialProduct.prototype.CloneAndAssignToStrategy = function(strategy, callback) {
+        this.strategyId = strategy.id;
+        ParcialProduct.CreateOne(this, (err, newParcialProduct) => {
+            if(err) return callback(err);
+
+            return callback(null, newParcialProduct);
         });
     }
 

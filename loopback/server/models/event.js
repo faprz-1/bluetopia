@@ -3,6 +3,7 @@
 module.exports = function(Event) {
 
     Event.CreateOne = function(ctx, event, callback) {
+        if(!event) return callback(null, null);
         if(event.hasOwnProperty('id')) delete event.id;
         Event.create(event, (err, newEvent) => {
             if(err) return callback(err);

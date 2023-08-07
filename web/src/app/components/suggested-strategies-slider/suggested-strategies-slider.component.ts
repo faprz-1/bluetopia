@@ -1,5 +1,8 @@
 import { Component, OnInit, Input, EventEmitter, ViewChild } from '@angular/core';
 import { StrategyDetailsModalComponent } from '../strategy-details-modal/strategy-details-modal.component';
+import { ApiService } from 'src/app/services/api.service';
+import { ToastService } from 'src/app/services/toast.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-suggested-strategies-slider',
@@ -9,12 +12,18 @@ import { StrategyDetailsModalComponent } from '../strategy-details-modal/strateg
 export class SuggestedStrategiesSliderComponent implements OnInit {
 
   @Input() strategies: Array<any> = [];
+  @Input() templateId: any = null;
 
   @ViewChild('strategyDetailsModal') strategyDetailsModal?: StrategyDetailsModalComponent;
 
   setStrategy: EventEmitter<any> = new EventEmitter();
+  loading: boolean = false;
 
-  constructor() { }
+  constructor(
+    private api: ApiService,
+    private toast: ToastService,
+    private nav: NavigationService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -36,6 +45,20 @@ export class SuggestedStrategiesSliderComponent implements OnInit {
 
   GetArray(length: number): any[] {
     return Array(length).fill(0);
+  }
+
+  UseStrategy(strategy: any) {
+    this.loading = true;
+    this.api.Post(`/Strategies/${strategy.id}/Clone`, {}).subscribe(newStrategy => {
+      this.toast.ShowSuccess(`Estrategia clonada correctamente`);
+      let route = `plantillas/${this.templateId}/crear/${newStrategy.id}`;
+      this.loading = false;
+      this.nav.GoToUserRoute(route);
+    }, err => {
+      console.error("Error cloning strategy", err);
+      this.toast.ShowError(`Error al clonar estartegía`);
+      this.loading = false;
+    });
   }
 
 }
