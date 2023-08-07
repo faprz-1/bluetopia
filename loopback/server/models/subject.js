@@ -3,18 +3,14 @@
 module.exports = function(Subject) {
 
     Subject.CreateOneWithoutRepeat = function(subject, callback) {
-        Subject.findOne({
-            where: {name: {like: `%${subject.name}%`}}
-        }, (err, subjectFound) => {
+        let filter= {
+            where:{}
+        };
+        if(subject.id) filter.where.id = subject.id;
+        else filter.where.name = {like:`%${subject.name}%`};
+        Subject.findOrCreate(filter,subject,(err,instance,created)=>{
             if(err) return callback(err);
-
-            if(subjectFound) return callback(null, subjectFound);
-            
-            Subject.create(subject, (err, newSubject) => {
-                if(err) return callback(err);
-
-                return callback(null, newSubject);
-            });
+            return callback(null,instance);
         });
     }
 

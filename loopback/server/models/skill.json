@@ -26,7 +26,8 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": [
-        "GetAll"
+        "GetAll",
+        "CreateOne"
       ]
     }
   ],
@@ -46,6 +47,34 @@
         {
           "path": "/",
           "verb": "get"
+        }
+      ]
+    },
+    "CreateOne": {
+      "accepts": [
+        {
+          "arg": "skill",
+          "type": "object",
+          "required": true,
+          "description": "",
+          "http":{
+            "source":"body"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "skills",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/",
+          "verb": "post"
         }
       ]
     }
