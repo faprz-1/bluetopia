@@ -57,6 +57,7 @@ module.exports = function(Event) {
     }
 
     Event.prototype.UpsertResources = function(resources, callback) {
+        return callback(null, []);
         let files = [];
         if(!resources) return callback(null, files);
         let cont = 0, limit = resources.length;
