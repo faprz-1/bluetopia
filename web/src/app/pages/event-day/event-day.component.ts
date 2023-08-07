@@ -14,7 +14,7 @@ import { ToastService } from 'src/app/services/toast.service';
 export class EventDayComponent implements OnInit {
 
   strategyId: any;
-  eventDate: any;
+  date: any;
 
   activities: Array<any> = [];
   loading: boolean = false;
@@ -30,8 +30,8 @@ export class EventDayComponent implements OnInit {
   });
 
   public get formatedDate() {
-    if(!this.eventDate) return '';
-    return moment(this.eventDate).format('DD/MM/YY');
+    if(!this.date) return '';
+    return moment(this.date).format('DD/MM/YY');
   }
 
   constructor(
@@ -48,16 +48,16 @@ export class EventDayComponent implements OnInit {
   GetParams() {
     this.activatedRoute.params.subscribe(params => {
       this.strategyId = params['strategyId'];
-      this.eventDate = params['eventDate'];
+      this.date = params['date'];
       
-      this.eventForm.get('date')?.setValue(moment(this.eventDate).toISOString());
+      this.eventForm.get('date')?.setValue(moment(this.date).toISOString());
       this.eventForm.get('strategyId')?.setValue(this.strategyId);
       this.GetStrategyTeacherActivities();
     });
   }
 
   GoBack() {
-    this.nav.GoToUserRoute(`estrategias/${this.strategyId}/calendario`);
+    this.nav.GoToUserRoute(`mis-estrategias/${this.strategyId}/calendario`);
   }
 
   GetStrategyTeacherActivities() {

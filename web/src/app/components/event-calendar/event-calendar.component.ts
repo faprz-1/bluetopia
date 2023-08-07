@@ -11,10 +11,8 @@ import { NavigationService } from 'src/app/services/navigation.service';
 })
 export class EventCalendarComponent implements OnInit {
 
-  @Input() grade: string | null = null;
-  @Input() group: string | null = null;
-  @Input() templateId: string | null = null;
   @Input() strategyId: string | null = null;
+  @Input() events: Array<any> = [];
 
   weekDays: Array<any> = [
     {
@@ -48,7 +46,6 @@ export class EventCalendarComponent implements OnInit {
   ]
   year: number = moment().get('year');
   currentMonth: number = moment().get('month');
-  events: Array<any> = [];
   month: Array<any> = [];
 
   public get previousMonth() {
@@ -71,14 +68,14 @@ export class EventCalendarComponent implements OnInit {
   ngOnInit(): void {
     this.GetParams();
     moment.locale('es');
+    console.log(this.events);
     this.PopulateMonth(this.currentMonth);
   }
 
   GetParams() {
     this.activatedRoute.params.subscribe(params => {
       this.strategyId = params['strategyId'];
-      this.GetStrategyEvents();
-    })
+    });
   }
 
   PopulateMonth(month: number) {
@@ -109,15 +106,6 @@ export class EventCalendarComponent implements OnInit {
     }
     if(!!newWeek[0].day) this.month.push(newWeek);
   }
-
-  GetStrategyEvents() {
-    this.api.Get(`/Events/OfStrategy/${this.strategyId}`).subscribe(events => {
-      console.log(events);
-      this.events = events;
-    }, err => {
-      console.error("Erro getting month events", err);
-    });
-  }
   
   FormatDay(day: number | string) {
     let formatedDay: string = '';
@@ -130,7 +118,7 @@ export class EventCalendarComponent implements OnInit {
   
   AddEvent(weekDay: any) {
     let date = `${this.year}-${this.currentMonth+1}-${weekDay.day}`;
-    this.nav.GoToUserRoute(`estrategias/${this.strategyId}/calendario/nuevo-evento/${date}`);
+    this.nav.GoToUserRoute(`mis-estrategias/${this.strategyId}/calendario/${date}`);
   }
 
   GetEventsOfDate(date: string = ''): Array<any> {
@@ -139,11 +127,11 @@ export class EventCalendarComponent implements OnInit {
     dateParts[2].length == 1 ? dateParts[2] = `0${dateParts[2]}` : null;
     date = dateParts.join('-');
     if(!date) return [];
-    return this.events.filter(event => event.date.includes(date));
+    return this.events.filter(event => !!event.date && event.date.includes(date));
   }
 
   GetEventName(event: any) {
-    if(!!event.start) return event.start;
+    if(!!event.name) return event.name;
     else if(!!event.parcialProduct) return `${event.parcialProduct.name}`;
     else return `Sin nombre`;
   }

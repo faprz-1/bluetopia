@@ -67,6 +67,7 @@ module.exports = function(Strategy) {
                     let cont = 0, limit = strategy.parcialProducts.length;
                     strategy.parcialProducts.forEach(parcialProduct => {
                         parcialProduct.strategyId = newStrategy.id;
+                        parcialProduct.eventId = null;
                         Strategy.app.models.ParcialProduct.CreateOne(parcialProduct, (err, newParcialProduct) => {
                             if(err) return callback(err);
     

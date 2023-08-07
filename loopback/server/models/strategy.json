@@ -8,7 +8,7 @@
   },
   "scope": {
     "include": [
-      {"events": "type"},
+      {"events": ["type", "parcialProduct"]},
       {
         "parcialProducts": [
         "type",
