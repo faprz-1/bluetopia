@@ -1,7 +1,7 @@
 <div class="card">
     <div class="d-flex align-items-center justify-content-between align-self-stretch">
         <div class="group">
-            1°A
+            {{strategy?.strategyGroup?.grade?.name}}°{{strategy?.strategyGroup?.group?.name}}
         </div>
         <div class="d-flex align-items-center" style="gap: 16px;">
             <img class="clickeable" (click)="deleteStrategyModal.show()" src="assets/icons/delete.svg" alt="delete">

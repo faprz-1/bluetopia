@@ -51,18 +51,23 @@ module.exports = function(Strategy) {
         let finalEvent = null;
         const userId = ctx.accessToken.userId;
         this.userId = userId;
-        Strategy.CreateOne(this, (err, newStrategy) => {
+        let strategy = this.toJSON();
+        Strategy.CreateOne(strategy, (err, newStrategy) => {
             if(err) return callback(err);
             
-            if(!!this.events() && !!this.events().length) finaleEvent = this.events().find(event => event.isFinal);
-            if(!!finalEvent) delete finalEvent.date;
+            if(!!strategy.events && !!strategy.events.length) finalEvent = strategy.events.find(event => event.isFinal);
+            if(!!finalEvent) {
+                delete finalEvent.date;
+                finalEvent.strategyId = newStrategy.id;
+            }
             Strategy.app.models.Event.CreateOne(finalEvent, (err, newFinalEvent) => {
                 if(err) return callback(err);
 
-                if(!!this.parcialProducts && this.parcialProducts().length) {
-                    let cont = 0, limit = this.parcialProducts().length;
-                    this.parcialProducts().forEach(parcialProduct => {
-                        parcialProduct.CloneAndAssignToStrategy(newStrategy, (err, newParcialProduct) => {
+                if(!!strategy.parcialProducts && strategy.parcialProducts.length) {
+                    let cont = 0, limit = strategy.parcialProducts.length;
+                    strategy.parcialProducts.forEach(parcialProduct => {
+                        parcialProduct.strategyId = newStrategy.id;
+                        Strategy.app.models.ParcialProduct.CreateOne(parcialProduct, (err, newParcialProduct) => {
                             if(err) return callback(err);
     
                             if(++cont == limit) return callback(null, newStrategy);

@@ -81,6 +81,7 @@ export class StrategyDetailsModalComponent implements OnInit {
   }
 
   UseStrategy() {
+    this.loading = true;
     this.api.Post(`/Strategies/${this.strategy.id}/Clone`, {}).subscribe(newStrategy => {
       this.toast.ShowSuccess(`Estrategia clonada correctamente`);
       this.strategyDetailsModal?.hide();
@@ -90,6 +91,7 @@ export class StrategyDetailsModalComponent implements OnInit {
     }, err => {
       console.error("Error cloning strategy", err);
       this.toast.ShowError(`Error al clonar estartegía`);
+      this.loading = false;
     });
   }
 

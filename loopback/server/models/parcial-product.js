@@ -141,13 +141,4 @@ module.exports = function(ParcialProduct) {
         });
     }
 
-    ParcialProduct.prototype.CloneAndAssignToStrategy = function(strategy, callback) {
-        this.strategyId = strategy.id;
-        ParcialProduct.CreateOne(this, (err, newParcialProduct) => {
-            if(err) return callback(err);
-
-            return callback(null, newParcialProduct);
-        });
-    }
-
 };

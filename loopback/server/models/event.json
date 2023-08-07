@@ -65,15 +65,6 @@
     "CreateOne": {
       "accepts": [
         {
-          "arg": "ctx",
-          "type": "object",
-          "required": true,
-          "description": "",
-          "http": {
-            "source": "req"
-          }
-        },
-        {
           "arg": "event",
           "type": "object",
           "required": true,

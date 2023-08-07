@@ -2,13 +2,13 @@
 
 module.exports = function(Event) {
 
-    Event.CreateOne = function(ctx, event, callback) {
+    Event.CreateOne = function(event, callback) {
         if(!event) return callback(null, null);
         if(event.hasOwnProperty('id')) delete event.id;
         Event.create(event, (err, newEvent) => {
             if(err) return callback(err);
             
-            newEvent.UpsertResources(ctx, event.resources, (err, resources) => {
+            newEvent.UpsertResources(event.resources, (err, resources) => {
                 if(err) return callback(err);
                 
                 newEvent.resources = resources;
@@ -29,9 +29,8 @@ module.exports = function(Event) {
         });
     }
 
-    Event.prototype.UpsertResources = function(ctx, resources, callback) {
+    Event.prototype.UpsertResources = function(resources, callback) {
         let files = [];
-        const userId = ctx.accessToken.userId;
         if(!resources) return callback(null, files);
         let cont = 0, limit = resources.length;
         if(!limit) return callback(null, files);
@@ -49,7 +48,6 @@ module.exports = function(Event) {
                 });
             }
             else {
-                resource.userId = userId;
                 Event.app.models.Upload.newBase64File(resource, (err, newFile) => {
                     if(err) return callback(err);
 
