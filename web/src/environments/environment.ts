@@ -6,6 +6,7 @@
 export const environment = {
   production: false,
   staging: false,
+  timeZone: 'America/Mexico_City',
   baseURL: "http://localhost:8127/api",
   socketURL: "http://localhost:8127",
   host: 'http://localhost:4200/#/',

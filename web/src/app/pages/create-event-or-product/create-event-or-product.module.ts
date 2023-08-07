@@ -8,6 +8,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { CreateEventOrProductComponent } from './create-event-or-product.component';
 import { LibraryFileSelectorModalModule } from 'src/app/components/library-file-selector-modal/library-file-selector-modal.module';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 const MODULE_ROUTES = [
   { path: '', component: CreateEventOrProductComponent }
@@ -24,6 +25,7 @@ const MODULE_ROUTES = [
     ReactiveFormsModule,
     ControlMessagesModule,
     ModalModule.forRoot(),
+    BsDatepickerModule.forRoot(),
     LibraryFileSelectorModalModule,
     RouterModule.forChild(MODULE_ROUTES),
   ],

@@ -378,6 +378,7 @@
           "*": false,
           "CreateOne": true,
           "Update": true,
+          "Delete": true,
           "GetAllOfStrategy": true,
           "Proof": true
         }

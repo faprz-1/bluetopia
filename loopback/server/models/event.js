@@ -29,6 +29,31 @@ module.exports = function(Event) {
         });
     }
 
+    Event.Delete = function(eventId, callback) {
+        Event.findById(eventId, {include: 'parcialProduct'}, (err, event) => {
+            if(err) return callback(err);
+
+            if(!event) return callback(null, true);
+            if(!!event.parcialProduct()) {
+                event.parcialProduct().eventId = null;
+                event.parcialProduct().save((err, saved) => {
+                    if(err) return callback(err);
+                    event.destroy((err, destroyed) => {
+                        if(err) return callback(err);
+                        
+                        return callback(null, destroyed);
+                    });
+                });
+            }
+            else {
+                event.destroy((err, destroyed) => {
+                    if(err) return callback(err);
+                    return callback(null, destroyed);
+                });
+            }
+        });
+    }
+
     Event.prototype.UpsertResources = function(resources, callback) {
         let files = [];
         if(!resources) return callback(null, files);

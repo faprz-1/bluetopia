@@ -16,7 +16,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "file": {
+      "type": "belongsTo",
+      "model": "UploadedFiles",
+      "foreignKey": "fileId"
+    }
+  },
   "acls": [],
   "methods": {}
 }

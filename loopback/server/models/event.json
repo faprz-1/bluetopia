@@ -40,6 +40,12 @@
       "type": "hasOne",
       "model": "ParcialProduct",
       "foreignKey": "eventId"
+    },
+    "resources": {
+      "type": "hasMany",
+      "model": "UploadedFiles",
+      "through": "EventFile",
+      "foreignKey": "eventId"
     }
   },
   "acls": [
@@ -57,6 +63,7 @@
       "property": [
         "CreateOne",
         "Update",
+        "Delete",
         "GetAllOfStrategy"
       ]
     }
@@ -118,6 +125,31 @@
         {
           "path": "/",
           "verb": "patch"
+        }
+      ]
+    },
+    "Delete": {
+      "accepts": [
+        {
+          "arg": "eventId",
+          "type": "number",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "newEvent",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/:eventId",
+          "verb": "delete"
         }
       ]
     },

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment-timezone';
 import { ApiService } from 'src/app/services/api.service';
 import { NavigationService } from 'src/app/services/navigation.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-event-calendar',
@@ -44,8 +45,8 @@ export class EventCalendarComponent implements OnInit {
       name: 'Domingo',
     },
   ]
-  year: number = moment().get('year');
-  currentMonth: number = moment().get('month');
+  year: number = moment().tz(environment.timeZone).get('year');
+  currentMonth: number = moment().tz(environment.timeZone).get('month');
   month: Array<any> = [];
 
   public get previousMonth() {
@@ -68,7 +69,6 @@ export class EventCalendarComponent implements OnInit {
   ngOnInit(): void {
     this.GetParams();
     moment.locale('es');
-    console.log(this.events);
     this.PopulateMonth(this.currentMonth);
   }
 
@@ -87,7 +87,7 @@ export class EventCalendarComponent implements OnInit {
       month = this.currentMonth = 0;
       this.year++;
     }
-    const days = moment().month(month).daysInMonth();
+    const days = moment().tz(environment.timeZone).month(month).daysInMonth();
     let currentDay = 1;
     let yesterday = currentDay;
     let newWeek = this.weekDays.map(day => Object.assign({}, day));
