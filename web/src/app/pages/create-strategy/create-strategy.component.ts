@@ -31,7 +31,6 @@ export class CreateStrategyComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.GetSuggestedStrategies();
     this.GetParams();
   }
 
@@ -39,6 +38,7 @@ export class CreateStrategyComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.templateId = params['templateId'];
       this.GetTemplate();
+      this.GetSuggestedStrategies();
     });
   }
 
@@ -94,10 +94,6 @@ export class CreateStrategyComponent implements OnInit {
 
   GetArray(length: number): any[] {
     return Array(length).fill(0);
-  }
-
-  GoToNewStrategyForm() {
-    this.nav.GoToUserRoute(`plantillas/${this.templateId}/crear`);
   }
 
 }

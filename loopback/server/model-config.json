@@ -165,7 +165,9 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
-          "GetAll": true
+          "GetAll": true,
+          "CreateOneWithoutRepeat":true
+
         }
       }
     }
@@ -265,7 +267,8 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
-          "GetAll": true
+          "GetAll": true,
+          "CreateOne":true
         }
       }
     }
@@ -277,7 +280,8 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
-          "GetAll": true
+          "GetAll": true,
+          "CreateOne":true
         }
       }
     }
@@ -314,6 +318,7 @@
         "sharedMethods": {
           "*": false,
           "CreateOne": true,
+          "prototype.CreateBasedOnAnother": true,
           "prototype.Update": true,
           "GetData": true,
           "prototype.GetActivities": true,
@@ -373,6 +378,7 @@
           "*": false,
           "CreateOne": true,
           "Update": true,
+          "Delete": true,
           "GetAllOfStrategy": true,
           "Proof": true
         }

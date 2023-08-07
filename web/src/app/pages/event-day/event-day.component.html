@@ -7,7 +7,7 @@
         <div></div>
     </div>
 
-    <div class="d-flex justify-content-between align-items-end mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
         <div class="back-section">
             <img class="back-icon clickeable" src="assets/icons/back-arrow.png" alt="back-arrow" (click)="GoBack()">
         </div>
@@ -20,106 +20,61 @@
         </div>
     </div>
 
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-10 col-lg-8">
-            <form [formGroup]="eventForm">
-                <div class="subtitle">
-                    Selecciona tu estrategia
-                </div>
-            
-                <div class="flex-row">
-                    <div class="subtitle my-auto">
-                        Inicio
-                    </div>
-                    <div class="input-container w-75 my-auto">
-                        <input class="form-control no-icon" type="text" placeholder="Inicio" formControlName="start">
+    <div class="d-flex flex-column align-items-center w-100" style="gap: 24px;">
+        <div class="d-flex align-items-center justify-content-between w-100" style="gap: 24px;">
+            <div class="event-card" *ngFor="let event of events">
+                <div class="d-flex align-items-center justify-content-between align-self-stretch">
+                    <span class="text-primary text-uppercase">
+                        {{strategy?.strategyGroup?.grade?.name}}°{{strategy?.strategyGroup?.group?.name}}
+                    </span>
+
+                    <div class="d-flex align-items-center" style="gap: 12px;">
+                        <img class="clickeable" src="assets/icons/delete.svg" (click)="selectedEvent = event; deleteEventConfirmationModal.show()">
                     </div>
                 </div>
-                <div class="flex-row">
-                    <div class="subtitle my-auto">
-                        Desarrollo
-                    </div>
-                    <div class="input-container w-75 my-auto">
-                        <input class="form-control no-icon" type="text" placeholder="Desarrollo" formControlName="body">
-                    </div>
+                <div class="text-success">
+                    Categoría
                 </div>
-                <div class="flex-row">
-                    <div class="subtitle my-auto">
-                        Cierre
-                    </div>
-                    <div class="input-container w-75 my-auto">
-                        <input class="form-control no-icon" type="text" placeholder="Cierre" formControlName="closure">
-                    </div>
+                <div class="">
+                    <span>{{event.name}}</span>
                 </div>
-    
-                <div class="subtitle">
-                    Asigna una actividad para ese día
+                <div class="d-flex flex-column">
+                    <label class="text-primary mb-1"><b>Instrucciones</b></label>
+                    <span>{{event.instructions ? event.instructions : 'Sin instrucciones'}}</span>
                 </div>
-    
-                <div class="input-container">
-                    <ng-select
-                        class="form-control with-border"
-                        [items]="activities"
-                        bindLabel="name"
-                        bindValue="id"
-                        [multiple]="false"
-                        placeholder="Selecciona tu actividad"
-                        formControlName="parcialProjectId">
-                    </ng-select>
-                </div>
-    
-                <div class="subtitle">
-                    Asigna los recursos a utilizar
-                </div>
-    
-                <div class="flex-files-container">
-                    <div class="flex-files">
-                        <div class="flex-icons" *ngIf="!GetFiles('new').length">
-                            <img src="assets/icons/video-recorder.png" alt="video">
-                            <img src="assets/icons/gallery.png" alt="video">
-                            <img src="assets/icons/book-closed-green.png" alt="video">
-                        </div>
-                        <div class="flex-resources" *ngIf="!!GetFiles('new').length">
-                            <div class="resource" *ngFor="let file of GetFiles('new')">
-                                <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
-                                {{file.name}}
-                            </div>
-                        </div>
-                        <input class="d-none" type="file" #fileInput multiple (change)="OnFileSelected($event)">
-                        <button class="btn btn-success btn-block" (click)="fileInput.click()">
-                            Adjuntar algún recurso
-                        </button>
-                    </div>
-    
-                    <div class="flex-files mr-0">
-                        <div class="flex-icons" *ngIf="!GetFiles('old').length">
-                            <img src="assets/icons/library.png" alt="video">
-                            <img src="assets/icons/movie.png" alt="video">
-                            <img src="assets/icons/microscope.png" alt="video">
-                        </div>
-                        <div class="flex-resources" *ngIf="!!GetFiles('old').length">
-                            <div class="resource" *ngFor="let file of GetFiles('old')">
-                                <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
-                                {{file.name}}
-                            </div>
-                        </div>
-                        <button class="btn btn-success btn-block" (click)="libraryModal.OpenModal()">
-                            Adjuntar de la biblioteca
-                        </button>
-                    </div>
-                </div>
-            </form>
+            </div>
         </div>
-        <div class="col-12 text-right mb-5">
-            <button class="btn btn-primary btn-bigger" (click)="SaveEvent()">
-                <span *ngIf="!loading">Continuar</span>
-                <span *ngIf="loading"><i class="zmdi zmdi-spinner zmdi-hc-lg zmdi-hc-spin"></i></span>
-            </button>
+
+        <button class="btn btn-success" (click)="GoToCreateEventOrProduct()">
+            Agregar evento o producto
+        </button>
+    </div>
+</div>
+
+<div class="modal fade" bsModal #deleteEventConfirmationModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
+    tabindex="-1" role="dialog" aria-labelledby="deleteEventConfirmationModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body finish-modal-content">
+                <div class="d-flex flex-column" style="gap: 12px;">
+                    <div class="">
+                        ¿Está seguro/a de que desea eliminar el evento "{{selectedEvent?.name}}"?
+                    </div>
+                    <div class="title text-danger">
+                        Al eliminarlo ya no podrá recuperarlo
+                    </div>
+                    <div class="d-flex align-items-center justify-content-end w-100" style="gap: 48px;">
+                        <button class="btn btn-secondary w-50" [disabled]="loading.deleting" (click)="deleteEventConfirmationModal.hide()">
+                            No, cancelar
+                        </button>
+                        <button class="btn btn-primary w-50" [disabled]="loading.deleting"
+                            (click)="DeleteEvent()">
+                            Si, eliminar
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<app-library-file-selector-modal
-    #libraryModal
-    (onFilesSelectd)="OnLibraryFilesSelected($event)"
-></app-library-file-selector-modal>

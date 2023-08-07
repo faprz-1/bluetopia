@@ -1,36 +1,25 @@
 <div class="content">
-    <div class="row-header">
-        <div></div>
-        <div class="title">
-            Calendario
-        </div>
-        <div></div>
-    </div>
-
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="row-header mb-5">
         <div class="back-section">
             <img class="back-icon clickeable" src="assets/icons/back-arrow.png" alt="back-arrow" (click)="GoBack()">
         </div>
-
+    </div>
+    
+    <div class="d-flex flex-column mb-4" style="gap: 12px;">
+        <div class="title mb-0">
+            Calendario
+        </div>
         <div class="subtitle">
             Planea tus estrategias para cada día
         </div>
-
-        <div>
+        <div class="text">
+            Selecciona el día para visualizar las actividades planeadas para esa fecha y crear nuevas
         </div>
     </div>
-
     <app-event-calendar
-        *ngIf="!loading.params"
-        [grade]="grade"
-        [group]="group"
-        [templateId]="templateId"
+        *ngIf="!!strategy"
         [strategyId]="strategyId"
+        [events]="strategy.events"
     ></app-event-calendar>
 
-    <div class="d-flex justify-content-end mb-5">
-        <button class="btn btn-primary btn-bigger" (click)="GoBack()">
-            Continuar
-        </button>
-    </div>
 </div>

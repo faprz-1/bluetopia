@@ -12,6 +12,7 @@ module.exports = function(Strategy) {
     });
 
     Strategy.CreateOne = function(strategy, callback) {
+        if(strategy.hasOwnProperty('id')) delete strategy.id;
         Strategy.app.models.Grade.findOne({
             where: {
                 name: {like: `%${strategy.grade}%`}
@@ -46,13 +47,47 @@ module.exports = function(Strategy) {
         });
     }
 
+    Strategy.prototype.CreateBasedOnAnother = function(ctx, callback) {
+        let finalEvent = null;
+        const userId = ctx.accessToken.userId;
+        let strategy = this.toJSON();
+        strategy.userId = userId;
+        Strategy.CreateOne(strategy, (err, newStrategy) => {
+            if(err) return callback(err);
+            
+            if(!!strategy.events && !!strategy.events.length) finalEvent = strategy.events.find(event => event.isFinal);
+            if(!!finalEvent) {
+                delete finalEvent.date;
+                finalEvent.strategyId = newStrategy.id;
+            }
+            Strategy.app.models.Event.CreateOne(finalEvent, (err, newFinalEvent) => {
+                if(err) return callback(err);
+
+                if(!!strategy.parcialProducts && strategy.parcialProducts.length) {
+                    let cont = 0, limit = strategy.parcialProducts.length;
+                    strategy.parcialProducts.forEach(parcialProduct => {
+                        parcialProduct.strategyId = newStrategy.id;
+                        parcialProduct.eventId = null;
+                        Strategy.app.models.ParcialProduct.CreateOne(parcialProduct, (err, newParcialProduct) => {
+                            if(err) return callback(err);
+    
+                            if(++cont == limit) return callback(null, newStrategy);
+                        });
+                    });
+                } else return callback(null, newStrategy);
+            });
+        });
+    }
+
     Strategy.prototype.Update = function(ctx, strategy, callback) {
         if(!!strategy.dates && strategy.dates.length == 2) {
             strategy.endDate = strategy.dates.pop();
             strategy.startDate = strategy.dates.pop();
             delete strategy.dates;
         }
-        Strategy.app.models.StrategyGroup.UpdateStrategyGroup(strategy.id, typeof strategy.grade == 'object' && !!strategy.grade ? strategy.grade.id : strategy.grade, typeof strategy.group == 'object' && !!strategy.group ? strategy.group.id : strategy.group, (err, saved) => {
+        let grade = strategy.grade ? strategy.grade.id : 0;
+        let group = strategy.group ? strategy.group.id : 0;
+        Strategy.app.models.StrategyGroup.UpdateStrategyGroup(strategy.id, grade,group, (err, saved) => {
             if(err) return callback(err);
 
             Strategy.upsert(strategy, (err, strategyUpdated) => {

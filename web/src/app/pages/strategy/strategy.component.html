@@ -1,0 +1,56 @@
+<div class="content">
+    <div class="title-row mb-5">
+        <div>
+            <img class="clickeable" src="assets/icons/back-arrow.png" alt="back" (click)="GoBack()">
+        </div>
+        <div class="nav-row">
+            <span>Mis Estrategias</span>
+            <img src="assets/icons/right-chevron.svg">
+            <span>{{strategy?.template?.nickname ? strategy?.template?.nickname : strategy?.template?.name }}</span>
+            <img src="assets/icons/right-chevron.svg">
+            <span class="category">Agua potable</span>
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <button class="btn btn-primary">
+            Editar paso por paso
+        </button>
+    </div>
+
+    <div class="strategy-form" [formGroup]="strategyForm">
+        <div class="d-flex align-items-center justify-content-between align-self-stretch text-uppercase">
+            <label class="m-0">{{strategyGroup}}</label>
+            <div class="d-flex align-items-center" style="gap: 16px;">
+                <img class="clickeable" src="assets/icons/delete.svg" alt="delete">
+                <img class="clickeable" src="assets/icons/edit.svg" alt="edit">
+            </div>
+        </div>
+        <div class="d-flex flex-column w-100">
+            <div class="input-container">
+                <input type="text" class="form-control no-icon" placeholder="Categoría">
+            </div>
+        </div>
+        <div class="d-flex flex-column w-100">
+            <label>Título</label>
+            <div class="input-container">
+                <input type="text" class="form-control no-icon" placeholder="Título" formControlName="title">
+            </div>
+        </div>
+        <div class="d-flex flex-column w-100">
+            <label>Pregunta generadora</label>
+            <div class="input-container">
+                <input type="text" class="form-control no-icon" placeholder="Título" formControlName="title">
+            </div>
+        </div>
+        <div class="d-flex flex-column w-100">
+            <label>Disciplinas</label>
+            <div class="subjects">
+                <div class="subject">
+                    Español
+                    <img class="clickeable" src="assets/icons/delete.svg" width="24" height="24" alt="delete">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

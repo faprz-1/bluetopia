@@ -3,7 +3,7 @@
 module.exports = function(StrategyGroup) {
 
     StrategyGroup.UpdateStrategyGroup = function(strategyId, gradeId, groupId, callback) {
-        if(!strategyId || !gradeId || !groupId) return callback(null, {});
+        if(!strategyId && !gradeId && !groupId) return callback(null, {});
         let instance = {
             strategyId,
             gradeId,
@@ -11,7 +11,6 @@ module.exports = function(StrategyGroup) {
         }
         StrategyGroup.findOrCreate({where: {strategyId}}, instance, (err, relation) => {
             if(err) return callback(err);
-
             StrategyGroup.updateAll({strategyId}, {gradeId, groupId}, (err, updated) => {
                 if(err) return callback(err);
 
