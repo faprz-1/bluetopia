@@ -6,6 +6,20 @@
   "options": {
     "validateUpsert": true
   },
+  "scope": {
+    "include": [
+      {"strategyGroup": ["grade", "group"]},
+      {"events": ["type", {"parcialProduct": "type"}]},
+      {
+        "parcialProducts": [
+        "type",
+        "event",
+        "evaluationType",
+        {"resources": "file"}
+        ]
+      }
+    ]
+  },
   "properties": {
     "title": {
       "type": "string"
@@ -34,6 +48,11 @@
     },
     "lastModified": {
       "type": "string"
+    },
+    "isDeleted": {
+      "type": "boolean",
+      "required": true,
+      "default": false
     }
   },
   "validations": [],
@@ -95,12 +114,15 @@
       "permission": "ALLOW",
       "property": [
         "CreateOne",
+        "CreateBasedOnAnother",
         "Update",
         "GetData",
         "GetActivities",
         "GetAllOfSchool",
         "GetAllOfTeacher",
-        "GetStudents"
+        "GetStudents",
+        "Delete",
+        "GetSuggested"
       ]
     }
   ],
@@ -126,6 +148,34 @@
       "http": [
         {
           "path": "/",
+          "verb": "post"
+        }
+      ]
+    },
+    "prototype.CreateBasedOnAnother": {
+      "accepts": [
+        {
+          "arg": "ctx",
+          "type": "object",
+          "required": true,
+          "description": "",
+          "http": {
+            "source": "req"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "newTeachers",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/Clone",
           "verb": "post"
         }
       ]
@@ -287,6 +337,53 @@
       "http": [
         {
           "path": "/:strategyId/Students",
+          "verb": "get"
+        }
+      ]
+    },
+    "prototype.Delete": {
+      "accepts": [],
+      "returns": [
+        {
+          "arg": "deleted",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/",
+          "verb": "delete"
+        }
+      ]
+    },
+    "GetSuggested": {
+      "accepts": [
+        {
+          "arg": "strategySubject",
+          "type": "object",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "deleted",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/Suggested",
+          "verb": "get"
+        },
+        {
+          "path": "/Suggested/:strategySubject",
           "verb": "get"
         }
       ]

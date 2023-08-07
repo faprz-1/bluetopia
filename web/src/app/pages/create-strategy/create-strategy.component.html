@@ -107,8 +107,8 @@
             </div>
         </div>
 
-        <div class="w-100">
-            <app-suggested-strategies-slider></app-suggested-strategies-slider>
+        <div class="w-100" *ngIf="!!suggestedStrategies?.length">
+            <app-suggested-strategies-slider [strategies]="suggestedStrategies" [templateId]="templateId"></app-suggested-strategies-slider>
         </div>
     </div>
     

@@ -7,6 +7,7 @@ import { ControlMessagesModule } from 'src/app/components/control-messages/contr
 import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { SuggestedStrategiesSliderComponent } from './suggested-strategies-slider.component';
+import { StrategyDetailsModalModule } from '../strategy-details-modal/strategy-details-modal.module';
 
 const MODULE_ROUTES = [
   { path: '', component: SuggestedStrategiesSliderComponent }
@@ -23,6 +24,7 @@ const MODULE_ROUTES = [
     ReactiveFormsModule,
     ControlMessagesModule,
     ModalModule.forRoot(),
+    StrategyDetailsModalModule,
     // RouterModule.forChild(MODULE_ROUTES),
   ],
   exports: [SuggestedStrategiesSliderComponent]

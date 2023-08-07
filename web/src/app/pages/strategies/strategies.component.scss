@@ -5,36 +5,3 @@
     font-family: Mulish;
     font-weight: 700;
 }
-
-.card {
-    border: 2px solid var(--primary);
-    border-radius: 6px;
-    box-shadow: 3px 2px 4px 2px #cacaca;
-
-    .card-header {
-        border: none;
-        background-color: white;
-
-        .card-title {
-            color: var(--primary);
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-    }
-
-    .info {
-        margin-bottom: .5rem;
-
-        label {
-            color: var(--primary);
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0;
-        }
-        .text {
-            color: black;
-            font-size: 1.1rem;
-        }
-    }
-}

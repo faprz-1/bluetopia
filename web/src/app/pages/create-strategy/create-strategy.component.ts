@@ -16,6 +16,7 @@ export class CreateStrategyComponent implements OnInit {
   template: any = null;
   selectedTemplate: any = null;
   templateId: number = 0;
+  suggestedStrategies: Array<any> = [];
   loading: any = {
     creating: false,
     getting: true
@@ -37,6 +38,7 @@ export class CreateStrategyComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.templateId = params['templateId'];
       this.GetTemplate();
+      this.GetSuggestedStrategies();
     });
   }
 
@@ -82,12 +84,16 @@ export class CreateStrategyComponent implements OnInit {
     });
   }
 
-  GetArray(length: number): any[] {
-    return Array(length).fill(0);
+  GetSuggestedStrategies() {
+    this.api.Get(`/Strategies/Suggested`).subscribe(strategies => {
+      this.suggestedStrategies = strategies;
+    }, err => {
+      console.error("Error getting suggested strategies", err);
+    });
   }
 
-  GoToNewStrategyForm() {
-    this.nav.GoToUserRoute(`plantillas/${this.templateId}/crear`);
+  GetArray(length: number): any[] {
+    return Array(length).fill(0);
   }
 
 }

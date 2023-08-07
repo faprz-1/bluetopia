@@ -3,21 +3,15 @@
 module.exports = function(SepObjective) {
 
     SepObjective.CreateOne = function(sepObjective, callback) {
-        sepObjective.name = `${sepObjective.name.split('')[0].toUpperCase()}${sepObjective.name.substring(1).toLowerCase()}`;
-        SepObjective.findOne({
+        let filter = {
             where: {
-                name: {like: `%${sepObjective.name}%`}
+                name:{like:`%${sepObjective.name}%`}
             }
-        }, (err, sepObjectiveFound) => {
+        }
+
+        SepObjective.findOrCreate(filter,sepObjective,(err,instance,wasCreated)=>{
             if(err) return callback(err);
-
-            if(!!sepObjectiveFound) return callback(null, sepObjectiveFound);
-            
-            SepObjective.create(sepObjective, (err, newSepObjective) => {
-                if(err) return callback(err);
-
-                return callback(null, newSepObjective);
-            });
+            return callback(null,instance);
         });
     }
 

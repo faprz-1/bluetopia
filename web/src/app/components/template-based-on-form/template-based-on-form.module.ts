@@ -11,6 +11,7 @@ import { RubricModule } from 'src/app/components/rubric/rubric.module';
 import { TemplateBasedOnFormComponent } from './template-based-on-form.component';
 import { LibraryFileSelectorModalModule } from '../library-file-selector-modal/library-file-selector-modal.module';
 import { RubricTutorialModalModule } from '../rubric-tutorial-modal/rubric-tutorial-modal.module';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 const MODULE_ROUTES = [
   { path: '', component: TemplateBasedOnFormComponent }
@@ -27,6 +28,7 @@ const MODULE_ROUTES = [
     NgSelectModule,
     ReactiveFormsModule,
     ControlMessagesModule,
+    MatProgressBarModule,
     ModalModule.forRoot(),
     RubricTutorialModalModule,
     BsDatepickerModule.forRoot(),

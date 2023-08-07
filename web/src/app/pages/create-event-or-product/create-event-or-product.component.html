@@ -1,0 +1,182 @@
+<div class="content">
+    <div class="row-header">
+        <div></div>
+        <div class="title">
+            Calendario
+        </div>
+        <div></div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="back-section">
+            <img class="back-icon clickeable" src="assets/icons/back-arrow.png" alt="back-arrow" (click)="GoBack()">
+        </div>
+
+        <div class="event-date">
+            {{formatedDate}}
+        </div>
+
+        <div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+            <form class="form-container" [formGroup]="eventForm">
+                <div class="form-row">
+                    <span class="instruction-number">1</span>
+                    <div class="form-col">
+                        <div class="form-section-title">
+                            Selecciona un evento o producto
+                        </div>
+                        <div class="input-container with-border-thin">
+                            <input class="form-control no-icon" type="text" formControlName="name"
+                                placeholder="Nombre del producto">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <span class="instruction-number">2</span>
+                    <div class="form-col">
+                        <div class="form-section-title">
+                            ¿Hoy qué producto trabajarás?
+                        </div>
+                        <div class="input-container">
+                            <textarea class="form-control with-border-thin"
+                                formControlName="instructions" placeholder="Instrucciones del producto"
+                                rows="6"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <span class="instruction-number">4</span>
+                    <div class="form-col">
+                        <div class="form-section-title">
+                            Selecciona la fecha de entrega
+                        </div>
+                        <div class="input-container">
+                            <input #parcialProductDatePicker="bsDatepicker"
+                                class="form-control no-icon with-border-thin" type="text"
+                                formControlName="date" placeholder="Fecha de entrega"
+                                [bsConfig]="{ adaptivePosition: true, containerClass: 'theme-dark-blue' }"
+                                bsDatepicker>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="form-row">
+                    <span class="instruction-number">6</span>
+                    <div class="form-col">
+                        <div class="form-section-title">
+                            Asignar los recursos a utilizar
+                        </div>
+                        <div class="flex-files-container">
+                            <div class="flex-files" [ngClass]="{'active': !!GetFiles('new').length}">
+                                <div class="flex-icons">
+                                    <img src="assets/icons/video-recorder.png" alt="video">
+                                    <img src="assets/icons/gallery.png" alt="video">
+                                    <img src="assets/icons/book-closed-green.png" alt="video">
+                                </div>
+                                <input class="d-none" type="file" #fileInput multiple
+                                    (change)="OnFileSelected($event)">
+                                <div class="add-resource clickeable" (click)="fileInput.click()">
+                                    Adjuntar algún recurso
+                                </div>
+                                <div class="flex-resources"
+                                    *ngIf="!!parcialProductForm.get('resources')?.value.length">
+                                    <ng-container
+                                        *ngFor="let file of parcialProductForm.get('resources')?.value; let i = index">
+                                        <div class="resource" *ngIf="!file.id">
+                                            <div class="d-flex align-items-center" style="gap: 20px;">
+                                                <i
+                                                    class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
+                                                {{file.name}}
+                                            </div>
+                                            <img class="clickeable"
+                                                (click)="RemoveItemFromArray(parcialProductForm.get('resources')?.value, i)"
+                                                src="assets/icons/close-circle.svg" alt="Borrar">
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+
+                            <div class="flex-files" [ngClass]="{'active': !!GetFiles('old').length}">
+                                <div class="flex-icons">
+                                    <img src="assets/icons/library.png" alt="video">
+                                    <img src="assets/icons/movie.png" alt="video">
+                                    <img src="assets/icons/microscope.png" alt="video">
+                                </div>
+                                <div class="add-resource clickeable" (click)="libraryModal.OpenModal()">
+                                    Adjuntar de la biblioteca
+                                </div>
+                                <div class="flex-resources"
+                                    *ngIf="!!parcialProductForm.get('resources')?.value.length">
+                                    <ng-container
+                                        *ngFor="let file of parcialProductForm.get('resources')?.value; let i = index">
+                                        <div class="resource" *ngIf="!!file.id">
+                                            <div class="d-flex align-items-center" style="gap: 20px;">
+                                                <i
+                                                    class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
+                                                {{file.name}}
+                                            </div>
+                                            <img class="clickeable"
+                                                (click)="RemoveItemFromArray(parcialProductForm.get('resources')?.value, i)"
+                                                src="assets/icons/close-circle.svg" alt="Borrar">
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+    
+                <div class="flex-files-container">
+                    <div class="flex-files">
+                        <div class="flex-icons" *ngIf="!GetFiles('new').length">
+                            <img src="assets/icons/video-recorder.png" alt="video">
+                            <img src="assets/icons/gallery.png" alt="video">
+                            <img src="assets/icons/book-closed-green.png" alt="video">
+                        </div>
+                        <div class="flex-resources" *ngIf="!!GetFiles('new').length">
+                            <div class="resource" *ngFor="let file of GetFiles('new')">
+                                <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
+                                {{file.name}}
+                            </div>
+                        </div>
+                        <input class="d-none" type="file" #fileInput multiple (change)="OnFileSelected($event)">
+                        <button class="btn btn-success btn-block" (click)="fileInput.click()">
+                            Adjuntar algún recurso
+                        </button>
+                    </div>
+    
+                    <div class="flex-files mr-0">
+                        <div class="flex-icons" *ngIf="!GetFiles('old').length">
+                            <img src="assets/icons/library.png" alt="video">
+                            <img src="assets/icons/movie.png" alt="video">
+                            <img src="assets/icons/microscope.png" alt="video">
+                        </div>
+                        <div class="flex-resources" *ngIf="!!GetFiles('old').length">
+                            <div class="resource" *ngFor="let file of GetFiles('old')">
+                                <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
+                                {{file.name}}
+                            </div>
+                        </div>
+                        <button class="btn btn-success btn-block" (click)="libraryModal.OpenModal()">
+                            Adjuntar de la biblioteca
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-12 text-right mb-5">
+            <button class="btn btn-primary btn-bigger" (click)="SaveEvent()">
+                <span *ngIf="!loading">Continuar</span>
+                <span *ngIf="loading"><i class="zmdi zmdi-spinner zmdi-hc-lg zmdi-hc-spin"></i></span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<app-library-file-selector-modal
+    #libraryModal
+    (onFilesSelectd)="OnLibraryFilesSelected($event)"
+></app-library-file-selector-modal>

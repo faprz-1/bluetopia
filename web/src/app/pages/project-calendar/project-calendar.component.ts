@@ -11,15 +11,10 @@ import { NavigationService } from 'src/app/services/navigation.service';
 })
 export class ProjectCalendarComponent implements OnInit {
 
-  grade: any;
-  group: any;
-  templateId: any;
-  strategyId: any;
+  strategyId: any = null;
+  strategy: any = null;
 
   modalRef: BsModalRef | null = null;
-  loading: any = {
-    params: true,
-  }
 
   constructor(
     private api: ApiService,
@@ -42,11 +37,16 @@ export class ProjectCalendarComponent implements OnInit {
 
   GetParams() {
     this.activatedRoute.params.subscribe(params => {
-      this.grade = params['grade'];
-      this.group = params['group'];
-      this.templateId = params['templateId'];
       this.strategyId = params['strategyId'];
-      this.loading.params = false;
+      this.GetStrategy();
+    });
+  }
+  
+  GetStrategy() {
+    this.api.Get(`/Strategies/${this.strategyId}`).subscribe(strategy => {
+      this.strategy = strategy;
+    }, err => {
+      console.error("Error getting strategy", err);
     });
   }
 

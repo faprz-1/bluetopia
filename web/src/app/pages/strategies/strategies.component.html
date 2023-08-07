@@ -61,53 +61,7 @@
     </div>
     <div class="row" *ngIf="!!strategies.length; else noStrategies">
         <div class="col-12 col-md-6 col-lg-4 mb-1" *ngFor="let strategy of strategies">
-            <div class="card py-3 px-2">
-                <div class="card-header">
-                    <h2 class="card-title">{{strategy.topic}}</h2>
-                </div>
-                <div class="card-body">
-                    <div class="info">
-                        <label>Título</label>
-                        <div class="text">{{strategy.title}}</div>
-                    </div>
-                    <div class="info">
-                        <label>Pregunta generadora</label>
-                        <div class="text">{{strategy.generatingQuestion}}</div>
-                    </div>
-                    <div class="info">
-                        <label>Plantilla</label>
-                        <div class="text">{{strategy.template?.name}}</div>
-                    </div>
-                    <div class="info">
-                        <label>Materias</label>
-                        <div class="text">
-                            <span *ngFor="let subject of strategy.subjects; let last = last">
-                                {{ !!last ? subject.name : (subject.name + ', ')}}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="info">
-                        <label>Grupo</label>
-                        <div class="text">
-                            <div class="text text-uppercase">{{strategy.strategyGroup?.grade?.name}}{{strategy.strategyGroup?.group?.name}}</div>
-                        </div>
-                    </div>
-                    <div class="flex-column align-items-center justify-content-between mt-3">
-                        <button class="btn btn-outline-success btn-block" *ngIf="!strategy.teams?.length" (click)="GoToEdit(strategy)">
-                            Editar
-                        </button>
-                        <button class="btn btn-primary btn-block" *ngIf="!strategy.teams?.length" (click)="GoToTeams(strategy)">
-                            Equipos
-                        </button>
-                        <button class="btn btn-primary btn-block" *ngIf="!!strategy.teams?.length" (click)="GoToTeamsProgress(strategy)">
-                            Progreso de equpos
-                        </button>
-                        <button class="btn btn-outline-primary btn-block" (click)="GoToCalendar(strategy)">
-                            Calendario
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <app-strategy-card [strategy]="strategy" (onChange)="OnStrategyChange($event)"></app-strategy-card>
         </div>
     </div>
 </div>
