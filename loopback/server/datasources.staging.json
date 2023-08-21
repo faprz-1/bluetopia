@@ -1,12 +1,12 @@
 {
   "mysqlDev": {
-    "host": "jarabeapi.com",
+    "host": "localhost",
     "port": 3306,
     "url": "",
-    "database": "template",
-    "password": "bq32H9?xyDYbaj6_",
+    "database": "bluetopia",
+    "password": "",
     "name": "mysqlDev",
-    "user": "jarabe_dev",
+    "user": "root",
     "connector": "mysql"
   }
 }

@@ -7,11 +7,11 @@
     "host": "localhost",
     "port": 3306,
     "url": "",
-    "database": "template",
+    "database": "bluetopia",
     "password": "",
     "name": "mysqlDev",
     "user": "root",
-    "connector": "mysql"  
+    "connector": "mysql"
   },
   "localFiles": {
     "name": "localFiles",
