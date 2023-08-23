@@ -47,7 +47,7 @@ export class SchoolTeachersComponent implements OnInit {
       return;
     }
     let teacher = this.teacherForm.value;
-    teacher.schoolUserId = this.api.GetUser().id;
+    teacher.schoolId = this.api.GetUser().schoolId;
     this.teachers.push(teacher);
     this.ResetForm();
   }

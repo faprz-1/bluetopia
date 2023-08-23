@@ -97,10 +97,10 @@ module.exports = function(Teacher) {
         });
     }
 
-    Teacher.GetAllOfSchool = function(schoolUserId, callback) {
+    Teacher.GetAllOfSchool = function(schoolId, callback) {
         Teacher.find({
             where: {
-                schoolUserId
+                schoolId
             },
             include: ['subjects', {'teacherGroups': ['grade', 'group']}]
         }, (err, schoolTeachers) => {
@@ -156,7 +156,7 @@ module.exports = function(Teacher) {
                 username: this.name,
                 email: this.email,
                 password: !!password ? password : '123',
-                schoolUserId: this.schoolUserId
+                schoolId: this.schoolId
             }
             Teacher.app.models.Usuario.RegisterUser(user, null, 'Teacher', (err, newTeacherUser) => {
                 
@@ -196,8 +196,8 @@ module.exports = function(Teacher) {
         });
     }
 
-    Teacher.ChangeSchoolUserId = function(teacherId, newSchoolUserId, callback) {
-        if(!newSchoolUserId || !teacherId) return callback(null, {});
+    Teacher.ChangeSchoolId = function(teacherId, newSchoolId, callback) {
+        if(!newSchoolId || !teacherId) return callback(null, {});
         Teacher.findOne({
             where: {
                 userId: teacherId
@@ -207,9 +207,9 @@ module.exports = function(Teacher) {
             if(err) return callback(err);
 
             if(!teacher) return callback('teacher not found!!');
-            if(!teacher.schoolUserId) {
-                teacher.schoolUserId = newSchoolUserId;
-                teacher.user().schoolUserId = newSchoolUserId;
+            if(!teacher.schoolId) {
+                teacher.schoolId = newSchoolId;
+                teacher.user().schoolId = newSchoolId;
             }
             teacher.save((err, saved) => {
                 if(err) return callback(err);
@@ -217,7 +217,7 @@ module.exports = function(Teacher) {
                 Teacher.app.models.Usuario.upsert(teacher.user(), (err, userSaved) => {
                     if(err) return callback(err);
 
-                    Teacher.app.models.UpdateSchoolUserId(teacherId, newSchoolUserId, (err, studentsUpdated) => {
+                    Teacher.app.models.UpdateSchoolId(teacherId, newSchoolId, (err, studentsUpdated) => {
                         if(err) return callback(err);
             
                         return callback(null, saved);

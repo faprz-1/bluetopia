@@ -82,21 +82,31 @@
                                         <input class="form-control" type="text" maxlength="10" placeholder="Teléfono" formControlName="phone">
                                     </div>
                                     <app-control-messages [control]="userRegisterForm.get('phone')"></app-control-messages>
-                                    <div class="input-container">
-                                        <div class="input-icon-container text-center">
-                                            <img src="assets/icons/school.png">
+                                    <ng-container [formGroup]="schoolForm">
+                                        <div class="input-container">
+                                            <div class="input-icon-container text-center">
+                                                <img src="assets/icons/school.png">
+                                            </div>
+                                            <input class="form-control" type="text" placeholder="Nombre de la institución" formControlName="name">
+                                            <span class="required-span">*</span>
                                         </div>
-                                        <input class="form-control" type="text" placeholder="Nombre de la institución" formControlName="schoolName">
-                                        <span class="required-span">*</span>
-                                    </div>
-                                    <app-control-messages [control]="userRegisterForm.get('schoolName')"></app-control-messages>
-                                    <div class="input-container">
-                                        <div class="input-icon-container text-center">
-                                            <img src="assets/icons/user-phone.png">
+                                        <app-control-messages [control]="schoolForm.get('name')"></app-control-messages>
+                                        <div class="input-container">
+                                            <div class="input-icon-container text-center">
+                                                <img src="assets/icons/location.png">
+                                            </div>
+                                            <input class="form-control" type="text" placeholder="Dirección" formControlName="address">
+                                            <span class="required-span">*</span>
                                         </div>
-                                        <input class="form-control" type="text" maxlength="10" placeholder="Teléfono escolar" formControlName="schoolPhone">
-                                    </div>
-                                    <app-control-messages [control]="userRegisterForm.get('schoolPhone')"></app-control-messages>
+                                        <app-control-messages [control]="schoolForm.get('address')"></app-control-messages>
+                                        <div class="input-container">
+                                            <div class="input-icon-container text-center">
+                                                <img src="assets/icons/user-phone.png">
+                                            </div>
+                                            <input class="form-control" type="text" maxlength="10" placeholder="Teléfono escolar" formControlName="phone">
+                                        </div>
+                                        <app-control-messages [control]="schoolForm.get('phone')"></app-control-messages>
+                                    </ng-container>
                                     <div class="input-container">
                                         <div class="input-icon-container text-center">
                                             <img src="assets/icons/users-group.png">
@@ -105,14 +115,6 @@
                                         <span class="required-span">*</span>
                                     </div>
                                     <app-control-messages [control]="userRegisterForm.get('workTitle')"></app-control-messages>
-                                    <div class="input-container">
-                                        <div class="input-icon-container text-center">
-                                            <img src="assets/icons/location.png">
-                                        </div>
-                                        <input class="form-control" type="text" placeholder="Dirección" formControlName="address">
-                                        <span class="required-span">*</span>
-                                    </div>
-                                    <app-control-messages [control]="userRegisterForm.get('address')"></app-control-messages>
                                     <div class="input-container">
                                         <div class="input-icon-container text-center">
                                             <img src="assets/icons/mail.png">

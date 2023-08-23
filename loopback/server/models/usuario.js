@@ -93,47 +93,52 @@ module.exports = function(Usuario) {
 
       if(!role) return callback('Role not specified');
       if(!!userData && !!userData.username) user.username = userData.username;
-      Usuario.create(user, (err, newU) => {
-        if (err) return callback(err);
+      Usuario.app.models.School.CreateOne(!!userData ? userData.school : null, (err, newSchool) => {
+        if(err) return callback(err);
 
-        role.principals.create({
-          principalType: RoleMapping.USER,
-          principalId: newU.id,
-        }, function (err, principal) {
-          if (err) callback(err);
-
-          if(userData) {
-            userData.userId = newU.id;
-            Usuario.app.models.UserData.create(userData, (err, newUserData) => {
-              if (err) {
-                newU.destroy((err2, destroyed) => {
-                  if (err2) return callback(err2);
-                  return callback(err);
-                });
-              }
-              
-              Usuario.app.models.Teacher.ChangeSchoolUserId(userData.teacherIdToAbsorb, newU.id, (err, teacherUpdated) => {
-                if(err) callback(err);
-                
-                if(role.name == 'Teacher') {
-                  let teacher = {
-                    name: userData.username,
-                    email: userData.email,
-                    active: true,
-                    userId: newU.id,
-                    subjects: []
-                  }
-                  Usuario.app.models.Teacher.AddTeacher(teacher, (err, newTeacher) => {
-                    if (err) callback(err);
+        if(!user.schoolId) user.schoolId = newSchool.id;
+        Usuario.create(user, (err, newU) => {
+          if (err) return callback(err);
   
-                    return callback(null, newU);
+          role.principals.create({
+            principalType: RoleMapping.USER,
+            principalId: newU.id,
+          }, function (err, principal) {
+            if (err) callback(err);
+  
+            if(userData) {
+              userData.userId = newU.id;
+              Usuario.app.models.UserData.create(userData, (err, newUserData) => {
+                if (err) {
+                  newU.destroy((err2, destroyed) => {
+                    if (err2) return callback(err2);
+                    return callback(err);
                   });
                 }
-                else return callback(null, newU);
+                
+                Usuario.app.models.Teacher.ChangeSchoolId(userData.teacherIdToAbsorb, newU.id, (err, teacherUpdated) => {
+                  if(err) callback(err);
+                  
+                  if(role.name == 'Teacher') {
+                    let teacher = {
+                      name: userData.username,
+                      email: userData.email,
+                      active: true,
+                      userId: newU.id,
+                      subjects: []
+                    }
+                    Usuario.app.models.Teacher.AddTeacher(teacher, (err, newTeacher) => {
+                      if (err) callback(err);
+    
+                      return callback(null, newU);
+                    });
+                  }
+                  else return callback(null, newU);
+                });
               });
-            });
-          }
-          else callback(null, newU);
+            }
+            else callback(null, newU);
+          });
         });
       });
     });
@@ -896,7 +901,8 @@ module.exports = function(Usuario) {
     });
   };
 
-  Usuario.GetFileLibrary = function(userId, callback) {
+  Usuario.GetFileLibrary = function(ctx, schoolId, callback) {
+    const userId = ctx.accessToken.userId;
     Usuario.app.models.RoleMapping.findOne({
       where: {
         principalId: userId
@@ -908,7 +914,7 @@ module.exports = function(Usuario) {
       if(roleMapping.role().name == 'School') {
         Usuario.find({
           where: {
-            schoolUserId: userId
+            schoolId: schoolId
           }
         }, (err, userTeachersOfSchool) => {
           if(err) return callback(err);
