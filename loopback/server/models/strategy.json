@@ -183,15 +183,6 @@
     "prototype.Update": {
       "accepts": [
         {
-          "arg": "ctx",
-          "type": "object",
-          "required": true,
-          "description": "",
-          "http": {
-            "source": "req"
-          }
-        },
-        {
           "arg": "strategy",
           "type": "object",
           "required": true,

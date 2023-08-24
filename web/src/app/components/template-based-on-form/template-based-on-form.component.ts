@@ -303,10 +303,10 @@ export class TemplateBasedOnFormComponent implements OnInit {
       try {
         switch (this.step) {
           case 1:
-            res(await this.SaveStragey());
+            res(await this.SaveStrategy());
             break;
           case 2:
-            res(await this.SaveStragey());
+            res(await this.SaveStrategy());
             break;
           case 3:
             res(true);
@@ -707,7 +707,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
       skills: !!strategy.skills ? strategy.skills : [],
       dates:
         !!strategy.startDate && !!strategy.endDate
-          ? [strategy.startDate, strategy.endDate]
+          ? this.GetDateRangePickerValue([strategy.startDate, strategy.endDate])
           : null,
     });
     this.grade = !!strategy.strategyGroup ? strategy.strategyGroup.grade : null;
@@ -751,7 +751,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     );
   }
 
-  SaveStragey() {
+  SaveStrategy() {
     return new Promise<boolean>((res, rej) => {
       let strategy = this.strategyForm.value;
       strategy.grade = this.grade ? this.grade:0;

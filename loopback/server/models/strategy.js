@@ -79,7 +79,7 @@ module.exports = function(Strategy) {
         });
     }
 
-    Strategy.prototype.Update = function(ctx, strategy, callback) {
+    Strategy.prototype.Update = function(strategy, callback) {
         if(!!strategy.dates && strategy.dates.length == 2) {
             strategy.endDate = strategy.dates.pop();
             strategy.startDate = strategy.dates.pop();

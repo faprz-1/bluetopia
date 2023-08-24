@@ -72,6 +72,7 @@
                 </div>
             </div>
             <div [ngSwitch]="step">
+                <!-- Strategy step 1 -->
                 <div *ngSwitchCase="1">
                     <div class="form-flexbox">
                         <div class="form-row">
@@ -206,6 +207,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- Strategy step 2 -->
                 <div *ngSwitchCase="2">
                     <div class="form-flexbox" [formGroup]="strategyForm">
                         <div class="d-flex flex-column" style="gap: 12px;">
@@ -271,6 +273,7 @@
                                 <div class="input-container">
                                     <input #strategyDateRangePicker="bsDaterangepicker" class="form-control no-icon"
                                         type="text" formControlName="dates" placeholder="Fechas del proyecto"
+                                        (onHidden)="saver.next()"
                                         [bsConfig]="{ adaptivePosition: true, containerClass: 'theme-dark-blue' }"
                                         bsDaterangepicker>
                                 </div>
@@ -278,6 +281,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- Strategy step 3 -->
                 <div *ngSwitchCase="3">
                     <div class="d-flex flex-column mb-5" style="gap: 12px;">
                         <div class="instruction">
@@ -523,6 +527,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- Strategy step 4 -->
                 <div *ngSwitchCase="4">
                     <div class="d-flex flex-column mb-5" style="gap: 12px;">
                         <div class="instruction">
@@ -691,6 +696,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- Strategy step 5 -->
                 <div *ngSwitchCase="5">
                     <div class="form-flexbox" [formGroup]="eventForm">
                         <div class="form-row">
