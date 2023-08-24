@@ -730,6 +730,7 @@
                                     <input #finalEventDatePicker="bsDatepicker"
                                         class="form-control no-icon with-border-thin" type="text" formControlName="date"
                                         placeholder="Fecha de entrega"
+                                        (onHidden)="saver.next()"
                                         [bsConfig]="{ adaptivePosition: true, containerClass: 'theme-dark-blue' }"
                                         bsDatepicker>
                                 </div>
@@ -744,7 +745,7 @@
                                 <div class="input-container">
                                     <textarea class="form-control with-border-thin" formControlName="instructions"
                                         placeholder="Instrucciones del evento" rows="6"
-                                        (change)="saver.next()"></textarea>
+                                        (input)="saver.next()"></textarea>
                                 </div>
                             </div>
                         </div>
