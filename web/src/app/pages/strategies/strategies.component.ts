@@ -64,7 +64,7 @@ export class StrategiesComponent implements OnInit {
     let endpoint: string;
     switch (this.user.role.name) {
       case 'School':
-        endpoint = `/Strategies/OfSchool/${this.user ? this.user.id: 0}`;
+        endpoint = `/Strategies/OfSchool/${this.user ? this.user.schoolId: 0}`;
         break;
       case 'Teacher':
         endpoint = `/Strategies/OfTeacher/${this.user ? this.user.id: 0}`;

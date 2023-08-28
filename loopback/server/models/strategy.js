@@ -125,15 +125,15 @@ module.exports = function(Strategy) {
         });
     }
 
-    Strategy.GetAllOfSchool = function(userId, callback) {
+    Strategy.GetAllOfSchool = function(schoolId, callback) {
         Strategy.app.models.Usuario.find({
-            where: {schoolUserId: userId}
+            where: {schoolId}
         }, (err, schoolTeachers) => {
             if(err) return callback(err);
 
             Strategy.find({
                 where: {
-                    userId: {inq: [userId, ...schoolTeachers.map(user => user.id)]},
+                    schoolId,
                     isDeleted: false
                 },
                 include: ['template', 'teams', {'strategyGroup': ['grade', 'group']}]
@@ -151,8 +151,13 @@ module.exports = function(Strategy) {
 
             Strategy.find({
                 where: {
-                    userId: {inq: [userId, teacherUser.schoolUserId]},
-                    isDeleted: false
+                    and: [
+                        {or: [
+                            {userId},
+                            {schoolId: teacherUser.schoolId}
+                        ]},
+                        {isDeleted: false}
+                    ]
                 },
                 include: ['template', 'teams', {'strategyGroup': ['grade', 'group']}]
             }, (err, strategies) => {

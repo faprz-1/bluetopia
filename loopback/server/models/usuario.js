@@ -93,6 +93,7 @@ module.exports = function(Usuario) {
 
       if(!role) return callback('Role not specified');
       if(!!userData && !!userData.username) user.username = userData.username;
+      if(role.name == 'School' && !!userData.school) userData.school.isActive = true;
       Usuario.app.models.School.CreateOne(!!userData ? userData.school : null, (err, newSchool) => {
         if(err) return callback(err);
 

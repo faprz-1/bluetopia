@@ -17,6 +17,11 @@
       },
       "phone": {
         "type": "string"
+      },
+      "isActive": {
+        "type": "boolean",
+        "required": true,
+        "default": false
       }
     },
     "validations": [],
@@ -40,6 +45,14 @@
       "students": {
         "type": "hasMany",
         "model": "Student",
+        "foreignKey": "schoolId",
+        "options": {
+          "nestRemoting": true
+        }
+      },
+      "strategies": {
+        "type": "hasMany",
+        "model": "Strategy",
         "foreignKey": "schoolId",
         "options": {
           "nestRemoting": true

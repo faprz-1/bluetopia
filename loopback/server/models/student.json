@@ -23,10 +23,10 @@
   },
   "validations": [],
   "relations": {
-    "schoolUser": {
+    "school": {
       "type": "belongsTo",
-      "model": "Usuario",
-      "foreignKey": "schoolUserId",
+      "model": "School",
+      "foreignKey": "schoolId",
       "options": {
         "nestRemoting": true
       }
@@ -39,10 +39,10 @@
         "nestRemoting": true
       }
     },
-    "teacherUser": {
+    "teacher": {
       "type": "belongsTo",
-      "model": "Usuario",
-      "foreignKey": "teacherUserId",
+      "model": "Teacher",
+      "foreignKey": "teacherId",
       "options": {
         "nestRemoting": true
       }
@@ -142,7 +142,7 @@
     "GetAllOfSchool": {
       "accepts": [
         {
-          "arg": "schoolUserId",
+          "arg": "schoolId",
           "type": "number",
           "required": true,
           "description": ""
@@ -171,11 +171,11 @@
       "description": "",
       "http": [
         {
-          "path": "/OfSchool/:schoolUserId",
+          "path": "/OfSchool/:schoolId",
           "verb": "get"
         },
         {
-          "path": "/OfSchool/:schoolUserId/FilteredBy/Grade/:gradeId/Group/:groupId",
+          "path": "/OfSchool/:schoolId/FilteredBy/Grade/:gradeId/Group/:groupId",
           "verb": "get"
         }
       ]
