@@ -126,6 +126,7 @@ module.exports = function(Usuario) {
                       email: userData.email,
                       active: true,
                       userId: newU.id,
+                      schoolId: newU.schoolId,
                       subjects: []
                     }
                     Usuario.app.models.Teacher.AddTeacher(teacher, (err, newTeacher) => {
