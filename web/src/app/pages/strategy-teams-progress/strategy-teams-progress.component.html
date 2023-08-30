@@ -83,7 +83,7 @@
                             </div>
                             <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 6px;">
                                 <span class="mb-1">Acción</span>
-                                <button class="btn btn-primary btn-block d-flex justify-content-center align-items-center" style="gap: 6px;">
+                                <button class="btn btn-primary btn-block d-flex justify-content-center align-items-center" (click)="GoToGradeTeamParcialProduct(team, parcialProduct)" style="gap: 6px;">
                                     <span *ngIf="false">Reevaluar</span>
                                     <span *ngIf="true">Evaluar</span>
                                     <img src="assets/icons/rate-review.svg">
