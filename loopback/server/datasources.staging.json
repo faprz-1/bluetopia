@@ -6,7 +6,7 @@
     "database": "bluetopia",
     "password": "blu3t0p14",
     "name": "mysqlDev",
-    "user": "root",
+    "user": "bluetopia",
     "connector": "mysql"
   }
 }
