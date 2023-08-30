@@ -8,9 +8,9 @@
     "port": 3306,
     "url": "",
     "database": "bluetopia",
-    "password": "blu3t0p14",
+    "password": "",
     "name": "mysqlDev",
-    "user": "bluetopia",
+    "user": "root",
     "connector": "mysql"
   },
   "localFiles": {

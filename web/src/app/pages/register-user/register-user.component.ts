@@ -25,14 +25,16 @@ export class RegisterUserComponent implements OnInit {
   });
   userRegisterForm: FormGroup = new FormGroup({
     username: new FormControl(null, [Validators.required]),
-    schoolName: new FormControl(null, [Validators.required]),
     workTitle: new FormControl(null, [Validators.required]),
-    address: new FormControl(null, [Validators.required, Validators.minLength(3)]),
     email: new FormControl(null, [Validators.required, Validators.email]),
     password: new FormControl(null, [Validators.required]),
     confirmPassword: new FormControl(null, [Validators.required]),
     phone: new FormControl(null, [Validators.required, ValidationService.CheckOnlyIntegerNumbers]),
-    schoolPhone: new FormControl(null, [Validators.required, ValidationService.CheckOnlyIntegerNumbers]),
+    school: new FormGroup({
+      name: new FormControl(null, [Validators.required]),
+      phone: new FormControl(null, [Validators.required, ValidationService.CheckOnlyIntegerNumbers]),
+      address: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+    })
   });
   passwordForgotten: boolean = false;
   email = '';
@@ -42,6 +44,10 @@ export class RegisterUserComponent implements OnInit {
   loading: boolean = false;;
   step: number = 0;
   pattern = new RegExp ('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$');
+
+  public get schoolForm(): FormGroup {
+    return this.userRegisterForm.get('school') as FormGroup;
+  }
 
   constructor(
     private navigation: NavigationService,
@@ -54,6 +60,7 @@ export class RegisterUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.GetParams();
+    console.log(this.schoolForm);
   }
 
   GetParams() {
@@ -64,8 +71,8 @@ export class RegisterUserComponent implements OnInit {
       if(this.userType == 'maestro') {
         this.userRegisterForm.get('phone')?.clearValidators();
         this.userRegisterForm.get('phone')?.setValidators([ValidationService.CheckOnlyIntegerNumbers]);
-        this.userRegisterForm.get('schoolPhone')?.clearValidators();
-        this.userRegisterForm.get('schoolPhone')?.setValidators([ValidationService.CheckOnlyIntegerNumbers]);
+        this.schoolForm.get('phone')?.clearValidators();
+        this.schoolForm.get('phone')?.setValidators([ValidationService.CheckOnlyIntegerNumbers]);
       }
     });
   }

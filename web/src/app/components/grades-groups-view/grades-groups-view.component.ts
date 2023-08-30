@@ -40,7 +40,7 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
     registerNumber: new FormControl('', [Validators.required]),
     grade: new FormControl('', [Validators.required]),
     group: new FormControl('', [Validators.required]),
-    schoolUserId: new FormControl('', []),
+    schoolId: new FormControl('', []),
     teacherUserId: new FormControl('', []),
   })
 
@@ -126,7 +126,7 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
   SetStudentFormRelations(student: any) {
     this.studentForm.get('grade')?.setValue(student.grade);
     this.studentForm.get('group')?.setValue(student.group);
-    this.studentForm.get('schoolUserId')?.setValue(student.schoolUserId);
+    this.studentForm.get('schoolId')?.setValue(student.schoolId);
     this.studentForm.get('teacherUserId')?.setValue(student.teacherUserId);
   }
 

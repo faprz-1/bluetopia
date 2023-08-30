@@ -6,7 +6,7 @@
             <div class="d-flex flex-column align-items-start">
                 <div class="username">{{user.username}}</div>
                 <div class="text">{{user.data?.workTitle}}</div>
-                <div class="text">{{user.data?.schoolName}}</div>
+                <div class="text">{{user.school?.name}}</div>
             </div>
             
             <div class="my-data clickeable" (click)="GoToProfile()">

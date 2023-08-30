@@ -103,8 +103,8 @@ export class StudentsCsvComponent implements OnInit {
       this.dataConversions.forEach(conversion => {
         studentFormatted[conversion.newKey] = student[conversion.oldKey];
       });
-      if(user.role.name == 'School') studentFormatted.schoolUserId = user.id;
-      else if(user.role.name == 'Teacher') studentFormatted.teacherUserId = user.id;
+      studentFormatted.schoolId = user.schoolId;
+      studentFormatted.teacherUserId = user.id;
       return studentFormatted;
     });
   }

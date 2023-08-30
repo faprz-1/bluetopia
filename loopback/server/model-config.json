@@ -409,7 +409,8 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
-          "AddTeams": true
+          "AddTeams": true,
+          "UpsertStrategyTeams": true
         }
       }
     }
@@ -469,5 +470,17 @@
   "ParcialProductFile": {
     "dataSource": "mysqlDev",
     "public": false
+  },
+  "School": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "Update": true
+        }
+      }
+    }
   }
 }

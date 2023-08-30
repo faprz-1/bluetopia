@@ -8,6 +8,7 @@
   },
   "scope": {
     "include": [
+      "teams",
       {"strategyGroup": ["grade", "group"]},
       {"events": ["type", {"parcialProduct": "type"}]},
       {
@@ -48,6 +49,11 @@
     },
     "lastModified": {
       "type": "string"
+    },
+    "isByTeams": {
+      "type": "boolean",
+      "required": false,
+      "default": null
     },
     "isDeleted": {
       "type": "boolean",
@@ -98,6 +104,14 @@
       "type": "hasMany",
       "model": "Team",
       "foreignKey": "strategyId"
+    },
+    "school": {
+      "type": "belongsTo",
+      "model": "School",
+      "foreignKey": "schoolId",
+      "options": {
+        "nestRemoting": true
+      }
     }
   },
   "acls": [
@@ -183,18 +197,15 @@
     "prototype.Update": {
       "accepts": [
         {
-          "arg": "ctx",
-          "type": "object",
-          "required": true,
-          "description": "",
-          "http": {
-            "source": "req"
-          }
-        },
-        {
           "arg": "strategy",
           "type": "object",
           "required": true,
+          "description": ""
+        },
+        {
+          "arg": "onlyStrategy",
+          "type": "boolean",
+          "required": false,
           "description": ""
         }
       ],
@@ -210,6 +221,10 @@
       "http": [
         {
           "path": "/",
+          "verb": "patch"
+        },
+        {
+          "path": "/OnlyStrategy/:onlyStrategy",
           "verb": "patch"
         }
       ]
@@ -260,7 +275,7 @@
     "GetAllOfSchool": {
       "accepts": [
         {
-          "arg": "userId",
+          "arg": "schoolId",
           "type": "number",
           "root": true,
           "description": ""
@@ -277,7 +292,7 @@
       "description": "",
       "http": [
         {
-          "path": "/OfSchool/:userId",
+          "path": "/OfSchool/:schoolId",
           "verb": "get"
         }
       ]

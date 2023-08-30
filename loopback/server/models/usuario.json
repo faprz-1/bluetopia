@@ -12,7 +12,7 @@
     "AppleToken"
   ],
   "scope": {
-    "include": ["profileImage", "teacher", "data"]
+    "include": ["profileImage", "teacher", "data", "school"]
   },
   "properties": {
     "FBToken": {
@@ -80,6 +80,14 @@
         "nestRemoting": true
       }
     },
+    "school": {
+      "type": "belongsTo",
+      "model": "School",
+      "foreignKey": "schoolId",
+      "options": {
+        "nestRemoting": true
+      }
+    },
     "teacher": {
       "type": "hasOne",
       "model": "Teacher",
@@ -88,34 +96,10 @@
         "nestRemoting": true
       }
     },
-    "teachers": {
-      "type": "hasMany",
-      "model": "Teacher",
-      "foreignKey": "schoolUserId",
-      "options": {
-        "nestRemoting": true
-      }
-    },
-    "usersTeacher": {
-      "type": "hasMany",
-      "model": "Usuario",
-      "foreignKey": "schoolUserId",
-      "options": {
-        "nestRemoting": true
-      }
-    },
     "student": {
       "type": "hasOne",
       "model": "Student",
       "foreignKey": "userId",
-      "options": {
-        "nestRemoting": true
-      }
-    },
-    "students": {
-      "type": "hasMany",
-      "model": "Student",
-      "foreignKey": "schoolUserId",
       "options": {
         "nestRemoting": true
       }
@@ -677,7 +661,15 @@
     "GetFileLibrary": {
       "accepts": [
         {
-          "arg": "userId",
+          "arg": "ctx",
+          "type": "object",
+          "required": true,
+          "http": {
+            "source": "req"
+          }
+        },
+        {
+          "arg": "schoolId",
           "type": "number",
           "required": true,
           "description": ""
@@ -694,7 +686,7 @@
       "description": "",
       "http": [
         {
-          "path": "/:userId/FileLibrary",
+          "path": "/:schoolId/FileLibrary",
           "verb": "get"
         }
       ]

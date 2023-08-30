@@ -10,7 +10,7 @@ import { NavigationService } from 'src/app/services/navigation.service';
 export class StudentsComponent implements OnInit {
 
   students: Array<any> = [];
-  schoolUserId: number = 0;
+  schoolId: number = 0;
 
   constructor(
     private api: ApiService,
@@ -18,13 +18,12 @@ export class StudentsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const user = this.api.GetUser();
-    this.schoolUserId = user.id;
+    this.schoolId = this.api.GetUser()?.schoolId;
     this.GetSchoolStudents();
   }
 
   GetSchoolStudents() {
-    this.api.Get(`/Students/OfSchool/${this.schoolUserId}`).subscribe(students => {
+    this.api.Get(`/Students/OfSchool/${this.schoolId}`).subscribe(students => {
       this.students = students;
     }, err => {
       console.error("Error getting the school students", err);

@@ -16,7 +16,7 @@ export class TeachersComponent implements OnInit {
 
   teachers: Array<any> = [];
   subjects: Array<any> = [];
-  schoolUserId: number = 0;
+  schoolId: number = 0;
   teacherToEdit: any = null;
   groupsInput: any = '';
   teacherForm: FormGroup = new FormGroup({
@@ -38,9 +38,8 @@ export class TeachersComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.schoolId = this.api.GetUser()?.schoolId;
     this.GetSubjects();
-    const user = this.api.GetUser();
-    this.schoolUserId = user.id;
     this.GetSchoolTeachers();
   }
 
@@ -61,7 +60,7 @@ export class TeachersComponent implements OnInit {
   }
 
   GetSchoolTeachers() {
-    this.api.Get(`/Teachers/OfSchool/${this.schoolUserId}`).subscribe(teachers => {
+    this.api.Get(`/Teachers/OfSchool/${this.schoolId}`).subscribe(teachers => {
       this.teachers = teachers;
     }, err => {
       console.error("Error getting school teachers", err);

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { NgSelectComponent } from '@ng-select/ng-select';
 import { ApiService } from 'src/app/services/api.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -12,8 +13,11 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class StrategyComponent implements OnInit {
 
+  @ViewChild('templateTopicSelect') templateTopicSelect?: NgSelectComponent;
+
   strategyId: any = null;
   strategy: any = null;
+  templateTopics: Array<any> = [];
   loading: any = {
     getting: true
   };
@@ -23,14 +27,13 @@ export class StrategyComponent implements OnInit {
     title: new FormControl(null, [Validators.required]),
     generatingQuestion: new FormControl(null, [Validators.required]),
     subjects: new FormControl([], Validators.required),
-    dates: new FormControl(null, Validators.required),
   });
 
   public get strategyGroup() {
     if(!!this.strategy?.strategyGroup?.group && !!this.strategy?.strategyGroup?.grade) {
-      return `${this.strategy?.strategyGroup?.grade.name}° ${this.strategy?.strategyGroup?.group.name}`
+      return `${this.strategy?.strategyGroup?.grade.name}°${this.strategy?.strategyGroup?.group.name}`
     }
-    return ``;
+    return `Sin grupo`;
   }
   
   constructor(
@@ -41,6 +44,7 @@ export class StrategyComponent implements OnInit {
     ) { }
     
     ngOnInit(): void {
+      this.GetTemplateTopics();
       this.GetParams();
     }
 
@@ -53,12 +57,13 @@ export class StrategyComponent implements OnInit {
       this.strategyId = params['strategyId'];
 
       this.GetStrategy();
-    })
+    });
   }
   
   GetStrategy() {
     this.api.Get(`/Strategies/${this.strategyId}`).subscribe(strategy => {
       this.strategy = strategy;
+      this.InitializeFormData();
       this.loading.getting = false;
     }, err => {
       console.error("Error getting strategy data", err);
@@ -73,8 +78,40 @@ export class StrategyComponent implements OnInit {
       title: !!this.strategy.title ? this.strategy.title : null,
       generatingQuestion: !!this.strategy.generatingQuestion ? this.strategy.generatingQuestion : null,
       subjects: !!this.strategy.subjects ? this.strategy.subjects : [],
-      dates: !!this.strategy.dates ? this.strategy.dates : null,
-    })
+    });
   }
+
+  GetTemplateTopics() {
+    this.api.Get(`/TemplateTopics`).subscribe(
+      (topics) => {
+        this.templateTopics = topics;
+      },
+      (err) => {
+        console.error('Erro getting template topics', err);
+      }
+    );
+  }
+
+  AddTemplateTopic = (templateTopic: string) => {
+    let templateTopicObj = {
+      name: templateTopic,
+      userId: this.api.GetUser()?.id,
+    };
+    let control = this.strategyForm.get('topic');
+    this.loading.templateTopic = true;
+    control?.disable();
+    this.api.Post(`/TemplateTopics`, { templateTopic: templateTopicObj }).subscribe((newTemplateTopic) => {
+      this.templateTopics = this.templateTopics.concat([newTemplateTopic]);
+      control?.setValue(newTemplateTopic.name);
+      this.loading.templateTopic = false;
+      control?.enable();
+      this.templateTopicSelect?.close();
+    }, (err) => {
+      console.error('Error creatong templateTopic', err);
+      this.loading.templateTopic = false;
+      control?.enable();
+      }
+    );
+  };
 
 }

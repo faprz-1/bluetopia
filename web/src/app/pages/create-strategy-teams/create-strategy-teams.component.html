@@ -1,0 +1,107 @@
+<div class="content">
+    <div class="d-flex justify-content-between flex-wrap">
+        <app-breadcrumb [crumbs]="crumbs"></app-breadcrumb>
+
+        <div class="d-flex">
+
+        </div>
+    </div>
+    
+    <div class="d-flex flex-column mt-5" style="gap: 13px;" [formGroup]="strategyTeamsForm">
+        <div class="form-row">
+            <span class="instruction-number">1</span>
+            <div class="form-col">
+                <div class="form-section-title">
+                    ¿Deseas que tu proyecto sea por equipos?
+                </div>
+                <div class="d-flex flex-column align-items-start" style="gap: 12px;">
+                    <label class="m-0 checkbox-label" for="isByTeamsYes">
+                        Si
+                        <input type="radio" class="checkbox-input"
+                        id="isByTeamsYes" name="isByTeams"
+                        [value]="true" formControlName="isByTeams"
+                        (change)="saver.next()">
+                        <span class="checkbox-custom"></span>
+                    </label>
+                    <label class="m-0 checkbox-label" for="isByTeamsNo">
+                        No
+                        <input type="radio" class="checkbox-input"
+                        id="isByTeamsNo" name="isByTeams"
+                        [value]="false" formControlName="isByTeams"
+                        (change)="saver.next()">
+                        <span class="checkbox-custom"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <ng-container *ngIf="!!strategyTeamsForm.get('isByTeams')?.value">
+            <div class="form-row">
+                <span class="instruction-number">2</span>
+                <div class="form-col">
+                    <div class="form-section-title">
+                        Selecciona la cantidad de equipos que quieres formar, conforme a la cantidad de alumnos que tienes
+                    </div>
+                    <div class="d-flex flex-column align-items-start" style="gap: 12px;">
+                        <div class="d-flex" style="gap: 12px;">
+                            <div class="fake-input-disabled text-uppercase">
+                                {{grade?.name}}° {{group?.name}}
+                            </div>
+                            <div class="fake-input-disabled">
+                                {{students.length}} Alumnos
+                            </div>
+                        </div>
+                        <ng-select
+                        class="form-control with-border align-self-stretch"
+                        placeholder="Equipos"
+                        formControlName="teamsNumber"
+                        (change)="OnTeamsOptionSelected($event)">
+                            <ng-option *ngFor="let option of teamsOptions" [value]="option">{{option}} equipos</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <span class="instruction-number">3</span>
+                <div class="form-col">
+                    <div class="form-section-title">
+                        Acomoda a tus alumnos en los equipos
+                    </div>
+                    <ng-select
+                    class="form-control with-border align-self-stretch"
+                    formControlName="fillMode"
+                    [clearable]="false"
+                    placeholder="Acomodo"
+                    (change)="OnFillModeChange($event)">
+                        <ng-option value="manual">Manual</ng-option>
+                        <ng-option value="auto">Aleatorio</ng-option>
+                    </ng-select>
+                    <div class="row align-self-stretch">
+                        <div class="col-12 col-md-6 col-lg-4" *ngFor="let team of strategyTeams; let i = index">
+                            <div class="team-container">
+                                <div class="title">Equipo {{i+1}}</div>
+                                <ng-select
+                                #studentsSelect
+                                class="form-control with-border"
+                                placeholder="Selecciona estudiante"
+                                (change)="OnStudentSelected(team, $event, studentsSelect)">
+                                    <ng-option *ngFor="let student of studentsOptions" [value]="student">{{BuildStudentFullName(student)}}</ng-option>
+                                </ng-select>
+                                <div class="team align-self-stretch" *ngIf="!!team?.members?.length">
+                                    <div class="member" *ngFor="let member of team.members; let i = index">
+                                        <span>
+                                            {{BuildStudentFullName(member)}}
+                                        </span>
+                                        <img class="clickeable" (click)="RemoveMemberOfTeam(team, i)" src="assets/icons/delete.svg" alt="delete">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <button class="btn align-self-end btn-primary" (click)="SaveAll()">
+            Continuar
+        </button>
+    </div>
+</div>

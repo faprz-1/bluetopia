@@ -47,10 +47,10 @@
       },
       "throughTable": "TeacherSubject"
     },
-    "schoolUser": {
+    "school": {
       "type": "belongsTo",
-      "model": "Usuario",
-      "foreignKey": "schoolUserId",
+      "model": "School",
+      "foreignKey": "schoolId",
       "options": {
         "nestRemoting": true
       }
@@ -141,7 +141,7 @@
     "GetAllOfSchool": {
       "accepts": [
         {
-          "arg": "schoolUserId",
+          "arg": "schoolId",
           "type": "number",
           "required": true,
           "description": ""
@@ -158,7 +158,7 @@
       "description": "",
       "http": [
         {
-          "path": "/OfSchool/:schoolUserId",
+          "path": "/OfSchool/:schoolId",
           "verb": "get"
         }
       ]

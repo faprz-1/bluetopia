@@ -40,8 +40,13 @@
             </button>
         </ng-container>
         <ng-container *ngIf="true">
-            <button class="btn btn-outline-primary flex-grow-1">
+            <button class="btn btn-outline-primary flex-grow-1" *ngIf="strategy?.isByTeams !== null">
                 Ver progreso
+            </button>
+            <button class="btn btn-outline-primary flex-grow-1"
+            *ngIf="strategy?.isByTeams === null"
+            (click)="GoToCreateStrategyTeams()">
+                Asignar equipos
             </button>
             <button class="btn btn-outline-success flex-grow-1" (click)="GoToStrategyCalendar()">
                 Calendario

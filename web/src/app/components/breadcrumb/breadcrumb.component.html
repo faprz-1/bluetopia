@@ -1,0 +1,12 @@
+<div class="breadcrumbs" *ngIf="crumbs">
+    <div>
+        <img class="clickeable" src="assets/icons/back-arrow.png" alt="back">
+    </div>
+    <span class="first-breadcrumb">{{crumbs[0].name}}</span>
+    <ng-container *ngFor="let crumb of crumbs; let f = first">
+        <ng-container *ngIf="!f">
+            <img src="assets/icons/right-chevron.svg">
+            <span>{{crumb.name}}</span>
+        </ng-container>
+    </ng-container>
+</div>

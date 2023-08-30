@@ -22,6 +22,8 @@
     font-weight: 500;
     line-height: normal;
 
+    .input-container {margin-bottom: 0;}
+
     label {
         color: var(--blue-1, #1081FB);
         font-size: 20px;
@@ -31,6 +33,11 @@
     .form-control {
         font-size: 16px;
         font-weight: 500;
+    }
+
+    .btn-control {
+        flex: 1 0 calc(50% - 12px);
+        min-width: max-content;
     }
 }
 

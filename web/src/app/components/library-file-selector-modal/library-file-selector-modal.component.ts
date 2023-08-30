@@ -33,7 +33,7 @@ export class LibraryFileSelectorModalComponent implements OnInit {
   }
 
   GetLibraryFiles() {
-    this.api.Get(`/Usuarios/${this.user.id}/FileLibrary`).subscribe(files => {
+    this.api.Get(`/Usuarios/${this.user.schoolId}/FileLibrary`).subscribe(files => {
       this.files = files;
     }, err => {
       console.error("Error getting the files", err);

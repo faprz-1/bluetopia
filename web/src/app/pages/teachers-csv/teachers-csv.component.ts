@@ -92,7 +92,7 @@ export class TeachersCsvComponent implements OnInit {
         else teacherFormatted[conversion.newKey] = teacher[conversion.oldKey];
       });
       teacherFormatted.subjects = teacherFormatted.subjects.split(',').map((s: string) => s.trim());
-      teacherFormatted.schoolUserId = user.id;
+      teacherFormatted.schoolId = user.schoolId;
       return teacherFormatted;
     });
   }

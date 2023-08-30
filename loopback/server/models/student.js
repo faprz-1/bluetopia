@@ -55,10 +55,10 @@ module.exports = function(Student) {
         });
     }
 
-    Student.GetAllOfSchool = function(schoolUserId, gradeId, groupId, callback) {
+    Student.GetAllOfSchool = function(schoolId, gradeId, groupId, callback) {
         Student.find({
             where: {
-                schoolUserId
+                schoolId
             },
             include: {'studentGroup': ['group', 'grade']}
         }, (err, schoolStudents) => {
@@ -94,7 +94,7 @@ module.exports = function(Student) {
                         or: [
                             {and: [
                                 {id: {inq: studentGroups.filter(sg => !!sg.student()).map(sg => sg.student().id)}},
-                                {schoolUserId: teacher.schoolUserId}
+                                {schoolId: teacher.schoolId}
                             ]},
                             {teacherUserId}
                         ]
@@ -111,11 +111,11 @@ module.exports = function(Student) {
         });
     }
 
-    Student.UpdateSchoolUserId = function(teacherId, schoolUserId, callback) {
-        if(!teacherId || !schoolUserId) return callback(null, {count: 0});
+    Student.UpdateSchoolId = function(teacherId, schoolId, callback) {
+        if(!teacherId || !schoolId) return callback(null, {count: 0});
         Student.updateAll({
             teacherUserId: teacherId
-        }, {schoolUserId, teacherUserId: null}, (err, studentsUpdated) => {
+        }, {schoolId, teacherUserId: null}, (err, studentsUpdated) => {
             if(err) return callback(err);
 
             return callback(null, studentsUpdated);
