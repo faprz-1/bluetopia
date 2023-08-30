@@ -25,17 +25,25 @@ export class TeacherProfileComponent implements OnInit {
     email: new FormControl('', [Validators.required]),
     data: new FormGroup({
       id: new FormControl('', []),
-      schoolName: new FormControl('', [Validators.required]),
-      address: new FormControl('', [Validators.required]),
-      schoolPhone: new FormControl('', [ValidationService.CheckOnlyIntegerNumbers]),
       workTitle: new FormControl('', [Validators.required]),
       phone: new FormControl('', [ValidationService.CheckOnlyIntegerNumbers]),
       userId: new FormControl('', [Validators.required]),
+    }),
+    school: new FormGroup({
+      id: new FormControl('', []),
+      name: new FormControl(null, [Validators.required]),
+      phone: new FormControl(null, [Validators.required, ValidationService.CheckOnlyIntegerNumbers]),
+      address: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+      isActive: new FormControl(null, []),
     }),
   });
 
   public get userDataForm() {
     return this.teacherUserForm.get('data') as FormGroup;
+  }
+
+  public get schoolForm(): FormGroup {
+    return this.teacherUserForm.get('school') as FormGroup;
   }
 
   constructor(
@@ -45,9 +53,7 @@ export class TeacherProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.user = this.api.GetUser();
-    this.SetForm();
-    this.GetTeacherGradesAndGroups();
+    this.GetUSerData();
   }
 
   SetForm() {
@@ -57,14 +63,31 @@ export class TeacherProfileComponent implements OnInit {
       email: this.user.teacher.email,
       data: {
         id: !!this.user.data ? this.user.data.id : null,
-        schoolName: !!this.user.data ? this.user.data.schoolName : null,
-        address: !!this.user.data ? this.user.data.address : null,
-        schoolPhone: !!this.user.data ? this.user.data.schoolPhone : null,
         workTitle: !!this.user.data ? this.user.data.workTitle : null,
         phone: !!this.user.data ? this.user.data.phone : null,
         userId: this.user.id,
       },
+      school: {
+        id: !!this.user?.school?.id ? this.user.school.id : null,
+        name: !!this.user?.school?.name ? this.user.school.name : null,
+        phone: !!this.user?.school?.phone ? this.user.school.phone : null,
+        address: !!this.user?.school?.address ? this.user.school.address : null,
+        isActive: !!this.user?.school?.isActive ? this.user.school.isActive : null,
+      },
     });
+
+    if(this.user?.school?.isActive && this.user.role.name != 'School') {
+      this.schoolForm.disable();
+    }
+  }
+
+  GetUSerData() {
+    this.api.Get(`/usuarios/withCredentials`).subscribe(user => {
+      this.user = user;
+      this.GetTeacherGradesAndGroups();
+      this.api.SetUser(user);
+      this.SetForm();
+    })
   }
 
   SaveUserData() {
@@ -76,8 +99,7 @@ export class TeacherProfileComponent implements OnInit {
     this.loading.updating = true;
     this.api.Patch(`/Teachers/${this.user.teacher.id}`, {teacher: this.teacherUserForm.value}).subscribe(saved => {
       this.toast.ShowSuccess(`Datos guardados correctamente`);
-      this.user.data = this.teacherUserForm.value.data;
-      localStorage.setItem('user', JSON.stringify(this.user));
+      this.GetUSerData();
       this.loading.updating = false;
     }, err => {
       console.error("Error saving user data", err);

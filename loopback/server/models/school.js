@@ -16,10 +16,10 @@ module.exports = function(School) {
         });
     }
 
-    School.Update = function(data, callback) {
-        if(!data) return callback(null, {});
+    School.Update = function(school, callback) {
+        if(!school) return callback(null, {});
 
-        School.upsert(data, (err, school) => {
+        School.upsert(school, (err, school) => {
             if(err) return callback(err);
 
             return callback(null, school);

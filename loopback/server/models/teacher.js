@@ -120,10 +120,14 @@ module.exports = function(Teacher) {
                 Teacher.app.models.UserData.Update(teacher.data, (err, updated) => {
                     if(err) return callback(err);
 
-                    Teacher.upsert(teacher, (err, teacherUpdated) => {
+                    Teacher.app.models.School.Update(teacher.school, (err, updated) => {
                         if(err) return callback(err);
-                        
-                        return callback(null, teacherUpdated);
+
+                        Teacher.upsert(teacher, (err, teacherUpdated) => {
+                            if(err) return callback(err);
+                            
+                            return callback(null, teacherUpdated);
+                        });
                     });
                 });
             });

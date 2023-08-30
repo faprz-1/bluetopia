@@ -55,14 +55,16 @@
                         </div>
                         <app-control-messages [control]="userDataForm.get('phone')"></app-control-messages>
                     </div>
+                </ng-container>
+                <ng-container [formGroup]="schoolForm">
                     <div class="w-100">
                         <div class="input-container">
                             <div class="input-icon-container text-center">
                                 <img src="assets/icons/school.png">
                             </div>
-                            <input class="form-control" type="text" placeholder="Nombre de la escuela" formControlName="schoolName" (keyup.enter)="SaveUserData()">
+                            <input class="form-control" type="text" placeholder="Nombre de la escuela" formControlName="name" (keyup.enter)="SaveUserData()">
                         </div>
-                        <app-control-messages [control]="userDataForm.get('schoolName')"></app-control-messages>
+                        <app-control-messages [control]="schoolForm.get('name')"></app-control-messages>
                     </div>
                     <div class="w-100">
                         <div class="input-container">
@@ -71,16 +73,16 @@
                             </div>
                             <input class="form-control" type="text" placeholder="Direccion de la escuela" formControlName="address" (keyup.enter)="SaveUserData()">
                         </div>
-                        <app-control-messages [control]="userDataForm.get('address')"></app-control-messages>
+                        <app-control-messages [control]="schoolForm.get('address')"></app-control-messages>
                     </div>
                     <div class="w-100">
                         <div class="input-container">
                             <div class="input-icon-container text-center">
                                 <img src="assets/icons/user-phone.png">
                             </div>
-                            <input class="form-control" type="text" placeholder="Teléfono de la escuela" formControlName="schoolPhone" (keyup.enter)="SaveUserData()">
+                            <input class="form-control" type="text" placeholder="Teléfono de la escuela" formControlName="phone" (keyup.enter)="SaveUserData()">
                         </div>
-                        <app-control-messages [control]="userDataForm.get('schoolPhone')"></app-control-messages>
+                        <app-control-messages [control]="schoolForm.get('phone')"></app-control-messages>
                     </div>
                 </ng-container>
                 <div class="d-flex justify-content-between w-100 mt-3">
