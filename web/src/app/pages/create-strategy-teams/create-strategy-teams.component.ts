@@ -21,7 +21,6 @@ export class CreateStrategyTeamsComponent implements OnInit {
   studentsOptions: Array<any> = [];
   teamsOptions: Array<number> = [2, 3, 4, 5, 6, 7, 8];
   strategyTeams: Array<any> = [];
-  fillMode: string = 'manual';
   saver = new Subject();
   saving: boolean = false;
   crumbs: Array<{name: string, route: string | null}> = [
@@ -74,6 +73,7 @@ export class CreateStrategyTeamsComponent implements OnInit {
       }
     } catch (err) {
       console.error("Error saving changes", err);
+      this.saving = false;
     }
   }
 

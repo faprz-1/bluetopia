@@ -43,7 +43,8 @@
       "permission": "ALLOW",
       "property": [
         "AddTeams",
-        "UpsertStrategyTeams"
+        "UpsertStrategyTeams",
+        "UpdateTeamsMembersRoles"
       ]
     },
     {
@@ -53,7 +54,8 @@
       "permission": "ALLOW",
       "property": [
         "AddTeams",
-        "UpsertStrategyTeams"
+        "UpsertStrategyTeams",
+        "UpdateTeamsMembersRoles"
       ]
     }
   ],
@@ -116,6 +118,31 @@
       "http": [
         {
           "path": "/OfStrategy/:strategyId",
+          "verb": "patch"
+        }
+      ]
+    },
+    "UpdateTeamsMembersRoles": {
+      "accepts": [
+        {
+          "arg": "teams",
+          "type": "array",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "newTeams",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/MemebersRoles",
           "verb": "patch"
         }
       ]

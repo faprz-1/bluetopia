@@ -1,0 +1,109 @@
+.info-card {
+    display: flex;
+    padding: 12px;
+    align-items: center;
+    gap: 12px;
+    border-radius: 6px;
+    border: 1px solid var(--gray-2, #758CA6);
+    color: #3D5E81;
+    text-align: center;
+    font-family: Mulish;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.team-progress-card {
+    display: flex;
+    padding: 12px;
+    align-items: flex-start;
+    gap: 14px;
+    border-radius: 12px;
+    border: 2px solid var(--gray-2, #758CA6);
+}
+
+.team-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+
+    .title {
+        color: var(--gray-1, #3D5E81);
+        font-family: Mulish;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+    .team {
+        display: flex;
+        padding: 12px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        border-radius: 12px;
+        background: var(--gray-3, #C1CCD7);
+        color: var(--gray-1, #3D5E81);
+        text-align: center;
+        font-family: Mulish;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    
+        .member {
+            display: flex;
+            flex-wrap: nowrap;
+            align-self: stretch;
+            justify-content: flex-start;
+            align-items: center;
+            height: 48px;
+            padding: 6px 24px;
+            border-radius: 6px;
+            background-color: #F6F7F8;
+            
+            span {
+                width: 100%;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+}
+
+.evaluation-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-basis: 150px;
+    max-width: 100%;
+    gap: 14px;
+    color: var(--blue-dark, #2369B5);
+    font-family: Mulish;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+
+    .file-box {
+        display: flex;
+        width: 100%;
+        padding: 6px;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border-radius: 6px;
+        border: 1px solid var(--blue-1, #1081FB);
+        color: var(--blue-1, #1081FB);
+        font-size: 12px;
+    }
+
+    .btn {
+        font-size: 12px;
+        padding: 6px;
+        border-radius: 6px !important;
+    }
+}
