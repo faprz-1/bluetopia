@@ -43,9 +43,9 @@
 
         <ng-container *ngIf="strategy?.isByTeams">
             <div class="col-12 mb-4" *ngFor="let team of strategy?.teams">
-                <div class="team-progress-card justify-content-center">
+                <div class="team-progress-card flex-wrap flex-lg-nowrap justify-content-center">
                     <!-- Team data -->
-                    <div class="team-container">
+                    <div class="team-container w-100 flex-grow-1">
                         <div class="title mb-0">{{team.name}}</div>
                         <div class="team w-100" *ngIf="!!team?.members?.length">
                             <div class="d-flex w-100" style="gap: 10px;">
@@ -72,7 +72,7 @@
                     </div>
 
                     <!-- Team evaluations -->
-                    <div class="d-flex align-items-start flex-grow-1 overflow-auto" style="gap: 14px;">
+                    <div class="d-flex align-items-start justify-content-center justify-content-lg-start overflow-auto" style="gap: 14px;">
                         <div class="evaluation-col" *ngFor="let parcialProduct of strategy.parcialProducts" style="gap: 14px;">
                             <div>{{parcialProduct.name}} {{parcialProduct.event?.date | date:"dd/MM/yyyy"}}</div>
                             <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 6px;">
