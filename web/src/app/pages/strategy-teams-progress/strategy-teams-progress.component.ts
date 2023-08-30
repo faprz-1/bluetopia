@@ -47,4 +47,34 @@ export class StrategyTeamsProgressComponent implements OnInit {
     );
   }
 
+  SaveStrategy() {
+    return new Promise<void>((res, rej) => {
+      let strategy = {
+        id: this.strategyId,
+        isByTeams: !!this.strategy ? !this.strategy.isByTeams : false
+      }
+      this.api.Patch(`/Strategies/${this.strategyId}/OnlyStrategy/1`, {strategy}).subscribe(strategySaved => {
+        res();
+      }, err => {
+        console.error("Error saving strategy", err);
+        rej(err);
+      });
+    });
+  }
+  
+  ToggleIsByTeams() {
+    return new Promise<void>((res, rej) => {
+      let strategy = {
+        id: this.strategyId,
+        isByTeams: !!this.strategy ? !this.strategy.isByTeams : false
+      }
+      this.api.Patch(`/Strategies/${this.strategyId}/OnlyStrategy/1`, {strategy}).subscribe(strategySaved => {
+        res();
+      }, err => {
+        console.error("Error saving strategy", err);
+        rej(err);
+      });
+    });
+  }
+
 }
