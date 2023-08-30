@@ -12,9 +12,40 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "strategy": {
+      "type": "belongsTo",
+      "model": "Strategy",
+      "foreignKey": "strategyId"
+    }
+  },
   "acls": [],
   "methods": {
+    "CreateOne": {
+      "accepts": [
+        {
+          "arg": "role",
+          "type": "object",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "teamRoles",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/",
+          "verb": "post"
+        }
+      ]
+    },
     "GetAll": {
       "accepts": [],
       "returns": [

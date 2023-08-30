@@ -53,4 +53,28 @@ module.exports = function(Team) {
             });
         });
     }
+
+    Team.UpdateMembersRoles = function(team, callback) {
+        let cont = 0, limit = team.members.length;
+        if(!limit) return callback(null, team);
+        team.members.forEach(member => {
+            Team.app.models.TeamStudent.upsert(member, (err, updated) => {
+                if(err) return callback(err);
+    
+                if(++cont == limit) return callback(null, team);
+            });
+        });
+    }
+
+    Team.UpdateTeamsMembersRoles = function(teams, callback) {
+        let cont = 0, limit = teams.length;
+        if(!limit) return callback(null, teams);
+        teams.forEach(team => {
+            Team.UpdateMembersRoles(team, (err, updated) => {
+                if(err) return callback(err);
+
+                if(++cont == limit) return callback(null, teams);
+            });
+        });
+    }
 };

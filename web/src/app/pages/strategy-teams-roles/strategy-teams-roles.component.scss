@@ -1,0 +1,141 @@
+.instruction-number {
+    margin-top: 3px;
+    color: var(--green-1, #26D7A4);
+    font-size: 24px;
+    font-family: Mulish;
+    font-weight: 900;
+}
+
+.form-row {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    gap: 12px;
+    width: 100%;
+
+    .form-col {
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+    .form-section-instruction {
+        color: var(--gray-1, #3D5E81);
+        font-family: Mulish;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+    .form-section-title {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+
+        color: var(--gray-1, #3D5E81);
+        font-size: 20px;
+        font-family: Mulish;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+}
+
+.checkbox-input {
+    display: none;
+}
+.checkbox-label {
+    display: inline-block;
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.checkbox-custom {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #2369B5;
+    background-color: #fff;
+    border-radius: 3px;
+}
+.checkbox-input:checked + .checkbox-custom::after {
+    content: "\2713";
+    font-size: 18px;
+    color: #2369B5;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.fake-input-disabled {
+    display: flex;
+    height: 43px;
+    padding: 6px 24px;
+    align-items: center;
+    gap: 10px;border-radius: 6px;
+    border: 1px solid var(--gray-1, #3D5E81);
+    background: #F6F7F8;
+    color: var(--gray-1, #3D5E81);
+    text-align: center;
+    font-family: Mulish;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.team-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+
+    .title {
+        color: var(--gray-1, #3D5E81);
+        font-family: Mulish;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+    .team {
+        display: flex;
+        padding: 12px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        border-radius: 12px;
+        background: var(--gray-3, #C1CCD7);
+        color: var(--gray-1, #3D5E81);
+        text-align: center;
+        font-family: Mulish;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    
+        .member {
+            display: flex;
+            flex-wrap: nowrap;
+            align-self: stretch;
+            justify-content: flex-start;
+            align-items: center;
+            height: 48px;
+            padding: 6px 24px;
+            border-radius: 6px;
+            background-color: #F6F7F8;
+            
+            span {
+                width: 100%;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+}

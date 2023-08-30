@@ -7,6 +7,7 @@ import { ControlMessagesModule } from 'src/app/components/control-messages/contr
 import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { StrategyTeamsRolesComponent } from './strategy-teams-roles.component';
+import { BreadcrumbModule } from 'src/app/components/breadcrumb/breadcrumb.module';
 
 const MODULE_ROUTES = [
   { path: '', component: StrategyTeamsRolesComponent }
@@ -20,6 +21,7 @@ const MODULE_ROUTES = [
     FormsModule,
     CommonModule,
     NgSelectModule,
+    BreadcrumbModule,
     ReactiveFormsModule,
     ControlMessagesModule,
     ModalModule.forRoot(),

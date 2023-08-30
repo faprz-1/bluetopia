@@ -410,7 +410,8 @@
         "sharedMethods": {
           "*": false,
           "AddTeams": true,
-          "UpsertStrategyTeams": true
+          "UpsertStrategyTeams": true,
+          "UpdateTeamsMembersRoles": true
         }
       }
     }
@@ -426,6 +427,7 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
+          "CreateOne": true,
           "GetAll": true
         }
       }

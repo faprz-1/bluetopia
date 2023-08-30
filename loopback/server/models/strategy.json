@@ -9,6 +9,7 @@
   "scope": {
     "include": [
       "teams",
+      "customRoles",
       {"strategyGroup": ["grade", "group"]},
       {"events": ["type", {"parcialProduct": "type"}]},
       {
@@ -51,6 +52,11 @@
       "type": "string"
     },
     "isByTeams": {
+      "type": "boolean",
+      "required": false,
+      "default": null
+    },
+    "useCustomRoles": {
       "type": "boolean",
       "required": false,
       "default": null
@@ -103,6 +109,11 @@
     "teams": {
       "type": "hasMany",
       "model": "Team",
+      "foreignKey": "strategyId"
+    },
+    "customRoles": {
+      "type": "hasMany",
+      "model": "TeamRole",
       "foreignKey": "strategyId"
     },
     "school": {
