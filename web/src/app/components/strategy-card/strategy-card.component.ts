@@ -46,7 +46,7 @@ export class StrategyCardComponent implements OnInit {
     this.nav.GoToUserRoute(`mis-estrategias/${this.strategy.id}/crear-equipos`);
   }
 
-  GoToCreateStrategyTeamsProgress() {
+  GoToStrategyTeamsProgress() {
     this.nav.GoToUserRoute(`mis-estrategias/${this.strategy.id}/progreso-equipos`);
   }
 

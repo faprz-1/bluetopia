@@ -1,0 +1,152 @@
+<div class="content">
+    <div class="d-flex justify-content-between flex-wrap">
+        <app-breadcrumb [crumbs]="crumbs"></app-breadcrumb>
+
+        <div class="d-flex">
+        </div>
+    </div>
+
+    <div class="row mb-5" style="gap: 60px;">
+        <div class="col-12">
+            <div class="d-flex align-items-end flex-wrap flex-md-nowrap" style="gap: 13px;">
+                <div class="strategy-info-card">
+                    <div class="text-primary text-uppercase">
+                        {{strategy?.strategyGroup?.grade?.name}}°{{strategy?.strategyGroup?.group?.name}}
+                    </div>
+                    <div class="d-flex align-items-center" style="gap: 12px;">
+                        <img [src]="'assets/icons/' + strategy?.template?.icon" height="35">
+                        <span class="text-primary">{{strategy?.template?.nickname}}</span>
+                    </div>
+                    <div class="d-flex" style="gap: 24px;color: #2369B5;">
+                        <span>{{strategy?.startDate | date:"dd/MM/yyyy"}}</span>
+                        <span>-</span>
+                        <span>{{strategy?.endDate | date:"dd/MM/yyyy"}}</span>
+                    </div>
+                    <span class="text-success"><b>{{strategy?.topic}}</b></span>
+                    <div class="d-flex flex-column align-items-start">
+                        <div class="text-primary">Título</div>
+                        <span style="font-size: 16px;">{{strategy?.title}}</span>
+                    </div>
+                </div>
+
+                <!-- Team data -->
+                <div class="team-container w-100 flex-grow-1">
+                    <div class="title mb-0">{{team?.name}}</div>
+                    <div class="team w-100" *ngIf="!!team?.members?.length">
+                        <div class="d-flex w-100" style="gap: 10px;">
+                            <div class="d-flex flex-column w-50" style="gap: 10px;">
+                                <ng-container *ngFor="let member of team?.members">
+                                    <div class="member">
+                                        <span>
+                                            {{BuildStudentFullName(member.student)}}
+                                        </span>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <div class="d-flex flex-column w-50" style="gap: 10px;">
+                                <ng-container *ngFor="let member of team?.members">
+                                    <div class="member">
+                                        <span>
+                                            {{member.role?.name}}
+                                        </span>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="d-flex align-items-center flex-wrap" style="gap: 24px;">
+                <div class="file-box">
+                    Archivo.pdf
+                </div>
+                <div class="info-col">
+                    <div class="title">Subido por</div>
+                    <div>{{BuildStudentFullName(team?.members[0].student)}}</div>
+                </div>
+                <div class="info-col">
+                    <div class="title">Entregado el día</div>
+                    <div>30/08/23</div>
+                </div>
+                <button class="btn btn-success d-flex justify-content-center align-items-center" style="gap: 6px; border-radius: 12px !important;">
+                    <img src="assets/icons/star-white.svg">
+                    Agregar a favoritos
+                </button>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="d-flex flex-column" style="gap: 13px;">
+                <ng-container [formGroup]="evaluationForm">
+                    <div class="form-row">
+                        <span class="instruction-number">1</span>
+                        <div class="form-col">
+                            <div class="form-section-title">
+                                Asigna la calificación en base a la rúbrica que creaste
+                            </div>
+                            <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 12px;">
+                                <div [ngSwitch]="parcialProduct?.evaluationType?.type">
+                                    <div *ngSwitchCase="'rubric'">
+                                    </div>
+                                    <div *ngSwitchCase="'numeric'">
+                                        <div class="d-flex flex-column" style="gap: 12px;">
+                                            <div class="text-bold">
+                                                Valor númerico
+                                            </div>
+                                            <div class="d-flex align-items-center justify-content-start text-1" style="gap: 12px;">
+                                                <div class="input-container m-0">
+                                                    <input
+                                                    class="form-control with-border no-icon"
+                                                    placeholder="Calificación"
+                                                    type="text"
+                                                    formControlName="calification">
+                                                </div>
+                                                <span>sobre</span>
+                                                <span>{{parcialProduct?.maxCalification}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <span class="instruction-number">2</span>
+                        <div class="form-col">
+                            <div class="form-section-title">
+                                Agregar comentario al equipo
+                            </div>
+                            <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 12px;">
+                                <textarea class="form-control with-border" placeholder="Comentario" rows="4"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <div class="form-row">
+                    <span class="instruction-number">3</span>
+                    <div class="form-col">
+                        <div class="form-section-title">
+                            Agregar comentario a algún miembro del equipo
+                        </div>
+                        <div class="d-flex align-items-start align-self-stretch flex-wrap" style="gap: 12px;">
+                            <div class="flex-grow-1" *ngFor="let member of team?.members">
+                                <div class="fake-input-disabled mb-2">
+                                    {{BuildStudentFullName(member.student)}}
+                                </div>
+                                <textarea class="form-control with-border" [(ngModel)]="member.comments" placeholder="Comentario" rows="4"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end mt-4">
+                    <button class="btn btn-primary">
+                        Finalizar evaluación
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
