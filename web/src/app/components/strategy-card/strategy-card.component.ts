@@ -46,6 +46,10 @@ export class StrategyCardComponent implements OnInit {
     this.nav.GoToUserRoute(`mis-estrategias/${this.strategy.id}/crear-equipos`);
   }
 
+  GoToCreateStrategyTeamsProgress() {
+    this.nav.GoToUserRoute(`mis-estrategias/${this.strategy.id}/progreso-equipos`);
+  }
+
   DeleteStrategy() {
     this.loading.deleting = true;
     this.api.Delete(`/Strategies/${this.strategy.id}`).subscribe(deleted => {
