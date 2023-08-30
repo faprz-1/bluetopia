@@ -31,6 +31,10 @@ export class StrategyTeamsProgressComponent implements OnInit {
     return `${student.name} ${student.fatherLastname} ${student.motherLastname}`;
   }
 
+  GoToGradeTeamParcialProduct(team: any, parcialProduct: any) {
+    this.nav.GoToUserRoute(`mis-estrategias/${this.strategyId}/progreso-equipos/${team.id}/evaluar/${parcialProduct.id}`);
+  }
+
   GetParams() {
     this.activatedRoute.params.subscribe(params => {
       this.strategyId = params['strategyId'];
