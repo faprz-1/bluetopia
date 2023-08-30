@@ -5,6 +5,11 @@
   "options": {
     "validateUpsert": true
   },
+  "scope": {
+    "include": [
+      {"members": ["student", "role"]}
+    ]
+  },
   "properties": {
     "name": {
       "type": "string",
@@ -13,7 +18,7 @@
   },
   "validations": [],
   "relations": {
-    "teamStudents": {
+    "members": {
       "type": "hasMany",
       "model": "TeamStudent",
       "foreignKey": "teamId"
@@ -37,7 +42,8 @@
       "principalId": "School",
       "permission": "ALLOW",
       "property": [
-        "AddTeams"
+        "AddTeams",
+        "UpsertStrategyTeams"
       ]
     },
     {
@@ -46,7 +52,8 @@
       "principalId": "Teacher",
       "permission": "ALLOW",
       "property": [
-        "AddTeams"
+        "AddTeams",
+        "UpsertStrategyTeams"
       ]
     }
   ],
@@ -79,6 +86,37 @@
         {
           "path": "/Array",
           "verb": "post"
+        }
+      ]
+    },
+    "UpsertStrategyTeams": {
+      "accepts": [
+        {
+          "arg": "teams",
+          "type": "array",
+          "required": true,
+          "description": ""
+        },
+        {
+          "arg": "strategyId",
+          "type": "number",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "newTeams",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/OfStrategy/:strategyId",
+          "verb": "patch"
         }
       ]
     }

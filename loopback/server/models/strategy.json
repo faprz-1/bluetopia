@@ -8,6 +8,7 @@
   },
   "scope": {
     "include": [
+      "teams",
       {"strategyGroup": ["grade", "group"]},
       {"events": ["type", {"parcialProduct": "type"}]},
       {
@@ -48,6 +49,11 @@
     },
     "lastModified": {
       "type": "string"
+    },
+    "isByTeams": {
+      "type": "boolean",
+      "required": false,
+      "default": null
     },
     "isDeleted": {
       "type": "boolean",
@@ -195,6 +201,12 @@
           "type": "object",
           "required": true,
           "description": ""
+        },
+        {
+          "arg": "onlyStrategy",
+          "type": "boolean",
+          "required": false,
+          "description": ""
         }
       ],
       "returns": [
@@ -209,6 +221,10 @@
       "http": [
         {
           "path": "/",
+          "verb": "patch"
+        },
+        {
+          "path": "/OnlyStrategy/:onlyStrategy",
           "verb": "patch"
         }
       ]

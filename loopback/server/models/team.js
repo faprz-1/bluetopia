@@ -11,6 +11,7 @@ module.exports = function(Team) {
             if(err) return callback(err);
 
             let cont = 0, limit = team.members.length;
+            if(!limit) return callback(null, newTeam);
             team.members.forEach(member => {
                 let teamStudent = {
                     teamId: newTeam.id,
@@ -38,4 +39,18 @@ module.exports = function(Team) {
         });
     }
 
+    Team.UpsertStrategyTeams = function(teams, strategyId, callback) {
+        Team.destroyAll({strategyId}, (err, destroyed) => {
+            if(err) return callback(err);
+            
+            teams = teams.map((team, idx) => {
+                team.name = `Equipo ${idx+1}`;
+                return team;
+            });
+            Team.AddTeams(teams, strategyId, (err, teamsCreated) => {
+                if(err) return callback(err);
+                return callback(null, teamsCreated);
+            });
+        });
+    }
 };

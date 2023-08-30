@@ -409,7 +409,8 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
-          "AddTeams": true
+          "AddTeams": true,
+          "UpsertStrategyTeams": true
         }
       }
     }

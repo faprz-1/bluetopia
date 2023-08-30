@@ -5,28 +5,28 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlMessagesModule } from 'src/app/components/control-messages/control-messages.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
-import { CreateStrategyTeamsComponent } from './create-strategy-teams.component';
-import { BreadcrumbModule } from 'src/app/components/breadcrumb/breadcrumb.module';
+import { BreadcrumbComponent } from './breadcrumb.component';
 
 const MODULE_ROUTES = [
-  { path: '', component: CreateStrategyTeamsComponent }
+  { path: '', component: BreadcrumbComponent }
 ];
 
 @NgModule({
   declarations: [
-    CreateStrategyTeamsComponent
+    BreadcrumbComponent
   ],
   imports: [
     FormsModule,
     CommonModule,
     NgSelectModule,
-    BreadcrumbModule,
     ReactiveFormsModule,
     ControlMessagesModule,
     ModalModule.forRoot(),
-    RouterModule.forChild(MODULE_ROUTES),
+    BsDatepickerModule.forRoot(),
+    // RouterModule.forChild(MODULE_ROUTES),
   ],
-  // exports: [CreateStrategyTeamsComponent]
+  exports: [BreadcrumbComponent]
 })
-export class CreateStrategyTeamsModule { }
+export class BreadcrumbModule { }
