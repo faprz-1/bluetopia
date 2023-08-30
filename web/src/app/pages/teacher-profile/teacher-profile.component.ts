@@ -34,7 +34,7 @@ export class TeacherProfileComponent implements OnInit {
       name: new FormControl(null, [Validators.required]),
       phone: new FormControl(null, [Validators.required, ValidationService.CheckOnlyIntegerNumbers]),
       address: new FormControl(null, [Validators.required, Validators.minLength(3)]),
-      isActive: new FormControl(null, []),
+      isActive: new FormControl(false, []),
     }),
   });
 
@@ -72,7 +72,7 @@ export class TeacherProfileComponent implements OnInit {
         name: !!this.user?.school?.name ? this.user.school.name : null,
         phone: !!this.user?.school?.phone ? this.user.school.phone : null,
         address: !!this.user?.school?.address ? this.user.school.address : null,
-        isActive: !!this.user?.school?.isActive ? this.user.school.isActive : null,
+        isActive: !!this.user?.school?.isActive,
       },
     });
 
