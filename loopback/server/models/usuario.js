@@ -162,7 +162,7 @@ module.exports = function(Usuario) {
       where: {
         id,
       },
-      include: 'data'
+      include: ['data', 'school']
     }, function(error, user) {
       if (error) return callback(error, 'Error On User');
 
