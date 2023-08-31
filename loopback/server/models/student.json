@@ -5,6 +5,14 @@
   "options": {
     "validateUpsert": true
   },
+  "scope": {
+    "include": [
+      "school",
+      {
+        "studentGroup": ["group", "grade"]
+      }
+    ]
+  },
   "properties": {
     "name": {
       "type": "string",
@@ -52,7 +60,7 @@
       "model": "StudentGroup",
       "foreignKey": "studentId"
     },
-    "teamStudent": {
+    "teamsStudents": {
       "type": "hasMany",
       "model": "TeamStudent",
       "foreignKey": "studentId"
@@ -64,6 +72,15 @@
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": [
+        "GetData"
+      ]
     },
     {
       "accessType": "EXECUTE",
@@ -217,6 +234,24 @@
         },
         {
           "path": "/OfTeacher/:teacherUserId/FilteredBy/Grade/:gradeId/Group/:groupId",
+          "verb": "get"
+        }
+      ]
+    },
+    "prototype.GetData": {
+      "accepts": [],
+      "returns": [
+        {
+          "arg": "student",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/",
           "verb": "get"
         }
       ]
