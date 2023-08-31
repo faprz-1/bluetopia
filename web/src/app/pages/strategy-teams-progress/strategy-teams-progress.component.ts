@@ -84,17 +84,15 @@ export class StrategyTeamsProgressComponent implements OnInit {
   }
   
   ToggleIsByTeams() {
-    return new Promise<void>((res, rej) => {
-      let strategy = {
-        id: this.strategyId,
-        isByTeams: !!this.strategy ? !this.strategy.isByTeams : false
-      }
-      this.api.Patch(`/Strategies/${this.strategyId}/OnlyStrategy/1`, {strategy}).subscribe(strategySaved => {
-        res();
-      }, err => {
-        console.error("Error saving strategy", err);
-        rej(err);
-      });
+    let strategy = {
+      id: this.strategyId,
+      isByTeams: !!this.strategy ? !this.strategy.isByTeams : false
+    }
+    this.api.Patch(`/Strategies/${this.strategyId}/OnlyStrategy/1`, {strategy}).subscribe(strategySaved => {
+      if(strategy.isByTeams) this.nav.GoToUserRoute(`mis-estrategias/${this.strategyId}/crear-equipos`);
+      else window.location.reload();
+    }, err => {
+      console.error("Error saving strategy", err);
     });
   }
 
