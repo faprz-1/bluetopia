@@ -119,5 +119,61 @@
                 </div>
             </div>
         </ng-container>
+        <ng-container *ngIf="!strategy?.isByTeams">
+            <div class="col-12 mb-4" *ngFor="let student of students">
+                <div class="team-progress-card flex-column justify-content-center">
+                    <!-- Student data -->
+                    <div class="team-container w-100 flex-grow-1">
+                        <div class="title mb-0">{{BuildStudentFullName(student)}}</div>
+                    </div>
+
+                    <!-- Student evaluations -->
+                    <div class="d-flex align-items-start justify-content-center justify-content-lg-start overflow-auto" style="gap: 14px;">
+                        <div class="evaluation-col flex-grow-1" *ngFor="let parcialProduct of strategy.parcialProducts" style="gap: 14px;">
+                            <div>{{parcialProduct.name}} {{parcialProduct.event?.date | date:"dd/MM/yyyy"}}</div>
+                            <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 6px;">
+                                <span class="mb-1">Entregable</span>
+                                <div class="file-box">
+                                    Archivo.pdf
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 6px;">
+                                <span class="mb-1">Acción</span>
+                                <button class="btn btn-primary btn-block d-flex justify-content-center align-items-center" (click)="GoToGradeStudentParcialProduct(student, parcialProduct)" style="gap: 6px;">
+                                    <span *ngIf="false">Reevaluar</span>
+                                    <span *ngIf="true">Evaluar</span>
+                                    <img src="assets/icons/rate-review.svg">
+                                </button>
+                            </div>
+                            <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 6px;">
+                                <span class="mb-1">Entrega</span>
+                                <button class="btn btn-success btn-block">
+                                    En tiempo
+                                </button>
+                                <button class="btn btn-danger btn-block">
+                                    Vencido
+                                </button>
+                            </div>
+                            <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 6px;">
+                                <span class="mb-1">Revisión</span>
+                                <ng-container *ngIf="true">
+                                    <button class="btn btn-warning btn-block">
+                                        Pendiente
+                                    </button>
+                                </ng-container>
+                                <ng-container *ngIf="false">
+                                    <button class="btn btn-primary btn-block">
+                                        Calificdo
+                                    </button>
+                                    <div class="file-box">
+                                        4.5
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
     </div>
 </div>

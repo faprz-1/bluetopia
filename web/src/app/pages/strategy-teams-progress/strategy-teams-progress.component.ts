@@ -11,7 +11,10 @@ import { NavigationService } from 'src/app/services/navigation.service';
 export class StrategyTeamsProgressComponent implements OnInit {
 
   strategyId: any;
+  grade: any;
+  group: any;
   strategy: any = null;
+  students: Array<any> = [];
   crumbs: Array<{name: string, route: string | null}> = [
     {name: 'Equipos', route: null},
     {name: 'Visualiza el progreso de tus equipos', route: null},
@@ -34,6 +37,9 @@ export class StrategyTeamsProgressComponent implements OnInit {
   GoToGradeTeamParcialProduct(team: any, parcialProduct: any) {
     this.nav.GoToUserRoute(`mis-estrategias/${this.strategyId}/progreso-equipos/${team.id}/evaluar/${parcialProduct.id}`);
   }
+  GoToGradeStudentParcialProduct(student: any, parcialProduct: any) {
+    this.nav.GoToUserRoute(`mis-estrategias/${this.strategyId}/progreso-estudiantes/${student.id}/evaluar/${parcialProduct.id}`);
+  }
 
   GetParams() {
     this.activatedRoute.params.subscribe(params => {
@@ -45,10 +51,21 @@ export class StrategyTeamsProgressComponent implements OnInit {
   GetStrategy() {
     this.api.Get(`/Strategies/${this.strategyId}`).subscribe((strategy: any) => {
         this.strategy = strategy;
+        this.grade = strategy.strategyGroup ? strategy.strategyGroup.grade : null;
+        this.group = strategy.strategyGroup ? strategy.strategyGroup.group : null;
+        this.GetGradeGroupStudents();
       }, (err) => {
         console.error('Error getting strategy', err);
       }
     );
+  }
+
+  GetGradeGroupStudents() {
+    this.api.Get(`/Students/OfTeacher/${this.api.GetUser()?.id}/FilteredBy/Grade/${!!this.grade ? this.grade.id : 0}/Group/${!!this.group ? this.group.id : 0}`).subscribe(students => {
+      this.students = students;
+    }, err => {
+      console.error("Error getting students", err);
+    });
   }
 
   SaveStrategy() {

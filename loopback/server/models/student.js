@@ -122,4 +122,8 @@ module.exports = function(Student) {
         });
     }
 
+    Student.prototype.GetData = function(callback) {
+        return callback(null, this);
+    }
+
 };

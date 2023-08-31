@@ -6,31 +6,37 @@
         </div>
     </div>
 
-    <div class="row mb-5" style="gap: 60px;">
+    <div class="row my-5" style="gap: 60px;">
         <div class="col-12">
             <div class="d-flex align-items-end flex-wrap flex-md-nowrap" style="gap: 13px;">
-                <div class="strategy-info-card">
-                    <div class="text-primary text-uppercase">
-                        {{strategy?.strategyGroup?.grade?.name}}°{{strategy?.strategyGroup?.group?.name}}
+                <div class="d-flex flex-column">
+                    <div class="d-flex align-items-center mb-3" style="gap: 16px;" *ngIf="!strategy?.isByTeams">
+                        <img src="assets/icons/user.svg" height="37">
+                        <span class="student-name">{{BuildStudentFullName(student)}}</span>
                     </div>
-                    <div class="d-flex align-items-center" style="gap: 12px;">
-                        <img [src]="'assets/icons/' + strategy?.template?.icon" height="35">
-                        <span class="text-primary">{{strategy?.template?.nickname}}</span>
-                    </div>
-                    <div class="d-flex" style="gap: 24px;color: #2369B5;">
-                        <span>{{strategy?.startDate | date:"dd/MM/yyyy"}}</span>
-                        <span>-</span>
-                        <span>{{strategy?.endDate | date:"dd/MM/yyyy"}}</span>
-                    </div>
-                    <span class="text-success"><b>{{strategy?.topic}}</b></span>
-                    <div class="d-flex flex-column align-items-start">
-                        <div class="text-primary">Título</div>
-                        <span style="font-size: 16px;">{{strategy?.title}}</span>
+                    <div class="strategy-info-card">
+                        <div class="text-primary text-uppercase">
+                            {{strategy?.strategyGroup?.grade?.name}}°{{strategy?.strategyGroup?.group?.name}}
+                        </div>
+                        <div class="d-flex align-items-center" style="gap: 12px;">
+                            <img [src]="'assets/icons/' + strategy?.template?.icon" height="35">
+                            <span class="text-primary">{{strategy?.template?.nickname}}</span>
+                        </div>
+                        <div class="d-flex" style="gap: 24px;color: #2369B5;">
+                            <span>{{strategy?.startDate | date:"dd/MM/yyyy"}}</span>
+                            <span>-</span>
+                            <span>{{strategy?.endDate | date:"dd/MM/yyyy"}}</span>
+                        </div>
+                        <span class="text-success"><b>{{strategy?.topic}}</b></span>
+                        <div class="d-flex flex-column align-items-start">
+                            <div class="text-primary">Título</div>
+                            <span style="font-size: 16px;">{{strategy?.title}}</span>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Team data -->
-                <div class="team-container w-100 flex-grow-1">
+                <div class="team-container w-100 flex-grow-1" *ngIf="strategy?.isByTeams">
                     <div class="title mb-0">{{team?.name}}</div>
                     <div class="team w-100" *ngIf="!!team?.members?.length">
                         <div class="d-flex w-100" style="gap: 10px;">
@@ -65,7 +71,8 @@
                 </div>
                 <div class="info-col">
                     <div class="title">Subido por</div>
-                    <div>{{BuildStudentFullName(team?.members[0].student)}}</div>
+                    <div *ngIf="strategy.isByTeams">{{BuildStudentFullName(team?.members[0].student)}}</div>
+                    <div *ngIf="!strategy.isByTeams">{{BuildStudentFullName(student)}}</div>
                 </div>
                 <div class="info-col">
                     <div class="title">Entregado el día</div>
@@ -125,7 +132,7 @@
                         </div>
                     </div>
                 </ng-container>
-                <div class="form-row">
+                <div class="form-row" *ngIf="strategy?.isByTeams">
                     <span class="instruction-number">3</span>
                     <div class="form-col">
                         <div class="form-section-title">
