@@ -24,7 +24,7 @@ export class CreateEventOrProductComponent implements OnInit {
       type: 'event'
     },
     {
-      name: 'Product parcial',
+      name: 'Producto parcial',
       type: 'parcialProduct'
     },
   ];
