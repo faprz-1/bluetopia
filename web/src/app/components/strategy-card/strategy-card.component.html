@@ -39,13 +39,19 @@
                 Terminar de editar
             </button>
         </ng-container>
+        <ng-container *ngIf="strategy.strategyGroup?.gradeId == 0">
+            <span class="badge badge-warning">Sin grado asignado</span>
+        </ng-container>
+        <ng-container *ngIf="strategy.strategyGroup?.groupId == 0">
+            <span class="badge badge-warning">Sin grupo asignado</span>
+        </ng-container>
         <ng-container *ngIf="true">
             <button class="btn btn-outline-primary flex-grow-1" (click)="GoToStrategyTeamsProgress()" *ngIf="strategy?.isByTeams !== null">
                 Ver progreso
             </button>
             <button class="btn btn-outline-primary flex-grow-1"
             *ngIf="strategy?.isByTeams === null"
-            (click)="GoToCreateStrategyTeams()">
+            (click)="GoToCreateStrategyTeams()" [disabled]="strategy.strategyGroup?.groupId == 0">
                 Asignar equipos
             </button>
             <button class="btn btn-outline-success flex-grow-1" (click)="GoToStrategyCalendar()">
