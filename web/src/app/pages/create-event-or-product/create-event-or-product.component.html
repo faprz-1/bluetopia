@@ -25,12 +25,12 @@
             <span class="instruction-number">1</span>
             <div class="form-col">
                 <div class="form-section-title">
-                    Selecciona un evento o producto
+                    Selecciona qué deseas agendar
                 </div>
                 <ng-select class="form-control with-border"
                     [items]="formTypes" bindLabel="name" bindValue="type"
                     placeholder="Evento o producto"
-                    formControlName="type">
+                    formControlName="type" (change)="FilterActivitiesByType()">
                 </ng-select>
             </div>
         </div>

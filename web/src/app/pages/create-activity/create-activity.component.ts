@@ -8,43 +8,27 @@ import { ToastService } from 'src/app/services/toast.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-create-event-or-product',
-  templateUrl: './create-event-or-product.component.html',
-  styleUrls: ['./create-event-or-product.component.scss']
+  selector: 'app-create-activity',
+  templateUrl: './create-activity.component.html',
+  styleUrls: ['./create-activity.component.scss']
 })
-export class CreateEventOrProductComponent implements OnInit {
-
+export class CreateActivityComponent implements OnInit {
   strategyId: any;
   date: any;
 
   activities: Array<any> = [];
-  formTypes: Array<any> = [
-    {
-      name: 'Evento de cierre',
-      type: 'event'
-    },
-    {
-      name: 'Producto parcial',
-      type: 'parcialProduct'
-    },
-    {
-      name: 'Actividad',
-      type: 'activity'
-    },
-  ];
+
   loading: boolean = false;
 
-  eventForm: FormGroup = new FormGroup({
-    name: new FormControl(null, []),
-    instructions: new FormControl(null, []),
-    type: new FormControl(null, [Validators.required]),
+  activityForm: FormGroup = new FormGroup({
+    name: new FormControl(null, [Validators.required]),
+    instructions: new FormControl(null, [Validators.required]),
     date: new FormControl(null, [Validators.required]),
-    parcialProduct: new FormControl(null, [Validators.required]),
     strategyId: new FormControl(null, [Validators.required]),
     resources: new FormControl([], []),
+    maxCalification: new FormControl([],[Validators.required])
   });
 
-  allActivities = [];
   public get formatedDate() {
     if(!this.date) return '';
     return moment(this.date).format('DD/MM/YY');
@@ -66,38 +50,13 @@ export class CreateEventOrProductComponent implements OnInit {
       this.strategyId = params['strategyId'];
       this.date = params['date'];
       
-      this.eventForm.get('date')?.setValue(new Date(moment(this.date).toISOString()));
-      this.eventForm.get('strategyId')?.setValue(this.strategyId);
-      this.GetStrategyTeacherActivities();
+      this.activityForm.get('date')?.setValue(new Date(moment(this.date).toISOString()));
+      this.activityForm.get('strategyId')?.setValue(this.strategyId);
     });
   }
 
   GoBack() {
     this.nav.GoToUserRoute(`mis-estrategias/${this.strategyId}/calendario/${this.date}`);
-  }
-
-  GetStrategyTeacherActivities() {
-    this.api.Get(`/Strategies/${this.strategyId}/Activities`).subscribe(activities => {
-      this.allActivities = activities.filter((activity: any) => !activity.eventId);
-    }, err => {
-      console.error("Error getting activities", err);
-    });
-  }
-
-
-  FilterActivitiesByType(){
-  let type = this.eventForm.get('type')?.value;    
-   switch (type) {
-    case 'activity':
-      this.activities = this.allActivities.filter((product:any)=> product.isActivity);
-      break;
-    case 'parcialProduct':
-      this.activities = this.allActivities.filter((product:any)=> !product.isActivity && !product.isFinal);
-      break;
-    case 'event':
-      this.activities = this.allActivities.filter((product:any)=> product.isFinal);
-      break;
-   }
   }
 
   OnFileSelected(event: any) {
@@ -114,31 +73,33 @@ export class CreateEventOrProductComponent implements OnInit {
           "fileExtention": "." + file.name.split('.').pop()?.toLowerCase()
         };
 
-        this.eventForm.get('resources')?.value.push(fileObj);
+        this.activityForm.get('resources')?.value.push(fileObj);
       };
       reader.readAsBinaryString(file);
     });
   }
   
   OnLibraryFilesSelected(files: Array<any>) {
-    this.eventForm.get('resources')?.setValue(
-      this.eventForm.get('resources')?.value.concat(files)
+    this.activityForm.get('resources')?.setValue(
+      this.activityForm.get('resources')?.value.concat(files)
     );
   }
 
-  SaveEvent() {
-    if(this.eventForm.invalid) {
+  SaveActivity() {
+    if(this.activityForm.invalid) {
       this.toast.ShowWarning(`Favor de llenar todos los campos`);
-      this.eventForm.markAllAsTouched();
+      this.activityForm.markAllAsTouched();
       return;
     }
 
     this.loading = true;
     let event = {
-      ...this.eventForm.value,
-      date: moment(this.eventForm.value.date).tz(environment.timeZone).toISOString()
+      ...this.activityForm.value,
+      date: moment(this.activityForm.value.date).tz(environment.timeZone).toISOString(),
+        strategyId: this.strategyId,
+        isActivity: true,
     }
-    this.api.Post(`/Events`, {event}).subscribe(newEvent => {
+    this.api.Post(`/ParcialProducts/activity`, event).subscribe(newEvent => {
       this.loading = false;
       this.toast.ShowSuccess(`Evento creado correctamente`);
       this.GoBack();
@@ -150,8 +111,8 @@ export class CreateEventOrProductComponent implements OnInit {
 
   GetFiles(type: string): Array<any> {
     switch (type) {
-      case 'new': return this.eventForm.get('resources')?.value.filter((file: any) => !file.id);
-      case 'old': return this.eventForm.get('resources')?.value.filter((file: any) => !!file.id);
+      case 'new': return this.activityForm.get('resources')?.value.filter((file: any) => !file.id);
+      case 'old': return this.activityForm.get('resources')?.value.filter((file: any) => !!file.id);
       default: return []
     }
   }

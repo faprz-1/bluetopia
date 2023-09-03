@@ -1,0 +1,126 @@
+<div class="content">
+    <div class="row-header">
+        <div></div>
+        <div class="title">
+            Calendario
+        </div>
+        <div></div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="back-section">
+            <img class="back-icon clickeable" src="assets/icons/back-arrow.png" alt="back-arrow" (click)="GoBack()">
+        </div>
+
+        <div class="event-date">
+            {{formatedDate}}
+        </div>
+
+        <div>
+        </div>
+    </div>
+
+    <form class="form-container" [formGroup]="activityForm">
+        <div class="form-row">
+            <span class="instruction-number">1</span>
+            <div class="form-col">
+                <div class="form-section-title">
+                    Escribe un nombre para tu actividad
+                </div>
+                <div class="input-container with-border-thin">
+                    <input class="form-control no-icon" type="text" 
+                        placeholder="Título" formControlName="name">
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <span class="instruction-number">2</span>
+            <div class="form-col">
+                <div class="form-section-title">
+                   Escribe las instrucciones
+                </div>
+                <div class="input-container">
+                    <textarea class="form-control with-border-thin"
+                        formControlName="instructions" placeholder="Instrucciones de la actividad"
+                        rows="6" ></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <span class="instruction-number">3</span>
+            <div class="form-col">
+                <div class="form-section-title">
+                    Escribe la calificación máxima
+                </div>
+                <div class="input-container with-border-thin">
+                    <input class="form-control no-icon" type="number" 
+                        placeholder="Calificación máxima" formControlName="maxCalification">
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <span class="instruction-number">4</span>
+            <div class="form-col">
+                <div class="form-section-title">
+                    Selecciona la fecha
+                </div>
+                <div class="input-container">
+                    <input #parcialProductDatePicker="bsDatepicker"
+                        class="form-control no-icon with-border" type="text"
+                        formControlName="date" placeholder="Fecha"
+                        [bsConfig]="{ adaptivePosition: true, containerClass: 'theme-dark-blue' }"
+                        bsDatepicker>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-files-container">
+            <div class="flex-files">
+                <div class="flex-icons" *ngIf="!GetFiles('new').length">
+                    <img src="assets/icons/video-recorder.png" alt="video">
+                    <img src="assets/icons/gallery.png" alt="video">
+                    <img src="assets/icons/book-closed-green.png" alt="video">
+                </div>
+                <div class="flex-resources" *ngIf="!!GetFiles('new').length">
+                    <div class="resource" *ngFor="let file of GetFiles('new')">
+                        <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
+                        {{file.name}}
+                    </div>
+                </div>
+                <input class="d-none" type="file" #fileInput multiple (change)="OnFileSelected($event)">
+                <button class="btn btn-success btn-block" (click)="fileInput.click()">
+                    Adjuntar algún recurso
+                </button>
+            </div>
+
+            <div class="flex-files mr-0">
+                <div class="flex-icons" *ngIf="!GetFiles('old').length">
+                    <img src="assets/icons/library.png" alt="video">
+                    <img src="assets/icons/movie.png" alt="video">
+                    <img src="assets/icons/microscope.png" alt="video">
+                </div>
+                <div class="flex-resources" *ngIf="!!GetFiles('old').length">
+                    <div class="resource" *ngFor="let file of GetFiles('old')">
+                        <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
+                        {{file.name}}
+                    </div>
+                </div>
+                <button class="btn btn-success btn-block" (click)="libraryModal.OpenModal()">
+                    Adjuntar de la biblioteca
+                </button>
+            </div>
+        </div>
+
+    </form>
+    <div class="d-flex justify-content-end my-4">
+        <button class="btn btn-primary btn-bigger" (click)="SaveActivity()">
+            <span *ngIf="!loading">Continuar</span>
+            <span *ngIf="loading"><i class="zmdi zmdi-spinner zmdi-hc-lg zmdi-hc-spin"></i></span>
+        </button>
+    </div>
+</div>
+
+<app-library-file-selector-modal
+    #libraryModal
+    (onFilesSelectd)="OnLibraryFilesSelected($event)"
+></app-library-file-selector-modal>

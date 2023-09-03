@@ -109,7 +109,10 @@
           "arg": "parcialProduct",
           "type": "object",
           "required": true,
-          "description": ""
+          "description": "",
+          "http":{
+            "source":"body"
+          }
         }
       ],
       "returns": [
