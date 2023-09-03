@@ -492,7 +492,6 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
-          "CreateOne": true,
           "Update": true
         }
       }

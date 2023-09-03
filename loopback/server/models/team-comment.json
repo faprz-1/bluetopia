@@ -11,7 +11,24 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "parcialProduct": {
+      "type": "belongsTo",
+      "model": "ParcialProduct",
+      "foreignKey": "parcialProductId",
+      "options": {
+        "nestRemoting": true
+      }
+    },
+    "team": {
+      "type": "belongsTo",
+      "model": "Team",
+      "foreignKey": "teamId",
+      "options": {
+        "nestRemoting": true
+      }
+    }
+  },
   "acls": [],
   "methods": {}
 }

@@ -15,7 +15,40 @@
     }
   },
   "validations": [],
-  "relations": {},
-  "acls": [],
+  "relations": {
+    "parcialProduct": {
+      "type": "belongsTo",
+      "model": "ParcialProduct",
+      "foreignKey": "parcialProductId",
+      "options": {
+        "nestRemoting": true
+      }
+    },
+    "student": {
+      "type": "belongsTo",
+      "model": "Student",
+      "foreignKey": "studentId",
+      "options": {
+        "nestRemoting": true
+      }
+    }
+  },
+  "acls": [
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": [
+        "Update"
+      ]
+    }
+  ],
   "methods": {}
 }
