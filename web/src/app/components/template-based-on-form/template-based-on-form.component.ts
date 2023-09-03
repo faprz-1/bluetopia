@@ -881,7 +881,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
       let eventInstance = {
         ...this.eventForm.value,
         name: `${
-          !!this.strategy?.title ? this.strategy.title : 'Sin titulo'
+          !!this.strategy?.title ? this.strategy.title : 'Sin título'
         }: Evento de cierre`,
         strategyId: this.strategyId,
         isFinal: true,
@@ -925,6 +925,9 @@ export class TemplateBasedOnFormComponent implements OnInit {
         this.parcialProductForm.get('rubric')?.setValue(rubric);
         break;
       case 4:
+        this.parcialProductForm.get('rubric')?.setValue(rubric);
+        break;
+      case 5:
         this.eventForm.get('rubric')?.setValue(rubric);
         break;
     }

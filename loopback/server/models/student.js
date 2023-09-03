@@ -19,7 +19,17 @@ module.exports = function(Student) {
                     }
                     Student.app.models.StudentGroup.create(studentGroup, (err, newStudentGroupInstance) => {
                         if(err) return callback(err);
-                        return callback(null, newStudent);
+    
+                        const teacherGroup = {
+                            gradeId: grades.find(g => g.name == student.grade.toLowerCase()) ? grades.find(g => g.name == student.grade.toLowerCase()).id : null,
+                            groupId: groups.find(g => g.name == student.group.toLowerCase()) ? groups.find(g => g.name == student.group.toLowerCase()).id : null,
+                            teacherId: student.teacherId
+                        }
+                        Student.app.models.TeacherGroup.LinkGroupToTeacher(teacherGroup,(err,newGroupTeacher)=>{
+                            if(err) return callback(err);
+
+                            return callback(null, newStudent);
+                        });
                     });
                 });
             });
@@ -37,19 +47,14 @@ module.exports = function(Student) {
                 if(err) return callback(err);
                 
                 students.forEach(student => {
+                    Student.app.models.Teacher.findOne({where:{userId:student.teacherUserId}}, (err, teacher) => {
+                        if(err) console.error(err);
+                        student.teacherId = teacher.id ? teacher.id:null;
                     Student.AddStudent(student, (err, newStudent) => {
-                        if(err) return callback(err);
-                        
-                        const studentGroup = {
-                            studentId: newStudent.id,
-                            gradeId: grades.find(g => g.name == student.grade.toLowerCase()) ? grades.find(g => g.name == student.grade.toLowerCase()).id : null,
-                            groupId: groups.find(g => g.name == student.group.toLowerCase()) ? groups.find(g => g.name == student.group.toLowerCase()).id : null
-                        }
-                        Student.app.models.StudentGroup.create(studentGroup, (err, newStudentGroupInstance) => {
+                        if(err) console.error(err);
                             newStudents.push(newStudent);
                             if(++cont == limit) return callback(null, newStudents);
-                        });
-                    });
+                    });});
                 });
             });
         });
@@ -123,7 +128,43 @@ module.exports = function(Student) {
     }
 
     Student.prototype.GetData = function(callback) {
-        return callback(null, this);
+        Student.findById(this.id, {
+            include: [
+                'school',
+                'evaluations',
+                {'studentGroup': ['group', 'grade']}
+            ]
+        }, (err, student) => {
+            return callback(err, student);
+        });
+    }
+
+    Student.prototype.GetDataWithEvaluations = function(parcialProductId, callback) {
+        Student.findById(this.id, {
+            include: [
+                'school',
+                {'studentGroup': ['group', 'grade']},
+                {
+                    relation: 'evaluations',
+                    scope: {
+                        where: parcialProductId ? {
+                            parcialProductId
+                        } : null
+                    }
+                },
+            ]
+        }, (err, student) => {
+            return callback(err, student);
+        });
+    }
+
+    Student.prototype.EvaluateParcialProduct = function(evaluation, callback) {
+        evaluation.studentId = this.id;
+        Student.app.models.Evaluation.Update(evaluation, (err, evaluationSaved) => {
+            if(err) return callback(err);
+
+            return callback(null, evaluationSaved);
+        });
     }
 
 };

@@ -9,6 +9,8 @@ import { Subscription } from 'rxjs';
 export class RubricComponent implements OnInit {
 
   @Input() onReset: EventEmitter<any> | null = null;
+  @Input() setEvaluations: EventEmitter<any> | null = null;
+  @Input() evaluationMode: boolean = false;
   @Input() canEdit: boolean = true;
   @Input() showControls: boolean = true;
   @Input() rubrics: Array<any> = [
@@ -17,8 +19,9 @@ export class RubricComponent implements OnInit {
       concepts: []
     }
   ];
-
+  
   @Output() exportRubrics: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onEvaluation: EventEmitter<any> = new EventEmitter<any>();
 
   subscriptions: Array<Subscription> = [];
   
@@ -28,6 +31,15 @@ export class RubricComponent implements OnInit {
     if(!!this.onReset) {
       this.subscriptions.push(this.onReset.subscribe(() => {
         this.ExportRubrics();
+      }));
+    }
+    if(!!this.setEvaluations) {
+      this.subscriptions.push(this.setEvaluations.subscribe((califications) => {
+        if(califications?.length) {
+          this.rubrics.forEach((rubric, idx) => {
+            rubric.conceptSelected = rubric.concepts.find((concept: any) => concept.value == califications[idx]);
+          });
+        }
       }));
     }
     if(!this.rubrics) {
@@ -82,6 +94,24 @@ export class RubricComponent implements OnInit {
 
   ExportRubrics() {
     this.exportRubrics.emit(this.rubrics);
+  }
+
+  // --------------------- Evaluation --------------------- //
+  OnRubricValueSelected(rubric: any, conceptSelected: any) {
+    rubric.conceptSelected = conceptSelected;
+    let maxCalification = 0, calification = 0;
+    this.rubrics.forEach(rubric => {
+      let max = 0;
+      rubric.concepts.forEach((concept: any) => {max = Math.max(max, concept.value)});
+      calification += (!!rubric.conceptSelected ? rubric.conceptSelected.value : 0);
+      maxCalification += max;
+    });
+
+    this.onEvaluation.emit({
+      maxCalification,
+      calification,
+      rubricsCalifications: this.rubrics.map(rubric => rubric.conceptSelected?.value)
+    });
   }
 
 }

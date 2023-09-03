@@ -77,4 +77,62 @@ module.exports = function(Team) {
             });
         });
     }
+
+    Team.prototype.GetData = function(parcialProductId, callback) {
+        Team.findById(this.id, {
+            include: [{
+                relation: 'comments',
+                scope: {
+                    where: !!parcialProductId ? {
+                        parcialProductId
+                    } : null
+                }
+            }, {'members': [
+                'role',
+                {'student': {
+                    relation: 'evaluations',
+                    scope: {
+                        where: !!parcialProductId ? {
+                            parcialProductId
+                        } : null
+                    }
+                }}]}]
+        }, (err, team) => {
+            return callback(err, team);
+        });
+    }
+
+    Team.prototype.EvaluateParcialProduct = function(evaluation, callback) {
+        Team.app.models.TeamStudent.find({
+            where: {teamId: this.id}
+        }, (err, teamStudents) => {
+            if(err) return callback(err);
+
+            let teamComment = {
+                teamId: this.id,
+                parcialProductId: evaluation.parcialProductId,
+                comment: evaluation.comment
+            }
+            Team.app.models.TeamComment.Update(teamComment, (err, teamCommentUpdated) => {
+                if(err) return callback(err);
+
+                let cont = 0, limit = teamStudents.length;
+                if(!limit) return callback(null, evaluation);
+                teamStudents.forEach(teamStudent => {
+                    let evaluationCopy = Object.assign({}, evaluation);
+                    evaluationCopy.studentId = teamStudent.studentId;
+                    if(!!evaluationCopy.members && evaluationCopy.members.length) {
+                        let member = evaluationCopy.members.find(member => member.studentId == teamStudent.studentId);
+                        evaluationCopy.comment = !!member && !!member.comment ? member.comment : null;
+                    }
+                    Team.app.models.Evaluation.Update(evaluationCopy, (err, newEvaluation) => {
+                        if(err) return callback(err);
+    
+                        if(++cont == limit) return callback(null, evaluation);
+                    });
+                });
+            });
+        });
+    }
+
 };

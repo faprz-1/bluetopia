@@ -42,11 +42,24 @@
                     <label class="text-primary mb-1"><b>Instrucciones</b></label>
                     <span>{{event.instructions ? event.instructions : 'Sin instrucciones'}}</span>
                 </div>
+                <div class="d-flex flex-column" *ngIf="event.resources.length > 0">
+                    <label class="text-primary mb-1"><b>Recursos</b></label>
+                    <div class="flex-resources ">
+                        <div class="resource clickeable" *ngFor="let file of event.resources" (click)="DownloadFile(file)">
+                            <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
+                            {{file.file.name}}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <button class="btn btn-success" (click)="GoToCreateEventOrProduct()">
-            Agregar evento o producto
+            Agregar evento a un producto parcial o actividad
+        </button>
+
+        <button class="btn btn-primary" (click)="GoToCreateActivity()">
+            Agregar actividad
         </button>
     </div>
 </div>

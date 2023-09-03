@@ -154,7 +154,9 @@
           "AddStudents": true,
           "GetAllOfSchool": true,
           "GetAllOfTeacher": true,
-          "prototype.GetData": true
+          "prototype.GetData": true,
+          "prototype.GetDataWithEvaluations": true,
+          "prototype.EvaluateParcialProduct": true
         }
       }
     }
@@ -167,8 +169,7 @@
         "sharedMethods": {
           "*": false,
           "GetAll": true,
-          "CreateOneWithoutRepeat":true
-
+          "CreateOneWithoutRepeat": true
         }
       }
     }
@@ -269,7 +270,7 @@
         "sharedMethods": {
           "*": false,
           "GetAll": true,
-          "CreateOne":true
+          "CreateOne": true
         }
       }
     }
@@ -282,7 +283,7 @@
         "sharedMethods": {
           "*": false,
           "GetAll": true,
-          "CreateOne":true
+          "CreateOne": true
         }
       }
     }
@@ -340,6 +341,7 @@
         "sharedMethods": {
           "*": false,
           "CreateOne": true,
+          "CreateActivity": true,
           "prototype.Update": true,
           "prototype.Delete": true
         }
@@ -412,7 +414,9 @@
           "*": false,
           "AddTeams": true,
           "UpsertStrategyTeams": true,
-          "UpdateTeamsMembersRoles": true
+          "UpdateTeamsMembersRoles": true,
+          "prototype.GetData": true,
+          "prototype.EvaluateParcialProduct": true
         }
       }
     }
@@ -485,5 +489,21 @@
         }
       }
     }
+  },
+  "Evaluation": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "Update": true
+        }
+      }
+    }
+  },
+  "TeamComment": {
+    "dataSource": "mysqlDev",
+    "public": false
   }
 }

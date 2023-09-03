@@ -71,8 +71,8 @@
                 </div>
                 <div class="info-col">
                     <div class="title">Subido por</div>
-                    <div *ngIf="strategy.isByTeams">{{BuildStudentFullName(team?.members[0].student)}}</div>
-                    <div *ngIf="!strategy.isByTeams">{{BuildStudentFullName(student)}}</div>
+                    <div *ngIf="strategy?.isByTeams">{{BuildStudentFullName(team?.members[0].student)}}</div>
+                    <div *ngIf="!strategy?.isByTeams">{{BuildStudentFullName(student)}}</div>
                 </div>
                 <div class="info-col">
                     <div class="title">Entregado el día</div>
@@ -95,15 +95,22 @@
                                 Asigna la calificación en base a la rúbrica que creaste
                             </div>
                             <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 12px;">
-                                <div [ngSwitch]="parcialProduct?.evaluationType?.type">
-                                    <div *ngSwitchCase="'rubric'">
+                                <div class="w-100" [ngSwitch]="parcialProduct?.evaluationType?.type">
+                                    <div class="w-100" *ngSwitchCase="'rubric'">
+                                        <app-rubric
+                                        class="w-100"
+                                        *ngIf="!!parcialProduct"
+                                        [rubrics]="parcialProduct.rubric"
+                                        [evaluationMode]="true"
+                                        [setEvaluations]="setRubricsEvaluations"
+                                        (onEvaluation)="OnRubricsEvaluateRubric($event)"></app-rubric>
                                     </div>
                                     <div *ngSwitchCase="'numeric'">
                                         <div class="d-flex flex-column" style="gap: 12px;">
                                             <div class="text-bold">
                                                 Valor númerico
                                             </div>
-                                            <div class="d-flex align-items-center justify-content-start text-1" style="gap: 12px;">
+                                            <div class="d-flex align-items-center justify-content-start text-1" style="gap: 24px;">
                                                 <div class="input-container m-0">
                                                     <input
                                                     class="form-control with-border no-icon"
@@ -127,7 +134,7 @@
                                 Agregar comentario al equipo
                             </div>
                             <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 12px;">
-                                <textarea class="form-control with-border" placeholder="Comentario" rows="4"></textarea>
+                                <textarea class="form-control with-border" formControlName="comment" placeholder="Comentario" rows="4"></textarea>
                             </div>
                         </div>
                     </div>
@@ -143,13 +150,13 @@
                                 <div class="fake-input-disabled mb-2">
                                     {{BuildStudentFullName(member.student)}}
                                 </div>
-                                <textarea class="form-control with-border" [(ngModel)]="member.comments" placeholder="Comentario" rows="4"></textarea>
+                                <textarea class="form-control with-border" [(ngModel)]="member.comment" placeholder="Comentario" rows="4"></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="d-flex justify-content-end mt-4">
-                    <button class="btn btn-primary">
+                    <button class="btn btn-primary" (click)="SaveEvaluation()">
                         Finalizar evaluación
                     </button>
                 </div>

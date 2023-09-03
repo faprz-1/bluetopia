@@ -62,4 +62,21 @@ module.exports = function(TeacherGroup) {
         });
     }
 
+    TeacherGroup.LinkGroupToTeacher = function (teacherGroup, callback) {
+      TeacherGroup.findOrCreate(
+        {
+          where: {
+            gradeId: teacherGroup.gradeId,
+            groupId: teacherGroup.groupId,
+            teacherId: teacherGroup.teacherId,
+          },
+        },
+        teacherGroup,
+        (err, result) => {
+            if(err) return callback(err);
+          return callback(err, result);
+        }
+      );
+    };
+
 };

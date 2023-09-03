@@ -1,4 +1,4 @@
-<div class="rubric">
+<div class="rubric" *ngIf="!evaluationMode">
     <div class="rubric-row" *ngFor="let rubric of rubrics; let last = last">
         <div class="rubric-item">
             <div class="rubric-title">Valor</div>
@@ -23,6 +23,45 @@
                 <img class="clickeable" (click)="AddRow()" src="assets/icons/add-circle.png" alt="add">
                 <img class="clickeable" (click)="RemoveRow()" src="assets/icons/remove-circle.png" alt="add">
             </div>
+        </div>
+    </div>
+</div>
+<div class="row w-100 evaluation-mode" *ngIf="evaluationMode">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-4 mb-2">
+                <div class="rubric-title">Valor</div>
+            </div>
+            <div class="col-4 mb-2">
+                <div class="rubric-title">Descripción</div>
+            </div>
+            <div class="col-4 mb-2">
+                <div class="rubric-title">Valor númerico</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="row">
+            <ng-container *ngFor="let rubric of rubrics">
+                <div class="col-4 mb-2 evaluation-card">
+                    {{rubric.description}}
+                </div>
+                <div class="col-4 mb-2 evaluation-card">
+                    {{rubric.conceptSelected?.description ? rubric.conceptSelected?.description : 'Seleccione un valor'}}
+                </div>
+                <div class="col-4 mb-2">
+                    <ng-select
+                    class="form-control with-border"
+                    placeholder="Valor"
+                    [clearable]="false"
+                    [(ngModel)]="rubric.conceptSelected"
+                    (change)="OnRubricValueSelected(rubric, $event)">
+                        <ng-option [value]="concept" *ngFor="let concept of rubric.concepts">
+                            {{concept.value}}
+                        </ng-option>
+                    </ng-select>
+                </div>
+            </ng-container>
         </div>
     </div>
 </div>

@@ -6,22 +6,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlMessagesModule } from 'src/app/components/control-messages/control-messages.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
-import { GradeProductComponent } from './grade-product.component';
+import { EvaluationsComponent } from './evaluations.component';
 import { BreadcrumbModule } from 'src/app/components/breadcrumb/breadcrumb.module';
-import { RubricModule } from 'src/app/components/rubric/rubric.module';
 
 const MODULE_ROUTES = [
-  { path: '', component: GradeProductComponent }
+  { path: '', component: EvaluationsComponent }
 ];
 
 @NgModule({
   declarations: [
-    GradeProductComponent
+    EvaluationsComponent
   ],
   imports: [
     FormsModule,
     CommonModule,
-    RubricModule,
     NgSelectModule,
     BreadcrumbModule,
     ReactiveFormsModule,
@@ -29,6 +27,6 @@ const MODULE_ROUTES = [
     ModalModule.forRoot(),
     RouterModule.forChild(MODULE_ROUTES),
   ],
-  // exports: [GradeProductComponent]
+  // exports: [EvaluationsComponent]
 })
-export class GradeProductModule { }
+export class EvaluationsModule { }

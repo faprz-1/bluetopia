@@ -5,11 +5,6 @@
   "options": {
     "validateUpsert": true
   },
-  "scope": {
-    "include": [
-      {"members": ["student", "role"]}
-    ]
-  },
   "properties": {
     "name": {
       "type": "string",
@@ -27,6 +22,11 @@
       "type": "belongsTo",
       "model": "Strategy",
       "foreignKey": "strategyId"
+    },
+    "comments": {
+      "type": "hasMany",
+      "model": "TeamComment",
+      "foreignKey": "teamId"
     }
   },
   "acls": [
@@ -44,7 +44,9 @@
       "property": [
         "AddTeams",
         "UpsertStrategyTeams",
-        "UpdateTeamsMembersRoles"
+        "UpdateTeamsMembersRoles",
+        "GetData",
+        "EvaluateParcialProduct"
       ]
     },
     {
@@ -55,7 +57,9 @@
       "property": [
         "AddTeams",
         "UpsertStrategyTeams",
-        "UpdateTeamsMembersRoles"
+        "UpdateTeamsMembersRoles",
+        "GetData",
+        "EvaluateParcialProduct"
       ]
     }
   ],
@@ -143,6 +147,60 @@
       "http": [
         {
           "path": "/MemebersRoles",
+          "verb": "patch"
+        }
+      ]
+    },
+    "prototype.GetData": {
+      "accepts": [
+        {
+          "arg": "parcialProductId",
+          "type": "number",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "evaluation",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/WithEvaluationsOf/ParcialProduct/:parcialProductId",
+          "verb": "get"
+        },
+        {
+          "path": "/:teamId",
+          "verb": "get"
+        }
+      ]
+    },
+    "prototype.EvaluateParcialProduct": {
+      "accepts": [
+        {
+          "arg": "evaluation",
+          "type": "object",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "evaluation",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/Evaluate/ParcialProduct/:parcialProductId",
           "verb": "patch"
         }
       ]

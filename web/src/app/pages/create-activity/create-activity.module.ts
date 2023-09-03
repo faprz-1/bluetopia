@@ -6,29 +6,30 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlMessagesModule } from 'src/app/components/control-messages/control-messages.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
-import { GradeProductComponent } from './grade-product.component';
-import { BreadcrumbModule } from 'src/app/components/breadcrumb/breadcrumb.module';
-import { RubricModule } from 'src/app/components/rubric/rubric.module';
+
+import { LibraryFileSelectorModalModule } from 'src/app/components/library-file-selector-modal/library-file-selector-modal.module';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { CreateActivityComponent } from './create-activity.component';
 
 const MODULE_ROUTES = [
-  { path: '', component: GradeProductComponent }
+  { path: '', component: CreateActivityComponent }
 ];
+
 
 @NgModule({
   declarations: [
-    GradeProductComponent
+    CreateActivityComponent
   ],
   imports: [
     FormsModule,
     CommonModule,
-    RubricModule,
     NgSelectModule,
-    BreadcrumbModule,
     ReactiveFormsModule,
     ControlMessagesModule,
     ModalModule.forRoot(),
+    BsDatepickerModule.forRoot(),
+    LibraryFileSelectorModalModule,
     RouterModule.forChild(MODULE_ROUTES),
-  ],
-  // exports: [GradeProductComponent]
+  ]
 })
-export class GradeProductModule { }
+export class CreateActivityModule { }
