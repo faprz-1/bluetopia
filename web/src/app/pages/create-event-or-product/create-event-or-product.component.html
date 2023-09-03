@@ -25,12 +25,12 @@
             <span class="instruction-number">1</span>
             <div class="form-col">
                 <div class="form-section-title">
-                    Selecciona un evento o producto
+                    Selecciona qué deseas agendar
                 </div>
                 <ng-select class="form-control with-border"
                     [items]="formTypes" bindLabel="name" bindValue="type"
                     placeholder="Evento o producto"
-                    formControlName="type">
+                    formControlName="type" (change)="FilterActivitiesByType()">
                 </ng-select>
             </div>
         </div>
@@ -38,7 +38,7 @@
             <span class="instruction-number">2</span>
             <div class="form-col">
                 <div class="form-section-title">
-                    ¿Hoy qué producto trabajarás?
+                   Producto a trabajar
                 </div>
                 <ng-select class="form-control with-border"
                     [items]="activities" bindLabel="name"
@@ -51,21 +51,7 @@
             <span class="instruction-number">3</span>
             <div class="form-col">
                 <div class="form-section-title">
-                    Elige una estrategia o crea una nueva
-                </div>
-                <div class="">
-                    Selecciona o crea una nueva estrategía que utilizarás para este día
-                </div>
-                <button class="btn btn-primary">
-                    Crear nueva estrategía
-                </button>
-            </div>
-        </div>
-        <div class="form-row">
-            <span class="instruction-number">4</span>
-            <div class="form-col">
-                <div class="form-section-title">
-                    Selecciona la duración
+                    Selecciona la fecha
                 </div>
                 <div class="input-container">
                     <input #parcialProductDatePicker="bsDatepicker"

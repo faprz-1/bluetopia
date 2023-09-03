@@ -339,6 +339,7 @@
         "sharedMethods": {
           "*": false,
           "CreateOne": true,
+          "CreateActivity": true,
           "prototype.Update": true,
           "prototype.Delete": true
         }

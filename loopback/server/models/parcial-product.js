@@ -52,17 +52,67 @@ module.exports = function(ParcialProduct) {
         }
     }
 
-    ParcialProduct.UpdateEvent = function(parcialProductId, eventId, callback) {
-        if(!parcialProductId) return callback(null, {});
-        ParcialProduct.findById(parcialProductId, {}, (err, parcialProduct) => {
-            parcialProduct.eventId = eventId;
-            parcialProduct.save((err, saved) => {
-                if(err) return callback(err);
+    ParcialProduct.CreateActivity = function (parcialProduct, callback) {
+      ParcialProduct.app.models.EvaluationType.GetIdByTypeName(
+        "numeric",
+        (err, evaluationTypeId) => {
+          if (err) return callback(err);
 
-                return callback(null, saved);
-            });
+          parcialProduct.evaluationTypeId = evaluationTypeId.id;
+          const eventInstance = {
+            name: `Actividad: "${parcialProduct.name}"`,
+            date: parcialProduct.date,
+            strategyId: parcialProduct.strategyId,
+          };
+          ParcialProduct.app.models.Event.create(
+            eventInstance,
+            (err, newEvent) => {
+              if (err) return callback(err);
+
+              parcialProduct.eventId = newEvent.id;
+              parcialProduct.isActivity = true;
+              ParcialProduct.create(
+                parcialProduct,
+                (err, newParcialProduct) => {
+                  if (err) return callback(err);
+
+                  newParcialProduct.UpdateResources(
+                    parcialProduct.resources,
+                    (err, updated) => {
+                      if (err) return callback(err);
+
+                      return callback(null, newParcialProduct);
+                    }
+                  );
+                }
+              );
+            }
+          );
+        }
+      );
+    };
+
+    ParcialProduct.UpdateEvent = function (
+      parcialProductId,
+      event,
+      callback
+    ) {
+      if (!parcialProductId) return callback(null, {});
+      ParcialProduct.findById(parcialProductId, {}, (err, parcialProduct) => {
+        parcialProduct.eventId = event.id;
+        parcialProduct.save((err, saved) => {
+          if (err) return callback(err);
+          parcialProduct.UpdateResources(
+            event.resources,
+            (err, savedResources) => {
+              if (err) return callback(err);
+
+              return callback(null, parcialProduct);
+            }
+          );
         });
-    }
+      });
+    };
 
     ParcialProduct.prototype.Update = function(ctx, parcialProduct, callback) {
         let eventInstance = {

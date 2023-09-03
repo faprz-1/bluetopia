@@ -26,4 +26,17 @@ module.exports = function(EvaluationType) {
         });
     }
 
+    EvaluationType.GetIdByTypeName = function(evaluationType,callback) {
+        let filter = {
+            where:{
+                type:{like:evaluationType}
+            },
+            fields:'id'
+        }
+        EvaluationType.findOne(filter,(err,evaluationTypeId)=>{
+            if(err) return callback(err);
+            return callback(null,evaluationTypeId);
+        });
+    }
+
 };

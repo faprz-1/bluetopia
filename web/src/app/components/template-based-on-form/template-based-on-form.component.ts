@@ -881,7 +881,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
       let eventInstance = {
         ...this.eventForm.value,
         name: `${
-          !!this.strategy?.title ? this.strategy.title : 'Sin titulo'
+          !!this.strategy?.title ? this.strategy.title : 'Sin título'
         }: Evento de cierre`,
         strategyId: this.strategyId,
         isFinal: true,

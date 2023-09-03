@@ -17,6 +17,11 @@
       "required": true,
       "default": false
     },
+    "isActivity": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
     "maxCalification": {
       "type": "number"
     },
@@ -66,6 +71,7 @@
       "permission": "ALLOW",
       "property": [
         "CreateOne",
+        "CreateActivity",
         "Update",
         "Delete"
       ]
@@ -93,6 +99,34 @@
       "http": [
         {
           "path": "/",
+          "verb": "post"
+        }
+      ]
+    },
+    "CreateActivity": {
+      "accepts": [
+        {
+          "arg": "parcialProduct",
+          "type": "object",
+          "required": true,
+          "description": "",
+          "http":{
+            "source":"body"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "parcialProductSaved",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/activity",
           "verb": "post"
         }
       ]
