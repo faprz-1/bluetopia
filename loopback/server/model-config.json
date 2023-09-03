@@ -167,8 +167,7 @@
         "sharedMethods": {
           "*": false,
           "GetAll": true,
-          "CreateOneWithoutRepeat":true
-
+          "CreateOneWithoutRepeat": true
         }
       }
     }
@@ -269,7 +268,7 @@
         "sharedMethods": {
           "*": false,
           "GetAll": true,
-          "CreateOne":true
+          "CreateOne": true
         }
       }
     }
@@ -282,7 +281,7 @@
         "sharedMethods": {
           "*": false,
           "GetAll": true,
-          "CreateOne":true
+          "CreateOne": true
         }
       }
     }
@@ -485,5 +484,22 @@
         }
       }
     }
+  },
+  "Evaluation": {
+    "dataSource": "mysqlDev",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "CreateOne": true,
+          "Update": true
+        }
+      }
+    }
+  },
+  "TeamComment": {
+    "dataSource": "mysqlDev",
+    "public": false
   }
 }
