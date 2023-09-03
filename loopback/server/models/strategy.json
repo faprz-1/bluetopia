@@ -6,22 +6,6 @@
   "options": {
     "validateUpsert": true
   },
-  "scope": {
-    "include": [
-      "teams",
-      "customRoles",
-      {"strategyGroup": ["grade", "group"]},
-      {"events": ["type", {"parcialProduct": "type"}]},
-      {
-        "parcialProducts": [
-        "type",
-        "event",
-        "evaluationType",
-        {"resources": "file"}
-        ]
-      }
-    ]
-  },
   "properties": {
     "title": {
       "type": "string"

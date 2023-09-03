@@ -128,7 +128,15 @@ module.exports = function(Student) {
     }
 
     Student.prototype.GetData = function(callback) {
-        return callback(null, this);
+        Student.findById(this.id, {
+            include: [
+                'school',
+                'evaluations',
+                {'studentGroup': ['group', 'grade']}
+            ]
+        }, (err, student) => {
+            return callback(err, student);
+        });
     }
 
 };

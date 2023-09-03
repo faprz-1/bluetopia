@@ -5,14 +5,6 @@
   "options": {
     "validateUpsert": true
   },
-  "scope": {
-    "include": [
-      "school",
-      {
-        "studentGroup": ["group", "grade"]
-      }
-    ]
-  },
   "properties": {
     "name": {
       "type": "string",
@@ -58,12 +50,26 @@
     "studentGroup": {
       "type": "hasOne",
       "model": "StudentGroup",
-      "foreignKey": "studentId"
+      "foreignKey": "studentId",
+      "options": {
+        "nestRemoting": true
+      }
     },
     "teamsStudents": {
       "type": "hasMany",
       "model": "TeamStudent",
-      "foreignKey": "studentId"
+      "foreignKey": "studentId",
+      "options": {
+        "nestRemoting": true
+      }
+    },
+    "evaluations": {
+      "type": "hasMany",
+      "model": "Evaluation",
+      "foreignKey": "studentId",
+      "options": {
+        "nestRemoting": true
+      }
     }
   },
   "acls": [

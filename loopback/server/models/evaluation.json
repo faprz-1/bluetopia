@@ -8,7 +8,12 @@
   "properties": {
     "calification": {
       "type": "number",
-      "required": true
+      "required": true,
+      "mysql": {
+        "dataType": "DECIMAL",
+        "dataPrecision": 5,
+        "dataScale": 2
+      }
     },
     "comment": {
       "type": "string"

@@ -412,7 +412,9 @@
           "*": false,
           "AddTeams": true,
           "UpsertStrategyTeams": true,
-          "UpdateTeamsMembersRoles": true
+          "UpdateTeamsMembersRoles": true,
+          "GetData": true,
+          "EvaluateParcialProduct": true
         }
       }
     }
