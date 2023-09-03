@@ -91,7 +91,7 @@ export class GradeProductComponent implements OnInit {
         this.evaluationForm.setValue({
           calification: !!team.members[0]?.student?.evaluations[0]?.calification ? team.members[0]?.student?.evaluations[0]?.calification : '',
           comment: !!team.comments[0]?.comment ? team.comments[0]?.comment : null
-        })
+        });
       }, (err) => {
         console.error('Error getting strategy', err);
       }
@@ -101,9 +101,13 @@ export class GradeProductComponent implements OnInit {
   // ----------------------- Evaluate one student ----------------------- //
 
   GetStudent() {
-    this.api.Get(`/Students/${this.studentId}`).subscribe(student => {
+    this.api.Get(`/Students/${this.studentId}/WithEvaluationsOf/ParcialProduct/${this.parcialProductId}`).subscribe(student => {
       this.student = student;
       this.crumbs.push({ name: `${this.BuildStudentFullName(student)}`, route: null });
+      this.evaluationForm.setValue({
+        calification: !!student?.evaluations[0]?.calification ? student?.evaluations[0]?.calification : '',
+        comment: !!student?.evaluations[0]?.comment ? student?.evaluations[0]?.comment : null
+      });
     });
   }
 
@@ -113,6 +117,7 @@ export class GradeProductComponent implements OnInit {
       return;
     }
     let evaluation = this.evaluationForm.value;
+    evaluation.parcialProductId = this.parcialProductId;
     if(!!this.teamId) {
       evaluation.members = this.team.members;
       this.api.Patch(`/Teams/${this.teamId}/Evaluate/ParcialProduct/${this.parcialProductId}`, {evaluation}).subscribe(evaluated => {

@@ -151,14 +151,8 @@
         }
       ]
     },
-    "GetData": {
+    "prototype.GetData": {
       "accepts": [
-        {
-          "arg": "teamId",
-          "type": "number",
-          "required": true,
-          "description": ""
-        },
         {
           "arg": "parcialProductId",
           "type": "number",
@@ -177,7 +171,7 @@
       "description": "",
       "http": [
         {
-          "path": "/:teamId/WithEvaluationsOf/ParcialProduct/:parcialProductId",
+          "path": "/WithEvaluationsOf/ParcialProduct/:parcialProductId",
           "verb": "get"
         },
         {
@@ -186,20 +180,8 @@
         }
       ]
     },
-    "EvaluateParcialProduct": {
+    "prototype.EvaluateParcialProduct": {
       "accepts": [
-        {
-          "arg": "teamId",
-          "type": "number",
-          "required": true,
-          "description": ""
-        },
-        {
-          "arg": "parcialProductId",
-          "type": "number",
-          "required": true,
-          "description": ""
-        },
         {
           "arg": "evaluation",
           "type": "object",
@@ -218,7 +200,7 @@
       "description": "",
       "http": [
         {
-          "path": "/:teamId/Evaluate/ParcialProduct/:parcialProductId",
+          "path": "/Evaluate/ParcialProduct/:parcialProductId",
           "verb": "patch"
         }
       ]

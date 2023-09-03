@@ -154,7 +154,9 @@
           "AddStudents": true,
           "GetAllOfSchool": true,
           "GetAllOfTeacher": true,
-          "prototype.GetData": true
+          "prototype.GetData": true,
+          "prototype.GetDataWithEvaluations": true,
+          "prototype.EvaluateParcialProduct": true
         }
       }
     }
@@ -413,8 +415,8 @@
           "AddTeams": true,
           "UpsertStrategyTeams": true,
           "UpdateTeamsMembersRoles": true,
-          "GetData": true,
-          "EvaluateParcialProduct": true
+          "prototype.GetData": true,
+          "prototype.EvaluateParcialProduct": true
         }
       }
     }

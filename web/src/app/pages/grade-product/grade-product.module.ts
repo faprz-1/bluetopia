@@ -8,6 +8,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { GradeProductComponent } from './grade-product.component';
 import { BreadcrumbModule } from 'src/app/components/breadcrumb/breadcrumb.module';
+import { RubricModule } from 'src/app/components/rubric/rubric.module';
 
 const MODULE_ROUTES = [
   { path: '', component: GradeProductComponent }
@@ -20,6 +21,7 @@ const MODULE_ROUTES = [
   imports: [
     FormsModule,
     CommonModule,
+    RubricModule,
     NgSelectModule,
     BreadcrumbModule,
     ReactiveFormsModule,

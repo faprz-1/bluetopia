@@ -139,4 +139,32 @@ module.exports = function(Student) {
         });
     }
 
+    Student.prototype.GetDataWithEvaluations = function(parcialProductId, callback) {
+        Student.findById(this.id, {
+            include: [
+                'school',
+                {'studentGroup': ['group', 'grade']},
+                {
+                    relation: 'evaluations',
+                    scope: {
+                        where: parcialProductId ? {
+                            parcialProductId
+                        } : null
+                    }
+                },
+            ]
+        }, (err, student) => {
+            return callback(err, student);
+        });
+    }
+
+    Student.prototype.EvaluateParcialProduct = function(evaluation, callback) {
+        evaluation.studentId = this.id;
+        Student.app.models.Evaluation.Update(evaluation, (err, evaluationSaved) => {
+            if(err) return callback(err);
+
+            return callback(null, evaluationSaved);
+        });
+    }
+
 };

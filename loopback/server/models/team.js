@@ -78,8 +78,8 @@ module.exports = function(Team) {
         });
     }
 
-    Team.GetData = function(teamId, parcialProductId, callback) {
-        Team.findById(teamId, {
+    Team.prototype.GetData = function(parcialProductId, callback) {
+        Team.findById(this.id, {
             include: [{
                 relation: 'comments',
                 scope: {
@@ -102,15 +102,15 @@ module.exports = function(Team) {
         });
     }
 
-    Team.EvaluateParcialProduct = function(teamId, parcialProductId, evaluation, callback) {
+    Team.prototype.EvaluateParcialProduct = function(evaluation, callback) {
         Team.app.models.TeamStudent.find({
-            where: {teamId}
+            where: {teamId: this.id}
         }, (err, teamStudents) => {
             if(err) return callback(err);
 
             let teamComment = {
-                teamId,
-                parcialProductId,
+                teamId: this.id,
+                parcialProductId: evaluation.parcialProductId,
                 comment: evaluation.comment
             }
             Team.app.models.TeamComment.Update(teamComment, (err, teamCommentUpdated) => {
@@ -118,7 +118,6 @@ module.exports = function(Team) {
 
                 let cont = 0, limit = teamStudents.length;
                 if(!limit) return callback(null, evaluation);
-                evaluation.parcialProductId = parcialProductId;
                 teamStudents.forEach(teamStudent => {
                     let evaluationCopy = Object.assign({}, evaluation);
                     evaluationCopy.studentId = teamStudent.studentId;
