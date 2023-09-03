@@ -925,6 +925,9 @@ export class TemplateBasedOnFormComponent implements OnInit {
         this.parcialProductForm.get('rubric')?.setValue(rubric);
         break;
       case 4:
+        this.parcialProductForm.get('rubric')?.setValue(rubric);
+        break;
+      case 5:
         this.eventForm.get('rubric')?.setValue(rubric);
         break;
     }

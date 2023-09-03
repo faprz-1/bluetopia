@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
@@ -13,6 +13,8 @@ import { ValidationService } from 'src/app/services/validation.service';
 })
 export class GradeProductComponent implements OnInit {
 
+  setRubricsEvaluations: EventEmitter<any> = new EventEmitter<any>();
+
   strategyId: any;
   studentId: any;
   teamId: any;
@@ -21,13 +23,15 @@ export class GradeProductComponent implements OnInit {
   student: any = null;
   team: any = null;
   parcialProduct: any = null;
+  rubricsCalifications: Array<any> = [];
   crumbs: Array<{name: string, route: string | null}> = [
     {name: 'Evaluar', route: null},
   ];
   evaluationForm: FormGroup = new FormGroup({
-    calification: new FormControl(null, [ValidationService.CheckOnlyIntegerNumbers]),
+    calification: new FormControl(null, [ValidationService.CheckOnlyNumbers]),
+    rubricsCalifications: new FormControl(null, []),
     comment: new FormControl(null, []),
-  })
+  });
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -45,9 +49,9 @@ export class GradeProductComponent implements OnInit {
     return '';
   }
 
-  CalculateNumericCalification(calification: number): number {
-    const maxValue = this.parcialProduct?.maxCalification;
-    let finalCalification = 100 / maxValue * calification;
+  CalculateNumericCalification(maxCalification: number, calification: number): number {
+    let finalCalification = 0;
+    if(!!maxCalification && !!calification) finalCalification = 100 / maxCalification * calification;
     return !Number.isNaN(finalCalification) ? finalCalification : 0;
   }
 
@@ -88,10 +92,13 @@ export class GradeProductComponent implements OnInit {
           return member;
         });
         this.team = team;
+        let rubricsCalifications = !!team.members[0]?.student?.evaluations[0]?.rubricsCalifications ? team.members[0]?.student?.evaluations[0]?.rubricsCalifications : null;
         this.evaluationForm.setValue({
           calification: !!team.members[0]?.student?.evaluations[0]?.calification ? team.members[0]?.student?.evaluations[0]?.calification : '',
-          comment: !!team.comments[0]?.comment ? team.comments[0]?.comment : null
+          comment: !!team.comments[0]?.comment ? team.comments[0]?.comment : null,
+          rubricsCalifications,
         });
+        this.setRubricsEvaluations.emit(rubricsCalifications);
       }, (err) => {
         console.error('Error getting strategy', err);
       }
@@ -104,11 +111,19 @@ export class GradeProductComponent implements OnInit {
     this.api.Get(`/Students/${this.studentId}/WithEvaluationsOf/ParcialProduct/${this.parcialProductId}`).subscribe(student => {
       this.student = student;
       this.crumbs.push({ name: `${this.BuildStudentFullName(student)}`, route: null });
+      let rubricsCalifications = !!student?.evaluations[0]?.rubricsCalifications ? student?.evaluations[0]?.rubricsCalifications : null;
       this.evaluationForm.setValue({
         calification: !!student?.evaluations[0]?.calification ? student?.evaluations[0]?.calification : '',
-        comment: !!student?.evaluations[0]?.comment ? student?.evaluations[0]?.comment : null
+        comment: !!student?.evaluations[0]?.comment ? student?.evaluations[0]?.comment : null,
+        rubricsCalifications,
       });
+      this.setRubricsEvaluations.emit(rubricsCalifications);
     });
+  }
+
+  OnRubricsEvaluateRubric(data: any) {
+    this.evaluationForm.get('calification')?.setValue(this.CalculateNumericCalification(data.maxCalification, data.calification));
+    this.evaluationForm.get('rubricsCalifications')?.setValue(data.rubricsCalifications);
   }
 
   SaveEvaluation() {
@@ -117,6 +132,7 @@ export class GradeProductComponent implements OnInit {
       return;
     }
     let evaluation = this.evaluationForm.value;
+    evaluation.calification = this.CalculateNumericCalification(this.parcialProduct?.maxCalification, evaluation.calification)
     evaluation.parcialProductId = this.parcialProductId;
     if(!!this.teamId) {
       evaluation.members = this.team.members;

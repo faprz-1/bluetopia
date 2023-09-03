@@ -95,8 +95,15 @@
                                 Asigna la calificación en base a la rúbrica que creaste
                             </div>
                             <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 12px;">
-                                <div [ngSwitch]="parcialProduct?.evaluationType?.type">
-                                    <div *ngSwitchCase="'rubric'">
+                                <div class="w-100" [ngSwitch]="parcialProduct?.evaluationType?.type">
+                                    <div class="w-100" *ngSwitchCase="'rubric'">
+                                        <app-rubric
+                                        class="w-100"
+                                        *ngIf="!!parcialProduct"
+                                        [rubrics]="parcialProduct.rubric"
+                                        [evaluationMode]="true"
+                                        [setEvaluations]="setRubricsEvaluations"
+                                        (onEvaluation)="OnRubricsEvaluateRubric($event)"></app-rubric>
                                     </div>
                                     <div *ngSwitchCase="'numeric'">
                                         <div class="d-flex flex-column" style="gap: 12px;">
