@@ -123,7 +123,7 @@ module.exports = function(Strategy) {
                 },
                 'template',
                 'user',
-                'events',
+                {'events':'parcialProduct'},
                 {'strategyGroup': ['grade', 'group']},
                 {'teams': {'members': ['student', 'role']}}]
         }, (err, strategy) => {
