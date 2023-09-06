@@ -30,6 +30,9 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
   grades: Array<any> = [];
   selectedGrade: any = null;
   strategiesStatuses: Array<any> = [];
+  loading: any = {
+    generatingLink: null
+  }
 
   subscriptions: Array<Subscription | undefined> = [];
 
@@ -144,6 +147,20 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
     }, err => {
       console.error("Error creating a student", err);
       this.toast.ShowError(`Error al crear estudiante`);
+    });
+  }
+
+  GenerateAndCopyLink(studentGroup: any) {
+    let params: any = {
+      schoolId: this.api.GetUser().schoolId,
+      gradeId: studentGroup?.gradeId,
+      groupId: studentGroup?.groupId,
+    }
+    this.api.Patch(`/StudentsGroups/RegisterUid`, params).subscribe(registerUid => {
+      navigator.clipboard.writeText(`${this.api.GetHost()}registro/estudiante/${registerUid}`);
+      this.toast.ShowSuccess(`Link copiado al portapapeles`);
+    }, err => {
+      this.toast.ShowError(`Error al generar link`);
     });
   }
 

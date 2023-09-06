@@ -31,22 +31,6 @@
         "nestRemoting": true
       }
     },
-    "parentUser": {
-      "type": "belongsTo",
-      "model": "Usuario",
-      "foreignKey": "parentUserId",
-      "options": {
-        "nestRemoting": true
-      }
-    },
-    "teacher": {
-      "type": "belongsTo",
-      "model": "Teacher",
-      "foreignKey": "teacherId",
-      "options": {
-        "nestRemoting": true
-      }
-    },
     "studentGroup": {
       "type": "hasOne",
       "model": "StudentGroup",

@@ -14,11 +14,16 @@ module.exports = function(Student) {
                     
                     const studentGroup = {
                         studentId: newStudent.id,
+                        schoolId: newStudent.schoolId,
                         gradeId: grades.find(g => g.name == student.grade.toLowerCase()) ? grades.find(g => g.name == student.grade.toLowerCase()).id : null,
                         groupId: groups.find(g => g.name == student.group.toLowerCase()) ? groups.find(g => g.name == student.group.toLowerCase()).id : null
                     }
-                    Student.app.models.StudentGroup.create(studentGroup, (err, newStudentGroupInstance) => {
-                        if(err) return callback(err);
+                    Student.app.models.StudentGroup.CreateOne(studentGroup, (err, newStudentGroupInstance) => {
+                        if(err) {
+                            newStudent.destroy((err2, destroyed) => {
+                                return callback(err);
+                            });
+                        }
     
                         const teacherGroup = {
                             gradeId: grades.find(g => g.name == student.grade.toLowerCase()) ? grades.find(g => g.name == student.grade.toLowerCase()).id : null,
