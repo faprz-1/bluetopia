@@ -459,6 +459,18 @@ module.exports = function(app) {
     });
   }
 
+  var SynchronizeSchoolIdOfStudentsGroups = function() {
+    app.models.StudentGroup.find({where: {schoolId: null}, include: 'student'}, (err, studentGroups) => {
+      studentGroups.forEach(studentGroup => {
+        if(!!studentGroup.student()) {
+          studentGroup.schoolId = studentGroup.student().schoolId;
+          studentGroup.save((err, saved) => {
+          });
+        }
+      });
+    });
+  }
+
   var seedUploadContainers = function(){
     var Upload = app.models.Upload;
     var containers = [
@@ -553,6 +565,7 @@ module.exports = function(app) {
     seedTeamRoles,
     seedStrategyStatuses,
     seedEvaluationTypes,
+    SynchronizeSchoolIdOfStudentsGroups
   ]
 
   // Migrate
