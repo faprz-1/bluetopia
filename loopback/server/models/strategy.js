@@ -52,6 +52,8 @@ module.exports = function(Strategy) {
         const userId = ctx.accessToken.userId;
         let strategy = this.toJSON();
         strategy.userId = userId;
+        strategy.startDate = null;
+        strategy.endDate = null;
         Strategy.CreateOne(strategy, (err, newStrategy) => {
             if(err) return callback(err);
             
@@ -65,12 +67,14 @@ module.exports = function(Strategy) {
 
                 if(!!strategy.parcialProducts && strategy.parcialProducts.length) {
                     let cont = 0, limit = strategy.parcialProducts.length;
-                    strategy.parcialProducts.forEach(parcialProduct => {
+                    strategy.parcialProducts.map(parcialProduct => {
                         parcialProduct.strategyId = newStrategy.id;
                         parcialProduct.eventId = null;
+                        return parcialProduct;
+                    }).forEach(parcialProduct => {
                         Strategy.app.models.ParcialProduct.CreateOne(parcialProduct, (err, newParcialProduct) => {
                             if(err) return callback(err);
-    
+
                             if(++cont == limit) return callback(null, newStrategy);
                         });
                     });
