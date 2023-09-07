@@ -49,6 +49,13 @@ export class RegisterUserComponent implements OnInit {
     return this.userRegisterForm.get('school') as FormGroup;
   }
 
+  public get canRegister() {
+    switch (this.userType) {
+      case 'estudiante': return false
+      default: return true;
+    }
+  }
+
   constructor(
     private navigation: NavigationService,
     private activeRoute: ActivatedRoute,

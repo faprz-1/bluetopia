@@ -215,7 +215,8 @@
     "options": {
       "remoting": {
         "sharedMethods": {
-          "*": false
+          "*": false,
+          "GenerateRegisterUid": true
         }
       }
     }
