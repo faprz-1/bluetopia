@@ -1,6 +1,39 @@
-<div class="d-flex flex-column" style="gap: 48px;">
-    <div class="d-flex">
+<div class="d-flex flex-column w-100" style="gap: 48px;">
+    <div class="d-flex flex-column justify-content-center align-items-center" style="gap: 12px;">
         <div class="title">¡Bienvenido Alumno!</div>
         <div class="text">Crea tu usuario</div>
+    </div>
+    <ng-container [formGroup]="credentialsForm">
+        <div class="d-flex flex-column justify-content-center align-items-center" style="gap: 12px;">
+            <div class="text w-100 text-left">Selecciona tu número de registro</div>
+            <ng-select class="form-control with-border w-100" formControlName="studentId" placeholder="Selecciona tu número de registro" [clearable]="false">
+                <ng-option [value]="studentGroup.studentId" *ngFor="let studentGroup of studentGroups">{{studentGroup.student?.registerNumber}}</ng-option>
+            </ng-select>
+        </div>
+        <div class="d-flex flex-column justify-content-center align-items-center" style="gap: 12px;">
+            <div class="text">Crea tus credenciales</div>
+            <div class="text">
+                Para la contraseña te recomendamos utilizar algo que puedas recordar, puede ser tu nombre, tu color favorito , tu cumpleaños o tu personaje favorito.
+            </div>
+            <div class="text text-left w-100">Usuario</div>
+            <div class="input-container mb-2">
+                <div class="input-icon-container">
+                    <img src="assets/icons/user.svg">
+                </div>
+                <input type="text" placeholder="Usuario" formControlName="username" class="form-control with-border">
+            </div>
+            <div class="text text-left w-100">Contraseña</div>
+            <div class="input-container mb-2">
+                <div class="input-icon-container">
+                    <img src="assets/icons/lock.png">
+                </div>
+                <input type="password" placeholder="Contraseña" formControlName="password" class="form-control with-border">
+            </div>
+        </div>
+    </ng-container>
+    <div class="d-flex flex-column justify-content-center align-items-center" style="gap: 12px;">
+        <button class="btn btn-success" (click)="RegisterStudent()">
+            Empezar
+        </button>
     </div>
 </div>

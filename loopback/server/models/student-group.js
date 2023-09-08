@@ -30,4 +30,15 @@ module.exports = function(StudentGroup) {
         });
     }
 
+    StudentGroup.GetByRegisterUid = function(registerUid, callback) {
+        StudentGroup.find({
+            where: {registerUid},
+            include: 'student'
+        }, (err, studentGroups) => {
+            if(err) return callback(err);
+            if(!studentGroups.length) return callback('registerUid not valid!!');
+            return callback(null, studentGroups);
+        });
+    }
+
 };

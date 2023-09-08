@@ -216,7 +216,8 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
-          "GenerateRegisterUid": true
+          "GenerateRegisterUid": true,
+          "GetByRegisterUid": true
         }
       }
     }

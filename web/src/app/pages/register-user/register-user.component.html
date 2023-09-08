@@ -63,6 +63,7 @@
                                     <div *ngSwitchCase="'estudiante'">
                                         <app-register-student
                                         (onBackClicked)="GoBack()"
+                                        (onNextClicked)="ApiRegisterUser($event, null, 'Student')"
                                         ></app-register-student>
                                     </div>
                                     <!-- Default register form -->

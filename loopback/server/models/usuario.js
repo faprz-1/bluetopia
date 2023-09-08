@@ -97,7 +97,7 @@ module.exports = function(Usuario) {
       Usuario.app.models.School.CreateOne(!!userData ? userData.school : null, (err, newSchool) => {
         if(err) return callback(err);
 
-        if(!user.schoolId) user.schoolId = newSchool.id;
+        if(!user.schoolId && !!newSchool) user.schoolId = newSchool.id;
         Usuario.create(user, (err, newU) => {
           if (err) return callback(err);
   
@@ -139,7 +139,28 @@ module.exports = function(Usuario) {
                 });
               });
             }
-            else callback(null, newU);
+            else {
+              if(role.name == 'Student') {
+                Usuario.app.models.Student.findById(user.studentId, (err, student) => {
+                  if(err) {
+                    newU.destroy((err2, destroyed) => {
+                      return callback(err);
+                    });
+                  }
+                  
+                  student.userId = newU.id;
+                  student.save((err, saved) => {
+                    if(err) {
+                      newU.destroy((err2, destroyed) => {
+                        return callback(err);
+                      });
+                    }
+                    callback(null, newU);
+                  });
+                });
+              }
+              else callback(null, newU);
+            }
           });
         });
       });
@@ -514,23 +535,43 @@ module.exports = function(Usuario) {
     */
 
   Usuario.loginIfActive = function(credentials, callback) {
-    Usuario.findOne({where: {email: credentials.email}}, function(err, mUser) {
+    let where = {
+      or: [
+        {
+          and: [
+            {email: {neq: null}},
+            {email: credentials.email},
+          ]
+        },
+        {
+          and: [
+            {email: null},
+            {username: credentials.email},
+          ]
+        },
+      ]
+    }
+    Usuario.findOne({where}, function(err, userFound) {
       if (err) return callback(err);
 
-      if (!mUser) {
+      if (!userFound) {
         return callback('Usuario no registrado');
       } else {
-        if (mUser.active == null) {
-          mUser.active = true;
-          Usuario.upsert(mUser, function(err, res) {
+        if (userFound.active == null) {
+          userFound.active = true;
+          Usuario.upsert(userFound, function(err, res) {
             if (err) return callback(err);
           });
         }
-        if (mUser.active == false) {
+        if (userFound.active == false) {
           return callback('Error con la cuenta. Contacta al administrador');
         }
       }
 
+      if(!userFound.email) {
+        credentials.username = credentials.email;
+        delete credentials.email;
+      }
       Usuario.login(credentials, function(err, accessToken) {
         if (err) return callback(err);
 

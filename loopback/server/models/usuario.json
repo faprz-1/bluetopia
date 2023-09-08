@@ -15,6 +15,14 @@
     "include": ["profileImage", "teacher", "data", "school"]
   },
   "properties": {
+    "username": {
+      "type": "string",
+      "required": false
+    },
+    "email": {
+      "type": "string",
+      "required": false
+    },
     "FBToken": {
       "type": "string"
     },
