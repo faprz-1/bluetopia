@@ -45,16 +45,13 @@ module.exports = function(Student) {
 
             Student.app.models.Grade.CreateBasedOnCSV(students, (err, grades) => {
                 if(err) return callback(err);
-                
+
                 students.forEach(student => {
-                    Student.app.models.Teacher.findOne({where:{userId:student.teacherUserId}}, (err, teacher) => {
-                        if(err) console.error(err);
-                        student.teacherId = teacher.id ? teacher.id:null;
                     Student.AddStudent(student, (err, newStudent) => {
                         if(err) console.error(err);
-                            newStudents.push(newStudent);
-                            if(++cont == limit) return callback(null, newStudents);
-                    });});
+                        newStudents.push(newStudent);
+                        if(++cont == limit) return callback(null, newStudents);
+                    });
                 });
             });
         });
