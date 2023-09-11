@@ -140,7 +140,7 @@ const LAYOUT_ROUTES: Routes = [
         path: 'student', canActivate: [AuthGuard], data: { role: 'Student' },
         children: [
           { path: '', redirectTo: 'home', pathMatch: 'full' },
-          { path: 'home', loadChildren: () => import('../pages/parent-student-dashboard/parent-student-dashboard.module').then(m => m.ParentStudentDashboardModule) },
+          { path: 'home', loadChildren: () => import('../pages/student-dashboard/student-dashboard.module').then(m => m.StudentDashboardModule) },
           { path: 'mis-estadisticas', loadChildren: () => import('../pages/student-stats/student-stats.module').then(m => m.StudentStatsModule) },
         ]
       },
