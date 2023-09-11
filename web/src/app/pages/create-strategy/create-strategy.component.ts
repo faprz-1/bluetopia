@@ -69,6 +69,7 @@ export class CreateStrategyComponent implements OnInit {
     let strategy = {
       templateId: this.template.id,
       userId: this.api.GetUser()?.id,
+      schoolId: this.api.GetUser()?.schoolId,
       grade: null,
       group: null,
     }
