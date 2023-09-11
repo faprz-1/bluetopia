@@ -59,9 +59,7 @@ module.exports = function(Student) {
 
     Student.GetAllOfSchool = function(schoolId, gradeId, groupId, callback) {
         Student.find({
-            where: {
-                schoolId
-            },
+            where: {schoolId},
             include: {'studentGroup': ['group', 'grade']}
         }, (err, schoolStudents) => {
             if(err) return callback(err);
@@ -84,8 +82,8 @@ module.exports = function(Student) {
             if(!teacher) return callback('Teacher not found!!');
             Student.app.models.StudentGroup.find({
                 where: {
-                    groupId: {inq: teacher.teacherGroups().map(tg => tg.groupId)},
                     gradeId: {inq: teacher.teacherGroups().map(tg => tg.gradeId)},
+                    groupId: {inq: teacher.teacherGroups().map(tg => tg.groupId)},
                 },
                 include: 'student',
             }, (err, studentGroups) => {
@@ -93,13 +91,8 @@ module.exports = function(Student) {
                 
                 Student.find({
                     where: {
-                        or: [
-                            {and: [
-                                {id: {inq: studentGroups.filter(sg => !!sg.student()).map(sg => sg.student().id)}},
-                                {schoolId: teacher.schoolId}
-                            ]},
-                            {teacherUserId}
-                        ]
+                        id: {inq: studentGroups.map(sg => sg.studentId)},
+                        schoolId: teacher.schoolId,
                     },
                     include: {'studentGroup': ['group', 'grade']},
                 }, (err, students) => {
