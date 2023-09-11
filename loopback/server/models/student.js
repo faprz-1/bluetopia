@@ -59,9 +59,7 @@ module.exports = function(Student) {
 
     Student.GetAllOfSchool = function(schoolId, gradeId, groupId, callback) {
         Student.find({
-            where: {
-                schoolId
-            },
+            where: {schoolId},
             include: {'studentGroup': ['group', 'grade']}
         }, (err, schoolStudents) => {
             if(err) return callback(err);
@@ -86,6 +84,7 @@ module.exports = function(Student) {
                 where: {
                     groupId: {inq: teacher.teacherGroups().map(tg => tg.groupId)},
                     gradeId: {inq: teacher.teacherGroups().map(tg => tg.gradeId)},
+                    schoolId: teacher.schoolId,
                 },
                 include: 'student',
             }, (err, studentGroups) => {
@@ -93,13 +92,7 @@ module.exports = function(Student) {
                 
                 Student.find({
                     where: {
-                        or: [
-                            {and: [
-                                {id: {inq: studentGroups.filter(sg => !!sg.student()).map(sg => sg.student().id)}},
-                                {schoolId: teacher.schoolId}
-                            ]},
-                            {teacherUserId}
-                        ]
+                        id: {inq: studentGroups.filter(sg => !!sg.studentId)},
                     },
                     include: {'studentGroup': ['group', 'grade']},
                 }, (err, students) => {

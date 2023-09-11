@@ -61,7 +61,14 @@ export class StrategyTeamsProgressComponent implements OnInit {
   }
 
   GetGradeGroupStudents() {
-    this.api.Get(`/Students/OfTeacher/${this.api.GetUser()?.id}/FilteredBy/Grade/${!!this.grade ? this.grade.id : 0}/Group/${!!this.group ? this.group.id : 0}`).subscribe(students => {
+    let endpoint = `/Students`;
+    const user = this.api.GetUser();
+    switch (user?.role?.name) {
+      case 'School': endpoint += `/OfSchool/${user.schoolId}`; break;
+      case 'Teacher': endpoint += `/OfTeacher/${user.id}`; break;
+      default: endpoint += `/OfSchool/${user.schoolId}`; break;
+    }
+    this.api.Get(`${endpoint}/FilteredBy/Grade/${!!this.grade ? this.grade.id : 0}/Group/${!!this.group ? this.group.id : 0}`).subscribe(students => {
       this.students = students;
     }, err => {
       console.error("Error getting students", err);

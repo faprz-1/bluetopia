@@ -125,7 +125,14 @@ export class CreateStrategyTeamsComponent implements OnInit {
   }
 
   GetGradeGroupStudents() {
-    this.api.Get(`/Students/OfTeacher/${this.api.GetUser()?.id}/FilteredBy/Grade/${!!this.grade ? this.grade.id : 0}/Group/${!!this.group ? this.group.id : 0}`).subscribe(students => {
+    let endpoint = `/Students`;
+    const user = this.api.GetUser();
+    switch (user?.role?.name) {
+      case 'School': endpoint += `/OfSchool/${user.schoolId}`; break;
+      case 'Teacher': endpoint += `/OfTeacher/${user.id}`; break;
+      default: endpoint += `/OfSchool/${user.schoolId}`; break;
+    }
+    this.api.Get(`${endpoint}/FilteredBy/Grade/${!!this.grade ? this.grade.id : 0}/Group/${!!this.group ? this.group.id : 0}`).subscribe(students => {
       this.students = students;
       if(this.strategyTeams.length) {
         this.studentsOptions = students.filter((student: any) => {
@@ -141,7 +148,14 @@ export class CreateStrategyTeamsComponent implements OnInit {
     if(fillMode == 'auto') {
       const teamsNumber = this.strategyTeams.length;
       if(teamsNumber > 0) {
-        let studentsPerTeam = Math.floor(this.students.length / teamsNumber);
+        this.OnTeamsOptionSelected(teamsNumber);
+        let studentsPerTeam = Math.ceil(this.studentsOptions.length / teamsNumber);
+        this.strategyTeams.forEach(team => {
+          for (let i = 0; i < studentsPerTeam; i++) {
+            let randomIdx = Math.floor((this.studentsOptions.length) * Math.random());
+            this.OnStudentSelected(team, this.studentsOptions[randomIdx], null);
+          }
+        });
       }
     }
   }
@@ -157,12 +171,12 @@ export class CreateStrategyTeamsComponent implements OnInit {
     }
   }
 
-  OnStudentSelected(team: any, student: any, studentsSelect: NgSelectComponent) {
+  OnStudentSelected(team: any, student: any, studentsSelect: NgSelectComponent | null) {
     if(!!student) {
       team.members.push(student);
-      const studentIdx = this.studentsOptions.findIndex(s => s.id == student.id);
+      const studentIdx = this.studentsOptions.findIndex(s => s.id == student?.id);
       if(studentIdx != -1) this.studentsOptions.splice(studentIdx, 1);
-      studentsSelect.handleClearClick();
+      if(!!studentsSelect) studentsSelect.handleClearClick();
       this.saver.next();
     }
   }
