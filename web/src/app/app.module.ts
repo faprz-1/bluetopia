@@ -48,12 +48,12 @@ export function createTranslateLoader(http: HttpClient) {
       provide: LocationStrategy,
       useClass: HashLocationStrategy
     },
-    { 
-      provide: LOCALE_ID, 
-      useValue: 'es-MX' 
+    {
+      provide: LOCALE_ID,
+      useValue: 'es-MX'
     },
     {
-      provide: DEFAULT_CURRENCY_CODE, 
+      provide: DEFAULT_CURRENCY_CODE,
       useValue: 'MXN'
     }
   ],
