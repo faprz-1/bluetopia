@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-student-dashboard',
@@ -16,11 +17,17 @@ export class StudentDashboardComponent implements OnInit {
     popoverBR: false
   }
 
-  constructor() { }
+  constructor(
+    private navigationService:NavigationService
+  ) { }
 
   ngOnInit(): void {}
 
   OnMouseOver(type:string) { this.popovers[type] = true; }
 
   OnMouseOut(type:string) { this.popovers[type] = false; }
+
+  GoToActivities() {
+    this.navigationService.GoToUserRoute(`mis-actividades`);
+  }
 }
