@@ -1,0 +1,83 @@
+<div class="content">
+  <div class="row">
+    <div class="col-12 d-flex justify-content-center flex-column mb-5">
+      <img class="back-arrow pointer" src="assets/icons/back-arrow.png" (click)="GoToHome()">
+      <h1 class="blue">Actividades pendientes</h1>
+      <h5 class="grey">Este es el aprendizaje completo</h5>
+    </div>
+    <div class="col-12 d-flex justify-content-center flex-md-row flex-column mb-5">
+      <div class="filters mx-4 text-center pointer" [ngClass]="{'isSelected': selectedFilter == 1}" (click)="OnChangeSelectedFilter(1)">Hoy</div>
+      <div class="filters mx-4 text-center pointer" [ngClass]="{'isSelected': selectedFilter == 2}" (click)="OnChangeSelectedFilter(2)">Esta semana</div>
+      <div class="filters mx-4 text-center pointer" [ngClass]="{'isSelected': selectedFilter == 3}" (click)="OnChangeSelectedFilter(3)">La siguiente semana</div>
+    </div>
+    <div class="col-12">
+      <div class="card grey">
+        <div class="card-body">
+          <div class="row d-flex justify-content-around">
+            <div class="col-12 col-md-4 mb-3">
+              <div class="card m-0">
+                <div class="card-body">
+                  <img src="assets/icons/scissors.svg">
+                  <h5 class="activity-title">Actividad</h5>
+                  <h4 class="activity-subtitle">Reporte e investigación</h4>
+                  <p class="activity-description">Estructura de energía renovable para mi comunidad</p>
+                  <p class="activity-date">12/MArzo/23</p>
+                  <button class="btn btn-primary transparent" (click)="GoToActivityDetails(null)">Ver detalles de actividad</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4 mb-3">
+              <div class="card m-0">
+                <div class="card-body">
+                  <img src="assets/icons/sun.svg">
+                  <h5 class="activity-title">Producto parcial</h5>
+                  <h4 class="activity-subtitle">Diseño</h4>
+                  <p class="activity-description">Estructura de energía renovable para mi comunidad</p>
+                  <p class="activity-date">12/MArzo/23</p>
+                  <button class="btn btn-primary transparent" (click)="GoToActivityDetails(null)">Ver detalles de actividad</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4 mb-3">
+              <div class="card m-0">
+                <div class="card-body">
+                  <img src="assets/icons/sun.svg">
+                  <h5 class="activity-title">Producto parcial</h5>
+                  <h4 class="activity-subtitle">Análisis matemático o de ingeniería</h4>
+                  <p class="activity-description">Estructura de energía renovable para mi comunidad</p>
+                  <p class="activity-date">12/MArzo/23</p>
+                  <button class="btn btn-primary transparent" (click)="GoToActivityDetails(null)">Ver detalles de actividad</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4 mb-3">
+              <div class="card m-0">
+                <div class="card-body">
+                  <img src="assets/icons/rocket.svg">
+                  <h5 class="activity-title">Producto final</h5>
+                  <h4 class="activity-subtitle">Modelo a escala</h4>
+                  <p class="activity-description">Estructura de energía renovable para mi comunidad</p>
+                  <p class="activity-date">12/MArzo/23</p>
+                  <button class="btn btn-primary transparent" (click)="GoToActivityDetails(null)">Ver detalles de actividad</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4 mb-3">
+              <div class="card m-0">
+                <div class="card-body">
+                  <img src="assets/icons/little-flags.svg">
+                  <h5 class="activity-title">Evento de cierre</h5>
+                  <h4 class="activity-subtitle">Museo</h4>
+                  <p class="activity-description">Estructura de energía renovable para mi comunidad</p>
+                  <p class="activity-date">12/MArzo/23</p>
+                  <button class="btn btn-primary transparent" (click)="GoToActivityDetails(null)">Ver detalles de actividad</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

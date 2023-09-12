@@ -1,0 +1,70 @@
+<div class="content">
+  <div class="row">
+    <div class="col-12 mb-5">
+      <img class="back-arrow pointer" src="assets/icons/back-arrow.png" (click)="GoToActivities()">
+      <h5 class="blue mb-0">Actividades pendientes</h5> <img src="assets/icons/arrow-right-grey.svg" alt=""> <h5 class="grey mb-0">Hoy</h5> <img src="assets/icons/arrow-right-grey.svg" alt=""> <h5 class="grey mb-0">Actividad</h5>
+    </div>
+    <div class="col-12">
+      <div class="row">
+        <div class="col-12 col-md-4 mb-3 mb-md-0">
+          <img src="assets/icons/sun.svg">
+          <h5 class="activity activity-title">Actividad</h5>
+          <h4 class="activity blue-grey bold">Tipo de producto</h4>
+          <h4 class="activity blue">Producto parcial</h4>
+          <h4 class="activity blue-grey bold">Tipo de actividad</h4>
+          <h4 class="activity blue bold">Producto escrito</h4>
+          <h4 class="activity blue-grey bold">Fecha de entrega</h4>
+          <h4 class="activity dark-blue bold">12/Marzo/23</h4>
+          <h4 class="activity blue-grey bold">Título</h4>
+          <p class="activity-description-title">Estructura de energía renovable para mi comunidad</p>
+          <p class="activity-description">Instrucciones</p>
+          <p class="activity-description">Basándote en tus investigaciones sobre el tipo de energías renovables existentes y las que predominan en zona geográfica y las estructuras que diseñaste previamente, seleccionarás la que creas mejor y desarrollarás una construcción a pequeña o mediana escala.</p>
+        </div>
+        <div class="col-12 col-md-4 mb-3 mb-md-0">
+          <img src="assets/icons/snowflake.svg">
+          <h5 class="activity activity-title">Subir mi actividad resuelta</h5>
+          <ngx-file-drop dropZoneClassName="dropZoneCustom" dropZoneLabel="Drop files here" (onFileDrop)="OnDropped($event)" (onFileOver)="OnFileOver($event)" (onFileLeave)="onFileLeave($event)" [multiple]="false" *ngIf="temporaryFile == null">
+              <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                <div class="row">
+                  <div class="col-12 text-center mb-3 body-text">Arrastra aquí tu trabajo o da click en subir y selecciona tu trabajo</div>
+                  <div class="col-12 text-center">
+                    <button class="btn btn-primary transparent">
+                      <label class="custom-file-upload mr-3">
+                        <input type="file" class="btn btn-primary" (change)="OnFileChange($event,true);" accept=".pdf, .zip, .rar, .doc*, .ppt*, .xls*, image/*"> Subir mi trabajo
+                      </label>
+                    </button>
+                  </div>
+                </div>
+              </ng-template>
+          </ngx-file-drop>
+          <ng-container *ngIf="temporaryFile != null">
+            <p> {{!!temporaryFile?.relativePath ? temporaryFile?.relativePath : temporaryFile?.name}} <i class="zmdi zmdi-close ml-5 color-red pointer" (click)="DeleteTemporaryFile(true)"></i> </p>
+          </ng-container>
+          <div class="button-container d-flex justify-content-center">
+            <button class="btn btn-secondary">Enviar</button>
+          </div>
+        </div>
+        <div class="col-12 col-md-4 mb-3 mb-md-0">
+          <img src="assets/icons/books.svg">
+          <h5 class="activity activity-title">Recursos de la biblioteca que el profesor te recomienda ver para hacer la actividad</h5>
+          <div class="card resources p-3 mt-3">
+            <img class="card-img-top m1" src="assets/img/file-test-img.svg">
+            <div class="card-body px-0">
+              <img src="assets/icons/pdf-icon.svg">
+              <h5 class="resources-title">{{('5 pasos para ahorrar agua al lavarte las mano.pdf' | slice:0:9) + '...'}}</h5>
+              <div class="dropdown more-vert">
+                <img class="more-vert-icon pointer dropdown-toggle" src="assets/icons/more_vert.svg" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
