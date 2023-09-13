@@ -1,10 +1,10 @@
-<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="75" height="75" viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="playlist_add_check">
-<mask id="mask0_2414_12575" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
-<rect id="Bounding box" width="24" height="24" fill="#D9D9D9"/>
+<mask id="mask0_130_383" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="75" height="75">
+<rect id="Bounding box" width="75" height="75" fill="#D9D9D9"/>
 </mask>
-<g mask="url(#mask0_2414_12575)">
-<path id="playlist_add_check_2" d="M3 16V14H11V16H3ZM3 12V10H15V12H3ZM3 8V6H15V8H3ZM16.35 19L12.8 15.45L14.2 14.05L16.35 16.15L20.6 11.9L22 13.35L16.35 19Z" fill="#26D7A4"/>
+<g mask="url(#mask0_130_383)">
+<path id="playlist_add_check_2" d="M9.375 50V43.75H34.375V50H9.375ZM9.375 37.5V31.25H46.875V37.5H9.375ZM9.375 25V18.75H46.875V25H9.375ZM51.0938 59.375L40 48.2812L44.375 43.9062L51.0938 50.4688L64.375 37.1875L68.75 41.7188L51.0938 59.375Z" fill="#0DDCDC"/>
 </g>
 </g>
 </svg>

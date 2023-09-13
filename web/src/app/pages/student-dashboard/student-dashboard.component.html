@@ -1,0 +1,41 @@
+<div class="content">
+  <div class="h-100 d-flex">
+    <div class="d-flex my-auto flex-grow-1 flex-column justify-content-center align-items-center" style="gap: 48px;">
+      <h1 class="blue">Encuentra lo que tienes que hacer</h1>
+      <div class="d-flex align-self-stretch align-items-center justify-content-center flex-wrap mb-5" style="gap: 48px;">
+        <div class="col-container d-flex flex-column justify-content-center align-items-center pointer" (mouseover)="OnMouseOver('popoverCalfication')"  (mouseout)="OnMouseOut('popoverCalfication')" (click)="GoToActivities()">
+          <div class="popover-left" *ngIf="popovers?.popoverCalfication">
+            Aquí podrás ver las calificaciones que asignan tus profesores.
+            <div class="triangle"></div>
+          </div>
+          <img class="icon" src="assets/icons/playlist_add_check.svg">
+          <h5 class="blue">Calificaciones</h5>
+        </div>
+        <div class="col-container d-flex flex-column justify-content-center align-items-center pointer" (mouseover)="OnMouseOver('popoverLibrary')"  (mouseout)="OnMouseOut('popoverLibrary')">
+          <div class="popover-center" *ngIf="popovers?.popoverLibrary">
+            Encontrarás contenido que te podrá ayudar a realizar tus actividades y conocer un poco más sobre algunos temas
+            <div class="triangle"></div>
+          </div>
+          <img class="icon" src="assets/icons/import_contacts.svg">
+          <h5 class="blue">Biblioteca</h5>
+        </div>
+        <div class="col-container d-flex flex-column justify-content-center align-items-center pointer" (mouseover)="OnMouseOver('popoverFavorites')"  (mouseout)="OnMouseOut('popoverFavorites')">
+          <div class="popover-center" *ngIf="popovers?.popoverFavorites">
+            Aquí podrás encontrar tus actividades favoritas
+            <div class="triangle"></div>
+          </div>
+          <img class="icon" src="assets/icons/favorite.svg">
+          <h5 class="blue">Mis favoritos</h5>
+        </div>
+        <div class="col-container d-flex flex-column justify-content-center align-items-center pointer" (mouseover)="OnMouseOver('popoverCalendar')"  (mouseout)="OnMouseOut('popoverCalendar')">
+          <div class="popover-right" *ngIf="popovers?.popoverCalendar">
+            Conoce tus actividades a realizar en las fechas correspondientes a entregar.
+            <div class="triangle"></div>
+          </div>
+          <img class="icon" src="assets/icons/calendar_month.svg">
+          <h5 class="blue">Calendario</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
