@@ -46,8 +46,8 @@
                                     </a>
                                 </div>
                                 <div class="btns-container">
-                                    <div class="d-flex justify-content-center justify-content-md-between flex-wrap">
-                                        <button class="mb-5 btn btn-primary" (click)="Forward()">
+                                    <div class="d-flex justify-content-center flex-wrap" [ngClass]="{'justify-content-md-between': canRegister}">
+                                        <button class="mb-5 btn btn-primary" *ngIf="canRegister" (click)="Forward()">
                                             Registrarme
                                         </button>
                                         <button class="mb-5 btn btn-success" (click)="LoginUser()">
@@ -58,96 +58,108 @@
                             </div>
                             <!-- Register 2nd part -->
                             <div class="header-container mb-0" *ngSwitchCase="2">
-                                <div class="header-container">
-                                    <div class="title text-success">
-                                        Cuéntanos más sobre tí
+                                <div [ngSwitch]="userType">
+                                    <!-- Register student -->
+                                    <div *ngSwitchCase="'estudiante'">
+                                        <app-register-student
+                                        (onBackClicked)="GoBack()"
+                                        (onNextClicked)="ApiRegisterUser($event, null, 'Student')"
+                                        ></app-register-student>
                                     </div>
-                                    <div class="text">
-                                        Y más sobre la institución que representas
-                                    </div>
-                                </div>
-                                <form class="form d-inline-block" [formGroup]="userRegisterForm">
-                                    <div class="input-container">
-                                        <div class="input-icon-container text-center">
-                                            <img src="assets/icons/user.png">
-                                        </div>
-                                        <input class="form-control" type="text" placeholder="Nombre" formControlName="username">
-                                        <span class="required-span">*</span>
-                                    </div>
-                                    <app-control-messages [control]="userForm.get('username')"></app-control-messages>
-                                    <div class="input-container">
-                                        <div class="input-icon-container text-center">
-                                            <img src="assets/icons/phone.png">
-                                        </div>
-                                        <input class="form-control" type="text" maxlength="10" placeholder="Teléfono" formControlName="phone">
-                                    </div>
-                                    <app-control-messages [control]="userRegisterForm.get('phone')"></app-control-messages>
-                                    <ng-container [formGroup]="schoolForm">
-                                        <div class="input-container">
-                                            <div class="input-icon-container text-center">
-                                                <img src="assets/icons/school.png">
+                                    <!-- Default register form -->
+                                    <div *ngSwitchDefault>
+                                        <div class="header-container">
+                                            <div class="title text-success">
+                                                Cuéntanos más sobre tí
                                             </div>
-                                            <input class="form-control" type="text" placeholder="Nombre de la institución" formControlName="name">
-                                            <span class="required-span">*</span>
-                                        </div>
-                                        <app-control-messages [control]="schoolForm.get('name')"></app-control-messages>
-                                        <div class="input-container">
-                                            <div class="input-icon-container text-center">
-                                                <img src="assets/icons/location.png">
+                                            <div class="text">
+                                                Y más sobre la institución que representas
                                             </div>
-                                            <input class="form-control" type="text" placeholder="Dirección" formControlName="address">
-                                            <span class="required-span">*</span>
                                         </div>
-                                        <app-control-messages [control]="schoolForm.get('address')"></app-control-messages>
-                                        <div class="input-container">
-                                            <div class="input-icon-container text-center">
-                                                <img src="assets/icons/user-phone.png">
+                                        <form class="form d-inline-block" [formGroup]="userRegisterForm">
+                                            <div class="input-container">
+                                                <div class="input-icon-container text-center">
+                                                    <img src="assets/icons/user.png">
+                                                </div>
+                                                <input class="form-control" type="text" placeholder="Nombre" formControlName="username">
+                                                <span class="required-span">*</span>
                                             </div>
-                                            <input class="form-control" type="text" maxlength="10" placeholder="Teléfono escolar" formControlName="phone">
+                                            <app-control-messages [control]="userForm.get('username')"></app-control-messages>
+                                            <div class="input-container">
+                                                <div class="input-icon-container text-center">
+                                                    <img src="assets/icons/phone.png">
+                                                </div>
+                                                <input class="form-control" type="text" maxlength="10" placeholder="Teléfono" formControlName="phone">
+                                            </div>
+                                            <app-control-messages [control]="userRegisterForm.get('phone')"></app-control-messages>
+                                            <ng-container [formGroup]="schoolForm">
+                                                <div class="input-container">
+                                                    <div class="input-icon-container text-center">
+                                                        <img src="assets/icons/school.png">
+                                                    </div>
+                                                    <input class="form-control" type="text" placeholder="Nombre de la institución" formControlName="name">
+                                                    <span class="required-span">*</span>
+                                                </div>
+                                                <app-control-messages [control]="schoolForm.get('name')"></app-control-messages>
+                                                <div class="input-container">
+                                                    <div class="input-icon-container text-center">
+                                                        <img src="assets/icons/location.png">
+                                                    </div>
+                                                    <input class="form-control" type="text" placeholder="Dirección" formControlName="address">
+                                                    <span class="required-span">*</span>
+                                                </div>
+                                                <app-control-messages [control]="schoolForm.get('address')"></app-control-messages>
+                                                <div class="input-container">
+                                                    <div class="input-icon-container text-center">
+                                                        <img src="assets/icons/user-phone.png">
+                                                    </div>
+                                                    <input class="form-control" type="text" maxlength="10" placeholder="Teléfono escolar" formControlName="phone">
+                                                </div>
+                                                <app-control-messages [control]="schoolForm.get('phone')"></app-control-messages>
+                                            </ng-container>
+                                            <div class="input-container">
+                                                <div class="input-icon-container text-center">
+                                                    <img src="assets/icons/users-group.png">
+                                                </div>
+                                                <input class="form-control" type="text" placeholder="Puesto" formControlName="workTitle">
+                                                <span class="required-span">*</span>
+                                            </div>
+                                            <app-control-messages [control]="userRegisterForm.get('workTitle')"></app-control-messages>
+                                            <div class="input-container">
+                                                <div class="input-icon-container text-center">
+                                                    <img src="assets/icons/mail.png">
+                                                </div>
+                                                <input class="form-control" type="text" placeholder="Correo" formControlName="email">
+                                                <span class="required-span">*</span>
+                                            </div>
+                                            <app-control-messages [control]="userRegisterForm.get('email')"></app-control-messages>
+                                            <div class="input-container">
+                                                <div class="input-icon-container text-center">
+                                                    <img src="assets/icons/lock.png">
+                                                </div>
+                                                <input class="form-control" type="password" placeholder="Contraseña" formControlName="password" (keyup)="OnPasswordChange()" (keyup.enter)="RegisterUser()">
+                                                <span class="required-span">*</span>
+                                            </div>
+                                            <app-control-messages [control]="userRegisterForm.get('password')"></app-control-messages>
+                                            <div class="input-container">
+                                                <div class="input-icon-container text-center">
+                                                    <img src="assets/icons/lock.png">
+                                                </div>
+                                                <input class="form-control" type="password" placeholder="Confirmar contraseña" formControlName="confirmPassword" (keyup.enter)="RegisterUser()">
+                                                <span class="required-span">*</span>
+                                            </div>
+                                            <app-control-messages [control]="userRegisterForm.get('confirmPassword')"></app-control-messages>
+                                        </form>
+                                        <div class="btns-container">
+                                            <div class="d-flex justify-content-center justify-content-md-between flex-wrap">
+                                                <button class="mb-5 btn btn-outline-primary" (click)="Back()">
+                                                    Volver
+                                                </button>
+                                                <button class="mb-5 btn btn-primary" (click)="RegisterUser()">
+                                                    Registrar
+                                                </button>
+                                            </div>
                                         </div>
-                                        <app-control-messages [control]="schoolForm.get('phone')"></app-control-messages>
-                                    </ng-container>
-                                    <div class="input-container">
-                                        <div class="input-icon-container text-center">
-                                            <img src="assets/icons/users-group.png">
-                                        </div>
-                                        <input class="form-control" type="text" placeholder="Puesto" formControlName="workTitle">
-                                        <span class="required-span">*</span>
-                                    </div>
-                                    <app-control-messages [control]="userRegisterForm.get('workTitle')"></app-control-messages>
-                                    <div class="input-container">
-                                        <div class="input-icon-container text-center">
-                                            <img src="assets/icons/mail.png">
-                                        </div>
-                                        <input class="form-control" type="text" placeholder="Correo" formControlName="email">
-                                        <span class="required-span">*</span>
-                                    </div>
-                                    <app-control-messages [control]="userRegisterForm.get('email')"></app-control-messages>
-                                    <div class="input-container">
-                                        <div class="input-icon-container text-center">
-                                            <img src="assets/icons/lock.png">
-                                        </div>
-                                        <input class="form-control" type="password" placeholder="Contraseña" formControlName="password" (keyup)="OnPasswordChange()" (keyup.enter)="RegisterUser()">
-                                        <span class="required-span">*</span>
-                                    </div>
-                                    <app-control-messages [control]="userRegisterForm.get('password')"></app-control-messages>
-                                    <div class="input-container">
-                                        <div class="input-icon-container text-center">
-                                            <img src="assets/icons/lock.png">
-                                        </div>
-                                        <input class="form-control" type="password" placeholder="Confirmar contraseña" formControlName="confirmPassword" (keyup.enter)="RegisterUser()">
-                                        <span class="required-span">*</span>
-                                    </div>
-                                    <app-control-messages [control]="userRegisterForm.get('confirmPassword')"></app-control-messages>
-                                </form>
-                                <div class="btns-container">
-                                    <div class="d-flex justify-content-center justify-content-md-between flex-wrap">
-                                        <button class="mb-5 btn btn-outline-primary" (click)="Back()">
-                                            Volver
-                                        </button>
-                                        <button class="mb-5 btn btn-primary" (click)="RegisterUser()">
-                                            Registrar
-                                        </button>
                                     </div>
                                 </div>
                             </div>

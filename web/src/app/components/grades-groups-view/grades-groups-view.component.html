@@ -82,8 +82,14 @@
 
     <div class="teacher-dashboard-row">
         <div class="group-card-2 m-4 flex-column justify-content-between" *ngFor="let group of selectedGrade?.groups">
-            <div class="group-title-2">
-                Grupo {{group[0].group}}
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4" style="gap: 12px;">
+                <div class="group-title-2 mb-0">
+                    Grupo {{group[0].group}}
+                </div>
+                <button class="btn btn-primary btn-small" (click)="GenerateAndCopyLink(group[0].studentGroup)">
+                    <span *ngIf="loading.generatingLink != group[0].group">Link de registro</span>
+                    <span *ngIf="loading.generatingLink == group[0].group"><i class="zmdi zmdi-spinner zmdi-hc-lg zmdi-hc-spin"></i></span>
+                </button>
             </div>
             <div class="students-2 flex-grow-1">
                 <div class="student" *ngFor="let student of group; let i = index">

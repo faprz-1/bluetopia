@@ -1,0 +1,70 @@
+<div class="content">
+  <div class="row h-100">
+    <div class="col-12"></div>
+    <div class="col-12">
+      <div class="row h-100 d-flex justify-content-around">
+        <div class="col-12 col-md-3 col-container d-flex flex-column justify-content-center align-items-center my-1 my-md-0 pointer" (mouseover)="OnMouseOver('popoverTL')"  (mouseout)="OnMouseOut('popoverTL')" (click)="GoToActivities()">
+          <div class="popover-left" *ngIf="popovers?.popoverTL">
+            Aquí podrás ver las actividades que asignaron tus profesores a realizar.
+            <div class="triangle"></div>
+          </div>
+          <img class="icon" src="assets/icons/description.svg">
+          <h5 class="blue">Actividades pendientes</h5>
+        </div>
+        <div class="col-12 col-md-3 col-container d-flex flex-column justify-content-center align-items-center my-1 my-md-0 pointer" (mouseover)="OnMouseOver('popoverTC')"  (mouseout)="OnMouseOut('popoverTC')">
+          <div class="popover-center" *ngIf="popovers?.popoverTC">
+            Estas son las materias que estas cursando y las actividades que relacionan a los campos
+            <div class="triangle"></div>
+          </div>
+          <img class="icon" src="assets/icons/bookmark_green.svg">
+          <h5 class="blue">Campos formativos</h5>
+        </div>
+        <div class="col-12 col-md-3 col-container d-flex flex-column justify-content-center align-items-center my-1 my-md-0 pointer" (mouseover)="OnMouseOver('popoverTR')"  (mouseout)="OnMouseOut('popoverTR')">
+          <div class="popover-right" *ngIf="popovers?.popoverTR">
+            Aquí podrás ver las calificaciones que asignan tus profesores.
+            <div class="triangle"></div>
+          </div>
+          <img class="icon" src="assets/icons/playlist_add_check.svg">
+          <h5 class="blue">Calificaciones</h5>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="row h-100">
+        <div class="col-12 d-flex flex-column justify-content-center align-items-center my-3 my-md-0">
+          <h1 class="blue">Encuentra lo que tienes que hacer</h1>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="row h-100 d-flex justify-content-around">
+        <div class="col-12 col-md-3 col-container d-flex flex-column justify-content-center align-items-center my-1 my-md-0 pointer" (mouseover)="OnMouseOver('popoverBL')"  (mouseout)="OnMouseOut('popoverBL')">
+          <div class="popover-left" *ngIf="popovers?.popoverBL">
+            Aquí podrás ver las calificaciones que asignan tus profesores.
+            <div class="triangle"></div>
+          </div>
+          <img class="icon" src="assets/icons/draw.svg">
+          <h5 class="blue">Aprendizajes</h5>
+        </div>
+        <div class="col-12 col-md-3 col-container d-flex flex-column justify-content-center align-items-center my-1 my-md-0 pointer" (mouseover)="OnMouseOver('popoverBC')"  (mouseout)="OnMouseOut('popoverBC')">
+
+          <div class="popover-center" *ngIf="popovers?.popoverBC">
+            Encontrarás contenido que te podrá ayudar a realizar tus actividades y conocer un poco más sobre algunos temas
+            <div class="triangle"></div>
+          </div>
+          <img class="icon" src="assets/icons/import_contacts.svg">
+          <h5 class="blue">Biblioteca</h5>
+        </div>
+        <div class="col-12 col-md-3 col-container d-flex flex-column justify-content-center align-items-center my-1 my-md-0 pointer" (mouseover)="OnMouseOver('popoverBR')"  (mouseout)="OnMouseOut('popoverBR')">
+          <div class="popover-right" *ngIf="popovers?.popoverBR">
+            Conoce tus actividades a realizar en las fechas correspondientes a entregar.
+            <div class="triangle"></div>
+          </div>
+          <img class="icon" src="assets/icons/calendar_month.svg">
+          <h5 class="blue">Calendario</h5>
+        </div>
+      </div>
+    </div>
+    <div class="col-12"></div>
+  </div>
+</div>

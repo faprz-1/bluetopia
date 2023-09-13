@@ -19,6 +19,7 @@ export class RegisterUserComponent implements OnInit {
   registerStep: number = 1;
   userType: string = '';
   teacherIdToAbsorb: string = '';
+  studentGroupRegisterUid: string | null = null;
   userForm: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
     password: new FormControl(null, [Validators.required, Validators.minLength(3)]),
@@ -49,6 +50,13 @@ export class RegisterUserComponent implements OnInit {
     return this.userRegisterForm.get('school') as FormGroup;
   }
 
+  public get canRegister() {
+    switch (this.userType) {
+      case 'estudiante': return false
+      default: return true;
+    }
+  }
+
   constructor(
     private navigation: NavigationService,
     private activeRoute: ActivatedRoute,
@@ -60,14 +68,14 @@ export class RegisterUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.GetParams();
-    console.log(this.schoolForm);
   }
 
   GetParams() {
     this.activeRoute.params.subscribe(params => {
       this.userType = params['userType'];
       this.teacherIdToAbsorb = params['teacherId'];
-      if(!!this.teacherIdToAbsorb) this.registerStep = 2;
+      this.studentGroupRegisterUid = params['registerUid'];
+      if(!!this.teacherIdToAbsorb || !!this.studentGroupRegisterUid) this.registerStep = 2;
       if(this.userType == 'maestro') {
         this.userRegisterForm.get('phone')?.clearValidators();
         this.userRegisterForm.get('phone')?.setValidators([ValidationService.CheckOnlyIntegerNumbers]);
@@ -106,10 +114,15 @@ export class RegisterUserComponent implements OnInit {
       password: userData.password,
       active: true
     };
+    this.ApiRegisterUser(user, userData, this.userType.toLowerCase());
+  }
+
+  ApiRegisterUser(user: any, userData: any, role: string) {
+    console.log(user, userData, role);
     user.active = true;
-    this.api.Post(`/Usuarios`, { user, userData, role: this.userType.toLowerCase() }).subscribe(newUser => {
+    this.api.Post(`/Usuarios`, { user, userData, role}).subscribe(newUser => {
       let credentials = {
-        email: user.email,
+        email: !!user.email ? user.email : user.username,
         password: user.password
       };
       this.api.Post('/Usuarios/login', credentials).subscribe(token => {

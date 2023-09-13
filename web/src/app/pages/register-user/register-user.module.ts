@@ -6,6 +6,7 @@ import { ControlMessagesModule } from 'src/app/components/control-messages/contr
 
 import { RegisterUserComponent } from './register-user.component';
 import { WelcomeViewModule } from 'src/app/components/welcome-view/welcome-view.module';
+import { RegisterStudentModule } from 'src/app/components/register-student/register-student.module';
 
 const MODULE_ROUTES = [
   { path: '', component: RegisterUserComponent }
@@ -20,6 +21,7 @@ const MODULE_ROUTES = [
     CommonModule,
     WelcomeViewModule,
     ReactiveFormsModule,
+    RegisterStudentModule,
     ControlMessagesModule,
     RouterModule.forChild(MODULE_ROUTES),
   ]
