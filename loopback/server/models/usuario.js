@@ -545,7 +545,6 @@ module.exports = function(Usuario) {
         },
         {
           and: [
-            {email: null},
             {username: credentials.email},
           ]
         },

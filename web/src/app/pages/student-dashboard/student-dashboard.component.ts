@@ -9,12 +9,10 @@ import { NavigationService } from 'src/app/services/navigation.service';
 export class StudentDashboardComponent implements OnInit {
 
   popovers:any = {
-    popoverTL: false,
-    popoverTC: false,
-    popoverTR: false,
-    popoverBL: false,
-    popoverBC: false,
-    popoverBR: false
+    popoverCalfication: false,
+    popoverLibrary: false,
+    popoverFavorites: false,
+    popoverCalendar: false,
   }
 
   constructor(

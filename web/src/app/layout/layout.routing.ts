@@ -29,7 +29,7 @@ export const ADMIN_MENU_PAGES: any = {
     // { name: 'Mis grados/grupos', action: '/inicio/teacher/mis-estudiantes', icon: 'zmdi zmdi-accounts', iconImg: 'groups.svg' },
     { name: 'Datos de los alumnos', action: '/inicio/teacher/datos-estudiantes', icon: 'zmdi zmdi-accounts', iconImg: 'person-success.svg' },
     { name: 'Mis entregables favoritos*', action: '/inicio/teacher/mis-estudiantes', icon: 'zmdi zmdi-accounts', iconImg: 'star_rate.svg' },
-    { name: 'Biblioteca de conocimiento*', action: '/inicio/teacher/mis-estudiantes', icon: 'zmdi zmdi-accounts', iconImg: 'import_contacts.svg' },
+    { name: 'Biblioteca de conocimiento*', action: '/inicio/teacher/mis-estudiantes', icon: 'zmdi zmdi-accounts', iconImg: 'import_contacts_success.svg' },
     // { name: 'Calificaciones', action: '/inicio/teacher/mis-estudiantes', icon: 'zmdi zmdi-accounts', iconImg: 'playlist_add_check.svg' },
     // { name: 'Calendario', action: '/inicio/teacher/mis-estudiantes', icon: 'zmdi zmdi-accounts', iconImg: 'calendar_month.svg' },
     { name: 'Gráficas de resultados*', action: '/inicio/teacher/mis-estudiantes', icon: 'zmdi zmdi-accounts', iconImg: 'bar_chart.svg' },
