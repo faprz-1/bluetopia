@@ -40,8 +40,9 @@ export const ADMIN_MENU_PAGES: any = {
     { name: 'Estadisticas', action: '/inicio/parent/estadisticas', icon: 'zmdi zmdi-accounts' },
   ],
   'Student': [
-    { name: 'Inicio', action: '/inicio/student/home', icon: 'zmdi zmdi-home' },
-    { name: 'Mis estadisticas', action: '/inicio/student/mis-estadisticas', icon: 'zmdi zmdi-accounts' },
+    { name: 'Inicio', action: '/inicio/student/home', icon: 'zmdi zmdi-home', iconImg: 'home.svg' },
+    { name: 'Mis estadisticas', action: '/inicio/student/mis-estadisticas', icon: 'zmdi zmdi-accounts', iconImg: 'groups.svg' },
+    { name: 'Calendario', action: '/inicio/student/calendario', icon: 'zmdi zmdi-accounts', iconImg: 'calendar_month.svg' },
   ],
 };
 
@@ -144,6 +145,7 @@ const LAYOUT_ROUTES: Routes = [
           { path: 'mis-actividades', loadChildren: () => import('../pages/student-activities/student-activities.module').then(m => m.StudentActivitiesModule) },
           { path: 'mis-actividades/detalle-de-actividad/:activityId', loadChildren: () => import('../pages/student-activity-details/student-activity-details.module').then(m => m.StudentActivityDetailsModule) },
           { path: 'mis-estadisticas', loadChildren: () => import('../pages/student-stats/student-stats.module').then(m => m.StudentStatsModule) },
+          { path: 'calendario', loadChildren: () => import('../pages/student-calendar/student-calendar.module').then(m => m.StudentCalendarModule) },
         ]
       },
     ]
