@@ -1,5 +1,5 @@
 'use strict';
-const { randomUUID } = require('crypto');
+const uuidV4 = require('uuid/v4');
 
 module.exports = function(StudentGroup) {
 
@@ -22,7 +22,7 @@ module.exports = function(StudentGroup) {
     }
 
     StudentGroup.GenerateRegisterUid = function(schoolId, gradeId, groupId, callback) {
-        let uid = randomUUID();
+        let uid = uuidV4();
         StudentGroup.updateAll({schoolId, gradeId, groupId}, {registerUid: uid}, (err, studentsgroups) => {
             if(err) return callback(err);
 
