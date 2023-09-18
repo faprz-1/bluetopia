@@ -27,7 +27,7 @@
           <img class="icon" src="assets/icons/favorite.svg">
           <h5 class="blue">Mis favoritos</h5>
         </div>
-        <div class="col-container d-flex flex-column justify-content-center align-items-center pointer" (mouseover)="OnMouseOver('popoverCalendar')"  (mouseout)="OnMouseOut('popoverCalendar')">
+        <div class="col-container d-flex flex-column justify-content-center align-items-center pointer" (mouseover)="OnMouseOver('popoverCalendar')"  (mouseout)="OnMouseOut('popoverCalendar')" (click)="navigationService.GoToUserRoute('calendario')">
           <div class="popover-right" *ngIf="popovers?.popoverCalendar">
             Conoce tus actividades a realizar en las fechas correspondientes a entregar.
             <div class="triangle"></div>

@@ -471,6 +471,18 @@ module.exports = function(app) {
     });
   }
 
+  var SynchronizeSchoolIdOfStrategyGroups = function() {
+    app.models.StrategyGroup.find({where: {schoolId: null}, include: 'strategy'}, (err, strategyGroups) => {
+      strategyGroups.forEach(strategyGroup => {
+        if(!!strategyGroup.strategy()) {
+          strategyGroup.schoolId = strategyGroup.strategy().schoolId;
+          strategyGroup.save((err, saved) => {
+          });
+        }
+      });
+    });
+  }
+
   var seedUploadContainers = function(){
     var Upload = app.models.Upload;
     var containers = [
@@ -565,7 +577,8 @@ module.exports = function(app) {
     seedTeamRoles,
     seedStrategyStatuses,
     seedEvaluationTypes,
-    SynchronizeSchoolIdOfStudentsGroups
+    SynchronizeSchoolIdOfStudentsGroups,
+    SynchronizeSchoolIdOfStrategyGroups
   ]
 
   // Migrate

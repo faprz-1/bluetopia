@@ -16,7 +16,7 @@ export class StudentDashboardComponent implements OnInit {
   }
 
   constructor(
-    private navigationService:NavigationService
+    public navigationService: NavigationService
   ) { }
 
   ngOnInit(): void {}
