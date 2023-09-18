@@ -1,4 +1,4 @@
-<div class="breadcrumbs" *ngIf="crumbs">
+<div class="breadcrumbs" *ngIf="!!crumbs?.length">
     <div>
         <img class="clickeable" src="assets/icons/back-arrow.png" alt="back" (click)="GoTo()">
     </div>

@@ -201,6 +201,20 @@ $TemplateWeb-theme: mat.define-light-theme((
     background-color: $success;
     border-width: 3px;
 }
+.btn-outline-purple {
+    color: #8128DB;
+    border-color: #8128DB;
+    border-width: 3px;
+}
+.btn-outline-purple:disabled {
+    color: #8128DB;
+}
+.btn-outline-purple:hover {
+    color: white;
+    background-color: #8128DB;
+    border-color: #8128DB;
+    border-width: 3px;
+}
 .title-row {
     display: flex;
     align-items: center;
