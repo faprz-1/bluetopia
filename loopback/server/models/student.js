@@ -184,7 +184,7 @@ module.exports = function(Student) {
                     where: {
                         strategyId: {inq: strategyGroups.map(strategyGroup => strategyGroup.strategyId)}
                     },
-                    include: ['type', 'parcialProduct']
+                    include: ['type', 'parcialProduct', 'strategy']
                 }, (err, events) => {
                     if(err) return callback(err);
 

@@ -1,0 +1,20 @@
+<div class="content">
+    <div class="d-flex align-items-start justify-content-between w-100">
+        <app-breadcrumb [crumbs]="crumbs"></app-breadcrumb>
+
+        <app-calendar-event-types-card></app-calendar-event-types-card>
+    </div>
+
+    <div class="d-flex flex-column justify-content-center align-items-center gap-2">
+        <div class="d-flex align-items-center gap-2">
+            <img src="assets/icons/calendar_month_success.svg" height="48">
+            <h1 class="text-success m-0">Día</h1>
+        </div>
+        <h1><b>{{date | date:"dd MMMM yyyy"}}</b></h1>
+    </div>
+
+
+    <div class="d-flex justify-content-center align-items-center p-3 gap-4 my-5 events-container">
+        <app-student-event-card class="flex-grow-1" *ngFor="let event of events" [event]="event"></app-student-event-card>
+    </div>
+</div>
