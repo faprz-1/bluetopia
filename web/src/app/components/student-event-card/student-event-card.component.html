@@ -1,0 +1,31 @@
+<div class="d-flex flex-column justify-content-start align-items-start p-3 gap-3 bg-white card m-0 flex-grow-1">
+    <div class="d-flex align-items-center justify-content-start">
+        <img src="assets/icons/calendar-event-types/{{GetEventDetails().icon}}" alt="Producto parcial">
+    </div>
+    <div class="d-flex flex-column align-items-start justify-content-start gap-1 text-capitalize">
+        <div>
+            <b>{{event?.strategy?.title}}</b>
+        </div>
+        <div class="text-primary">
+            {{GetEventDetails().type}}
+        </div>
+    </div>
+    <div class="d-flex flex-column align-items-start justify-content-start gap-1 text-capitalize">
+        <div class="text-primary">
+            <b>{{GetEventDetails().title}}</b>
+        </div>
+        <div class="text-black">
+            {{GetEventDetails().instructions}}
+        </div>
+    </div>
+    <div class="d-flex align-items-center justify-content-start gap-2 text-capitalize">
+        <img src="assets/icons/calendar_dark_blue.svg">
+        <div class="blue-dark">
+            {{event.date | date:"dd/MMMM/yyyy"}}
+        </div>
+    </div>
+
+    <button class="btn btn-outline-purple" (click)="GoToDetails()">
+        Ver detalles de la actividad
+    </button>
+</div>
