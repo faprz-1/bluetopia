@@ -1,0 +1,67 @@
+h1.blue {
+  text-align: center;
+  font-weight: bold;
+  color: #2369B5;
+  font-size: 36px;
+  letter-spacing: 3px;
+}
+
+h5.grey {
+  text-align: center;
+  font-weight: bold;
+  color: #2369B5;
+  font-size: 24px;
+}
+
+img.back-arrow {
+  max-width: 58px;
+  position: absolute;
+  @media (width <= 767px) {
+    position: relative;
+    margin: 0 auto 1rem auto;
+  }
+}
+
+div.filters {
+  background-color: #F4F5F7;
+  padding: 1rem;
+  border-radius: 5px;
+  color: #1081FB;
+  font-size: 16px;
+  font-weight: bold;
+  &.isSelected {
+    border: 2px solid #1081FB;
+  }
+}
+
+div.card.grey {
+  background-color: #F4F5F7;
+}
+
+button.transparent {
+  background-color: transparent;
+  color: #1081FB !important;
+  font-size: 16px;
+}
+
+h5.activity-title {
+  font-size: 14px;
+  color: #1081FB;
+}
+
+h4.activity-subtitle {
+  font-size: 14px;
+  font-weight: bold;
+  color: #1081FB;
+}
+
+p.activity-description {
+  font-size: 16px;
+  color: #3D5E81;
+}
+
+p.activity-date {
+  font-size: 14px;
+  font-weight: bold;
+  color: #2369B5;
+}

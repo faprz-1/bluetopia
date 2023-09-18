@@ -156,7 +156,8 @@
           "GetAllOfTeacher": true,
           "prototype.GetData": true,
           "prototype.GetDataWithEvaluations": true,
-          "prototype.EvaluateParcialProduct": true
+          "prototype.EvaluateParcialProduct": true,
+          "GetEvents": true
         }
       }
     }
@@ -215,7 +216,9 @@
     "options": {
       "remoting": {
         "sharedMethods": {
-          "*": false
+          "*": false,
+          "GenerateRegisterUid": true,
+          "GetByRegisterUid": true
         }
       }
     }

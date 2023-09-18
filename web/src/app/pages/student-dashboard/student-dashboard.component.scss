@@ -1,0 +1,145 @@
+.col-container {
+  background-color: #F4F5F7;
+  flex-basis: 225px;
+  height: 160px;
+  position: relative;
+}
+
+h1.blue {
+  text-align: center;
+  font-weight: bold;
+  color: #2369B5;
+  font-size: 36px;
+  letter-spacing: 3px;
+}
+
+h5.blue {
+  text-align: center;
+  font-weight: bold;
+  color: #2369B5;
+  font-size: 24px;
+  // letter-spacing: 3px;
+}
+
+img.icon {
+  min-width: 75px;
+}
+
+div.popover-left {
+  background-color: #d0e4fc;
+  border: none;
+  padding: 1rem;
+  z-index: 10;
+  position: absolute;
+  top: -50%;
+  max-width: 240px;
+  font-size: 20px;
+  color: #3D5E81;
+  border-radius: 5px;
+
+  @media (width > 767px) {
+    right: -70%;
+    &>.triangle {
+      width: 0;
+      height: 0;
+      border-right: 20px solid transparent;
+      border-top: 20px solid #d0e4fc;
+      border-left: 20px solid #d0e4fc;
+      border-bottom: 20px solid transparent;
+      position: absolute;
+      top: 100%;
+      left: 10%;
+      z-index: 0;
+    }
+  }
+
+  @media (width <= 767px) {
+    top: -70%;
+    &>.triangle {
+      width: 0;
+      height: 0;
+      border-right: 20px solid transparent;
+      border-top: 20px solid #d0e4fc;
+      border-left: 20px solid transparent;
+      border-bottom: 20px solid transparent;
+      position: absolute;
+      top: 100%;
+      left: 42%;
+      z-index: 0;
+    }
+  }
+}
+
+div.popover-center {
+  background-color: #d0e4fc;
+  border: none;
+  padding: 1rem;
+  z-index: 10;
+  position: absolute;
+  top: -50%;
+  max-width: 240px;
+  font-size: 20px;
+  color: #3D5E81;
+  border-radius: 5px;
+  &>.triangle {
+    width: 0;
+    height: 0;
+    border-right: 20px solid transparent;
+    border-top: 20px solid #d0e4fc;
+    border-left: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    position: absolute;
+    top: 100%;
+    left: 42%;
+    z-index: 0;
+  }
+  @media (width <= 767px) {
+    top: -70%;
+  }
+}
+
+div.popover-right {
+  background-color: #d0e4fc;
+  border: none;
+  padding: 1rem;
+  z-index: 10;
+  position: absolute;
+  top: -50%;
+  max-width: 240px;
+  font-size: 20px;
+  color: #3D5E81;
+  border-radius: 5px;
+
+  @media (width > 767px) {
+    left: -70%;
+    &>.triangle {
+      width: 0;
+      height: 0;
+      border-right: 20px solid #d0e4fc;
+      border-top: 20px solid #d0e4fc;
+      border-left: 20px solid transparent;
+      border-bottom: 20px solid transparent;
+      position: absolute;
+      top: 100%;
+      right: 10%;
+      z-index: 0;
+    }
+  }
+
+  @media (width <= 767px) {
+    top: -70%;
+    &>.triangle {
+      width: 0;
+      height: 0;
+      border-right: 20px solid transparent;
+      border-top: 20px solid #d0e4fc;
+      border-left: 20px solid transparent;
+      border-bottom: 20px solid transparent;
+      position: absolute;
+      top: 100%;
+      left: 42%;
+      z-index: 0;
+    }
+  }
+}
+

@@ -26,15 +26,20 @@
       "model": "Strategy",
       "foreignKey": "strategyId"
     },
-    "group": {
+    "school": {
       "type": "belongsTo",
-      "model": "Group",
-      "foreignKey": "groupId"
+      "model": "School",
+      "foreignKey": "schoolId"
     },
     "grade": {
       "type": "belongsTo",
       "model": "Grade",
       "foreignKey": "gradeId"
+    },
+    "group": {
+      "type": "belongsTo",
+      "model": "Group",
+      "foreignKey": "groupId"
     }
   },
   "acls": [],

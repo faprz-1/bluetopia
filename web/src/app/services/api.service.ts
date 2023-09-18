@@ -116,7 +116,7 @@ export class ApiService {
           }
           if (error && error.status == 401) {
             localStorage.clear();
-            this.router.navigate(['login']);
+            this.router.navigate(['landing-page']);
           }
         },
       ),

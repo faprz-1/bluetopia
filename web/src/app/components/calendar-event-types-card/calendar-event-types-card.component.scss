@@ -1,0 +1,26 @@
+.calendar-types-card {
+    display: flex;
+    padding: 16px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 6px;
+    background: #F4F5F7;
+    box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 0.17);
+
+    .icon-container {
+        width: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .event-type-text {
+        color: #3D5E81;
+        font-family: Mulish;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+}

@@ -459,6 +459,30 @@ module.exports = function(app) {
     });
   }
 
+  var SynchronizeSchoolIdOfStudentsGroups = function() {
+    app.models.StudentGroup.find({where: {schoolId: null}, include: 'student'}, (err, studentGroups) => {
+      studentGroups.forEach(studentGroup => {
+        if(!!studentGroup.student()) {
+          studentGroup.schoolId = studentGroup.student().schoolId;
+          studentGroup.save((err, saved) => {
+          });
+        }
+      });
+    });
+  }
+
+  var SynchronizeSchoolIdOfStrategyGroups = function() {
+    app.models.StrategyGroup.find({where: {schoolId: null}, include: 'strategy'}, (err, strategyGroups) => {
+      strategyGroups.forEach(strategyGroup => {
+        if(!!strategyGroup.strategy()) {
+          strategyGroup.schoolId = strategyGroup.strategy().schoolId;
+          strategyGroup.save((err, saved) => {
+          });
+        }
+      });
+    });
+  }
+
   var seedUploadContainers = function(){
     var Upload = app.models.Upload;
     var containers = [
@@ -553,6 +577,8 @@ module.exports = function(app) {
     seedTeamRoles,
     seedStrategyStatuses,
     seedEvaluationTypes,
+    SynchronizeSchoolIdOfStudentsGroups,
+    SynchronizeSchoolIdOfStrategyGroups
   ]
 
   // Migrate

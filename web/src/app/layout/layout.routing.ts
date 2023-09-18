@@ -29,7 +29,7 @@ export const ADMIN_MENU_PAGES: any = {
     // { name: 'Mis grados/grupos', action: '/inicio/teacher/mis-estudiantes', icon: 'zmdi zmdi-accounts', iconImg: 'groups.svg' },
     { name: 'Datos de los alumnos', action: '/inicio/teacher/datos-estudiantes', icon: 'zmdi zmdi-accounts', iconImg: 'person-success.svg' },
     { name: 'Mis entregables favoritos*', action: '/inicio/teacher/mis-estudiantes', icon: 'zmdi zmdi-accounts', iconImg: 'star_rate.svg' },
-    { name: 'Biblioteca de conocimiento*', action: '/inicio/teacher/mis-estudiantes', icon: 'zmdi zmdi-accounts', iconImg: 'import_contacts.svg' },
+    { name: 'Biblioteca de conocimiento*', action: '/inicio/teacher/mis-estudiantes', icon: 'zmdi zmdi-accounts', iconImg: 'import_contacts_success.svg' },
     // { name: 'Calificaciones', action: '/inicio/teacher/mis-estudiantes', icon: 'zmdi zmdi-accounts', iconImg: 'playlist_add_check.svg' },
     // { name: 'Calendario', action: '/inicio/teacher/mis-estudiantes', icon: 'zmdi zmdi-accounts', iconImg: 'calendar_month.svg' },
     { name: 'Gráficas de resultados*', action: '/inicio/teacher/mis-estudiantes', icon: 'zmdi zmdi-accounts', iconImg: 'bar_chart.svg' },
@@ -40,8 +40,9 @@ export const ADMIN_MENU_PAGES: any = {
     { name: 'Estadisticas', action: '/inicio/parent/estadisticas', icon: 'zmdi zmdi-accounts' },
   ],
   'Student': [
-    { name: 'Inicio', action: '/inicio/student/home', icon: 'zmdi zmdi-home' },
-    { name: 'Mis estadisticas', action: '/inicio/student/mis-estadisticas', icon: 'zmdi zmdi-accounts' },
+    { name: 'Inicio', action: '/inicio/student/home', icon: 'zmdi zmdi-home', iconImg: 'home.svg' },
+    { name: 'Mis estadisticas', action: '/inicio/student/mis-estadisticas', icon: 'zmdi zmdi-accounts', iconImg: 'groups.svg' },
+    { name: 'Calendario', action: '/inicio/student/calendario', icon: 'zmdi zmdi-accounts', iconImg: 'calendar_month.svg' },
   ],
 };
 
@@ -140,8 +141,12 @@ const LAYOUT_ROUTES: Routes = [
         path: 'student', canActivate: [AuthGuard], data: { role: 'Student' },
         children: [
           { path: '', redirectTo: 'home', pathMatch: 'full' },
-          { path: 'home', loadChildren: () => import('../pages/parent-student-dashboard/parent-student-dashboard.module').then(m => m.ParentStudentDashboardModule) },
+          { path: 'home', loadChildren: () => import('../pages/student-dashboard/student-dashboard.module').then(m => m.StudentDashboardModule) },
+          { path: 'mis-actividades', loadChildren: () => import('../pages/student-activities/student-activities.module').then(m => m.StudentActivitiesModule) },
+          { path: 'mis-actividades/detalle-de-actividad/:activityId', loadChildren: () => import('../pages/student-activity-details/student-activity-details.module').then(m => m.StudentActivityDetailsModule) },
           { path: 'mis-estadisticas', loadChildren: () => import('../pages/student-stats/student-stats.module').then(m => m.StudentStatsModule) },
+          { path: 'calendario', loadChildren: () => import('../pages/student-calendar/student-calendar.module').then(m => m.StudentCalendarModule) },
+          { path: 'calendario/:date/actividades', loadChildren: () => import('../pages/student-calendar/student-calendar.module').then(m => m.StudentCalendarModule) },
         ]
       },
     ]

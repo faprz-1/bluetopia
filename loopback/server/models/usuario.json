@@ -15,6 +15,15 @@
     "include": ["profileImage", "teacher", "data", "school"]
   },
   "properties": {
+    "username": {
+      "type": "string",
+      "required": false
+    },
+    "email": {
+      "type": "string",
+      "required": false,
+      "default": null
+    },
     "FBToken": {
       "type": "string"
     },
@@ -100,14 +109,6 @@
       "type": "hasOne",
       "model": "Student",
       "foreignKey": "userId",
-      "options": {
-        "nestRemoting": true
-      }
-    },
-    "children": {
-      "type": "hasMany",
-      "model": "Student",
-      "foreignKey": "parentUserId",
       "options": {
         "nestRemoting": true
       }

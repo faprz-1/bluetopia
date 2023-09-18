@@ -119,6 +119,17 @@ $TemplateWeb-theme: mat.define-light-theme((
     background-color: #939292;
 }
 
+.gap-0 {gap: 0px !important;}
+.gap-1 {gap: 4px !important;}
+.gap-2 {gap: 8px !important;}
+.gap-3 {gap: 12px !important;}
+.gap-4 {gap: 24px !important;}
+.gap-5 {gap: 48px !important;}
+
+.blue-dark {
+    color: var(--Blue-dark, #2369B5);
+}
+
 .full-page {
     height: 100vh;
     width: 100vw;
@@ -493,6 +504,11 @@ ng-select.form-control {
     font-size: 1.25rem;
     font-weight: 800;
     padding: 1rem 5rem;
+}
+.btn-small {
+    font-size: .75rem;
+    font-weight: 500;
+    padding: 0px 15px;
 }
 
 // Template

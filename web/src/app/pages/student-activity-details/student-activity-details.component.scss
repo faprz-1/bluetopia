@@ -1,0 +1,124 @@
+h5.blue {
+  font-weight: bold;
+  color: #2369B5;
+  font-size: 20px;
+  display: inline;
+  margin: 0 1rem;
+}
+
+h5.grey {
+  font-weight: bold;
+  color: #3D5E81;
+  font-size: 20px;
+  display: inline;
+  margin: 0 1rem;
+}
+
+span.arrow {
+  font-weight: bold;
+  color: #8A939B;
+  font-size: 20px;
+  display: inline;
+}
+
+img.back-arrow {
+  max-width: 58px;
+}
+
+button.transparent {
+  background-color: transparent;
+  color: #1081FB !important;
+  font-size: 16px;
+}
+
+h4,h5 {
+  &.activity {
+    font-size: 14px;
+  }
+}
+
+h5.activity-title {
+  color: #3D5E81;
+  display: inline;
+  margin-left: 0.5rem;
+  font-weight: bold;
+}
+
+h4 {
+  &.activity {
+    margin: 0;
+  }
+  &.blue-grey {
+    color: #3D5E81;
+    margin-top: 1rem;
+  }
+  &.blue {
+    color: #1081FB;
+  }
+  &.dark-blue {
+    color: #2369B5;
+  }
+  &.bold {
+    font-weight: bold;
+  }
+}
+
+p {
+  &.activity-description-title {
+    font-size: 20px;
+    color: #1081FB;
+    line-height: 1.5rem;
+  }
+  &.activity-description {
+    font-size: 16x;
+    color: #3D5E81;
+    margin-bottom: 1rem;
+  }
+}
+
+.custom-file-upload {
+  input[type="file"] { display: none; }
+  border: none;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.body-text {
+  color: #3D5E81;
+  font-size: 16px;
+}
+
+div.button-container {
+  bottom: 0;
+  width: 100%;
+  @media (width > 767px) {
+    position: absolute;
+  }
+  @media (width <= 767px) {
+    margin-top: 1rem;
+  }
+}
+
+.card.resources {
+  background-color: #9BC478;
+  border-radius: 10px;
+  max-width: 13rem;
+  margin: auto;
+  padding-bottom: 0 !important;
+}
+
+h5.resources-title {
+  color: #FFFFFF;
+  display: inline;
+  font-weight: bold;
+  font-size: 16px;
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+.dropdown.more-vert {
+  position: absolute;
+  right: 1rem;
+  bottom: 1.9rem;
+}

@@ -14,11 +14,16 @@ module.exports = function(Student) {
                     
                     const studentGroup = {
                         studentId: newStudent.id,
+                        schoolId: newStudent.schoolId,
                         gradeId: grades.find(g => g.name == student.grade.toLowerCase()) ? grades.find(g => g.name == student.grade.toLowerCase()).id : null,
                         groupId: groups.find(g => g.name == student.group.toLowerCase()) ? groups.find(g => g.name == student.group.toLowerCase()).id : null
                     }
-                    Student.app.models.StudentGroup.create(studentGroup, (err, newStudentGroupInstance) => {
-                        if(err) return callback(err);
+                    Student.app.models.StudentGroup.CreateOne(studentGroup, (err, newStudentGroupInstance) => {
+                        if(err) {
+                            newStudent.destroy((err2, destroyed) => {
+                                return callback(err);
+                            });
+                        }
     
                         const teacherGroup = {
                             gradeId: grades.find(g => g.name == student.grade.toLowerCase()) ? grades.find(g => g.name == student.grade.toLowerCase()).id : null,
@@ -155,6 +160,39 @@ module.exports = function(Student) {
 
             return callback(null, evaluationSaved);
         });
+    }
+
+    Student.GetEvents = function(studentUserId, callback) {
+        Student.findOne({
+            where: {userId: studentUserId},
+            include: 'studentGroup'
+        }, (err, student) => {
+            if(err) return callback(err);
+            
+            if(!student) return callback('Student not found!!')
+            if(!student.studentGroup()) return callback('Student not in group!!')
+            Student.app.models.StrategyGroup.find({
+                where: {
+                    schoolId: student.studentGroup().schoolId,
+                    gradeId: student.studentGroup().gradeId,
+                    groupId: student.studentGroup().groupId,
+                }
+            }, (err, strategyGroups) => {
+                if(err) return callback(err);
+                
+                Student.app.models.Event.find({
+                    where: {
+                        strategyId: {inq: strategyGroups.map(strategyGroup => strategyGroup.strategyId)}
+                    },
+                    include: ['type', 'parcialProduct']
+                }, (err, events) => {
+                    if(err) return callback(err);
+
+                    return callback(null, events);
+                });
+            });
+        });
+        
     }
 
 };
