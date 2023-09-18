@@ -47,7 +47,7 @@
                     {{weekDay.date.split('-').pop()}}
                 </div>
                 <div class="d-flex flex-column justify-content-center align-items-center flex-grow-1 gap-4">
-                    <div class="d-flex flex-column align-items-center gap-1" *ngFor="let event of weekDay.events">
+                    <div class="d-flex flex-column align-items-center gap-2" *ngFor="let event of weekDay.events">
                         <img style="width: 50px;" src="assets/icons/calendar-event-types/{{GetEventDetails(event).icon}}">
                         <div class="event-type">
                             {{GetEventDetails(event).type}}
