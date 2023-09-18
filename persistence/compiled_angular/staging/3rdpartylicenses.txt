@@ -252,6 +252,9 @@ SOFTWARE.
 
 
 
+ngx-file-drop
+MIT
+
 ngx-papaparse
 MIT
 The MIT License
