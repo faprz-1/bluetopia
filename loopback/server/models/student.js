@@ -162,4 +162,37 @@ module.exports = function(Student) {
         });
     }
 
+    Student.GetEvents = function(studentUserId, callback) {
+        Student.findOne({
+            where: {userId: studentUserId},
+            include: 'studentGroup'
+        }, (err, student) => {
+            if(err) return callback(err);
+            
+            if(!student) return callback('Student not found!!')
+            if(!student.studentGroup()) return callback('Student not in group!!')
+            Student.app.models.StrategyGroup.find({
+                where: {
+                    schoolId: student.studentGroup().schoolId,
+                    gradeId: student.studentGroup().gradeId,
+                    groupId: student.studentGroup().groupId,
+                }
+            }, (err, strategyGroups) => {
+                if(err) return callback(err);
+                
+                Student.app.models.Event.find({
+                    where: {
+                        strategyId: {inq: strategyGroups.map(strategyGroup => strategyGroup.strategyId)}
+                    },
+                    include: ['type', 'parcialProduct']
+                }, (err, events) => {
+                    if(err) return callback(err);
+
+                    return callback(null, events);
+                });
+            });
+        });
+        
+    }
+
 };

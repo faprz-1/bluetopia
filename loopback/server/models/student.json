@@ -78,7 +78,8 @@
       "permission": "ALLOW",
       "property": [
         "GetData",
-        "GetDataWithEvaluations"
+        "GetDataWithEvaluations",
+        "GetEvents"
       ]
     },
     {
@@ -304,6 +305,31 @@
         {
           "path": "/Evaluate/ParcialProduct/:parcialProductId",
           "verb": "patch"
+        }
+      ]
+    },
+    "GetEvents": {
+      "accepts": [
+        {
+          "arg": "studentUserId",
+          "type": "number",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "events",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/:studentUserId/Events",
+          "verb": "get"
         }
       ]
     }

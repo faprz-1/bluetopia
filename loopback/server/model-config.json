@@ -156,7 +156,8 @@
           "GetAllOfTeacher": true,
           "prototype.GetData": true,
           "prototype.GetDataWithEvaluations": true,
-          "prototype.EvaluateParcialProduct": true
+          "prototype.EvaluateParcialProduct": true,
+          "GetEvents": true
         }
       }
     }

@@ -1,13 +1,13 @@
 <div class="calendar">
-    <div class="d-flex align-items-center" style="gap: 1.6rem;">
-        <img class="control-icon clickeable" src="assets/icons/left.png" alt="left" (click)="PopulateMonth(previousMonth)">
+    <div class="d-flex align-items-center {{'justify-content-' + config.controlsAlign}}" style="gap: 1.6rem;">
+        <img class="control-icon clickeable" src="assets/icons/left.png" alt="left" (click)="ChangeCalendarTick(-1)">
         <div class="month-year text-capitalize">
-            {{monthAndYear}}
+            {{controlsLabel}}
         </div>
-        <img class="control-icon clickeable" src="assets/icons/right.png" alt="left" (click)="PopulateMonth(nextMonth)">
+        <img class="control-icon clickeable" src="assets/icons/right.png" alt="left" (click)="ChangeCalendarTick(1)">
     </div>
 
-    <table class="calendar-table">
+    <table class="calendar-table" *ngIf="config.mode == 'monthly'">
         <thead>
             <tr>
                 <th class="text-center" *ngFor="let weekDay of weekDays">
@@ -38,9 +38,23 @@
             </tr>
         </tbody>
     </table>
-    <div class="calendar-grid">
-        <div class="calendar-weekdays">
-            
+
+    <div class="d-flex align-items-start align-self-stretch mt-4 gap-2" *ngIf="config.mode == 'weekly'">
+        <div class="d-flex flex-column flex-grow-1 align-self-stretch gap-3" *ngFor="let weekDay of currentWeek">
+            <h1 class="text">{{weekDay.name}}</h1>
+            <div class="d-flex flex-column week-day-container" (click)="onDayClicked.emit(weekDay.date)" [ngClass]="{'day-active clickeable': !!weekDay.events?.length}">
+                <div class="d-flex justify-content-start gap-3">
+                    {{weekDay.date.split('-').pop()}}
+                </div>
+                <div class="d-flex flex-column justify-content-center align-items-center flex-grow-1 gap-4">
+                    <div class="d-flex flex-column align-items-center gap-1" *ngFor="let event of weekDay.events">
+                        <img style="width: 50px;" src="assets/icons/calendar-event-types/{{GetEventDetails(event).icon}}">
+                        <div class="event-type">
+                            {{GetEventDetails(event).type}}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
