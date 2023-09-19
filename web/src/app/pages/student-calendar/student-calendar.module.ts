@@ -9,6 +9,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { StudentCalendarComponent } from './student-calendar.component';
 import { CalendarEventTypesCardModule } from 'src/app/components/calendar-event-types-card/calendar-event-types-card.module';
 import { EventCalendarModule } from 'src/app/components/event-calendar/event-calendar.module';
+import { BreadcrumbModule } from 'src/app/components/breadcrumb/breadcrumb.module';
 
 const MODULE_ROUTES = [
   { path: '', component: StudentCalendarComponent }
@@ -22,6 +23,7 @@ const MODULE_ROUTES = [
     FormsModule,
     CommonModule,
     NgSelectModule,
+    BreadcrumbModule,
     ReactiveFormsModule,
     EventCalendarModule,
     ControlMessagesModule,

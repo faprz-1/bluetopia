@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
@@ -9,6 +9,9 @@ import { NavigationService } from 'src/app/services/navigation.service';
 export class BreadcrumbComponent implements OnInit {
 
   @Input() crumbs: Array<{name: string, route: string | null}> = [];
+  @Input() theme: 'success' | 'dark-blue' = 'success';
+
+  @Output() onGoBack: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
     public navService: NavigationService
@@ -17,9 +20,15 @@ export class BreadcrumbComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  GoTo(routeToMoveTo:any=''){
-    let route = routeToMoveTo ? routeToMoveTo: 'mis-estrategias';
-    this.navService.GoToUserRoute(route);
+  GoBack() {
+    const route = this.crumbs[this.crumbs.length - 1]?.route;
+    if(!!route) this.navService.GoToUserRoute(route);
+    else this.onGoBack.emit();
+  }
+
+  GoTo(route: string | null = null) {
+    if(!!route) this.navService.GoToUserRoute(route);
+    else this.onGoBack.emit();
   }
 
 }

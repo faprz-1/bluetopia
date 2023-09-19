@@ -17,6 +17,9 @@ export class StudentCalendarComponent implements OnInit {
     controlsAlign: 'center',
     mode: 'weekly'
   }
+  crumbs: Array<any> = [
+    { name: 'Volver al inicio', route: '/home' },
+  ]
 
   constructor(
     private api: ApiService,

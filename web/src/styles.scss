@@ -126,6 +126,17 @@ $TemplateWeb-theme: mat.define-light-theme((
 .gap-4 {gap: 24px !important;}
 .gap-5 {gap: 48px !important;}
 
+.font-size-1 {font-size: 1rem !important;}
+.font-size-2 {font-size: 1.25rem !important;}
+.font-size-3 {font-size: 1.5rem !important;}
+.font-size-4 {font-size: 2rem !important;}
+.font-size-5 {font-size: 2.25rem !important;}
+
+.font-mulish {font-family: Mulish !important;}
+.font-josefin-sans {font-family: Josefin Sans !important;}
+.font-quicksand {font-family: Quicksand !important;}
+.font-open-sans {font-family: OpenSans !important;}
+
 .blue-dark {
     color: var(--Blue-dark, #2369B5);
 }
@@ -246,7 +257,9 @@ $TemplateWeb-theme: mat.define-light-theme((
     line-height: 100%;
 }
 .text {
-    font-size: 1.3rem;
+    font-family: Mulish;
+    font-size: 20px;
+    font-weight: 400;
     color: #758CA6;
 }
 
