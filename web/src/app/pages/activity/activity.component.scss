@@ -170,3 +170,27 @@
     font-weight: 700;
     line-height: normal;
 }
+
+.send {
+    display: flex;
+    padding: 8px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 500px;
+    background: #D9DCDE;
+    margin-top: 10pt;
+    margin-left: 180pt;
+    margin-right: 80pt;
+}
+
+.send-text {
+    color: #FFF;
+    text-align: center;
+    font-family: Mulish;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: 1.2px;
+}
