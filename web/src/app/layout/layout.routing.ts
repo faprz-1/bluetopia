@@ -147,6 +147,7 @@ const LAYOUT_ROUTES: Routes = [
           { path: 'mis-estadisticas', loadChildren: () => import('../pages/student-stats/student-stats.module').then(m => m.StudentStatsModule) },
           { path: 'calendario', loadChildren: () => import('../pages/student-calendar/student-calendar.module').then(m => m.StudentCalendarModule) },
           { path: 'calendario/:date/actividades', loadChildren: () => import('../pages/student-calendar-date-events/student-calendar-date-events.module').then(m => m.StudentCalendarDateEventsModule) },
+          { path: 'actividades', loadChildren: () => import('../pages/activity/activity.module').then(m => m.ActivityModule) },
         ]
       },
     ]

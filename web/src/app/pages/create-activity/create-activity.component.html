@@ -28,8 +28,7 @@
                     Escribe un nombre para tu actividad
                 </div>
                 <div class="input-container with-border-thin">
-                    <input class="form-control no-icon" type="text" 
-                        placeholder="Título" formControlName="name">
+                    <input class="form-control no-icon" type="text" placeholder="Título" formControlName="name">
                 </div>
             </div>
         </div>
@@ -37,12 +36,10 @@
             <span class="instruction-number">2</span>
             <div class="form-col">
                 <div class="form-section-title">
-                   Escribe las instrucciones
+                    Escribe las instrucciones
                 </div>
                 <div class="input-container">
-                    <textarea class="form-control with-border-thin"
-                        formControlName="instructions" placeholder="Instrucciones de la actividad"
-                        rows="6" ></textarea>
+                    <textarea class="form-control with-border-thin" formControlName="instructions" placeholder="Instrucciones de la actividad" rows="6"></textarea>
                 </div>
             </div>
         </div>
@@ -53,8 +50,7 @@
                     Escribe la calificación máxima
                 </div>
                 <div class="input-container with-border-thin">
-                    <input class="form-control no-icon" type="number" 
-                        placeholder="Calificación máxima" formControlName="maxCalification">
+                    <input class="form-control no-icon" type="number" placeholder="Calificación máxima" formControlName="maxCalification">
                 </div>
             </div>
         </div>
@@ -65,11 +61,7 @@
                     Selecciona la fecha
                 </div>
                 <div class="input-container">
-                    <input #parcialProductDatePicker="bsDatepicker"
-                        class="form-control no-icon with-border" type="text"
-                        formControlName="date" placeholder="Fecha"
-                        [bsConfig]="{ adaptivePosition: true, containerClass: 'theme-dark-blue' }"
-                        bsDatepicker>
+                    <input #parcialProductDatePicker="bsDatepicker" class="form-control no-icon with-border" type="text" formControlName="date" placeholder="Fecha" [bsConfig]="{ adaptivePosition: true, containerClass: 'theme-dark-blue' }" bsDatepicker>
                 </div>
             </div>
         </div>
@@ -83,8 +75,7 @@
                 </div>
                 <div class="flex-resources" *ngIf="!!GetFiles('new').length">
                     <div class="resource" *ngFor="let file of GetFiles('new')">
-                        <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
-                        {{file.name}}
+                        <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i> {{file.name}}
                     </div>
                 </div>
                 <input class="d-none" type="file" #fileInput multiple (change)="OnFileSelected($event)">
@@ -101,8 +92,7 @@
                 </div>
                 <div class="flex-resources" *ngIf="!!GetFiles('old').length">
                     <div class="resource" *ngFor="let file of GetFiles('old')">
-                        <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
-                        {{file.name}}
+                        <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i> {{file.name}}
                     </div>
                 </div>
                 <button class="btn btn-success btn-block" (click)="libraryModal.OpenModal()">
@@ -120,7 +110,4 @@
     </div>
 </div>
 
-<app-library-file-selector-modal
-    #libraryModal
-    (onFilesSelectd)="OnLibraryFilesSelected($event)"
-></app-library-file-selector-modal>
+<app-library-file-selector-modal #libraryModal (onFilesSelectd)="OnLibraryFilesSelected($event)"></app-library-file-selector-modal>
