@@ -1,8 +1,8 @@
 <div class="breadcrumbs" *ngIf="!!crumbs?.length">
     <div>
-        <img class="clickeable" src="assets/icons/back-arrow.png" alt="back" (click)="GoTo()">
+        <img class="clickeable" src="assets/icons/back-arrow.png" alt="back" (click)="GoBack()">
     </div>
-    <span class="first-breadcrumb" (click)="GoTo(crumbs[0].route)">{{crumbs[0].name}}</span>
+    <span class="first-breadcrumb font-size-3 {{theme}}" (click)="GoTo(crumbs[0].route)">{{crumbs[0].name}}</span>
     <ng-container *ngFor="let crumb of crumbs; let f = first" (click)="GoTo(crumb.route)">
         <ng-container *ngIf="!f">
             <img src="assets/icons/right-chevron.svg">
