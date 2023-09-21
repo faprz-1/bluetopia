@@ -53,7 +53,7 @@ export class StudentEventCardComponent implements OnInit {
   }
 
   GoToDetails() {
-    this.nav.GoToUserRoute(`mis-actividades/detalle-de-actividad/${this.event.parcialProduct.id}`);
+    this.nav.GoToUserRoute(`mis-actividades/detalle-de-actividad/${this.event.id}`);
   }
 
 }

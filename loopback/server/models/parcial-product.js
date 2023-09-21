@@ -121,7 +121,7 @@ module.exports = function(ParcialProduct) {
             strategyId: parcialProduct.strategyId,
             id: parcialProduct.eventId
         };
-        ParcialProduct.app.models.Event.Update(ctx,eventInstance, (err, updatedEvent) => {
+        ParcialProduct.app.models.Event.Update(ctx, eventInstance, (err, updatedEvent) => {
             if(err) return callback(err);
 
             parcialProduct.eventId = updatedEvent.id;

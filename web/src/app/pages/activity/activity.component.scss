@@ -121,7 +121,6 @@
 }
 
 .text-activity {
-    width: 116px;
     color: var(--Gray-1, #3D5E81);
     font-family: Mulish;
     font-size: 14px;
@@ -131,7 +130,6 @@
 }
 
 .subtext-activity {
-    margin-top: 8pt;
     color: #1081FB;
     font-family: Mulish;
     font-size: 14px;
@@ -140,9 +138,13 @@
     line-height: normal;
 }
 
-.background-activity {
-    margin-left: 10pt;
-    margin-top: 8pt;
+.text {
+    color: var(--Gray-1, #3D5E81);
+    font-family: Mulish;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
 }
 
 .back-arrow {

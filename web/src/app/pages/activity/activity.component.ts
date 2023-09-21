@@ -11,8 +11,8 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class ActivityComponent implements OnInit {
 
-  parcialProductId: string | null = null;
-  parcialProduct: any = null;
+  eventId: string | null = null;
+  event: any = null;
   crumbs: Array<any> = [
     {name: 'Mis actividades', route: null},
     {name: 'Actividad 1', route: null},
@@ -31,19 +31,53 @@ export class ActivityComponent implements OnInit {
 
   GetParams() {
     this.activatedRoute.params.subscribe(params => {
-      this.parcialProductId = params['activityId'];
+      this.eventId = params['activityId'];
 
-      this.GetActivityDetails();
+      this.GetEvent();
     });
   }
 
-  GetActivityDetails() {
-    this.api.Get(`/ParcialProducts/${this.parcialProductId}`).subscribe(parcialProduct => {
-      this.parcialProduct = parcialProduct;
-      console.log(parcialProduct);
+  GetEvent() {
+    this.api.Get(`/Events/${this.eventId}`).subscribe(event => {
+      this.event = event;
     }, err => {
       console.error("Error getting parcial product", err);
     });
+  }
+
+  GetEventDetails(): {icon: string, type: string, title: string, instructions: string} {
+    let details: {icon: string, type: string, title: string, instructions: string} = {
+      icon: 'activity.png',
+      type: 'Actividad',
+      title: 'Título',
+      instructions: 'Instrucciones',
+    }
+    if(this.event?.isFinal) {
+      details.icon = 'event.png';
+      details.type = `Evento de cierre`;
+      details.title = this.event?.name;
+      details.instructions = this.event?.instructions;
+    }
+    else if(this.event?.parcialProduct?.isFinal) {
+      details.icon = 'final-product.png';
+      details.type = `Producto final`;
+      details.title = this.event?.parcialProduct.name;
+      details.instructions = this.event?.parcialProduct.instructions;
+    }
+    else if(this.event?.parcialProduct?.isActivity) {
+      details.icon = 'activity.png';
+      details.type = `Actividad`;
+      details.title = this.event?.parcialProduct.name;
+      details.instructions = this.event?.parcialProduct.instructions;
+    }
+    else {
+      details.icon = 'parcial-product.png';
+      details.type = `Producto parcial`;
+      details.title = this.event?.parcialProduct.name;
+      details.instructions = this.event?.parcialProduct.instructions;
+    }
+
+    return details;
   }
 
 }

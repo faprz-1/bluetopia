@@ -104,4 +104,10 @@ module.exports = function(Event) {
         });
     }
 
+    Event.GetData = function(eventId, callback) {
+        Event.findById(eventId, {
+            include: ['type', {'parcialProduct': 'resources'}]
+        }, (err, event) => callback(err, event));
+    }
+
 };
