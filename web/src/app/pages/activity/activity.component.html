@@ -1,20 +1,8 @@
 <div class="content">
-    <div class="row">
-        <div class="back-arrow">
-            <img class="back-icon clickeable" src="assets/icons/back-arrow.png" alt="back-arrow">
-            <div class="back-text">
-                Calendario
-            </div>
-            <img class="back-icon clickeable" src="assets/icons/Vector.png" alt="back-arrow">
-            <div class="back-text">
-                Día
-            </div>
-            <img class="back-icon clickeable" src="assets/icons/Vector.png" alt="back-arrow">
-            <div class="back-text">
-                Actividad
-            </div>
-        </div>
+    <div class="d-flex align-items-center justify-content-between mb-5">
+        <app-breadcrumb [crumbs]="crumbs" theme="dark-blue" (onGoBack)="nav.GoBack()"></app-breadcrumb>
     </div>
+
     <div class="row">
         <div class="col-12 col-md-6 col-lg-4 align-self-stretch mb-4">
             <div class="card-container position-relative">

@@ -28,7 +28,6 @@ export class BreadcrumbComponent implements OnInit {
 
   GoTo(route: string | null = null) {
     if(!!route) this.navService.GoToUserRoute(route);
-    else this.onGoBack.emit();
   }
 
 }

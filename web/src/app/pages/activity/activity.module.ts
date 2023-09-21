@@ -10,6 +10,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { LibraryFileSelectorModalModule } from 'src/app/components/library-file-selector-modal/library-file-selector-modal.module';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ActivityComponent } from './activity.component';
+import { BreadcrumbModule } from 'src/app/components/breadcrumb/breadcrumb.module';
 
 const MODULE_ROUTES = [
   { path: '', component: ActivityComponent}
@@ -23,6 +24,7 @@ const MODULE_ROUTES = [
     FormsModule,
     CommonModule,
     NgSelectModule,
+    BreadcrumbModule,
     ReactiveFormsModule,
     ControlMessagesModule,
     ModalModule.forRoot(),
