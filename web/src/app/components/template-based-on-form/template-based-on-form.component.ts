@@ -93,6 +93,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     name: new FormControl(null, [Validators.required]),
     instructions: new FormControl(null, [Validators.required]),
     date: new FormControl(null, [Validators.required]),
+    eventId: new FormControl(null, []),
     evaluationType: new FormControl(null, [Validators.required]),
     rubric: new FormControl(null, []),
     maxCalification: new FormControl(null, []),
@@ -192,40 +193,43 @@ export class TemplateBasedOnFormComponent implements OnInit {
   InitializeFinalProductForm() {
     this.parcialProductForm.setValue({
       id:
-        !!this.finalParcialProduct && !!this.finalParcialProduct.id
+        !!this.finalParcialProduct?.id
           ? this.finalParcialProduct.id
           : null,
       parcialProductTypeId:
-        !!this.finalParcialProduct &&
-        !!this.finalParcialProduct.parcialProductTypeId
+                !!this.finalParcialProduct?.parcialProductTypeId
           ? this.finalParcialProduct.parcialProductTypeId
           : null,
       name:
-        !!this.finalParcialProduct && !!this.finalParcialProduct.name
+        !!this.finalParcialProduct?.name
           ? this.finalParcialProduct.name
           : null,
       instructions:
-        !!this.finalParcialProduct && !!this.finalParcialProduct.instructions
+        !!this.finalParcialProduct?.instructions
           ? this.finalParcialProduct.instructions
           : null,
       date:
-        !!this.finalParcialProduct && !!this.finalParcialProduct.event
+        !!this.finalParcialProduct?.event
           ? this.finalParcialProduct.event.date
           : null,
+      eventId:
+        !!this.finalParcialProduct?.eventId
+          ? this.finalParcialProduct.eventId
+          : null,
       evaluationType:
-        !!this.finalParcialProduct && !!this.finalParcialProduct.evaluationType
+        !!this.finalParcialProduct?.evaluationType
           ? this.finalParcialProduct.evaluationType
           : null,
       rubric:
-        !!this.finalParcialProduct && !!this.finalParcialProduct.rubric
+        !!this.finalParcialProduct?.rubric
           ? this.finalParcialProduct.rubric
           : null,
       maxCalification:
-        !!this.finalParcialProduct && !!this.finalParcialProduct.maxCalification
+        !!this.finalParcialProduct?.maxCalification
           ? this.finalParcialProduct.maxCalification
           : null,
       resources:
-        !!this.finalParcialProduct && !!this.finalParcialProduct.resources
+        !!this.finalParcialProduct?.resources
           ? this.finalParcialProduct.resources.map(
               (parcialProduct: any) => parcialProduct.file
             )
@@ -827,6 +831,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
         ? parcialProduct.instructions
         : null,
       date: !!parcialProduct.event ? parcialProduct.event.date : null,
+      eventId: !!parcialProduct.eventId ? parcialProduct.eventId : null,
       evaluationType: !!parcialProduct.evaluationType
         ? parcialProduct.evaluationType
         : null,
@@ -902,7 +907,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
           }
         );
       } else {
-        this.api.Post(`/Events`, { event: eventInstance }).subscribe(
+        this.api.Patch(`/Events`, { event: eventInstance }).subscribe(
           (newEvent) => {
             this.loading.event = false;
             this.finalEvent = newEvent;
