@@ -58,7 +58,7 @@ export class RegisterStudentComponent implements OnInit {
 
   RegisterStudent() {
     if(this.credentialsForm.invalid) {
-      this.toast.ShowWarning(`Favor de leenar todos los campos correctamente`);
+      this.toast.ShowWarning(`Favor de llenar todos los campos correctamente`);
       this.credentialsForm.markAllAsTouched();
       return;
     }
