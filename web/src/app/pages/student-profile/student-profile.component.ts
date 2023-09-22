@@ -13,6 +13,8 @@ export class StudentProfileComponent implements OnInit {
   crumbs: Array<any> = [
     {name: 'Volver al inicio', route: '/home'}
   ]
+  student: any;
+  canEdit: boolean = false;
 
   constructor(
     private api: ApiService,
@@ -20,16 +22,28 @@ export class StudentProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.GetStudentData();
   }
 
   GetStudentData() {
     this.api.Get(`/Usuarios/withCredentials`).subscribe(user => {
       this.api.SetUser(user);
-      this.api.Get(`/Students/${user.student?.id}`).subscribe(student => {
+      this.api.Get(`/Students/GetStudentByUser`, {userId: user.id}).subscribe(student => {
+      this.student = student;
       });
     }, err => {
       console.error("");
     });
   }
+
+  async EditPromise() {
+    delete this.student.studentGroup
+    await  this.api.Post(`/Students/${this.student.id}/EditStudent`, {newStudent: this.student}).subscribe(student => {
+    this.student = student;
+  }, err => {
+    console.error("");
+  });
+  this.canEdit = false;
+}
 
 }

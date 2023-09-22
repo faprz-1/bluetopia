@@ -1,0 +1,82 @@
+.info-card {
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1 0 0;
+    border-radius: 6px;
+    background: #F4F5F7;
+    box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 0.17);
+}
+
+.title {
+    color: #1081FB;
+    text-align: center;
+    font-family: Mulish;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.sub-title {
+    color: var(--Gray-1, #3D5E81);
+    font-family: Mulish;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.labels-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    align-self: stretch;
+}
+
+.text {
+    color: #1081FB;
+    font-family: Mulish;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.btn-edit {
+    border-radius: 500px;
+    background: #1081FB;
+}
+
+.btn-save {
+    border-radius: 500px;
+    background: #26D7A4;
+}
+
+.btn-center {
+    display: flex;
+    height: 57px;
+    padding: 0px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.blutopiaPromise {
+    color: #3D5E81;
+    font-family: Mulish;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    flex: 1 0 0;
+    border-radius: 6px;
+    background: #FFF;
+    display: flex;
+    padding: 8px;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+}
