@@ -40,7 +40,7 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
     name: new FormControl('', [Validators.required]),
     fatherLastname: new FormControl('', [Validators.required]),
     motherLastname: new FormControl('', []),
-    registerNumber: new FormControl('', [Validators.required]),
+    registerNumber: new FormControl('', [Validators.required, Validators.pattern(/^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/)]),
     grade: new FormControl('', [Validators.required]),
     group: new FormControl('', [Validators.required]),
     schoolId: new FormControl('', []),
