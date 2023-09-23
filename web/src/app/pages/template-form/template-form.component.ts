@@ -91,7 +91,6 @@ export class TemplateFormComponent implements OnInit {
         this.selectedTab = this.selectedSubjects[0];
       }
       this.loading.getting = false;
-      console.log(strategy);
     }, err => {
       console.error("Error getting strategy", err);
       this.loading.getting = false;

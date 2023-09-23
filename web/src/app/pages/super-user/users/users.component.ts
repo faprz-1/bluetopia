@@ -97,7 +97,6 @@ export class UsersComponent implements OnInit {
     this.api.Get('/Usuarios/users').subscribe(
       (users: Array<any>) => {
         this.users = users
-        // console.log("usuarios", users);
         this.loading = false
       },
       (err: any) => {
@@ -175,7 +174,6 @@ export class UsersComponent implements OnInit {
   }
 
   updateUser(){
-    // console.log(this.updtUser);
     this.validateAnEmail(this.updtUser.email)
     this.loading = true;
     this.updtUser.permissionNodeIds = this.selectedNodes;
@@ -215,7 +213,6 @@ export class UsersComponent implements OnInit {
   }
 
   updateSelectedNodes(event: { selectedLeafNodeIds: { [s: string]: unknown; } | ArrayLike<unknown>; }) {
-    // console.log("tree",this.state);
     
     let selectedTreeList = Object.entries(event.selectedLeafNodeIds)
       .filter(([key,value]) => value === true)

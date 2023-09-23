@@ -33,7 +33,6 @@ export class TeamsProgressComponent implements OnInit {
 
   GetStrategy() {
     this.api.Get(`/Strategies/${this.strategyId}`).subscribe(strategy => {
-      console.log(strategy);
       this.strategy = strategy;
     }, err => {
       console.error("Error getting strategy data", err);

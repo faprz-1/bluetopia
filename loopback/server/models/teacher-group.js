@@ -72,7 +72,7 @@ module.exports = function(TeacherGroup) {
         }
         TeacherGroup.findOne(filter,(err,teacherGroup)=>{
             if(err) return callback(err);
-            console.log(teacherGroup);
+            // console.log(tGroupObject,teacherGroup);
             if(teacherGroup != null) return callback(null,teacherGroup);
             TeacherGroup.create(tGroupObject,(err, created)=>{
                 if(err) return callback(err);

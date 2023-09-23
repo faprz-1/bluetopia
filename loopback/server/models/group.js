@@ -44,4 +44,16 @@ module.exports = function(Group) {
         });
     }
 
+    Group.GetByName = function(groupName,cb) {
+        let filter= {
+            where:{
+                name: {like:`${groupName.toLowerCase()}`}
+            }
+        }
+        Group.findOne(filter,(err,group)=>{
+            if(err) return cb(err);
+            return cb(null,group);
+        });
+    }
+
 };
