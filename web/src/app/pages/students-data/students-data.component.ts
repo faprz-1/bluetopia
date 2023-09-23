@@ -219,4 +219,8 @@ export class StudentsDataComponent implements OnInit {
     return valid;
   }
 
+  GoToStudentsCSVPage(){
+    this.nav.GoToUserRoute('registrar-estudiantes/csv');
+  }
+
 }
