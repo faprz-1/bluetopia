@@ -100,6 +100,7 @@ module.exports = function(Student) {
                         schoolId: teacher.schoolId,
                     },
                     include: {'studentGroup': ['group', 'grade']},
+                    oder:'fatherLastname ASC',
                 }, (err, students) => {
                     if(err) return callback(err);
 

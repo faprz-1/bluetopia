@@ -32,5 +32,31 @@
     }
   },
   "acls": [],
-  "methods": {}
+  "methods": {
+    "GetGroupsByTeacher": {
+      "accepts": [
+        {
+          "arg": "teacher",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "groups",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/of/:teacher",
+          "verb": "get"
+        }
+      ]
+    }
+  }
 }

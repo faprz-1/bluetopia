@@ -205,7 +205,8 @@
     "options": {
       "remoting": {
         "sharedMethods": {
-          "*": false
+          "*": false,
+          "GetGroupsByTeacher":true
         }
       }
     }

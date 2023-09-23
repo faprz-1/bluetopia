@@ -62,21 +62,44 @@ module.exports = function(TeacherGroup) {
         });
     }
 
-    TeacherGroup.LinkGroupToTeacher = function (teacherGroup, callback) {
-      TeacherGroup.findOrCreate(
-        {
-          where: {
-            gradeId: teacherGroup.gradeId,
-            groupId: teacherGroup.groupId,
-            teacherId: teacherGroup.teacherId,
-          },
-        },
-        teacherGroup,
-        (err, result) => {
-            if(err) return callback(err);
-          return callback(err, result);
+    TeacherGroup.LinkGroupToTeacher = function (tGroupObject, callback) {
+        let filter = {
+            where: {
+                gradeId: tGroupObject.gradeId,
+                groupId: tGroupObject.groupId,
+                teacherId: tGroupObject.teacherId,
+            }
         }
-      );
+        TeacherGroup.findOne(filter,(err,teacherGroup)=>{
+            if(err) return callback(err);
+            console.log(teacherGroup);
+            if(teacherGroup != null) return callback(null,teacherGroup);
+            TeacherGroup.create(tGroupObject,(err, created)=>{
+                if(err) return callback(err);
+                return callback(null,created);
+            });
+        });
+
+    };
+    TeacherGroup.GetGroupsByTeacher = function (teacher, cb) {
+    let filter = {
+        where:{
+            teacherId:teacher
+        },
+        include:[
+            {
+                relation:'grade',
+                scope:{
+                    order:'name'
+                }
+            },
+            'group'
+        ]
+    };
+    TeacherGroup.find(filter,(err,teacherGroups)=>{
+        if(err) return cb(err);
+        return cb(null,teacherGroups);
+    });
     };
 
 };
