@@ -90,6 +90,8 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
       if (Object.prototype.hasOwnProperty.call(grades, key)) {
         const studentsOfGrade = grades[key];
         studentsOfGrade.forEach((student: any) => {
+          console.log(student);
+          
           if(groups[student.group]) groups[student.group].push(student);
           else groups[student.group] = [student];
         })

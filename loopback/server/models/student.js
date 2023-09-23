@@ -100,16 +100,27 @@ module.exports = function(Student) {
                         schoolId: teacher.schoolId,
                     },
                     include: {'studentGroup': ['group', 'grade']},
-                    oder:'fatherLastname ASC',
+                    oder:['fatherLastname ASC','motherLastname ASC'],
                 }, (err, students) => {
                     if(err) return callback(err);
 
                     if(!!gradeId && gradeId != 0) students = students.filter(student => student.studentGroup().gradeId == gradeId);
                     if(!!groupId && groupId != 0) students = students.filter(student => student.studentGroup().groupId == groupId);
-                    return callback(null, students);
+                    return callback(null, Student.SortInAlphabeticalOrder(students));
                 });
             });
         });
+    }
+
+    Student.SortInAlphabeticalOrder = function(students) {
+        let mergedData = students.map((item) => ({
+            ...JSON.parse(JSON.stringify(item)),
+            fullName: `${item.fatherLastname} ${item.motherLastname}`,
+          }));
+          let sortedData = mergedData.sort((a, b) => {
+            return a.fullName.localeCompare(b.fullName);
+          });
+         return sortedData;
     }
 
     Student.UpdateSchoolId = function(teacherId, schoolId, callback) {

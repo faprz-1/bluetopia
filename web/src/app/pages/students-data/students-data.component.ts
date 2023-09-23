@@ -71,12 +71,23 @@ export class StudentsDataComponent implements OnInit {
     }
     endpoint += `/FilteredBy/Grade/${!!this.gradeSelected ? this.gradeSelected.id : 0}/Group/${!!this.groupSelected ? this.groupSelected.id : 0}`;
     this.api.Get(endpoint).subscribe(students => {
-      this.students = students;
+    this.SortInAlphabeticalOrder(students);
       this.loading.getting = false;
     }, err => {
       console.error("Error getting students", err);
       this.loading.getting = false;
     });
+  }
+
+  SortInAlphabeticalOrder(students:any){
+    const mergedData = students.map((item:any) => ({
+      ...item,
+      fullName: `${item.fatherLastname} ${item.motherLastname}`,
+    }));
+    const sortedData = mergedData.sort((a:any, b:any) => {
+      return a.fullName.localeCompare(b.fullName);
+    });
+    this.students = sortedData;
   }
 
   AddGradeOrGroup() {
