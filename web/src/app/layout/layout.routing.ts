@@ -141,6 +141,7 @@ const LAYOUT_ROUTES: Routes = [
         path: 'student', canActivate: [AuthGuard], data: { role: 'Student' },
         children: [
           { path: '', redirectTo: 'home', pathMatch: 'full' },
+          { path: 'perfil', loadChildren: () => import('../pages/student-profile/student-profile.module').then(m => m.StudentProfileModule) },
           { path: 'home', loadChildren: () => import('../pages/student-dashboard/student-dashboard.module').then(m => m.StudentDashboardModule) },
           { path: 'mis-actividades', loadChildren: () => import('../pages/student-activities/student-activities.module').then(m => m.StudentActivitiesModule) },
           { path: 'mis-actividades/detalle-de-actividad/:activityId', loadChildren: () => import('../pages/activity/activity.module').then(m => m.ActivityModule) },

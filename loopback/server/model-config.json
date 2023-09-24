@@ -1,512 +1,514 @@
 {
-  "_meta": {
-    "sources": [
-      "loopback/common/models",
-      "loopback/server/models",
-      "../common/models",
-      "./models"
-    ],
-    "mixins": [
-      "loopback/common/mixins",
-      "loopback/server/mixins",
-      "../common/mixins",
-      "./mixins"
-    ]
-  },
-  "ACL": {
-    "dataSource": "mysqlDev",
-    "public": false
-  },
-  "RoleMapping": {
-    "dataSource": "mysqlDev",
-    "public": false,
-    "options": {
-      "strictObjectIDCoercion": true
-    }
-  },
-  "Role": {
-    "dataSource": "mysqlDev",
-    "public": false
-  },
-  "Usuario": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "allowEternalTokens": true,
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "profileImage": false,
-          "loginIfActive": true,
-          "logout": true,
-          "register": true,
-          "registerAdmins": true,
-          "RegisterWithEmailVerification": true,
-          "userWithCredentials": true,
-          "getAnyUsers": true,
-          "prototype.updateAnyUser": true,
-          "changeAnyPassword": true,
-          "changePassword": true,
-          "resetPassword": true,
-          "setPassword": true,
-          "getRoles": true,
-          "testPush": true,
-          "prototype.updatePushToken": true,
-          "prototype.updatePushTokenMobile": true,
-          "prototype.changeProfileImage": true,
-          "prototype.UpdateProfile": true,
-          "loginBySocialMedia": true,
-          "VerifyEmail": true,
-          "RegisterUser": true,
-          "GetFileLibrary": true
+    "_meta": {
+        "sources": [
+            "loopback/common/models",
+            "loopback/server/models",
+            "../common/models",
+            "./models"
+        ],
+        "mixins": [
+            "loopback/common/mixins",
+            "loopback/server/mixins",
+            "../common/mixins",
+            "./mixins"
+        ]
+    },
+    "ACL": {
+        "dataSource": "mysqlDev",
+        "public": false
+    },
+    "RoleMapping": {
+        "dataSource": "mysqlDev",
+        "public": false,
+        "options": {
+            "strictObjectIDCoercion": true
         }
-      }
-    }
-  },
-  "UsuarioAccessToken": {
-    "dataSource": "mysqlDev",
-    "public": false
-  },
-  "Upload": {
-    "dataSource": "localFiles",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "download": true
+    },
+    "Role": {
+        "dataSource": "mysqlDev",
+        "public": false
+    },
+    "Usuario": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "allowEternalTokens": true,
+            "remoting": {
+                "sharedMethods": {
+                    "*": false,
+                    "profileImage": false,
+                    "loginIfActive": true,
+                    "logout": true,
+                    "register": true,
+                    "registerAdmins": true,
+                    "RegisterWithEmailVerification": true,
+                    "userWithCredentials": true,
+                    "getAnyUsers": true,
+                    "prototype.updateAnyUser": true,
+                    "changeAnyPassword": true,
+                    "changePassword": true,
+                    "resetPassword": true,
+                    "setPassword": true,
+                    "getRoles": true,
+                    "testPush": true,
+                    "prototype.updatePushToken": true,
+                    "prototype.updatePushTokenMobile": true,
+                    "prototype.changeProfileImage": true,
+                    "prototype.UpdateProfile": true,
+                    "loginBySocialMedia": true,
+                    "VerifyEmail": true,
+                    "RegisterUser": true,
+                    "GetFileLibrary": true
+                }
+            }
         }
-      }
-    }
-  },
-  "UploadedFiles": {
-    "dataSource": "mysqlDev",
-    "public": false
-  },
-  "Notification": {
-    "dataSource": "mysqlDev",
-    "public": true
-  },
-  "PushTokens": {
-    "dataSource": "mysqlDev",
-    "public": false
-  },
-  "Mail": {
-    "dataSource": "mailDev",
-    "public": false
-  },
-  "PasswordResetPIN": {
-    "dataSource": "mysqlDev",
-    "public": true
-  },
-  "adminMail": {
-    "dataSource": "adminMail",
-    "public": false
-  },
-  "UserPermissionPolicyNode": {
-    "dataSource": "mysqlDev",
-    "public": true
-  },
-  "UserPermissionPolicyRelation": {
-    "dataSource": "mysqlDev",
-    "public": false
-  },
-  "OrdersHistory": {
-    "dataSource": "mysqlDev",
-    "public": true
-  },
-  "UserData": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false
+    },
+    "UsuarioAccessToken": {
+        "dataSource": "mysqlDev",
+        "public": false
+    },
+    "Upload": {
+        "dataSource": "localFiles",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false,
+                    "download": true
+                }
+            }
         }
-      }
-    }
-  },
-  "Teacher": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "AddTeachers": true,
-          "GetAllOfSchool": true,
-          "prototype.UpdateData": true,
-          "GetByActivationToken": true,
-          "prototype.Activate": true,
-          "GetData": true
+    },
+    "UploadedFiles": {
+        "dataSource": "mysqlDev",
+        "public": false
+    },
+    "Notification": {
+        "dataSource": "mysqlDev",
+        "public": true
+    },
+    "PushTokens": {
+        "dataSource": "mysqlDev",
+        "public": false
+    },
+    "Mail": {
+        "dataSource": "mailDev",
+        "public": false
+    },
+    "PasswordResetPIN": {
+        "dataSource": "mysqlDev",
+        "public": true
+    },
+    "adminMail": {
+        "dataSource": "adminMail",
+        "public": false
+    },
+    "UserPermissionPolicyNode": {
+        "dataSource": "mysqlDev",
+        "public": true
+    },
+    "UserPermissionPolicyRelation": {
+        "dataSource": "mysqlDev",
+        "public": false
+    },
+    "OrdersHistory": {
+        "dataSource": "mysqlDev",
+        "public": true
+    },
+    "UserData": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false
+                }
+            }
         }
-      }
-    }
-  },
-  "Student": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "AddStudent": true,
-          "AddStudents": true,
-          "GetAllOfSchool": true,
-          "GetAllOfTeacher": true,
-          "prototype.GetData": true,
-          "prototype.GetDataWithEvaluations": true,
-          "prototype.EvaluateParcialProduct": true,
-          "GetEvents": true
+    },
+    "Teacher": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false,
+                    "AddTeachers": true,
+                    "GetAllOfSchool": true,
+                    "prototype.UpdateData": true,
+                    "GetByActivationToken": true,
+                    "prototype.Activate": true,
+                    "GetData": true
+                }
+            }
         }
-      }
-    }
-  },
-  "Subject": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "GetAll": true,
-          "CreateOneWithoutRepeat": true
+    },
+    "Student": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false,
+                    "AddStudent": true,
+                    "AddStudents": true,
+                    "GetAllOfSchool": true,
+                    "GetAllOfTeacher": true,
+                    "prototype.GetData": true,
+                    "prototype.GetDataWithEvaluations": true,
+                    "prototype.EvaluateParcialProduct": true,
+                    "GetEvents": true,
+                    "prototype.EditStudent": true,
+                    "GetStudentByUser": true
+                }
+            }
         }
-      }
-    }
-  },
-  "TeacherSubject": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false
+    },
+    "Subject": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false,
+                    "GetAll": true,
+                    "CreateOneWithoutRepeat": true
+                }
+            }
         }
-      }
-    }
-  },
-  "Group": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "CreateOne": true,
-          "GetAll": true
+    },
+    "TeacherSubject": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false
+                }
+            }
         }
-      }
-    }
-  },
-  "TeacherGroup": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false
+    },
+    "Group": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false,
+                    "CreateOne": true,
+                    "GetAll": true
+                }
+            }
         }
-      }
-    }
-  },
-  "StudentGroup": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "GenerateRegisterUid": true,
-          "GetByRegisterUid": true
+    },
+    "TeacherGroup": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false
+                }
+            }
         }
-      }
-    }
-  },
-  "Grade": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "CreateGradeOrGroup": true,
-          "CreateOne": true,
-          "GetAll": true,
-          "prototype.UpdateGroups": true
+    },
+    "StudentGroup": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false,
+                    "GenerateRegisterUid": true,
+                    "GetByRegisterUid": true
+                }
+            }
         }
-      }
-    }
-  },
-  "Template": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "GetAll": true,
-          "GetOne": true
+    },
+    "Grade": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false,
+                    "CreateGradeOrGroup": true,
+                    "CreateOne": true,
+                    "GetAll": true,
+                    "prototype.UpdateGroups": true
+                }
+            }
         }
-      }
-    }
-  },
-  "TemplateType": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "GetAll": true,
-          "GetAllWithTemplates": true,
-          "GetOne": true
+    },
+    "Template": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false,
+                    "GetAll": true,
+                    "GetOne": true
+                }
+            }
         }
-      }
-    }
-  },
-  "SepObjective": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "GetAll": true,
-          "CreateOne": true
+    },
+    "TemplateType": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false,
+                    "GetAll": true,
+                    "GetAllWithTemplates": true,
+                    "GetOne": true
+                }
+            }
         }
-      }
-    }
-  },
-  "Skill": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "GetAll": true,
-          "CreateOne": true
+    },
+    "SepObjective": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false,
+                    "GetAll": true,
+                    "CreateOne": true
+                }
+            }
         }
-      }
-    }
-  },
-  "TemplateTopic": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "CreateOne": true,
-          "GetAll": true
+    },
+    "Skill": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false,
+                    "GetAll": true,
+                    "CreateOne": true
+                }
+            }
         }
-      }
-    }
-  },
-  "TeacherTemplate": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false
+    },
+    "TemplateTopic": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false,
+                    "CreateOne": true,
+                    "GetAll": true
+                }
+            }
         }
-      }
-    }
-  },
-  "Strategy": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "CreateOne": true,
-          "prototype.CreateBasedOnAnother": true,
-          "prototype.Update": true,
-          "GetData": true,
-          "prototype.GetActivities": true,
-          "GetAllOfSchool": true,
-          "GetAllOfTeacher": true,
-          "GetStudents": true,
-          "prototype.Delete": true,
-          "GetSuggested": true
+    },
+    "TeacherTemplate": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false
+                }
+            }
         }
-      }
-    }
-  },
-  "ParcialProduct": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "CreateOne": true,
-          "CreateActivity": true,
-          "prototype.Update": true,
-          "prototype.Delete": true
+    },
+    "Strategy": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false,
+                    "CreateOne": true,
+                    "prototype.CreateBasedOnAnother": true,
+                    "prototype.Update": true,
+                    "GetData": true,
+                    "prototype.GetActivities": true,
+                    "GetAllOfSchool": true,
+                    "GetAllOfTeacher": true,
+                    "GetStudents": true,
+                    "prototype.Delete": true,
+                    "GetSuggested": true
+                }
+            }
         }
-      }
-    }
-  },
-  "ParcialProductType": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "CreateOne": true,
-          "GetAll": true
+    },
+    "ParcialProduct": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false,
+                    "CreateOne": true,
+                    "CreateActivity": true,
+                    "prototype.Update": true,
+                    "prototype.Delete": true
+                }
+            }
         }
-      }
-    }
-  },
-  "StrategyGroup": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false
+    },
+    "ParcialProductType": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false,
+                    "CreateOne": true,
+                    "GetAll": true
+                }
+            }
         }
-      }
-    }
-  },
-  "Event": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "CreateOne": true,
-          "Update": true,
-          "Delete": true,
-          "GetAllOfStrategy": true,
-          "GetData": true
+    },
+    "StrategyGroup": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false
+                }
+            }
         }
-      }
-    }
-  },
-  "EventType": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "CreateOne": true,
-          "GetAll": true
+    },
+    "Event": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false,
+                    "CreateOne": true,
+                    "Update": true,
+                    "Delete": true,
+                    "GetAllOfStrategy": true,
+                    "Proof": true
+                }
+            }
         }
-      }
-    }
-  },
-  "EventFile": {
-    "dataSource": "mysqlDev",
-    "public": false
-  },
-  "Team": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "AddTeams": true,
-          "UpsertStrategyTeams": true,
-          "UpdateTeamsMembersRoles": true,
-          "prototype.GetData": true,
-          "prototype.EvaluateParcialProduct": true
+    },
+    "EventType": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false,
+                    "CreateOne": true,
+                    "GetAll": true
+                }
+            }
         }
-      }
-    }
-  },
-  "TeamStudent": {
-    "dataSource": "mysqlDev",
-    "public": false
-  },
-  "TeamRole": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "CreateOne": true,
-          "GetAll": true
+    },
+    "EventFile": {
+        "dataSource": "mysqlDev",
+        "public": false
+    },
+    "Team": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false,
+                    "AddTeams": true,
+                    "UpsertStrategyTeams": true,
+                    "UpdateTeamsMembersRoles": true,
+                    "prototype.GetData": true,
+                    "prototype.EvaluateParcialProduct": true
+                }
+            }
         }
-      }
-    }
-  },
-  "StrategyStatus": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "GetAll": true
+    },
+    "TeamStudent": {
+        "dataSource": "mysqlDev",
+        "public": false
+    },
+    "TeamRole": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false,
+                    "CreateOne": true,
+                    "GetAll": true
+                }
+            }
         }
-      }
-    }
-  },
-  "GradeSubject": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "UpdateGradeTeacherSubjects": true
+    },
+    "StrategyStatus": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false,
+                    "GetAll": true
+                }
+            }
         }
-      }
-    }
-  },
-  "EvaluationType": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "GetAll": true
+    },
+    "GradeSubject": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false,
+                    "UpdateGradeTeacherSubjects": true
+                }
+            }
         }
-      }
-    }
-  },
-  "ParcialProductFile": {
-    "dataSource": "mysqlDev",
-    "public": false
-  },
-  "School": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "Update": true
+    },
+    "EvaluationType": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false,
+                    "GetAll": true
+                }
+            }
         }
-      }
-    }
-  },
-  "Evaluation": {
-    "dataSource": "mysqlDev",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "Update": true
+    },
+    "ParcialProductFile": {
+        "dataSource": "mysqlDev",
+        "public": false
+    },
+    "School": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false,
+                    "Update": true
+                }
+            }
         }
-      }
+    },
+    "Evaluation": {
+        "dataSource": "mysqlDev",
+        "public": true,
+        "options": {
+            "remoting": {
+                "sharedMethods": {
+                    "*": false,
+                    "Update": true
+                }
+            }
+        }
+    },
+    "TeamComment": {
+        "dataSource": "mysqlDev",
+        "public": false
     }
-  },
-  "TeamComment": {
-    "dataSource": "mysqlDev",
-    "public": false
-  }
 }
