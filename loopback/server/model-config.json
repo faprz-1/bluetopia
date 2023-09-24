@@ -388,7 +388,7 @@
           "Update": true,
           "Delete": true,
           "GetAllOfStrategy": true,
-          "Proof": true
+          "GetData": true
         }
       }
     }

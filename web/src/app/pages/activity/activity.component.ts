@@ -45,7 +45,6 @@ export class ActivityComponent implements OnInit {
     this.api.Get(`/Events/${this.eventId}`).subscribe(event => {
       this.event = event;
 
-      console.log(event);
       this.GetStudentFiles();
     }, err => {
       console.error("Error getting parcial product", err);

@@ -180,7 +180,7 @@ module.exports = function(Usuario) {
             where: {
                 id,
             },
-            include: ['data', 'school']
+            include: ['data', 'school', 'student']
         }, function(error, user) {
             if (error) return callback(error, 'Error On User');
 
