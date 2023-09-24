@@ -38,13 +38,14 @@
                     <div class="sub-titles ">Recursos de la biblioteca que el profesor te recomienda ver para hacer la actividad</div>
                 </div>
                 <div class="background">
-                    <div class="file-card">
-                        <div class="d-flex align-items-center gap-2">
+                    <div class="file-card" *ngFor="let resource of event?.parcialProduct?.resources">
+                        <div class="d-flex align-items-center justify-content-between gap-2">
                             <img src="assets/icons/pdf-icon.png">
                             <div class="file-name">
-                                5 pasos para ahorrar agua al lavarte las mano.pdf
+                                {{resource.file?.name}}
                             </div>
-                            <img class="clickeable" src="assets/icons/more_vert.svg ">
+                            <!-- <img class="clickeable" src="assets/icons/more_vert.svg"> -->
+                            <i class="zmdi zmdi-download zmdi-hc-lg text-white clickeable" (click)="DownloadResource(resource.file)"></i>
                         </div>
                     </div>
                 </div>
@@ -56,7 +57,26 @@
                     <img class="bullet-point " src="assets/icons/bullet-point.png " alt="back-arrow ">
                     <div class="sub-titles ">Subir mi actividad resuelta</div>
                 </div>
-                <div class="row">
+                <div class="d-flex flex-column align-self-stretch gap-3 p-3 file-input-box">
+                    <div class="text-center" *ngIf="!studentFiles?.length">
+                        Da click en subir y selecciona tu trabajo
+                    </div>
+                    <div class="file-card" *ngFor="let file of studentFiles">
+                        <div class="d-flex align-items-center justify-content-between gap-2">
+                            <img src="assets/icons/pdf-icon.png">
+                            <div class="file-name">
+                                Archivo
+                            </div>
+                            <!-- <img class="clickeable" src="assets/icons/more_vert.svg"> -->
+                            <i class="zmdi zmdi-download zmdi-hc-lg text-white clickeable" (click)="DownloadResource(file)"></i>
+                        </div>
+                    </div>
+                    <button class="btn btn-medium btn-outline-purple" (click)="fileInput.click()">
+                        Subir mi trabajo
+                    </button>
+                    <input class="d-none" #fileInput accept=".pdf" multiple type="file">
+                </div>
+                <div class="row" *ngIf="false">
                     <div class="col-12">
                         <div class="not-file">
                             <div class="not-file-text">Esta actividad no requiere que entregues un archivo</div>

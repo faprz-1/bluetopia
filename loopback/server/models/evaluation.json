@@ -40,6 +40,12 @@
       "options": {
         "nestRemoting": true
       }
+    },
+    "studentFiles": {
+      "type": "hasMany",
+      "model": "UploadedFiles",
+      "through": "EvaluationFile",
+      "foreignKey": "evaluationId"
     }
   },
   "acls": [
@@ -55,9 +61,80 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": [
-        "Update"
+        "Update",
+        "UpdateGetStudentEvaluation",
+        "UpdateUploadStudentFile"
       ]
     }
   ],
-  "methods": {}
+  "methods": {
+    "GetStudentEvaluation": {
+      "accepts": [
+        {
+          "arg": "studentId",
+          "type": "number",
+          "required": true,
+          "description": ""
+        },
+        {
+          "arg": "parcialProductId",
+          "type": "number",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "evaluation",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/OfStudent/:studentId/OfProduct/:parcialProductId",
+          "verb": "get"
+        }
+      ]
+    },
+    "UploadStudentFile": {
+      "accepts": [
+        {
+          "arg": "studentId",
+          "type": "number",
+          "required": true,
+          "description": ""
+        },
+        {
+          "arg": "parcialProductId",
+          "type": "number",
+          "required": true,
+          "description": ""
+        },
+        {
+          "arg": "file",
+          "type": "object",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "evaluation",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/UploadFile/OfStudent/:studentId/OfProduct/:parcialProductId",
+          "verb": "patch"
+        }
+      ]
+    }
+  }
 }

@@ -20,4 +20,38 @@ module.exports = function(Evaluation) {
         });
     }
 
+    Evaluation.GetStudentEvaluation = function(studentId, parcialProductId, callback) {
+        let evaluation = {
+            studentId,
+            parcialProductId,
+            calification: 0,
+        }
+        Evaluation.findOrCreate({
+            where: {studentId, parcialProductId}
+        }, evaluation, (err, studentEvaluation) => {
+            if(err) return callback(err);
+            
+            return callback(null, studentEvaluation);
+        });
+    }
+
+    Evaluation.UploadStudentFile = function(studentId, parcialProductId, file, callback) {
+        Evaluation.GetStudentEvaluation(studentId, parcialProductId, (err, studentEvaluation) => {
+            if(err) return callback(err);
+            Evaluation.app.models.Upload.newBase64File(file, (err, newFile) => {
+                if(err) return callback(err);
+
+                let evaluationFile = {
+                    evaluationId: studentEvaluation.id,
+                    fileId: newFile.id
+                }
+                Evaluation.app.models.EvaluationFile.create(evaluationFile, (err, newEvaluationFile) => {
+                    if(err) return callback(err);
+
+                    return callback(null, newFile);
+                });
+            });
+        });
+    }
+
 };
