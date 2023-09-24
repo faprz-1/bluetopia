@@ -16,7 +16,9 @@ export class ActivityComponent implements OnInit {
   event: any = null;
   evaluation: any = null;
   studentFiles: Array<any> = [];
-  loading: boolean = false;
+  loading: any = {
+    updating: false
+  };
   crumbs: Array<any> = [
     {name: 'Mis actividades', route: null},
     {name: 'Actividad 1', route: null},
@@ -138,6 +140,16 @@ export class ActivityComponent implements OnInit {
   DeleteFile(file: any) {
     this.api.Delete(`/Evaluations/${this.evaluation.id}/StudentFile/${file.id}`).subscribe(deleted => {
       this.GetStudentFiles();
+    });
+  }
+
+  ToggleMarkAsDone() {
+    this.loading.updating = true;
+    this.api.Patch(`/Evaluations/${this.evaluation.id}/ToggleIsDone`, {}).subscribe(evaluation => {
+      this.evaluation.isDone = evaluation.isDone;
+      this.loading.updating = false;
+    }, err => {
+      this.loading.updating = false;
     });
   }
 

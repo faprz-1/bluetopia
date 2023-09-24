@@ -505,7 +505,8 @@
           "Update": true,
           "GetStudentEvaluation": true,
           "prototype.UploadStudentFile": true,
-          "prototype.DeleteStudentFile": true
+          "prototype.DeleteStudentFile": true,
+          "prototype.ToggleIsDone": true
         }
       }
     }

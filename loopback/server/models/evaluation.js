@@ -56,4 +56,11 @@ module.exports = function(Evaluation) {
         }));
     }
 
+    Evaluation.prototype.ToggleIsDone = function(callback) {
+        this.isDone = !this.isDone;
+        this.save((err, evaluationSaved) => {
+            return callback(err, evaluationSaved);
+        });
+    }
+
 };

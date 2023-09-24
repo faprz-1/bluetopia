@@ -21,6 +21,11 @@
     },
     "comment": {
       "type": "string"
+    },
+    "isDone": {
+      "type": "boolean",
+      "required": true,
+      "default": false
     }
   },
   "validations": [],
@@ -66,7 +71,8 @@
         "Update",
         "GetStudentEvaluation",
         "UploadStudentFile",
-        "DeleteStudentFile"
+        "DeleteStudentFile",
+        "ToggleIsDone"
       ]
     }
   ],
@@ -149,6 +155,24 @@
         {
           "path": "/StudentFile/:fileId",
           "verb": "delete"
+        }
+      ]
+    },
+    "prototype.ToggleIsDone": {
+      "accepts": [],
+      "returns": [
+        {
+          "arg": "evaluation",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/ToggleIsDone",
+          "verb": "patch"
         }
       ]
     }
