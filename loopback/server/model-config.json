@@ -502,7 +502,9 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
-          "Update": true
+          "Update": true,
+          "GetStudentEvaluation": true,
+          "UploadStudentFile": true
         }
       }
     }

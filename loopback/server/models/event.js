@@ -106,7 +106,7 @@ module.exports = function(Event) {
 
     Event.GetData = function(eventId, callback) {
         Event.findById(eventId, {
-            include: ['type', {'parcialProduct': 'resources'}]
+            include: ['type', {'parcialProduct': {'resources': 'file'}}]
         }, (err, event) => callback(err, event));
     }
 
