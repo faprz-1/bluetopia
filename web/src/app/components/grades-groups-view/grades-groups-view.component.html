@@ -86,14 +86,14 @@
                 <div class="group-title-2 mb-0">
                     Grupo {{group[0].group}}
                 </div>
-                <div class="col-container d-flex flex-column justify-content-center align-items-center" (mouseover)="OnMouseOver('popoverPassword',group[0].id)"  (mouseout)="OnMouseOut('popoverPassword')" (click)="passwordModal.show()">
-                    <div class="popover-right" *ngIf="popovers?.popoverPassword && selectedGroup == group[0].id">
+                <div class="col-container d-flex flex-column justify-content-center align-items-center" (mouseover)="OnMouseOver('popoverPassword',group[0])"  (mouseout)="OnMouseOut('popoverPassword')" (click)="passwordModal.show()">
+                    <div class="popover-right" *ngIf="popovers?.popoverPassword && selectedGroup == group[0]">
                       Aquí podrás una contraseña para que ingresen tus alumnos.
                     </div>
                     <img class="icon" src="assets/icons/lock.svg">
                   </div>
-                <div class="col-container d-flex flex-column justify-content-center align-items-center" (mouseover)="OnMouseOver('popoverLink',group[0].id)"  (mouseout)="OnMouseOut('popoverLink')" (click)="GenerateAndCopyLink(group[0].studentGroup)">
-                    <div class="popover-right" *ngIf="popovers?.popoverLink && selectedGroup == group[0].id">
+                <div class="col-container d-flex flex-column justify-content-center align-items-center" (mouseover)="OnMouseOver('popoverLink',group[0])"  (mouseout)="OnMouseOut('popoverLink')" (click)="GenerateAndCopyLink(group[0].studentGroup)">
+                    <div class="popover-right" *ngIf="popovers?.popoverLink && selectedGroup == group[0]">
                       Copia el link de registro y compártelo con tus alumnos.
                     </div>
                     <img class="icon" src="assets/icons/link.svg" *ngIf="loading.generatingLink != group[0].group">
@@ -140,7 +140,7 @@
                                 <div class="input-icon-container text-center clickeable" *ngIf="!showPassword.current" (click)="TogglePassword('current')">
                                     <img src="assets/icons/show.svg">
                                 </div>
-                                <input class="form-control" id="current" type="password" placeholder="Contraseña actual" readonly>
+                                <input class="form-control" id="current" type="password" placeholder="Contraseña actual" ormControlName="currentPassword" disabled>
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
@@ -153,7 +153,7 @@
                                 </div>
                                 <input class="form-control" id="new" type="password" placeholder="Nueva Contraseña" formControlName="newPassword">
                                 <span class="required-span">*</span>
-                                <app-control-messages [control]="passwordForm.get('new')"></app-control-messages>
+                                <app-control-messages [control]="passwordForm.get('newPassword')"></app-control-messages>
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
@@ -174,11 +174,11 @@
             </div>
             <div class="modal-footer justify-content-between">
                 <button class="btn btn-outline-primary modal-btn"
-                (click)="passwordModal.hide();">
+                (click)="CleanPasswordForm(); passwordModal.hide();">
                     Cancelar
                 </button>
                 <button class="btn btn-primary modal-btn"
-                (click)="SaveGroupPassword()" [disabled]="passwordForm.invalid">
+                (click)="SaveGroupPassword();passwordModal.hide();" [disabled]="passwordForm.invalid">
                     Guardar cambios
                 </button>
             </div>

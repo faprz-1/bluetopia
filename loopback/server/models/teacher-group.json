@@ -12,7 +12,7 @@
     "teacherId": {
       "type": "number"
     },
-    "isPasswordSet":{
+    "wasPasswordSet":{
       "type":"boolean",
       "default":false
     },
@@ -62,6 +62,34 @@
         {
           "path": "/of/:teacher",
           "verb": "get"
+        }
+      ]
+    },
+    "SetMasterKey": {
+      "accepts": [
+        {
+          "arg": "newKey",
+          "type": "object",
+          "required": true,
+          "description": "",
+          "http":{
+            "source": "body"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "groups",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/setKey",
+          "verb": "post"
         }
       ]
     }

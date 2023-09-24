@@ -143,6 +143,8 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
   }
 
   SelectGrade(grade: any) {
+    console.log(grade);
+    
     this.selectedGrade = grade;
   }
 
@@ -192,14 +194,16 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
         this.toast.ShowError(`Error al generar link`);
       }
     );
+    this.selectedGroup = null;
   }
   OnMouseOver(type: string, index: any) {
     this.selectedGroup = index;
+    console.log(this.selectedGroup);
+    
     this.popovers[type] = true;
   }
 
   OnMouseOut(type: string) {
-    this.selectedGroup = null;
     this.popovers[type] = false;
   }
 
@@ -217,8 +221,6 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
     let newPassword = this.passwordForm.get('newPassword')?.value;
     let confirmation= this.passwordForm.get('confirmation')?.value;
     if(newPassword != confirmation) {
-      console.log('hello');
-      
       this.toast.ShowWarning("Las contraseñas no coinciden");}
     return newPassword === confirmation;
   }
@@ -227,20 +229,26 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
     if(!this.IsNewPasswordValid()) return;
     var newPassword = {
       new: this.passwordForm.get('newPassword')?.value,
-      confirmation: this.passwordForm.get('confirmation')?.value
+      confirmation: this.passwordForm.get('confirmation')?.value,
+      groupId: this.selectedGroup.studentGroup.groupId,
+      gradeId: this.selectedGroup.studentGroup.gradeId,
+      teacherId: this.api.GetUser().teacher.id
     }
     this.loading.password = true;
     this.api.Post('/TeacherGroups/setKey',newPassword,true).subscribe((result)=>{
       this.CleanPasswordForm();
-      this.passwordForm.get('currentPassword')?.setValue(result.masterKey);
+      this.passwordForm.get('currentPassword')?.setValue(newPassword.new);
       this.toast.ShowSuccess(`Contraseña creada`);
+      this.loading.password = false;
     },
     (err) => {
+      this.loading.password = false;
       this.toast.ShowError(`Error al guardar contraseña`);
     });
   }
-
+  
   CleanPasswordForm(){
+    this.selectedGroup = null;
     this.passwordForm.get('newPassword')?.setValue('');
     this.passwordForm.get('confirmation')?.setValue('');
   }

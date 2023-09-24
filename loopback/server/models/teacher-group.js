@@ -81,25 +81,52 @@ module.exports = function(TeacherGroup) {
         });
 
     };
+
     TeacherGroup.GetGroupsByTeacher = function (teacher, cb) {
-    let filter = {
-        where:{
-            teacherId:teacher
+      let filter = {
+        where: {
+          teacherId: teacher,
         },
-        include:[
-            {
-                relation:'grade',
-                scope:{
-                    order:'name'
-                }
+        include: [
+          {
+            relation: "grade",
+            scope: {
+              order: "name",
             },
-            'group'
-        ]
-    };
-    TeacherGroup.find(filter,(err,teacherGroups)=>{
-        if(err) return cb(err);
-        return cb(null,teacherGroups);
-    });
+          },
+          "group",
+        ],
+      };
+      TeacherGroup.find(filter, (err, teacherGroups) => {
+        if (err) return cb(err);
+        return cb(null, teacherGroups);
+      });
     };
 
+    TeacherGroup.FindByGroup = function(filterData,cb){
+        let filter= {
+            where: {
+                teacherId: filterData.teacherId,
+                gradeId: filterData.gradeId,
+                groupId: filterData.groupId,
+            }
+        };
+        TeacherGroup.findOne(filter,(err,teacherGroup)=>{
+            if (err) return cb(err);
+            return cb(null, teacherGroup);
+        });
+    }
+    
+    TeacherGroup.SetMasterKey = function(newPassword,cb){
+        TeacherGroup.FindByGroup(newPassword,(err,teacherGroup)=>{
+            if (err) return cb(err);
+           if(!teacherGroup) return cb("No se encontró el grupo al que intentas modificar");
+           teacherGroup.masterKey = newPassword.new;
+           teacherGroup.wasPasswordSet = true;
+           teacherGroup.save((err,saved)=>{
+            if (err) return cb(err);
+            return cb(null, teacherGroup);
+           });
+        });
+    }
 };
