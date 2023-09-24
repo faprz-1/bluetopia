@@ -11,6 +11,13 @@
     },
     "teacherId": {
       "type": "number"
+    },
+    "isPasswordSet":{
+      "type":"boolean",
+      "default":false
+    },
+    "masterKey":{
+      "type":"string"
     }
   },
   "validations": [],

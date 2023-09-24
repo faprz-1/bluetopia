@@ -81,15 +81,25 @@
     </div>
 
     <div class="teacher-dashboard-row">
-        <div class="group-card-2 m-4 flex-column justify-content-between" *ngFor="let group of selectedGrade?.groups">
+        <div class="group-card-2 m-4 flex-column justify-content-between" *ngFor="let group of selectedGrade?.groups; let i = index">
             <div class="d-flex flex-wrap justify-content-between align-items-center mb-4" style="gap: 12px;">
                 <div class="group-title-2 mb-0">
                     Grupo {{group[0].group}}
                 </div>
-                <button class="btn btn-primary btn-small" (click)="GenerateAndCopyLink(group[0].studentGroup)">
-                    <span *ngIf="loading.generatingLink != group[0].group">Link de registro</span>
+                <div class="col-container d-flex flex-column justify-content-center align-items-center" (mouseover)="OnMouseOver('popoverPassword',group[0].id)"  (mouseout)="OnMouseOut('popoverPassword')" (click)="passwordModal.show()">
+                    <div class="popover-right" *ngIf="popovers?.popoverPassword && selectedGroup == group[0].id">
+                      Aquí podrás una contraseña para que ingresen tus alumnos.
+                    </div>
+                    <img class="icon" src="assets/icons/lock.svg">
+                  </div>
+                <div class="col-container d-flex flex-column justify-content-center align-items-center" (mouseover)="OnMouseOver('popoverLink',group[0].id)"  (mouseout)="OnMouseOut('popoverLink')" (click)="GenerateAndCopyLink(group[0].studentGroup)">
+                    <div class="popover-right" *ngIf="popovers?.popoverLink && selectedGroup == group[0].id">
+                      Copia el link de registro y compártelo con tus alumnos.
+                    </div>
+                    <img class="icon" src="assets/icons/link.svg" *ngIf="loading.generatingLink != group[0].group">
                     <span *ngIf="loading.generatingLink == group[0].group"><i class="zmdi zmdi-spinner zmdi-hc-lg zmdi-hc-spin"></i></span>
-                </button>
+                  </div>
+               
             </div>
             <div class="students-2 flex-grow-1">
                 <div class="student" *ngFor="let student of group; let i = index">
@@ -106,6 +116,72 @@
             <button class="btn btn-success btn-add-group">
                 Agregar grupo
             </button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" bsModal #passwordModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
+    tabindex="-1" role="dialog" aria-labelledby="passwordModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Asignar contraseña</h2>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="passwordForm">
+                    <div class="row">
+                     
+                        <div class="col-12 col-md-8">
+                            <label for="current" class="text">Contraseña actual</label>
+                            <div class="input-container">
+                                <div class="input-icon-container text-center clickeable" *ngIf="showPassword.current" (click)="TogglePassword('current')">
+                                    <img src="assets/icons/hide.svg">
+                                </div>
+                                <div class="input-icon-container text-center clickeable" *ngIf="!showPassword.current" (click)="TogglePassword('current')">
+                                    <img src="assets/icons/show.svg">
+                                </div>
+                                <input class="form-control" id="current" type="password" placeholder="Contraseña actual" readonly>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="input-container">
+                                 <div class="input-icon-container text-center clickeable" *ngIf="showPassword.new" (click)="TogglePassword('new')">
+                                    <img src="assets/icons/hide.svg">
+                                </div>
+                                <div class="input-icon-container text-center clickeable" *ngIf="!showPassword.new" (click)="TogglePassword('new')">
+                                    <img src="assets/icons/show.svg">
+                                </div>
+                                <input class="form-control" id="new" type="password" placeholder="Nueva Contraseña" formControlName="newPassword">
+                                <span class="required-span">*</span>
+                                <app-control-messages [control]="passwordForm.get('new')"></app-control-messages>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="input-container">
+                                 <div class="input-icon-container text-center clickeable" *ngIf="showPassword.confirmation" (click)="TogglePassword('confirmation')">
+                                    <img src="assets/icons/hide.svg">
+                                </div>
+                                <div class="input-icon-container text-center clickeable" *ngIf="!showPassword.confirmation" (click)="TogglePassword('confirmation')">
+                                    <img src="assets/icons/show.svg">
+                                </div>
+                                <input class="form-control" id="confirmation" type="password" placeholder="Confirma la contraseña" formControlName="confirmation">
+                                <span class="required-span">*</span>
+                                <app-control-messages [control]="passwordForm.get('confirmation')"></app-control-messages>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button class="btn btn-outline-primary modal-btn"
+                (click)="passwordModal.hide();">
+                    Cancelar
+                </button>
+                <button class="btn btn-primary modal-btn"
+                (click)="SaveGroupPassword()" [disabled]="passwordForm.invalid">
+                    Guardar cambios
+                </button>
+            </div>
         </div>
     </div>
 </div>
