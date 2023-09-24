@@ -14,6 +14,7 @@ export class ActivityComponent implements OnInit {
 
   eventId: string | null = null;
   event: any = null;
+  evaluation: any = null;
   studentFiles: Array<any> = [];
   loading: boolean = false;
   crumbs: Array<any> = [
@@ -56,6 +57,8 @@ export class ActivityComponent implements OnInit {
     const instanceId = !!this.event.parcialProduct ? this.event.parcialProduct.id : this.event.id;
     console.log(user);
     this.api.Get(`/Evaluations/OfStudent/${user.student.id}/OfProduct/${instanceId}`).subscribe(evaluation => {
+      this.evaluation = evaluation;
+      this.studentFiles = evaluation.studentFiles || [];
     }, err => {
       console.error("Error getting student evaluation", err);
     });
@@ -104,7 +107,6 @@ export class ActivityComponent implements OnInit {
     const files: FileList = event.target.files;
     let filesArray = Array.from(files), cont = 0;
     if(!filesArray.length) return;
-    this.loading = true;
     filesArray.forEach(file => {
       const reader = new FileReader();
       reader.onload = (readEvent: any) => {
@@ -118,20 +120,24 @@ export class ActivityComponent implements OnInit {
         };
 
         this.UploadFile(fileObj);
-        if(++cont == filesArray.length) this.loading = false;
       };
       reader.readAsBinaryString(file);
     });
   }
 
   UploadFile(file: any) {
-    const user = this.api.GetUser();
-    const instanceId = !!this.event.parcialProduct ? this.event.parcialProduct.id : this.event.id;
-    this.api.Patch(`/Evaluations/OfStudent/${user.student.id}/OfProduct/${instanceId}`, {
+    this.api.Patch(`/Evaluations/${this.evaluation.id}/UploadFile`, {
       file
     }).subscribe(evaluation => {
+      this.GetStudentFiles();
     }, err => {
       console.error("Error getting student evaluation", err);
+    });
+  }
+
+  DeleteFile(file: any) {
+    this.api.Delete(`/Evaluations/${this.evaluation.id}/StudentFile/${file.id}`).subscribe(deleted => {
+      this.GetStudentFiles();
     });
   }
 

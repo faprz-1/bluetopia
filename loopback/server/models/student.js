@@ -192,8 +192,8 @@ module.exports = function(Student) {
         }, (err, student) => {
             if (err) return callback(err);
 
-            if (!student) return callback('Student not found!!')
-            if (!student.studentGroup()) return callback('Student not in group!!')
+            if (!student) return callback('Student not found!!');
+            if (!student.studentGroup()) return callback('Student not in group!!');
             Student.app.models.StrategyGroup.find({
                 where: {
                     schoolId: student.studentGroup().schoolId,

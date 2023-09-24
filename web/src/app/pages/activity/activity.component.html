@@ -65,16 +65,19 @@
                         <div class="d-flex align-items-center justify-content-between gap-2">
                             <img src="assets/icons/pdf-icon.png">
                             <div class="file-name">
-                                Archivo
+                                {{file.name}}
                             </div>
                             <!-- <img class="clickeable" src="assets/icons/more_vert.svg"> -->
-                            <i class="zmdi zmdi-download zmdi-hc-lg text-white clickeable" (click)="DownloadResource(file)"></i>
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="zmdi zmdi-download zmdi-hc-lg text-white clickeable" (click)="DownloadResource(file)"></i>
+                                <i class="zmdi zmdi-close-circle-o zmdi-hc-lg text-white clickeable" (click)="DeleteFile(file)"></i>
+                            </div>
                         </div>
                     </div>
                     <button class="btn btn-medium btn-outline-purple" (click)="fileInput.click()">
                         Subir mi trabajo
                     </button>
-                    <input class="d-none" #fileInput accept=".pdf" multiple type="file">
+                    <input class="d-none" #fileInput accept=".pdf" multiple type="file" (change)="OnFileSelected($event)">
                 </div>
                 <div class="row" *ngIf="false">
                     <div class="col-12">

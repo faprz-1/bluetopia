@@ -27,7 +27,8 @@ module.exports = function(Evaluation) {
             calification: 0,
         }
         Evaluation.findOrCreate({
-            where: {studentId, parcialProductId}
+            where: {studentId, parcialProductId},
+            include: ['studentFiles']
         }, evaluation, (err, studentEvaluation) => {
             if(err) return callback(err);
             
@@ -35,23 +36,24 @@ module.exports = function(Evaluation) {
         });
     }
 
-    Evaluation.UploadStudentFile = function(studentId, parcialProductId, file, callback) {
-        Evaluation.GetStudentEvaluation(studentId, parcialProductId, (err, studentEvaluation) => {
+    Evaluation.prototype.UploadStudentFile = function(file, callback) {
+        Evaluation.app.models.Upload.newBase64File(file, (err, newFile) => {
             if(err) return callback(err);
-            Evaluation.app.models.Upload.newBase64File(file, (err, newFile) => {
+
+            this.studentFiles.add(newFile.id, (err => {
                 if(err) return callback(err);
-
-                let evaluationFile = {
-                    evaluationId: studentEvaluation.id,
-                    fileId: newFile.id
-                }
-                Evaluation.app.models.EvaluationFile.create(evaluationFile, (err, newEvaluationFile) => {
-                    if(err) return callback(err);
-
-                    return callback(null, newFile);
-                });
-            });
+    
+                return callback(null, newFile);
+            }));
         });
+    }
+
+    Evaluation.prototype.DeleteStudentFile = function(fileId, callback) {
+        this.studentFiles.destroy(fileId, (err => {
+            if(err) return callback(err);
+
+            return callback(null, this);
+        }));
     }
 
 };

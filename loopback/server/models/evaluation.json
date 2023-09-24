@@ -42,10 +42,12 @@
       }
     },
     "studentFiles": {
-      "type": "hasMany",
+      "type": "hasAndBelongsToMany",
       "model": "UploadedFiles",
-      "through": "EvaluationFile",
-      "foreignKey": "evaluationId"
+      "foreignKey": "evaluationId",
+      "options": {
+        "nestRemoting": true
+      }
     }
   },
   "acls": [
@@ -62,8 +64,9 @@
       "permission": "ALLOW",
       "property": [
         "Update",
-        "UpdateGetStudentEvaluation",
-        "UpdateUploadStudentFile"
+        "GetStudentEvaluation",
+        "UploadStudentFile",
+        "DeleteStudentFile"
       ]
     }
   ],
@@ -99,20 +102,8 @@
         }
       ]
     },
-    "UploadStudentFile": {
+    "prototype.UploadStudentFile": {
       "accepts": [
-        {
-          "arg": "studentId",
-          "type": "number",
-          "required": true,
-          "description": ""
-        },
-        {
-          "arg": "parcialProductId",
-          "type": "number",
-          "required": true,
-          "description": ""
-        },
         {
           "arg": "file",
           "type": "object",
@@ -131,8 +122,33 @@
       "description": "",
       "http": [
         {
-          "path": "/UploadFile/OfStudent/:studentId/OfProduct/:parcialProductId",
+          "path": "/UploadFile",
           "verb": "patch"
+        }
+      ]
+    },
+    "prototype.DeleteStudentFile": {
+      "accepts": [
+        {
+          "arg": "fileId",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "evaluation",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/StudentFile/:fileId",
+          "verb": "delete"
         }
       ]
     }
