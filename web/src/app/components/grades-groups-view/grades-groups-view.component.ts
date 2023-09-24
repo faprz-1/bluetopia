@@ -67,16 +67,19 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
     new: false,
     confirmation: false,
   };
-
-  constructor(private api: ApiService, private toast: ToastService) {}
+  user:any;
+  teacherGroups:any;
+  constructor(private api: ApiService, private toast: ToastService) {
+    this.user = this.api.GetUser();
+    this.GetTeacherData();
+  }
 
   ngOnInit(): void {
-    this.FormatStudents();
     this.subscriptions.push(this.onStudentSearch?.subscribe((student) => {}));
     this.subscriptions.push(
       this.onChange?.subscribe((students) => {
         this.students = students;
-        this.FormatStudents();
+        this.GetTeacherData();
       })
     );
   }
@@ -113,6 +116,7 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
       if (Object.prototype.hasOwnProperty.call(grades, key)) {
         const studentsOfGrade = grades[key];
         studentsOfGrade.forEach((student: any) => {
+          student = this.SetMasterKey(student);
           if (groups[student.group]) groups[student.group].push(student);
           else groups[student.group] = [student];
         });
@@ -142,10 +146,28 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
     return array;
   }
 
+  GetTeacherData() {
+    this.api.Get(`/Teachers/${this.user ? this.user.id : 0}/Data`).subscribe(teacher => {
+      this.teacherGroups = teacher.teacherGroups;
+      this.FormatStudents();
+
+    }, err => {
+      console.error(`Error getting teacher data`, err);
+    });
+  }
+
+  SetMasterKey(student: any){
+    if(this.teacherGroups.length == 0) return student;
+    let matchingGroup = this.teacherGroups.filter((group:any)=> group.groupId == student.studentGroup.groupId && group.gradeId == student.studentGroup.gradeId);
+    if(matchingGroup.length == 0) return student;
+    student.masterKey = matchingGroup[0].masterKey;
+    return student;
+  }
+
+
   SelectGrade(grade: any) {
-    console.log(grade);
-    
     this.selectedGrade = grade;
+    this.passwordForm.get('newPassword')?.setValue(grade.masterKey);
   }
 
   AddGrade() {}
@@ -196,10 +218,10 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
     );
     this.selectedGroup = null;
   }
+
   OnMouseOver(type: string, index: any) {
-    this.selectedGroup = index;
-    console.log(this.selectedGroup);
-    
+    this.selectedGroup = index;    
+    this.passwordForm.get('currentPassword')?.setValue(index.masterKey);
     this.popovers[type] = true;
   }
 
@@ -232,7 +254,8 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
       confirmation: this.passwordForm.get('confirmation')?.value,
       groupId: this.selectedGroup.studentGroup.groupId,
       gradeId: this.selectedGroup.studentGroup.gradeId,
-      teacherId: this.api.GetUser().teacher.id
+      teacherId:this.user.teacher.id,
+      schoolId: this.user.schoolId
     }
     this.loading.password = true;
     this.api.Post('/TeacherGroups/setKey',newPassword,true).subscribe((result)=>{
@@ -240,6 +263,7 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
       this.passwordForm.get('currentPassword')?.setValue(newPassword.new);
       this.toast.ShowSuccess(`Contraseña creada`);
       this.loading.password = false;
+      this.GetTeacherData();
     },
     (err) => {
       this.loading.password = false;

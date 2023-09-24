@@ -249,4 +249,12 @@ module.exports = function(Student) {
         
     }
 
+    Student.OverridePassword = function(passwordObj,cb) {
+        console.log(passwordObj);
+            Student.app.models.Usuario.setPassword(passwordObj.userId, passwordObj.newPassword,function(err) {
+                if (err) return cb(err);
+        
+                cb(null, 'success');
+              });
+    };
 };

@@ -140,7 +140,7 @@
                                 <div class="input-icon-container text-center clickeable" *ngIf="!showPassword.current" (click)="TogglePassword('current')">
                                     <img src="assets/icons/show.svg">
                                 </div>
-                                <input class="form-control" id="current" type="password" placeholder="Contraseña actual" ormControlName="currentPassword" disabled>
+                                <input class="form-control" id="current" type="password" placeholder="Contraseña actual" formControlName="currentPassword" [disabled]="true">
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
