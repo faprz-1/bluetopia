@@ -958,7 +958,6 @@ export class TemplateBasedOnFormComponent implements OnInit {
           (saved) => {
             this.loading.event = false;
             this.finalEvent = saved;
-            this.eventForm.controls['id']?.setValue(saved.id);
             res(true);
           },
           (err) => {
@@ -972,6 +971,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
           (newEvent) => {
             this.loading.event = false;
             this.finalEvent = newEvent;
+            this.eventForm.controls['id']?.setValue(newEvent.id);
             res(true);
           },
           (err) => {
