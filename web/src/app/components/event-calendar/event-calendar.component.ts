@@ -33,7 +33,7 @@ export class EventCalendarComponent implements OnInit {
     },
     {
       value: 3,
-      name: 'Miercoles',
+      name: 'Miércoles',
     },
     {
       value: 4,
@@ -45,7 +45,7 @@ export class EventCalendarComponent implements OnInit {
     },
     {
       value: 6,
-      name: 'Sabado',
+      name: 'Sábado',
     },
     {
       value: 0,
@@ -142,10 +142,11 @@ export class EventCalendarComponent implements OnInit {
     let newWeek = this.weekDays.map(day => Object.assign({}, day));
     this.month = [];
     while(currentDay <= days) {
-      let currentDate = moment(`${this.year}-${this.currentMonth+1}-${currentDay}`);
-      let yesterdayDate = moment(`${this.year}-${this.currentMonth+1}-${yesterday}`);
-      const weekDay = currentDate.weekday();
-      if(weekDay == this.weekDays[0].value && yesterdayDate.weekday() == this.weekDays[6].value) {
+      let currentDate = moment(`${this.year}-${this.currentMonth+1}-${currentDay}`).tz('America/Mexico_City');
+      let yesterdayDate = moment(`${this.year}-${this.currentMonth+1}-${yesterday}`).tz('America/Mexico_City');
+      const weekDay = currentDate.day();
+      
+      if(weekDay == this.weekDays[0].value && yesterdayDate.day() == this.weekDays[6].value) {
         this.month.push(newWeek);
         newWeek = this.weekDays.map(day => Object.assign({}, day));
       }

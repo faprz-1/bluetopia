@@ -207,7 +207,9 @@
     "options": {
       "remoting": {
         "sharedMethods": {
-          "*": false
+          "*": false,
+          "GetGroupsByTeacher":true,
+          "SetMasterKey":true
         }
       }
     }

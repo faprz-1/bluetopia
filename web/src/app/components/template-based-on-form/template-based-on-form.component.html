@@ -62,9 +62,9 @@
                             </ng-select>
                         </div>
                         <div class="input-container input-small" *ngIf="step != 1">
-                            <ng-select #groupSelect class="ng-select form-control with-border" [items]="groups"
+                            <ng-select #groupSelect class="ng-select form-control with-border groups" [items]="groups"
                                 bindLabel="name" placeholder="Grupo" addTagText="Agregar" [addTag]="AddGroup"
-                                [disabled]="loading.group" [loading]="loading.group" [(ngModel)]="group"
+                                [disabled]="!grade || groups.length === 0 || loading.group" [loading]="loading.group" [(ngModel)]="group"
                                 (change)="saver.next()">
                             </ng-select>
                         </div>

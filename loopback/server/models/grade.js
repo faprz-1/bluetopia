@@ -119,4 +119,15 @@ module.exports = function(Grade) {
         });
     }
 
+    Grade.GetByName = function(gradeName,cb) {
+        let filter= {
+            where:{
+                name: {like:`${gradeName}`}
+            }
+        }
+        Grade.findOne(filter,(err,grade)=>{
+            if(err) return cb(err);
+            return cb(null,grade);
+        });
+    }
 };

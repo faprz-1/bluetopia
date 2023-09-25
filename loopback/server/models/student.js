@@ -24,7 +24,7 @@ module.exports = function(Student) {
                                 return callback(err);
                             });
                         }
-
+                        if(student.teacherGroup) return callback(null, newStudent);
                         const teacherGroup = {
                             gradeId: grades.find(g => g.name == student.grade.toLowerCase()) ? grades.find(g => g.name == student.grade.toLowerCase()).id : null,
                             groupId: groups.find(g => g.name == student.group.toLowerCase()) ? groups.find(g => g.name == student.group.toLowerCase()).id : null,
@@ -42,25 +42,53 @@ module.exports = function(Student) {
     }
 
     Student.AddStudents = function(students, callback) {
-        if (!students.length) return callback(null, []);
-        let cont = 0,
-            limit = students.length,
-            newStudents = [];
-        if (!limit) return callback(null, newStudents);
+        if(!students.length) return callback(null, []);
+        let newStudents = [];
         Student.app.models.Group.CreateBasedOnCSV(students, (err, groups) => {
             if (err) return callback(err);
 
             Student.app.models.Grade.CreateBasedOnCSV(students, (err, grades) => {
-                if (err) return callback(err);
-
-                students.forEach(student => {
-                    Student.AddStudent(student, (err, newStudent) => {
-                        if (err) console.error(err);
-                        newStudents.push(newStudent);
-                        if (++cont == limit) return callback(null, newStudents);
+                if(err) return callback(err);
+                var sortedStudents = Student.GroupStudents(students);
+                if(sortedStudents.length == 0) return callback(null,[]);
+                sortedStudents.forEach((group,i)=>{
+                    Student.CreateByGroup(group,(err,studentsCreated)=>{
+                        if(err) return callback(err);
+                        newStudents.push(studentsCreated);
+                        if(i == sortedStudents.length-1) return callback(null,newStudents);
                     });
                 });
             });
+        });
+    }
+//Previous method was creating a teacherGroup instance for every element on the array of students, this one creates just one for every group
+    Student.CreateByGroup = function(students, cb) {
+        if(students.length == 0) return cb(null,[]);
+        let grade = students[0].grade;
+        let group = students[0].group;
+        let newStudents = [];
+        Student.app.models.Grade.GetByName(grade,(err,gradeWithId)=>{
+            if(err) return cb(err);
+        Student.app.models.Group.GetByName(group,(err,groupWithId)=>{
+            if(err) return cb(err);
+            const teacherGroup = {
+                gradeId: JSON.parse(JSON.stringify(gradeWithId)) ? JSON.parse(JSON.stringify(gradeWithId)).id : null,
+                groupId: JSON.parse(JSON.stringify(groupWithId)) ? JSON.parse(JSON.stringify(groupWithId)).id : null,
+                teacherId: students[0].teacherId
+            }
+            Student.app.models.TeacherGroup.LinkGroupToTeacher(teacherGroup,(err,newGroupTeacher)=>{
+                if(err) return cb(err);
+    
+               students.forEach((student,i)=>{
+                student.teacherGroup = newGroupTeacher;
+                Student.AddStudent(student,(err,newStudent)=>{
+                    if(err) return cb(err);
+                    newStudents.push(newStudent);
+                    if(i== students.length-1) return cb(null,newStudents);
+                });
+               });
+            });
+        });
         });
     }
 
@@ -72,6 +100,18 @@ module.exports = function(Student) {
             if (err) return callback(err);
             return callback(null, student);
         });
+    }
+
+    Student.GroupStudents = function(students,cb) {
+        var sortedData = Object.values(students.reduce((result, item) => {
+            const key = item.group + item.grade;
+            if (!result[key]) {
+              result[key] = [];
+            }
+            result[key].push(item);
+            return result;
+          }, {}));;
+         return sortedData;
     }
 
     Student.GetAllOfSchool = function(schoolId, gradeId, groupId, callback) {
@@ -111,16 +151,28 @@ module.exports = function(Student) {
                         id: { inq: studentGroups.map(sg => sg.studentId) },
                         schoolId: teacher.schoolId,
                     },
-                    include: { 'studentGroup': ['group', 'grade'] },
+                    include: {'studentGroup': ['group', 'grade']},
+                    oder:['fatherLastname ASC','motherLastname ASC'],
                 }, (err, students) => {
                     if (err) return callback(err);
 
-                    if (!!gradeId && gradeId != 0) students = students.filter(student => student.studentGroup().gradeId == gradeId);
-                    if (!!groupId && groupId != 0) students = students.filter(student => student.studentGroup().groupId == groupId);
-                    return callback(null, students);
+                    if(!!gradeId && gradeId != 0) students = students.filter(student => student.studentGroup().gradeId == gradeId);
+                    if(!!groupId && groupId != 0) students = students.filter(student => student.studentGroup().groupId == groupId);
+                    return callback(null, Student.SortInAlphabeticalOrder(students));
                 });
             });
         });
+    }
+
+    Student.SortInAlphabeticalOrder = function(students) {
+        let mergedData = students.map((item) => ({
+            ...JSON.parse(JSON.stringify(item)),
+            fullName: `${item.fatherLastname} ${item.motherLastname}`,
+          }));
+          let sortedData = mergedData.sort((a, b) => {
+            return a.fullName.localeCompare(b.fullName);
+          });
+         return sortedData;
     }
 
     Student.UpdateSchoolId = function(teacherId, schoolId, callback) {
@@ -218,4 +270,12 @@ module.exports = function(Student) {
         });
     }
 
+    Student.OverridePassword = function(passwordObj,cb) {
+        console.log(passwordObj);
+            Student.app.models.Usuario.setPassword(passwordObj.userId, passwordObj.newPassword,function(err) {
+                if (err) return cb(err);
+        
+                cb(null, 'success');
+              });
+    };
 };

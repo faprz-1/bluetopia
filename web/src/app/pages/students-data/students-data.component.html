@@ -6,7 +6,7 @@
                 Datos de alumnos
             </div>
 
-            <button class="btn btn-outline-success" (click)="addGradeOrGroupModal.show()">
+            <button class="btn btn-outline-success" (click)="GoToStudentsCSVPage()">
                 Agregar grado o grupo
             </button>
         </div>
@@ -93,7 +93,7 @@
                             <div *ngIf="isEditing">
                             </div>
                             <div *ngIf="!isEditing">
-                                {{student.fatherLastname + " " + student.motherLastname}}
+                                {{student.fullName}}
                             </div>
                         </td>
                         <td>

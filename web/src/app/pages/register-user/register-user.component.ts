@@ -118,7 +118,6 @@ export class RegisterUserComponent implements OnInit {
   }
 
   ApiRegisterUser(user: any, userData: any, role: string) {
-    console.log(user, userData, role);
     user.active = true;
     this.api.Post(`/Usuarios`, { user, userData, role}).subscribe(newUser => {
       let credentials = {

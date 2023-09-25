@@ -109,7 +109,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
   });
 
   step: number = 1;
-  noGroupMessage = "";
+  noGroupMessage = '';
   public get isLoading() {
     for (const key in this.loading) {
       if (Object.prototype.hasOwnProperty.call(this.loading, key)) {
@@ -119,8 +119,8 @@ export class TemplateBasedOnFormComponent implements OnInit {
     }
     return false;
   }
-	saver = new Subject();
-  subSelected:any = null;
+  saver = new Subject();
+  subSelected: any = null;
   constructor(
     private api: ApiService,
     private activatedRoute: ActivatedRoute,
@@ -131,8 +131,8 @@ export class TemplateBasedOnFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.GetGrades();
-    this.GetGroups();
+    this.GetTeacherGroups();
+    this.SetGroupsOfSelectedGrade(this.grade);
     this.GetSubjects();
     this.GetSepObjectives();
     this.GetSkills();
@@ -142,8 +142,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     this.GetEventTypes();
     this.GetParams();
 
-    this.saver.pipe(debounceTime(500))
-			.subscribe(data => this.Autosave());
+    this.saver.pipe(debounceTime(500)).subscribe((data) => this.Autosave());
   }
 
   OpenModal(template: any) {
@@ -337,8 +336,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     this.activatedRoute.params.subscribe((params) => {
       this.templateId = params['templateId'];
       this.strategyId = params['strategyId'];
-
-      this.GetStrategy();
+      this.GetStrategy();      
     });
   }
 
@@ -381,6 +379,53 @@ export class TemplateBasedOnFormComponent implements OnInit {
         console.error('Error getting groups', err);
       }
     );
+  }
+
+  GetTeacherGroups() {
+    let user = this.api.GetUser();
+    this.api.Get(`/TeacherGroups/of/${user.teacher?.id}`).subscribe(
+      (groups) => {
+        this.SetGrades(groups);
+      },
+      (err) => {
+        console.error('Error getting groups', err);
+      }
+    );
+  }
+
+  GroupByProperty(teacherGroups: any, property: string) {
+    const groupedData: any = Object.values(
+      teacherGroups.reduce((result: any, item: any) => {
+        const valueToGroupBy = item[property];
+        if (!result[valueToGroupBy]) {
+          result[valueToGroupBy] = [];
+        }
+        result[valueToGroupBy].push(item);
+        return result;
+      }, {})
+    );
+    return groupedData;
+  }
+
+  SetGrades(teacherGroups: any) {
+    this.grades = [];
+    let groupedByGrade = this.GroupByProperty(teacherGroups, 'gradeId');
+    groupedByGrade.forEach((grade: any) => {
+      let auxGrade: any = grade[0].grade;
+      auxGrade.groups = grade.map((item: any) => item.group);
+      this.grades.push(auxGrade);
+    });
+  }
+
+  SetGroupsOfSelectedGrade(gradeId:any){
+    this.groups = [];
+    if(!gradeId || gradeId == null || gradeId == 0){
+       this.groups = [];
+      }
+    else{
+      let selectedGrade = this.grades.filter((grade:any)=> grade.id == gradeId);
+      this.groups = selectedGrade.length > 0 ? selectedGrade[0].groups:[];
+    }
   }
 
   AddGroup = (group: string) => {
@@ -453,7 +498,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
   GetSepObjectives() {
     this.api.Get(`/SepObjectives`).subscribe(
       (sepObjectives) => {
-        this.sepObjectives = this.GroupSepGoalsBy(sepObjectives,'subjectId');
+        this.sepObjectives = this.GroupSepGoalsBy(sepObjectives, 'subjectId');
       },
       (err) => {
         console.error('Error getting sep objectives', err);
@@ -461,42 +506,44 @@ export class TemplateBasedOnFormComponent implements OnInit {
     );
   }
 
-  GetMySelectableGoals(subject:any){
-    let goalsToSelect = this.sepObjectives.filter((group:any) => group.subjectId === subject);
-    return goalsToSelect.length > 0 ? goalsToSelect[0].items: [];    
+  GetMySelectableGoals(subject: any) {
+    let goalsToSelect = this.sepObjectives.filter(
+      (group: any) => group.subjectId === subject
+    );
+    return goalsToSelect.length > 0 ? goalsToSelect[0].items : [];
   }
 
-  GroupSepGoalsBy(array:any,key:any){
-    return Object.values(array.reduce((result:any, item:any) => {
-      const keyValue = item[key];
-      if (!result[keyValue]) {
-        result[keyValue] = { [key]: keyValue, items: [] };
-      }
-      result[keyValue].items.push(item);
-      return result;
-    }, {}));
+  GroupSepGoalsBy(array: any, key: any) {
+    return Object.values(
+      array.reduce((result: any, item: any) => {
+        const keyValue = item[key];
+        if (!result[keyValue]) {
+          result[keyValue] = { [key]: keyValue, items: [] };
+        }
+        result[keyValue].items.push(item);
+        return result;
+      }, {})
+    );
   }
 
   AddSepObjective = (sepObjective: string) => {
     let sepObjectiveObj = {
       name: sepObjective,
-      subjectId: this.subSelected.id
+      subjectId: this.subSelected.id,
     };
     this.loading.sepObjective = true;
-    this.api
-      .Post(`/SepObjectives`, sepObjectiveObj)
-      .subscribe(
-        (newSepObjective) => {
-         this.GetSepObjectives();
-          this.loading.sepObjective = false;
-          this.OnObjectiveSelected(this.subSelected,newSepObjective);
-          this.sepObjectivesSelect?.close();
-        },
-        (err) => {
-          console.error('Error creatong SepObjective', err);
-          this.loading.sepObjective = false;
-        }
-      );
+    this.api.Post(`/SepObjectives`, sepObjectiveObj).subscribe(
+      (newSepObjective) => {
+        this.GetSepObjectives();
+        this.loading.sepObjective = false;
+        this.OnObjectiveSelected(this.subSelected, newSepObjective);
+        this.sepObjectivesSelect?.close();
+      },
+      (err) => {
+        console.error('Error creatong SepObjective', err);
+        this.loading.sepObjective = false;
+      }
+    );
   };
 
   GetSkills() {
@@ -515,7 +562,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
       name: skill,
     };
     this.loading.skill = true;
-    this.api.Post(`/Skills`,skillObj).subscribe(
+    this.api.Post(`/Skills`, skillObj).subscribe(
       (newSkill) => {
         this.skills = this.skills.concat([newSkill]);
         this.loading.skill = false;
@@ -721,7 +768,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
       this.RemoveSelectedSubject(subject);
     });
 
-    if(strategy.skills){
+    if (strategy.skills) {
       strategy.skills.forEach((skill: any) => {
         this.RemoveSelectedSkill(skill);
       });
@@ -730,18 +777,26 @@ export class TemplateBasedOnFormComponent implements OnInit {
     this.SetGradeGroupMessage();
   }
 
-  SetGradeGroupMessage(){
-    if(!this.grade && !this.group) this.noGroupMessage = "No se ha seleccionado un grado y grupo";
-    else if(!this.grade) this.noGroupMessage = "No se ha seleccionado un grado";
-    else if(!this.group) this.noGroupMessage = "No se ha seleccionado un grupo";
+  SetGradeGroupMessage() {
+    if (!this.grade && !this.group)
+      this.noGroupMessage = 'No se ha seleccionado un grado y grupo';
+    else if (!this.grade)
+      this.noGroupMessage = 'No se ha seleccionado un grado';
+    else if (!this.group)
+      this.noGroupMessage = 'No se ha seleccionado un grupo';
   }
 
   GetStrategy() {
     this.api.Get(`/Strategies/${this.strategyId}`).subscribe(
       (strategy) => {
         this.strategy = strategy;
-        this.grade = strategy.strategygroup ? strategy.strategygroup.gradeId:null;        
-        this.group = strategy.strategygroup ? strategy.strategygroup.groupId:null;        
+        this.grade = strategy.strategyGroup
+          ? strategy.strategyGroup.gradeId
+          : null;   
+          this.SetGroupsOfSelectedGrade(this.grade);       
+        this.group = strategy.strategyGroup
+          ? strategy.strategyGroup.groupId
+          : null;
         if (!!strategy.parcialProducts && !!strategy.parcialProducts.length)
           this.finalParcialProduct = strategy.parcialProducts.find(
             (parcialProduct: any) => parcialProduct.isFinal
@@ -758,42 +813,47 @@ export class TemplateBasedOnFormComponent implements OnInit {
   SaveStrategy() {
     return new Promise<boolean>((res, rej) => {
       let strategy = this.strategyForm.value;
-      strategy.grade = this.grade ? this.grade:0;
-      strategy.group = this.group ? this.group:0;
+      strategy.grade = this.grade ? this.grade : 0;
+      this.SetGroupsOfSelectedGrade(strategy.grade.id);
+      strategy.group = this.group ? this.group : 0;
       strategy.subjects = this.selectedSubjects;
       this.gradeSelect?.close();
       this.api.Patch(`/Strategies/${this.strategyId}`, { strategy }).pipe(takeUntil(this.saver)).subscribe(
-        (strategySaved) => {
-          this.InitializeForms(strategySaved);
-          res(true);
-        },
-        (err) => {
-          console.error('Error updating strategy', err);
-          res(false);
-        }
-      );
+          (strategySaved) => {
+            this.InitializeForms(strategySaved);
+            res(true);
+          },
+          (err) => {
+            console.error('Error updating strategy', err);
+            res(false);
+          }
+        );
     });
   }
 
   SaveParcialProduct(isParcialProductFinal: boolean = false) {
-    
     return new Promise<boolean>((res, rej) => {
       let parcialProductInstance = {
         ...this.parcialProductForm.value,
         isFinal: isParcialProductFinal,
         strategyId: this.strategyId,
       };
-      parcialProductInstance.evaluationTypeId= parcialProductInstance.evaluationType ? parcialProductInstance.evaluationType.id : null;
+      parcialProductInstance.evaluationTypeId =
+        parcialProductInstance.evaluationType
+          ? parcialProductInstance.evaluationType.id
+          : null;
       if (!!parcialProductInstance.id) {
         this.api
-          .Patch(`/ParcialProducts/${parcialProductInstance.id}`, 
-            parcialProductInstance,true
+          .Patch(
+            `/ParcialProducts/${parcialProductInstance.id}`,
+            parcialProductInstance,
+            true
           )
           .subscribe(
             (newParcialProduct) => {
               if (!isParcialProductFinal) this.CancelParcialProduct();
               this.GetStrategy();
-              this.toast.ShowSuccess("Cambios guardados correctamente");
+              this.toast.ShowSuccess('Cambios guardados correctamente');
               res(true);
             },
             (err) => {
@@ -892,7 +952,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
         isFinal: true,
       };
       this.loading.event = true;
-      
+
       if (!!eventInstance.id) {
         this.api.Patch(`/Events`, { event: eventInstance }).subscribe(
           (saved) => {
@@ -995,8 +1055,8 @@ export class TemplateBasedOnFormComponent implements OnInit {
     }
   }
 
-  CalculateProgress(){
-    switch(this.step){
+  CalculateProgress() {
+    switch (this.step) {
       case 1:
         return 20;
       case 2:
@@ -1012,7 +1072,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     }
   }
 
-  GoToStep(step:any){
+  GoToStep(step: any) {
     this.step = step;
     this.GoToStep(step);
   }
