@@ -12,6 +12,7 @@ module.exports = function(Evaluation) {
             if(err) return callback(err);
 
             if(!!evaluationFound) evaluation.id = evaluationFound.id;
+            evaluation.hasBeenEvaluated = true;
             Evaluation.upsert(evaluation, (err, newEvaluation) => {
                 if(err) return callback(err);
     

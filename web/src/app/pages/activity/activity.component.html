@@ -29,6 +29,20 @@
                         <div class="text">{{GetEventDetails().instructions}}</div>
                     </div>
                 </div>
+                <div class="background-activity">
+                    <div class="d-flex flex-column align-items-start gap-2">
+                        <div class="text-activity">Calificación</div>
+                        <div class="subtext-activity" *ngIf="evaluation?.hasBeenEvaluated">{{evaluation.calification}} / 100</div>
+                        <div class="subtext-activity" *ngIf="!evaluation?.hasBeenEvaluated">-- / 100</div>
+                    </div>
+                </div>
+                <div class="background-activity">
+                    <div class="d-flex flex-column align-items-start gap-2">
+                        <div class="text-activity">Comentarios</div>
+                        <div class="subtext-activity" *ngIf="evaluation?.hasBeenEvaluated">{{evaluation.comment ? evaluation.comment : 'Sin comentarios'}}</div>
+                        <div class="subtext-activity" *ngIf="!evaluation?.hasBeenEvaluated">--</div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-12 col-md-6 col-lg-4 align-self-stretch mb-4">
@@ -37,8 +51,8 @@
                     <img class="icon-padding " src="assets/icons/books.png " alt="back-arrow ">
                     <div class="sub-titles ">Recursos de la biblioteca que el profesor te recomienda ver para hacer la actividad</div>
                 </div>
-                <div class="background">
-                    <div class="file-card" *ngFor="let resource of event?.parcialProduct?.resources">
+                <div class="d-flex flex-column justify-content-center align-items-center gap-3">
+                    <div class="file-card align-self-stretch" *ngFor="let resource of event?.parcialProduct?.resources">
                         <div class="d-flex align-items-center justify-content-between gap-2">
                             <img src="assets/icons/pdf-icon.png">
                             <div class="file-name">
