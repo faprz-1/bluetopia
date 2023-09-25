@@ -157,7 +157,9 @@
           "prototype.GetData": true,
           "prototype.GetDataWithEvaluations": true,
           "prototype.EvaluateParcialProduct": true,
-          "GetEvents": true
+          "GetEvents": true,
+          "prototype.EditStudent": true,
+          "GetStudentByUser": true
         }
       }
     }
@@ -388,7 +390,7 @@
           "Update": true,
           "Delete": true,
           "GetAllOfStrategy": true,
-          "Proof": true
+          "GetData": true
         }
       }
     }
@@ -502,7 +504,11 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
-          "Update": true
+          "Update": true,
+          "GetStudentEvaluation": true,
+          "prototype.UploadStudentFile": true,
+          "prototype.DeleteStudentFile": true,
+          "prototype.ToggleIsDone": true
         }
       }
     }

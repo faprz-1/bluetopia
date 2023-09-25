@@ -492,6 +492,9 @@ module.exports = function(app) {
       {
         name: "resources"
       },
+      {
+        name: "studentActivitiesFiles"
+      },
     ]
 
     var sequentialConteinerSeed = function(containers, uploadAppModel){

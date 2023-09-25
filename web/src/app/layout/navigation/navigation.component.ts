@@ -103,7 +103,7 @@ export class NavigationComponent implements OnInit {
 
   GoToProfile() {
     switch (this.user.role.name) {
-      case 'Teacher': this.nav.GoToUserRoute('perfil'); break;
+      case 'Teacher': case 'Student': this.nav.GoToUserRoute('perfil'); break;
       default: this.GoTo('/inicio/perfil'); break;
     }
   }

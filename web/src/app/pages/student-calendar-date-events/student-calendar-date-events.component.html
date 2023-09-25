@@ -1,6 +1,6 @@
 <div class="content">
     <div class="d-flex align-items-start justify-content-between w-100">
-        <app-breadcrumb [crumbs]="crumbs"></app-breadcrumb>
+        <app-breadcrumb [crumbs]="crumbs" (onGoBack)="nav.GoBack()"></app-breadcrumb>
 
         <app-calendar-event-types-card></app-calendar-event-types-card>
     </div>

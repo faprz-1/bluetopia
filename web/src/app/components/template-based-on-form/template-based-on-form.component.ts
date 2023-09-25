@@ -81,6 +81,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
   evaluationTypes: Array<any> = [];
   strategyForm: FormGroup = new FormGroup({
     id: new FormControl(null, []),
+    schoolId: new FormControl(null, [Validators.required]),
     topic: new FormControl(null, [Validators.required]),
     title: new FormControl(null, [Validators.required]),
     generatingQuestion: new FormControl(null, [Validators.required]),
@@ -93,6 +94,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     name: new FormControl(null, [Validators.required]),
     instructions: new FormControl(null, [Validators.required]),
     date: new FormControl(null, [Validators.required]),
+    eventId: new FormControl(null, []),
     evaluationType: new FormControl(null, [Validators.required]),
     rubric: new FormControl(null, []),
     maxCalification: new FormControl(null, []),
@@ -191,40 +193,43 @@ export class TemplateBasedOnFormComponent implements OnInit {
   InitializeFinalProductForm() {
     this.parcialProductForm.setValue({
       id:
-        !!this.finalParcialProduct && !!this.finalParcialProduct.id
+        !!this.finalParcialProduct?.id
           ? this.finalParcialProduct.id
           : null,
       parcialProductTypeId:
-        !!this.finalParcialProduct &&
-        !!this.finalParcialProduct.parcialProductTypeId
+                !!this.finalParcialProduct?.parcialProductTypeId
           ? this.finalParcialProduct.parcialProductTypeId
           : null,
       name:
-        !!this.finalParcialProduct && !!this.finalParcialProduct.name
+        !!this.finalParcialProduct?.name
           ? this.finalParcialProduct.name
           : null,
       instructions:
-        !!this.finalParcialProduct && !!this.finalParcialProduct.instructions
+        !!this.finalParcialProduct?.instructions
           ? this.finalParcialProduct.instructions
           : null,
       date:
-        !!this.finalParcialProduct && !!this.finalParcialProduct.event
+        !!this.finalParcialProduct?.event
           ? this.finalParcialProduct.event.date
           : null,
+      eventId:
+        !!this.finalParcialProduct?.eventId
+          ? this.finalParcialProduct.eventId
+          : null,
       evaluationType:
-        !!this.finalParcialProduct && !!this.finalParcialProduct.evaluationType
+        !!this.finalParcialProduct?.evaluationType
           ? this.finalParcialProduct.evaluationType
           : null,
       rubric:
-        !!this.finalParcialProduct && !!this.finalParcialProduct.rubric
+        !!this.finalParcialProduct?.rubric
           ? this.finalParcialProduct.rubric
           : null,
       maxCalification:
-        !!this.finalParcialProduct && !!this.finalParcialProduct.maxCalification
+        !!this.finalParcialProduct?.maxCalification
           ? this.finalParcialProduct.maxCalification
           : null,
       resources:
-        !!this.finalParcialProduct && !!this.finalParcialProduct.resources
+        !!this.finalParcialProduct?.resources
           ? this.finalParcialProduct.resources.map(
               (parcialProduct: any) => parcialProduct.file
             )
@@ -746,6 +751,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     this.gradeSelect?.close();
     this.strategyForm.setValue({
       id: !!strategy.id ? strategy.id : null,
+      schoolId: !!strategy.schoolId ? strategy.schoolId : null,
       topic: !!strategy.topic ? strategy.topic : null,
       title: !!strategy.title ? strategy.title : null,
       generatingQuestion: !!strategy.generatingQuestion
@@ -887,6 +893,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
         ? parcialProduct.instructions
         : null,
       date: !!parcialProduct.event ? parcialProduct.event.date : null,
+      eventId: !!parcialProduct.eventId ? parcialProduct.eventId : null,
       evaluationType: !!parcialProduct.evaluationType
         ? parcialProduct.evaluationType
         : null,
@@ -948,33 +955,19 @@ export class TemplateBasedOnFormComponent implements OnInit {
       };
       this.loading.event = true;
 
-      if (!!eventInstance.id) {
-        this.api.Patch(`/Events`, { event: eventInstance }).subscribe(
-          (saved) => {
-            this.loading.event = false;
-            this.finalEvent = saved;
-            res(true);
-          },
-          (err) => {
-            console.error('Error posting new event', err);
-            this.loading.event = false;
-            res(false);
-          }
-        );
-      } else {
-        this.api.Post(`/Events`, { event: eventInstance }).subscribe(
-          (newEvent) => {
-            this.loading.event = false;
-            this.finalEvent = newEvent;
-            res(true);
-          },
-          (err) => {
-            console.error('Error posting new event', err);
-            this.loading.event = false;
-            res(false);
-          }
-        );
-      }
+      this.api.Patch(`/Events`, { event: eventInstance }).subscribe(
+        (eventSaved) => {
+          this.loading.event = false;
+          this.finalEvent = eventSaved;
+          this.eventForm.controls['id']?.setValue(eventSaved.id);
+          res(true);
+        },
+        (err) => {
+          console.error('Error posting new event', err);
+          this.loading.event = false;
+          res(false);
+        }
+      );
     });
   }
 

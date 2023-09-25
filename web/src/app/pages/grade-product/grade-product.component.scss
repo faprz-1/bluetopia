@@ -113,7 +113,8 @@
 
 .file-box {
     display: flex;
-    width: max-content;
+    flex-basis: 150px;
+    overflow: hidden;
     padding: 10px;
     align-items: center;
     justify-content: center;
@@ -122,6 +123,13 @@
     border: 1px solid var(--blue-1, #1081FB);
     color: var(--blue-1, #1081FB);
     font-size: 12px;
+}
+
+.ellipsis {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .info-col {

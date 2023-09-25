@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment-timezone';
-import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ApiService } from 'src/app/services/api.service';
-import { DownloadFileService } from 'src/app/services/download-file-service.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { environment } from 'src/environments/environment';
@@ -33,10 +31,8 @@ export class StudentCalendarDateEventsComponent implements OnInit {
 
   constructor(
     private api: ApiService,
-    private nav: NavigationService,
+    public nav: NavigationService,
     private activatedRoute: ActivatedRoute,
-    private toast: ToastService,
-    private downloadService: DownloadFileService
   ) { }
 
   ngOnInit(): void {
@@ -57,7 +53,7 @@ export class StudentCalendarDateEventsComponent implements OnInit {
 
   GetStudentEvents() {
     this.api.Get(`/Students/${this.api.GetUser()?.id}/Events`).subscribe(events => {
-      this.events = events.filter((event: any) => event.date.includes(this.date));
+     this.events = events.filter((event: any) => event.date !== null && event.date.includes(this.date));
       this.loading = false;
     }, err => {
       console.error("Error getting student events", err);
