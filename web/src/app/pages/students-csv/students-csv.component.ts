@@ -22,7 +22,7 @@ export class StudentsCsvComponent implements OnInit {
       newKey: 'name'
     },
     {
-      oldKey: 'Apellido Primer Apellido',
+      oldKey: 'Primer Apellido',
       newKey: 'fatherLastname'
     },
     {

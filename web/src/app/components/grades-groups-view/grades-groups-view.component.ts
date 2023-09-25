@@ -158,7 +158,7 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
 
   SetMasterKey(student: any){
     if(this.teacherGroups.length == 0) return student;
-    let matchingGroup = this.teacherGroups.filter((group:any)=> group.groupId == student.studentGroup.groupId && group.gradeId == student.studentGroup.gradeId);
+    let matchingGroup = this.teacherGroups.filter((group:any)=> group?.groupId == student.studentGroup?.groupId && group?.gradeId == student.studentGroup?.gradeId);
     if(matchingGroup.length == 0) return student;
     student.masterKey = matchingGroup[0].masterKey;
     return student;
