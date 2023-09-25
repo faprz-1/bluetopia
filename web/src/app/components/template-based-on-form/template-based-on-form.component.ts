@@ -958,6 +958,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
           (saved) => {
             this.loading.event = false;
             this.finalEvent = saved;
+            this.eventForm.controls['id']?.setValue(saved.id);
             res(true);
           },
           (err) => {
