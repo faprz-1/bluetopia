@@ -64,19 +64,20 @@
             </div>
         </div>
 
-        <div class="col-12">
-            <div class="d-flex align-items-center flex-wrap" style="gap: 24px;">
-                <div class="file-box">
-                    Archivo.pdf
+        <div class="col-12 d-flex flex-column gap-2">
+            <div class="d-flex align-items-center flex-wrap gap-4" *ngFor="let file of studentFiles">
+                <div class="file-box clickeable" (click)="DownloadResource(file)">
+                    <div class="ellipsis">
+                        {{file.name}}
+                    </div>
                 </div>
                 <div class="info-col">
                     <div class="title">Subido por</div>
-                    <div *ngIf="strategy?.isByTeams">{{BuildStudentFullName(team?.members[0].student)}}</div>
-                    <div *ngIf="!strategy?.isByTeams">{{BuildStudentFullName(student)}}</div>
+                    <div>{{BuildStudentFullName(file.owner)}}</div>
                 </div>
                 <div class="info-col">
                     <div class="title">Entregado el día</div>
-                    <div>30/08/23</div>
+                    <div>{{file.uploaded | date:"dd/MM/yyyy"}}</div>
                 </div>
                 <button class="btn btn-success d-flex justify-content-center align-items-center" style="gap: 6px; border-radius: 12px !important;">
                     <img src="assets/icons/star-white.svg">

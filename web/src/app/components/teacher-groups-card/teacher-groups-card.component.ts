@@ -62,7 +62,6 @@ export class TeacherGroupsCardComponent implements OnInit {
   }
 
   SaveGroups() {
-    console.log(this.teacherGroupForm);
     this.api.Patch(`/Grades/${this.grade.id}/UpdateGroups`, {teacherId: this.user.teacher.id, teacherGroups: this.teacherGroupForm.value.teacherGroups}).subscribe(updated => {
       this.editGroupsModal?.hide();
       this.onChange.emit();

@@ -44,7 +44,6 @@ export class StudentsDataComponent implements OnInit {
     this.loading.getting = true;
     this.api.Get(`/Grades`).subscribe(grades => {
       this.grades = grades;
-      this.gradeSelected = !!this.grades.length ? this.grades[0] : null;
       this.GetGroups();
     }, err => {
       console.error("Error getting grades", err);
@@ -55,7 +54,6 @@ export class StudentsDataComponent implements OnInit {
   GetGroups() {
     this.api.Get(`/Groups`).subscribe(groups => {
       this.groups = groups;
-      this.groupSelected = !!this.groups.length ? this.groups[0] : null;
       this.GetStudents();
     }, err => {
       console.error("Error getting groups", err);
@@ -73,12 +71,23 @@ export class StudentsDataComponent implements OnInit {
     }
     endpoint += `/FilteredBy/Grade/${!!this.gradeSelected ? this.gradeSelected.id : 0}/Group/${!!this.groupSelected ? this.groupSelected.id : 0}`;
     this.api.Get(endpoint).subscribe(students => {
-      this.students = students;
+    this.SortInAlphabeticalOrder(students);
       this.loading.getting = false;
     }, err => {
       console.error("Error getting students", err);
       this.loading.getting = false;
     });
+  }
+
+  SortInAlphabeticalOrder(students:any){
+    const mergedData = students.map((item:any) => ({
+      ...item,
+      fullName: `${item.fatherLastname} ${item.motherLastname}`,
+    }));
+    const sortedData = mergedData.sort((a:any, b:any) => {
+      return a.fullName.localeCompare(b.fullName);
+    });
+    this.students = sortedData;
   }
 
   AddGradeOrGroup() {
@@ -208,6 +217,10 @@ export class StudentsDataComponent implements OnInit {
       else this.toast.ShowWarning(value.message);
     });
     return valid;
+  }
+
+  GoToStudentsCSVPage(){
+    this.nav.GoToUserRoute('registrar-estudiantes/csv');
   }
 
 }

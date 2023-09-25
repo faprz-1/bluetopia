@@ -62,21 +62,78 @@ module.exports = function(TeacherGroup) {
         });
     }
 
-    TeacherGroup.LinkGroupToTeacher = function (teacherGroup, callback) {
-      TeacherGroup.findOrCreate(
-        {
-          where: {
-            gradeId: teacherGroup.gradeId,
-            groupId: teacherGroup.groupId,
-            teacherId: teacherGroup.teacherId,
-          },
-        },
-        teacherGroup,
-        (err, result) => {
-            if(err) return callback(err);
-          return callback(err, result);
+    TeacherGroup.LinkGroupToTeacher = function (tGroupObject, callback) {
+        let filter = {
+            where: {
+                gradeId: tGroupObject.gradeId,
+                groupId: tGroupObject.groupId,
+                teacherId: tGroupObject.teacherId,
+            }
         }
-      );
+        TeacherGroup.findOne(filter,(err,teacherGroup)=>{
+            if(err) return callback(err);
+            if(teacherGroup != null) return callback(null,teacherGroup);
+            TeacherGroup.create(tGroupObject,(err, created)=>{
+                if(err) return callback(err);
+                return callback(null,created);
+            });
+        });
+
     };
 
+    TeacherGroup.GetGroupsByTeacher = function (teacher, cb) {
+      let filter = {
+        where: {
+          teacherId: teacher,
+        },
+        include: [
+          {
+            relation: "grade",
+            scope: {
+              order: "name",
+            },
+          },
+          "group",
+        ],
+      };
+      TeacherGroup.find(filter, (err, teacherGroups) => {
+        if (err) return cb(err);
+        return cb(null, teacherGroups);
+      });
+    };
+
+    TeacherGroup.FindByGroup = function(filterData,cb){
+        let filter= {
+            where: {
+                teacherId: filterData.teacherId,
+                gradeId: filterData.gradeId,
+                groupId: filterData.groupId,
+                schoolId: filterData.schoolId
+            }
+        };
+        TeacherGroup.findOne(filter,(err,teacherGroup)=>{
+            if (err) return cb(err);
+            return cb(null, teacherGroup);
+        });
+    }
+    
+    TeacherGroup.SetMasterKey = function (newPassword, cb) {
+      TeacherGroup.FindByGroup(newPassword, (err, teacherGroup) => {
+        if (err) return cb(err);
+        if (!teacherGroup)
+          return cb("No se encontró el grupo al que intentas modificar");
+        teacherGroup.masterKey = newPassword.new;
+        teacherGroup.wasPasswordSet = true;
+        teacherGroup.save((err, saved) => {
+          if (err) return cb(err);
+          TeacherGroup.app.models.StudentGroup.SetMasterKeyAsSet(
+            newPassword,
+            (err, result) => {
+              if (err) return cb(err);
+              return cb(null, teacherGroup);
+            }
+          );
+        });
+      });
+    };
 };

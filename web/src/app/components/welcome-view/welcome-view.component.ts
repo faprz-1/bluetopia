@@ -56,7 +56,6 @@ export class WelcomeViewComponent implements OnInit {
       case 'Teacher': route += `/registrar-estudiantes`; break;
       default: route += `/registrar-maestros`; break;
     }
-    console.log(route);
     this.nav.GoTo(`${route}/csv`);
   }
 

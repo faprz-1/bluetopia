@@ -41,4 +41,40 @@ module.exports = function(StudentGroup) {
         });
     }
 
+    StudentGroup.FindByGroup = function(filterData,cb){
+        let filter= {
+            where: {
+                gradeId: filterData.gradeId,
+                groupId: filterData.groupId,
+                schoolId: filterData.schoolId
+            },
+            include: 'student'
+        };
+        StudentGroup.find(filter,(err,teacherGroup)=>{
+            if (err) return cb(err);
+            return cb(null, teacherGroup);
+        });
+    }
+
+    StudentGroup.SetMasterKeyAsSet = function(group,cb) {
+        StudentGroup.FindByGroup(group,(err,studentsInGroup)=>{
+            if (err) return cb(err);
+            if(!studentsInGroup || studentsInGroup.length == 0) return cb(null,[]);
+            studentsInGroup.forEach((studentInGroup,i) => {
+                let studentInGroupJSON = JSON.parse(JSON.stringify(studentInGroup));
+                studentInGroup.wasPasswordSet = true;
+                studentInGroup.save((err,saved)=>{
+                    if (err) return cb(err);
+                    let newPassword = {
+                        newPassword:group.new,
+                        userId: studentInGroupJSON.student.userId
+                    }
+                    StudentGroup.app.models.Student.OverridePassword(newPassword,(err,result)=>{
+                        if (err) return cb(err);
+                        if(i == studentsInGroup.length-1) return cb(null,'passwordsChanged');
+                    });
+                });
+            });
+        });
+    }
 };

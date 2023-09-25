@@ -42,6 +42,18 @@
     }
 }
 
+.no-students-message{
+    color: var(--gray-1, #3D5E81);
+    font-size: 20px;
+    font-family: Mulish;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    b{
+        color: var(--green-1, #26D7A4);
+    }
+}
+
 .checkbox-input {
     display: none;
 }

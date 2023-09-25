@@ -3,8 +3,8 @@
 module.exports = function(Event) {
 
     Event.CreateOne = function(event, callback) {
-        let resources = event.resources;
         if(!event) return callback(null, null);
+        let resources = event.resources;
         if(event.hasOwnProperty('id')) delete event.id;
         if(event.hasOwnProperty('resources')) delete event.resources;
         Event.create(event, (err, newEvent) => {
@@ -102,6 +102,12 @@ module.exports = function(Event) {
 
             return callback(null, events);
         });
+    }
+
+    Event.GetData = function(eventId, callback) {
+        Event.findById(eventId, {
+            include: ['type', {'parcialProduct': {'resources': 'file'}}]
+        }, (err, event) => callback(err, event));
     }
 
 };

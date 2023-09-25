@@ -58,7 +58,8 @@
         "CreateOne",
         "Update",
         "Delete",
-        "GetAllOfStrategy"
+        "GetAllOfStrategy",
+        "GetData"
       ]
     }
   ],
@@ -168,6 +169,30 @@
       "http": [
         {
           "path": "/OfStrategy/:strategyId",
+          "verb": "get"
+        }
+      ]
+    },
+    "GetData": {
+      "accepts": [
+        {
+          "arg": "eventId",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "returns": [
+        {
+          "arg": "event",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/:eventId",
           "verb": "get"
         }
       ]

@@ -21,7 +21,7 @@ export class CsvFileService {
     const options = {
       header: true,
       skipEmptyLines: true,
-      encoding: "ISO-8859-3",
+      encoding: "UTF-8",
       complete: (results: { data: any; }, file: any) => {
         return results.data;
       }

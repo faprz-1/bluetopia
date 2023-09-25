@@ -10,6 +10,10 @@
     "registerUid": {
       "type": "string",
       "required": false
+    },
+    "wasPasswordSet":{
+      "type":"boolean",
+      "default":false
     }
   },
   "validations": [],

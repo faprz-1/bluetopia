@@ -11,6 +11,13 @@
     },
     "teacherId": {
       "type": "number"
+    },
+    "wasPasswordSet":{
+      "type":"boolean",
+      "default":false
+    },
+    "masterKey":{
+      "type":"string"
     }
   },
   "validations": [],
@@ -32,5 +39,59 @@
     }
   },
   "acls": [],
-  "methods": {}
+  "methods": {
+    "GetGroupsByTeacher": {
+      "accepts": [
+        {
+          "arg": "teacher",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "groups",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/of/:teacher",
+          "verb": "get"
+        }
+      ]
+    },
+    "SetMasterKey": {
+      "accepts": [
+        {
+          "arg": "newKey",
+          "type": "object",
+          "required": true,
+          "description": "",
+          "http":{
+            "source": "body"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "groups",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/setKey",
+          "verb": "post"
+        }
+      ]
+    }
+  }
 }

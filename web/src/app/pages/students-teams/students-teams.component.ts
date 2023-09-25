@@ -99,7 +99,6 @@ export class StudentsTeamsComponent implements OnInit {
 
   CreateStrategyTeams() {
     let valid = true;
-    console.log(this.teams);
     this.teams.forEach(team => {
       if(team.members.some((member: any) => !member.roleId)) valid = false;
     });

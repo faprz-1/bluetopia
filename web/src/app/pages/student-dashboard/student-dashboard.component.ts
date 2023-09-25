@@ -19,7 +19,9 @@ export class StudentDashboardComponent implements OnInit {
     public navigationService: NavigationService
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.navigationService.ClearRoutes();
+  }
 
   OnMouseOver(type:string) { this.popovers[type] = true; }
 

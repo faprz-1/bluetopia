@@ -1,0 +1,59 @@
+<div class="content">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+        <app-breadcrumb [crumbs]="crumbs" theme="dark-blue"></app-breadcrumb>
+
+        <div class="d-flex flex-column gap-3">
+            <img src="assets/icons/" alt="">
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="info-card">
+        <div class="title">
+            Sobre mi
+        </div>
+        <div class="labels-card">
+            <div class="sub-title">
+                Mi nombre
+            </div>
+            <div class="text">
+                {{ (student.name) ? student.name : "" }} {{ (student.fatherLastname) ? student.fatherLastname : "" }} {{ (student.motherLastname) ? student.motherLastname : "" }}
+            </div>
+        </div>
+        <div class="labels-card">
+            <div class="sub-title">
+                Mi grado
+            </div>
+            <div class="text">
+                {{ (student.studentGroup) ? student.studentGroup.grade.name : "Sin información" }}
+            </div>
+        </div>
+        <div class="labels-card">
+            <div class="sub-title">
+                Mi grupo
+            </div>
+            <div class="text">
+                {{ (student.studentGroup) ? student.studentGroup.group.name : "Sin información" }}
+            </div>
+        </div>
+        <div class="labels-card">
+            <div class="sub-title">
+                Mi promesa en bluetopia
+            </div>
+            <div class="text" *ngIf="!canEdit">
+                {{ (student.blutopiaPromise) ? student.blutopiaPromise : "Sin información"}}
+            </div>
+            <input *ngIf="canEdit" class="blutopiaPromise" type="text" [(ngModel)]="student.blutopiaPromise" />
+        </div>
+        <div class="btn-center">
+            <button *ngIf="!canEdit" class="btn btn-edit" (click)="canEdit = true">
+                <img src="assets/icons/edit.png">
+                    Editar
+            </button>
+            <button *ngIf="canEdit" class="btn btn-save" (click)="EditPromise()">
+                <img src="assets/icons/edit.png">
+                    Guardar
+            </button>
+        </div>
+    </div>
+</div>

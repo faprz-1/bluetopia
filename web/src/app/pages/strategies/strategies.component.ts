@@ -41,7 +41,6 @@ export class StrategiesComponent implements OnInit {
     this.loading.getting = true;
     this.api.Get(`/Grades`).subscribe(grades => {
       this.grades = grades;
-      this.gradeSelected = !!this.grades.length ? this.grades[0] : null;
       this.GetGroups();
     }, err => {
       console.error("Error getting grades", err);
@@ -52,7 +51,6 @@ export class StrategiesComponent implements OnInit {
   GetGroups() {
     this.api.Get(`/Groups`).subscribe(groups => {
       this.groups = groups;
-      this.groupSelected = !!this.groups.length ? this.groups[0] : null;
       this.GetStrategies();
     }, err => {
       console.error("Error getting groups", err);
