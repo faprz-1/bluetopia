@@ -84,16 +84,16 @@ export class StudentsCsvComponent implements OnInit {
     if(!file) return;
     const FILE_READER = new FileReader();
     FILE_READER.onload = (reader) => {
-      this.csvService.ReadCSV(FILE_READER.result).then(res => {
-        console.log(res.data);
-        
+      this.csvService.ReadCSV(FILE_READER.result).then((res) => {
         this.students = this.FormatData(res.data);
+        if(this.students.length == 0) this.toast.ShowWarning("Sin alumnos por registrar");
         this.areStudentsValid = this.ValidateStudents(this.students);
-        this.step++;
+        if(this.areStudentsValid && this.students.length > 0) this.step++;
+        else this.step = 1;
       });
     };
     if(file) {
-      if(this.instructionsStep < 3) this.instructionsStep = 3;
+      if(this.instructionsStep < 3 && this.areStudentsValid && this.students.length > 0) this.instructionsStep = 3;
       FILE_READER.readAsText(file, 'UTF-8');
     }
   }
@@ -105,8 +105,6 @@ export class StudentsCsvComponent implements OnInit {
       this.dataConversions.forEach(conversion => {
         studentFormatted[conversion.newKey] = student[conversion.oldKey];
       });
-      console.log(studentFormatted);
-      
       studentFormatted.schoolId = user.schoolId;
       studentFormatted.teacherId = user.teacher.id;
       return studentFormatted;
