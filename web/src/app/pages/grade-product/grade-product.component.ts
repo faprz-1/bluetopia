@@ -95,7 +95,13 @@ export class GradeProductComponent implements OnInit {
     this.api.Get(`/Teams/${this.teamId}/WithEvaluationsOf/ParcialProduct/${this.parcialProductId}`).subscribe(
       (team) => {
         team.members = team.members.map((member: any) => {
-          member.comment = member.student?.evaluations[0]?.comment;
+          const studentEvaluaion = member.student?.evaluations[0];
+          this.studentFiles = this.studentFiles.concat((studentEvaluaion?.studentFiles || []).map((file: any) => {
+            let fileMapped = Object.assign({}, file);
+            fileMapped.owner = member.student;
+            return fileMapped;
+          }));
+          member.comment = studentEvaluaion?.comment;
           return member;
         });
         this.team = team;
