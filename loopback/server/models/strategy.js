@@ -95,7 +95,7 @@ module.exports = function(Strategy) {
             if(!onlyStrategy) {
                 let grade = strategy.grade ? strategy.grade.id : 0;
                 let group = strategy.group ? strategy.group.id : 0;
-                Strategy.app.models.StrategyGroup.UpdateStrategyGroup(strategy.id, grade,group, (err, saved) => {
+                Strategy.app.models.StrategyGroup.UpdateStrategyGroup(strategy.id, strategy.schoolId, grade, group, (err, saved) => {
                     if(err) return callback(err);
         
                     Strategy.GetData(this.id, (err, strategy) => {

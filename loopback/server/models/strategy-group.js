@@ -2,12 +2,13 @@
 
 module.exports = function(StrategyGroup) {
 
-    StrategyGroup.UpdateStrategyGroup = function(strategyId, gradeId, groupId, callback) {
+    StrategyGroup.UpdateStrategyGroup = function(strategyId, schoolId, gradeId, groupId, callback) {
         if(!strategyId && !gradeId && !groupId) return callback(null, {});
         let instance = {
             strategyId,
             gradeId,
-            groupId
+            groupId,
+            schoolId
         }
         StrategyGroup.findOrCreate({where: {strategyId}}, instance, (err, relation) => {
             if(err) return callback(err);
