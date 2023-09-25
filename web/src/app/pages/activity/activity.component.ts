@@ -57,7 +57,6 @@ export class ActivityComponent implements OnInit {
   GetStudentFiles() {
     const user = this.api.GetUser();
     const instanceId = !!this.event.parcialProduct ? this.event.parcialProduct.id : this.event.id;
-    console.log(user);
     this.api.Get(`/Evaluations/OfStudent/${user.student.id}/OfProduct/${instanceId}`).subscribe(evaluation => {
       this.evaluation = evaluation;
       this.studentFiles = evaluation.studentFiles || [];
