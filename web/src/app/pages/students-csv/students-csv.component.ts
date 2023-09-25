@@ -22,15 +22,15 @@ export class StudentsCsvComponent implements OnInit {
       newKey: 'name'
     },
     {
-      oldKey: 'Apellido P',
+      oldKey: 'Apellido Primer Apellido',
       newKey: 'fatherLastname'
     },
     {
-      oldKey: 'Apellido M',
+      oldKey: 'Segundo Apellido',
       newKey: 'motherLastname'
     },
     {
-      oldKey: 'Numero de registro',
+      oldKey: 'CURP',
       newKey: 'registerNumber'
     },
     {
