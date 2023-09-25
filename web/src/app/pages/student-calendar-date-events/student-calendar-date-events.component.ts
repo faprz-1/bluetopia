@@ -53,7 +53,7 @@ export class StudentCalendarDateEventsComponent implements OnInit {
 
   GetStudentEvents() {
     this.api.Get(`/Students/${this.api.GetUser()?.id}/Events`).subscribe(events => {
-      this.events = events.filter((event: any) => event.date.includes(this.date));
+     this.events = events.filter((event: any) => event.date !== null && event.date.includes(this.date));
       this.loading = false;
     }, err => {
       console.error("Error getting student events", err);
