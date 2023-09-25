@@ -165,6 +165,7 @@ module.exports = function(Student) {
                 {
                     relation: 'evaluations',
                     scope: {
+                        include: 'studentFiles',
                         where: parcialProductId ? {
                             parcialProductId
                         } : null

@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
+import { DownloadFileService } from 'src/app/services/download-file-service.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { ValidationService } from 'src/app/services/validation.service';
@@ -23,6 +24,7 @@ export class GradeProductComponent implements OnInit {
   student: any = null;
   team: any = null;
   parcialProduct: any = null;
+  studentFiles: Array<any> = [];
   rubricsCalifications: Array<any> = [];
   crumbs: Array<{name: string, route: string | null}> = [
     {name: 'Evaluar', route: null},
@@ -37,7 +39,8 @@ export class GradeProductComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private api: ApiService,
     private nav: NavigationService,
-    private toast: ToastService
+    private toast: ToastService,
+    private downloadService: DownloadFileService
   ) { }
 
   ngOnInit(): void {
@@ -84,6 +87,10 @@ export class GradeProductComponent implements OnInit {
     );
   }
 
+  DownloadResource(file: any) {
+    this.downloadService.Download(file.URL, file?.name);
+  }
+
   GetTeam() {
     this.api.Get(`/Teams/${this.teamId}/WithEvaluationsOf/ParcialProduct/${this.parcialProductId}`).subscribe(
       (team) => {
@@ -110,6 +117,10 @@ export class GradeProductComponent implements OnInit {
   GetStudent() {
     this.api.Get(`/Students/${this.studentId}/WithEvaluationsOf/ParcialProduct/${this.parcialProductId}`).subscribe(student => {
       this.student = student;
+      this.studentFiles = (student.evaluations[0]?.studentFiles || []).map((file: any) => {
+        file.owner = student;
+        return file;
+      });
       this.crumbs.push({ name: `${this.BuildStudentFullName(student)}`, route: null });
       let rubricsCalifications = !!student?.evaluations[0]?.rubricsCalifications ? student?.evaluations[0]?.rubricsCalifications : null;
       this.evaluationForm.setValue({
