@@ -51,7 +51,7 @@
             </button>
             <button class="btn btn-outline-primary flex-grow-1"
             *ngIf="strategy?.isByTeams === null"
-            (click)="GoToCreateStrategyTeams()" [disabled]="strategy.strategyGroup?.groupId == 0">
+            (click)="GoToCreateStrategyTeams()" [disabled]="!IsAssignTeamsEnabled()">
                 Asignar equipos
             </button>
             <button class="btn btn-outline-success flex-grow-1" (click)="GoToStrategyCalendar()">

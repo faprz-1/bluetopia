@@ -92,7 +92,7 @@ export class StudentsCsvComponent implements OnInit {
     };
     if(file) {
       if(this.instructionsStep < 3) this.instructionsStep = 3;
-      FILE_READER.readAsText(file, 'ISO-8859-3');
+      FILE_READER.readAsText(file, 'UTF-8');
     }
   }
   
@@ -104,6 +104,7 @@ export class StudentsCsvComponent implements OnInit {
         studentFormatted[conversion.newKey] = student[conversion.oldKey];
       });
       studentFormatted.schoolId = user.schoolId;
+      studentFormatted.teacherId = user.teacher.id;
       return studentFormatted;
     });
   }

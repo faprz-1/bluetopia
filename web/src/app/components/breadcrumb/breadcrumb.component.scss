@@ -7,9 +7,12 @@
     font-size: 24px;
     font-style: normal;
     line-height: normal;
-    
-    span.first-breadcrumb {
-        color: var(--green-1, #26D7A4);
-        font-size: 32px;
-    }
+}
+
+.success {
+    color: var(--green-1, #26D7A4);
+}
+
+.dark-blue {
+    color: var(--Blue-dark, #2369B5);
 }

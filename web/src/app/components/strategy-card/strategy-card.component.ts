@@ -67,4 +67,11 @@ export class StrategyCardComponent implements OnInit {
     });
   }
 
+IsAssignTeamsEnabled(){
+  if(!this.strategy.strategyGroup) return false;
+    let hasGroupAssigned = this.strategy.strategyGroup.groupId != null && this.strategy.strategyGroup.groupId != 0;
+    let hasGradeAssigned = this.strategy.strategyGroup.gradeId != null && this.strategy.strategyGroup.gradeId != 0;
+    return hasGradeAssigned && hasGroupAssigned;
+  }
+
 }
