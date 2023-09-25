@@ -12,7 +12,7 @@ module.exports = function(StrategyGroup) {
         }
         StrategyGroup.findOrCreate({where: {strategyId}}, instance, (err, relation) => {
             if(err) return callback(err);
-            StrategyGroup.updateAll({strategyId}, {gradeId, groupId}, (err, updated) => {
+            StrategyGroup.updateAll({strategyId}, {gradeId, groupId, schoolId}, (err, updated) => {
                 if(err) return callback(err);
 
                 return callback(null, updated);
