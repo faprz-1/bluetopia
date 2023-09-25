@@ -64,7 +64,7 @@ export class EventCalendarComponent implements OnInit {
     monthYear += ` ${this.year}`;
     switch (this.config.mode) {
       case 'monthly':
-      return `${moment(`${this.year}-${this.currentMonth + 1}-01`).format(`MMMM`)}`;
+      return `${moment(`${this.year}-${this.currentMonth + 1}-01`).format(`MMMM YYYY`)}`;
       case 'weekly':
         return `${this.weekFirstDay}-${this.weekLastDay} ${monthYear}`;
       default:
