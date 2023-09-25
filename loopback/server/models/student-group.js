@@ -47,7 +47,7 @@ module.exports = function(StudentGroup) {
     StudentGroup.GetMasterKey = function(registerUid,cb) {
         let filter = {
             where: {
-                where: {registerUid},
+               registerUid,
                 wasPasswordSet: true
             }
         }

@@ -5,10 +5,11 @@
     </div>
     <ng-container [formGroup]="credentialsForm">
         <div class="d-flex flex-column justify-content-center align-items-center" style="gap: 12px;">
-            <div class="text w-100 text-left">Selecciona tu número de registro</div>
-            <ng-select class="form-control with-border w-100" formControlName="studentId" placeholder="Selecciona tu número de registro" [clearable]="false">
+            <div class="text w-100 text-left">Selecciona tu CURP</div>
+            <ng-select class="form-control with-border w-100" formControlName="studentId" placeholder="Selecciona tu CURP" [clearable]="false">
                 <ng-option [value]="studentGroup.studentId" *ngFor="let studentGroup of studentGroups">{{studentGroup.student?.registerNumber}}</ng-option>
             </ng-select>
+            <span *ngIf="!credentialsForm.get('studentId')?.touched || !credentialsForm.get('studentId')?.value" class="text-small text-danger">Por favor selecciona tu CURP</span>
         </div>
         <div class="d-flex flex-column justify-content-center align-items-center" style="gap: 12px;">
             <div class="text">Crea tus credenciales</div>
@@ -21,8 +22,9 @@
                 <div class="input-icon-container">
                     <img src="assets/icons/user.svg">
                 </div>
-                <input type="text" placeholder="Usuario" formControlName="username" class="form-control with-border">
+                <input type="text" placeholder="Usuario" formControlName="username" class="form-control with-border" (change)="saver.next()">
             </div>
+            <span *ngIf="!isUsernameValid && credentialsForm.get('username')?.dirty" class="text-small text-danger">Por favor verifica tus datos</span>
             <div class="text text-left w-100" *ngIf="masterKey == null">Contraseña</div>
             <div class="text text-left w-100" *ngIf="masterKey != null">
                 Por favor ingresa la contraseña que asignó tu maestro
