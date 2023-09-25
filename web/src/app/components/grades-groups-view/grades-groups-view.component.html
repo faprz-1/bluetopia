@@ -169,6 +169,13 @@
                                 <app-control-messages [control]="passwordForm.get('confirmation')"></app-control-messages>
                             </div>
                         </div>
+                        <div class="col-12">
+                            <div class="input-container">
+                                <div class="text-small text-center">
+                                    Al cambiar la contraseña los alumnos del grupo que estén activos en la plataforma  deberán iniciar sesión con la nueva contraseña
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -178,7 +185,7 @@
                     Cancelar
                 </button>
                 <button class="btn btn-primary modal-btn"
-                (click)="SaveGroupPassword();passwordModal.hide();" [disabled]="passwordForm.invalid">
+                (click)="SaveGroupPassword();" [disabled]="passwordForm.invalid">
                     Guardar cambios
                 </button>
             </div>
