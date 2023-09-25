@@ -15,6 +15,7 @@
             <div class="text">
                 Para la contraseña te recomendamos utilizar algo que puedas recordar, puede ser tu nombre, tu color favorito , tu cumpleaños o tu personaje favorito.
             </div>
+            
             <div class="text text-left w-100">Usuario</div>
             <div class="input-container mb-2">
                 <div class="input-icon-container">
@@ -22,17 +23,27 @@
                 </div>
                 <input type="text" placeholder="Usuario" formControlName="username" class="form-control with-border">
             </div>
-            <div class="text text-left w-100">Contraseña</div>
+            <div class="text text-left w-100" *ngIf="masterKey == null">Contraseña</div>
+            <div class="text text-left w-100" *ngIf="masterKey != null">
+                Por favor ingresa la contraseña que asignó tu maestro
+            </div>
             <div class="input-container mb-2">
                 <div class="input-icon-container">
-                    <img src="assets/icons/lock.png">
+                    <img src="assets/icons/lock.svg">
                 </div>
-                <input type="password" placeholder="Contraseña" formControlName="password" class="form-control with-border">
+                <input type="password" id="password" placeholder="Contraseña" formControlName="password" class="form-control with-border">
             </div>
+            <div class="form-control form-check clickable" (click)="TogglePassword()">
+                <input class="form-check-input clickable" type="checkbox" value="" id="flexCheckChecked" [checked]="isPasswordShowing">
+                <label class="form-check-label text-small clickable" for="flexCheckChecked">
+                 {{isPasswordShowing ? 'Ocultar Contraseña':'Mostrar Contraseña'}}
+                </label>
+              </div>
+            <span *ngIf="!credentialsForm.invalid && !AreCredentialsValid()" class="text-small text-danger">Por favor verifica tus datos</span>
         </div>
     </ng-container>
     <div class="d-flex flex-column justify-content-center align-items-center" style="gap: 12px;">
-        <button class="btn btn-success" (click)="RegisterStudent()">
+        <button class="btn btn-success" (click)="RegisterStudent()" [disabled]="!AreCredentialsValid()">
             Empezar
         </button>
     </div>

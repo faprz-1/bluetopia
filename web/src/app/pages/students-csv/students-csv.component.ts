@@ -22,15 +22,15 @@ export class StudentsCsvComponent implements OnInit {
       newKey: 'name'
     },
     {
-      oldKey: 'Apellido P',
+      oldKey: 'Primer Apellido',
       newKey: 'fatherLastname'
     },
     {
-      oldKey: 'Apellido M',
+      oldKey: 'Segundo Apellido',
       newKey: 'motherLastname'
     },
     {
-      oldKey: 'Numero de registro',
+      oldKey: 'CURP',
       newKey: 'registerNumber'
     },
     {
@@ -85,6 +85,8 @@ export class StudentsCsvComponent implements OnInit {
     const FILE_READER = new FileReader();
     FILE_READER.onload = (reader) => {
       this.csvService.ReadCSV(FILE_READER.result).then(res => {
+        console.log(res.data);
+        
         this.students = this.FormatData(res.data);
         this.areStudentsValid = this.ValidateStudents(this.students);
         this.step++;
@@ -103,6 +105,8 @@ export class StudentsCsvComponent implements OnInit {
       this.dataConversions.forEach(conversion => {
         studentFormatted[conversion.newKey] = student[conversion.oldKey];
       });
+      console.log(studentFormatted);
+      
       studentFormatted.schoolId = user.schoolId;
       studentFormatted.teacherId = user.teacher.id;
       return studentFormatted;
