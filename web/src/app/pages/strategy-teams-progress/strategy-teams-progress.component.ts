@@ -19,7 +19,6 @@ export class StrategyTeamsProgressComponent implements OnInit {
     {name: 'Equipos', route: null},
     {name: 'Visualiza el progreso de tus equipos', route: null},
   ];
-
   constructor(
     private activatedRoute: ActivatedRoute,
     private api: ApiService,
@@ -44,6 +43,8 @@ export class StrategyTeamsProgressComponent implements OnInit {
   GetParams() {
     this.activatedRoute.params.subscribe(params => {
       this.strategyId = params['strategyId'];
+      this.crumbs[0].route = `/mis-estrategias`;
+      this.crumbs[1].route = `/mis-estrategias`;
       this.GetStrategy();
     });
   }

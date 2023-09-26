@@ -37,10 +37,29 @@ module.exports = function(StudentGroup) {
         }, (err, studentGroups) => {
             if(err) return callback(err);
             if(!studentGroups.length) return callback('registerUid not valid!!');
-            return callback(null, studentGroups);
+            StudentGroup.GetMasterKey(registerUid,(err,masterKey)=>{
+                if(err) return callback(err);
+                return callback(null, {studentGroups,masterKey});
+            });
         });
     }
 
+    StudentGroup.GetMasterKey = function(registerUid,cb) {
+        let filter = {
+            where: {
+               registerUid,
+                wasPasswordSet: true
+            }
+        }
+        StudentGroup.findOne(filter,(err,studentGroup)=>{
+            if(err) return cb(err);
+            StudentGroup.app.models.TeacherGroup.FindByGroup(studentGroup,(err,result)=>{
+                if(err) return cb(err);
+                if(!result) return cb(null,null);
+                return cb(null, JSON.parse(JSON.stringify(result)).masterKey);
+            });
+        });
+    }
     StudentGroup.FindByGroup = function(filterData,cb){
         let filter= {
             where: {

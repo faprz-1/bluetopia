@@ -152,7 +152,7 @@ $TemplateWeb-theme: mat.define-light-theme((
 }
 
 .clickeable {
-    cursor: pointer;
+    cursor: pointer !important;
 }
 
 .text-success {
@@ -260,6 +260,10 @@ $TemplateWeb-theme: mat.define-light-theme((
     font-family: Mulish;
     font-size: 20px;
     font-weight: 400;
+    color: #758CA6;
+}
+.text-small {
+    font-size: 1rem;
     color: #758CA6;
 }
 

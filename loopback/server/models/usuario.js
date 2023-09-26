@@ -981,4 +981,16 @@ module.exports = function(Usuario) {
         });
     }
 
+    Usuario.IsUsernameDuplicated = function(user,cb){
+        let filter = {
+            where: {
+                username:{like:`${user}`}
+            }
+        }
+        Usuario.findOne(filter,(err,user)=>{
+            if(err) return cb(err);
+            return cb(null, user === null ? false:true);
+        });
+    }
+
 };

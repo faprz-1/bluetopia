@@ -105,12 +105,12 @@ module.exports = function(TeacherGroup) {
     TeacherGroup.FindByGroup = function(filterData,cb){
         let filter= {
             where: {
-                teacherId: filterData.teacherId,
                 gradeId: filterData.gradeId,
                 groupId: filterData.groupId,
                 schoolId: filterData.schoolId
             }
         };
+        if(filterData.teacherId) filter.where.teacherId = filterData.teacherId;
         TeacherGroup.findOne(filter,(err,teacherGroup)=>{
             if (err) return cb(err);
             return cb(null, teacherGroup);
