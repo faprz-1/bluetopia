@@ -76,12 +76,6 @@
                         <div class="evaluation-col" *ngFor="let parcialProduct of strategy.parcialProducts" style="gap: 14px;">
                             <div>{{parcialProduct.name}} {{parcialProduct.event?.date | date:"dd/MM/yyyy"}}</div>
                             <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 6px;">
-                                <span class="mb-1">Entregable</span>
-                                <div class="file-box">
-                                    Archivo.pdf
-                                </div>
-                            </div>
-                            <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 6px;">
                                 <span class="mb-1">Acción</span>
                                 <button class="btn btn-primary btn-block d-flex justify-content-center align-items-center" (click)="GoToGradeTeamParcialProduct(team, parcialProduct)" style="gap: 6px;">
                                     <span *ngIf="false">Reevaluar</span>
@@ -89,7 +83,7 @@
                                     <img src="assets/icons/rate-review.svg">
                                 </button>
                             </div>
-                            <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 6px;">
+                            <!-- <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 6px;">
                                 <span class="mb-1">Entrega</span>
                                 <button class="btn btn-success btn-block">
                                     En tiempo
@@ -113,7 +107,7 @@
                                         4.5
                                     </div>
                                 </ng-container>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -132,12 +126,6 @@
                         <div class="evaluation-col flex-grow-1" *ngFor="let parcialProduct of strategy.parcialProducts" style="gap: 14px;">
                             <div>{{parcialProduct.name}} {{parcialProduct.event?.date | date:"dd/MM/yyyy"}}</div>
                             <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 6px;">
-                                <span class="mb-1">Entregable</span>
-                                <div class="file-box">
-                                    Archivo.pdf
-                                </div>
-                            </div>
-                            <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 6px;">
                                 <span class="mb-1">Acción</span>
                                 <button class="btn btn-primary btn-block d-flex justify-content-center align-items-center" (click)="GoToGradeStudentParcialProduct(student, parcialProduct)" style="gap: 6px;">
                                     <span *ngIf="false">Reevaluar</span>
@@ -145,7 +133,7 @@
                                     <img src="assets/icons/rate-review.svg">
                                 </button>
                             </div>
-                            <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 6px;">
+                            <!-- <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 6px;">
                                 <span class="mb-1">Entrega</span>
                                 <button class="btn btn-success btn-block">
                                     En tiempo
@@ -169,7 +157,7 @@
                                         4.5
                                     </div>
                                 </ng-container>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

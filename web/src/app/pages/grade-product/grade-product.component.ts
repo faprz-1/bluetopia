@@ -64,7 +64,7 @@ export class GradeProductComponent implements OnInit {
       this.studentId = params['studentId'];
       this.teamId = params['teamId'];
       this.parcialProductId = params['parcialProductId'];
-
+      this.crumbs[0].route = `/mis-estrategias/${this.strategyId}/progreso-equipos`;
       this.GetStrategy();
       if(!!this.teamId) this.GetTeam();
     });
@@ -75,7 +75,7 @@ export class GradeProductComponent implements OnInit {
       (strategy) => {
         this.strategy = strategy;
         if(!!strategy.strategyGroup) {
-          this.crumbs.push({ name: `${strategy?.strategyGroup?.grade?.name}°${strategy?.strategyGroup?.group?.name}`.toUpperCase(), route: null });
+          this.crumbs.push({ name: `${strategy?.strategyGroup?.grade?.name}°${strategy?.strategyGroup?.group?.name}`.toUpperCase(), route: `/mis-estrategias/${this.strategyId}/progreso-equipos` });
         }
         if(!strategy.isByTeams) this.GetStudent();
         if(!!strategy.parcialProducts?.length) {

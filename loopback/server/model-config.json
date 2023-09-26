@@ -58,7 +58,8 @@
           "loginBySocialMedia": true,
           "VerifyEmail": true,
           "RegisterUser": true,
-          "GetFileLibrary": true
+          "GetFileLibrary": true,
+          "IsUsernameDuplicated":true
         }
       }
     }
