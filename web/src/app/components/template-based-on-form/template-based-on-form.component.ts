@@ -416,7 +416,16 @@ export class TemplateBasedOnFormComponent implements OnInit {
       auxGrade.groups = grade.map((item: any) => item.group);
       this.grades.push(auxGrade);
     });
+    this.grades = this.SortbyName(this.grades);
   }
+
+  SortbyName(objects:any){
+    return objects.sort((a:any, b:any) => {
+      const nameA = a.name.toLowerCase();
+      const nameB = b.name.toLowerCase();
+      return nameA.localeCompare(nameB);
+    });
+  };
 
   SetGroupsOfSelectedGrade(gradeId:any){
     this.groups = [];
@@ -427,6 +436,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
       let selectedGrade = this.grades.filter((grade:any)=> grade.id == gradeId);
       this.groups = selectedGrade.length > 0 ? selectedGrade[0].groups:[];
     }
+    this.groups = this.SortbyName(this.groups);
   }
 
   AddGroup = (group: string) => {

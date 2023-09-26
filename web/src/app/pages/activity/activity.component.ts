@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import * as moment from 'moment';
 import { ApiService } from 'src/app/services/api.service';
 import { DownloadFileService } from 'src/app/services/download-file-service.service';
 import { NavigationService } from 'src/app/services/navigation.service';
@@ -20,10 +21,11 @@ export class ActivityComponent implements OnInit {
     updating: false
   };
   crumbs: Array<any> = [
-    {name: 'Mis actividades', route: null},
-    {name: 'Actividad 1', route: null},
+    {name: 'Mis actividades', route: `/inicio/student/calendario`},
+    {name: 'Actividad', route: `/inicio/student/calendario`},
   ]
 
+  maxScore = 0;
   constructor(
     private api: ApiService,
     private toast: ToastService,
@@ -47,7 +49,7 @@ export class ActivityComponent implements OnInit {
   GetEvent() {
     this.api.Get(`/Events/${this.eventId}`).subscribe(event => {
       this.event = event;
-
+      this.maxScore = this.GetMaxValueOfRubric();
       this.GetStudentFiles();
     }, err => {
       console.error("Error getting parcial product", err);
@@ -59,10 +61,22 @@ export class ActivityComponent implements OnInit {
     const instanceId = !!this.event.parcialProduct ? this.event.parcialProduct.id : this.event.id;
     this.api.Get(`/Evaluations/OfStudent/${user.student.id}/OfProduct/${instanceId}`).subscribe(evaluation => {
       this.evaluation = evaluation;
+      this.CalculateScoreOfRubric(evaluation.rubricsCalifications);
       this.studentFiles = evaluation.studentFiles || [];
     }, err => {
       console.error("Error getting student evaluation", err);
     });
+  }
+
+  GetMaxValueOfRubric(){
+    if(!this.event || !this.event.parcialProduct || !this.event.parcialProduct.rubric) return 100;
+    let concepts = this.event.parcialProduct.rubric;
+    let max = 0;
+    concepts.forEach((concept: any)=>{
+      const maxObject = concept.concepts.reduce((max:any, obj:any) => (obj.value > max.value ? obj : max), concept.concepts[0]);
+      max += maxObject.value;
+    });
+    return max;
   }
 
   GetEventDetails(): {icon: string, type: string, title: string, instructions: string} {
@@ -97,6 +111,7 @@ export class ActivityComponent implements OnInit {
       details.instructions = this.event?.parcialProduct.instructions;
     }
 
+    this.GetMaxValueOfRubric();
     return details;
   }
 
@@ -152,4 +167,8 @@ export class ActivityComponent implements OnInit {
     });
   }
 
+  CalculateScoreOfRubric(scores:any){
+    const totalScore = scores.reduce((total:any, score:any) => total + score, 0);
+    this.evaluation.calification = (totalScore/this.maxScore)*100
+  }
 }

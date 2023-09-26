@@ -56,14 +56,14 @@
                     <div class="d-flex align-items-center" style="gap: 12px;" *ngIf="step != 1">
                         <div class="input-container input-small">
                             <ng-select #gradeSelect class="ng-select form-control with-border" [items]="grades"
-                                bindLabel="name" placeholder="Grado" addTagText="Agregar" [addTag]="AddGrade"
+                                bindLabel="name" placeholder="Grado" 
                                 [disabled]="loading.grade" [loading]="loading.grade" [(ngModel)]="grade"
                                 (change)="saver.next()">
                             </ng-select>
                         </div>
                         <div class="input-container input-small" *ngIf="step != 1">
                             <ng-select #groupSelect class="ng-select form-control with-border groups" [items]="groups"
-                                bindLabel="name" placeholder="Grupo" addTagText="Agregar" [addTag]="AddGroup"
+                                bindLabel="name" placeholder="Grupo"
                                 [disabled]="!grade || groups.length === 0 || loading.group" [loading]="loading.group" [(ngModel)]="group"
                                 (change)="saver.next()">
                             </ng-select>

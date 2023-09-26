@@ -26,6 +26,7 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
   @Output() onReload: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('addStudentModal') addStudentModal?: ModalDirective;
+  @ViewChild('passwordModal') passwordModal?: ModalDirective;
 
   grades: Array<any> = [];
   selectedGrade: any = null;
@@ -157,8 +158,8 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
   }
 
   SetMasterKey(student: any){
-    if(this.teacherGroups.length == 0) return student;
-    let matchingGroup = this.teacherGroups.filter((group:any)=> group?.groupId == student.studentGroup?.groupId && group?.gradeId == student.studentGroup?.gradeId);
+    if(this.teacherGroups.length == 0 || !student.studentGroup) return student;
+    let matchingGroup = this.teacherGroups.filter((group:any)=> group.groupId == student.studentGroup.groupId && group.gradeId == student.studentGroup.gradeId);
     if(matchingGroup.length == 0) return student;
     student.masterKey = matchingGroup[0].masterKey;
     return student;
@@ -263,6 +264,7 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
       this.passwordForm.get('currentPassword')?.setValue(newPassword.new);
       this.toast.ShowSuccess(`Contraseña creada`);
       this.loading.password = false;
+      this.passwordModal?.hide();
       this.GetTeacherData();
     },
     (err) => {
