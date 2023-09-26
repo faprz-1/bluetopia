@@ -106,11 +106,10 @@ export class RubricComponent implements OnInit {
       calification += (!!rubric.conceptSelected ? rubric.conceptSelected.value : 0);
       maxCalification += max;
     });
-
     this.onEvaluation.emit({
       maxCalification,
       calification,
-      rubricsCalifications: this.rubrics.map(rubric => rubric.conceptSelected?.value)
+      rubricsCalifications: this.rubrics.map(rubric => {rubric.conceptSelected?.value})
     });
   }
 

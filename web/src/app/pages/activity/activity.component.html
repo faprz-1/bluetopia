@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-12 col-md-6 col-lg-4 align-self-stretch mb-4">
             <div class="card-container position-relative">
-                <img class="absolute-top-right clickeable" src="assets/icons/heart_plus.png">
+                <!-- <img class="absolute-top-right clickeable" src="assets/icons/heart_plus.png"> -->
                 <div class="d-flex w-100 align-items-center justify-content-start gap-2">
                     <img src="assets/icons/calendar-event-types/{{GetEventDetails().icon}}">
                     <div class="sub-title-activity">{{GetEventDetails().type}}</div>
@@ -19,7 +19,7 @@
                 </div>
                 <div class="background-activity">
                     <div class="d-flex flex-column align-items-start gap-2">
-                        <div class="text-activity">Titulo</div>
+                        <div class="text-activity">Título</div>
                         <div class="subtext-activity">{{GetEventDetails().title}}</div>
                     </div>
                 </div>
@@ -33,19 +33,19 @@
                     <div class="d-flex flex-column align-items-start gap-2">
                         <div class="text-activity">Calificación</div>
                         <div class="subtext-activity" *ngIf="evaluation?.hasBeenEvaluated">{{evaluation.calification}} / 100</div>
-                        <div class="subtext-activity" *ngIf="!evaluation?.hasBeenEvaluated">-- / 100</div>
+                        <div class="subtext-activity" *ngIf="!evaluation?.hasBeenEvaluated">Sin Registro</div>
                     </div>
                 </div>
                 <div class="background-activity">
                     <div class="d-flex flex-column align-items-start gap-2">
                         <div class="text-activity">Comentarios</div>
                         <div class="subtext-activity" *ngIf="evaluation?.hasBeenEvaluated">{{evaluation.comment ? evaluation.comment : 'Sin comentarios'}}</div>
-                        <div class="subtext-activity" *ngIf="!evaluation?.hasBeenEvaluated">--</div>
+                        <div class="subtext-activity" *ngIf="!evaluation?.hasBeenEvaluated">Sin Registro</div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-6 col-lg-4 align-self-stretch mb-4">
+        <div class="col-12 col-md-6 col-lg-4 align-self-stretch mb-4" *ngIf="event?.parcialProduct?.resources.length > 0">
             <div class="card-container">
                 <div class="d-flex align-items-start gap-3">
                     <img class="icon-padding " src="assets/icons/books.png " alt="back-arrow ">
@@ -66,10 +66,14 @@
             </div>
         </div>
         <div class="col-12 col-md-6 col-lg-4 align-self-stretch mb-4">
-            <div class="card-container justify-content-between">
+            <div class="card-container justify-content-between"  *ngIf="!evaluation?.hasBeenEvaluated">
                 <div class="d-flex align-items-center gap-2">
                     <img class="bullet-point " src="assets/icons/bullet-point.png " alt="back-arrow ">
                     <div class="sub-titles ">Subir mi actividad resuelta</div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <img class="bullet-point " src="assets/icons/bullet-point.png " alt="back-arrow ">
+                    <div class="sub-titles ">Mi actividad resuelta</div>
                 </div>
                 <div class="d-flex flex-column align-self-stretch gap-3 p-3 file-input-box">
                     <div class="text-center" *ngIf="!studentFiles?.length">
@@ -103,12 +107,33 @@
                 <div class="d-flex flex-column align-self-stretch align-items-center justify-content-center gap-4">
                     <button class="btn btn-outline-purple btn-block" (click)="ToggleMarkAsDone()">
                         <span *ngIf="!loading.updating">
-                            {{evaluation?.isDone ? 'Deshacer entrega' : 'Marcar como completado'}}
+                            {{evaluation?.isDone  ? 'Deshacer entrega' : 'Marcar como completado'}}
                         </span>
                         <span *ngIf="loading.updating">
                             <i class="zmdi zmdi-spinner zmdi-hc-lg zmdi-hc-spin"></i>
                         </span>
                     </button>
+                </div>
+            </div>
+            <div class="card-container" *ngIf="evaluation?.hasBeenEvaluated">
+                <div class="d-flex align-items-center">
+                    <img class="bullet-point " src="assets/icons/bullet-point.png " alt="back-arrow ">
+                    <div class="sub-titles ">Mi actividad resuelta</div>
+                </div>
+                <div class="d-flex flex-column align-self-stretch gap-3 p-3 file-input-box">
+                    <div class="file-card" *ngFor="let file of studentFiles">
+                        <div class="d-flex align-items-center justify-content-between gap-2">
+                            <img src="assets/icons/pdf-icon.png">
+                            <div class="file-name">
+                                {{file.name}}
+                            </div>
+                            <!-- <img class="clickeable" src="assets/icons/more_vert.svg"> -->
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="zmdi zmdi-download zmdi-hc-lg text-white clickeable" (click)="DownloadResource(file)"></i>
+                                <i class="zmdi zmdi-close-circle-o zmdi-hc-lg text-white clickeable" *ngIf="!evaluation?.isDone"(click)="DeleteFile(file)"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
