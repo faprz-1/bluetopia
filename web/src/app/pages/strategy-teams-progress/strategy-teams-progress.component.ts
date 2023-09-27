@@ -94,7 +94,8 @@ export class StrategyTeamsProgressComponent implements OnInit {
   ToggleIsByTeams() {
     let strategy = {
       id: this.strategyId,
-      isByTeams: !!this.strategy ? !this.strategy.isByTeams : false
+      isByTeams: !!this.strategy ? !this.strategy.isByTeams : false,
+      useCustomRoles: false,
     }
     this.api.Patch(`/Strategies/${this.strategyId}/OnlyStrategy/1`, {strategy}).subscribe(strategySaved => {
       if(strategy.isByTeams) this.nav.GoToUserRoute(`mis-estrategias/${this.strategyId}/crear-equipos`);
