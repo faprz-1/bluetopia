@@ -756,7 +756,7 @@
     </div>
 
     <div class="d-flex justify-content-end w-100 my-5">
-        <button class="btn btn-primary continue-button" (click)="ChangeStep()">
+        <button [disabled]="canContinue == false && (step == 2 ||  step == 4)" class="btn btn-primary continue-button" (click)="ChangeStep()">
             Continuar
         </button>
     </div>

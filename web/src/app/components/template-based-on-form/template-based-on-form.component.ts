@@ -65,6 +65,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
   selectedEvaluationType: any = null;
   finalParcialProduct: any = null;
   finalEvent: any = null;
+  canContinue: boolean = true;
   loading: any = {
     grade: false,
     group: false,
@@ -235,7 +236,6 @@ export class TemplateBasedOnFormComponent implements OnInit {
             )
           : [],
     });
-
     this.InitializeDatePickers();
   }
 
@@ -252,6 +252,19 @@ export class TemplateBasedOnFormComponent implements OnInit {
     this.InitializeDatePickers();
   }
 
+  ThatDateAlreadyPassed(date: any){
+    let startDate = moment(date[0])
+    let endDate = moment(date[1])
+    let today = moment();
+   if(startDate.isBefore(today, 'day')) { 
+    this.toast.ShowError('La fecha proporcionada ya ha pasado, por favor elija otra fecha')
+  this.strategyDateRangePicker = undefined;
+  this.canContinue = false;
+   }else{
+    this.canContinue = true;
+   }
+  }
+
   InitializeDatePickers() {
     setTimeout(() => {
       switch (this.step) {
@@ -260,6 +273,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
             this.strategyDateRangePicker.bsValue = this.GetDateRangePickerValue(
               [this.strategy.startDate, this.strategy.endDate]
             );
+
           break;
         case 3:
           if (
@@ -269,6 +283,8 @@ export class TemplateBasedOnFormComponent implements OnInit {
             this.parcialProductDatePicker.bsValue = new Date(
               this.parcialProductForm.get('date')?.value
             );
+            console.log(this.parcialProductDatePicker);
+            
           break;
         case 4:
           if (
@@ -277,7 +293,9 @@ export class TemplateBasedOnFormComponent implements OnInit {
           )
             this.finalParcialProductDatePicker.bsValue = new Date(
               this.parcialProductForm.get('date')?.value
-            );
+              );
+            
+            
           break;
         case 5:
           if (
@@ -754,6 +772,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     if (dates.some((date) => !date)) return [];
     let start = new Date(dates[0]);
     let end = new Date(dates[1]);
+    this.ThatDateAlreadyPassed([start, end]);
     return [start, end];
   }
 
