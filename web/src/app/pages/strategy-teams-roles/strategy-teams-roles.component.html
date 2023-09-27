@@ -81,7 +81,7 @@
                                                     <ng-option *ngFor="let role of team.roles" [value]="role.id">{{!!role.name ? role.name : role}}</ng-option>
                                                 </ng-select>
                                                 <div class="member justify-content-between gap-2 px-3" *ngIf="!!member.roleId">
-                                                    {{GetRoleById(member.roleId).name}}
+                                                    {{GetRoleById(member.roleId)?.name}}
                                                     <img class="clickeable" (click)="RemoveMemberRole(team, member)" src="assets/icons/delete.svg" alt="delete">
                                                 </div>
                                             </div>

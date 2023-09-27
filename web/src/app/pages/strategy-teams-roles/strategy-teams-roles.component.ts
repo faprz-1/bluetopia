@@ -93,14 +93,23 @@ export class StrategyTeamsRolesComponent implements OnInit {
     this.api.Get(`/Strategies/${this.strategyId}`).subscribe(
       (strategy) => {
         this.strategy = strategy;
-        this.rolesToUse = strategy.useCustomRoles ? 'custom' : 'default';
-        if(!!strategy.teams?.length) this.strategyTeams = strategy.teams;
-        if(!!strategy.customRoles?.length) this.customRoles = strategy.customRoles;
-        this.OnRolesToUseChange();
+        this.InitializeVariables();
       }, (err) => {
         console.error('Error getting strategy', err);
       }
-    );
+      );
+    }
+    
+    InitializeVariables() {
+    this.rolesToUse = this.strategy.useCustomRoles ? 'custom' : 'default';
+    if(!!this.strategy.customRoles?.length) this.customRoles = this.strategy.customRoles;
+    this.strategyTeams = this.strategy?.teams || [];
+    this.OnRolesToUseChange(false);
+    this.strategyTeams.forEach(team => {
+      team.members.forEach((member: any) => {
+        this.OnTeamMemberRoleSelected(team, member.roleId, false);
+      });
+    });
   }
 
   SaveStrategy() {
@@ -129,30 +138,30 @@ export class StrategyTeamsRolesComponent implements OnInit {
     });
   }
 
-  OnRolesToUseChange() {
+  OnRolesToUseChange(changeTriggerdeFromView: boolean = true) {
     switch (this.rolesToUse) {
       case 'default': this.roleOptions = this.roles; break;
       case 'custom': this.roleOptions = this.customRoles; break;
     }
     this.strategyTeams.forEach(team => {
       team.roles = Array.from(this.roleOptions);
+      if(changeTriggerdeFromView) team.members.forEach((member: any) => member.roleId = null);
     });
     this.saver.next();
   }
 
-  OnTeamMemberRoleSelected(team: any, roleId: number) {
+  OnTeamMemberRoleSelected(team: any, roleId: number, save: boolean = true) {
     if(!!roleId) {
       const roleIdx = team.roles.findIndex((role: any) => role.id == roleId);
       if(roleIdx != -1) team.roles.splice(roleIdx, 1);
     }
-    else {
-      team.roles.push
-    }
+    if(save) this.saver.next();
   }
-
+  
   RemoveMemberRole(team: any, member: any) {
     team.roles.push(this.GetRoleById(member.roleId));
     member.roleId = null;
+    this.saver.next();
   }
 
   GetRoleById(roleId: any) {

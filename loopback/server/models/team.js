@@ -4,7 +4,6 @@ module.exports = function(Team) {
 
     Team.observe('before delete', (ctx, next) => {
         let instanceThatTriggered = ctx.instance || ctx.data;
-        console.log(instanceThatTriggered);
         if(!!instanceThatTriggered) {
             Team.app.models.TeamStudent.destroyAll({teamId: instanceThatTriggered.relatedModelId}, (err, destroyed) => {
                 if(err) return next(err);
