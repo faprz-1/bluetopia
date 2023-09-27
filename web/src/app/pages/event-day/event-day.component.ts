@@ -43,6 +43,14 @@ export class EventDayComponent implements OnInit {
 
   ngOnInit(): void {
     this.GetParams();
+    this.ThatDayHasNotPassed();  
+  }
+
+ ThatDayHasNotPassed() {
+    let selectedDate = moment(this.date).tz(environment.timeZone)
+    let today = moment();
+   if(selectedDate.isBefore(today, 'day') && !selectedDate.isSame(today, 'day')) return false;
+   else return true;
   }
 
   GetParams() {
