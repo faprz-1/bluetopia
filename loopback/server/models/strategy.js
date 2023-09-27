@@ -126,6 +126,7 @@ module.exports = function(Strategy) {
                     ]
                 },
                 'template',
+                'customRoles',
                 'user',
                 {'events':'parcialProduct'},
                 {'strategyGroup': ['grade', 'group']},

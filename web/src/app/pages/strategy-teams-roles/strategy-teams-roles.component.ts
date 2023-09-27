@@ -40,7 +40,6 @@ export class StrategyTeamsRolesComponent implements OnInit {
       this.SaveAll();
     });
     this.GetRoles();
-    this.GetParams();
   }
 
   BuildStudentFullName(student: any): string {
@@ -83,7 +82,10 @@ export class StrategyTeamsRolesComponent implements OnInit {
   GetRoles() {
     this.api.Get(`/TeamRoles`).subscribe(roles => {
       this.roles = roles;
-      this.roleOptions = Array.from(roles);
+
+      this.GetParams();
+    }, err => {
+      console.error("Error getting roles", err);
     });
   }
 
@@ -94,6 +96,7 @@ export class StrategyTeamsRolesComponent implements OnInit {
         this.rolesToUse = strategy.useCustomRoles ? 'custom' : 'default';
         if(!!strategy.teams?.length) this.strategyTeams = strategy.teams;
         if(!!strategy.customRoles?.length) this.customRoles = strategy.customRoles;
+        this.OnRolesToUseChange();
       }, (err) => {
         console.error('Error getting strategy', err);
       }
@@ -131,7 +134,29 @@ export class StrategyTeamsRolesComponent implements OnInit {
       case 'default': this.roleOptions = this.roles; break;
       case 'custom': this.roleOptions = this.customRoles; break;
     }
+    this.strategyTeams.forEach(team => {
+      team.roles = Array.from(this.roleOptions);
+    });
     this.saver.next();
+  }
+
+  OnTeamMemberRoleSelected(team: any, roleId: number) {
+    if(!!roleId) {
+      const roleIdx = team.roles.findIndex((role: any) => role.id == roleId);
+      if(roleIdx != -1) team.roles.splice(roleIdx, 1);
+    }
+    else {
+      team.roles.push
+    }
+  }
+
+  RemoveMemberRole(team: any, member: any) {
+    team.roles.push(this.GetRoleById(member.roleId));
+    member.roleId = null;
+  }
+
+  GetRoleById(roleId: any) {
+    return this.roleOptions.find((role: any) => role.id == roleId);
   }
 
 }
