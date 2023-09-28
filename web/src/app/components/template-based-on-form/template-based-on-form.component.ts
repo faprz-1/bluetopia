@@ -123,6 +123,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
   }
   saver = new Subject();
   subSelected: any = null;
+
   constructor(
     private api: ApiService,
     private activatedRoute: ActivatedRoute,
@@ -254,11 +255,9 @@ export class TemplateBasedOnFormComponent implements OnInit {
 
   ThatDateAlreadyPassed(date: any){
     let startDate = moment(date[0])
-    let endDate = moment(date[1])
     let today = moment();
    if(startDate.isBefore(today, 'day')) { 
     this.toast.ShowError('La fecha proporcionada ya ha pasado, por favor elija otra fecha')
-  this.strategyDateRangePicker = undefined;
   this.canContinue = false;
    }else{
     this.canContinue = true;
@@ -283,8 +282,6 @@ export class TemplateBasedOnFormComponent implements OnInit {
             this.parcialProductDatePicker.bsValue = new Date(
               this.parcialProductForm.get('date')?.value
             );
-            console.log(this.parcialProductDatePicker);
-            
           break;
         case 4:
           if (
@@ -294,8 +291,6 @@ export class TemplateBasedOnFormComponent implements OnInit {
             this.finalParcialProductDatePicker.bsValue = new Date(
               this.parcialProductForm.get('date')?.value
               );
-            
-            
           break;
         case 5:
           if (
