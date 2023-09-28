@@ -131,7 +131,8 @@
         "GetAllOfTeacher",
         "GetStudents",
         "Delete",
-        "GetSuggested"
+        "GetSuggested",
+        "ResetTeams"
       ]
     }
   ],
@@ -395,6 +396,30 @@
         {
           "path": "/Suggested/:strategySubject",
           "verb": "get"
+        }
+      ]
+    },
+    "ResetTeams": {
+      "accepts": [
+        {
+          "arg": "strategyId",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "returns": [
+        {
+          "arg": "strategyTeams",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/:strategyId/ResetTeams",
+          "verb": "patch"
         }
       ]
     }

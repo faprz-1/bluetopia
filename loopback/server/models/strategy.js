@@ -243,4 +243,22 @@ module.exports = function(Strategy) {
         });
     }
 
+    Strategy.ResetTeams = function(strategyId, callback) {
+        Strategy.app.models.Team.find({
+            where: {strategyId}
+        }, (err, strategyTeams) => {
+            if(err) return callback(err);
+
+            let cont = 0, limit = strategyTeams.length;
+            if(!limit) return callback(null, []);
+            strategyTeams.forEach(team => {
+                team.ResetMembers((err, updated) => {
+                    if(err) return callback(err);
+
+                    if(++cont == limit) return callback(null, strategyTeams);
+                });
+            });
+        });
+    }
+
 };

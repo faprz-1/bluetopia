@@ -106,6 +106,14 @@ module.exports = function(Team) {
         });
     }
 
+    Team.prototype.ResetMembers = function(callback) {
+        Team.app.models.TeamStudent.updateAll({teamId: this.id}, {roleId: null}, (err, updated) => {
+            if(err) return callback(err);
+
+            return callback(null, updated);
+        });
+    }
+
     Team.prototype.GetData = function(parcialProductId, callback) {
         Team.findById(this.id, {
             include: [{
