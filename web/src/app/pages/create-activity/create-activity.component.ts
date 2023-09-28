@@ -55,6 +55,16 @@ export class CreateActivityComponent implements OnInit {
   }
 }
 
+ThatDateAlreadyPassed(date: any){
+  let startDate = moment(date[0])
+  let today = moment();
+ if(startDate.isBefore(today, 'day')) { 
+  this.toast.ShowError('La fecha proporcionada ya ha pasado, por favor elija otra fecha')
+this.canContinue = false;
+ }else{
+  this.canContinue = true;
+ }
+}
   GetParams() {
     this.activatedRoute.params.subscribe(params => {
       this.strategyId = params['strategyId'];

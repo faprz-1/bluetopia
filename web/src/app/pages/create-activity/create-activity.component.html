@@ -61,7 +61,8 @@
                     Selecciona la fecha
                 </div>
                 <div class="input-container">
-                    <input #parcialProductDatePicker="bsDatepicker" class="form-control no-icon with-border" type="text" formControlName="date" placeholder="Fecha" [bsConfig]="{ adaptivePosition: true, containerClass: 'theme-dark-blue' }" bsDatepicker>
+                    <input #parcialProductDatePicker="bsDatepicker" class="form-control no-icon with-border" type="text" formControlName="date" placeholder="Fecha" [bsConfig]="{ adaptivePosition: true, containerClass: 'theme-dark-blue' }" bsDatepicker
+                    (bsValueChange)="ThatDateAlreadyPassed([$event])">
                 </div>
             </div>
         </div>
