@@ -50,7 +50,7 @@
                     Escribe la calificación máxima
                 </div>
                 <div class="input-container with-border-thin">
-                    <input class="form-control no-icon" type="number" placeholder="Calificación máxima" formControlName="maxCalification">
+                    <input (ngModelChange)="IsANumber(activityForm.get('maxCalification')?.value)" class="form-control no-icon" type="text" placeholder="Calificación máxima" formControlName="maxCalification">
                 </div>
             </div>
         </div>
@@ -103,7 +103,7 @@
 
     </form>
     <div class="d-flex justify-content-end my-4">
-        <button class="btn btn-primary btn-bigger" (click)="SaveActivity()">
+        <button [disabled]="canContinue == false" class="btn btn-primary btn-bigger" (click)="SaveActivity()">
             <span *ngIf="!loading">Continuar</span>
             <span *ngIf="loading"><i class="zmdi zmdi-spinner zmdi-hc-lg zmdi-hc-spin"></i></span>
         </button>

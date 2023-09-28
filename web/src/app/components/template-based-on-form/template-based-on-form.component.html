@@ -387,7 +387,8 @@
                                             </div>
                                             <div class="input-container with-border-thin">
                                                 <input class="form-control no-icon" type="text"
-                                                    formControlName="maxCalification" placeholder="Calificación máxima">
+                                                    formControlName="maxCalification" placeholder="Calificación máxima"  
+                                                    (ngModelChange)="IsANumber(parcialProductForm.get('maxCalification')?.value)">
                                             </div>
                                         </div>
                                     </div>
@@ -461,7 +462,7 @@
                                     <button class="btn btn-outline-success" (click)="CancelParcialProduct()">
                                         Cancelar
                                     </button>
-                                    <button class="btn btn-success" (click)="SaveParcialProduct()">
+                                    <button [disabled]="canContinue == false && (step == 2 || step == 3 || step == 4)" class="btn btn-success" (click)="SaveParcialProduct()">
                                         Guardar producto
                                     </button>
                                 </div>
@@ -620,7 +621,8 @@
                                     <div class="input-container with-border-thin">
                                         <input class="form-control no-icon" type="text"
                                             formControlName="maxCalification" placeholder="Calificación máxima"
-                                            (change)="saver.next()">
+                                            (change)="saver.next()" 
+                                            (ngModelChange)="IsANumber(parcialProductForm.get('maxCalification')?.value)">
                                     </div>
                                 </div>
                             </div>
@@ -692,7 +694,7 @@
                             <button class="btn btn-outline-success" (click)="CancelParcialProduct()">
                                 Cancelar
                             </button>
-                            <button class="btn btn-success" (click)="SaveParcialProduct(true)">
+                            <button [disabled]="canContinue == false && (step == 2 || step == 3 || step == 4)" class="btn btn-success" (click)="SaveParcialProduct(true)">
                                 Guardar producto
                             </button>
                         </div>

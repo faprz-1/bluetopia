@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, NgZone, OnInit, Output, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { BsModalRef, BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
@@ -131,7 +131,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     private modalService: BsModalService,
     private toast: ToastService,
     private zone: NgZone
-  ) {}
+  ) {  }
 
   ngOnInit(): void {
     this.GetTeacherGroups();
@@ -147,6 +147,15 @@ export class TemplateBasedOnFormComponent implements OnInit {
 
     this.saver.pipe(debounceTime(500)).subscribe((data) => this.Autosave());
   }
+
+  IsANumber(input: any){
+    if (isNaN(Number(input))) {
+       this.toast.ShowError('Solo valores numéricos')
+       this.canContinue = false;
+  }else {
+    this.canContinue = true;
+  }
+}
 
   OpenModal(template: any) {
     this.modalRef = this.modalService.show(template, { backdrop: 'static' });
