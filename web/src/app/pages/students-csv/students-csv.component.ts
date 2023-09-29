@@ -18,11 +18,11 @@ export class StudentsCsvComponent implements OnInit {
 
   dataConversions: Array<any> = [
     {
-      oldKey: 'Nombre',
+      oldKey: 'Nombre (Campo obligatoio)',
       newKey: 'name'
     },
     {
-      oldKey: 'Primer Apellido',
+      oldKey: 'Primer Apellido (Campo obligatoio)',
       newKey: 'fatherLastname'
     },
     {
@@ -30,15 +30,15 @@ export class StudentsCsvComponent implements OnInit {
       newKey: 'motherLastname'
     },
     {
-      oldKey: 'CURP',
+      oldKey: 'CURP (Campo obligatoio)',
       newKey: 'registerNumber'
     },
     {
-      oldKey: 'Grado',
+      oldKey: 'Grado (Campo obligatoio)',
       newKey: 'grade'
     },
     {
-      oldKey: 'Grupo',
+      oldKey: 'Grupo (Campo obligatoio)',
       newKey: 'group'
     },
   ];

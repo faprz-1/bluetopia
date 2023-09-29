@@ -10,7 +10,7 @@ module.exports = function(Subject) {
                 where: {}
             };
             if(subject.id) filter.where['id'] = subject.id;
-            else filter.where['name'] = {like: `%${subject.name}%`};
+            else filter.where['name'] = subject.name;
             Subject.findOrCreate(filter, subject, (err,instance)=>{
                 if(err) return callback(err);
                 return callback(null,instance);

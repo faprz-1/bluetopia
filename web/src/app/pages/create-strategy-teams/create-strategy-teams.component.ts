@@ -5,6 +5,7 @@ import { NgSelectComponent } from '@ng-select/ng-select';
 import { ApiService } from 'src/app/services/api.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { Subject } from 'rxjs';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-create-strategy-teams',
@@ -37,7 +38,8 @@ export class CreateStrategyTeamsComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private api: ApiService,
-    private nav: NavigationService
+    private nav: NavigationService,
+    private toast: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -66,6 +68,10 @@ export class CreateStrategyTeamsComponent implements OnInit {
       await this.SaveStrategyTeams();
       this.saving = false;
       if(goToNextStep) {
+        if(!!this.studentsOptions.length) {
+          this.toast.ShowError(`${this.studentsOptions.length} estudiante(s) no tienen equipo asignado`);
+          return;
+        }
         let formValue = this.strategyTeamsForm.value;
         this.nav.GoToUserRoute(
           `mis-estrategias/${this.strategyId}/${formValue.isByTeams ? 'asignar-roles' : 'progreso-equipos'}`
@@ -148,7 +154,7 @@ export class CreateStrategyTeamsComponent implements OnInit {
     if(fillMode == 'auto') {
       const teamsNumber = this.strategyTeams.length;
       if(teamsNumber > 0) {
-        this.OnTeamsOptionSelected(teamsNumber);
+        this.ResetStrategyTeams();
         let studentsPerTeam = Math.ceil(this.studentsOptions.length / teamsNumber);
         this.strategyTeams.forEach(team => {
           for (let i = 0; i < studentsPerTeam; i++) {
@@ -160,13 +166,21 @@ export class CreateStrategyTeamsComponent implements OnInit {
     }
   }
 
-  OnTeamsOptionSelected(teamsNumber: number) {
+  ResetStrategyTeams() {
+    const teamsNumber = this.strategyTeamsForm.get('teamsNumber')?.value;
     if(!!teamsNumber) {
       this.studentsOptions = Array.from(this.students);
       this.strategyTeams = [];
       for (let i = 0; i < teamsNumber; i++) {
         this.strategyTeams.push(Object.assign({}, {members: []}));
       }
+    }
+  }
+
+  OnTeamsOptionSelected(teamsNumber: number) {
+    if(!!teamsNumber) {
+      this.ResetStrategyTeams();
+      this.OnFillModeChange(this.strategyTeamsForm.get('fillMode')?.value);
       this.saver.next();
     }
   }
