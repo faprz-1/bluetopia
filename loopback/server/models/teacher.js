@@ -29,7 +29,7 @@ module.exports = function(Teacher) {
                 Teacher.create(teacher, (err, newTeacher) => {
                     if(err) return callback(err);
 
-                    let cont = 0, limit = subjects.length;
+                    let cont = 0, limit = !!subjects ? subjects.length : 0;
                     if(!newTeacher.userId) {
                         newTeacher.Activate(null, (err, teacherActive) => {
                             if(err) return callback(err);

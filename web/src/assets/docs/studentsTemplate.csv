@@ -1,1 +1,1 @@
-Nombre,Primer Apellido,Segundo Apellido,CURP,Grado,Grupo
+Nombre (Campo obligatoio),Primer Apellido (Campo obligatoio),Segundo Apellido,CURP (Campo obligatoio),Grado (Campo obligatoio),Grupo (Campo obligatoio)
