@@ -69,7 +69,9 @@ export class RubricComponent implements OnInit {
       })
     });
   }
+
   RemoveRow() {
+    if(!this.canEdit) return;
     if(this.rubrics.length == 1) return;
     this.rubrics.pop();
   }
@@ -84,7 +86,9 @@ export class RubricComponent implements OnInit {
       });
     });
   }
+  
   RemoveCol() {
+    if(!this.canEdit) return;
     const value = this.rubrics[0].concepts.length;
     if(value == 1) return;
     this.rubrics.forEach(r => {
