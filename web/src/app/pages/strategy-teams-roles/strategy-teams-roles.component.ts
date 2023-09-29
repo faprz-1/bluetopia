@@ -50,6 +50,9 @@ export class StrategyTeamsRolesComponent implements OnInit {
     if(!!role) {
       this.api.Post(`/TeamRoles`, {role: {name: role, strategyId: this.strategyId}}).subscribe(newRole => {
         this.customRoles.push(newRole);
+        if(this.rolesToUse == 'custom') {
+          this.strategyTeams.forEach(team => team.roles.push(newRole));
+        }
       });
     }
   }
