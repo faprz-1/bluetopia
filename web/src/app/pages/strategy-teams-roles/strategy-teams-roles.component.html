@@ -23,8 +23,10 @@
                             (change)="OnRolesToUseChange()">
                             <span class="checkbox-custom"></span>
                         </label>
-                        <div class="fake-input-disabled">
-                            Lider/Creativo/Cronometro/Redactor
+                        <div class="d-flex flex-wrap gap-3">
+                            <div class="fake-input-disabled" *ngFor="let role of roles">
+                                {{role.name}}
+                            </div>
                         </div>
                     </div>
                     <div class="d-flex flex-column align-items-start align-self-stretch gap-3">
