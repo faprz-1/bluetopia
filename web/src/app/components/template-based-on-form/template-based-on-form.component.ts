@@ -903,7 +903,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
             (newParcialProduct) => {
               if (!isParcialProductFinal) this.CancelParcialProduct();
               this.GetStrategy();
-              this.toast.ShowSuccess('Producto parcial guardado correctamente dirigete a la sección de ‘Productos guardados’');
+              this.toast.ShowSuccess('Producto parcial guardado correctamente dirígete a la sección de ‘Productos guardados’');
               res(true);
             },
             (err) => {

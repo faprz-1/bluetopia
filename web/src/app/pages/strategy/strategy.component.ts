@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';
+import { takeUntil } from 'rxjs/operators';
 import { ApiService } from 'src/app/services/api.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -113,5 +114,31 @@ export class StrategyComponent implements OnInit {
       }
     );
   };
+
+  GoToEditDetails(){
+    // plantillas/1/crear/2
+    this.nav.GoToUserRoute('plantillas/' + this.strategy.templateId + '/crear/'+this.strategy.id);
+  }
+
+  
+  SaveStrategy() {
+    return new Promise<boolean>((res, rej) => {
+      let strategy = this.strategyForm.value;
+      this.api.Patch(`/Strategies/${this.strategyId}`, { strategy }).subscribe(
+          (strategySaved) => {
+            this.strategy = strategySaved;
+            this.InitializeFormData();
+            this.toast.ShowSuccess('Cambios guardados correctamente');
+            res(true);
+          },
+          (err) => {
+            this.toast.ShowError('Error al guardar cambios, intente nuevamente');
+
+            console.error('Error updating strategy', err);
+            res(false);
+          }
+        );
+    });
+  }
 
 }

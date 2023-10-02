@@ -332,7 +332,7 @@
             }],
             "description": "",
             "http": [{
-                "path": "/EditStudent",
+                "path": "/save",
                 "verb": "post"
             }]
         }

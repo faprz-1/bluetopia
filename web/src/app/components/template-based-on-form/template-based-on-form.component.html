@@ -510,7 +510,7 @@
                                         *ngIf="parcialProduct.evaluationType?.type == 'rubric'"
                                         (click)="parcialProduct.showMore = !!!parcialProduct.showMore">
                                         <span *ngIf="!parcialProduct.showMore">
-                                            Ver rubrica
+                                            Ver rúbrica
                                         </span>
                                         <img *ngIf="!parcialProduct.showMore" src="assets/icons/chevron-down.svg">
                                         <span *ngIf="parcialProduct.showMore">
@@ -688,14 +688,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="product-controls" style="gap: 10px;">
+                        <!-- <div class="product-controls" style="gap: 10px;">
                             <button class="btn btn-outline-success" (click)="CancelParcialProduct()">
                                 Cancelar
                             </button>
                             <button [disabled]="canContinue == false && (step == 2 || step == 3 || step == 4)" class="btn btn-success" (click)="SaveParcialProduct(true)">
                                 Guardar producto
                             </button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <!-- Strategy step 5 -->

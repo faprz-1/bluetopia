@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ApiService } from 'src/app/services/api.service';
 import { CsvFileService } from 'src/app/services/csv-file.service';
@@ -26,6 +26,14 @@ export class StudentsDataComponent implements OnInit {
     getting: false,
     creating: false,
   }
+  selectedStudent:any= null;
+
+  studentForm: FormGroup = new FormGroup({
+    CURP: new FormControl(null, [Validators.required]),
+    name: new FormControl(null, [Validators.required]),
+    fatherLastname: new FormControl(null, [Validators.required]),
+    motherLastname: new FormControl(null, [Validators.required]),
+  });
 
   constructor(
     public nav: NavigationService,
@@ -62,7 +70,6 @@ export class StudentsDataComponent implements OnInit {
       this.grades.push(auxGrade);
     });
     this.grades = this.SortbyName(this.grades);
-    
   }
 
    GroupByProperty(teacherGroups: any, property: string) {
@@ -216,7 +223,7 @@ export class StudentsDataComponent implements OnInit {
   UploadStudents() {
     this.loading.uploading = true;
     this.api.Post(`/Students/Array`, {students: this.studentsToUpload}).subscribe((newStudents: any) => {
-      this.toast.ShowSuccess(`${newStudents.length} Estudiantes agregados correctamente`);
+      this.toast.ShowSuccess(`Estudiantes agregados correctamente`);
       this.addGradeOrGroupModal?.hide();
       this.loading.uploading = false;
     }, err => {
@@ -269,4 +276,35 @@ export class StudentsDataComponent implements OnInit {
     this.nav.GoToUserRoute('registrar-estudiantes/csv');
   }
 
+  WillEdit(student:any){
+    this.isEditing = !this.isEditing;
+    this.selectedStudent = student;
+    this.studentForm.get('name')?.setValue(student.name);
+    this.studentForm.get('fatherLastname')?.setValue(student.fatherLastname);
+    this.studentForm.get('motherLastname')?.setValue(student.motherLastname);
+    this.studentForm.get('CURP')?.setValue(student.registerNumber);
+  }
+
+  SaveChanges(){
+    this.loading.edit = true;
+    let editedStudent = {
+      name: this.studentForm.get('name')?.value,
+      fatherLastname: this.studentForm.get('fatherLastname')?.value,
+      motherLastname: this.studentForm.get('motherLastname')?.value,
+      registerNumber: this.studentForm.get('CURP')?.value,
+      id:this.selectedStudent.id
+    }
+      this.api.Post(`/Students/${this.selectedStudent.id}/save`, {newStudent: editedStudent}).subscribe(student => {
+      this.toast.ShowSuccess("Cambios guardados correctamente");
+      this.GetStudents();
+      this.loading.edit = false;
+      this.selectedStudent = null;
+      this.isEditing  = false;
+    },error=>{
+      this.toast.ShowError("Error al guardar cambios, intente más tarde");
+      this.loading.edit = false;
+      this.isEditing = false; 
+      this.selectedStudent = null;
+    });
+  }
 }
