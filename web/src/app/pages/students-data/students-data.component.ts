@@ -102,12 +102,12 @@ export class StudentsDataComponent implements OnInit {
   };
 
   GetStudents() {
+    this.SetGroupsOfSelectedGrade(this.gradeSelected.id);
     if(!this.gradeSelected || !this.groupSelected) {
       this.students = [];
       this.loading.getting = false;
       return;
     }
-    this.SetGroupsOfSelectedGrade(this.gradeSelected.id);
     this.loading.getting = true;
     let endpoint = `/Students`;
     switch (this.user.role.name) {
