@@ -353,7 +353,8 @@
                                                 class="form-control no-icon with-border-thin" type="text"
                                                 formControlName="date" placeholder="Fecha de entrega"
                                                 [bsConfig]="{ adaptivePosition: true, containerClass: 'theme-dark-blue' }"
-                                                bsDatepicker>
+                                                bsDatepicker
+                                                (bsValueChange)="ThatDateAlreadyPassed([$event])">
                                         </div>
                                     </div>
                                 </div>
@@ -386,7 +387,8 @@
                                             </div>
                                             <div class="input-container with-border-thin">
                                                 <input class="form-control no-icon" type="text"
-                                                    formControlName="maxCalification" placeholder="Calificación máxima">
+                                                    formControlName="maxCalification" placeholder="Calificación máxima"  
+                                                    (ngModelChange)="IsANumber(parcialProductForm.get('maxCalification')?.value)">
                                             </div>
                                         </div>
                                     </div>
@@ -460,7 +462,7 @@
                                     <button class="btn btn-outline-success" (click)="CancelParcialProduct()">
                                         Cancelar
                                     </button>
-                                    <button class="btn btn-success" (click)="SaveParcialProduct()">
+                                    <button [disabled]="canContinue == false && (step == 2 || step == 3 || step == 4)" class="btn btn-success" (click)="SaveParcialProduct()">
                                         Guardar producto
                                     </button>
                                 </div>
@@ -587,7 +589,8 @@
                                         class="form-control no-icon with-border-thin" type="text" formControlName="date"
                                         placeholder="Fecha de entrega"
                                         [bsConfig]="{ adaptivePosition: true, containerClass: 'theme-dark-blue' }"
-                                        bsDatepicker>
+                                        bsDatepicker
+                                        (bsValueChange)="ThatDateAlreadyPassed([$event])">
                                 </div>
                             </div>
                         </div>
@@ -618,7 +621,8 @@
                                     <div class="input-container with-border-thin">
                                         <input class="form-control no-icon" type="text"
                                             formControlName="maxCalification" placeholder="Calificación máxima"
-                                            (change)="saver.next()">
+                                            (change)="saver.next()" 
+                                            (ngModelChange)="IsANumber(parcialProductForm.get('maxCalification')?.value)">
                                     </div>
                                 </div>
                             </div>
@@ -690,7 +694,7 @@
                             <button class="btn btn-outline-success" (click)="CancelParcialProduct()">
                                 Cancelar
                             </button>
-                            <button class="btn btn-success" (click)="SaveParcialProduct(true)">
+                            <button [disabled]="canContinue == false && (step == 2 || step == 3 || step == 4)" class="btn btn-success" (click)="SaveParcialProduct(true)">
                                 Guardar producto
                             </button>
                         </div>
@@ -756,7 +760,7 @@
     </div>
 
     <div class="d-flex justify-content-end w-100 my-5">
-        <button class="btn btn-primary continue-button" (click)="ChangeStep()">
+        <button [disabled]="canContinue == false && (step == 2 || step == 3 || step == 4)" class="btn btn-primary continue-button" (click)="ChangeStep()">
             Continuar
         </button>
     </div>

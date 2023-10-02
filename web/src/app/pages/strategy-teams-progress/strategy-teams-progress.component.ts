@@ -16,8 +16,8 @@ export class StrategyTeamsProgressComponent implements OnInit {
   strategy: any = null;
   students: Array<any> = [];
   crumbs: Array<{name: string, route: string | null}> = [
-    {name: 'Equipos', route: null},
-    {name: 'Visualiza el progreso de tus equipos', route: null},
+    {name: 'Equipos', route: '/mis-estrategias'},
+    {name: 'Visualiza el progreso de tus equipos', route: '/mis-estrategias'},
   ];
   constructor(
     private activatedRoute: ActivatedRoute,
