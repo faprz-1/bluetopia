@@ -21,8 +21,8 @@ export class StrategyTeamsRolesComponent implements OnInit {
   saver = new Subject();
   saving: boolean = false;
   crumbs: Array<{name: string, route: string | null}> = [
-    {name: 'Equipos', route: null},
-    {name: 'Asigna roles a tus alumnos', route: null},
+    {name: 'Equipos', route: '/mis-estrategias'},
+    {name: 'Asigna roles a tus alumnos', route: '/mis-estrategias'},
   ];
 
   public get rolesText() {

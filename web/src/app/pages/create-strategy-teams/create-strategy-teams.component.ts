@@ -25,8 +25,8 @@ export class CreateStrategyTeamsComponent implements OnInit {
   saver = new Subject();
   saving: boolean = false;
   crumbs: Array<{name: string, route: string | null}> = [
-    {name: 'Equipos', route: null},
-    {name: 'Asigna a tus alumnos', route: null},
+    {name: 'Equipos', route: '/mis-estrategias'},
+    {name: 'Asigna a tus alumnos', route: '/mis-estrategias'},
   ];
 
   strategyTeamsForm: FormGroup = new FormGroup({

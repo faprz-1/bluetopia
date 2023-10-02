@@ -53,6 +53,7 @@ module.exports = function(StudentGroup) {
         }
         StudentGroup.findOne(filter,(err,studentGroup)=>{
             if(err) return cb(err);
+            if (studentGroup == null) return cb(null, studentGroup)
             StudentGroup.app.models.TeacherGroup.FindByGroup(studentGroup,(err,result)=>{
                 if(err) return cb(err);
                 if(!result) return cb(null,null);

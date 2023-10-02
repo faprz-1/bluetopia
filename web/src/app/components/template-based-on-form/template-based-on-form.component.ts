@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, NgZone, OnInit, Output, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { BsModalRef, BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
@@ -65,6 +65,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
   selectedEvaluationType: any = null;
   finalParcialProduct: any = null;
   finalEvent: any = null;
+  canContinue: boolean = true;
   loading: any = {
     grade: false,
     group: false,
@@ -122,6 +123,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
   }
   saver = new Subject();
   subSelected: any = null;
+
   constructor(
     private api: ApiService,
     private activatedRoute: ActivatedRoute,
@@ -129,7 +131,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     private modalService: BsModalService,
     private toast: ToastService,
     private zone: NgZone
-  ) {}
+  ) {  }
 
   ngOnInit(): void {
     this.GetTeacherGroups();
@@ -145,6 +147,15 @@ export class TemplateBasedOnFormComponent implements OnInit {
 
     this.saver.pipe(debounceTime(500)).subscribe((data) => this.Autosave());
   }
+
+  IsANumber(input: any){
+    if (isNaN(Number(input))) {
+       this.toast.ShowError('Solo valores numéricos')
+       this.canContinue = false;
+  }else {
+    this.canContinue = true;
+  }
+}
 
   OpenModal(template: any) {
     this.modalRef = this.modalService.show(template, { backdrop: 'static' });
@@ -235,7 +246,6 @@ export class TemplateBasedOnFormComponent implements OnInit {
             )
           : [],
     });
-
     this.InitializeDatePickers();
   }
 
@@ -252,6 +262,17 @@ export class TemplateBasedOnFormComponent implements OnInit {
     this.InitializeDatePickers();
   }
 
+  ThatDateAlreadyPassed(date: any){
+    let startDate = moment(date[0])
+    let today = moment();
+   if(startDate.isBefore(today, 'day')) { 
+    this.toast.ShowError('La fecha proporcionada ya ha pasado, por favor elija otra fecha')
+  this.canContinue = false;
+   }else{
+    this.canContinue = true;
+   }
+  }
+
   InitializeDatePickers() {
     setTimeout(() => {
       switch (this.step) {
@@ -260,6 +281,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
             this.strategyDateRangePicker.bsValue = this.GetDateRangePickerValue(
               [this.strategy.startDate, this.strategy.endDate]
             );
+
           break;
         case 3:
           if (
@@ -277,7 +299,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
           )
             this.finalParcialProductDatePicker.bsValue = new Date(
               this.parcialProductForm.get('date')?.value
-            );
+              );
           break;
         case 5:
           if (
@@ -754,6 +776,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     if (dates.some((date) => !date)) return [];
     let start = new Date(dates[0]);
     let end = new Date(dates[1]);
+    this.ThatDateAlreadyPassed([start, end]);
     return [start, end];
   }
 
@@ -880,6 +903,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
             (newParcialProduct) => {
               if (!isParcialProductFinal) this.CancelParcialProduct();
               this.GetStrategy();
+              this.toast.ShowSuccess('Producto parcial guardado correctamente dirigete a la sección de ‘Productos guardados’');
               res(true);
             },
             (err) => {

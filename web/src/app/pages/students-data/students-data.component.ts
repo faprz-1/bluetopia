@@ -37,29 +37,69 @@ export class StudentsDataComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.api.GetUser();
-    this.GetGrades();
+    this.GetTeacherGroups();
+     this.SetGroupsOfSelectedGrade(this.gradeSelected);
   }
 
-  GetGrades() {
-    this.loading.getting = true;
-    this.api.Get(`/Grades`).subscribe(grades => {
-      this.grades = grades;
-      this.GetGroups();
-    }, err => {
-      console.error("Error getting grades", err);
-      this.loading.getting = false;
-    });
+   GetTeacherGroups() {
+    let user = this.api.GetUser();
+    this.api.Get(`/TeacherGroups/of/${user.teacher?.id}`).subscribe(
+      (groups) => {
+        this.SetGrades(groups);
+      },
+      (err) => {
+        console.error('Error getting groups', err);
+      }
+    );
   }
-  
-  GetGroups() {
-    this.api.Get(`/Groups`).subscribe(groups => {
-      this.groups = groups;
-      this.GetStudents();
-    }, err => {
-      console.error("Error getting groups", err);
-      this.loading.getting = false;
+
+   SetGrades(teacherGroups: any) {
+    this.grades = [];
+    let groupedByGrade = this.GroupByProperty(teacherGroups, 'gradeId');
+    groupedByGrade.forEach((grade: any) => {
+      let auxGrade: any = grade[0].grade;
+      auxGrade.groups = grade.map((item: any) => item.group);
+      this.grades.push(auxGrade);
     });
+    this.grades = this.SortbyName(this.grades);
+    
   }
+
+   GroupByProperty(teacherGroups: any, property: string) {
+    const groupedData: any = Object.values(
+      teacherGroups.reduce((result: any, item: any) => {
+        const valueToGroupBy = item[property];
+        if (!result[valueToGroupBy]) {
+          result[valueToGroupBy] = [];
+        }
+        result[valueToGroupBy].push(item);
+        return result;
+      }, {})
+    );
+    
+    return groupedData;
+  }
+
+  SetGroupsOfSelectedGrade(gradeId:any){
+    this.groups = [];
+    if(!gradeId || gradeId == null || gradeId == 0){
+       this.groups = [];
+      }
+    else{
+      let selectedGrade = this.grades.filter((grade:any)=> grade.id == gradeId);
+      this.groups = selectedGrade.length > 0 ? selectedGrade[0].groups:[];
+    }
+    this.groups = this.SortbyName(this.groups);
+  }
+
+
+  SortbyName(objects:any){
+    return objects.sort((a:any, b:any) => {
+      const nameA = a.name.toLowerCase();
+      const nameB = b.name.toLowerCase();
+      return nameA.localeCompare(nameB);
+    });
+  };
 
   GetStudents() {
     if(!this.gradeSelected || !this.groupSelected) {
@@ -67,6 +107,7 @@ export class StudentsDataComponent implements OnInit {
       this.loading.getting = false;
       return;
     }
+    this.SetGroupsOfSelectedGrade(this.gradeSelected.id);
     this.loading.getting = true;
     let endpoint = `/Students`;
     switch (this.user.role.name) {
@@ -100,7 +141,7 @@ export class StudentsDataComponent implements OnInit {
     this.api.Post(`/Grades/GradeOrGroup`, {}).subscribe(newData => {
       this.toast.ShowSuccess(`Datos agregados`);
       this.addGradeOrGroupModal?.hide();
-      this.GetGrades();
+      // this.GetGrades();
       this.loading.creating = false;
     }, err => {
       console.error("Error creating grade or group", err);
