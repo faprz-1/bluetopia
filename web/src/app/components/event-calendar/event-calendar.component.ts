@@ -95,6 +95,13 @@ export class EventCalendarComponent implements OnInit {
     this.PopulateWeek();
   }
 
+  ThatDateAlreadyPassed(date: any){
+    let startDate = moment(`${this.year}-${this.currentMonth + 1}-${date}`)
+     let today = moment();
+    if(startDate.isBefore(today, 'day')) return true
+    else return false
+  }
+
   GetParams() {
     this.activatedRoute.params.subscribe(params => {
       this.strategyId = params['strategyId'];
