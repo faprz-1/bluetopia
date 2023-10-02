@@ -62,6 +62,11 @@ export class StudentsDataComponent implements OnInit {
   }
 
   GetStudents() {
+    if(!this.gradeSelected || !this.groupSelected) {
+      this.students = [];
+      this.loading.getting = false;
+      return;
+    }
     this.loading.getting = true;
     let endpoint = `/Students`;
     switch (this.user.role.name) {
@@ -71,7 +76,7 @@ export class StudentsDataComponent implements OnInit {
     }
     endpoint += `/FilteredBy/Grade/${!!this.gradeSelected ? this.gradeSelected.id : 0}/Group/${!!this.groupSelected ? this.groupSelected.id : 0}`;
     this.api.Get(endpoint).subscribe(students => {
-    this.SortInAlphabeticalOrder(students);
+      this.students = this.SortInAlphabeticalOrder(students);
       this.loading.getting = false;
     }, err => {
       console.error("Error getting students", err);
@@ -87,7 +92,7 @@ export class StudentsDataComponent implements OnInit {
     const sortedData = mergedData.sort((a:any, b:any) => {
       return a.fullName.localeCompare(b.fullName);
     });
-    this.students = sortedData;
+    return sortedData;
   }
 
   AddGradeOrGroup() {

@@ -4,7 +4,7 @@ module.exports = function(EventType) {
 
     EventType.CreateOne = function(eventType, callback) {
         EventType.findOne({
-            where: {name: {like: `%${eventType.name}%`}}
+            where: {name: eventType.name}
         }, (err, eventTypeFound) => {
             if(err) return callback(err);
 

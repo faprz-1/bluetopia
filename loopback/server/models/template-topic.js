@@ -5,7 +5,7 @@ module.exports = function(TemplateTopic) {
     TemplateTopic.CreateOne = function(templateTopic, callback) {
         TemplateTopic.findOrCreate({
             where: {
-                name: {like: `%${templateTopic.name}%`}
+                name: templateTopic.name
             }
         }, templateTopic, (err, newTemplateTopic) => {
             if(err) return callback(err);

@@ -2,6 +2,17 @@
 
 module.exports = function(Team) {
 
+    Team.observe('before delete', (ctx, next) => {
+        let instanceThatTriggered = ctx.instance || ctx.data;
+        if(!!instanceThatTriggered) {
+            Team.app.models.TeamStudent.destroyAll({teamId: instanceThatTriggered.relatedModelId}, (err, destroyed) => {
+                if(err) return next(err);
+                next();
+            });
+        }
+        else next();
+    });
+
     Team.CreateOne = function(team, callback) {
         let teamInstance = {
             name: team.name,
@@ -40,17 +51,34 @@ module.exports = function(Team) {
     }
 
     Team.UpsertStrategyTeams = function(teams, strategyId, callback) {
-        Team.destroyAll({strategyId}, (err, destroyed) => {
+        Team.find({strategyId}, (err, strategyTeams) => {
             if(err) return callback(err);
-            
             teams = teams.map((team, idx) => {
                 team.name = `Equipo ${idx+1}`;
                 return team;
             });
-            Team.AddTeams(teams, strategyId, (err, teamsCreated) => {
-                if(err) return callback(err);
-                return callback(null, teamsCreated);
-            });
+
+            let cont = 0, limit = strategyTeams.length;
+            if(!!limit) {
+                strategyTeams.forEach(team => {
+                    team.destroy((err, destroyed) => {
+                        if(err) return callback(err);
+    
+                        if(++cont == limit) {
+                            Team.AddTeams(teams, strategyId, (err, teamsCreated) => {
+                                if(err) return callback(err);
+                                return callback(null, teamsCreated);
+                            });
+                        }
+                    });
+                });
+            }
+            else {
+                Team.AddTeams(teams, strategyId, (err, teamsCreated) => {
+                    if(err) return callback(err);
+                    return callback(null, teamsCreated);
+                });
+            }
         });
     }
 
@@ -75,6 +103,14 @@ module.exports = function(Team) {
 
                 if(++cont == limit) return callback(null, teams);
             });
+        });
+    }
+
+    Team.prototype.ResetMembers = function(callback) {
+        Team.app.models.TeamStudent.updateAll({teamId: this.id}, {roleId: null}, (err, updated) => {
+            if(err) return callback(err);
+
+            return callback(null, updated);
         });
     }
 

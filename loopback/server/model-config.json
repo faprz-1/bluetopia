@@ -336,7 +336,8 @@
           "GetAllOfTeacher": true,
           "GetStudents": true,
           "prototype.Delete": true,
-          "GetSuggested": true
+          "GetSuggested": true,
+          "ResetTeams": true
         }
       }
     }

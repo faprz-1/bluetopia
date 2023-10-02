@@ -94,11 +94,18 @@ export class StrategyTeamsProgressComponent implements OnInit {
   ToggleIsByTeams() {
     let strategy = {
       id: this.strategyId,
-      isByTeams: !!this.strategy ? !this.strategy.isByTeams : false
+      isByTeams: !!this.strategy ? !this.strategy.isByTeams : false,
+      useCustomRoles: false,
     }
     this.api.Patch(`/Strategies/${this.strategyId}/OnlyStrategy/1`, {strategy}).subscribe(strategySaved => {
       if(strategy.isByTeams) this.nav.GoToUserRoute(`mis-estrategias/${this.strategyId}/crear-equipos`);
-      else window.location.reload();
+      else {
+        this.api.Patch(`/Strategies/${this.strategyId}/ResetTeams`, {}).subscribe(updated => {
+          window.location.reload();
+        }, err => {
+          console.error("Error rese4ting teams members roles", err);
+        });
+      }
     }, err => {
       console.error("Error saving strategy", err);
     });

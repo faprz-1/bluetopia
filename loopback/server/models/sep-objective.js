@@ -5,11 +5,11 @@ module.exports = function(SepObjective) {
     SepObjective.CreateOne = function(sepObjective, callback) {
         let filter = {
             where: {
-                name:{like:`%${sepObjective.name}%`}
+                name: sepObjective.name
             }
         }
 
-        SepObjective.findOrCreate(filter,sepObjective,(err,instance,wasCreated)=>{
+        SepObjective.findOrCreate(filter, sepObjective, (err,instance,wasCreated)=>{
             if(err) return callback(err);
             return callback(null,instance);
         });

@@ -371,8 +371,7 @@
                                         </div>
                                         <div *ngIf="parcialProductForm.get('evaluationType')?.value?.type == 'rubric'"
                                             class="d-flex justify-content-end w-100">
-                                            <div class="link clickeable" (click)="rubricTutorialModal.OpenModal()">Ver
-                                                ejemplo de rubrica</div>
+                                            <div class="link clickeable" (click)="rubricTutorialModal.OpenModal()">Ver explicación de rúbrica</div>
                                         </div>
                                         <app-rubric
                                             *ngIf="parcialProductForm.get('evaluationType')?.value?.type == 'rubric'"
@@ -605,8 +604,7 @@
                                 </div>
                                 <div *ngIf="parcialProductForm.get('evaluationType')?.value?.type == 'rubric'"
                                     class="d-flex justify-content-end w-100">
-                                    <div class="link clickeable" (click)="rubricTutorialModal.OpenModal()">Ver ejemplo
-                                        de rubrica</div>
+                                    <div class="link clickeable" (click)="rubricTutorialModal.OpenModal()">Ver explicación de rúbrica</div>
                                 </div>
                                 <app-rubric *ngIf="parcialProductForm.get('evaluationType')?.value?.type == 'rubric'"
                                     [onReset]="onReset" (exportRubrics)="CatchRubrics($event)"></app-rubric>
@@ -762,8 +760,7 @@
     </div>
 </div>
 
-<app-library-file-selector-modal #libraryModal
-    (onFilesSelectd)="OnLibraryFilesSelected($event)"></app-library-file-selector-modal>
+<app-library-file-selector-modal #libraryModal (onFilesSelectd)="OnLibraryFilesSelected($event)"></app-library-file-selector-modal>
 <app-rubric-tutorial-modal #rubricTutorialModal></app-rubric-tutorial-modal>
 
 <ng-template #finishModal>
