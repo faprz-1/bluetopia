@@ -6,15 +6,19 @@
         <div class="d-flex align-items-center" style="gap: 16px;">
             <img class="clickeable" (click)="deleteStrategyModal.show()" src="assets/icons/delete.svg" alt="delete">
             <img class="clickeable" (click)="GoToEditStrategy()" src="assets/icons/edit.svg" alt="find">
-            <!-- <img class="clickeable" (click)="GoToStrategyDetails()" src="assets/icons/find-in-page-success.svg" alt="edit"> -->
+            <img class="clickeable" (click)="GoToStrategyDetails()" src="assets/icons/find-in-page-success.svg" alt="edit">
         </div>
     </div>
     <div class="category" *ngIf="false">
         Category
     </div>
     <div class="d-flex flex-column align-items-start justify-content-start align-self-stretch">
-        <label>Titulo</label>
+        <label>Título</label>
         {{strategy?.title ? strategy?.title : 'Sin título'}}
+    </div>
+    <div class="d-flex flex-column align-items-start justify-content-start align-self-stretch">
+        <label>Fechas de duración</label>
+        {{strategy.startDate | date:'shortDate'}} - {{strategy.endDate | date:'shortDate'}}
     </div>
     <div class="d-flex flex-column align-items-start justify-content-start align-self-stretch">
         <label>Pregunta generadora</label>

@@ -223,7 +223,7 @@ export class StudentsDataComponent implements OnInit {
   UploadStudents() {
     this.loading.uploading = true;
     this.api.Post(`/Students/Array`, {students: this.studentsToUpload}).subscribe((newStudents: any) => {
-      this.toast.ShowSuccess(`${newStudents.length} Estudiantes agregados correctamente`);
+      this.toast.ShowSuccess(`Estudiantes agregados correctamente`);
       this.addGradeOrGroupModal?.hide();
       this.loading.uploading = false;
     }, err => {

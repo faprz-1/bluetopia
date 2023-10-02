@@ -23,7 +23,7 @@ export class TeachersCsvComponent implements OnInit {
       newKey: 'subjects'
     },
     {
-      oldKey: 'Correo (Campo obligatoio)',
+      oldKey: 'Correo (Campo obligatorio)',
       newKey: 'email'
     },
     {
@@ -31,15 +31,15 @@ export class TeachersCsvComponent implements OnInit {
       newKey: 'extracurricular'
     },
     {
-      oldKey: 'Grado (Campo obligatoio)',
+      oldKey: 'Grado (Campo obligatorio)',
       newKey: 'grade'
     },
     {
-      oldKey: 'Grupo (Campo obligatoio)',
+      oldKey: 'Grupo (Campo obligatorio)',
       newKey: 'group'
     },
     {
-      oldKey: 'Nombre (Campo obligatoio)',
+      oldKey: 'Nombre (Campo obligatorio)',
       newKey: 'name'
     },
   ];
