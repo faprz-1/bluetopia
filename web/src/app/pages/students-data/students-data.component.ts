@@ -107,7 +107,7 @@ export class StudentsDataComponent implements OnInit {
       this.loading.getting = false;
       return;
     }
-     this.SetGroupsOfSelectedGrade(this.gradeSelected.id);
+    this.SetGroupsOfSelectedGrade(this.gradeSelected.id);
     this.loading.getting = true;
     let endpoint = `/Students`;
     switch (this.user.role.name) {
@@ -123,7 +123,6 @@ export class StudentsDataComponent implements OnInit {
       console.error("Error getting students", err);
       this.loading.getting = false;
     });
-  }
   }
 
   SortInAlphabeticalOrder(students:any){
