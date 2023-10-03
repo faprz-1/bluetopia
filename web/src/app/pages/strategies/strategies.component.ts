@@ -23,11 +23,11 @@ export class StrategiesComponent implements OnInit {
     public nav: NavigationService
   ) { }
 
-  ngOnInit(): void {
-    this.user = this.api.GetUser();
+  async ngOnInit() {
+   this.user = await this.api.GetUser();
+    this.GetStrategies();
     this.GetStrategyStatuses();
    this.GetTeacherGroups();
-  
   }
 
    GetTeacherGroups() {
@@ -88,8 +88,7 @@ export class StrategiesComponent implements OnInit {
       return nameA.localeCompare(nameB);
     });
   };
- async  GetStrategyStatuses() {
-  
+   GetStrategyStatuses() {
     this.api.Get(`/StrategyStatuses`, ).subscribe(startegyStatuses => {
       this.startegyStatuses = startegyStatuses;
     }, err => {
@@ -98,8 +97,7 @@ export class StrategiesComponent implements OnInit {
   }
 
   GetStrategies() {
-   
-      this.SetGroupsOfSelectedGrade(this.gradeSelected.id);
+     if (!!this.gradeSelected) this.SetGroupsOfSelectedGrade(this.gradeSelected.id);
     let endpoint: string;
     switch (this.user.role.name) {
       case 'School':
