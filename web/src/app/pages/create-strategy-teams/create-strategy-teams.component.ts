@@ -24,6 +24,7 @@ export class CreateStrategyTeamsComponent implements OnInit {
   strategyTeams: Array<any> = [];
   saver = new Subject();
   saving: boolean = false;
+  loading: boolean = true;
   crumbs: Array<{name: string, route: string | null}> = [
     {name: 'Equipos', route: '/mis-estrategias'},
     {name: 'Asigna a tus alumnos', route: '/mis-estrategias'},
@@ -99,6 +100,7 @@ export class CreateStrategyTeamsComponent implements OnInit {
         }
         this.GetGradeGroupStudents();
       }, (err) => {
+        this.loading = false;
         console.error('Error getting strategy', err);
       }
     );
@@ -131,6 +133,11 @@ export class CreateStrategyTeamsComponent implements OnInit {
   }
 
   GetGradeGroupStudents() {
+    if(!this.grade || !this.group) {
+      this.toast.ShowError(`La estrategia no tiene grupo asignado`);
+      this.nav.GoBack();
+      return;
+    }
     let endpoint = `/Students`;
     const user = this.api.GetUser();
     switch (user?.role?.name) {
@@ -138,14 +145,16 @@ export class CreateStrategyTeamsComponent implements OnInit {
       case 'Teacher': endpoint += `/OfTeacher/${user.id}`; break;
       default: endpoint += `/OfSchool/${user.schoolId}`; break;
     }
-    this.api.Get(`${endpoint}/FilteredBy/Grade/${!!this.grade ? this.grade.id : 0}/Group/${!!this.group ? this.group.id : 0}`).subscribe(students => {
+    this.api.Get(`${endpoint}/FilteredBy/Grade/${this.grade.id}/Group/${this.group.id}`).subscribe(students => {
       this.students = students;
       if(this.strategyTeams.length) {
         this.studentsOptions = students.filter((student: any) => {
           return !this.strategyTeams.some((team: any) => team.members.some((member: any) => member.id == student.id));
         });
       }
+      this.loading = false;
     }, err => {
+      this.loading = false;
       console.error("Error getting students", err);
     });
   }

@@ -20,10 +20,7 @@ export class StrategyTeamsRolesComponent implements OnInit {
   rolesToUse: string = 'default';
   saver = new Subject();
   saving: boolean = false;
-  crumbs: Array<{name: string, route: string | null}> = [
-    {name: 'Equipos', route: '/mis-estrategias'},
-    {name: 'Asigna roles a tus alumnos', route: '/mis-estrategias'},
-  ];
+  crumbs: Array<{name: string, route: string | null}> = [];
 
   public get rolesText() {
     return this.roles.map(role => role.name).join(' / ');
@@ -97,6 +94,8 @@ export class StrategyTeamsRolesComponent implements OnInit {
       (strategy) => {
         this.strategy = strategy;
         this.InitializeVariables();
+        this.crumbs.push({name: 'Equipos', route: `mis-estrategias/${strategy.id}/crear-equipos`});
+        this.crumbs.push({name: 'Asigna roles a tus alumnos', route: null});
       }, (err) => {
         console.error('Error getting strategy', err);
       }
