@@ -53,6 +53,10 @@ module.exports = function(Team) {
     Team.UpsertStrategyTeams = function(teams, strategyId, callback) {
         Team.DeleteTeamsOfStrategy(strategyId, (err, strategyTeams) => {
             if(err) return callback(err);
+
+            teams.forEach((team, idx) => {
+                team.name = `Equipo ${idx + 1}`;
+            });
             Team.AddTeams(teams, strategyId, (err, teamsCreated) => {
                 if(err) return callback(err);
                 return callback(null, teamsCreated);
