@@ -610,7 +610,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
   };
 
   GetTemplateTopics() {
-    this.api.Get(`/TemplateTopics`).subscribe(
+    this.api.Get(`/TemplateTopics/OfSchool/${this.api.GetUser()?.schoolId}`).subscribe(
       (topics) => {
         this.templateTopics = topics;
       },
@@ -624,6 +624,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     let templateTopicObj = {
       name: templateTopic,
       userId: this.api.GetUser()?.id,
+      schoolId: this.api.GetUser()?.schoolId,
     };
     let control = this.strategyForm.get('topic');
     this.loading.templateTopic = true;
