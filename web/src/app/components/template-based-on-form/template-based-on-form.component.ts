@@ -869,11 +869,13 @@ export class TemplateBasedOnFormComponent implements OnInit {
 
   EvaluationProductsInfo(parcialProductInstance: any): boolean {
 if (parcialProductInstance.evaluationType.type == 'rubric'){
-    if (parcialProductInstance.rubric.length == 1 && parcialProductInstance.rubric[0].description == ""){
-      this.toast.ShowError('La rubrica tiene que contener información');
-this.wrongInfo = true;
-      return true;
-    }else return false;
+        for (let rubric of parcialProductInstance.rubric) {
+      if (rubric.description == "") {
+       this.toast.ShowError('Todos los campos de la rúbrica deberían estar completos');
+       this.wrongInfo = true;
+        return true;
+      }else return false;
+  }
    }else if (parcialProductInstance.evaluationType.type == "numeric" && parcialProductInstance.maxCalification == null) {
     this.toast.ShowError('El valor máximo de la evalución no puede quedar en blanco');
     this.wrongInfo = true;
@@ -882,6 +884,7 @@ this.wrongInfo = true;
      this.wrongInfo = false;
      return false;
    }
+   return false
   }
 
  
@@ -935,6 +938,7 @@ this.wrongInfo = true;
             }
             );
           }
+            this.wrongInfo = false;
           this.Autosave();
         });
   }
