@@ -123,6 +123,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
   }
   saver = new Subject();
   subSelected: any = null;
+  wrongInfo:boolean = false;
 
   constructor(
     private api: ApiService,
@@ -866,38 +867,60 @@ export class TemplateBasedOnFormComponent implements OnInit {
     });
   }
 
-  SaveParcialProduct(isParcialProductFinal: boolean = false) {
+  EvaluationProductsInfo(parcialProductInstance: any): boolean {
+if (parcialProductInstance.evaluationType.type == 'rubric'){
+    if (parcialProductInstance.rubric.length == 1 && parcialProductInstance.rubric[0].description == ""){
+      this.toast.ShowError('La rubrica tiene que contener información');
+this.wrongInfo = true;
+      return true;
+    }else return false;
+   }else if (parcialProductInstance.evaluationType.type == "numeric" && parcialProductInstance.maxCalification == null) {
+    this.toast.ShowError('El valor máximo de la evalución no puede quedar en blanco');
+    this.wrongInfo = true;
+     return true;
+   }else{
+     this.wrongInfo = false;
+     return false;
+   }
+  }
+
+ 
+
+   SaveParcialProduct(isParcialProductFinal: boolean = false) {
     return new Promise<boolean>((res, rej) => {
       let parcialProductInstance = {
         ...this.parcialProductForm.value,
         isFinal: isParcialProductFinal,
         strategyId: this.strategyId,
       };
-      parcialProductInstance.evaluationTypeId =
-        parcialProductInstance.evaluationType
-          ? parcialProductInstance.evaluationType.id
-          : null;
-      if (!!parcialProductInstance.id) {
-        this.api
-          .Patch(
-            `/ParcialProducts/${parcialProductInstance.id}`,
-            parcialProductInstance,
-            true
-          )
-          .subscribe(
-            (newParcialProduct) => {
-              if (!isParcialProductFinal) this.CancelParcialProduct();
-              this.GetStrategy();
-              this.toast.ShowSuccess('Cambios guardados correctamente');
-              res(true);
+  if (this.EvaluationProductsInfo(parcialProductInstance)) return
+
+     parcialProductInstance.evaluationTypeId =
+     parcialProductInstance.evaluationType
+     ? parcialProductInstance.evaluationType.id
+     : null;
+     
+     if (!!parcialProductInstance.id) {
+       this.api
+       .Patch(
+         `/ParcialProducts/${parcialProductInstance.id}`,
+         parcialProductInstance,
+         true
+         )
+         .subscribe(
+           (newParcialProduct) => {
+             if (!isParcialProductFinal) this.CancelParcialProduct();
+             this.GetStrategy();
+             this.toast.ShowSuccess('Cambios guardados correctamente');
+             res(true);
             },
             (err) => {
               console.error('Error posting new parcial product', err);
               res(false);
             }
-          );
-      } else {
-        this.api
+            );
+          } else {
+            this.api
           .Post(`/ParcialProducts`, { parcialProduct: parcialProductInstance })
           .subscribe(
             (newParcialProduct) => {
@@ -910,10 +933,10 @@ export class TemplateBasedOnFormComponent implements OnInit {
               console.error('Error posting new parcial product', err);
               res(false);
             }
-          );
-      }
-      this.Autosave();
-    });
+            );
+          }
+          this.Autosave();
+        });
   }
 
   EditParcialProduct(parcialProduct: any) {

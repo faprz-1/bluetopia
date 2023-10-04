@@ -44,8 +44,7 @@
         <div class="d-sm-none d-md-block col-lg-2 col-xl-1">
         </div>
         <div class="col">
-            <div class="alert-warning d-flex align-items-center" role="alert"
-                *ngIf="noGroupMessage.length > 0 && (!grade || !group)">
+            <div class="alert-warning d-flex align-items-center" role="alert" *ngIf="noGroupMessage.length > 0 && (!grade || !group)">
                 <div class="alert-text">{{noGroupMessage}}</div>
             </div>
             <div class="form-flexbox  mb-2">
@@ -55,17 +54,11 @@
                     </div>
                     <div class="d-flex align-items-center" style="gap: 12px;" *ngIf="step != 1">
                         <div class="input-container input-small">
-                            <ng-select #gradeSelect class="ng-select form-control with-border" [items]="grades"
-                                bindLabel="name" placeholder="Grado" 
-                                [disabled]="loading.grade" [loading]="loading.grade" [(ngModel)]="grade"
-                                (change)="saver.next()">
+                            <ng-select #gradeSelect class="ng-select form-control with-border" [items]="grades" bindLabel="name" placeholder="Grado" [disabled]="loading.grade" [loading]="loading.grade" [(ngModel)]="grade" (change)="saver.next()">
                             </ng-select>
                         </div>
                         <div class="input-container input-small" *ngIf="step != 1">
-                            <ng-select #groupSelect class="ng-select form-control with-border groups" [items]="groups"
-                                bindLabel="name" placeholder="Grupo"
-                                [disabled]="!grade || groups.length === 0 || loading.group" [loading]="loading.group" [(ngModel)]="group"
-                                (change)="saver.next()">
+                            <ng-select #groupSelect class="ng-select form-control with-border groups" [items]="groups" bindLabel="name" placeholder="Grupo" [disabled]="!grade || groups.length === 0 || loading.group" [loading]="loading.group" [(ngModel)]="group" (change)="saver.next()">
                             </ng-select>
                         </div>
                     </div>
@@ -83,17 +76,11 @@
                                 </div>
                                 <div class="d-flex align-items-center" style="gap: 12px;">
                                     <div class="input-container input-small">
-                                        <ng-select #gradeSelect class="ng-select form-control with-border"
-                                            [items]="grades" bindLabel="name" placeholder="Grado" addTagText="Agregar"
-                                            [addTag]="AddGrade" [disabled]="loading.grade" [loading]="loading.grade"
-                                            [(ngModel)]="grade" (change)="saver.next()">
+                                        <ng-select #gradeSelect class="ng-select form-control with-border" [items]="grades" bindLabel="name" placeholder="Grado" addTagText="Agregar" [addTag]="AddGrade" [disabled]="loading.grade" [loading]="loading.grade" [(ngModel)]="grade" (change)="saver.next()">
                                         </ng-select>
                                     </div>
                                     <div class="input-container input-small">
-                                        <ng-select #groupSelect class="ng-select form-control with-border"
-                                            [items]="groups" bindLabel="name" placeholder="Grupo" addTagText="Agregar"
-                                            [addTag]="AddGroup" [disabled]="loading.group" [loading]="loading.group"
-                                            [(ngModel)]="group" (change)="saver.next()">
+                                        <ng-select #groupSelect class="ng-select form-control with-border" [items]="groups" bindLabel="name" placeholder="Grupo" addTagText="Agregar" [addTag]="AddGroup" [disabled]="loading.group" [loading]="loading.group" [(ngModel)]="group" (change)="saver.next()">
                                         </ng-select>
                                     </div>
                                 </div>
@@ -107,10 +94,7 @@
                                 </div>
                                 <div class="d-flex align-items-center w-100">
                                     <div class="input-container">
-                                        <ng-select #subjectsSelect class="form-control with-border" [items]="subjects"
-                                            bindLabel="name" placeholder="Campo formativo" addTagText="Agregar"
-                                            [addTag]="AddSubject" [loading]="loading.subject"
-                                            (change)="OnSelectedSubjectsChange($event); subjectsSelect.handleClearClick()">
+                                        <ng-select #subjectsSelect class="form-control with-border" [items]="subjects" bindLabel="name" placeholder="Campo formativo" addTagText="Agregar" [addTag]="AddSubject" [loading]="loading.subject" (change)="OnSelectedSubjectsChange($event); subjectsSelect.handleClearClick()">
                                         </ng-select>
                                     </div>
                                 </div>
@@ -123,40 +107,29 @@
                                     Selecciona o escribe los objetivos
                                 </div>
                                 <div class="slider w-100 justify-content-between" style="min-height: 215px;">
-                                    <div class="slider-control left clickeable"><img
-                                            src="assets/icons/left-chevron-circle.svg" alt=""></div>
+                                    <div class="slider-control left clickeable"><img src="assets/icons/left-chevron-circle.svg" alt=""></div>
                                     <div class="slider-content">
-                                        <div class="slide select-card"
-                                            *ngFor="let subject of selectedSubjects; let i = index">
+                                        <div class="slide select-card" *ngFor="let subject of selectedSubjects; let i = index">
                                             <div class="d-flex justify-content-end clickeable w-100">
-                                                <img src="assets/icons/close-circle.svg"
-                                                    (click)="RemoveItemFromArray(selectedSubjects, i)">
+                                                <img src="assets/icons/close-circle.svg" (click)="RemoveItemFromArray(selectedSubjects, i)">
                                             </div>
                                             <div class="title">{{subject.name}}</div>
                                             <div>Selecciona o escribe los objetivos de la SEP</div>
                                             <div class="subtitle">
-                                                {{'Usted seleccionó ' + (!!subject.sepObjectives?.length ?
-                                                subject.sepObjectives?.length : 0) + ' objetivos'}}
+                                                {{'Usted seleccionó ' + (!!subject.sepObjectives?.length ? subject.sepObjectives?.length : 0) + ' objetivos'}}
                                             </div>
                                             <div class="input-container">
-                                                <ng-select #sepObjectivesSelect class="form-control with-border"
-                                                    [items]="GetMySelectableGoals(subject.id)" bindLabel="name"
-                                                    (focus)="subSelected=subject" placeholder="Objetivo"
-                                                    addTagText="Agregar" [addTag]="AddSepObjective"
-                                                    [loading]="loading.sepObjective"
+                                                <ng-select #sepObjectivesSelect class="form-control with-border" [items]="GetMySelectableGoals(subject.id)" bindLabel="name" (focus)="subSelected=subject" placeholder="Objetivo" addTagText="Agregar" [addTag]="AddSepObjective" [loading]="loading.sepObjective"
                                                     (change)="OnObjectiveSelected(subject, $event); sepObjectivesSelect.handleClearClick()">
                                                 </ng-select>
                                             </div>
                                             <div class="dropdown-content" [ngClass]="{'show': subject.showMore}">
                                                 <div class="element-container" *ngFor="let objective of subject.sepObjectives; let i = index">
                                                     <div>{{objective.name}}</div>
-                                                    <img class="clickeable"
-                                                        (click)="RemoveItemFromArray(subject.sepObjectives, i)"
-                                                        src="assets/icons/close-circle.svg" alt="delete">
+                                                    <img class="clickeable" (click)="RemoveItemFromArray(subject.sepObjectives, i)" src="assets/icons/close-circle.svg" alt="delete">
                                                 </div>
                                             </div>
-                                            <div class="dropdown-text clickeable"
-                                                (click)="subject.showMore = !!!subject.showMore">
+                                            <div class="dropdown-text clickeable" (click)="subject.showMore = !!!subject.showMore">
                                                 <span *ngIf="!subject.showMore">
                                                     Ver todos los objetivos que seleccioné
                                                 </span>
@@ -168,8 +141,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="slider-control right clickeable"><img
-                                            src="assets/icons/right-chevron-circle.svg" alt=""></div>
+                                    <div class="slider-control right clickeable"><img src="assets/icons/right-chevron-circle.svg" alt=""></div>
                                 </div>
                             </div>
                         </div>
@@ -181,25 +153,18 @@
                                 </div>
                                 <div class="d-flex flex-column align-items-start w-100">
                                     <div class="input-container">
-                                        <ng-select #skillsSelect class="form-control with-border" [items]="skills"
-                                            bindLabel="name" placeholder="Competencia" addTagText="Agregar"
-                                            [addTag]="AddSkill" [loading]="loading.skill"
-                                            (change)="OnSkillSelected($event); skillsSelect.handleClearClick()">
+                                        <ng-select #skillsSelect class="form-control with-border" [items]="skills" bindLabel="name" placeholder="Competencia" addTagText="Agregar" [addTag]="AddSkill" [loading]="loading.skill" (change)="OnSkillSelected($event); skillsSelect.handleClearClick()">
                                         </ng-select>
                                     </div>
 
                                     <div class="select-card mt-4" [formGroup]="strategyForm">
                                         <div class="title">Competencias</div>
                                         <div class="subtitle">
-                                            {{'Usted seleccionó ' + (!!strategyForm.get('skills') ?
-                                            strategyForm.get('skills')?.value?.length : 0) + ' competencias'}}
+                                            {{'Usted seleccionó ' + (!!strategyForm.get('skills') ? strategyForm.get('skills')?.value?.length : 0) + ' competencias'}}
                                         </div>
-                                        <div class="element-container"
-                                            *ngFor="let skill of strategyForm.get('skills')?.value; let i = index">
+                                        <div class="element-container" *ngFor="let skill of strategyForm.get('skills')?.value; let i = index">
                                             <div>{{skill.name}}</div>
-                                            <img class="clickeable"
-                                                (click)="RemoveItemFromArray(strategyForm.get('skills')?.value, i)"
-                                                src="assets/icons/close-circle.svg" alt="delete">
+                                            <img class="clickeable" (click)="RemoveItemFromArray(strategyForm.get('skills')?.value, i)" src="assets/icons/close-circle.svg" alt="delete">
                                         </div>
                                     </div>
                                 </div>
@@ -222,10 +187,7 @@
                                     Selecciona o escribe tu temática
                                 </div>
                                 <div class="input-container">
-                                    <ng-select #templateTopicSelect class="form-control with-border"
-                                        [items]="templateTopics" bindLabel="name" bindValue="name"
-                                        placeholder="Temática" addTagText="Agregar" [addTag]="AddTemplateTopic"
-                                        [loading]="loading.templateTopic" formControlName="topic"
+                                    <ng-select #templateTopicSelect class="form-control with-border" [items]="templateTopics" bindLabel="name" bindValue="name" placeholder="Temática" addTagText="Agregar" [addTag]="AddTemplateTopic" [loading]="loading.templateTopic" formControlName="topic"
                                         (change)="saver.next()">
                                     </ng-select>
                                 </div>
@@ -238,13 +200,10 @@
                                     Escribe un título
                                 </div>
                                 <div class="form-section-instruction">
-                                    Recuerda que tu título debe ser creativo y atractivo para tus alumnos, puedes
-                                    incluir un poco de información del tema y alguna palabra que sea familiar para tus
-                                    alumnos
+                                    Recuerda que tu título debe ser creativo y atractivo para tus alumnos, puedes incluir un poco de información del tema y alguna palabra que sea familiar para tus alumnos
                                 </div>
                                 <div class="input-container">
-                                    <input class="form-control no-icon" type="text" formControlName="title"
-                                        placeholder="Título de tu proyecto" (change)="saver.next()">
+                                    <input class="form-control no-icon" type="text" formControlName="title" placeholder="Título de tu proyecto" (change)="saver.next()">
                                 </div>
                             </div>
                         </div>
@@ -255,12 +214,10 @@
                                     Escribe la pregunta generadora
                                 </div>
                                 <div class="form-section-instruction">
-                                    Recuerda que esta pregunta será la que deberán responder al final del proyecto, lo
-                                    que indicará que sí obtuvieron los aprendizajes esperados.
+                                    Recuerda que esta pregunta será la que deberán responder al final del proyecto, lo que indicará que sí obtuvieron los aprendizajes esperados.
                                 </div>
                                 <div class="input-container">
-                                    <input class="form-control no-icon" type="text" formControlName="generatingQuestion"
-                                        placeholder="Pregunta generadora" (change)="saver.next()">
+                                    <input class="form-control no-icon" type="text" formControlName="generatingQuestion" placeholder="Pregunta generadora" (change)="saver.next()">
                                 </div>
                             </div>
                         </div>
@@ -271,10 +228,7 @@
                                     Selecciona las fechas de duración
                                 </div>
                                 <div class="input-container">
-                                    <input #strategyDateRangePicker="bsDaterangepicker" class="form-control no-icon"
-                                        type="text" formControlName="dates" placeholder="Fechas del proyecto"
-                                        (onHidden)="saver.next()"
-                                        [bsConfig]="{ adaptivePosition: true, containerClass: 'theme-dark-blue' }"
+                                    <input #strategyDateRangePicker="bsDaterangepicker" class="form-control no-icon" type="text" formControlName="dates" placeholder="Fechas del proyecto" (onHidden)="saver.next()" [bsConfig]="{ adaptivePosition: true, containerClass: 'theme-dark-blue' }"
                                         bsDaterangepicker>
                                 </div>
                             </div>
@@ -289,12 +243,10 @@
                         </div>
                     </div>
                     <div class="tabs">
-                        <div class="tab clickeable" (click)="selectedTab = 'create'"
-                            [ngClass]="{'active': selectedTab == 'create'}">
+                        <div class="tab clickeable" (click)="selectedTab = 'create'" [ngClass]="{'active': selectedTab == 'create'}">
                             Crear producto nuevo
                         </div>
-                        <div class="tab clickeable" (click)="selectedTab = 'saved'"
-                            [ngClass]="{'active': selectedTab == 'saved'}">
+                        <div class="tab clickeable" (click)="selectedTab = 'saved'" [ngClass]="{'active': selectedTab == 'saved'}">
                             Productos guardados
                         </div>
                     </div>
@@ -308,10 +260,7 @@
                                             Selecciona tu tipo de producto
                                         </div>
                                         <div class="input-container">
-                                            <ng-select #parcialProductTypeSelect class="form-control with-border"
-                                                [items]="parcialProductTypes" groupBy="type" bindLabel="name"
-                                                bindValue="id" placeholder="Tipo de producto" addTagText="Agregar"
-                                                [addTag]="AddParcialProductType" [loading]="loading.parcialProductType"
+                                            <ng-select #parcialProductTypeSelect class="form-control with-border" [items]="parcialProductTypes" groupBy="type" bindLabel="name" bindValue="id" placeholder="Tipo de producto" addTagText="Agregar" [addTag]="AddParcialProductType" [loading]="loading.parcialProductType"
                                                 formControlName="parcialProductTypeId" (change)="saver.next()">
                                             </ng-select>
                                         </div>
@@ -324,8 +273,7 @@
                                             Escribe un nombre de producto
                                         </div>
                                         <div class="input-container with-border-thin">
-                                            <input class="form-control no-icon" type="text" formControlName="name"
-                                                placeholder="Nombre del producto" (change)="saver.next()">
+                                            <input class="form-control no-icon" type="text" formControlName="name" placeholder="Nombre del producto" (change)="saver.next()">
                                         </div>
                                     </div>
                                 </div>
@@ -336,9 +284,7 @@
                                             Escribe las instrucciones de tu producto
                                         </div>
                                         <div class="input-container">
-                                            <textarea class="form-control with-border-thin"
-                                                formControlName="instructions" placeholder="Instrucciones del producto"
-                                                rows="6" (change)="saver.next()"></textarea>
+                                            <textarea class="form-control with-border-thin" formControlName="instructions" placeholder="Instrucciones del producto" rows="6" (change)="saver.next()"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -349,12 +295,7 @@
                                             Selecciona la fecha de entrega
                                         </div>
                                         <div class="input-container">
-                                            <input #parcialProductDatePicker="bsDatepicker"
-                                                class="form-control no-icon with-border-thin" type="text"
-                                                formControlName="date" placeholder="Fecha de entrega"
-                                                [bsConfig]="{ adaptivePosition: true, containerClass: 'theme-dark-blue' }"
-                                                bsDatepicker
-                                                (bsValueChange)="ThatDateAlreadyPassed([$event])">
+                                            <input #parcialProductDatePicker="bsDatepicker" class="form-control no-icon with-border-thin" type="text" formControlName="date" placeholder="Fecha de entrega" [bsConfig]="{ adaptivePosition: true, containerClass: 'theme-dark-blue' }" bsDatepicker (bsValueChange)="ThatDateAlreadyPassed([$event])">
                                         </div>
                                     </div>
                                 </div>
@@ -363,31 +304,26 @@
                                     <div class="form-col">
                                         <div class="form-section-title">
                                             Evaluar por
+
                                         </div>
                                         <div class="input-container">
-                                            <ng-select #evaluationTypeSelect class="form-control with-border"
-                                                [items]="evaluationTypes" bindLabel="name"
-                                                formControlName="evaluationType" placeholder="Tipo de evaluación">
+                                            <ng-select #evaluationTypeSelect class="form-control with-border" [items]="evaluationTypes" bindLabel="name" formControlName="evaluationType" placeholder="Tipo de evaluación">
                                             </ng-select>
                                         </div>
-                                        <div *ngIf="parcialProductForm.get('evaluationType')?.value?.type == 'rubric'"
-                                            class="d-flex justify-content-end w-100">
+                                        <div *ngIf="parcialProductForm.get('evaluationType')?.value?.type == 'rubric'" class="d-flex justify-content-end w-100">
                                             <div class="link clickeable" (click)="rubricTutorialModal.OpenModal()">Ver explicación de rúbrica</div>
                                         </div>
-                                        <app-rubric
-                                            *ngIf="parcialProductForm.get('evaluationType')?.value?.type == 'rubric'"
-                                            [onReset]="onReset"
-                                            [rubrics]="!!parcialProductForm.get('rubric') ? parcialProductForm.get('rubric')?.value : []"
-                                            (exportRubrics)="CatchRubrics($event)"></app-rubric>
-                                        <div class="d-flex flex-column w-100" style="gap: 16px;"
-                                            *ngIf="parcialProductForm.get('evaluationType')?.value?.type =='numeric'">
+                                        <div *ngIf="wrongInfo == true" class="wrong-info">
+                                            Campo obligatorio *
+                                        </div>
+                                        <app-rubric *ngIf="parcialProductForm.get('evaluationType')?.value?.type == 'rubric'" [onReset]="onReset" [rubrics]="!!parcialProductForm.get('rubric') ? parcialProductForm.get('rubric')?.value : []" (exportRubrics)="CatchRubrics($event)"></app-rubric>
+                                        <div class="d-flex flex-column w-100" style="gap: 16px;" *ngIf="parcialProductForm.get('evaluationType')?.value?.type =='numeric'">
                                             <div class="instruction-2">
                                                 Escribe el máximo a aspirar
+
                                             </div>
                                             <div class="input-container with-border-thin">
-                                                <input class="form-control no-icon" type="text"
-                                                    formControlName="maxCalification" placeholder="Calificación máxima"  
-                                                    (ngModelChange)="IsANumber(parcialProductForm.get('maxCalification')?.value)">
+                                                <input class="form-control no-icon" type="text" formControlName="maxCalification" placeholder="Calificación máxima" (ngModelChange)="IsANumber(parcialProductForm.get('maxCalification')?.value)">
                                             </div>
                                         </div>
                                     </div>
@@ -405,24 +341,17 @@
                                                     <img src="assets/icons/gallery.png" alt="video">
                                                     <img src="assets/icons/book-closed-green.png" alt="video">
                                                 </div>
-                                                <input class="d-none" type="file" #fileInput multiple
-                                                    (change)="OnFileSelected($event)">
+                                                <input class="d-none" type="file" #fileInput multiple (change)="OnFileSelected($event)">
                                                 <div class="add-resource clickeable" (click)="fileInput.click()">
                                                     Adjuntar algún recurso
                                                 </div>
-                                                <div class="flex-resources"
-                                                    *ngIf="!!this.parcialProductForm.get('resources')?.value.length">
-                                                    <ng-container
-                                                        *ngFor="let file of this.parcialProductForm.get('resources')?.value; let i = index">
+                                                <div class="flex-resources" *ngIf="!!this.parcialProductForm.get('resources')?.value.length">
+                                                    <ng-container *ngFor="let file of this.parcialProductForm.get('resources')?.value; let i = index">
                                                         <div class="resource" *ngIf="!file.id">
                                                             <div class="d-flex align-items-center" style="gap: 20px;">
-                                                                <i
-                                                                    class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
-                                                                {{file.name}}
+                                                                <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i> {{file.name}}
                                                             </div>
-                                                            <img class="clickeable"
-                                                                (click)="RemoveItemFromArray(this.parcialProductForm.get('resources')?.value, i)"
-                                                                src="assets/icons/close-circle.svg" alt="Borrar">
+                                                            <img class="clickeable" (click)="RemoveItemFromArray(this.parcialProductForm.get('resources')?.value, i)" src="assets/icons/close-circle.svg" alt="Borrar">
                                                         </div>
                                                     </ng-container>
                                                 </div>
@@ -437,19 +366,13 @@
                                                 <div class="add-resource clickeable" (click)="libraryModal.OpenModal()">
                                                     Adjuntar de la biblioteca
                                                 </div>
-                                                <div class="flex-resources"
-                                                    *ngIf="!!this.parcialProductForm.get('resources')?.value.length">
-                                                    <ng-container
-                                                        *ngFor="let file of this.parcialProductForm.get('resources')?.value; let i = index">
+                                                <div class="flex-resources" *ngIf="!!this.parcialProductForm.get('resources')?.value.length">
+                                                    <ng-container *ngFor="let file of this.parcialProductForm.get('resources')?.value; let i = index">
                                                         <div class="resource" *ngIf="!!file.id">
                                                             <div class="d-flex align-items-center" style="gap: 20px;">
-                                                                <i
-                                                                    class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
-                                                                {{file.name}}
+                                                                <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i> {{file.name}}
                                                             </div>
-                                                            <img class="clickeable"
-                                                                (click)="RemoveItemFromArray(this.parcialProductForm.get('resources')?.value, i)"
-                                                                src="assets/icons/close-circle.svg" alt="Borrar">
+                                                            <img class="clickeable" (click)="RemoveItemFromArray(this.parcialProductForm.get('resources')?.value, i)" src="assets/icons/close-circle.svg" alt="Borrar">
                                                         </div>
                                                     </ng-container>
                                                 </div>
@@ -471,11 +394,8 @@
                             <ng-container *ngFor="let parcialProduct of strategy?.parcialProducts; let i = index">
                                 <div class="parcial-product-show-card" *ngIf="!parcialProduct.isFinal">
                                     <div class="d-flex justify-content-end w-100" style="gap: 16px;">
-                                        <img class="clickeable"
-                                            (click)="selectedParcialProduct = parcialProduct; OpenModal(deleteConfirmationModal)"
-                                            src="assets/icons/delete.svg" alt="">
-                                        <img class="clickeable" (click)="EditParcialProduct(parcialProduct)"
-                                            src="assets/icons/edit.svg" alt="">
+                                        <img class="clickeable" (click)="selectedParcialProduct = parcialProduct; OpenModal(deleteConfirmationModal)" src="assets/icons/delete.svg" alt="">
+                                        <img class="clickeable" (click)="EditParcialProduct(parcialProduct)" src="assets/icons/edit.svg" alt="">
                                     </div>
                                     <div class="name">
                                         {{!!parcialProduct.name ? parcialProduct.name : 'Sin nombre' }}
@@ -484,8 +404,7 @@
                                         {{!!parcialProduct.type?.name ? parcialProduct.type?.name : 'Sin tipo' }}
                                     </div>
                                     <div class="">
-                                        {{!!parcialProduct.instructions ? parcialProduct.instructions : 'Sin
-                                        instrucciones' }}
+                                        {{!!parcialProduct.instructions ? parcialProduct.instructions : 'Sin instrucciones' }}
                                     </div>
                                     <div class="date">
                                         <span *ngIf="!!parcialProduct.event?.date">
@@ -496,19 +415,15 @@
                                         </span>
                                     </div>
                                     <div class="">
-                                        {{ !!strategy.generatingQuestion ? strategy.generatingQuestion : 'Sin pregunta
-                                        generadora' }}
+                                        {{ !!strategy.generatingQuestion ? strategy.generatingQuestion : 'Sin pregunta generadora' }}
                                     </div>
                                     <div class="">
-                                        {{ !!parcialProduct.evaluationType?.name ? parcialProduct.evaluationType?.name :
-                                        'Sin tipo de evaluación' }}
+                                        {{ !!parcialProduct.evaluationType?.name ? parcialProduct.evaluationType?.name : 'Sin tipo de evaluación' }}
                                     </div>
                                     <div class="dropdown-content" [ngClass]="{'show-bigger': parcialProduct.showMore}">
                                         <app-rubric [rubrics]="parcialProduct.rubric" [showControls]="false"></app-rubric>
                                     </div>
-                                    <div class="dropdown-text clickeable"
-                                        *ngIf="parcialProduct.evaluationType?.type == 'rubric'"
-                                        (click)="parcialProduct.showMore = !!!parcialProduct.showMore">
+                                    <div class="dropdown-text clickeable" *ngIf="parcialProduct.evaluationType?.type == 'rubric'" (click)="parcialProduct.showMore = !!!parcialProduct.showMore">
                                         <span *ngIf="!parcialProduct.showMore">
                                             Ver rúbrica
                                         </span>
@@ -543,10 +458,7 @@
                                     Selecciona tu tipo de producto
                                 </div>
                                 <div class="input-container">
-                                    <ng-select #parcialProductTypeSelect class="form-control with-border"
-                                        [items]="parcialProductTypes" groupBy="type" bindLabel="name" bindValue="id"
-                                        placeholder="Tipo de producto" addTagText="Agregar"
-                                        [addTag]="AddParcialProductType" [loading]="loading.parcialProductType"
+                                    <ng-select #parcialProductTypeSelect class="form-control with-border" [items]="parcialProductTypes" groupBy="type" bindLabel="name" bindValue="id" placeholder="Tipo de producto" addTagText="Agregar" [addTag]="AddParcialProductType" [loading]="loading.parcialProductType"
                                         formControlName="parcialProductTypeId" (change)="saver.next()">
                                     </ng-select>
                                 </div>
@@ -559,8 +471,7 @@
                                     Escribe un nombre de producto
                                 </div>
                                 <div class="input-container with-border-thin">
-                                    <input class="form-control no-icon" type="text" formControlName="name"
-                                        placeholder="Nombre del producto" (change)="saver.next()">
+                                    <input class="form-control no-icon" type="text" formControlName="name" placeholder="Nombre del producto" (change)="saver.next()">
                                 </div>
                             </div>
                         </div>
@@ -571,9 +482,7 @@
                                     Escribe las instrucciones de tu producto
                                 </div>
                                 <div class="input-container">
-                                    <textarea class="form-control with-border-thin" formControlName="instructions"
-                                        placeholder="Instrucciones del producto" rows="6"
-                                        (change)="saver.next()"></textarea>
+                                    <textarea class="form-control with-border-thin" formControlName="instructions" placeholder="Instrucciones del producto" rows="6" (change)="saver.next()"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -584,11 +493,7 @@
                                     Selecciona la fecha de entrega
                                 </div>
                                 <div class="input-container">
-                                    <input #finalParcialProductDatePicker="bsDatepicker"
-                                        class="form-control no-icon with-border-thin" type="text" formControlName="date"
-                                        placeholder="Fecha de entrega"
-                                        [bsConfig]="{ adaptivePosition: true, containerClass: 'theme-dark-blue' }"
-                                        bsDatepicker
+                                    <input #finalParcialProductDatePicker="bsDatepicker" class="form-control no-icon with-border-thin" type="text" formControlName="date" placeholder="Fecha de entrega" [bsConfig]="{ adaptivePosition: true, containerClass: 'theme-dark-blue' }" bsDatepicker
                                         (bsValueChange)="ThatDateAlreadyPassed([$event])">
                                 </div>
                             </div>
@@ -598,29 +503,25 @@
                             <div class="form-col">
                                 <div class="form-section-title">
                                     Evaluar por
+
                                 </div>
                                 <div class="input-container">
-                                    <ng-select #evaluationTypeSelect class="form-control with-border"
-                                        [items]="evaluationTypes" bindLabel="name" formControlName="evaluationType"
-                                        placeholder="Tipo de evaluación">
+                                    <ng-select #evaluationTypeSelect class="form-control with-border" [items]="evaluationTypes" bindLabel="name" formControlName="evaluationType" placeholder="Tipo de evaluación">
                                     </ng-select>
                                 </div>
-                                <div *ngIf="parcialProductForm.get('evaluationType')?.value?.type == 'rubric'"
-                                    class="d-flex justify-content-end w-100">
+                                <div *ngIf="parcialProductForm.get('evaluationType')?.value?.type == 'rubric'" class="d-flex justify-content-end w-100">
                                     <div class="link clickeable" (click)="rubricTutorialModal.OpenModal()">Ver explicación de rúbrica</div>
                                 </div>
-                                <app-rubric *ngIf="parcialProductForm.get('evaluationType')?.value?.type == 'rubric'"
-                                    [onReset]="onReset" (exportRubrics)="CatchRubrics($event)"></app-rubric>
-                                <div class="d-flex flex-column w-100" style="gap: 16px;"
-                                    *ngIf="parcialProductForm.get('evaluationType')?.value?.type =='numeric'">
+                                <div *ngIf="wrongInfo == true" class="wrong-info">
+                                    Campo obligatorio *
+                                </div>
+                                <app-rubric *ngIf="parcialProductForm.get('evaluationType')?.value?.type == 'rubric'" [onReset]="onReset" (exportRubrics)="CatchRubrics($event)"></app-rubric>
+                                <div class="d-flex flex-column w-100" style="gap: 16px;" *ngIf="parcialProductForm.get('evaluationType')?.value?.type =='numeric'">
                                     <div class="instruction-2">
                                         Escribe el máximo a aspirar
                                     </div>
                                     <div class="input-container with-border-thin">
-                                        <input class="form-control no-icon" type="text"
-                                            formControlName="maxCalification" placeholder="Calificación máxima"
-                                            (change)="saver.next()" 
-                                            (ngModelChange)="IsANumber(parcialProductForm.get('maxCalification')?.value)">
+                                        <input class="form-control no-icon" type="text" formControlName="maxCalification" placeholder="Calificación máxima" (change)="saver.next()" (ngModelChange)="IsANumber(parcialProductForm.get('maxCalification')?.value)">
                                     </div>
                                 </div>
                             </div>
@@ -638,23 +539,17 @@
                                             <img src="assets/icons/gallery.png" alt="video">
                                             <img src="assets/icons/book-closed-green.png" alt="video">
                                         </div>
-                                        <input class="d-none" type="file" #fileInput multiple
-                                            (change)="OnFileSelected($event)">
+                                        <input class="d-none" type="file" #fileInput multiple (change)="OnFileSelected($event)">
                                         <div class="add-resource clickeable" (click)="fileInput.click()">
                                             Adjuntar algún recurso
                                         </div>
-                                        <div class="flex-resources"
-                                            *ngIf="!!this.parcialProductForm.get('resources')?.value.length">
-                                            <ng-container
-                                                *ngFor="let file of this.parcialProductForm.get('resources')?.value; let i = index">
+                                        <div class="flex-resources" *ngIf="!!this.parcialProductForm.get('resources')?.value.length">
+                                            <ng-container *ngFor="let file of this.parcialProductForm.get('resources')?.value; let i = index">
                                                 <div class="resource" *ngIf="!file.id">
                                                     <div class="d-flex align-items-center" style="gap: 20px;">
-                                                        <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
-                                                        {{file.name}}
+                                                        <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i> {{file.name}}
                                                     </div>
-                                                    <img class="clickeable"
-                                                        (click)="RemoveItemFromArray(this.parcialProductForm.get('resources')?.value, i)"
-                                                        src="assets/icons/close-circle.svg" alt="Borrar">
+                                                    <img class="clickeable" (click)="RemoveItemFromArray(this.parcialProductForm.get('resources')?.value, i)" src="assets/icons/close-circle.svg" alt="Borrar">
                                                 </div>
                                             </ng-container>
                                         </div>
@@ -669,18 +564,13 @@
                                         <div class="add-resource clickeable" (click)="libraryModal.OpenModal()">
                                             Adjuntar de la biblioteca
                                         </div>
-                                        <div class="flex-resources"
-                                            *ngIf="!!this.parcialProductForm.get('resources')?.value.length">
-                                            <ng-container
-                                                *ngFor="let file of this.parcialProductForm.get('resources')?.value; let i = index">
+                                        <div class="flex-resources" *ngIf="!!this.parcialProductForm.get('resources')?.value.length">
+                                            <ng-container *ngFor="let file of this.parcialProductForm.get('resources')?.value; let i = index">
                                                 <div class="resource" *ngIf="!!file.id">
                                                     <div class="d-flex align-items-center" style="gap: 20px;">
-                                                        <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
-                                                        {{file.name}}
+                                                        <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i> {{file.name}}
                                                     </div>
-                                                    <img class="clickeable"
-                                                        (click)="RemoveItemFromArray(this.parcialProductForm.get('resources')?.value, i)"
-                                                        src="assets/icons/close-circle.svg" alt="Borrar">
+                                                    <img class="clickeable" (click)="RemoveItemFromArray(this.parcialProductForm.get('resources')?.value, i)" src="assets/icons/close-circle.svg" alt="Borrar">
                                                 </div>
                                             </ng-container>
                                         </div>
@@ -708,17 +598,12 @@
                                     Selecciona o escribe tu tipo de evento de cierre
                                 </div>
                                 <div class="input-container">
-                                    <ng-select #eventTypeSelect class="ng-select form-control with-border"
-                                        [items]="eventTypes" bindLabel="name" bindValue="id"
-                                        placeholder="Tipo de evento" addTagText="Agregar" [addTag]="AddEventType"
-                                        [loading]="loading.eventType" (change)="OnEventTypeSelected($event)"
+                                    <ng-select #eventTypeSelect class="ng-select form-control with-border" [items]="eventTypes" bindLabel="name" bindValue="id" placeholder="Tipo de evento" addTagText="Agregar" [addTag]="AddEventType" [loading]="loading.eventType" (change)="OnEventTypeSelected($event)"
                                         formControlName="eventTypeId" (change)="saver.next()">
                                     </ng-select>
                                 </div>
                                 <div class="input-container">
-                                    <textarea class="form-control with-border-thin" formControlName="description"
-                                        placeholder="Descripción del evento" rows="5"
-                                        (change)="saver.next()"></textarea>
+                                    <textarea class="form-control with-border-thin" formControlName="description" placeholder="Descripción del evento" rows="5" (change)="saver.next()"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -729,11 +614,7 @@
                                     Selecciona la fecha de tu evento
                                 </div>
                                 <div class="input-container">
-                                    <input #finalEventDatePicker="bsDatepicker"
-                                        class="form-control no-icon with-border-thin" type="text" formControlName="date"
-                                        placeholder="Fecha de entrega"
-                                        (onHidden)="saver.next()"
-                                        [bsConfig]="{ adaptivePosition: true, containerClass: 'theme-dark-blue' }"
+                                    <input #finalEventDatePicker="bsDatepicker" class="form-control no-icon with-border-thin" type="text" formControlName="date" placeholder="Fecha de entrega" (onHidden)="saver.next()" [bsConfig]="{ adaptivePosition: true, containerClass: 'theme-dark-blue' }"
                                         bsDatepicker>
                                 </div>
                             </div>
@@ -745,9 +626,7 @@
                                     Escribe los detalles de tu evento
                                 </div>
                                 <div class="input-container">
-                                    <textarea class="form-control with-border-thin" formControlName="instructions"
-                                        placeholder="Instrucciones del evento" rows="6"
-                                        (input)="saver.next()"></textarea>
+                                    <textarea class="form-control with-border-thin" formControlName="instructions" placeholder="Instrucciones del evento" rows="6" (input)="saver.next()"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -773,8 +652,7 @@
             Se ha calendarizado exitosamente tu proyecto
         </div>
         <div class="">
-            Al publicar tu estrategia otros podrán utilizarla, es necesario que para la publicación la autorice tu
-            rector o tu director, se enviará la solicitud y se te notificará.
+            Al publicar tu estrategia otros podrán utilizarla, es necesario que para la publicación la autorice tu rector o tu director, se enviará la solicitud y se te notificará.
         </div>
         <div class="">
             Se publicará en la biblioteca de estrategias, también la podrás utilizar después de publicada.
@@ -808,8 +686,7 @@
             <button class="btn btn-secondary w-50" [disabled]="loading.parcialProduct" (click)="CloseModal()">
                 No, cancelar
             </button>
-            <button class="btn btn-primary w-50" [disabled]="loading.parcialProduct"
-                (click)="DeleteParcialProduct(selectedParcialProduct)">
+            <button class="btn btn-primary w-50" [disabled]="loading.parcialProduct" (click)="DeleteParcialProduct(selectedParcialProduct)">
                 Si, eliminar
             </button>
         </div>
