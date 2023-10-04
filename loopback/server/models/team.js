@@ -51,32 +51,28 @@ module.exports = function(Team) {
     }
 
     Team.UpsertStrategyTeams = function(teams, strategyId, callback) {
+        Team.DeleteTeamsOfStrategy(strategyId, (err, strategyTeams) => {
+            if(err) return callback(err);
+            Team.AddTeams(teams, strategyId, (err, teamsCreated) => {
+                if(err) return callback(err);
+                return callback(null, teamsCreated);
+            });
+        });
+    }
+
+    Team.DeleteTeamsOfStrategy = function(strategyId, callback) {
         Team.find({strategyId}, (err, strategyTeams) => {
             if(err) return callback(err);
-            teams = teams.map((team, idx) => {
-                team.name = `Equipo ${idx+1}`;
-                return team;
-            });
 
             let cont = 0, limit = strategyTeams.length;
-            if(!!limit) {
+            if(!limit) return callback(null, []);
+            else {
                 strategyTeams.forEach(team => {
                     team.destroy((err, destroyed) => {
                         if(err) return callback(err);
-    
-                        if(++cont == limit) {
-                            Team.AddTeams(teams, strategyId, (err, teamsCreated) => {
-                                if(err) return callback(err);
-                                return callback(null, teamsCreated);
-                            });
-                        }
+
+                        if(++cont == limit) return callback(null, []);
                     });
-                });
-            }
-            else {
-                Team.AddTeams(teams, strategyId, (err, teamsCreated) => {
-                    if(err) return callback(err);
-                    return callback(null, teamsCreated);
                 });
             }
         });

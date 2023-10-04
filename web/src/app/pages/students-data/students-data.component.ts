@@ -161,27 +161,27 @@ export class StudentsDataComponent implements OnInit {
 
   dataConversions: Array<any> = [
     {
-      oldKey: 'Nombre',
+      oldKey: 'Nombre (Campo obligatorio)',
       newKey: 'name'
     },
     {
-      oldKey: 'Apellido P',
+      oldKey: 'Primer Apellido (Campo obligatorio)',
       newKey: 'fatherLastname'
     },
     {
-      oldKey: 'Apellido M',
+      oldKey: 'Segundo Apellido',
       newKey: 'motherLastname'
     },
     {
-      oldKey: 'Numero de registro',
+      oldKey: 'CURP (Campo obligatorio)',
       newKey: 'registerNumber'
     },
     {
-      oldKey: 'Grado',
+      oldKey: 'Grado (Campo obligatorio)',
       newKey: 'grade'
     },
     {
-      oldKey: 'Grupo',
+      oldKey: 'Grupo (Campo obligatorio)',
       newKey: 'group'
     },
   ];

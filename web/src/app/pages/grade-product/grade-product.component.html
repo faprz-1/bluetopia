@@ -53,7 +53,7 @@
                                 <ng-container *ngFor="let member of team?.members">
                                     <div class="member">
                                         <span>
-                                            {{member.role?.name}}
+                                            {{member.role?.name ? member.role?.name : 'Sin rol'}}
                                         </span>
                                     </div>
                                 </ng-container>

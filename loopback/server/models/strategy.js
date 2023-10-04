@@ -89,29 +89,29 @@ module.exports = function(Strategy) {
             strategy.startDate = strategy.dates.pop();
             delete strategy.dates;
         }
-        Strategy.upsert(strategy, (err, strategyUpdated) => {
-            if(err) return callback(err);
-            
-            if(!onlyStrategy) {
-                let grade = strategy.grade ? strategy.grade.id : 0;
-                let group = strategy.group ? strategy.group.id : 0;
-                Strategy.app.models.StrategyGroup.UpdateStrategyGroup(strategy.id, strategy.schoolId, grade, group, (err, saved) => {
+        if(onlyStrategy) {
+            Strategy.upsert(strategy, (err, strategyUpdated) => {
+                if(err) return callback(err);
+                Strategy.GetData(this.id, (err, strategy) => {
                     if(err) return callback(err);
-        
+                    return callback(null, strategy);
+                });
+            });
+        } else {
+            let grade = strategy.grade ? strategy.grade.id : 0;
+            let group = strategy.group ? strategy.group.id : 0;
+            Strategy.app.models.StrategyGroup.UpdateStrategyGroup(strategy.id, strategy.schoolId, grade, group, (err, strategyGroup) => {
+                if(err) return callback(err);
+                if(strategyGroup.teamsDeleted) strategy.isByTeams = false;
+                Strategy.upsert(strategy, (err, strategyUpdated) => {
+                    if(err) return callback(err);
                     Strategy.GetData(this.id, (err, strategy) => {
                         if(err) return callback(err);
-                        
                         return callback(null, strategy);
                     });
                 });
-            } else {
-                Strategy.GetData(this.id, (err, strategy) => {
-                    if(err) return callback(err);
-                    
-                    return callback(null, strategy);
-                });
-            }
-        });
+            });
+        }
     }
     
     Strategy.GetData = function(strategyId, callback) {
