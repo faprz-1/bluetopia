@@ -868,23 +868,35 @@ export class TemplateBasedOnFormComponent implements OnInit {
   }
 
   EvaluationProductsInfo(parcialProductInstance: any): boolean {
-if (parcialProductInstance.evaluationType.type == 'rubric'){
-        for (let rubric of parcialProductInstance.rubric) {
-      if (rubric.description == "") {
-       this.toast.ShowError('Todos los campos de la rúbrica deberían estar completos');
-       this.wrongInfo = true;
-        return true;
-      }else return false;
-  }
-   }else if (parcialProductInstance.evaluationType.type == "numeric" && parcialProductInstance.maxCalification == null) {
-    this.toast.ShowError('El valor máximo de la evalución no puede quedar en blanco');
+    if (parcialProductInstance.evaluationType == null) {
+         this.toast.ShowError('La evaluación no puede quedar en blanco');
     this.wrongInfo = true;
-     return true;
-   }else{
-     this.wrongInfo = false;
-     return false;
-   }
-   return false
+    return true;
+    }
+switch (parcialProductInstance.evaluationType.type) {
+  case 'rubric':
+    for (let rubric of parcialProductInstance.rubric) {
+      if (rubric.description == "") {
+        this.toast.ShowError('Todos los campos de la rúbrica deberían estar completos');
+        this.wrongInfo = true;
+        return true;
+      }
+    }
+    return false;
+
+  case 'numeric':
+    if (parcialProductInstance.maxCalification == null) {
+      this.toast.ShowError('El valor máximo de la evaluación no puede quedar en blanco');
+      this.wrongInfo = true;
+      return true;
+    }
+    this.wrongInfo = false;
+    return false;
+
+  default:
+    return false;
+}
+
   }
 
  
@@ -1015,6 +1027,7 @@ if (parcialProductInstance.evaluationType.type == 'rubric'){
         isFinal: true,
       };
       this.loading.event = true;
+console.log(eventInstance);
 
       this.api.Patch(`/Events`, { event: eventInstance }).subscribe(
         (eventSaved) => {
