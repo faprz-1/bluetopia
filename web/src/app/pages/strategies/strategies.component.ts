@@ -11,10 +11,13 @@ export class StrategiesComponent implements OnInit {
 
   user: any = null;
   startegyStatuses: Array<any> = [];
+  templates: Array<any> = [];
   grades: Array<any> = [];
   groups: Array<any> = [];
   gradeSelected: any = null;
   groupSelected: any = null;
+  templateSelected: any = null;
+  statusSelected: any = null;
   strategies: Array<any> = [];
   loading: any = {};
 
@@ -26,7 +29,16 @@ export class StrategiesComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.api.GetUser();
     this.GetStrategyStatuses();
+    this.GetTemplates();
     this.GetGrades();
+  }
+
+  GetTemplates() {
+    this.api.Get(`/Templates`).subscribe(templates => {
+      this.templates = templates;
+    }, err => {
+      console.error('Error getting templates', err);
+    });
   }
 
   GetStrategyStatuses() {
@@ -65,12 +77,13 @@ export class StrategiesComponent implements OnInit {
         endpoint = `/Strategies/OfSchool/${this.user ? this.user.schoolId: 0}`;
         break;
       case 'Teacher':
-        endpoint = `/Strategies/OfTeacher/${this.user ? this.user.id: 0}`;
+        endpoint = `/Strategies`;
         break;
       default:
         endpoint = '';
         break;
     }
+    endpoint += `/FilteredBy/Grade/${!!this.gradeSelected ? this.gradeSelected.id : 0}/Group/${!!this.groupSelected ? this.groupSelected.id : 0}/Template/${!!this.templateSelected ? this.templateSelected.id : 0}/Statuses/${JSON.stringify(this.statusSelected || [])}`;
     this.api.Get(endpoint).subscribe(strategies => {
       this.strategies = strategies;
     }, err => {

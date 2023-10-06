@@ -49,6 +49,11 @@
       "type": "boolean",
       "required": true,
       "default": false
+    },
+    "statusId": {
+      "type": "number",
+      "required": true,
+      "default": 1
     }
   },
   "validations": [],
@@ -57,6 +62,14 @@
       "type": "belongsTo",
       "model": "Template",
       "foreignKey": "templateId",
+      "options": {
+        "nestRemoting": true
+      }
+    },
+    "status": {
+      "type": "belongsTo",
+      "model": "StrategyStatus",
+      "foreignKey": "statusId",
       "options": {
         "nestRemoting": true
       }
@@ -273,8 +286,27 @@
         {
           "arg": "schoolId",
           "type": "number",
-          "root": true,
-          "description": ""
+          "required": true
+        },
+        {
+          "arg": "gradeId",
+          "type": "number",
+          "required": false
+        },
+        {
+          "arg": "groupId",
+          "type": "number",
+          "required": false
+        },
+        {
+          "arg": "templateId",
+          "type": "number",
+          "required": false
+        },
+        {
+          "arg": "statuses",
+          "type": "array",
+          "required": false
         }
       ],
       "returns": [
@@ -290,16 +322,42 @@
         {
           "path": "/OfSchool/:schoolId",
           "verb": "get"
+        },
+        {
+          "path": "/OfSchool/:schoolId/FilteredBy/Grade/:gradeId/Group/:groupId/Template/:templateId/Statuses/:statuses",
+          "verb": "get"
         }
       ]
     },
     "GetAllOfTeacher": {
       "accepts": [
         {
-          "arg": "userId",
+          "arg": "ctx",
+          "type": "object",
+          "required": true,
+          "http": {
+            "source": "req"
+          }
+        },
+        {
+          "arg": "gradeId",
           "type": "number",
-          "root": true,
-          "description": ""
+          "required": false
+        },
+        {
+          "arg": "groupId",
+          "type": "number",
+          "required": false
+        },
+        {
+          "arg": "templateId",
+          "type": "number",
+          "required": false
+        },
+        {
+          "arg": "statuses",
+          "type": "array",
+          "required": false
         }
       ],
       "returns": [
@@ -313,7 +371,11 @@
       "description": "",
       "http": [
         {
-          "path": "/OfTeacher/:userId",
+          "path": "/",
+          "verb": "get"
+        },
+        {
+          "path": "/FilteredBy/Grade/:gradeId/Group/:groupId/Template/:templateId/Statuses/:statuses",
           "verb": "get"
         }
       ]

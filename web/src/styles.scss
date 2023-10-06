@@ -426,18 +426,9 @@ ng-select.form-control {
 }
 
 // Filters styles
-.filters > *:not(:first-child):not(:last-child) {
-    margin: 0 8px;
-}
 .filters {
     .input-container {
         margin: 0;
-    }
-    div.filter:first-child {
-        margin-right: 8px;
-    }
-    div.filter:last-child {
-        margin-left: 8px;
     }
 
     input {
@@ -455,7 +446,8 @@ ng-select.form-control {
         width: 120px;
         border: 1px solid #758CA6;
         border-radius: 12px;
-        height: 46px;
+        min-height: 46px;
+        height: min-content;
         max-width: 100%;
     }
     .big {

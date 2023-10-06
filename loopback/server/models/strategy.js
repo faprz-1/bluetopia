@@ -151,43 +151,51 @@ module.exports = function(Strategy) {
         });
     }
 
-    Strategy.GetAllOfSchool = function(schoolId, callback) {
-        Strategy.app.models.Usuario.find({
-            where: {schoolId}
-        }, (err, schoolTeachers) => {
+    Strategy.GetAllOfSchool = function(schoolId, gradeId, groupId, templateId, statuses, callback) {
+        Strategy.find({
+            where: {
+                schoolId,
+                isDeleted: false
+            },
+            include: ['user', 'status', 'template', 'teams', {'strategyGroup': ['grade', 'group']}]
+        }, (err, strategies) => {
             if(err) return callback(err);
 
-            Strategy.find({
-                where: {
-                    schoolId,
-                    isDeleted: false
-                },
-                include: ['template', 'teams', {'strategyGroup': ['grade', 'group']}]
-            }, (err, strategies) => {
-                if(err) return callback(err);
-    
-                return callback(null, strategies);
-            });
+            return callback(null, strategies);
         });
     }
 
-    Strategy.GetAllOfTeacher = function(userId, callback) {
+    Strategy.GetAllOfTeacher = function(ctx, gradeId, groupId, templateId, statuses, callback) {
+        const userId = ctx.accessToken.userId;
         Strategy.app.models.Usuario.findById(userId, (err, teacherUser) => {
             if(err) return callback(err);
 
+            let where = {
+                and: [
+                    {or: [ {userId}, {schoolId: teacherUser.schoolId} ] },
+                    {isDeleted: false}
+                ]
+            }
+            if(!!templateId && templateId != '*') where.and.push({templateId});
+            if(!!statuses && statuses.length) where.and.push({statusId: {inq: statuses}});
             Strategy.find({
-                where: {
-                    and: [
-                        {or: [
-                            {userId},
-                            {schoolId: teacherUser.schoolId}
-                        ]},
-                        {isDeleted: false}
-                    ]
-                },
-                include: ['template', 'teams', {'strategyGroup': ['grade', 'group']}]
+                where,
+                include: ['user', 'status', 'template', 'teams', {'strategyGroup': ['grade', 'group']}]
             }, (err, strategies) => {
                 if(err) return callback(err);
+
+                strategies = strategies.filter(strategy => {
+                    let isValid = true;
+                    if(!!strategy.strategyGroup()) {
+                        if(!!gradeId && gradeId != '*') {
+                            if(strategy.strategyGroup().gradeId != gradeId) isValid = false;
+                        }
+                        if(!!groupId && groupId != '*') {
+                            if(strategy.strategyGroup().groupId != groupId) isValid = false;
+                        }
+                    }
+                    return isValid;
+                });
     
                 return callback(null, strategies);
             });

@@ -12,6 +12,12 @@
     <div class="category" *ngIf="false">
         Category
     </div>
+    <div class="category" *ngIf="true">
+    </div>
+    <div class="d-flex flex-column align-items-start justify-content-start align-self-stretch">
+        <label class="category">Autor</label>
+        {{strategy?.user?.username}}
+    </div>
     <div class="d-flex flex-column align-items-start justify-content-start align-self-stretch">
         <label>Título</label>
         {{strategy?.title ? strategy?.title : 'Sin título'}}
