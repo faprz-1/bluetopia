@@ -3,6 +3,21 @@
 var moment = require('moment-timezone');
 var constants = require('./../helpers/constants');
 
+var FilterStrategiesByGradeAndGroup = function(strategies, gradeId, groupId) {
+    return strategies.filter(strategy => {
+        let isValid = true;
+        if(!!strategy.strategyGroup()) {
+            if(!!gradeId && gradeId != '*') {
+                if(strategy.strategyGroup().gradeId != gradeId) isValid = false;
+            }
+            if(!!groupId && groupId != '*') {
+                if(strategy.strategyGroup().groupId != groupId) isValid = false;
+            }
+        }
+        return isValid;
+    });
+}
+
 module.exports = function(Strategy) {
 
     Strategy.observe('before save', (ctx, next) => {
@@ -152,15 +167,21 @@ module.exports = function(Strategy) {
     }
 
     Strategy.GetAllOfSchool = function(schoolId, gradeId, groupId, templateId, statuses, callback) {
+        let where = {
+            and: [
+                {schoolId},
+                {isDeleted: false},
+            ]
+        };
+        if(!!templateId && templateId != '*') where.and.push({templateId});
+        if(!!statuses && statuses.length) where.and.push({statusId: {inq: statuses}});
         Strategy.find({
-            where: {
-                schoolId,
-                isDeleted: false
-            },
+            where,
             include: ['user', 'status', 'template', 'teams', {'strategyGroup': ['grade', 'group']}]
         }, (err, strategies) => {
             if(err) return callback(err);
 
+            strategies = FilterStrategiesByGradeAndGroup(strategies, gradeId, groupId)
             return callback(null, strategies);
         });
     }
@@ -184,18 +205,7 @@ module.exports = function(Strategy) {
             }, (err, strategies) => {
                 if(err) return callback(err);
 
-                strategies = strategies.filter(strategy => {
-                    let isValid = true;
-                    if(!!strategy.strategyGroup()) {
-                        if(!!gradeId && gradeId != '*') {
-                            if(strategy.strategyGroup().gradeId != gradeId) isValid = false;
-                        }
-                        if(!!groupId && groupId != '*') {
-                            if(strategy.strategyGroup().groupId != groupId) isValid = false;
-                        }
-                    }
-                    return isValid;
-                });
+                strategies = FilterStrategiesByGradeAndGroup(strategies, gradeId, groupId)
     
                 return callback(null, strategies);
             });

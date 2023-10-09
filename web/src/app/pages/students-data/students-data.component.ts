@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { ApiService } from 'src/app/services/api.service';
 import { CsvFileService } from 'src/app/services/csv-file.service';
 import { DownloadFileService } from 'src/app/services/download-file-service.service';
@@ -20,6 +22,7 @@ export class StudentsDataComponent implements OnInit {
   groups: Array<any> = [];
   gradeSelected: any = null;
   groupSelected: any = null;
+  searchText: string = '';
   students: Array<any> = [];
   isEditing: boolean = false;
   loading: any = {
@@ -27,6 +30,7 @@ export class StudentsDataComponent implements OnInit {
     creating: false,
   }
   selectedStudent:any= null;
+  searchTrigger: Subject<any> = new Subject();
 
   studentForm: FormGroup = new FormGroup({
     CURP: new FormControl(null, [Validators.required]),
@@ -47,6 +51,10 @@ export class StudentsDataComponent implements OnInit {
     this.user = this.api.GetUser();
     this.GetTeacherGroups();
      this.SetGroupsOfSelectedGrade(this.gradeSelected);
+
+     this.searchTrigger.pipe(debounceTime(500)).subscribe(() => {
+      this.GetStudents();
+     });
   }
 
    GetTeacherGroups() {
@@ -122,7 +130,7 @@ export class StudentsDataComponent implements OnInit {
       case 'Teacher': endpoint += `/OfTeacher/${this.user.id}`; break;
       default: endpoint += `/OfSchool`; break;
     }
-    endpoint += `/FilteredBy/Grade/${!!this.gradeSelected ? this.gradeSelected.id : 0}/Group/${!!this.groupSelected ? this.groupSelected.id : 0}`;
+    endpoint += `/FilteredBy/Text/${!!this.searchText ? this.searchText : '*'}/Grade/${!!this.gradeSelected ? this.gradeSelected.id : 0}/Group/${!!this.groupSelected ? this.groupSelected.id : 0}`;
     this.api.Get(endpoint).subscribe(students => {
       this.students = this.SortInAlphabeticalOrder(students);
       this.loading.getting = false;

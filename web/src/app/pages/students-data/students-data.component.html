@@ -13,13 +13,13 @@
     </div>
 
     <div class="row">
-        <div class="col-12 d-flex align-items-center filters">
+        <div class="col-12 d-flex align-items-center filters flex-wrap gap-3">
             <div class="flex-grow-1 filter">
                 <div class="input-container">
                     <div class="input-icon-container icon-container-right text-center">
                         <img src="assets/icons/search-small.png">
                     </div>
-                    <input class="form-control icon-right" type="text" placeholder="Buscar">
+                    <input class="form-control icon-right" type="text" (keyup)="GetStudents()" placeholder="Buscar" [(ngModel)]="searchText">
                 </div>
             </div>
             <div class="select-container filter">
