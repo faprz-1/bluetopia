@@ -4,9 +4,7 @@ module.exports = function(Skill) {
 
     Skill.CreateOne = function(skill, callback) {
         Skill.findOne({
-            where: {
-                name: {like: `%${skill.name}%`}
-            }
+            where: {name: skill.name}
         }, (err, skillFound) => {
             if(err) return callback(err);
 
@@ -19,13 +17,13 @@ module.exports = function(Skill) {
                         return callback(null, skillSaved);
                     });
                 }
+            } else {
+                Skill.create(skill, (err, newSkill) => {
+                    if(err) return callback(err);
+    
+                    return callback(null, newSkill);
+                });
             }
-            
-            Skill.create(skill, (err, newSkill) => {
-                if(err) return callback(err);
-
-                return callback(null, newSkill);
-            });
         });
     }
 

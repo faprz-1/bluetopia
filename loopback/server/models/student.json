@@ -171,6 +171,12 @@
                     "type": "number",
                     "required": false,
                     "description": ""
+                },
+                {
+                    "arg": "searchText",
+                    "type": "string",
+                    "required": false,
+                    "description": ""
                 }
             ],
             "returns": [{
@@ -185,7 +191,7 @@
                     "verb": "get"
                 },
                 {
-                    "path": "/OfSchool/:schoolId/FilteredBy/Grade/:gradeId/Group/:groupId",
+                    "path": "/OfSchool/:schoolId/FilteredBy/Text/:searchText/Grade/:gradeId/Group/:groupId",
                     "verb": "get"
                 }
             ]
@@ -208,6 +214,12 @@
                     "type": "number",
                     "required": false,
                     "description": ""
+                },
+                {
+                    "arg": "searchText",
+                    "type": "string",
+                    "required": false,
+                    "description": ""
                 }
             ],
             "returns": [{
@@ -222,7 +234,7 @@
                     "verb": "get"
                 },
                 {
-                    "path": "/OfTeacher/:teacherUserId/FilteredBy/Grade/:gradeId/Group/:groupId",
+                    "path": "/OfTeacher/:teacherUserId/FilteredBy/Text/:searchText/Grade/:gradeId/Group/:groupId",
                     "verb": "get"
                 }
             ]
@@ -332,7 +344,7 @@
             }],
             "description": "",
             "http": [{
-                "path": "/EditStudent",
+                "path": "/save",
                 "verb": "post"
             }]
         }

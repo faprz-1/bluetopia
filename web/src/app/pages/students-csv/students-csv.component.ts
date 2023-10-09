@@ -18,11 +18,11 @@ export class StudentsCsvComponent implements OnInit {
 
   dataConversions: Array<any> = [
     {
-      oldKey: 'Nombre',
+      oldKey: 'Nombre (Campo obligatorio)',
       newKey: 'name'
     },
     {
-      oldKey: 'Primer Apellido',
+      oldKey: 'Primer Apellido (Campo obligatorio)',
       newKey: 'fatherLastname'
     },
     {
@@ -30,15 +30,15 @@ export class StudentsCsvComponent implements OnInit {
       newKey: 'motherLastname'
     },
     {
-      oldKey: 'CURP',
+      oldKey: 'CURP (Campo obligatorio)',
       newKey: 'registerNumber'
     },
     {
-      oldKey: 'Grado',
+      oldKey: 'Grado (Campo obligatorio)',
       newKey: 'grade'
     },
     {
-      oldKey: 'Grupo',
+      oldKey: 'Grupo (Campo obligatorio)',
       newKey: 'group'
     },
   ];
@@ -114,7 +114,7 @@ export class StudentsCsvComponent implements OnInit {
   UploadStudents() {
     this.loading.uploading = true;
     this.api.Post(`/Students/Array`, {students: this.students}).subscribe((newStudents: any) => {
-      this.toast.ShowSuccess(`${newStudents.length} Estudiantes agregados correctamente`);
+      this.toast.ShowSuccess(`Estudiantes agregados correctamente`);
       this.loading.uploading = false;
       this.confirmationModal?.show();
     }, err => {

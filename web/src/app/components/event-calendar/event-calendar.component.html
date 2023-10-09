@@ -25,7 +25,7 @@
                                 {{FormatDay(weekDay.day)}}
                             </span>
 
-                            <img class="clickeable" width="24" src="assets/icons/add-circle.png" alt="add" (click)="AddEvent(weekDay)">
+                            <img  *ngIf="ThatDateAlreadyPassed(weekDay.day) == false" class="clickeable" width="24" src="assets/icons/add-circle.png" alt="add" (click)="AddEvent(weekDay)">
                         </div>
 
                         <div class="day-events">

@@ -19,6 +19,7 @@ export class CreateActivityComponent implements OnInit {
   activities: Array<any> = [];
 
   loading: boolean = false;
+  canContinue: boolean = true;
 
   activityForm: FormGroup = new FormGroup({
     name: new FormControl(null, [Validators.required]),
@@ -45,6 +46,25 @@ export class CreateActivityComponent implements OnInit {
     this.GetParams();
   }
 
+  IsANumber(input: any){
+    if (isNaN(Number(input))) {
+       this.toast.ShowError('Solo valores numéricos')
+       this.canContinue = false;
+  }else {
+    this.canContinue = true;
+  }
+}
+
+ThatDateAlreadyPassed(date: any){
+  let startDate = moment(date[0])
+  let today = moment();
+ if(startDate.isBefore(today, 'day')) { 
+  this.toast.ShowError('La fecha proporcionada ya ha pasado, por favor elija otra fecha')
+this.canContinue = false;
+ }else{
+  this.canContinue = true;
+ }
+}
   GetParams() {
     this.activatedRoute.params.subscribe(params => {
       this.strategyId = params['strategyId'];

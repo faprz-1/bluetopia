@@ -12,15 +12,15 @@
     </div>
 
     <div class="row">
-        <div class="col-12 d-flex align-items-center filters mb-4">
-            <div class="flex-grow-1 filter">
+        <div class="col-12 d-flex align-items-center flex-wrap filters gap-3 mb-4">
+            <!-- <div class="flex-grow-1 filter">
                 <div class="input-container">
                     <div class="input-icon-container icon-container-right text-center">
                         <img src="assets/icons/search-small.png">
                     </div>
                     <input class="form-control icon-right" type="text" placeholder="Buscar">
                 </div>
-            </div>
+            </div> -->
             <div class="select-container filter">
                 <ng-select
                     class="ng-select form-control"
@@ -28,7 +28,8 @@
                     bindLabel="name"
                     (change)="GetStrategies()"
                     [(ngModel)]="gradeSelected"
-                    placeholder="Grado">
+                    placeholder="Grado"
+                    (change)="GetStrategies()">
                 </ng-select>
             </div>
             <div class="select-container filter">
@@ -38,23 +39,30 @@
                     bindLabel="name"
                     (change)="GetStrategies()"
                     [(ngModel)]="groupSelected"
-                    placeholder="Grupo">
+                    placeholder="Grupo"
+                    (change)="GetStrategies()">
                 </ng-select>
             </div>
-            <div class="select-container big filter">
+            <div class="select-container flex-grow-1 big filter">
+                <ng-select
+                    class="ng-select form-control placeholder-primary"
+                    [items]="templates"
+                    bindLabel="name"
+                    placeholder="Tipo de estrategia"
+                    [(ngModel)]="templateSelected"
+                    (change)="GetStrategies()">
+                </ng-select>
+            </div>
+            <div class="select-container flex-grow-1 big filter">
                 <ng-select
                     class="ng-select form-control placeholder-primary"
                     [items]="startegyStatuses"
                     bindLabel="name"
-                    placeholder="Tipo de estrategia">
-                </ng-select>
-            </div>
-            <div class="select-container big filter">
-                <ng-select
-                    class="ng-select form-control placeholder-primary"
-                    [items]="startegyStatuses"
-                    bindLabel="name"
-                    placeholder="Estado">
+                    bindValue="id"
+                    placeholder="Estado"
+                    [multiple]="true"
+                    [(ngModel)]="statusSelected"
+                    (change)="GetStrategies()">
                 </ng-select>
             </div>
         </div>

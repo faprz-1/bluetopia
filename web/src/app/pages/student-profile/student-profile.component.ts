@@ -38,7 +38,7 @@ export class StudentProfileComponent implements OnInit {
 
   async EditPromise() {
     delete this.student.studentGroup
-    await  this.api.Post(`/Students/${this.student.id}/EditStudent`, {newStudent: this.student}).subscribe(student => {
+    await  this.api.Post(`/Students/${this.student.id}/save`, {newStudent: this.student}).subscribe(student => {
     this.student = student;
   }, err => {
     console.error("");

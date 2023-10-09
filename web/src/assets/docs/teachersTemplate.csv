@@ -1,1 +1,1 @@
-Nombre,Correo,Asignaturas,Extracurriculares,Grado,Grupo
+Nombre (Campo obligatorio),Correo (Campo obligatorio),Asignaturas,Extracurriculares,Grado (Campo obligatorio),Grupo (Campo obligatorio)

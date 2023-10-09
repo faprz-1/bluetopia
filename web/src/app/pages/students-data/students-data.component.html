@@ -13,13 +13,13 @@
     </div>
 
     <div class="row">
-        <div class="col-12 d-flex align-items-center filters">
+        <div class="col-12 d-flex align-items-center filters flex-wrap gap-3">
             <div class="flex-grow-1 filter">
                 <div class="input-container">
                     <div class="input-icon-container icon-container-right text-center">
                         <img src="assets/icons/search-small.png">
                     </div>
-                    <input class="form-control icon-right" type="text" placeholder="Buscar">
+                    <input class="form-control icon-right" type="text" (keyup)="GetStudents()" placeholder="Buscar" [(ngModel)]="searchText">
                 </div>
             </div>
             <div class="select-container filter">
@@ -69,51 +69,60 @@
                         <th>Apellidos</th>
                         <th>Materias</th>
                         <th>Promedio</th>
-                        <th>Acciónes</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 
-                <tbody *ngIf="!loading.getting; else bigLoading">
-                    <tr *ngFor="let student of students">
+                <tbody *ngIf="!loading.getting; else bigLoading"  [formGroup]="studentForm">
+                    <tr *ngFor="let student of students" >
                         <td>
-                            <div *ngIf="isEditing">
+                            <div *ngIf="isEditing && selectedStudent === student">
+                                <input type="text" placeholder="CURP" formControlName="CURP" class="form-control with-border">
                             </div>
-                            <div *ngIf="!isEditing">
+                            <div *ngIf="!isEditing || selectedStudent != student">
                                 {{student.registerNumber}}
                             </div>
                         </td>
                         <td>
-                            <div *ngIf="isEditing">
+                            <div *ngIf="isEditing && selectedStudent === student">
+                                <input type="text" placeholder="Nombre" formControlName="name" class="form-control with-border">
                             </div>
-                            <div *ngIf="!isEditing">
+                            <div *ngIf="!isEditing || selectedStudent != student">
                                 {{student.name}}
                             </div>
                         </td>
                         <td>
-                            <div *ngIf="isEditing">
+                            <div *ngIf="isEditing && selectedStudent === student">
+                                <input type="text" placeholder="Primer Apellido" formControlName="fatherLastname" class="form-control with-border">
                             </div>
-                            <div *ngIf="!isEditing">
+                            <div *ngIf="isEditing && selectedStudent === student">
+                                <input type="text" placeholder="Segundo Apellido" formControlName="motherLastname" class="form-control with-border">
+                            </div>
+                            <div *ngIf="!isEditing || selectedStudent != student">
                                 {{student.fullName}}
                             </div>
                         </td>
                         <td>
-                            <div *ngIf="isEditing">
+                            <div *ngIf="isEditing && selectedStudent === student">
                             </div>
-                            <div *ngIf="!isEditing">
+                            <div *ngIf="!isEditing || selectedStudent != student">
                                 4.5
                             </div>
                         </td>
                         <td>
-                            <div *ngIf="isEditing">
+                            <div *ngIf="isEditing && selectedStudent === student">
                             </div>
-                            <div *ngIf="!isEditing">
+                            <div *ngIf="!isEditing || selectedStudent != student">
                                 4.5
                             </div>
                         </td>
                         <td>
-                            <div *ngIf="isEditing">
+                            <div *ngIf="isEditing && selectedStudent === student">
+                                <img class="clickeable" src="assets/icons/save.svg" (click)="SaveChanges()" width="24">
+
                             </div>
                             <div class="d-flex align-items-center justify-content-center" *ngIf="!isEditing">
+                                <img class="clickeable" src="assets/icons/edit.svg" (click)="WillEdit(student)" width="24">
                             </div>
                         </td>
                     </tr>

@@ -17,6 +17,11 @@
       "type": "belongsTo",
       "model": "Usuario",
       "foreignKey": "userId"
+    },
+    "school": {
+      "type": "belongsTo",
+      "model": "School",
+      "foreignKey": "schoolId"
     }
   },
   "acls": [
@@ -73,6 +78,11 @@
           "http": {
             "source": "req"
           }
+        },
+        {
+          "arg": "schoolId",
+          "type": "number",
+          "required": true
         }
       ],
       "returns": [
@@ -87,6 +97,10 @@
       "http": [
         {
           "path": "/",
+          "verb": "get"
+        },
+        {
+          "path": "/OfSchool/:schoolId",
           "verb": "get"
         }
       ]
