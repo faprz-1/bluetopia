@@ -145,7 +145,8 @@
         "GetStudents",
         "Delete",
         "GetSuggested",
-        "ResetTeams"
+        "ResetTeams",
+        "GetAllOfStudent"
       ]
     }
   ],
@@ -482,6 +483,33 @@
         {
           "path": "/:strategyId/ResetTeams",
           "verb": "patch"
+        }
+      ]
+    },
+    "GetAllOfStudent": {
+      "accepts": [
+        {
+          "arg": "ctx",
+          "type": "object",
+          "required": true,
+          "http": {
+            "source": "req"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "strategies",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/OfStudent",
+          "verb": "get"
         }
       ]
     }

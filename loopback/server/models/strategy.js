@@ -279,4 +279,26 @@ module.exports = function(Strategy) {
         });
     }
 
+    Strategy.GetAllOfStudent = function(ctx, callback) {
+        const userId = ctx.accessToken.userId;
+        Strategy.app.models.Student.findOne({where: {userId}, include: 'studentGroup'}, (err, student) => {
+            if(err) return callback(err);
+
+            Strategy.app.models.StrategyGroup.find({
+                where: {
+                    gradeId: student.studentGroup().gradeId,
+                    groupId: student.studentGroup().groupId,
+                    schoolId: student.studentGroup().schoolId,
+                },
+                include: 'strategy'
+            }, (err, strategyGroups) => {
+                if(err) return callback(err);
+
+                let strategies = strategyGroups.map(strategyGroup => strategyGroup.strategy());
+
+                return callback(null, strategies);
+            });
+        });
+    }
+
 };

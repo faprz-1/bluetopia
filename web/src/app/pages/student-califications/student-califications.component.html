@@ -1,3 +1,45 @@
 <div class="content">
-    <p>student-califications works!</p>
+    <div class="d-flex align-items-center justify-content-between">
+        <app-breadcrumb [crumbs]="crumbs" theme="dark-blue"></app-breadcrumb>
+
+        <h1 class="blue-dark font-quicksand" style="font-size: 2.25rem;"><b>Calificaciones</b></h1>
+
+        <div></div>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-center gap-5 my-5">
+        <div class="strategy-tab clickeable" *ngFor="let strategy of strategies"
+        (click)="SetStrategyAsActive(strategy)"
+        [ngClass]="{'strategy-tab-active': strategy.active}">
+            {{strategy.title}}
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Tipo de producto</th>
+                <th>Actividad</th>
+                <th>Campos formativos</th>
+                <th>Calificación</th>
+                <th>Comentario</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr *ngFor="let evaluation of evaluations">
+                <td>Tipo de producto</td>
+                <td>Actividad</td>
+                <td>Campos formativos</td>
+                <td>Calificación</td>
+                <td>Comentario</td>
+                <td>
+                    <button class="btn btn-primary btn-small">
+                        Ver detalles
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>

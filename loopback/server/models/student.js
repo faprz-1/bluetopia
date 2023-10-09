@@ -248,6 +248,33 @@ module.exports = function(Student) {
         });
     }
 
+    Student.GetDataWithEvaluationsOfStrategy = function(studentUserId, strategyId, callback) {
+        Student.app.models.Strategy.findById(strategyId, {include: 'parcialProducts'}, (err, strategy) => {
+            if(err) return callback(err);
+
+            if(!strategy) return callback('Strategy not found!!!');
+
+            Student.findOne({
+                where: {userId: studentUserId},
+                include: [
+                    'school',
+                    { 'studentGroup': ['group', 'grade'] },
+                    {
+                        relation: 'evaluations',
+                        scope: {
+                            include: 'studentFiles',
+                            where: strategy.parcialProducts().length ? {
+                                parcialProductId: {inq: strategy.parcialProducts().map(product => product.id)}
+                            } : null
+                        }
+                    },
+                ]
+            }, (err, student) => {
+                return callback(err, student);
+            });
+        });
+    }
+
     Student.prototype.EvaluateParcialProduct = function(evaluation, callback) {
         evaluation.studentId = this.id;
         Student.app.models.Evaluation.Update(evaluation, (err, evaluationSaved) => {

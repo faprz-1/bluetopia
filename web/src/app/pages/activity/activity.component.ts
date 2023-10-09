@@ -168,7 +168,8 @@ export class ActivityComponent implements OnInit {
   }
 
   CalculateScoreOfRubric(scores:any){
+    if(!scores) return;
     const totalScore = scores.reduce((total:any, score:any) => total + score, 0);
-    this.evaluation.calification = (totalScore/this.maxScore)*100
+    this.evaluation.calification = (totalScore / this.maxScore) * 100;
   }
 }

@@ -160,7 +160,8 @@
           "prototype.EvaluateParcialProduct": true,
           "GetEvents": true,
           "prototype.EditStudent": true,
-          "GetStudentByUser": true
+          "GetStudentByUser": true,
+          "GetDataWithEvaluationsOfStrategy": true
         }
       }
     }
@@ -337,7 +338,8 @@
           "GetStudents": true,
           "prototype.Delete": true,
           "GetSuggested": true,
-          "ResetTeams": true
+          "ResetTeams": true,
+          "GetAllOfStudent": true
         }
       }
     }
