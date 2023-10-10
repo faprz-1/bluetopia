@@ -238,7 +238,7 @@ module.exports = function(app) {
         type: 'rubric',
       },
       {
-        name: 'Valor númerico',
+        name: 'Valor numérico',
         type: 'numeric',
       },
     ];
