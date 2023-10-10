@@ -67,8 +67,8 @@
                         <th>#</th>
                         <th>Nombre</th>
                         <th>Apellidos</th>
-                        <th>Materias</th>
-                        <th>Promedio</th>
+                        <!-- <th>Materias</th>
+                        <th>Promedio</th> -->
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -102,7 +102,7 @@
                                 {{student.fullName}}
                             </div>
                         </td>
-                        <td>
+                        <!-- <td>
                             <div *ngIf="isEditing && selectedStudent === student">
                             </div>
                             <div *ngIf="!isEditing || selectedStudent != student">
@@ -115,7 +115,7 @@
                             <div *ngIf="!isEditing || selectedStudent != student">
                                 4.5
                             </div>
-                        </td>
+                        </td> -->
                         <td>
                             <div *ngIf="isEditing && selectedStudent === student">
                                 <img class="clickeable" src="assets/icons/save.svg" (click)="SaveChanges()" width="24">
