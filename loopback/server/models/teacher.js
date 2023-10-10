@@ -192,6 +192,7 @@ module.exports = function(Teacher) {
         }, (err, teacher) => {
             if(err) return callback(err);
 
+            if(!teacher) return callback(null, null);
             teacher = teacher.toJSON();
             teacher.teacherGroups.forEach(teacherGroup => {
                 teacherGroup.grade.gradeSubjects = teacherGroup.grade.gradeSubjects.filter(teacherSubject => teacherSubject.teacherId == teacher.id);

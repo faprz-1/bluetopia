@@ -115,18 +115,21 @@ module.exports = function(Student) {
     }
 
     Student.GetAllOfSchool = function(schoolId, gradeId, groupId, searchText, callback) {
+        let where = {
+            and: [
+                {schoolId},
+            ]
+        };
+        if(!!searchText && searchText != '*') {
+            where.and.push({or: [
+                {name: {like: `%${searchText}%`}},
+                {fatherLastname: {like: `%${searchText}%`}},
+                {motherLastname: {like: `%${searchText}%`}},
+                {registerNumber: {like: `%${searchText}%`}},
+            ]});
+        }
         Student.find({
-            where: {
-                and: [
-                    {schoolId},
-                    {or: [
-                        {name: {like: `%${searchText}%`}},
-                        {fatherLastname: {like: `%${searchText}%`}},
-                        {motherLastname: {like: `%${searchText}%`}},
-                        {registerNumber: {like: `%${searchText}%`}},
-                    ]}
-                ]
-            },
+            where,
             include: { 'studentGroup': ['group', 'grade'] }
         }, (err, schoolStudents) => {
             if (err) return callback(err);

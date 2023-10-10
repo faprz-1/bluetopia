@@ -149,7 +149,7 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
 
   GetTeacherData() {
     this.api.Get(`/Teachers/${this.user ? this.user.id : 0}/Data`).subscribe(teacher => {
-      this.teacherGroups = teacher.teacherGroups;
+      this.teacherGroups = teacher?.teacherGroups || [];
       this.FormatStudents();
 
     }, err => {
