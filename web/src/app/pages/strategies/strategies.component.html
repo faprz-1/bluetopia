@@ -53,7 +53,7 @@
                     (change)="GetStrategies()">
                 </ng-select>
             </div>
-            <div class="select-container flex-grow-1 big filter">
+            <!-- <div class="select-container flex-grow-1 big filter">
                 <ng-select
                     class="ng-select form-control placeholder-primary"
                     [items]="startegyStatuses"
@@ -64,7 +64,7 @@
                     [(ngModel)]="statusSelected"
                     (change)="GetStrategies()">
                 </ng-select>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="row" *ngIf="!!strategies.length; else noStrategies">

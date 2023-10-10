@@ -1,154 +1,147 @@
 <section class="content" *ngIf="user != null">
-  <div class="row">
-    <div class="col-8">
-      <div class="display-4">
-        Perfil <i class="zmdi zmdi-camera" ></i>
-      </div>
-    </div>
-    <div class="col-4 d-flex align-items-center justify-content-end">
-    </div>
-  </div>
-
-  <div class="row" *ngIf="user != null">
-    <div class="col-lg-3 col-md-5 col-sm-6 pl-0">
-      <div class="card ml-3">
-        <div class="card-img">
-
-          <app-profile-image-editor style="top: 10px; right:15px; position:absolute"
-            (imageChanged)="ImageChanged($event)"></app-profile-image-editor>
-
-          <img class="card-img-top" [src]="user?.profileImage | jarabeImage:'medium'">
+    <div class="row">
+        <div class="col-8">
+            <div class="display-4">
+                Perfil <i class="zmdi zmdi-camera"></i>
+            </div>
         </div>
+        <div class="col-4 d-flex align-items-center justify-content-end">
+        </div>
+    </div>
 
-        <div class="card-body">
-          <div class="form-group row mb-2" *ngIf="user?.username">
-            <p> Nombre de usuario:
-              <strong> {{user?.username}}</strong>
-            </p>
-          </div>
+    <div class="row" *ngIf="user != null">
+        <div class="col-lg-3 col-md-5 col-sm-6 pl-0">
+            <div class="card ml-3">
+                <div class="card-img">
 
-          <div class="form-group row mb-2" *ngIf="user?.name">
-            <p>Nombre completo:
-              <strong> {{user?.name}}</strong>
-            </p>
-          </div>
+                    <app-profile-image-editor style="top: 10px; right:15px; position:absolute" (imageChanged)="ImageChanged($event)"></app-profile-image-editor>
 
-          <div class="form-group row mb-2" *ngIf="user?.email">
-            <p>Correo:
-              <strong> {{user?.email}}</strong>
-            </p>
-          </div>
+                    <img class="card-img-top" [src]="user?.profileImage | jarabeImage:'medium'">
+                </div>
 
-          <div class="form-group row mb-2">
-            <button class="btn btn-block btn-primary" (click)="OpenModal(changePassword, $event)">
+                <div class="card-body">
+                    <div class="form-group row mb-2" *ngIf="user?.username">
+                        <p> Nombre de usuario:
+                            <strong> {{user?.username}}</strong>
+                        </p>
+                    </div>
+
+                    <div class="form-group row mb-2" *ngIf="user?.name">
+                        <p>Nombre completo:
+                            <strong> {{user?.name}}</strong>
+                        </p>
+                    </div>
+
+                    <div class="form-group row mb-2" *ngIf="user?.email">
+                        <p>Correo:
+                            <strong> {{user?.email}}</strong>
+                        </p>
+                    </div>
+
+                    <div class="form-group row mb-2">
+                        <button class="btn btn-block btn-primary" (click)="OpenModal(changePassword, $event)">
               Cambiar contraseña
             </button>
-          </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+
+        <div class="col-12 col-sm-6 col-md-7 col-lg-9">
+
+            <div class="row">
+                <div class="col-12 col-md-6 data-col">
+                    <label>Mi número</label>
+                    <div class="text">
+                        {{user?.data?.phone ? user?.data?.phone : 'Sin registro'}}
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 data-col">
+                    <label>Puesto</label>
+                    <div class="text">
+                        {{user?.data?.workTitle ? user?.data?.workTitle : 'Sin registro'}}
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 data-col">
+                    <label>Escuela</label>
+                    <div class="text">
+                        {{user?.school?.name ? user?.school?.name : 'Sin registro'}}
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 data-col">
+                    <label>Teléfono de la escuela</label>
+                    <div class="text">
+                        {{user?.school?.phone ? user?.school?.phone : 'Sin registro'}}
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 data-col">
+                    <label>Dirección de la escuela</label>
+                    <div class="text">
+                        {{user?.school?.address ? user?.school?.address : 'Sin registro'}}
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
-
-    <div class="col-12 col-sm-6 col-md-7 col-lg-9">
-
-      <div class="row">
-        <div class="col-12 col-md-6 data-col">
-          <label>Mi número</label>
-          <div class="text">
-            {{user?.data?.phone ? user?.data?.phone : 'Sin registro'}}
-          </div>
-        </div>
-        <div class="col-12 col-md-6 data-col">
-          <label>Puesto</label>
-          <div class="text">
-            {{user?.data?.workTitle ? user?.data?.workTitle : 'Sin registro'}}
-          </div>
-        </div>
-        <div class="col-12 col-md-6 data-col">
-          <label>Escuela</label>
-          <div class="text">
-            {{user?.school?.name ? user?.school?.name : 'Sin registro'}}
-          </div>
-        </div>
-        <div class="col-12 col-md-6 data-col">
-          <label>Teléfono de la escuela</label>
-          <div class="text">
-            {{user?.school?.phone ? user?.school?.phone : 'Sin registro'}}
-          </div>
-        </div>
-        <div class="col-12 col-md-6 data-col">
-          <label>Dirección de la escuela</label>
-          <div class="text">
-            {{user?.school?.address ? user?.school?.address : 'Sin registro'}}
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
 </section>
 
 <ng-template #changePassword>
-  <div class="modal-header">
-    <h5 class="modal-title">
-      Cambiar contraseña
-    </h5>
-    <button class="close" aria-label="Close" (click)="CloseModal(); CleanForm()">
+    <div class="modal-header">
+        <h5 class="modal-title">
+            Cambiar contraseña
+        </h5>
+        <button class="close" aria-label="Close" (click)="CloseModal(); CleanForm()">
       <span aria-hidden="true">&times;</span>
     </button>
-  </div>
-  <div class="modal-body">
-    <div class="row">
-      <div class="col-12">
-        <div class="form-group">
-          <label for="oldPassword">
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="oldPassword">
             Contraseña actual:
           </label>
-          <input class="form-control" name="oldPassword" type="password"
-            [ngClass]="{'is-invalid': isFormSended && !userPasswords.oldPassword}"
-            [(ngModel)]="userPasswords.oldPassword">
-          <div class="invalid" *ngIf="isFormSended && !userPasswords.oldPassword">
-            Ingrese su contraseña actual
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="oldPassword">
+                    <input class="form-control" name="oldPassword" type="password" [ngClass]="{'is-invalid': isFormSended && !userPasswords.oldPassword}" [(ngModel)]="userPasswords.oldPassword">
+                    <div class="invalid" *ngIf="isFormSended && !userPasswords.oldPassword">
+                        Ingrese su contraseña actual
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="oldPassword">
             Nueva contraseña:
           </label>
-          <input class="form-control" name="newPassword" type="password"
-            [ngClass]="{'is-invalid': isFormSended && !IsNewPasswordValid(userPasswords.newPassword)}"
-            [(ngModel)]="userPasswords.newPassword">
-          <div class="invalid" *ngIf="isFormSended && !IsNewPasswordValid(userPasswords.newPassword)">
-            Minimo 3 caracteres
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="oldPassword">
+                    <input class="form-control" name="newPassword" type="password" [ngClass]="{'is-invalid': isFormSended && !IsNewPasswordValid(userPasswords.newPassword)}" [(ngModel)]="userPasswords.newPassword">
+                    <div class="invalid" *ngIf="isFormSended && !IsNewPasswordValid(userPasswords.newPassword)">
+                        Mínimo 3 caracteres
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="oldPassword">
             Confirmar contraseña:
           </label>
-          <input class="form-control" name="newPassword2" type="password"
-            [ngClass]="{'is-invalid': isFormSended && (IsNewPassword2Valid(userPasswords.newPassword2) == false || IsNewPassword2Valid(userPasswords.newPassword2) == 'no-match')}"
-            [(ngModel)]="userPasswords.newPassword2">
-          <div class="invalid" *ngIf="isFormSended && IsNewPassword2Valid(userPasswords.newPassword2) == false">
-            Confirme su contraseña
-          </div>
-          <div class="invalid" *ngIf="isFormSended && IsNewPassword2Valid(userPasswords.newPassword2) == 'no-match'">
-            Las contraseñas no son identicas
-          </div>
+                    <input class="form-control" name="newPassword2" type="password" [ngClass]="{'is-invalid': isFormSended && (IsNewPassword2Valid(userPasswords.newPassword2) == false || IsNewPassword2Valid(userPasswords.newPassword2) == 'no-match')}" [(ngModel)]="userPasswords.newPassword2">
+                    <div class="invalid" *ngIf="isFormSended && IsNewPassword2Valid(userPasswords.newPassword2) == false">
+                        Confirme su contraseña
+                    </div>
+                    <div class="invalid" *ngIf="isFormSended && IsNewPassword2Valid(userPasswords.newPassword2) == 'no-match'">
+                        Las contraseñas no son identicas
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  <div class="modal-footer">
-    <div class="text-right">
-      <button class="btn btn-secondary mr-3" (click)="CloseModal(); CleanForm()">
+    <div class="modal-footer">
+        <div class="text-right">
+            <button class="btn btn-secondary mr-3" (click)="CloseModal(); CleanForm()">
         Cancelar
       </button>
-      <button class="btn btn-primary" *ngIf="!isPromiseActive" (click)="ChangeUserPassword()">
+            <button class="btn btn-primary" *ngIf="!isPromiseActive" (click)="ChangeUserPassword()">
         Guardar
       </button>
-      <button class="btn btn-primary" *ngIf="isPromiseActive">
+            <button class="btn btn-primary" *ngIf="isPromiseActive">
         <i class="zmdi zmdi-spinner zmdi-hc-spin zmdi-hc-lg"></i>
       </button>
+        </div>
     </div>
-  </div>
 </ng-template>

@@ -1,5 +1,4 @@
-<div class="modal fade" bsModal #rubricTutorialModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
-    tabindex="-1" role="dialog" aria-labelledby="rubricTutorialModal">
+<div class="modal fade" bsModal #rubricTutorialModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}" tabindex="-1" role="dialog" aria-labelledby="rubricTutorialModal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -13,7 +12,8 @@
                 <div class="card">
                     <div class="title">Configura la rúbrica</div>
                     <div class="text">
-                        Para evaluar a tus alumnos podrás crear tus propios elementos a evaluar, podrá ser la ortografía, creatividad, claridad de presentación, etc.. Eso lo puedes definir tú, para después evaluar su desempeño y tener claro con que si se cumplió o no para la calificación asignada.
+                        Para evaluar a tus alumnos podrás crear tus propios elementos a evaluar, podrá ser la ortografía, creatividad, claridad de presentación, etc.. Eso lo puedes definir tú, para después evaluar su desempeño y tener claro con que si se cumplió o no para la
+                        calificación asignada.
                     </div>
                     <div class="text">
                         Cada uno en horizontal es su nivel de cumplimiento a este elemento.
@@ -23,12 +23,12 @@
                     </div>
 
                     <div class="rubric-item">
-                        <div class="rubric-title">El valor númerico</div>
+                        <div class="rubric-title">El valor numérico</div>
                         <textarea class="rubric-input" disabled [value]="'Las características que serán para definir su valor.'"></textarea>
                     </div>
                 </div>
                 <div class="card">
-                    <div class="title">Al iniciar se viualiza así</div>
+                    <div class="title">Al iniciar se visualiza así</div>
                     <app-rubric [canEdit]="false"></app-rubric>
                 </div>
                 <div class="card">
