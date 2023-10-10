@@ -114,9 +114,19 @@ module.exports = function(Student) {
          return sortedData;
     }
 
-    Student.GetAllOfSchool = function(schoolId, gradeId, groupId, callback) {
+    Student.GetAllOfSchool = function(schoolId, gradeId, groupId, searchText, callback) {
         Student.find({
-            where: { schoolId },
+            where: {
+                and: [
+                    {schoolId},
+                    {or: [
+                        {name: {like: `%${searchText}%`}},
+                        {fatherLastname: {like: `%${searchText}%`}},
+                        {motherLastname: {like: `%${searchText}%`}},
+                        {registerNumber: {like: `%${searchText}%`}},
+                    ]}
+                ]
+            },
             include: { 'studentGroup': ['group', 'grade'] }
         }, (err, schoolStudents) => {
             if (err) return callback(err);
@@ -127,7 +137,7 @@ module.exports = function(Student) {
         });
     }
 
-    Student.GetAllOfTeacher = function(teacherUserId, gradeId, groupId, callback) {
+    Student.GetAllOfTeacher = function(teacherUserId, gradeId, groupId, searchText, callback) {
         Student.app.models.Teacher.findOne({
             where: {
                 userId: teacherUserId
@@ -146,11 +156,20 @@ module.exports = function(Student) {
             }, (err, studentGroups) => {
                 if (err) return callback(err);
 
+                let where = {
+                    and: [
+                        {id: { inq: studentGroups.map(sg => sg.studentId) }},
+                        {schoolId: teacher.schoolId},
+                    ]
+                }
+                if(!!searchText && searchText != '*') where.and.push({or: [
+                    {name: {like: `%${searchText}%`}},
+                    {fatherLastname: {like: `%${searchText}%`}},
+                    {motherLastname: {like: `%${searchText}%`}},
+                    {registerNumber: {like: `%${searchText}%`}},
+                ]});
                 Student.find({
-                    where: {
-                        id: { inq: studentGroups.map(sg => sg.studentId) },
-                        schoolId: teacher.schoolId,
-                    },
+                    where,
                     include: {'studentGroup': ['group', 'grade']},
                     oder:['fatherLastname ASC','motherLastname ASC'],
                 }, (err, students) => {
@@ -229,6 +248,33 @@ module.exports = function(Student) {
         });
     }
 
+    Student.GetDataWithEvaluationsOfStrategy = function(studentUserId, strategyId, callback) {
+        Student.app.models.Strategy.findById(strategyId, {include: 'parcialProducts'}, (err, strategy) => {
+            if(err) return callback(err);
+
+            if(!strategy) return callback('Strategy not found!!!');
+
+            Student.findOne({
+                where: {userId: studentUserId},
+                include: [
+                    'school',
+                    { 'studentGroup': ['group', 'grade'] },
+                    {
+                        relation: 'evaluations',
+                        scope: {
+                            include: 'studentFiles',
+                            where: strategy.parcialProducts().length ? {
+                                parcialProductId: {inq: strategy.parcialProducts().map(product => product.id)}
+                            } : null
+                        }
+                    },
+                ]
+            }, (err, student) => {
+                return callback(err, student);
+            });
+        });
+    }
+
     Student.prototype.EvaluateParcialProduct = function(evaluation, callback) {
         evaluation.studentId = this.id;
         Student.app.models.Evaluation.Update(evaluation, (err, evaluationSaved) => {
@@ -271,6 +317,7 @@ module.exports = function(Student) {
     }
 
     Student.OverridePassword = function(passwordObj,cb) {
+        if(!passwordObj.userId) return cb(null,'no user found');
             Student.app.models.Usuario.setPassword(passwordObj.userId, passwordObj.newPassword,function(err) {
                 if (err) return cb(err);
         

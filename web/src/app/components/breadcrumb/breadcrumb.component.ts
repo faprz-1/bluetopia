@@ -21,7 +21,7 @@ export class BreadcrumbComponent implements OnInit {
   }
 
   GoBack() {
-    const route = this.crumbs[this.crumbs.length - 1]?.route;
+    const route = this.crumbs[this.crumbs.length - (this.crumbs.length == 1 ? 1 : 2)]?.route;
     if(!!route) this.navService.GoToUserRoute(route);
     else this.onGoBack.emit();
   }

@@ -171,6 +171,12 @@
                     "type": "number",
                     "required": false,
                     "description": ""
+                },
+                {
+                    "arg": "searchText",
+                    "type": "string",
+                    "required": false,
+                    "description": ""
                 }
             ],
             "returns": [{
@@ -186,6 +192,10 @@
                 },
                 {
                     "path": "/OfSchool/:schoolId/FilteredBy/Grade/:gradeId/Group/:groupId",
+                    "verb": "get"
+                },
+                {
+                    "path": "/OfSchool/:schoolId/FilteredBy/Text/:searchText/Grade/:gradeId/Group/:groupId",
                     "verb": "get"
                 }
             ]
@@ -208,6 +218,12 @@
                     "type": "number",
                     "required": false,
                     "description": ""
+                },
+                {
+                    "arg": "searchText",
+                    "type": "string",
+                    "required": false,
+                    "description": ""
                 }
             ],
             "returns": [{
@@ -223,6 +239,10 @@
                 },
                 {
                     "path": "/OfTeacher/:teacherUserId/FilteredBy/Grade/:gradeId/Group/:groupId",
+                    "verb": "get"
+                },
+                {
+                    "path": "/OfTeacher/:teacherUserId/FilteredBy/Text/:searchText/Grade/:gradeId/Group/:groupId",
                     "verb": "get"
                 }
             ]
@@ -257,6 +277,31 @@
             "description": "",
             "http": [{
                 "path": "/WithEvaluationsOf/ParcialProduct/:parcialProductId",
+                "verb": "get"
+            }]
+        },
+        "GetDataWithEvaluationsOfStrategy": {
+            "accepts": [
+                {
+                    "arg": "studentUserId",
+                    "type": "number",
+                    "required": true
+                },
+                {
+                    "arg": "strategyId",
+                    "type": "number",
+                    "required": true
+                }
+            ],
+            "returns": [{
+                "arg": "student",
+                "type": "object",
+                "root": true,
+                "description": ""
+            }],
+            "description": "",
+            "http": [{
+                "path": "/:studentUserId/WithEvaluationsOf/Strategy/:strategyId",
                 "verb": "get"
             }]
         },
@@ -332,7 +377,7 @@
             }],
             "description": "",
             "http": [{
-                "path": "/EditStudent",
+                "path": "/save",
                 "verb": "post"
             }]
         }

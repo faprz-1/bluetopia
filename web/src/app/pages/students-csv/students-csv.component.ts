@@ -18,27 +18,27 @@ export class StudentsCsvComponent implements OnInit {
 
   dataConversions: Array<any> = [
     {
-      oldKey: 'Nombre',
+      oldKey: 'Nombre (Campo obligatorio)',
       newKey: 'name'
     },
     {
-      oldKey: 'Apellido P',
+      oldKey: 'Primer Apellido (Campo obligatorio)',
       newKey: 'fatherLastname'
     },
     {
-      oldKey: 'Apellido M',
+      oldKey: 'Segundo Apellido',
       newKey: 'motherLastname'
     },
     {
-      oldKey: 'Numero de registro',
+      oldKey: 'CURP (Campo obligatorio)',
       newKey: 'registerNumber'
     },
     {
-      oldKey: 'Grado',
+      oldKey: 'Grado (Campo obligatorio)',
       newKey: 'grade'
     },
     {
-      oldKey: 'Grupo',
+      oldKey: 'Grupo (Campo obligatorio)',
       newKey: 'group'
     },
   ];
@@ -84,14 +84,16 @@ export class StudentsCsvComponent implements OnInit {
     if(!file) return;
     const FILE_READER = new FileReader();
     FILE_READER.onload = (reader) => {
-      this.csvService.ReadCSV(FILE_READER.result).then(res => {
+      this.csvService.ReadCSV(FILE_READER.result).then((res) => {
         this.students = this.FormatData(res.data);
+        if(this.students.length == 0) this.toast.ShowWarning("Sin alumnos por registrar");
         this.areStudentsValid = this.ValidateStudents(this.students);
-        this.step++;
+        if(this.areStudentsValid && this.students.length > 0) this.step++;
+        else this.step = 1;
       });
     };
     if(file) {
-      if(this.instructionsStep < 3) this.instructionsStep = 3;
+      if(this.instructionsStep < 3 && this.areStudentsValid && this.students.length > 0) this.instructionsStep = 3;
       FILE_READER.readAsText(file, 'UTF-8');
     }
   }
@@ -112,7 +114,7 @@ export class StudentsCsvComponent implements OnInit {
   UploadStudents() {
     this.loading.uploading = true;
     this.api.Post(`/Students/Array`, {students: this.students}).subscribe((newStudents: any) => {
-      this.toast.ShowSuccess(`${newStudents.length} Estudiantes agregados correctamente`);
+      this.toast.ShowSuccess(`Estudiantes agregados correctamente`);
       this.loading.uploading = false;
       this.confirmationModal?.show();
     }, err => {

@@ -8,12 +8,12 @@
             <img src="assets/icons/right-chevron.svg">
             <span>{{strategy?.template?.nickname ? strategy?.template?.nickname : strategy?.template?.name }}</span>
             <img src="assets/icons/right-chevron.svg">
-            <span class="category">{{strategy.topic}}</span>
+            <span class="category">{{strategy?.title}}</span>
         </div>
     </div>
 
     <div class="mb-5">
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" (click)="GoToEditDetails()">
             Editar paso por paso
         </button>
     </div>
@@ -21,10 +21,10 @@
     <div class="strategy-form" [formGroup]="strategyForm">
         <div class="d-flex align-items-center justify-content-between align-self-stretch text-uppercase">
             <label class="m-0">{{strategyGroup}}</label>
-            <div class="d-flex align-items-center" style="gap: 16px;">
+            <!-- <div class="d-flex align-items-center" style="gap: 16px;">
                 <img class="clickeable" src="assets/icons/delete.svg" alt="delete">
                 <img class="clickeable" src="assets/icons/edit.svg" alt="edit">
-            </div>
+            </div> -->
         </div>
         <div class="d-flex flex-column w-100">
             <label>Temática</label>
@@ -50,7 +50,7 @@
                 <input type="text" class="form-control no-icon" placeholder="Título" formControlName="title">
             </div>
         </div>
-        <div class="d-flex flex-column w-100">
+        <!-- <div class="d-flex flex-column w-100">
             <label>Disciplinas</label>
             <div class="subjects">
                 <div class="subject">
@@ -58,12 +58,12 @@
                     <img class="clickeable" src="assets/icons/delete.svg" width="24" height="24" alt="delete">
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="d-flex align-items-center justify-content-between flex-wrap w-100" style="gap: 24px;">
-            <button class="btn btn-outline-success btn-control">
+            <button class="btn btn-outline-success btn-control" (click)="GoBack()">
                 No guardar cambios
             </button>
-            <button class="btn btn-success btn-control">
+            <button class="btn btn-success btn-control" (click)="SaveStrategy()">
                 Guardar
             </button>
         </div>

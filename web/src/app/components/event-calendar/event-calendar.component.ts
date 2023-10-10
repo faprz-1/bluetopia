@@ -64,7 +64,7 @@ export class EventCalendarComponent implements OnInit {
     monthYear += ` ${this.year}`;
     switch (this.config.mode) {
       case 'monthly':
-      return `${moment(`${this.year}-${this.currentMonth}-01`).format(`MMMM`)}`;
+      return `${moment(`${this.year}-${this.currentMonth + 1}-01`).format(`MMMM YYYY`)}`;
       case 'weekly':
         return `${this.weekFirstDay}-${this.weekLastDay} ${monthYear}`;
       default:
@@ -93,6 +93,13 @@ export class EventCalendarComponent implements OnInit {
     this.GetParams();
     this.PopulateMonth();
     this.PopulateWeek();
+  }
+
+  ThatDateAlreadyPassed(date: any){
+    let startDate = moment(`${this.year}-${this.currentMonth + 1}-${date}`)
+     let today = moment();
+    if(startDate.isBefore(today, 'day')) return true
+    else return false
   }
 
   GetParams() {

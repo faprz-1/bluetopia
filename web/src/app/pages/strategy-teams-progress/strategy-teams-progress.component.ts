@@ -16,10 +16,9 @@ export class StrategyTeamsProgressComponent implements OnInit {
   strategy: any = null;
   students: Array<any> = [];
   crumbs: Array<{name: string, route: string | null}> = [
-    {name: 'Equipos', route: null},
-    {name: 'Visualiza el progreso de tus equipos', route: null},
+    {name: 'Equipos', route: '/mis-estrategias'},
+    {name: 'Visualiza el progreso de tus equipos', route: '/mis-estrategias'},
   ];
-
   constructor(
     private activatedRoute: ActivatedRoute,
     private api: ApiService,
@@ -44,6 +43,8 @@ export class StrategyTeamsProgressComponent implements OnInit {
   GetParams() {
     this.activatedRoute.params.subscribe(params => {
       this.strategyId = params['strategyId'];
+      this.crumbs[0].route = `/mis-estrategias`;
+      this.crumbs[1].route = `/mis-estrategias`;
       this.GetStrategy();
     });
   }
@@ -93,11 +94,18 @@ export class StrategyTeamsProgressComponent implements OnInit {
   ToggleIsByTeams() {
     let strategy = {
       id: this.strategyId,
-      isByTeams: !!this.strategy ? !this.strategy.isByTeams : false
+      isByTeams: !!this.strategy ? !this.strategy.isByTeams : false,
+      useCustomRoles: false,
     }
     this.api.Patch(`/Strategies/${this.strategyId}/OnlyStrategy/1`, {strategy}).subscribe(strategySaved => {
       if(strategy.isByTeams) this.nav.GoToUserRoute(`mis-estrategias/${this.strategyId}/crear-equipos`);
-      else window.location.reload();
+      else {
+        this.api.Patch(`/Strategies/${this.strategyId}/ResetTeams`, {}).subscribe(updated => {
+          window.location.reload();
+        }, err => {
+          console.error("Error rese4ting teams members roles", err);
+        });
+      }
     }, err => {
       console.error("Error saving strategy", err);
     });

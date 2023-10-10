@@ -143,7 +143,8 @@
         "loginIfActive",
         "RegisterWithEmailVerification",
         "VerifyEmail",
-        "RegisterUser"
+        "RegisterUser",
+        "IsUsernameDuplicated"
       ]
     },
     {
@@ -688,6 +689,30 @@
       "http": [
         {
           "path": "/:schoolId/FileLibrary",
+          "verb": "get"
+        }
+      ]
+    },
+    "IsUsernameDuplicated": {
+      "accepts": [
+        {
+          "arg": "username",
+          "type": "string",
+          "description": "username to search for"
+        }
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "type": "string",
+          "root": true,
+          "description": "validation result"
+        }
+      ],
+      "description": "Verifies if a username already exists",
+      "http": [
+        {
+          "path": "/:username/duplicated",
           "verb": "get"
         }
       ]

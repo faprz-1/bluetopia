@@ -58,7 +58,8 @@
           "loginBySocialMedia": true,
           "VerifyEmail": true,
           "RegisterUser": true,
-          "GetFileLibrary": true
+          "GetFileLibrary": true,
+          "IsUsernameDuplicated":true
         }
       }
     }
@@ -159,7 +160,8 @@
           "prototype.EvaluateParcialProduct": true,
           "GetEvents": true,
           "prototype.EditStudent": true,
-          "GetStudentByUser": true
+          "GetStudentByUser": true,
+          "GetDataWithEvaluationsOfStrategy": true
         }
       }
     }
@@ -335,7 +337,9 @@
           "GetAllOfTeacher": true,
           "GetStudents": true,
           "prototype.Delete": true,
-          "GetSuggested": true
+          "GetSuggested": true,
+          "ResetTeams": true,
+          "GetAllOfStudent": true
         }
       }
     }

@@ -5,7 +5,7 @@ module.exports = function(TemplateTopic) {
     TemplateTopic.CreateOne = function(templateTopic, callback) {
         TemplateTopic.findOrCreate({
             where: {
-                name: {like: `%${templateTopic.name}%`}
+                name: templateTopic.name
             }
         }, templateTopic, (err, newTemplateTopic) => {
             if(err) return callback(err);
@@ -15,28 +15,34 @@ module.exports = function(TemplateTopic) {
     }
     
     TemplateTopic.CreateOneOfTeacher = function(topic, userId, callback) {
-        const templateTopic = {
-            name: topic,
-            userId
-        }
-        TemplateTopic.findOrCreate({
-            where: {
-                name: {like: `%${templateTopic.name}%`},
-                userId
-            }
-        }, templateTopic, (err, newTemplateTopic) => {
+        TemplateTopic.app.models.Usuario.findById(userId, {}, (err, user) => {
             if(err) return callback(err);
-            
-            return callback(null, newTemplateTopic);
+
+            const templateTopic = {
+                name: topic,
+                userId,
+                schoolId: user.schoolId
+            }
+            TemplateTopic.findOrCreate({
+                where: {
+                    name: {like: `%${templateTopic.name}%`},
+                    userId,
+                }
+            }, templateTopic, (err, newTemplateTopic) => {
+                if(err) return callback(err);
+                
+                return callback(null, newTemplateTopic);
+            });
         });
     }
     
-    TemplateTopic.GetAll = function(ctx, callback) {
+    TemplateTopic.GetAll = function(ctx, schoolId = null, callback) {
         const userId = ctx.accessToken.userId;
         TemplateTopic.find({
             where: {
                 or: [
                     {userId},
+                    {schoolId},
                     {userId: null}
                 ]
             },

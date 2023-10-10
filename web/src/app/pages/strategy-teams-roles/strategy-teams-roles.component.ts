@@ -20,10 +20,7 @@ export class StrategyTeamsRolesComponent implements OnInit {
   rolesToUse: string = 'default';
   saver = new Subject();
   saving: boolean = false;
-  crumbs: Array<{name: string, route: string | null}> = [
-    {name: 'Equipos', route: null},
-    {name: 'Asigna roles a tus alumnos', route: null},
-  ];
+  crumbs: Array<{name: string, route: string | null}> = [];
 
   public get rolesText() {
     return this.roles.map(role => role.name).join(' / ');
@@ -40,7 +37,6 @@ export class StrategyTeamsRolesComponent implements OnInit {
       this.SaveAll();
     });
     this.GetRoles();
-    this.GetParams();
   }
 
   BuildStudentFullName(student: any): string {
@@ -51,6 +47,9 @@ export class StrategyTeamsRolesComponent implements OnInit {
     if(!!role) {
       this.api.Post(`/TeamRoles`, {role: {name: role, strategyId: this.strategyId}}).subscribe(newRole => {
         this.customRoles.push(newRole);
+        if(this.rolesToUse == 'custom') {
+          this.strategyTeams.forEach(team => team.roles.push(newRole));
+        }
       });
     }
   }
@@ -83,7 +82,10 @@ export class StrategyTeamsRolesComponent implements OnInit {
   GetRoles() {
     this.api.Get(`/TeamRoles`).subscribe(roles => {
       this.roles = roles;
-      this.roleOptions = Array.from(roles);
+
+      this.GetParams();
+    }, err => {
+      console.error("Error getting roles", err);
     });
   }
 
@@ -91,13 +93,25 @@ export class StrategyTeamsRolesComponent implements OnInit {
     this.api.Get(`/Strategies/${this.strategyId}`).subscribe(
       (strategy) => {
         this.strategy = strategy;
-        this.rolesToUse = strategy.useCustomRoles ? 'custom' : 'default';
-        if(!!strategy.teams?.length) this.strategyTeams = strategy.teams;
-        if(!!strategy.customRoles?.length) this.customRoles = strategy.customRoles;
+        this.InitializeVariables();
+        this.crumbs.push({name: 'Equipos', route: `mis-estrategias/${strategy.id}/crear-equipos`});
+        this.crumbs.push({name: 'Asigna roles a tus alumnos', route: null});
       }, (err) => {
         console.error('Error getting strategy', err);
       }
-    );
+      );
+    }
+    
+    InitializeVariables() {
+    this.rolesToUse = this.strategy.useCustomRoles ? 'custom' : 'default';
+    if(!!this.strategy.customRoles?.length) this.customRoles = this.strategy.customRoles;
+    this.strategyTeams = this.strategy?.teams || [];
+    this.OnRolesToUseChange(false);
+    this.strategyTeams.forEach(team => {
+      team.members.forEach((member: any) => {
+        this.OnTeamMemberRoleSelected(team, member.roleId, false);
+      });
+    });
   }
 
   SaveStrategy() {
@@ -126,12 +140,34 @@ export class StrategyTeamsRolesComponent implements OnInit {
     });
   }
 
-  OnRolesToUseChange() {
+  OnRolesToUseChange(changeTriggerdeFromView: boolean = true) {
     switch (this.rolesToUse) {
       case 'default': this.roleOptions = this.roles; break;
       case 'custom': this.roleOptions = this.customRoles; break;
     }
+    this.strategyTeams.forEach(team => {
+      team.roles = Array.from(this.roleOptions);
+      if(changeTriggerdeFromView) team.members.forEach((member: any) => member.roleId = null);
+    });
     this.saver.next();
+  }
+
+  OnTeamMemberRoleSelected(team: any, roleId: number, save: boolean = true) {
+    if(!!roleId) {
+      const roleIdx = team.roles.findIndex((role: any) => role.id == roleId);
+      if(roleIdx != -1) team.roles.splice(roleIdx, 1);
+    }
+    if(save) this.saver.next();
+  }
+  
+  RemoveMemberRole(team: any, member: any) {
+    team.roles.push(this.GetRoleById(member.roleId));
+    member.roleId = null;
+    this.saver.next();
+  }
+
+  GetRoleById(roleId: any) {
+    return this.roleOptions.find((role: any) => role.id == roleId);
   }
 
 }

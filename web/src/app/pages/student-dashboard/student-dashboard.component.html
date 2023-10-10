@@ -3,7 +3,7 @@
     <div class="d-flex my-auto flex-grow-1 flex-column justify-content-center align-items-center" style="gap: 48px;">
       <h1 class="blue">Encuentra lo que tienes que hacer</h1>
       <div class="d-flex align-self-stretch align-items-center justify-content-center flex-wrap mb-5" style="gap: 48px;">
-        <div class="col-container d-flex flex-column justify-content-center align-items-center pointer" (mouseover)="OnMouseOver('popoverCalfication')"  (mouseout)="OnMouseOut('popoverCalfication')" (click)="GoToActivities()">
+        <div class="col-container d-flex flex-column justify-content-center align-items-center pointer" (mouseover)="OnMouseOver('popoverCalfication')"  (mouseout)="OnMouseOut('popoverCalfication')" (click)="navigationService.GoToUserRoute('mis-calificaciones')">
           <div class="popover-left" *ngIf="popovers?.popoverCalfication">
             Aquí podrás ver las calificaciones que asignan tus profesores.
             <div class="triangle"></div>

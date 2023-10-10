@@ -6,7 +6,7 @@
         </div>
     </div>
     
-    <div class="d-flex flex-column mt-5" *ngIf="students.length == 0">
+    <div class="d-flex flex-column mt-5" *ngIf="students.length == 0 && !loading">
         <div class="form-row">
             <div class="form-col">
                 <div class="no-students-message">
@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-    <div class="d-flex flex-column mt-5" style="gap: 13px;" [formGroup]="strategyTeamsForm" *ngIf="students.length > 0">
+    <div class="d-flex flex-column mt-5" style="gap: 13px;" [formGroup]="strategyTeamsForm" *ngIf="students.length > 0 && !loading">
         <div class="form-row">
             <span class="instruction-number">1</span>
             <div class="form-col">
@@ -111,5 +111,9 @@
         <button class="btn align-self-end btn-primary" (click)="SaveAll(true)">
             Continuar
         </button>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-center" *ngIf="loading">
+        <i class="zmdi zmdi-spinner zmdi-hc-5x zmdi-hc-spin"></i>
     </div>
 </div>

@@ -1,1 +1,1 @@
-Nombre,Apellido P,Apellido M,Numero de registro,Grado,Grupo
+Nombre (Campo obligatorio),Primer Apellido (Campo obligatorio),Segundo Apellido,CURP (Campo obligatorio),Grado (Campo obligatorio),Grupo (Campo obligatorio)

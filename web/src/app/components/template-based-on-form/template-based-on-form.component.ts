@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, NgZone, OnInit, Output, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { BsModalRef, BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
@@ -65,6 +65,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
   selectedEvaluationType: any = null;
   finalParcialProduct: any = null;
   finalEvent: any = null;
+  canContinue: boolean = true;
   loading: any = {
     grade: false,
     group: false,
@@ -81,6 +82,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
   evaluationTypes: Array<any> = [];
   strategyForm: FormGroup = new FormGroup({
     id: new FormControl(null, []),
+    schoolId: new FormControl(null, [Validators.required]),
     topic: new FormControl(null, [Validators.required]),
     title: new FormControl(null, [Validators.required]),
     generatingQuestion: new FormControl(null, [Validators.required]),
@@ -121,6 +123,8 @@ export class TemplateBasedOnFormComponent implements OnInit {
   }
   saver = new Subject();
   subSelected: any = null;
+  wrongInfo:boolean = false;
+
   constructor(
     private api: ApiService,
     private activatedRoute: ActivatedRoute,
@@ -128,7 +132,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     private modalService: BsModalService,
     private toast: ToastService,
     private zone: NgZone
-  ) {}
+  ) {  }
 
   ngOnInit(): void {
     this.GetTeacherGroups();
@@ -144,6 +148,15 @@ export class TemplateBasedOnFormComponent implements OnInit {
 
     this.saver.pipe(debounceTime(500)).subscribe((data) => this.Autosave());
   }
+
+  IsANumber(input: any){
+    if (isNaN(Number(input))) {
+       this.toast.ShowError('Solo valores numéricos')
+       this.canContinue = false;
+  }else {
+    this.canContinue = true;
+  }
+}
 
   OpenModal(template: any) {
     this.modalRef = this.modalService.show(template, { backdrop: 'static' });
@@ -234,7 +247,6 @@ export class TemplateBasedOnFormComponent implements OnInit {
             )
           : [],
     });
-
     this.InitializeDatePickers();
   }
 
@@ -251,6 +263,17 @@ export class TemplateBasedOnFormComponent implements OnInit {
     this.InitializeDatePickers();
   }
 
+  ThatDateAlreadyPassed(date: any){
+    let startDate = moment(date[0])
+    let today = moment();
+   if(startDate.isBefore(today, 'day')) { 
+    this.toast.ShowError('La fecha proporcionada ya ha pasado, por favor elija otra fecha')
+  this.canContinue = false;
+   }else{
+    this.canContinue = true;
+   }
+  }
+
   InitializeDatePickers() {
     setTimeout(() => {
       switch (this.step) {
@@ -259,6 +282,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
             this.strategyDateRangePicker.bsValue = this.GetDateRangePickerValue(
               [this.strategy.startDate, this.strategy.endDate]
             );
+
           break;
         case 3:
           if (
@@ -276,7 +300,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
           )
             this.finalParcialProductDatePicker.bsValue = new Date(
               this.parcialProductForm.get('date')?.value
-            );
+              );
           break;
         case 5:
           if (
@@ -415,7 +439,16 @@ export class TemplateBasedOnFormComponent implements OnInit {
       auxGrade.groups = grade.map((item: any) => item.group);
       this.grades.push(auxGrade);
     });
+    this.grades = this.SortbyName(this.grades);
   }
+
+  SortbyName(objects:any){
+    return objects.sort((a:any, b:any) => {
+      const nameA = a.name.toLowerCase();
+      const nameB = b.name.toLowerCase();
+      return nameA.localeCompare(nameB);
+    });
+  };
 
   SetGroupsOfSelectedGrade(gradeId:any){
     this.groups = [];
@@ -426,6 +459,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
       let selectedGrade = this.grades.filter((grade:any)=> grade.id == gradeId);
       this.groups = selectedGrade.length > 0 ? selectedGrade[0].groups:[];
     }
+    this.groups = this.SortbyName(this.groups);
   }
 
   AddGroup = (group: string) => {
@@ -577,7 +611,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
   };
 
   GetTemplateTopics() {
-    this.api.Get(`/TemplateTopics`).subscribe(
+    this.api.Get(`/TemplateTopics/OfSchool/${this.api.GetUser()?.schoolId}`).subscribe(
       (topics) => {
         this.templateTopics = topics;
       },
@@ -591,6 +625,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     let templateTopicObj = {
       name: templateTopic,
       userId: this.api.GetUser()?.id,
+      schoolId: this.api.GetUser()?.schoolId,
     };
     let control = this.strategyForm.get('topic');
     this.loading.templateTopic = true;
@@ -743,6 +778,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     if (dates.some((date) => !date)) return [];
     let start = new Date(dates[0]);
     let end = new Date(dates[1]);
+    this.ThatDateAlreadyPassed([start, end]);
     return [start, end];
   }
 
@@ -750,6 +786,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     this.gradeSelect?.close();
     this.strategyForm.setValue({
       id: !!strategy.id ? strategy.id : null,
+      schoolId: !!strategy.schoolId ? strategy.schoolId : null,
       topic: !!strategy.topic ? strategy.topic : null,
       title: !!strategy.title ? strategy.title : null,
       generatingQuestion: !!strategy.generatingQuestion
@@ -831,53 +868,92 @@ export class TemplateBasedOnFormComponent implements OnInit {
     });
   }
 
-  SaveParcialProduct(isParcialProductFinal: boolean = false) {
+  EvaluationProductsInfo(parcialProductInstance: any): boolean {
+    if (parcialProductInstance.evaluationType == null) {
+         this.toast.ShowError('La evaluación no puede quedar en blanco');
+    this.wrongInfo = true;
+    return true;
+    }
+switch (parcialProductInstance.evaluationType.type) {
+  case 'rubric':
+    for (let rubric of parcialProductInstance.rubric) {
+      if (rubric.description == "") {
+        this.toast.ShowError('Todos los campos de la rúbrica deberían estar completos');
+        this.wrongInfo = true;
+        return true;
+      }
+    }
+    return false;
+
+  case 'numeric':
+    if (parcialProductInstance.maxCalification == null) {
+      this.toast.ShowError('El valor máximo de la evaluación no puede quedar en blanco');
+      this.wrongInfo = true;
+      return true;
+    }
+    this.wrongInfo = false;
+    return false;
+
+  default:
+    return false;
+}
+
+  }
+
+ 
+
+   SaveParcialProduct(isParcialProductFinal: boolean = false) {
     return new Promise<boolean>((res, rej) => {
       let parcialProductInstance = {
         ...this.parcialProductForm.value,
         isFinal: isParcialProductFinal,
         strategyId: this.strategyId,
       };
-      parcialProductInstance.evaluationTypeId =
-        parcialProductInstance.evaluationType
-          ? parcialProductInstance.evaluationType.id
-          : null;
-      if (!!parcialProductInstance.id) {
-        this.api
-          .Patch(
-            `/ParcialProducts/${parcialProductInstance.id}`,
-            parcialProductInstance,
-            true
-          )
-          .subscribe(
-            (newParcialProduct) => {
-              if (!isParcialProductFinal) this.CancelParcialProduct();
-              this.GetStrategy();
-              this.toast.ShowSuccess('Cambios guardados correctamente');
-              res(true);
+  if (this.EvaluationProductsInfo(parcialProductInstance)) return
+
+     parcialProductInstance.evaluationTypeId =
+     parcialProductInstance.evaluationType
+     ? parcialProductInstance.evaluationType.id
+     : null;
+     
+     if (!!parcialProductInstance.id) {
+       this.api
+       .Patch(
+         `/ParcialProducts/${parcialProductInstance.id}`,
+         parcialProductInstance,
+         true
+         )
+         .subscribe(
+           (newParcialProduct) => {
+             if (!isParcialProductFinal) this.CancelParcialProduct();
+             this.GetStrategy();
+             this.toast.ShowSuccess('Cambios guardados correctamente');
+             res(true);
             },
             (err) => {
               console.error('Error posting new parcial product', err);
               res(false);
             }
-          );
-      } else {
-        this.api
+            );
+          } else {
+            this.api
           .Post(`/ParcialProducts`, { parcialProduct: parcialProductInstance })
           .subscribe(
             (newParcialProduct) => {
               if (!isParcialProductFinal) this.CancelParcialProduct();
               this.GetStrategy();
+              this.toast.ShowSuccess('Producto parcial guardado correctamente dirígete a la sección de ‘Productos guardados’');
               res(true);
             },
             (err) => {
               console.error('Error posting new parcial product', err);
               res(false);
             }
-          );
-      }
-      this.Autosave();
-    });
+            );
+          }
+            this.wrongInfo = false;
+          this.Autosave();
+        });
   }
 
   EditParcialProduct(parcialProduct: any) {
@@ -952,34 +1028,21 @@ export class TemplateBasedOnFormComponent implements OnInit {
         isFinal: true,
       };
       this.loading.event = true;
+console.log(eventInstance);
 
-      if (!!eventInstance.id) {
-        this.api.Patch(`/Events`, { event: eventInstance }).subscribe(
-          (saved) => {
-            this.loading.event = false;
-            this.finalEvent = saved;
-            res(true);
-          },
-          (err) => {
-            console.error('Error posting new event', err);
-            this.loading.event = false;
-            res(false);
-          }
-        );
-      } else {
-        this.api.Patch(`/Events`, { event: eventInstance }).subscribe(
-          (newEvent) => {
-            this.loading.event = false;
-            this.finalEvent = newEvent;
-            res(true);
-          },
-          (err) => {
-            console.error('Error posting new event', err);
-            this.loading.event = false;
-            res(false);
-          }
-        );
-      }
+      this.api.Patch(`/Events`, { event: eventInstance }).subscribe(
+        (eventSaved) => {
+          this.loading.event = false;
+          this.finalEvent = eventSaved;
+          this.eventForm.controls['id']?.setValue(eventSaved.id);
+          res(true);
+        },
+        (err) => {
+          console.error('Error posting new event', err);
+          this.loading.event = false;
+          res(false);
+        }
+      );
     });
   }
 

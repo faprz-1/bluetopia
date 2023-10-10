@@ -460,11 +460,11 @@ module.exports = function(app) {
   }
 
   var SynchronizeSchoolIdOfStudentsGroups = function() {
-    app.models.StudentGroup.find({where: {schoolId: null}, include: 'student'}, (err, studentGroups) => {
-      studentGroups.forEach(studentGroup => {
-        if(!!studentGroup.student()) {
-          studentGroup.schoolId = studentGroup.student().schoolId;
-          studentGroup.save((err, saved) => {
+    app.models.StudentGroup.find({where: {schoolId: null}, include: 'student'}, (err, instances) => {
+      instances.forEach(instance => {
+        if(!!instance.student()) {
+          instance.schoolId = instance.student().schoolId;
+          instance.save((err, saved) => {
           });
         }
       });
@@ -472,11 +472,23 @@ module.exports = function(app) {
   }
 
   var SynchronizeSchoolIdOfStrategyGroups = function() {
-    app.models.StrategyGroup.find({where: {schoolId: null}, include: 'strategy'}, (err, strategyGroups) => {
-      strategyGroups.forEach(strategyGroup => {
-        if(!!strategyGroup.strategy()) {
-          strategyGroup.schoolId = strategyGroup.strategy().schoolId;
-          strategyGroup.save((err, saved) => {
+    app.models.StrategyGroup.find({where: {schoolId: null}, include: 'strategy'}, (err, instances) => {
+      instances.forEach(instance => {
+        if(!!instance.strategy()) {
+          instance.schoolId = instance.strategy().schoolId;
+          instance.save((err, saved) => {
+          });
+        }
+      });
+    });
+  }
+
+  var SynchronizeSchoolIdOfTemplateTopics = function() {
+    app.models.TemplateTopic.find({where: {schoolId: null}, include: 'user'}, (err, instances) => {
+      instances.forEach(instance => {
+        if(!!instance.user()) {
+          instance.schoolId = instance.user().schoolId;
+          instance.save((err, saved) => {
           });
         }
       });
@@ -581,7 +593,8 @@ module.exports = function(app) {
     seedStrategyStatuses,
     seedEvaluationTypes,
     SynchronizeSchoolIdOfStudentsGroups,
-    SynchronizeSchoolIdOfStrategyGroups
+    SynchronizeSchoolIdOfStrategyGroups,
+    SynchronizeSchoolIdOfTemplateTopics
   ]
 
   // Migrate

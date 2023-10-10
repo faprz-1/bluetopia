@@ -4,7 +4,7 @@ module.exports = function(ParcialProductType) {
 
     ParcialProductType.CreateOne = function(parcialProductType, callback) {
         ParcialProductType.findOne({
-            where: {name: {like: `%${parcialProductType.name}%`}}
+            where: {name: parcialProductType.name}
         }, (err, parcialProductTypeFound) => {
             if(err) return callback(err);
 

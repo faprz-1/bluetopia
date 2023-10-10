@@ -6,8 +6,8 @@
         </div>
     </div>
 
-    <div class="row mt-5">
-        <div class="col-8">
+    <div class="row mt-4">
+        <div class="col-12 col-md-6 col-lg-8">
             <div class="d-flex flex-column" style="gap: 24px;">
                 <div class="info-card justify-content-between flex-wrap">
                     <span class="text-primary text-uppercase">{{strategy?.strategyGroup?.grade?.name}}°{{strategy?.strategyGroup?.group?.name}}</span>
@@ -26,15 +26,15 @@
                     </div>
                 </div>
 
-                <div class="input-container">
+                <!-- <div class="input-container">
                     <div class="input-icon-container icon-container-right">
                         <img src="assets/icons/search.png" alt="search">
                     </div>
                     <input class="form-control with-border icon-right" type="text" placeholder="Buscar">
-                </div>
+                </div> -->
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-12 col-md-6 col-lg-4">
             <button class="btn btn-primary" (click)="ToggleIsByTeams()" *ngIf="!!strategy">
                 <span *ngIf="strategy.isByTeams">Deshacer equipos</span>
                 <span *ngIf="!strategy.isByTeams">Asignar equipos</span>
@@ -42,7 +42,7 @@
         </div>
 
         <ng-container *ngIf="strategy?.isByTeams">
-            <div class="col-12 mb-4" *ngFor="let team of strategy?.teams">
+            <div class="col-12 my-4" *ngFor="let team of strategy?.teams">
                 <div class="team-progress-card flex-wrap flex-lg-nowrap justify-content-center">
                     <!-- Team data -->
                     <div class="team-container w-100 flex-grow-1">
@@ -62,7 +62,7 @@
                                     <ng-container *ngFor="let member of team.members">
                                         <div class="member">
                                             <span>
-                                                {{member.role?.name}}
+                                                {{member.role?.name ? member.role?.name : 'Sin rol'}}
                                             </span>
                                         </div>
                                     </ng-container>
@@ -73,13 +73,10 @@
 
                     <!-- Team evaluations -->
                     <div class="d-flex align-items-start justify-content-center justify-content-lg-start overflow-auto" style="gap: 14px;">
-                        <div class="evaluation-col" *ngFor="let parcialProduct of strategy.parcialProducts" style="gap: 14px;">
-                            <div>{{parcialProduct.name}} {{parcialProduct.event?.date | date:"dd/MM/yyyy"}}</div>
-                            <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 6px;">
-                                <span class="mb-1">Entregable</span>
-                                <div class="file-box">
-                                    Archivo.pdf
-                                </div>
+                        <div class="evaluation-col align-self-stretch justify-content-between" *ngFor="let parcialProduct of strategy.parcialProducts" style="gap: 14px;">
+                            <div class="d-flex flex-column gap-1">
+                                <div class="date-text">{{parcialProduct.event?.date | date:"dd/MM/yyyy"}}</div>
+                                <div>{{parcialProduct.name}}</div>
                             </div>
                             <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 6px;">
                                 <span class="mb-1">Acción</span>
@@ -89,7 +86,7 @@
                                     <img src="assets/icons/rate-review.svg">
                                 </button>
                             </div>
-                            <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 6px;">
+                            <!-- <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 6px;">
                                 <span class="mb-1">Entrega</span>
                                 <button class="btn btn-success btn-block">
                                     En tiempo
@@ -113,14 +110,14 @@
                                         4.5
                                     </div>
                                 </ng-container>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
             </div>
         </ng-container>
         <ng-container *ngIf="!strategy?.isByTeams">
-            <div class="col-12 mb-4" *ngFor="let student of students">
+            <div class="col-12 my-4" *ngFor="let student of students">
                 <div class="team-progress-card flex-column justify-content-center">
                     <!-- Student data -->
                     <div class="team-container w-100 flex-grow-1">
@@ -129,13 +126,10 @@
 
                     <!-- Student evaluations -->
                     <div class="d-flex align-items-start justify-content-center justify-content-lg-start overflow-auto" style="gap: 14px;">
-                        <div class="evaluation-col flex-grow-1" *ngFor="let parcialProduct of strategy.parcialProducts" style="gap: 14px;">
-                            <div>{{parcialProduct.name}} {{parcialProduct.event?.date | date:"dd/MM/yyyy"}}</div>
-                            <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 6px;">
-                                <span class="mb-1">Entregable</span>
-                                <div class="file-box">
-                                    Archivo.pdf
-                                </div>
+                        <div class="evaluation-col flex-grow-1 align-self-stretch justify-content-between" *ngFor="let parcialProduct of strategy.parcialProducts" style="gap: 14px;">
+                            <div class="d-flex flex-column gap-1">
+                                <div class="date-text">{{parcialProduct.event?.date | date:"dd/MM/yyyy"}}</div>
+                                <div>{{parcialProduct.name}}</div>
                             </div>
                             <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 6px;">
                                 <span class="mb-1">Acción</span>
@@ -145,7 +139,7 @@
                                     <img src="assets/icons/rate-review.svg">
                                 </button>
                             </div>
-                            <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 6px;">
+                            <!-- <div class="d-flex flex-column align-items-start align-self-stretch" style="gap: 6px;">
                                 <span class="mb-1">Entrega</span>
                                 <button class="btn btn-success btn-block">
                                     En tiempo
@@ -169,7 +163,7 @@
                                         4.5
                                     </div>
                                 </ng-container>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
