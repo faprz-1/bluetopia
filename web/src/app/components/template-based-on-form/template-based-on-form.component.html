@@ -94,7 +94,7 @@
                                 </div>
                                 <div class="d-flex align-items-center w-100">
                                     <div class="input-container">
-                                        <ng-select #subjectsSelect class="form-control with-border" [items]="subjects" bindLabel="name" placeholder="Campo formativo" addTagText="Agregar" [addTag]="AddSubject" [loading]="loading.subject" (change)="OnSelectedSubjectsChange($event); subjectsSelect.handleClearClick()">
+                                        <ng-select #subjectsSelect class="form-control with-border" [items]="subjects" bindLabel="name" placeholder="Campo formativo"  [loading]="loading.subject" (change)="OnSelectedSubjectsChange($event); subjectsSelect.handleClearClick()">
                                         </ng-select>
                                     </div>
                                 </div>
