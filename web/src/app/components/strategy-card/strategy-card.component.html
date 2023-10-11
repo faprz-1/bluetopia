@@ -19,20 +19,16 @@
         {{strategy?.user?.username}}
     </div>
     <div class="d-flex flex-column align-items-start justify-content-start align-self-stretch">
-        <label>Título</label>
-        {{strategy?.title ? strategy?.title : 'Sin título'}}
+        <label>Título</label> {{strategy?.title ? strategy?.title : 'Sin título'}}
     </div>
     <div class="d-flex flex-column align-items-start justify-content-start align-self-stretch">
-        <label>Fechas de duración</label>
-        {{strategy.startDate | date:'shortDate'}} - {{strategy.endDate | date:'shortDate'}}
+        <label>Fechas de duración</label> {{strategy.startDate | date:'shortDate'}} - {{strategy.endDate | date:'shortDate'}}
     </div>
     <div class="d-flex flex-column align-items-start justify-content-start align-self-stretch">
-        <label>Pregunta generadora</label>
-        {{strategy?.generatingQuestion ? strategy?.generatingQuestion : 'Sin pregunta generadora'}}
+        <label>Pregunta generadora</label> {{strategy?.generatingQuestion ? strategy?.generatingQuestion : 'Sin pregunta generadora'}}
     </div>
     <div class="d-flex flex-column align-items-start justify-content-start align-self-stretch">
-        <label>Plantilla</label>
-        {{strategy?.template?.name ? strategy?.template?.name : 'Sin plantilla'}}
+        <label>Plantilla</label> {{strategy?.template?.name ? strategy?.template?.name : 'Sin plantilla'}}
     </div>
     <div class="d-flex flex-column align-items-start justify-content-start align-self-stretch">
         <label>Campos formativos</label>
@@ -59,9 +55,7 @@
             <button class="btn btn-outline-primary flex-grow-1" (click)="GoToStrategyTeamsProgress()" *ngIf="strategy?.isByTeams !== null">
                 Ver progreso
             </button>
-            <button class="btn btn-outline-primary flex-grow-1"
-            *ngIf="strategy?.isByTeams === null"
-            (click)="GoToCreateStrategyTeams()" [disabled]="!IsAssignTeamsEnabled()">
+            <button class="btn btn-outline-primary flex-grow-1" *ngIf="strategy?.isByTeams === null" (click)="GoToCreateStrategyTeams()" [disabled]="!IsAssignTeamsEnabled()">
                 Asignar equipos
             </button>
             <button class="btn btn-outline-success flex-grow-1" (click)="GoToStrategyCalendar()">
@@ -71,23 +65,20 @@
     </div>
 </div>
 
-<div class="modal fade" bsModal #deleteStrategyModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
-    tabindex="-1" role="dialog" aria-labelledby="deleteStrategyModal">
+<div class="modal fade" bsModal #deleteStrategyModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}" tabindex="-1" role="dialog" aria-labelledby="deleteStrategyModal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header d-flex justify-content-center">
-                <div class="modal-title">Eliminar estrategía</div>
+                <div class="modal-title">Eliminar estrategia</div>
             </div>
             <div class="modal-body">
-                ¿Está seguro/a de que desea eliminar la estrategía <b>"{{strategy?.title}}"</b>?
+                ¿Está seguro/a de que desea eliminar la estrategia <b>"{{strategy?.title}}"</b>?
             </div>
             <div class="modal-footer justify-content-around">
-                <button [disabled]="loading.deleting" class="btn btn-outline-primary"
-                (click)="deleteStrategyModal.hide()">
+                <button [disabled]="loading.deleting" class="btn btn-outline-primary" (click)="deleteStrategyModal.hide()">
                     No, cancelar
                 </button>
-                <button [disabled]="loading.deleting" class="btn btn-danger" style="min-width: 155px;"
-                (click)="DeleteStrategy()">
+                <button [disabled]="loading.deleting" class="btn btn-danger" style="min-width: 155px;" (click)="DeleteStrategy()">
                     <span *ngIf="!loading.deleting">Si, eliminar</span>
                     <span *ngIf="loading.deleting"><i class="zmdi zmdi-spinner zmdi-hc-lg zmdi-hc-spin"></i></span>
                 </button>
@@ -95,4 +86,3 @@
         </div>
     </div>
 </div>
-

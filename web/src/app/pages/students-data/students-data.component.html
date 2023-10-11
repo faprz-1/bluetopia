@@ -23,23 +23,11 @@
                 </div>
             </div>
             <div class="select-container filter">
-                <ng-select
-                    class="ng-select form-control"
-                    [items]="grades"
-                    bindLabel="name"
-                    (change)="GetStudents()"
-                    [(ngModel)]="gradeSelected"
-                    placeholder="Grado">
+                <ng-select class="ng-select form-control" [items]="grades" bindLabel="name" (change)="GetStudents()" [(ngModel)]="gradeSelected" placeholder="Grado">
                 </ng-select>
             </div>
             <div class="select-container filter">
-                <ng-select
-                    class="ng-select form-control"
-                    [items]="groups"
-                    bindLabel="name"
-                    (change)="GetStudents()"
-                    [(ngModel)]="groupSelected"
-                    placeholder="Grupo">
+                <ng-select class="ng-select form-control" [items]="groups" bindLabel="name" (change)="GetStudents()" [(ngModel)]="groupSelected" placeholder="Grupo">
                 </ng-select>
             </div>
             <!-- <div class="select-container big filter">
@@ -67,14 +55,16 @@
                         <th>#</th>
                         <th>Nombre</th>
                         <th>Apellidos</th>
+                        <th></th>
+                        <th></th>
                         <!-- <th>Materias</th>
                         <th>Promedio</th> -->
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                
-                <tbody *ngIf="!loading.getting; else bigLoading"  [formGroup]="studentForm">
-                    <tr *ngFor="let student of students" >
+
+                <tbody *ngIf="!loading.getting; else bigLoading" [formGroup]="studentForm">
+                    <tr *ngFor="let student of students">
                         <td>
                             <div *ngIf="isEditing && selectedStudent === student">
                                 <input type="text" placeholder="CURP" formControlName="CURP" class="form-control with-border">
@@ -102,20 +92,20 @@
                                 {{student.fullName}}
                             </div>
                         </td>
-                        <!-- <td>
+                        <td>
                             <div *ngIf="isEditing && selectedStudent === student">
                             </div>
-                            <div *ngIf="!isEditing || selectedStudent != student">
+                            <!-- <div *ngIf="!isEditing || selectedStudent != student">
                                 4.5
-                            </div>
+                            </div> -->
                         </td>
                         <td>
                             <div *ngIf="isEditing && selectedStudent === student">
                             </div>
-                            <div *ngIf="!isEditing || selectedStudent != student">
+                            <!-- <div *ngIf="!isEditing || selectedStudent != student">
                                 4.5
-                            </div>
-                        </td> -->
+                            </div> -->
+                        </td>
                         <td>
                             <div *ngIf="isEditing && selectedStudent === student">
                                 <img class="clickeable" src="assets/icons/save.svg" (click)="SaveChanges()" width="24">
@@ -142,8 +132,7 @@
     </tbody>
 </ng-template>
 
-<div class="modal fade" bsModal #addGradeOrGroupModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
-    tabindex="-1" role="dialog" aria-labelledby="addGradeOrGroupModal">
+<div class="modal fade" bsModal #addGradeOrGroupModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}" tabindex="-1" role="dialog" aria-labelledby="addGradeOrGroupModal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header p-0">
@@ -168,8 +157,7 @@
                     <input class="d-none" #studentsCsv type="file" accept=".csv" (change)="OnFileChanged($event)">
                     <div class="w-100 d-flex flex-column align-items-center">
                         <div class="upload-container clickeable" (click)="studentsCsv.click()">
-                            <img src="assets/icons/upload.png" alt="CSV file">
-                            Subir excel de alumnos
+                            <img src="assets/icons/upload.png" alt="CSV file"> Subir excel de alumnos
                         </div>
                         <div class="modal-text mt-3">
                             {{ studentsCsv.files?.item(0)?.name }}
@@ -178,9 +166,7 @@
                 </div>
             </div>
             <div class="modal-footer justify-content-center">
-                <button class="btn btn-primary modal-btn"
-                [disabled]="loading.creating"
-                (click)="UploadStudents()">
+                <button class="btn btn-primary modal-btn" [disabled]="loading.creating" (click)="UploadStudents()">
                     Guardar
                 </button>
             </div>
