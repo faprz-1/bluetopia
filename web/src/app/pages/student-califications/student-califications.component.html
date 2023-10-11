@@ -33,7 +33,7 @@
         <tbody *ngIf="evaluations.length != 0">
             <tr *ngFor="let evaluation of evaluations">
                 <td>{{evaluation.parcialProduct?.type?.name}}</td>
-                <td>{{evaluation.parcialProduct?.name}} !!</td>
+                <td>{{evaluation.parcialProduct?.name}}</td>
                 <td>{{evaluation.hasBeenEvaluated ? evaluation.calification : 'Sin registro'}}</td>
                 <td>{{evaluation.hasBeenEvaluated ? evaluation.comment : 'Sin registro'}}</td>
             </tr>
