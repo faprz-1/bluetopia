@@ -74,8 +74,12 @@ export class ActivityComponent implements OnInit {
     let max = 0;
     concepts.forEach((concept: any)=>{
       const maxObject = concept.concepts.reduce((max:any, obj:any) => (obj.value > max.value ? obj : max), concept.concepts[0]);
-      max += maxObject.value;
-    });
+   if (maxObject == undefined) {
+    max += 0; 
+  } else {
+    max += maxObject.value;
+  }
+});
     return max;
   }
 
