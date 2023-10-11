@@ -77,7 +77,8 @@
         "GetStudentEvaluation",
         "UploadStudentFile",
         "DeleteStudentFile",
-        "ToggleIsDone"
+        "ToggleIsDone",
+        "GetByStrategyOfStudent"
       ]
     }
   ],
@@ -178,6 +179,37 @@
         {
           "path": "/ToggleIsDone",
           "verb": "patch"
+        }
+      ]
+    },
+    "GetByStrategyOfStudent": {
+      "accepts": [
+        {
+          "arg": "studentId",
+          "type": "string",
+          "required": true,
+          "description": ""
+        },
+        {
+          "arg": "strategyId",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "evaluations",
+          "type": "array",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/of/:studentId/in/:strategyId",
+          "verb": "get"
         }
       ]
     }

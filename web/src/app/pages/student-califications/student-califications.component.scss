@@ -13,9 +13,12 @@
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    border: 1px solid #8128DB;
+
 }
 
 .strategy-tab-active {
-    border: 1px solid #8128DB;
+    background-color: #8128DB !important;
+    color: #F4F5F7 !important;
     box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 0.17);
 }

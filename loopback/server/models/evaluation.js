@@ -64,4 +64,25 @@ module.exports = function(Evaluation) {
         });
     }
 
+    Evaluation.GetByStrategyOfStudent = function name(student,strategy,cb) {
+        Evaluation.app.models.ParcialProduct.GetByStrategy(strategy,(err,products)=>{
+            if(err) return cb(err);
+            if(products.length == 0) return cb(null,[]);
+            const productsIds = products.map(product => product.id);
+            let filter = {
+                where:{
+                    and:[{
+                        productId:{inq:productsIds}
+                    },
+                {studentId:student}]
+                },
+                include: {'parcialProduct':'type'}
+            }
+
+            Evaluation.find(filter,(err,evaluations)=>{
+                if(err) return cb(err);
+                return cb(null,evaluations);
+            });
+        }); 
+    }
 };

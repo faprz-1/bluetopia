@@ -191,4 +191,10 @@ module.exports = function(ParcialProduct) {
         });
     }
 
+    ParcialProduct.GetByStrategy = function(strategy,cb) {
+        ParcialProduct.find({where:{strategyId:strategy}},(err,products)=>{
+            if(err) return cb(err);
+            return cb(null,products);
+        });
+    }
 };
