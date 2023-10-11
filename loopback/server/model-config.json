@@ -512,7 +512,8 @@
           "GetStudentEvaluation": true,
           "prototype.UploadStudentFile": true,
           "prototype.DeleteStudentFile": true,
-          "prototype.ToggleIsDone": true
+          "prototype.ToggleIsDone": true,
+          "GetByStrategyOfStudent":true
         }
       }
     }

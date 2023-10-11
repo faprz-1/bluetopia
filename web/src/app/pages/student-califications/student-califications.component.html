@@ -8,9 +8,9 @@
     </div>
 
     <div class="d-flex align-items-center justify-content-center gap-5 my-5">
-        <div class="strategy-tab clickeable" *ngFor="let strategy of strategies"
+        <div class="strategy-tab clickeable" *ngFor="let strategy of strategies; let index as i"
         (click)="SetStrategyAsActive(strategy)"
-        [ngClass]="{'strategy-tab-active': strategy.active}">
+        [ngClass]="strategy.active ? 'strategy-tab-active' :'strategy-tab'" id=`tab-${id}`>
             {{strategy.title}}
         </div>
     </div>
@@ -19,26 +19,23 @@
         <thead>
             <tr>
                 <th>Tipo de producto</th>
-                <th>Actividad</th>
-                <th>Campos formativos</th>
+                <th>Título</th>
                 <th>Calificación</th>
                 <th>Comentario</th>
-                <th>Acción</th>
             </tr>
         </thead>
-        
-        <tbody>
+        <tbody *ngIf="evaluations.length == 0">
+            <tr><td class="align-items-center" colspan="4">
+                <i *ngIf="activeStrategy == null" class="text">Selecciona una estrategia</i>
+                <i *ngIf="activeStrategy != null" class="text">Sin evaluaciones registradas</i>
+            </td></tr>
+        </tbody>
+        <tbody *ngIf="evaluations.length != 0">
             <tr *ngFor="let evaluation of evaluations">
-                <td>Tipo de producto</td>
-                <td>Actividad</td>
-                <td>Campos formativos</td>
-                <td>Calificación</td>
-                <td>Comentario</td>
-                <td>
-                    <button class="btn btn-primary btn-small">
-                        Ver detalles
-                    </button>
-                </td>
+                <td>{{evaluation.parcialProduct?.type?.name}}</td>
+                <td>{{evaluation.parcialProduct?.name}} !!</td>
+                <td>{{evaluation.hasBeenEvaluated ? evaluation.calification : 'Sin registro'}}</td>
+                <td>{{evaluation.hasBeenEvaluated ? evaluation.comment : 'Sin registro'}}</td>
             </tr>
         </tbody>
     </table>

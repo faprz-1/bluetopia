@@ -16,6 +16,7 @@ export class StudentCalificationsComponent implements OnInit {
     {name: 'Volver al inicio', route: '/home'}
   ]
 
+  activeStrategy:any = null;
   constructor(
     private api: ApiService,
     private toast: ToastService,
@@ -29,40 +30,25 @@ export class StudentCalificationsComponent implements OnInit {
   GetStudentStrategies() {
     this.api.Get(`/Strategies/OfStudent`).subscribe(strategies => {
       this.strategies = strategies;
-      if(!!this.strategies.length) this.strategies[0].active = true;
     }, err => {
       console.error('Error getting students strategies', err);
     });
   }
 
-  SetStrategyAsActive(strategy: any) {
-    this.strategies.forEach(strategy => strategy.active = false);
-    strategy.active = true;
+  SetStrategyAsActive(strategySelected: any) {
+    this.strategies.forEach(strategy => {
+      strategy.active = strategy.id == strategySelected.id;
+    });
+    this.activeStrategy = strategySelected;
+    this.GetEvaluationDetails(strategySelected);
   }
+  
 
-  GetEvaluationDetails(evaluation: any): any {
-    // let details: {icon: string, type: string} = {
-    //   icon: 'activity.png',
-    //   type: 'Actividad'
-    // }
-    // if(event?.isFinal) {
-    //   details.icon = 'event.png';
-    //   details.type = `Evento de cierre`
-    // }
-    // else if(event?.parcialProduct?.isFinal) {
-    //   details.icon = 'final-product.png';
-    //   details.type = `Producto final`
-    // }
-    // else if(event?.parcialProduct?.isActivity) {
-    //   details.icon = 'activity.png';
-    //   details.type = `Actividad`
-    // }
-    // else {
-    //   details.icon = 'parcial-product.png';
-    //   details.type = `Producto parcial`
-    // }
-
-    // return details;
+  GetEvaluationDetails(strategy:any): any {
+    var user = this.api.GetUser();
+    this.api.Get(`/Evaluations/of/${user.student.id}/in/${strategy.id}`).subscribe((result)=>{
+      this.evaluations = result;      
+    });
   }
 
 }
