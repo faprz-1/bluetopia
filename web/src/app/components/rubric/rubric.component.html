@@ -1,27 +1,33 @@
 <div class="rubric" *ngIf="!evaluationMode">
-    <div class="rubric-row" *ngFor="let rubric of rubrics; let last = last">
-        <div class="rubric-item">
-            <div class="rubric-title">Valor</div>
-            <textarea class="rubric-input" [disabled]="!canEdit" [(ngModel)]="rubric.description" placeholder="Rubro"></textarea>
-        </div>
-        <div class="rubric-item" *ngFor="let concept of rubric.concepts">
-            <div class="rubric-title">
-                <input type="text" [disabled]="!canEdit" [(ngModel)]="concept.value">
+    <div *ngFor="let rubric of rubrics; let last = last">
+        <div class="rubric-row">
+
+            <div class="rubric-item">
+                <div class="rubric-title">Valor</div>
+                <textarea class="rubric-input" [disabled]="!canEdit" [(ngModel)]="rubric.description" placeholder="Rubro"></textarea>
             </div>
-            <textarea class="rubric-input" [disabled]="!canEdit" [(ngModel)]="concept.description" placeholder="Descripción"></textarea>
-        </div>
-        <div class="controls vertical" *ngIf="last && showControls">
-            <img class="clickeable" (click)="AddCol()" src="assets/icons/add-circle.png" alt="add">
-            <img class="clickeable" (click)="RemoveCol()" src="assets/icons/remove-circle.png" alt="add">
+            <div class="rubric-item" *ngFor="let concept of rubric.concepts">
+                <div class="rubric-title">
+                    <input type="text" [disabled]="!canEdit" [(ngModel)]="concept.value">
+                </div>
+                <textarea class="rubric-input" [disabled]="!canEdit" [(ngModel)]="concept.description" placeholder="Descripción"></textarea>
+            </div>
+            <div class="controls vertical" *ngIf="last && showControls">
+                <img class="clickeable" (click)="AddCol()" src="assets/icons/add-circle.png" alt="add">
+                <img class="clickeable" (click)="RemoveCol()" src="assets/icons/remove-circle.png" alt="add">
+            </div>
+
         </div>
     </div>
-    <div class="rubric-row" *ngIf="showControls">
-        <div class="rubric-item" *ngFor="let rubric of rubrics[0]?.concepts" style="opacity: 0;">
-        </div>
-        <div class="rubric-col">
-            <div class="controls horizontal">
-                <img class="clickeable" (click)="AddRow()" src="assets/icons/add-circle.png" alt="add">
-                <img class="clickeable" (click)="RemoveRow()" src="assets/icons/remove-circle.png" alt="add">
+    <div class="aling-bottom">
+        <div *ngIf="showControls">
+            <div class="rubric-item" *ngFor="let rubric of rubrics[0]?.concepts" style="opacity: 0;">
+            </div>
+            <div class="rubric-col">
+                <div class="controls horizontal">
+                    <img class="clickeable" (click)="AddRow()" src="assets/icons/add-circle.png" alt="add">
+                    <img class="clickeable" (click)="RemoveRow()" src="assets/icons/remove-circle.png" alt="add">
+                </div>
             </div>
         </div>
     </div>
@@ -50,12 +56,7 @@
                     {{rubric.conceptSelected?.description ? rubric.conceptSelected?.description : 'Seleccione un valor'}}
                 </div>
                 <div class="col-4 mb-2">
-                    <ng-select
-                    class="form-control with-border"
-                    placeholder="Valor"
-                    [clearable]="false"
-                    [(ngModel)]="rubric.conceptSelected"
-                    (change)="OnRubricValueSelected(rubric, $event)">
+                    <ng-select class="form-control with-border" placeholder="Valor" [clearable]="false" [(ngModel)]="rubric.conceptSelected" (change)="OnRubricValueSelected(rubric, $event)">
                         <ng-option [value]="concept" *ngFor="let concept of rubric.concepts">
                             {{concept.value}}
                         </ng-option>

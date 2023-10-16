@@ -1,13 +1,33 @@
-import { Component, EventEmitter, Input, NgZone, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  NgZone,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';
-import { BsModalRef, BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
+import {
+  BsModalRef,
+  BsModalService,
+  ModalDirective,
+} from 'ngx-bootstrap/modal';
 import { ApiService } from 'src/app/services/api.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { RubricTutorialModalComponent } from '../rubric-tutorial-modal/rubric-tutorial-modal.component';
-import { BsDatepickerDirective, BsDaterangepickerDirective } from 'ngx-bootstrap/datepicker';
+import {
+  BsDatepickerDirective,
+  BsDaterangepickerDirective,
+} from 'ngx-bootstrap/datepicker';
 import * as moment from 'moment-timezone';
 import { takeUntil, debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -123,8 +143,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
   }
   saver = new Subject();
   subSelected: any = null;
-  wrongInfo:boolean = false;
-
+  wrongInfo: boolean = false;
   constructor(
     private api: ApiService,
     private activatedRoute: ActivatedRoute,
@@ -132,7 +151,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     private modalService: BsModalService,
     private toast: ToastService,
     private zone: NgZone
-  ) {  }
+  ) {}
 
   ngOnInit(): void {
     this.GetTeacherGroups();
@@ -146,17 +165,17 @@ export class TemplateBasedOnFormComponent implements OnInit {
     this.GetEventTypes();
     this.GetParams();
 
-    this.saver.pipe(debounceTime(500)).subscribe((data) => this.Autosave());
+    this.saver.pipe(debounceTime(100)).subscribe((data) =>{ this.Autosave()});
   }
 
-  IsANumber(input: any){
+  IsANumber(input: any) {
     if (isNaN(Number(input))) {
-       this.toast.ShowError('Solo valores numéricos')
-       this.canContinue = false;
-  }else {
-    this.canContinue = true;
+      this.toast.ShowError('Solo valores numéricos');
+      this.canContinue = false;
+    } else {
+      this.canContinue = true;
+    }
   }
-}
 
   OpenModal(template: any) {
     this.modalRef = this.modalService.show(template, { backdrop: 'static' });
@@ -204,48 +223,36 @@ export class TemplateBasedOnFormComponent implements OnInit {
 
   InitializeFinalProductForm() {
     this.parcialProductForm.setValue({
-      id:
-        !!this.finalParcialProduct?.id
-          ? this.finalParcialProduct.id
-          : null,
-      parcialProductTypeId:
-                !!this.finalParcialProduct?.parcialProductTypeId
-          ? this.finalParcialProduct.parcialProductTypeId
-          : null,
-      name:
-        !!this.finalParcialProduct?.name
-          ? this.finalParcialProduct.name
-          : null,
-      instructions:
-        !!this.finalParcialProduct?.instructions
-          ? this.finalParcialProduct.instructions
-          : null,
-      date:
-        !!this.finalParcialProduct?.event
-          ? this.finalParcialProduct.event.date
-          : null,
-      eventId:
-        !!this.finalParcialProduct?.eventId
-          ? this.finalParcialProduct.eventId
-          : null,
-      evaluationType:
-        !!this.finalParcialProduct?.evaluationType
-          ? this.finalParcialProduct.evaluationType
-          : null,
-      rubric:
-        !!this.finalParcialProduct?.rubric
-          ? this.finalParcialProduct.rubric
-          : null,
-      maxCalification:
-        !!this.finalParcialProduct?.maxCalification
-          ? this.finalParcialProduct.maxCalification
-          : null,
-      resources:
-        !!this.finalParcialProduct?.resources
-          ? this.finalParcialProduct.resources.map(
-              (parcialProduct: any) => parcialProduct.file
-            )
-          : [],
+      id: !!this.finalParcialProduct?.id ? this.finalParcialProduct.id : null,
+      parcialProductTypeId: !!this.finalParcialProduct?.parcialProductTypeId
+        ? this.finalParcialProduct.parcialProductTypeId
+        : null,
+      name: !!this.finalParcialProduct?.name
+        ? this.finalParcialProduct.name
+        : null,
+      instructions: !!this.finalParcialProduct?.instructions
+        ? this.finalParcialProduct.instructions
+        : null,
+      date: !!this.finalParcialProduct?.event
+        ? this.finalParcialProduct.event.date
+        : null,
+      eventId: !!this.finalParcialProduct?.eventId
+        ? this.finalParcialProduct.eventId
+        : null,
+      evaluationType: !!this.finalParcialProduct?.evaluationType
+        ? this.finalParcialProduct.evaluationType
+        : null,
+      rubric: !!this.finalParcialProduct?.rubric
+        ? this.finalParcialProduct.rubric
+        : null,
+      maxCalification: !!this.finalParcialProduct?.maxCalification
+        ? this.finalParcialProduct.maxCalification
+        : null,
+      resources: !!this.finalParcialProduct?.resources
+        ? this.finalParcialProduct.resources.map(
+            (parcialProduct: any) => parcialProduct.file
+          )
+        : [],
     });
     this.InitializeDatePickers();
   }
@@ -263,15 +270,17 @@ export class TemplateBasedOnFormComponent implements OnInit {
     this.InitializeDatePickers();
   }
 
-  ThatDateAlreadyPassed(date: any){
-    let startDate = moment(date[0])
+  ThatDateAlreadyPassed(date: any) {
+    let startDate = moment(date[0]);
     let today = moment();
-   if(startDate.isBefore(today, 'day')) { 
-    this.toast.ShowError('La fecha proporcionada ya ha pasado, por favor elija otra fecha')
-  this.canContinue = false;
-   }else{
-    this.canContinue = true;
-   }
+    if (startDate.isBefore(today, 'day')) {
+      this.toast.ShowError(
+        'La fecha proporcionada ya ha pasado, por favor elija otra fecha'
+      );
+      this.canContinue = false;
+    } else {
+      this.canContinue = true;
+    }
   }
 
   InitializeDatePickers() {
@@ -300,7 +309,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
           )
             this.finalParcialProductDatePicker.bsValue = new Date(
               this.parcialProductForm.get('date')?.value
-              );
+            );
           break;
         case 5:
           if (
@@ -339,7 +348,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
             res(true);
             break;
           case 4:
-            res(true);
+            res(await this.SaveParcialProduct(true));
             break;
           case 5:
             res(await this.SaveEvent());
@@ -360,7 +369,7 @@ export class TemplateBasedOnFormComponent implements OnInit {
     this.activatedRoute.params.subscribe((params) => {
       this.templateId = params['templateId'];
       this.strategyId = params['strategyId'];
-      this.GetStrategy();      
+      this.GetStrategy();
     });
   }
 
@@ -442,22 +451,23 @@ export class TemplateBasedOnFormComponent implements OnInit {
     this.grades = this.SortbyName(this.grades);
   }
 
-  SortbyName(objects:any){
-    return objects.sort((a:any, b:any) => {
+  SortbyName(objects: any) {
+    return objects.sort((a: any, b: any) => {
       const nameA = a.name.toLowerCase();
       const nameB = b.name.toLowerCase();
       return nameA.localeCompare(nameB);
     });
-  };
+  }
 
-  SetGroupsOfSelectedGrade(gradeId:any){
+  SetGroupsOfSelectedGrade(gradeId: any) {
     this.groups = [];
-    if(!gradeId || gradeId == null || gradeId == 0){
-       this.groups = [];
-      }
-    else{
-      let selectedGrade = this.grades.filter((grade:any)=> grade.id == gradeId);
-      this.groups = selectedGrade.length > 0 ? selectedGrade[0].groups:[];
+    if (!gradeId || gradeId == null || gradeId == 0) {
+      this.groups = [];
+    } else {
+      let selectedGrade = this.grades.filter(
+        (grade: any) => grade.id == gradeId
+      );
+      this.groups = selectedGrade.length > 0 ? selectedGrade[0].groups : [];
     }
     this.groups = this.SortbyName(this.groups);
   }
@@ -611,14 +621,16 @@ export class TemplateBasedOnFormComponent implements OnInit {
   };
 
   GetTemplateTopics() {
-    this.api.Get(`/TemplateTopics/OfSchool/${this.api.GetUser()?.schoolId}`).subscribe(
-      (topics) => {
-        this.templateTopics = topics;
-      },
-      (err) => {
-        console.error('Erro getting template topics', err);
-      }
-    );
+    this.api
+      .Get(`/TemplateTopics/OfSchool/${this.api.GetUser()?.schoolId}`)
+      .subscribe(
+        (topics) => {
+          this.templateTopics = topics;
+        },
+        (err) => {
+          console.error('Erro getting template topics', err);
+        }
+      );
   }
 
   AddTemplateTopic = (templateTopic: string) => {
@@ -829,8 +841,8 @@ export class TemplateBasedOnFormComponent implements OnInit {
         this.strategy = strategy;
         this.grade = strategy.strategyGroup
           ? strategy.strategyGroup.gradeId
-          : null;   
-          this.SetGroupsOfSelectedGrade(this.grade);       
+          : null;
+        this.SetGroupsOfSelectedGrade(this.grade);
         this.group = strategy.strategyGroup
           ? strategy.strategyGroup.groupId
           : null;
@@ -855,7 +867,10 @@ export class TemplateBasedOnFormComponent implements OnInit {
       strategy.group = this.group ? this.group : 0;
       strategy.subjects = this.selectedSubjects;
       this.gradeSelect?.close();
-      this.api.Patch(`/Strategies/${this.strategyId}`, { strategy }).pipe(takeUntil(this.saver)).subscribe(
+      this.api
+        .Patch(`/Strategies/${this.strategyId}`, { strategy })
+        .pipe(takeUntil(this.saver))
+        .subscribe(
           (strategySaved) => {
             this.InitializeForms(strategySaved);
             res(true);
@@ -867,95 +882,98 @@ export class TemplateBasedOnFormComponent implements OnInit {
         );
     });
   }
-
   EvaluationProductsInfo(parcialProductInstance: any): boolean {
+    if(!this.parcialProductForm.get('evaluationType')?.touched) return false;
     if (parcialProductInstance.evaluationType == null) {
-         this.toast.ShowError('La evaluación no puede quedar en blanco');
-    this.wrongInfo = true;
-    return true;
-    }
-switch (parcialProductInstance.evaluationType.type) {
-  case 'rubric':
-    for (let rubric of parcialProductInstance.rubric) {
-      if (rubric.description == "") {
-        this.toast.ShowError('Todos los campos de la rúbrica deberían estar completos');
-        this.wrongInfo = true;
-        return true;
-      }
-    }
-    return false;
-
-  case 'numeric':
-    if (parcialProductInstance.maxCalification == null) {
-      this.toast.ShowError('El valor máximo de la evaluación no puede quedar en blanco');
+      //  this.toast.ShowError('La evaluación no puede quedar en blanco');
       this.wrongInfo = true;
       return true;
     }
-    this.wrongInfo = false;
-    return false;
+    switch (parcialProductInstance.evaluationType.type) {
+      case 'rubric':
+        for (let rubric of parcialProductInstance.rubric) {
+          if (rubric.description == '') {
+            this.toast.ShowError(
+              'Todos los campos de la rúbrica deberían estar completos'
+            );
+            this.wrongInfo = true;
+            return true;
+          }
+        }
+        return false;
 
-  default:
-    return false;
-}
+      case 'numeric':
+        if (parcialProductInstance.maxCalification == null) {
+          this.toast.ShowError(
+            'El valor máximo de la evaluación no puede quedar en blanco'
+          );
+          this.wrongInfo = true;
+          return true;
+        }
+        this.wrongInfo = false;
+        return false;
 
+      default:
+        return false;
+    }
   }
 
- 
-
-   SaveParcialProduct(isParcialProductFinal: boolean = false) {
+  SaveParcialProduct(isParcialProductFinal: boolean = false) {
     return new Promise<boolean>((res, rej) => {
       let parcialProductInstance = {
         ...this.parcialProductForm.value,
         isFinal: isParcialProductFinal,
         strategyId: this.strategyId,
       };
-  if (this.EvaluationProductsInfo(parcialProductInstance)) return
+      let isEvaluationEmpty = this.EvaluationProductsInfo(parcialProductInstance);
+      parcialProductInstance.evaluationTypeId = parcialProductInstance.evaluationType ? parcialProductInstance.evaluationType.id : null;
+      if (!isEvaluationEmpty && (this.parcialProductForm.get('evaluationType')?.touched ? parcialProductInstance.evaluationTypeId != null:true)) {
+        if (!!parcialProductInstance.id) {
+          this.api
+            .Patch(
+              `/ParcialProducts/${parcialProductInstance.id}`,
+              parcialProductInstance,
+              true
+            )
+            .subscribe(
+              (newParcialProduct) => {
+                if (!isParcialProductFinal) this.CancelParcialProduct();
+                this.GetStrategy();
+                if(!isParcialProductFinal)  this.toast.ShowSuccess('Cambios guardados correctamente');
+                res(true);
+              },
+              (err) => {
+                console.error('Error posting new parcial product', err);
+                res(false);
+              }
+            );
+        } else {
+          this.api
+            .Post(`/ParcialProducts`, {
+              parcialProduct: parcialProductInstance,
+            })
+            .subscribe(
+              (newParcialProduct) => {
+                if (!isParcialProductFinal) this.CancelParcialProduct();
+                this.GetStrategy();
+                if(!isParcialProductFinal) this.toast.ShowSuccess(
+                  'Producto parcial guardado correctamente dirígete a la sección de ‘Productos guardados’'
+                );
+                res(true);
+              },
+              (err) => {
+                console.error('Error posting new parcial product', err);
+                res(false);
+              }
+            );
+        }
+        this.wrongInfo = false;
+      }else{
+        this.canContinue = false;
+      }
 
-     parcialProductInstance.evaluationTypeId =
-     parcialProductInstance.evaluationType
-     ? parcialProductInstance.evaluationType.id
-     : null;
-     
-     if (!!parcialProductInstance.id) {
-       this.api
-       .Patch(
-         `/ParcialProducts/${parcialProductInstance.id}`,
-         parcialProductInstance,
-         true
-         )
-         .subscribe(
-           (newParcialProduct) => {
-             if (!isParcialProductFinal) this.CancelParcialProduct();
-             this.GetStrategy();
-             this.toast.ShowSuccess('Cambios guardados correctamente');
-             res(true);
-            },
-            (err) => {
-              console.error('Error posting new parcial product', err);
-              res(false);
-            }
-            );
-          } else {
-            this.api
-          .Post(`/ParcialProducts`, { parcialProduct: parcialProductInstance })
-          .subscribe(
-            (newParcialProduct) => {
-              if (!isParcialProductFinal) this.CancelParcialProduct();
-              this.GetStrategy();
-              let message = `Producto guardado correctamente`;
-              if(this.step <= 3) message += `dirígete a la sección de ‘Productos guardados’ para ver los productos guardados`;
-              this.toast.ShowSuccess(message);
-              res(true);
-            },
-            (err) => {
-              console.error('Error posting new parcial product', err);
-              res(false);
-            }
-            );
-          }
-            this.wrongInfo = false;
-          this.Autosave();
-        });
+      if(!isParcialProductFinal)this.Autosave();
+    });
   }
 
   EditParcialProduct(parcialProduct: any) {
@@ -1030,7 +1048,6 @@ switch (parcialProductInstance.evaluationType.type) {
         isFinal: true,
       };
       this.loading.event = true;
-console.log(eventInstance);
 
       this.api.Patch(`/Events`, { event: eventInstance }).subscribe(
         (eventSaved) => {
@@ -1139,6 +1156,5 @@ console.log(eventInstance);
 
   GoToStep(step: any) {
     this.step = step;
-    this.GoToStep(step);
   }
 }
