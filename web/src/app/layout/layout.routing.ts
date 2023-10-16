@@ -78,6 +78,7 @@ const LAYOUT_ROUTES: Routes = [
         path: 'school', canActivate: [AuthGuard], data: { role: 'School' },
         children: [
           { path: '', redirectTo: 'mis-maestros', pathMatch: 'full' },
+          { path: 'perfil', loadChildren: () => import('../pages/school-profile/school-profile.module').then(m => m.SchoolProfileModule) },
           { path: 'mis-estudiantes', loadChildren: () => import('../pages/students/students.module').then(m => m.StudentsModule) },
           { path: 'datos-estudiantes', loadChildren: () => import('../pages/students-data/students-data.module').then(m => m.StudentsDataModule) },
           { path: 'registrar-estudiantes/csv', loadChildren: () => import('../pages/students-csv/students-csv.module').then(m => m.StudentsCsvModule) },
