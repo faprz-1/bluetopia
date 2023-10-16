@@ -27,10 +27,7 @@
                 <div class="form-section-title">
                     Selecciona qué deseas agendar
                 </div>
-                <ng-select class="form-control with-border"
-                    [items]="formTypes" bindLabel="name" bindValue="type"
-                    placeholder="Evento o producto"
-                    formControlName="type" (change)="FilterActivitiesByType()">
+                <ng-select class="form-control with-border" [items]="formTypes" bindLabel="name" bindValue="type" placeholder="Evento o producto" formControlName="type" (change)="FilterActivitiesByType()">
                 </ng-select>
             </div>
         </div>
@@ -38,16 +35,13 @@
             <span class="instruction-number">2</span>
             <div class="form-col">
                 <div class="form-section-title">
-                   Producto a trabajar
+                    Producto a trabajar
                 </div>
-                <ng-select class="form-control with-border"
-                    [items]="activities" bindLabel="name"
-                    placeholder="Productos parciales"
-                    formControlName="parcialProduct">
+                <ng-select class="form-control with-border" [items]="activities" bindLabel="name" placeholder="Productos parciales" formControlName="parcialProduct">
                 </ng-select>
             </div>
         </div>
-        <div class="form-row">
+        <!-- <div class="form-row">
             <span class="instruction-number">3</span>
             <div class="form-col">
                 <div class="form-section-title">
@@ -61,7 +55,7 @@
                         bsDatepicker>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- <div class="form-row">
             <span class="instruction-number">6</span>
             <div class="form-col">
@@ -137,8 +131,7 @@
                 </div>
                 <div class="flex-resources" *ngIf="!!GetFiles('new').length">
                     <div class="resource" *ngFor="let file of GetFiles('new')">
-                        <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
-                        {{file.name}}
+                        <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i> {{file.name}}
                     </div>
                 </div>
                 <input class="d-none" type="file" #fileInput multiple (change)="OnFileSelected($event)">
@@ -155,8 +148,7 @@
                 </div>
                 <div class="flex-resources" *ngIf="!!GetFiles('old').length">
                     <div class="resource" *ngFor="let file of GetFiles('old')">
-                        <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i>
-                        {{file.name}}
+                        <i class="zmdi zmdi-file zmdi-hc-2x text-primary mr-3"></i> {{file.name}}
                     </div>
                 </div>
                 <button class="btn btn-success btn-block" (click)="libraryModal.OpenModal()">
@@ -174,7 +166,4 @@
     </div>
 </div>
 
-<app-library-file-selector-modal
-    #libraryModal
-    (onFilesSelectd)="OnLibraryFilesSelected($event)"
-></app-library-file-selector-modal>
+<app-library-file-selector-modal #libraryModal (onFilesSelectd)="OnLibraryFilesSelected($event)"></app-library-file-selector-modal>

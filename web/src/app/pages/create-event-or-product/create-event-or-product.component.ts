@@ -136,7 +136,8 @@ export class CreateEventOrProductComponent implements OnInit {
     this.loading = true;
     let event = {
       ...this.eventForm.value,
-      date: moment(this.eventForm.value.date).tz(environment.timeZone).toISOString()
+      // date: moment(this.eventForm.value.date).tz(environment.timeZone).toISOString()
+      date: moment(this.date).tz(environment.timeZone).toISOString()
     }
     this.api.Post(`/Events`, {event}).subscribe(newEvent => {
       this.loading = false;
