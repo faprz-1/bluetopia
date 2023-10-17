@@ -83,7 +83,8 @@ export class StrategyComponent implements OnInit {
   }
 
   GetTemplateTopics() {
-    this.api.Get(`/TemplateTopics`).subscribe(
+    this.api.Get(`/TemplateTopics/OfSchool/${this.api.GetUser()?.schoolId}`)
+    .subscribe(
       (topics) => {
         this.templateTopics = topics;
       },
