@@ -496,7 +496,8 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
-          "Update": true
+          "Update": true,
+          "prototype.UpdateData": true
         }
       }
     }
