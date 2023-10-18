@@ -232,4 +232,8 @@ module.exports = function(Teacher) {
         });
     }
 
+    Teacher.RoleMap = function(teacher, callback) {
+        console.log(teacher);
+    }
+
 };

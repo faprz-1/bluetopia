@@ -108,7 +108,8 @@
       "permission": "ALLOW",
       "property": [
         "GetByActivationToken",
-        "Activate"
+        "Activate",
+        "RoleMap"
       ]
     }
   ],
@@ -184,6 +185,31 @@
       "http": [
         {
           "path": "/",
+          "verb": "patch"
+        }
+      ]
+    },
+    "RoleMap": {
+      "accepts": [
+        {
+          "arg": "teacher",
+          "type": "object",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "isThereExistedSchool",
+          "type": "object",
+          "root": true,
+          "description": ""
+        }
+      ],
+      "description": "",
+      "http": [
+        {
+          "path": "/RoleMap",
           "verb": "patch"
         }
       ]

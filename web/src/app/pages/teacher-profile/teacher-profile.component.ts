@@ -54,9 +54,11 @@ export class TeacherProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.GetUSerData();
+    this.FindSchool();
   }
 
   SetForm() {
+    
     this.teacherUserForm.setValue({
       id: this.user.teacher.id,
       name: this.user.teacher.name,
@@ -75,15 +77,26 @@ export class TeacherProfileComponent implements OnInit {
         isActive: !!this.user?.school?.isActive,
       },
     });
+    console.log(this.teacherUserForm);
 
     if(this.user?.school?.isActive && this.user.role.name != 'School') {
       this.schoolForm.disable();
     }
   }
 
+  FindSchool() {
+  this.api.Patch(`/Teachers/RoleMap`, {teacher: this.user}).subscribe(user => {
+      console.log(user);
+      
+    })
+  }
+
+
   GetUSerData() {
     this.api.Get(`/usuarios/withCredentials`).subscribe(user => {
       this.user = user;
+      console.log(this.user);
+      
       this.GetTeacherGradesAndGroups();
       this.api.SetUser(user);
       this.SetForm();

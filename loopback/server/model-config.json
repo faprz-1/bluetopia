@@ -134,6 +134,7 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
+          "RoleMap": true,
           "AddTeachers": true,
           "GetAllOfSchool": true,
           "prototype.UpdateData": true,
