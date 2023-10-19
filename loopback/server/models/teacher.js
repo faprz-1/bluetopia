@@ -225,7 +225,7 @@ module.exports = function(Teacher) {
                 Teacher.app.models.Usuario.upsert(teacher.user(), (err, userSaved) => {
                     if (err) return callback(err);
 
-                    Teacher.app.models.UpdateSchoolId(teacherId, newSchoolId, (err, studentsUpdated) => {
+                    Teacher.app.models.Student.UpdateSchoolId(teacherId, newSchoolId, (err, studentsUpdated) => {
                         if (err) return callback(err);
 
                         return callback(null, saved);
