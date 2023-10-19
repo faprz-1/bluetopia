@@ -19,6 +19,7 @@ export class TeacherProfileComponent implements OnInit {
     getting: false,
     updating: false
   }
+  existedSchool: boolean = false;
   teacherUserForm: FormGroup = new FormGroup({
     id: new FormControl('', [Validators.required]),
     name: new FormControl('', [Validators.required]),
@@ -31,9 +32,9 @@ export class TeacherProfileComponent implements OnInit {
     }),
     school: new FormGroup({
       id: new FormControl('', []),
-      name: new FormControl(null, [Validators.required]),
-      phone: new FormControl(null, [Validators.required, ValidationService.CheckOnlyIntegerNumbers]),
-      address: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+      name: new FormControl({value: null, disabled: !this.existedSchool}, [Validators.required]),
+      phone: new FormControl({value: null, disabled: !this.existedSchool}, [Validators.required, ValidationService.CheckOnlyIntegerNumbers]),
+      address: new FormControl({value: null, disabled: !this.existedSchool}, [Validators.required, Validators.minLength(3)]),
       isActive: new FormControl(false, []),
     }),
   });
@@ -52,13 +53,11 @@ export class TeacherProfileComponent implements OnInit {
     public nav: NavigationService
   ) { }
 
-  ngOnInit(): void {
-    this.GetUSerData();
-    this.FindSchool();
+  ngOnInit() {
+ this.GetUSerData();
   }
 
   SetForm() {
-    
     this.teacherUserForm.setValue({
       id: this.user.teacher.id,
       name: this.user.teacher.name,
@@ -77,17 +76,14 @@ export class TeacherProfileComponent implements OnInit {
         isActive: !!this.user?.school?.isActive,
       },
     });
-    console.log(this.teacherUserForm);
-
     if(this.user?.school?.isActive && this.user.role.name != 'School') {
       this.schoolForm.disable();
     }
   }
 
   FindSchool() {
-  this.api.Patch(`/Teachers/RoleMap`, {teacher: this.user}).subscribe(user => {
-      console.log(user);
-      
+  this.api.Patch(`/Teachers/RoleMap`, {teacher: this.user }).subscribe(existedSchool => {
+  this.existedSchool = existedSchool;
     })
   }
 
@@ -95,8 +91,7 @@ export class TeacherProfileComponent implements OnInit {
   GetUSerData() {
     this.api.Get(`/usuarios/withCredentials`).subscribe(user => {
       this.user = user;
-      console.log(this.user);
-      
+       this.FindSchool();
       this.GetTeacherGradesAndGroups();
       this.api.SetUser(user);
       this.SetForm();
