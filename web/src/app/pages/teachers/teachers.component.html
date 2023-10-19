@@ -21,8 +21,7 @@
 
     <div class="row" *ngIf="teachers?.length; else noTeachers">
         <div class="col-12 col-sm-10 col-md-6 col-xl-4 mb-4" *ngFor="let teacher of teachers">
-            <app-teacher-card class="clickeable" [teacher]="teacher" [showGroups]="true"
-                (click)="EditTeacher(editTeacherModal, teacher)"></app-teacher-card>
+            <app-teacher-card class="clickeable" [teacher]="teacher" [showGroups]="true" (click)="EditTeacher(editTeacherModal, teacher)"></app-teacher-card>
         </div>
     </div>
 </div>
@@ -55,8 +54,7 @@
                             <div class="input-icon-container text-center">
                                 <img src="assets/icons/book.png">
                             </div>
-                            <ng-select class="ng-select form-control with-icon" [items]="subjects" [multiple]="true"
-                                [closeOnSelect]="false" bindLabel="name" placeholder="Asignaturas" formControlName="subjects">
+                            <ng-select class="ng-select form-control with-icon" [items]="subjects" [multiple]="true" [closeOnSelect]="false" bindLabel="name" placeholder="Asignaturas" formControlName="subjects">
                             </ng-select>
                         </div>
                         <app-control-messages [control]="teacherForm.get('subjects')"></app-control-messages>
@@ -66,13 +64,12 @@
                             <div class="input-icon-container text-center">
                                 <img src="assets/icons/mail.png">
                             </div>
-                            <input class="form-control" type="text" placeholder="Correo electrónico de trabajo"
-                                formControlName="email">
-                            </div>
-                            <app-control-messages [control]="teacherForm.get('email')"></app-control-messages>
+                            <input class="form-control" type="text" placeholder="Correo electrónico de trabajo" formControlName="email">
+                        </div>
+                        <app-control-messages [control]="teacherForm.get('email')"></app-control-messages>
                     </div>
                     <div class="col-12 col-md-6">
-                        <div class="checkbox-container clickeable">
+                        <!-- <div class="checkbox-container clickeable">
                             <div class="mr-2" (click)="extracurricularsInput.click()">
                                 <img src="assets/icons/star.png">
                             </div>
@@ -81,7 +78,7 @@
                             <input type="checkbox" #extracurricularsInput formControlName="extracurricular">
                             <span class="checkmark" (click)="extracurricularsInput.click()"></span>
                         </div>
-                        <app-control-messages [control]="teacherForm.get('extracurricular')"></app-control-messages>
+                        <app-control-messages [control]="teacherForm.get('extracurricular')"></app-control-messages> -->
                     </div>
                     <div class="col-12 col-md-6 col-xl-4">
                         <div class="input-container">
@@ -102,8 +99,7 @@
                         <app-control-messages [control]="teacherForm.get('group')"></app-control-messages>
                     </div>
                     <div class="col-12 col-md-6 col-xl-4">
-                        <button class="btn btn-outline-success btn-block" (click)="AddGroup()"
-                            [disabled]="!teacherForm.get('group')?.value || !teacherForm.get('grade')?.value">
+                        <button class="btn btn-outline-success btn-block" (click)="AddGroup()" [disabled]="!teacherForm.get('group')?.value || !teacherForm.get('grade')?.value">
                             Asignar grupo
                         </button>
                     </div>
@@ -115,14 +111,14 @@
                                     <span class="mr-2 text-uppercase">
                                         {{(teacherGoup.grade?.name ? teacherGoup.grade.name : teacherGoup.grade) + (teacherGoup.group?.name ? teacherGoup.group.name : teacherGoup.group)}}
                                     </span>
-                                    <i class="zmdi zmdi-close clickeable" (click)="DeleteGroup(i)"></i>
-                                </div>
-                            </span>
+                            <i class="zmdi zmdi-close clickeable" (click)="DeleteGroup(i)"></i>
                         </div>
+                        </span>
                     </div>
                 </div>
-            </form>
         </div>
+        </form>
+    </div>
     </div>
     <div class="modal-footer d-flex align-items-center">
         <button class="btn btn-outline-primary btn-big mr-4" (click)="CloseModal()">
