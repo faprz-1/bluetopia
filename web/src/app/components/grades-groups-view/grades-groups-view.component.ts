@@ -255,7 +255,7 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
       confirmation: this.passwordForm.get('confirmation')?.value,
       groupId: this.selectedGroup.studentGroup.groupId,
       gradeId: this.selectedGroup.studentGroup.gradeId,
-      teacherId:this.user.teacher.id,
+      teacherId:this.user.teacher ? this.user.teacher.id : null,
       schoolId: this.user.schoolId
     }
     this.loading.password = true;
