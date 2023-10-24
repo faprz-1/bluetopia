@@ -181,6 +181,7 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
   }
 
   AddStudent() {
+    this.studentForm.value.teacherUserId = this.studentForm.value.teacherUserId ? this.studentForm.value.teacherUserId : null;
     if (this.studentForm.invalid) {
       this.toast.ShowWarning(`Favor de llenar los campos obligatorios`);
       this.studentForm.markAllAsTouched();
