@@ -17,6 +17,7 @@ import { ValidationService } from 'src/app/services/validation.service';
 export class RegisterUserComponent implements OnInit {
 
   registerStep: number = 1;
+  showPassword : boolean = false;
   userType: string = '';
   teacherIdToAbsorb: string = '';
   studentGroupRegisterUid: string | null = null;
