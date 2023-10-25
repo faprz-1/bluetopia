@@ -1,5 +1,5 @@
 <div class="content">
-    
+
     <div class="d-flex flex-wrap align-items-center gap-48">
 
         <div class="profile-tab clickeable" (click)="activeTab = 'profile'" [ngClass]="{'active': activeTab == 'profile'}">
@@ -97,12 +97,7 @@
         </div>
         <div *ngSwitchCase="'subjects'">
             <div class="subjects mb-5">
-                <app-teacher-groups-card
-                    *ngFor="let grade of grades"
-                    [data]="grade"
-                    [subjects]="subjects"
-                    (onChange)="GetTeacherGradesAndGroups()"
-                ></app-teacher-groups-card>
+                <app-teacher-groups-card *ngFor="let grade of grades" [data]="grade" [subjects]="subjects" (onChange)="GetTeacherGradesAndGroups()"></app-teacher-groups-card>
                 <button class="btn btn-outline-success btn-card" (click)="addGradeAndGroupModal.show()">
                     <i class="zmdi zmdi-plus-box zmdi-hc-5x"></i>
                 </button>
@@ -111,8 +106,7 @@
     </div>
 </div>
 
-<div class="modal fade" bsModal #addGradeAndGroupModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
-    tabindex="-1" role="dialog" aria-labelledby="addGradeAndGroupModal">
+<div class="modal fade" bsModal #addGradeAndGroupModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}" tabindex="-1" role="dialog" aria-labelledby="addGradeAndGroupModal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -137,14 +131,10 @@
                 </form>
             </div>
             <div class="modal-footer justify-content-between">
-                <button class="btn btn-outline-primary modal-btn"
-                [disabled]="loading.creating"
-                (click)="addGradeAndGroupModal.hide();">
+                <button class="btn btn-outline-primary modal-btn" [disabled]="loading.creating" (click)="addGradeAndGroupModal.hide();">
                     Cancelar
                 </button>
-                <button class="btn btn-primary modal-btn"
-                [disabled]="loading.creating"
-                (click)="AddGradeAndGroup()">
+                <button class="btn btn-primary modal-btn" [disabled]="loading.creating" (click)="AddGradeAndGroup()">
                     Agregar
                 </button>
             </div>
@@ -152,19 +142,17 @@
     </div>
 </div>
 
-<div class="modal fade" bsModal #addGradeModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
-    tabindex="-1" role="dialog" aria-labelledby="first-time-configuration">
+<div class="modal fade" bsModal #addGradeModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}" tabindex="-1" role="dialog" aria-labelledby="first-time-configuration">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title">Agregar grupo</h2>
             </div>
             <div class="modal-body">
-                
+
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" [disabled]="loading.uploading"
-                (click)="addGradeModal.hide(); nav.GoToUserRoute('mis-estudiantes')">
+                <button class="btn btn-primary" [disabled]="loading.uploading" (click)="addGradeModal.hide(); nav.GoToUserRoute('mis-estudiantes')">
                     Continuar
                 </button>
             </div>

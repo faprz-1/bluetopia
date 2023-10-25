@@ -19,6 +19,7 @@ export class TeacherProfileComponent implements OnInit {
     getting: false,
     updating: false
   }
+  existedSchool: boolean = false;
   teacherUserForm: FormGroup = new FormGroup({
     id: new FormControl('', [Validators.required]),
     name: new FormControl('', [Validators.required]),
@@ -31,9 +32,9 @@ export class TeacherProfileComponent implements OnInit {
     }),
     school: new FormGroup({
       id: new FormControl('', []),
-      name: new FormControl(null, [Validators.required]),
-      phone: new FormControl(null, [Validators.required, ValidationService.CheckOnlyIntegerNumbers]),
-      address: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+      name: new FormControl({value: null, disabled: !this.existedSchool}, [Validators.required]),
+      phone: new FormControl({value: null, disabled: !this.existedSchool}, [Validators.required, ValidationService.CheckOnlyIntegerNumbers]),
+      address: new FormControl({value: null, disabled: !this.existedSchool}, [Validators.required, Validators.minLength(3)]),
       isActive: new FormControl(false, []),
     }),
   });
@@ -52,8 +53,8 @@ export class TeacherProfileComponent implements OnInit {
     public nav: NavigationService
   ) { }
 
-  ngOnInit(): void {
-    this.GetUSerData();
+  ngOnInit() {
+ this.GetUSerData();
   }
 
   SetForm() {
@@ -75,15 +76,22 @@ export class TeacherProfileComponent implements OnInit {
         isActive: !!this.user?.school?.isActive,
       },
     });
-
     if(this.user?.school?.isActive && this.user.role.name != 'School') {
       this.schoolForm.disable();
     }
   }
 
+  FindSchool() {
+  this.api.Patch(`/Teachers/RoleMap`, {teacher: this.user }).subscribe(existedSchool => {
+  this.existedSchool = existedSchool;
+    })
+  }
+
+
   GetUSerData() {
     this.api.Get(`/usuarios/withCredentials`).subscribe(user => {
       this.user = user;
+       this.FindSchool();
       this.GetTeacherGradesAndGroups();
       this.api.SetUser(user);
       this.SetForm();

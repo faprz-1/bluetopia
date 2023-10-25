@@ -9,13 +9,13 @@
                     Mientras más mejor
                 </div>
             </div>
-        
+
             <div class="teacher-cards">
                 <div class="d-inline-block mr-3" *ngFor="let teacher of teachers">
                     <app-teacher-card [teacher]="teacher" (onDelete)="DeleteTeacher($event)"></app-teacher-card>
                 </div>
             </div>
-            
+
             <div class="teacher-form">
                 <form [formGroup]="teacherForm">
                     <div class="row">
@@ -33,13 +33,7 @@
                                 <div class="input-icon-container text-center">
                                     <img src="assets/icons/book.png">
                                 </div>
-                                <ng-select
-                                    class="ng-select form-control with-icon"
-                                    [items]="subjects"
-                                    [multiple]="true"
-                                    bindLabel="name"
-                                    placeholder="Asignaturas"
-                                    formControlName="subjects">
+                                <ng-select class="ng-select form-control with-icon" [items]="subjects" [multiple]="true" bindLabel="name" placeholder="Asignaturas" formControlName="subjects">
                                 </ng-select>
                             </div>
                             <app-control-messages [control]="teacherForm.get('subjects')"></app-control-messages>
@@ -54,7 +48,7 @@
                             <app-control-messages [control]="teacherForm.get('email')"></app-control-messages>
                         </div>
                         <div class="col-12 col-md-6">
-                            <div class="checkbox-container clickeable">
+                            <!-- <div class="checkbox-container clickeable">
                                 <div class="mr-2" (click)="extracurricularsInput.click()">
                                     <img src="assets/icons/star.png">
                                 </div>
@@ -62,7 +56,7 @@
                                 <input type="checkbox" #extracurricularsInput formControlName="extracurricular">
                                 <span class="checkmark" (click)="extracurricularsInput.click()"></span>
                             </div>
-                            <app-control-messages [control]="teacherForm.get('extracurricular')"></app-control-messages>
+                            <app-control-messages [control]="teacherForm.get('extracurricular')"></app-control-messages> -->
                         </div>
                         <div class="col-12 col-md-6 col-xl-4">
                             <div class="input-container">
@@ -90,7 +84,7 @@
                     </div>
                 </form>
             </div>
-        
+
             <div class="w-100 text-center">
                 <div class="btns-container">
                     <div class="d-flex justify-content-between">
