@@ -37,8 +37,7 @@
                 <div class="step">3) Sube la plantilla con los datos de tus maestros</div>
                 <input class="d-none" #teachersCsv type="file" accept=".csv" (change)="OnFileChanged($event)">
                 <div class="upload-container clickeable" (click)="teachersCsv.click()">
-                    <img src="assets/icons/upload.png" alt="CSV file">
-                    Subir excel de maestros
+                    <img src="assets/icons/upload.png" alt="CSV file"> Subir excel de maestros
                 </div>
             </div>
         </div>
@@ -54,8 +53,7 @@
     </div>
 </div>
 
-<div class="modal fade" bsModal #confirmationModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
-    tabindex="-1" role="dialog" aria-labelledby="first-time-configuration">
+<div class="modal fade" bsModal #confirmationModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}" tabindex="-1" role="dialog" aria-labelledby="first-time-configuration">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-body confirmation-modal">
@@ -65,16 +63,14 @@
 
                 <img class="my-5" src="assets/icons/check-circle-md.png" alt="check.png">
 
-                <button class="btn btn-primary" [disabled]="loading.uploading"
-                (click)="confirmationModal.hide(); teachersCsv.value = ''">
+                <button class="btn btn-primary" [disabled]="loading.uploading" (click)="confirmationModal.hide(); teachersCsv.value = ''">
                     Continuar
                 </button>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" bsModal #verifyTeachersDataModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}"
-    tabindex="-1" role="dialog" aria-labelledby="first-time-configuration">
+<div class="modal fade" bsModal #verifyTeachersDataModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}" tabindex="-1" role="dialog" aria-labelledby="first-time-configuration">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -90,7 +86,7 @@
                             <th>Nombre</th>
                             <th>Correo</th>
                             <th>Asignaturas</th>
-                            <th>Extracurricular</th>
+                            <!-- <th>Extracurricular</th> -->
                             <th>Grado</th>
                             <th>Grupo</th>
                         </tr>
@@ -100,7 +96,7 @@
                             <th>{{teacher.name}}</th>
                             <th>{{teacher.email}}</th>
                             <th>{{teacher.subjects}}</th>
-                            <th>{{!!teacher.extracurricular ? "SI" : "NO"}}</th>
+                            <!-- <th>{{!!teacher.extracurricular ? "SI" : "NO"}}</th> -->
                             <th>{{teacher.grade}}</th>
                             <th>{{teacher.group}}</th>
                         </tr>
@@ -108,12 +104,10 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-outline-primary" [disabled]="loading.uploading"
-                (click)="verifyTeachersDataModal.hide(); teachersCsv.value = ''">
+                <button class="btn btn-outline-primary" [disabled]="loading.uploading" (click)="verifyTeachersDataModal.hide(); teachersCsv.value = ''">
                     Cancelar
                 </button>
-                <button class="btn btn-primary" [disabled]="loading.uploading"
-                (click)="UploadTeachers()">
+                <button class="btn btn-primary" [disabled]="loading.uploading" (click)="UploadTeachers()">
                     Subir
                 </button>
             </div>

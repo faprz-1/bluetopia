@@ -60,6 +60,32 @@
       }
     },
     "acls": [],
-    "methods": {}
+    "methods": {
+      "prototype.UpdateData": {
+        "accepts": [
+          {
+            "arg": "school",
+            "type": "object",
+            "required": true,
+            "description": ""
+          }
+        ],
+        "returns": [
+          {
+            "arg": "schoolSaved",
+            "type": "object",
+            "root": true,
+            "description": ""
+          }
+        ],
+        "description": "",
+        "http": [
+          {
+            "path": "/",
+            "verb": "patch"
+          }
+        ]
+      }
+    }
   }
   

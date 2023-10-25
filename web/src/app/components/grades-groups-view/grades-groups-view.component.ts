@@ -181,6 +181,7 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
   }
 
   AddStudent() {
+    this.studentForm.value.teacherUserId = this.studentForm.value.teacherUserId ? this.studentForm.value.teacherUserId : null;
     if (this.studentForm.invalid) {
       this.toast.ShowWarning(`Favor de llenar los campos obligatorios`);
       this.studentForm.markAllAsTouched();
@@ -255,7 +256,7 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
       confirmation: this.passwordForm.get('confirmation')?.value,
       groupId: this.selectedGroup.studentGroup.groupId,
       gradeId: this.selectedGroup.studentGroup.gradeId,
-      teacherId:this.user.teacher.id,
+      teacherId:this.user.teacher ? this.user.teacher.id : null,
       schoolId: this.user.schoolId
     }
     this.loading.password = true;

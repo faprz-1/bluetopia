@@ -26,10 +26,10 @@ export class TeachersCsvComponent implements OnInit {
       oldKey: 'Correo (Campo obligatorio)',
       newKey: 'email'
     },
-    {
-      oldKey: 'Extracurriculares',
-      newKey: 'extracurricular'
-    },
+    // {
+    //   oldKey: 'Extracurriculares',
+    //   newKey: 'extracurricular'
+    // },
     {
       oldKey: 'Grado (Campo obligatorio)',
       newKey: 'grade'

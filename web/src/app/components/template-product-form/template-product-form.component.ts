@@ -152,15 +152,19 @@ export class TemplateProductFormComponent implements OnInit {
   }
 
   GetTemplateTopics() {
-    this.api.Get(`/TemplateTopics`).subscribe(topics => {
-      this.templateTopics = topics;
-      this.templateTopics.unshift({
+    this.api.Get(`/TemplateTopics/OfSchool/${this.api.GetUser()?.schoolId}`)
+    .subscribe(
+      (topics) => {
+        this.templateTopics = topics;
+              this.templateTopics.unshift({
         id: 0,
         name: this.NEW_TOPIC_NAME,
       });
-    }, err => {
-      console.error("Erro getting template topics", err);
-    });
+      },
+      (err) => {
+        console.error('Erro getting template topics', err);
+      }
+    );
   }
 
   GetParcialProductTypes() {
