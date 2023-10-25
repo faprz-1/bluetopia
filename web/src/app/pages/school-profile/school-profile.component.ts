@@ -20,10 +20,11 @@ export class SchoolProfileComponent implements OnInit {
     getting: false,
     updating: false
   }
+  cantEdit: boolean = false;
   schoolUserForm: FormGroup = new FormGroup({
     id: new FormControl('', [Validators.required]),
     name: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required]),
+    email: new FormControl({value: '', disabled: !this.cantEdit}, [Validators.required]),
     data: new FormGroup({
       id: new FormControl('', []),
       workTitle: new FormControl('', [Validators.required]),
@@ -60,7 +61,7 @@ export class SchoolProfileComponent implements OnInit {
 SetForm() {
     this.schoolUserForm.setValue({
       id: this.user.school.id,
-      name: this.user.school.name,
+      name: this.user.username,
        email: this.user.email,
       data: {
         id: !!this.user.data ? this.user.data.id : null,
