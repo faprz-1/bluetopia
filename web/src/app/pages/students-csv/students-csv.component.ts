@@ -106,6 +106,7 @@ export class StudentsCsvComponent implements OnInit {
         studentFormatted[conversion.newKey] = student[conversion.oldKey];
       });
       studentFormatted.schoolId = user.schoolId;
+      studentFormatted.teacherId = user.teacher ? user.teacher.id:null;
       return studentFormatted;
     });
   }
