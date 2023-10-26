@@ -100,13 +100,14 @@ export class StudentsCsvComponent implements OnInit {
   
   FormatData(students: Array<any>) {
     const user = this.api.GetUser();
+    const role = user.role.name;
     return students.map(student => {
       let studentFormatted: any = {};
       this.dataConversions.forEach(conversion => {
         studentFormatted[conversion.newKey] = student[conversion.oldKey];
       });
       studentFormatted.schoolId = user.schoolId;
-      studentFormatted.teacherId = user.teacher ? user.teacher.id:null;
+      if(role == "Teacher") studentFormatted.teacherId =user.teacher.id;
       return studentFormatted;
     });
   }
