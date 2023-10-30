@@ -235,30 +235,4 @@ module.exports = function(Teacher) {
         });
     }
 
-    Teacher.RoleMap = function(teacher, callback) {
-
-        let filter = {
-            where: { schoolId: teacher.school.id }
-        }
-        let roleMap = Teacher.app.models.RoleMapping;
-
-        Teacher.app.models.Usuario.find(filter, (err, userSaved) => {
-            if (err) return callback(err);
-            userSaved.map(function(user, i) {
-                let filter2 = {
-                    where: { principalId: user.id }
-                }
-                roleMap.find(filter2, (err, founded) => {
-                    if (err) return callback(err);
-                    let data = JSON.parse(JSON.stringify(founded));
-                    if (data[0].roleId == 4) return callback(null, true)
-                    if (userSaved.length == i + 1) return callback(null, false)
-                })
-
-            });
-
-        });
-
-    }
-
 };
