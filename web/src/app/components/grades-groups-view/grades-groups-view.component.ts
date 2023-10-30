@@ -192,6 +192,7 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
       (newStudent) => {
         this.toast.ShowSuccess(`Estudiante agregado con exito`);
         this.addStudentModal?.hide();
+      location.reload();
         this.onReload.emit();
       },
       (err) => {
