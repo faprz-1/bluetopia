@@ -76,6 +76,7 @@ export class RegisterUserComponent implements OnInit {
       this.userType = params['userType'];
       this.teacherIdToAbsorb = params['teacherId'];
       this.studentGroupRegisterUid = params['registerUid'];
+      if (this.userType == 'escuela' && !!this.teacherIdToAbsorb) this.FindSchoolInfo();
       if(!!this.teacherIdToAbsorb || !!this.studentGroupRegisterUid) this.registerStep = 2;
       if(this.userType == 'maestro') {
         this.userRegisterForm.get('phone')?.clearValidators();
@@ -83,6 +84,18 @@ export class RegisterUserComponent implements OnInit {
         this.schoolForm.get('phone')?.clearValidators();
         this.schoolForm.get('phone')?.setValidators([ValidationService.CheckOnlyIntegerNumbers]);
       }
+    });
+  }
+
+  FindSchoolInfo(){
+    this.api.Post('/Usuarios/SchoolByUsuario', { teacherId: this.teacherIdToAbsorb }).subscribe((school: any) => {
+    if (!!school) {
+      this.schoolForm.get('address')?.setValue(school.address) 
+      this.schoolForm.get('phone')?.setValue(school.phone) 
+      this.schoolForm.get('name')?.setValue(school.name) 
+    }
+    }, (err: any) => {
+       this.toast.ShowWarning('Hubo un problema al obtener información');
     });
   }
 

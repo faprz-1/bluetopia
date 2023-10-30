@@ -59,7 +59,8 @@
                     "VerifyEmail": true,
                     "RegisterUser": true,
                     "GetFileLibrary": true,
-                    "IsUsernameDuplicated": true
+                    "IsUsernameDuplicated": true,
+                    "SchoolByUsuario": true
                 }
             }
         }

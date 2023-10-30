@@ -997,4 +997,16 @@ module.exports = function(Usuario) {
         });
     }
 
+    Usuario.SchoolByUsuario = function(usuerId, callback) {
+        Usuario.findOne({
+            where: { id: Number(usuerId) },
+            include: ['school']
+        }, (err, user) => {
+            user = JSON.parse(JSON.stringify(user))
+            let school = user ? user.school : null
+            return callback(null, school)
+        })
+    }
+
+
 };
