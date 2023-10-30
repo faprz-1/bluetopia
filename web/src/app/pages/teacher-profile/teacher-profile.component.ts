@@ -32,9 +32,9 @@ export class TeacherProfileComponent implements OnInit {
     }),
     school: new FormGroup({
       id: new FormControl('', []),
-      name: new FormControl({value: null, disabled: !this.existedSchool}, [Validators.required]),
-      phone: new FormControl({value: null, disabled: !this.existedSchool}, [Validators.required, ValidationService.CheckOnlyIntegerNumbers]),
-      address: new FormControl({value: null, disabled: !this.existedSchool}, [Validators.required, Validators.minLength(3)]),
+      name: new FormControl(null, [Validators.required]),
+      phone: new FormControl({value: null}, [Validators.required, ValidationService.CheckOnlyIntegerNumbers]),
+      address: new FormControl({value: null}, [Validators.required, Validators.minLength(3)]),
       isActive: new FormControl(false, []),
     }),
   });
@@ -82,9 +82,11 @@ export class TeacherProfileComponent implements OnInit {
   }
 
   FindSchool() {
-  this.api.Patch(`/Teachers/RoleMap`, {teacher: this.user }).subscribe(existedSchool => {
-  this.existedSchool = existedSchool;
-    })
+    if (this.user.school.schoolUserId != null){
+      this.schoolForm.get('name')?.disable()
+      this.schoolForm.get('phone')?.disable()
+      this.schoolForm.get('address')?.disable()
+    }
   }
 
 

@@ -109,33 +109,37 @@ module.exports = function(Usuario) {
 
                         if (userData) {
                             userData.userId = newU.id;
-                            Usuario.app.models.UserData.create(userData, (err, newUserData) => {
-                                if (err) {
-                                    newU.destroy((err2, destroyed) => {
-                                        if (err2) return callback(err2);
-                                        return callback(err);
-                                    });
-                                }
-
-                                Usuario.app.models.Teacher.ChangeSchoolId(userData.teacherIdToAbsorb, newU.id, (err, teacherUpdated) => {
-                                    if (err) callback(err);
-
-                                    if (role.name == 'Teacher') {
-                                        let teacher = {
-                                            name: userData.username,
-                                            email: userData.email,
-                                            active: true,
-                                            userId: newU.id,
-                                            schoolId: newU.schoolId,
-                                            subjects: []
-                                        }
-                                        Usuario.app.models.Teacher.AddTeacher(teacher, (err, newTeacher) => {
-                                            if (err) callback(err);
-
-                                            return callback(null, newU);
+                            if (role.name == 'School') newSchool.schoolUserId = newU.id;
+                            Usuario.app.models.School.upsert(newSchool, (err, schoolUpdate) => {
+                                if (err) callback(err);
+                                Usuario.app.models.UserData.create(userData, (err, newUserData) => {
+                                    if (err) {
+                                        newU.destroy((err2, destroyed) => {
+                                            if (err2) return callback(err2);
+                                            return callback(err);
                                         });
-                                    } else return callback(null, newU);
-                                });
+                                    }
+
+                                    Usuario.app.models.Teacher.ChangeSchoolId(userData.teacherIdToAbsorb, newU.id, (err, teacherUpdated) => {
+                                        if (err) callback(err);
+
+                                        if (role.name == 'Teacher') {
+                                            let teacher = {
+                                                name: userData.username,
+                                                email: userData.email,
+                                                active: true,
+                                                userId: newU.id,
+                                                schoolId: newU.schoolId,
+                                                subjects: []
+                                            }
+                                            Usuario.app.models.Teacher.AddTeacher(teacher, (err, newTeacher) => {
+                                                if (err) callback(err);
+
+                                                return callback(null, newU);
+                                            });
+                                        } else return callback(null, newU);
+                                    });
+                                })
                             });
                         } else {
                             if (role.name == 'Student') {
@@ -981,15 +985,15 @@ module.exports = function(Usuario) {
         });
     }
 
-    Usuario.IsUsernameDuplicated = function(user,cb){
+    Usuario.IsUsernameDuplicated = function(user, cb) {
         let filter = {
             where: {
-                username:{like:`${user}`}
+                username: { like: `${user}` }
             }
         }
-        Usuario.findOne(filter,(err,user)=>{
-            if(err) return cb(err);
-            return cb(null, user === null ? false:true);
+        Usuario.findOne(filter, (err, user) => {
+            if (err) return cb(err);
+            return cb(null, user === null ? false : true);
         });
     }
 
