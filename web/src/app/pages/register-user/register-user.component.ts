@@ -91,8 +91,11 @@ export class RegisterUserComponent implements OnInit {
     this.api.Post('/Usuarios/SchoolByUsuario', { teacherId: this.teacherIdToAbsorb }).subscribe((school: any) => {
     if (!!school) {
       this.schoolForm.get('address')?.setValue(school.address) 
+      this.schoolForm.get('address')?.disable(); 
       this.schoolForm.get('phone')?.setValue(school.phone) 
+      this.schoolForm.get('phone')?.disable();
       this.schoolForm.get('name')?.setValue(school.name) 
+      this.schoolForm.get('name')?.disable();
     }
     }, (err: any) => {
        this.toast.ShowWarning('Hubo un problema al obtener información');
