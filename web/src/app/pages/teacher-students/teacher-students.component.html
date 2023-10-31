@@ -8,8 +8,8 @@
         <div class="d-flex flex-column align-items-end" style="gap: 25px;">
             <!-- <div class="link clickeable">Ver biblioteca de estrategias</div> -->
             <div class="strategy-buttons">
-                <button class="btn btn-primary" (click)="registerSchoolModal.show()">
-                    Compartir con coordinador
+                <button *ngIf="!existedSchoolUser" class="btn btn-primary" (click)="registerSchoolModal.show()">
+                    Enlace a coordinador
                 </button>
                 <button class="btn btn-primary" (click)="nav.GoToUserRoute('plantillas')">
                     Crear nueva estrategia
@@ -62,7 +62,7 @@
             </div>
             <div class="modal-footer justify-content-center">
                 <button class="btn btn-primary modal-btn" (click)="CopyLinkToClipBoard(); registerSchoolModal.hide();">
-                    Continuar
+                    Cerrar
                 </button>
             </div>
         </div>
