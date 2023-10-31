@@ -84,7 +84,7 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
       })
     );
   }
-
+  
   ngOnDestroy() {
     while (this.subscriptions.length) this.subscriptions.pop()?.unsubscribe();
   }
@@ -192,6 +192,7 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
       (newStudent) => {
         this.toast.ShowSuccess(`Estudiante agregado con exito`);
         this.addStudentModal?.hide();
+      location.reload();
         this.onReload.emit();
       },
       (err) => {
@@ -247,6 +248,21 @@ export class GradesGroupsViewComponent implements OnInit, OnDestroy {
     if(newPassword != confirmation) {
       this.toast.ShowWarning("Las contraseñas no coinciden");}
     return newPassword === confirmation;
+  }
+
+   FindMasterKey(){
+    var teacherGroup = {
+      groupId: this.selectedGroup.studentGroup.groupId,
+      gradeId: this.selectedGroup.studentGroup.gradeId,
+      teacherId:this.user.teacher ? this.user.teacher.id : null,
+      schoolId: this.user.schoolId
+    }
+    this.api.Post('/TeacherGroups/FindMasterKey',teacherGroup,true).subscribe((result)=>{
+      this.passwordForm.get('currentPassword')?.setValue(result);
+    },
+    (err) => {
+      this.toast.ShowError(`Se produjo un error al obtener información`);
+    });
   }
 
   SaveGroupPassword(){

@@ -110,7 +110,7 @@
     </div>
 </div>
 
-<div class="modal fade" bsModal #passwordModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}" tabindex="-1" role="dialog" aria-labelledby="passwordModal">
+<div class="modal fade" (onShown)="FindMasterKey()" bsModal #passwordModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}" tabindex="-1" role="dialog" aria-labelledby="passwordModal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -180,7 +180,7 @@
     </div>
 </div>
 
-<div class="modal fade" bsModal #addStudentModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}" tabindex="-1" role="dialog" aria-labelledby="addStudentModal">
+<div class="modal fade" (onShow)="FindMasterKey()" bsModal #addStudentModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}" tabindex="-1" role="dialog" aria-labelledby="addStudentModal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
