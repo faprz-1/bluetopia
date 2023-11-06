@@ -46,6 +46,7 @@ export class RegisterUserComponent implements OnInit {
   loading: boolean = false;;
   step: number = 0;
   pattern = new RegExp ('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$');
+  school:any = null;
 
   public get schoolForm(): FormGroup {
     return this.userRegisterForm.get('school') as FormGroup;
@@ -89,10 +90,14 @@ export class RegisterUserComponent implements OnInit {
 
   FindSchoolInfo(){
     this.api.Post('/Usuarios/SchoolByUsuario', { teacherId: this.teacherIdToAbsorb }).subscribe((school: any) => {
+    this.school = school;
     if (!!school) {
       this.schoolForm.get('address')?.setValue(school.address) 
+      this.schoolForm.get('address')?.disable(); 
       this.schoolForm.get('phone')?.setValue(school.phone) 
+      this.schoolForm.get('phone')?.disable();
       this.schoolForm.get('name')?.setValue(school.name) 
+      this.schoolForm.get('name')?.disable();
     }
     }, (err: any) => {
        this.toast.ShowWarning('Hubo un problema al obtener información');
@@ -128,6 +133,14 @@ export class RegisterUserComponent implements OnInit {
       password: userData.password,
       active: true
     };
+    if (this.userType == 'escuela' && !!this.teacherIdToAbsorb) {
+      let { address, name, phone } = this.school
+      userData.school = {
+        'address' : address,
+      'name' : name,
+      'phone' : phone
+    }
+  }
     this.ApiRegisterUser(user, userData, this.userType.toLowerCase());
   }
 

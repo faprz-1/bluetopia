@@ -17,6 +17,7 @@ export class TeacherStudentsComponent implements OnInit {
   teacherSubjects: Array<any> = [];
   teacherGroups: Array<any> = [];
   user: any = null;
+  existedSchoolUser: boolean = false;
 
   public get schoolRegisterLink() {
     return `${this.api.GetHost()}registro/escuela/recomendado/${this.user ? this.user.id : 0}`;
@@ -30,6 +31,7 @@ export class TeacherStudentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.api.GetUser();
+   if (this.user.school.schoolUserId != null) this.existedSchoolUser = true; 
     this.GetTeacherData();
     this.GetTeacherStudents();
   }
