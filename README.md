@@ -1,29 +1,18 @@
-Template Aplicación de JarabeSoft - Versión 3.0
-
-Requisitos: 
-    - docker
-    - docker-compose
-    - nodejs (10.x LTS o versión estable)
+Requisitos:
+    -nodejs versión 16.13.1
     - Módulos npm:
         - @angular/cli
         - loopback-cli
-        - ionic
-        - corvoda
+Pasos para inicializar web:
+    -En consola dentro de bluetopia\web:
+        * npm i
+        * ng serve
 
-Pasos:
-    1. Clonar repositorio
-
-    2. Ejecutar el siguiente comando para inicializar containers de docker:
-        docker-compose -f docker-compose-dev.yml up -d --build
-    
-    3. Inicializar Angular: 
-        ng serve
-
-    4. Inicializar servidor de pruebas de Ionic (sin Cordova) (opcional)
-        ionic serve
-
-Se pueden encontrar más comandos útiles en los archivos docker-dev.txt y docker-prod.txt
-
-<!-- Generate Facebook Key    -->
-<!-- Correr comando en la carpeta donde se generó el apk -->
-<!-- keytool -list -printcert -jarfile android-debug.apk -->
+Pasos para inicializar loopback:
+    -En consola dentro de bluetopia\loopback:
+            * npm i
+            * node . 
+    También podemos instalar nodemon para que esté observando los cambios:
+     -En consola dentro de bluetopia\loopback:
+            * npm i nodemon
+            * nodemon
